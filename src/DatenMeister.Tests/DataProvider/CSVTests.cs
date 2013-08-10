@@ -36,6 +36,14 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(elements[0].IsSet("Column 0"), Is.True);
             Assert.That(elements[0].IsSet("Column 5"), Is.False);
             Assert.That(elements[0].IsSet("Unknown"), Is.False);
+
+            var column1 = elements[0].GetAll().Where(x => x.First == "Column 0").FirstOrDefault();
+            Assert.That(column1 != null);
+            Assert.That(column1.Second.ToString() == "1");
+
+            var column2 = elements[3].GetAll().Where(x => x.First == "Column 0").FirstOrDefault();
+            Assert.That(column2 != null);
+            Assert.That(column2.Second.ToString() == "cat");
         }
 
         [Test]
@@ -75,6 +83,36 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(elements[0].IsSet("Title2"), Is.True);
             Assert.That(elements[0].IsSet("Title3"), Is.True);
             Assert.That(elements[0].IsSet("Title4"), Is.False);
+
+            var column1 = elements[0].GetAll().Where(x => x.First == "Title1").FirstOrDefault();
+            Assert.That(column1 != null);
+            Assert.That(column1.Second.ToString() == "1");
+
+            var column2 = elements[3].GetAll().Where(x => x.First == "Title3").FirstOrDefault();
+            Assert.That(column2 != null);
+            Assert.That(column2.Second.ToString() == "rat");
+        }
+
+        [Test]
+        public void TestSettingUnsetting()
+        {
+            var settings = new CSVSettings()
+            {
+                HasHeader = true,
+                Separator = ","
+            };
+
+            var provider = new CSVDataProvider();
+            var extent = provider.Load("data/csv/withheader.txt", settings);
+            var elements = extent.Elements().Select(x => x as IObject).ToList();
+
+            elements[0].Set("Column 0", "Eins");
+            Assert.That(elements[0].Get("Title1").ToString(), Is.EqualTo("Eins"));
+            Assert.That(elements[1].Get("Title2").ToString(), Is.EqualTo("two"));
+
+            elements[1].Unset("Column 1");
+            Assert.That(elements[1].Get("Title2").ToString(), Is.EqualTo(string.Empty));
+            Assert.That(elements[1].Get("Column 1").ToString(), Is.EqualTo(string.Empty));
         }
     }
 }

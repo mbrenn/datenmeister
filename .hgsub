@@ -1,2 +1,4 @@
 dependencies/BurnSystems=https://mbrenn@bitbucket.org/mbrenn/burnsystems/
-
+dependencies/BurnSystems.WebServer=https://mbrenn@bitbucket.org/mbrenn/burnsystems.webserver/
+dependencies/DeJS=https://mbrenn@bitbucket.org/mbrenn/dejs
+dependencies/Bootstrap=https://mbrenn@bitbucket.org/mbrenn/bootstrap.compiled

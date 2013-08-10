@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D0C28956-4EEE-4AF0-A0ED-A500A558C5D8}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{CBF6F357-3BAF-43A5-AAF4-37961979A154}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DatenMeister</RootNamespace>
-    <AssemblyName>DatenMeister</AssemblyName>
+    <RootNamespace>DatenmeisterServer</RootNamespace>
+    <AssemblyName>DatenmeisterServer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,12 +23,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -39,24 +45,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataProvider\CSV\CSVDataProvider.cs" />
-    <Compile Include="DataProvider\CSV\CSVExtent.cs" />
-    <Compile Include="DataProvider\CSV\CSVObject.cs" />
-    <Compile Include="DataProvider\CSV\CSVSettings.cs" />
-    <Compile Include="DataProvider\DotNet\DotNetExtent.cs" />
-    <Compile Include="DataProvider\DotNet\DotNetObject.cs" />
-    <Compile Include="DataProvider\IDataProvider.cs" />
-    <Compile Include="IObject.cs" />
-    <Compile Include="IURIExtent.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\BurnSystems.WebServer.csproj">
+      <Project>{b31df31a-f19e-4ff9-b50f-b70f4f5949f4}</Project>
+      <Name>BurnSystems.WebServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\dependencies\BurnSystems\src\BurnSystems.csproj">
       <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
       <Name>BurnSystems</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

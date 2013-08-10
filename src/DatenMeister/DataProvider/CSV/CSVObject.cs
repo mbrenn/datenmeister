@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BurnSystems.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,54 +20,40 @@ namespace DatenMeister.DataProvider.CSV
 
         public object Get(string propertyName)
         {
-            if (propertyName.StartsWith("Column "))
-            {
-                var numberString = propertyName.Substring("Column ".Length);
-                int number;
-                if (Int32.TryParse(numberString, out number))
-                {
-                    if (number >= this.values.Count)
-                    {
-                        throw new IndexOutOfRangeException();
-                    }
-
-                    return this.values[number];
-                }
-            }
-
-            var index =  extent.HeaderNames.IndexOf ( propertyName );
-            if (index == -1)
+            int number = this.GetIndexOfProperty(propertyName);
+            if (number == -1)
             {
                 throw new IndexOutOfRangeException();
             }
-
-            return this.values[index];
+            return this.values[number];
+                
         }
 
-        public KeyValuePair<string, object> GetAll()
+        public IEnumerable<Pair<string, object>> GetAll()
         {
-            throw new NotImplementedException();
+            if (this.extent.Settings.HasHeader)
+            {
+                foreach (var value in this.extent.HeaderNames)
+                {
+                    yield return new Pair<string, object>(
+                        value, 
+                        this.Get(value));
+                }
+            }
+            else
+            {
+                for (var n = 0; n < this.values.Count; n++)
+                {
+                    yield return new Pair<string, object>(
+                        "Column " + n.ToString(), 
+                        this.values[n]);
+                }
+            }
         }
 
         public bool IsSet(string propertyName)
         {
-            if (propertyName.StartsWith("Column "))
-            {
-                var numberString = propertyName.Substring("Column ".Length);
-                int number;
-                if (Int32.TryParse(numberString, out number))
-                {
-                    if (number >= this.values.Count)
-                    {
-                        return false;
-                    }
-
-                    return true;
-                }
-            }
-
-            var index = extent.HeaderNames.IndexOf(propertyName);
-            if (index == -1)
+            if (this.GetIndexOfProperty(propertyName) == -1)
             {
                 return false;
             }
@@ -76,12 +63,43 @@ namespace DatenMeister.DataProvider.CSV
 
         public void Set(string propertyName, object value)
         {
-            throw new NotImplementedException();
+            var index = this.GetIndexOfProperty(propertyName);
+            if (index != -1)
+            {
+                this.values[index] = value.ToString();
+            }
         }
 
         public void Unset(string propertyName)
         {
-            throw new NotImplementedException();
+            var index = this.GetIndexOfProperty(propertyName);
+            if (index != -1)
+            {
+                this.values[index] = string.Empty;
+            }
+        }
+
+        private int GetIndexOfProperty(string propertyName)
+        {
+            int number = -1;
+            if (propertyName.StartsWith("Column "))
+            {
+                var numberString = propertyName.Substring("Column ".Length);
+                if (Int32.TryParse(numberString, out number))
+                {
+                    if (number >= this.values.Count)
+                    {
+                        number = -1;
+                    }
+                }
+            }
+
+            if (number == -1)
+            {
+                number = extent.HeaderNames.IndexOf(propertyName);
+            }
+
+            return number;
         }
     }
 }
