@@ -46,11 +46,17 @@
     <Compile Include="DataProvider\DotNet\DotNetExtent.cs" />
     <Compile Include="DataProvider\DotNet\DotNetObject.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
+    <Compile Include="DatenMeisterPool.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IURIExtent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\ExtentController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\BurnSystems.WebServer.csproj">
+      <Project>{b31df31a-f19e-4ff9-b50f-b70f4f5949f4}</Project>
+      <Name>BurnSystems.WebServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\dependencies\BurnSystems\src\BurnSystems.csproj">
       <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
       <Name>BurnSystems</Name>

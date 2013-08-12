@@ -1,10 +1,10 @@
-copy dependencies\DeJS\src\js\*.js web\js\lib\*.js
-copy dependencies\Bootstrap\js\*.js web\js\lib\*.js
-copy dependencies\Bootstrap\css\*.css web\css\*.css
-copy dependencies\Bootstrap\img\*.* web\img\*.*
-copy dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\Resources\Require\*.js web\js\lib\*.js
-copy dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\Resources\JQuery\*.js web\js\lib\*.js
+copy dependencies\DeJS\src\js\*.js src\DatenMeisterWeb\js\lib\*.js
+copy dependencies\Bootstrap\js\*.js src\DatenMeisterWeb\js\lib\*.js
+copy dependencies\Bootstrap\css\*.css src\DatenMeisterWeb\css\*.css
+copy dependencies\Bootstrap\img\*.* src\DatenMeisterWeb\img\*.*
+copy dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\Resources\Require\*.js src\DatenMeisterWeb\js\lib\*.js
+copy dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\Resources\JQuery\*.js src\DatenMeisterWeb\js\lib\*.js
 
 cd src
-msbuild
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild /m
 cd ..

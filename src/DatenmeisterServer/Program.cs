@@ -1,6 +1,8 @@
 ﻿using BurnSystems.Logging;
 using BurnSystems.ObjectActivation;
 using BurnSystems.WebServer;
+using DatenMeister;
+using DatenMeister.DataProvider.CSV;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,18 @@ namespace DatenmeisterServer
             Log.TheLog.LogEntry(LogLevel.Message, "Datenmeister");
 
             var activationContainer = new ActivationContainer("Website");
+
+            // Initialize DatenMeisterPool
+            var pool = new DatenMeisterPool();
+
+            var provider = new CSVDataProvider();
+            var csvExtent = provider.Load("data/test.csv", new CSVSettings()
+                {
+                    HasHeader = true
+                });
+
+            pool.Add(csvExtent);
+            activationContainer.Bind<DatenMeisterPool>().ToConstant(pool);
 
             using (var server = Server.CreateDefaultServer(activationContainer))
             {
