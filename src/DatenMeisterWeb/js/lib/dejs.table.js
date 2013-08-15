@@ -1,82 +1,72 @@
-"use strict";
+/// <reference path="jquery.d.ts" />
+define(["require", "exports"], function(require, exports) {
+    var CellOptions = (function () {
+        function CellOptions() {
+        }
+        return CellOptions;
+    })();
+    exports.CellOptions = CellOptions;
 
-define([],
-    function () {
-        var tableClass = function (domElement) {
-            if (domElement === undefined) {
-                throw ("First parameter 'domElement' is not defined.");
-            }
+    var Table = (function () {
+        function Table(domElement) {
             this.__domElement = domElement;
-            this.__currentTable = undefined;
-            this.__currentRow = undefined;
+            this.__currentTable = $("<table></table>");
+            this.__domElement.append(this.__currentTable);
+        }
+        Table.prototype.addRow = function () {
             this.__isHeaderRow = false;
-            
-            this.__init();
+
+            this.__currentRow = $("<tr></tr>");
+            this.__currentTable.append(this.__currentRow);
+
+            return this.__currentRow;
         };
 
-        tableClass.prototype =
-            {
-                __init: function () {
-                    this.__currentTable = $("<table></table>");
-                    this.__domElement.append(this.__currentTable);
-                },
+        Table.prototype.addHeaderRow = function () {
+            this.__isHeaderRow = true;
 
-                addRow: function () {
-                    this.__isHeaderRow = false;
+            this.__currentRow = $("<tr></tr>");
+            this.__currentTable.append(this.__currentRow);
 
-                    this.__currentRow = $("<tr></tr>");
-                    this.__currentTable.append(this.__currentRow);
+            return this.__currentRow;
+        };
 
-                    return this.__currentRow;
-                },
+        Table.prototype.addColumn = function (content, options) {
+            var currentColumn = this.__createColumn(options);
+            currentColumn.text(content);
 
-                addHeaderRow: function () {
-                    this.__isHeaderRow = true;
+            return currentColumn;
+        };
 
-                    this.__currentRow = $("<tr></tr>");
-                    this.__currentTable.append(this.__currentRow);
+        Table.prototype.addColumnHtml = function (content, options) {
+            var currentColumn = this.__createColumn(options);
+            currentColumn.html(content);
 
-                    return this.__currentRow;
-                },
+            return currentColumn;
+        };
 
-                addColumn: function (content, options) {
-                    var currentColumn = this.__createColumn(options);
-                    currentColumn.text(content);
+        Table.prototype.__createColumn = function (options) {
+            if (this.__currentRow === undefined) {
+                throw ("Row has not been started");
+            }
 
-                    return currentColumn;
-                },
+            if (options == undefined) {
+                options = {};
+            }
 
-                addColumnHtml: function (content, options) {
-                    var currentColumn = this.__createColumn(options);
-                    currentColumn.html(content);
+            var currentColumn;
 
-                    return currentColumn;
-                },
+            if (this.__isHeaderRow || options.asHeader === true) {
+                currentColumn = $("<th></th>");
+            } else {
+                currentColumn = $("<td></td>");
+            }
 
-                __createColumn: function (options) {
-                    if (this.__currentRow === undefined) {
-                        throw ("Row has not been started");
-                    }
+            this.__currentRow.append(currentColumn);
 
-                    if (options == undefined) {
-                        options = {};
-                    }
-
-                    var currentColumn;
-
-                    if (this.__isHeaderRow || options.asHeader === true) {
-                        currentColumn = $("<th></th>");
-                    }
-                    else {
-                        currentColumn = $("<td></td>");
-                    }
-
-                    this.__currentRow.append(currentColumn);
-
-                    return currentColumn;
-                }
-            };
-
-        return tableClass;
-    }
-    );
+            return currentColumn;
+        };
+        return Table;
+    })();
+    exports.Table = Table;
+});

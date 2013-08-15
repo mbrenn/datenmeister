@@ -51,6 +51,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="app.manifest" />
+    <None Include="data\test.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\BurnSystems.WebServer.csproj">

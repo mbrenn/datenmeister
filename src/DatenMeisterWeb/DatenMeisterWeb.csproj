@@ -61,16 +61,17 @@
     <Content Include="css\bootstrap-responsive.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\datenmeister.css" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="index.html" />
     <Content Include="js\datenmeister.js" />
     <TypeScriptCompile Include="js\datenmeister.ts" />
+    <TypeScriptCompile Include="js\init.ts" />
     <Content Include="js\init.js" />
     <Content Include="js\lib\bootstrap.js" />
     <Content Include="js\lib\bootstrap.min.js" />
     <Content Include="js\lib\dejs.ajax.js" />
-    <Content Include="js\lib\dejs.ajax.ts" />
     <Content Include="js\lib\dejs.gallery.js" />
     <Content Include="js\lib\dejs.number.js" />
     <Content Include="js\lib\dejs.string.js" />
@@ -125,7 +126,7 @@
   </ProjectExtensions>
   <Target Name="TypeScriptCompile" BeforeTargets="CoreCompile">
     <Message Text="Compiling TypeScript files" />
-    <Exec Command="&quot;%AppData%\npm\tsc.cmd&quot; @(TypeScriptCompile ->'&quot;%(fullpath)&quot;', ' ') --module amd" />
+    <Exec Command="&quot;%AppData%\npm\tsc.cmd&quot; @(TypeScriptCompile ->'&quot;%(fullpath)&quot;', ' ') --module amd --declaration" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

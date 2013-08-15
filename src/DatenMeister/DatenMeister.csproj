@@ -51,6 +51,7 @@
     <Compile Include="IURIExtent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\ExtentController.cs" />
+    <Compile Include="Web\ServerInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\BurnSystems.WebServer.csproj">

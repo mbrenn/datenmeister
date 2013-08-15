@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurnSystems.WebServer", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatenMeisterWeb", "DatenMeisterWeb\DatenMeisterWeb.csproj", "{C02EFD3E-63FC-4665-92CE-A099573F521B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeJS", "..\dependencies\DeJS\src\DeJS.csproj", "{E2B6E0DD-94ED-4F9A-A661-99553CB33215}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,14 @@ Global
 		{C02EFD3E-63FC-4665-92CE-A099573F521B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C02EFD3E-63FC-4665-92CE-A099573F521B}.Release|x64.ActiveCfg = Release|Any CPU
 		{C02EFD3E-63FC-4665-92CE-A099573F521B}.Release|x86.ActiveCfg = Release|Any CPU
+		{E2B6E0DD-94ED-4F9A-A661-99553CB33215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2B6E0DD-94ED-4F9A-A661-99553CB33215}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2B6E0DD-94ED-4F9A-A661-99553CB33215}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E2B6E0DD-94ED-4F9A-A661-99553CB33215}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E2B6E0DD-94ED-4F9A-A661-99553CB33215}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2B6E0DD-94ED-4F9A-A661-99553CB33215}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2B6E0DD-94ED-4F9A-A661-99553CB33215}.Release|x64.ActiveCfg = Release|Any CPU
+		{E2B6E0DD-94ED-4F9A-A661-99553CB33215}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,11 @@
 ﻿using BurnSystems.Logging;
 using BurnSystems.ObjectActivation;
 using BurnSystems.WebServer;
+using BurnSystems.WebServer.Filters;
+using BurnSystems.WebServer.Modules.MVC;
 using DatenMeister;
 using DatenMeister.DataProvider.CSV;
+using DatenMeister.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +41,10 @@ namespace DatenmeisterServer
 
             using (var server = Server.CreateDefaultServer(activationContainer))
             {
+                activationContainer.Bind<IRequestFilter>().ToConstant(new AddCorsHeaderFilter());
+
+                server.Add(new ControllerDispatcher<ExtentController>(BurnSystems.WebServer.Dispatcher.DispatchFilter.ByUrl("/extent/"), "/extent/"));
+                
                 server.AddPrefix("http://127.0.0.1:8081/");
 
                 server.Start();

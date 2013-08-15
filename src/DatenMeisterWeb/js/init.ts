@@ -1,13 +1,13 @@
 ﻿/// <reference path="lib/jquery.d.ts" />
 /// <reference path="datenmeister.ts" />
-define(["require", "exports", "datenmeister"], function(require, exports, __dm__) {
-    var dm = __dm__;
 
-    $(document).ready(function () {
+import dm = require("datenmeister");
+
+$(document).ready(
+    function () {
         var form = new dm.Forms.ServerConnectionForm($("#server_selection"));
         form.onConnect = function (settings) {
         };
 
         form.bind();
     });
-});

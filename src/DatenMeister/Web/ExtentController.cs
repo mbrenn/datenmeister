@@ -13,7 +13,12 @@ namespace DatenMeister.Web
         [WebMethod]
         public IActionResult GetServerInfo()
         {
-            throw new InvalidOperationException();
+            return this.Json(new ServerInfo()
+            {
+                serverAddress = "http://localhost:8081",
+                serverInfo = "DatenMeister Demoserver",
+                success = true
+            });
         }
 
         [WebMethod]
