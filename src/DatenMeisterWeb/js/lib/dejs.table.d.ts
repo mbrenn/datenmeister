@@ -10,7 +10,7 @@ export declare class Table {
     constructor(domElement: JQuery);
     public addRow(): JQuery;
     public addHeaderRow(): JQuery;
-    public addColumn(content: string, options);
-    public addColumnHtml(content: string, options);
+    public addColumn(content: string);
+    public addColumnHtml(content: string);
     public __createColumn(options);
 }

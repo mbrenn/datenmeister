@@ -1,6 +1,7 @@
 ﻿/// <reference path="lib/jquery.d.ts" />
 /// <reference path="lib/dejs.ajax.d.ts" />
-define(["require", "exports", "lib/dejs.ajax"], function(require, exports, __ajax__) {
+/// <reference path="lib/dejs.table.d.ts" />
+define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(require, exports, __ajax__, __t__) {
     var ServerSettings = (function () {
         function ServerSettings() {
         }
@@ -37,6 +38,7 @@ define(["require", "exports", "lib/dejs.ajax"], function(require, exports, __aja
     exports.ExtentData = ExtentData;
 
     var ajax = __ajax__;
+    var t = __t__;
 
     // Serverconnection form
     // The Server API
@@ -68,6 +70,23 @@ define(["require", "exports", "lib/dejs.ajax"], function(require, exports, __aja
                 }
             });
         };
+
+        ServerAPI.prototype.getExtentInfo = function (success, fail) {
+            ajax.performRequest({
+                url: this.__getUrl() + "extent/GetExtentInfos",
+                prefix: 'loadextentinfos_',
+                fail: function () {
+                    if (fail !== undefined) {
+                        fail();
+                    }
+                },
+                success: function (data) {
+                    if (success !== undefined) {
+                        success(data.extents);
+                    }
+                }
+            });
+        };
         return ServerAPI;
     })();
     exports.ServerAPI = ServerAPI;
@@ -91,7 +110,7 @@ define(["require", "exports", "lib/dejs.ajax"], function(require, exports, __aja
                     var serverAPI = new ServerAPI(settings);
                     serverAPI.getServerInfo(function (info) {
                         if (tthis.onConnect !== undefined) {
-                            tthis.onConnect(settings);
+                            tthis.onConnect(settings, serverAPI);
                         }
                     }, function () {
                     });
@@ -104,4 +123,78 @@ define(["require", "exports", "lib/dejs.ajax"], function(require, exports, __aja
         Forms.ServerConnectionForm = ServerConnectionForm;
     })(exports.Forms || (exports.Forms = {}));
     var Forms = exports.Forms;
+
+    (function (Tables) {
+        var ColumnDefinition = (function () {
+            function ColumnDefinition(title) {
+                this.title = title;
+                this.width = -1;
+            }
+            return ColumnDefinition;
+        })();
+        Tables.ColumnDefinition = ColumnDefinition;
+
+        var DataTable = (function () {
+            function DataTable(domTable) {
+                this.domTable = domTable;
+                this.columns = new Array();
+                this.objects = new Array();
+            }
+            DataTable.prototype.defineColumns = function (columns) {
+                this.columns = columns;
+            };
+
+            DataTable.prototype.addObject = function (object) {
+                this.objects.push(object);
+            };
+
+            // Renders the table for the given objects
+            DataTable.prototype.renderTable = function () {
+                var table = new t.Table(this.domTable);
+                table.addHeaderRow();
+                for (var n = 0; n < this.columns.length; n++) {
+                    table.addColumn(this.columns[n].title);
+                }
+
+                for (var m = 0; m < this.objects.length; m++) {
+                    var object = this.objects[m];
+                    table.addRow();
+
+                    for (var n = 0; n < this.columns.length; n++) {
+                        var value = object[this.columns[n].title];
+                        if (value === undefined || value === null) {
+                            table.addColumnHtml("<i>undefined</i>");
+                        } else {
+                            table.addColumn(value);
+                        }
+                    }
+                }
+            };
+            return DataTable;
+        })();
+        Tables.DataTable = DataTable;
+    })(exports.Tables || (exports.Tables = {}));
+    var Tables = exports.Tables;
+
+    (function (Gui) {
+        // Shows the extents of the server at the given DOM element
+        function showExtents(serverConnection, domElement) {
+            serverConnection.getExtentInfo(function (data) {
+                var table = new Tables.DataTable(domElement);
+                table.defineColumns([
+                    new Tables.ColumnDefinition("uri"),
+                    new Tables.ColumnDefinition("type")
+                ]);
+
+                for (var n = 0; n < data.length; n++) {
+                    table.addObject(data[n]);
+                }
+
+                table.renderTable();
+            }, function () {
+            });
+        }
+        Gui.showExtents = showExtents;
+    })(exports.Gui || (exports.Gui = {}));
+    var Gui = exports.Gui;
 });

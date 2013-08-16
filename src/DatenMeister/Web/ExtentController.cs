@@ -10,6 +10,13 @@ namespace DatenMeister.Web
 {
     public class ExtentController : Controller
     {
+        [Inject]
+        public DatenMeisterPool Pool
+        {
+            get;
+            set;
+        }
+
         [WebMethod]
         public IActionResult GetServerInfo()
         {
@@ -24,12 +31,29 @@ namespace DatenMeister.Web
         [WebMethod]
         public IActionResult GetExtentInfos()
         {
-            throw new InvalidOperationException();
+            var extents = this.Pool.Extents.Select(x =>
+                 new
+                 {
+                     uri = x.ContextURI(),
+                     type = x.GetType().FullName
+                 });
+
+            return this.Json(new
+            {
+                success = true,
+                extents = extents
+            });
         }
 
         [WebMethod]
         public IActionResult GetObjectsInExtent(string url)
         {
+            var extent = this.Pool.Extents.Where(x => x.ContextURI() == url).FirstOrDefault();
+            if (extent == null)
+            {
+
+            }
+
             throw new InvalidOperationException();
         }
     }
