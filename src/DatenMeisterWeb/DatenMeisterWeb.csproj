@@ -61,7 +61,7 @@
     <Content Include="css\bootstrap-responsive.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
-    <Content Include="css\datenmeister.css" />
+    <LessCompile Include="css\datenmeister.less" />
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="index.html" />
@@ -127,6 +127,10 @@
   <Target Name="TypeScriptCompile" BeforeTargets="CoreCompile">
     <Message Text="Compiling TypeScript files" />
     <Exec Command="&quot;%AppData%\npm\tsc.cmd&quot; @(TypeScriptCompile ->'&quot;%(fullpath)&quot;', ' ') --module amd --declaration" />
+  </Target>
+  <Target Name="LessCompile" BeforeTargets="CoreCompile">
+    <Message Text="Compiling .less files" />
+    <Exec Command="&quot;%AppData%\npm\lessc.cmd&quot; &quot;%(LessCompile.Identity)&quot; &quot;%(LessCompile.RelativeDir)%(LessCompile.Filename).css&quot; --yui-compress" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
