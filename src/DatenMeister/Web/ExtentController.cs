@@ -1,5 +1,6 @@
 ﻿using BurnSystems.ObjectActivation;
 using BurnSystems.WebServer.Modules.MVC;
+using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,15 +47,35 @@ namespace DatenMeister.Web
         }
 
         [WebMethod]
-        public IActionResult GetObjectsInExtent(string url)
+        public IActionResult GetObjectsInExtent(string uri)
         {
-            var extent = this.Pool.Extents.Where(x => x.ContextURI() == url).FirstOrDefault();
+            var extent = this.Pool.Extents.Where(x => x.ContextURI() == uri).FirstOrDefault();
             if (extent == null)
             {
-
+                throw new MVCProcessException("uri_not_found", "URI has not been found");
             }
 
-            throw new InvalidOperationException();
+            var data = new ExtentData();
+            
+            var elements = extent.Elements();
+            var titles = elements.GetColumnTitles();
+            data.columns.AddRange(titles.Select(x => new ExtentColumnInfo()
+            {
+                name = x
+            }));
+
+            foreach (var element in elements)
+            {
+                var dict = new Dictionary<string, string>();
+                foreach (var pair in element.GetAll())
+                {
+                    dict[pair.First] = pair.Second.ToString();
+                }
+
+                data.objects.Add(dict);
+            }
+
+            return this.Json(data);
         }
     }
 }

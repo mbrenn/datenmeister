@@ -7,12 +7,29 @@ define(["require", "exports"], function(require, exports) {
     })();
     exports.CellOptions = CellOptions;
 
+    var TableOptions = (function () {
+        function TableOptions() {
+        }
+        return TableOptions;
+    })();
+    exports.TableOptions = TableOptions;
+
     var Table = (function () {
-        function Table(domElement) {
+        function Table(domElement, options) {
             this.__domElement = domElement;
             this.__currentTable = $("<table></table>");
             this.__domElement.append(this.__currentTable);
+
+            if (options !== undefined) {
+                if (options.cssClass !== undefined && options.cssClass !== null) {
+                    this.__currentTable.addClass(options.cssClass);
+                }
+            }
         }
+        Table.prototype.getTableDom = function () {
+            return this.__currentTable;
+        };
+
         Table.prototype.addRow = function () {
             this.__isHeaderRow = false;
 

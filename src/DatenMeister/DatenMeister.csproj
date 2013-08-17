@@ -49,8 +49,11 @@
     <Compile Include="DatenMeisterPool.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IURIExtent.cs" />
+    <Compile Include="Logic\ObjectHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\ExtentColumnInfo.cs" />
     <Compile Include="Web\ExtentController.cs" />
+    <Compile Include="Web\ExtentData.cs" />
     <Compile Include="Web\ServerInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,15 +15,20 @@ export declare class ExtentInfo {
 export declare class ObjectData {
     public values: any;
 }
+export declare class ExtentColumnInfo {
+    public name: string;
+}
 export declare class ExtentData {
-    public dataObjects: ObjectData;
+    public columns: ExtentColumnInfo[];
+    public objects: any[];
 }
 export declare class ServerAPI {
     public connectionInfo: ServerSettings;
     constructor(connection: ServerSettings);
     public __getUrl(): string;
-    public getServerInfo(success: (info: ServerInfo) => void, fail: () => void): void;
-    public getExtentInfo(success: (info: ExtentInfo[]) => void, fail: () => void): void;
+    public getServerInfo(success: (info: ServerInfo) => void, fail?: () => void): void;
+    public getExtentInfo(success: (info: ExtentInfo[]) => void, fail?: () => void): void;
+    public getObjectsInExtent(uri: string, success: (extentData: ExtentData) => void, fail?: () => void): void;
 }
 export declare module Forms {
     class ServerConnectionForm {
@@ -43,12 +48,18 @@ export declare module Tables {
         public domTable: JQuery;
         public columns: ColumnDefinition[];
         public objects: any[];
+        public itemClickedEvent: (object: any) => void;
+        public isReadOnly: boolean;
         constructor(domTable: JQuery);
         public defineColumns(columns: ColumnDefinition[]): void;
         public addObject(object: any): void;
+        public setItemClickedEvent(clickedEvent: (object: any) => void): void;
+        public setAsReadOnly(): void;
         public renderTable(): void;
     }
 }
 export declare module Gui {
     function showExtents(serverConnection: ServerAPI, domElement: JQuery): void;
+    function showObjectsByUri(serverConnection: ServerAPI, uri: string, domElement: JQuery): void;
+    function showObjects(data: ExtentData, domElement: JQuery): void;
 }
