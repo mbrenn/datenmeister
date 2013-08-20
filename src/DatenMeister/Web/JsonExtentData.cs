@@ -9,19 +9,19 @@ namespace DatenMeister.Web
     /// <summary>
     /// Stores the extent data, which will be sent as json 
     /// </summary>
-    public class ExtentData
+    public class JsonExtentData
     {
-        public ExtentData()
+        public JsonExtentData()
         {
-            this.columns = new List<ExtentColumnInfo>();
-            this.objects = new List<Dictionary<string, string>>();
+            this.columns = new List<JsonExtentColumnInfo>();
+            this.objects = new List<JsonExtentObject>();
             this.success = true;
         }
 
         /// <summary>
         /// Gets or sets a list of column
         /// </summary>
-        public List<ExtentColumnInfo> columns
+        public List<JsonExtentColumnInfo> columns
         {
             get;
             set;
@@ -30,7 +30,7 @@ namespace DatenMeister.Web
         /// <summary>
         /// Gets or sets a list of objects that shall be sent to browser
         /// </summary>
-        public List<Dictionary<string, string>> objects
+        public List<JsonExtentObject> objects
         {
             get;
             set;

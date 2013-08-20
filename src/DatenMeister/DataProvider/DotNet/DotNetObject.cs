@@ -8,6 +8,11 @@ namespace DatenMeister.DataProvider.DotNet
 {
     class DotNetObject : IObject
     {
+        /// <summary>
+        /// Stores the id
+        /// </summary>
+        private Guid id = Guid.NewGuid();
+
         private object value;
 
         public DotNetObject(object value)
@@ -20,7 +25,7 @@ namespace DatenMeister.DataProvider.DotNet
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BurnSystems.Collections.Pair<string, object>> GetAll()
+        public IEnumerable<ObjectPropertyPair> GetAll()
         {
             throw new NotImplementedException();
         }
@@ -38,6 +43,14 @@ namespace DatenMeister.DataProvider.DotNet
         public void Unset(string propertyName)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets the id of the dotnet object
+        /// </summary>
+        public string Id
+        {
+            get { return this.id.ToString(); }
         }
     }
 }

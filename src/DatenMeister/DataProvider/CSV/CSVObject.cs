@@ -9,11 +9,24 @@ namespace DatenMeister.DataProvider.CSV
 {
     public class CSVObject : IObject
     {
+        /// <summary>
+        /// Stores the extent, which created the object
+        /// </summary>
         private CSVExtent extent;
+
+        /// <summary>
+        /// Stores the value of the item
+        /// </summary>
         private IList<string> values;
 
-        public CSVObject(CSVExtent extent, IList<string> values)
+        /// <summary>
+        /// Stores the line number of the CSV object
+        /// </summary>
+        private long line;
+
+        public CSVObject(long line, CSVExtent extent, IList<string> values)
         {
+            this.line = line;
             this.extent = extent;
             this.values = values;
         }
@@ -29,13 +42,13 @@ namespace DatenMeister.DataProvider.CSV
                 
         }
 
-        public IEnumerable<Pair<string, object>> GetAll()
+        public IEnumerable<ObjectPropertyPair> GetAll()
         {
             if (this.extent.Settings.HasHeader)
             {
                 foreach (var value in this.extent.HeaderNames)
                 {
-                    yield return new Pair<string, object>(
+                    yield return new ObjectPropertyPair(
                         value, 
                         this.Get(value));
                 }
@@ -44,7 +57,7 @@ namespace DatenMeister.DataProvider.CSV
             {
                 for (var n = 0; n < this.values.Count; n++)
                 {
-                    yield return new Pair<string, object>(
+                    yield return new ObjectPropertyPair(
                         "Column " + n.ToString(), 
                         this.values[n]);
                 }
@@ -100,6 +113,14 @@ namespace DatenMeister.DataProvider.CSV
             }
 
             return number;
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get { return this.line.ToString(); }
         }
     }
 }

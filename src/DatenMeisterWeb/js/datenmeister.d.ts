@@ -12,15 +12,21 @@ export declare class ExtentInfo {
     public uri: string;
     public type: string;
 }
-export declare class ObjectData {
-    public values: any;
-}
-export declare class ExtentColumnInfo {
+export declare class JsonExtentFieldInfo {
     public name: string;
+    public title: string;
+    public width: number;
+    constructor(name?: string, title?: string);
 }
-export declare class ExtentData {
-    public columns: ExtentColumnInfo[];
-    public objects: any[];
+export declare class JsonExtentObject {
+    public id: string;
+    public values: any;
+    public extentUri: string;
+    public getUri(): string;
+}
+export declare class JsonExtentData {
+    public columns: JsonExtentFieldInfo[];
+    public objects: JsonExtentObject[];
 }
 export declare class ServerAPI {
     public connectionInfo: ServerSettings;
@@ -28,38 +34,36 @@ export declare class ServerAPI {
     public __getUrl(): string;
     public getServerInfo(success: (info: ServerInfo) => void, fail?: () => void): void;
     public getExtentInfo(success: (info: ExtentInfo[]) => void, fail?: () => void): void;
-    public getObjectsInExtent(uri: string, success: (extentData: ExtentData) => void, fail?: () => void): void;
+    public getObjectsInExtent(uri: string, success: (extentData: JsonExtentData) => void, fail?: () => void): void;
+    public deleteObject(uri: string, success: () => void, fail?: () => void): void;
 }
 export declare module Forms {
     class ServerConnectionForm {
-        public onConnect: (settings: ServerSettings, api: ServerAPI) => any;
+        public onConnect: (settings: ServerSettings) => any;
         public formDom: JQuery;
         constructor(formDom);
         public bind(): void;
     }
 }
-export declare module Tables {
-    class ColumnDefinition {
-        public title: string;
-        public width: number;
-        constructor(title: string);
-    }
+export declare module Gui {
+    function showExtents(domElement: JQuery): void;
+    function showObjectsByUri(uri: string, domElement: JQuery): void;
+    function showObjects(data: JsonExtentData, domElement: JQuery): void;
     class DataTable {
         public domTable: JQuery;
-        public columns: ColumnDefinition[];
-        public objects: any[];
-        public itemClickedEvent: (object: any) => void;
-        public isReadOnly: boolean;
+        public columns: JsonExtentFieldInfo[];
+        public objects: JsonExtentObject[];
+        public itemClickedEvent: (object: JsonExtentObject) => void;
+        public allowEdit: boolean;
+        public allowDelete: boolean;
+        public allowNew: boolean;
         constructor(domTable: JQuery);
-        public defineColumns(columns: ColumnDefinition[]): void;
-        public addObject(object: any): void;
-        public setItemClickedEvent(clickedEvent: (object: any) => void): void;
-        public setAsReadOnly(): void;
+        public defineColumns(columns: JsonExtentFieldInfo[]): void;
+        public addObject(object: JsonExtentObject): void;
         public renderTable(): void;
+        public createReadField(object: JsonExtentObject, field: JsonExtentFieldInfo): JQuery;
+        public createWriteField(object: JsonExtentObject, field: JsonExtentFieldInfo): JQuery;
+        public setItemClickedEvent(clickedEvent: (object: JsonExtentObject) => void): void;
+        public triggerDelete(object: JsonExtentObject): void;
     }
-}
-export declare module Gui {
-    function showExtents(serverConnection: ServerAPI, domElement: JQuery): void;
-    function showObjectsByUri(serverConnection: ServerAPI, uri: string, domElement: JQuery): void;
-    function showObjects(data: ExtentData, domElement: JQuery): void;
 }

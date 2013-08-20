@@ -18,7 +18,7 @@ namespace DatenMeister.Logic
         /// <returns></returns>
         public static IEnumerable<string> GetColumnTitles(this IEnumerable<IObject> objects)
         {
-            var titles = objects.SelectMany(x => x.GetAll().Select(y => y.First)).Distinct();
+            var titles = objects.SelectMany(x => x.GetAll().Select(y => y.PropertyName)).Distinct();
             return titles;
         }
     }

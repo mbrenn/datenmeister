@@ -62,6 +62,13 @@ define(["require", "exports"], function(require, exports) {
             return currentColumn;
         };
 
+        Table.prototype.addColumnJQuery = function (content, options) {
+            var currentColumn = this.__createColumn(options);
+            currentColumn.append(content);
+
+            return currentColumn;
+        };
+
         Table.prototype.__createColumn = function (options) {
             if (this.__currentRow === undefined) {
                 throw ("Row has not been started");

@@ -9,7 +9,7 @@ namespace DatenMeister.Web
     /// <summary>
     /// Stores the information about the column
     /// </summary>
-    public class ExtentColumnInfo
+    public class JsonExtentColumnInfo
     {
         /// <summary>
         /// Gets or sets the name of the column

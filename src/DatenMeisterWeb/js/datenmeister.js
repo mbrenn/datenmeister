@@ -23,34 +23,47 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
     })();
     exports.ExtentInfo = ExtentInfo;
 
-    var ObjectData = (function () {
-        function ObjectData() {
+    // Defines the information for a column that has been received from server
+    var JsonExtentFieldInfo = (function () {
+        function JsonExtentFieldInfo(name, title) {
+            if (name !== undefined) {
+                this.name = name;
+            }
+
+            if (title === undefined) {
+                this.title = this.name;
+            }
         }
-        return ObjectData;
+        return JsonExtentFieldInfo;
     })();
-    exports.ObjectData = ObjectData;
+    exports.JsonExtentFieldInfo = JsonExtentFieldInfo;
 
     // Defines the information for a column that has been received from server
-    var ExtentColumnInfo = (function () {
-        function ExtentColumnInfo() {
+    var JsonExtentObject = (function () {
+        function JsonExtentObject() {
         }
-        return ExtentColumnInfo;
+        JsonExtentObject.prototype.getUri = function () {
+            return this.extentUri + "#" + this.id;
+        };
+        return JsonExtentObject;
     })();
-    exports.ExtentColumnInfo = ExtentColumnInfo;
+    exports.JsonExtentObject = JsonExtentObject;
 
     // Result from GetObjectsInExtent
-    var ExtentData = (function () {
-        function ExtentData() {
+    var JsonExtentData = (function () {
+        function JsonExtentData() {
         }
-        return ExtentData;
+        return JsonExtentData;
     })();
-    exports.ExtentData = ExtentData;
+    exports.JsonExtentData = JsonExtentData;
 
     var ajax = __ajax__;
     var t = __t__;
 
     // Serverconnection form
     // The Server API
+    var singletonAPI;
+
     var ServerAPI = (function () {
         function ServerAPI(connection) {
             this.connectionInfo = connection;
@@ -58,6 +71,8 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
             if (this.connectionInfo.serverAddress[connection.serverAddress.length - 1] != '/') {
                 this.connectionInfo.serverAddress += '/';
             }
+
+            singletonAPI = this;
         }
         ServerAPI.prototype.__getUrl = function () {
             return this.connectionInfo.serverAddress;
@@ -103,7 +118,33 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                 prefix: 'loadobjects_',
                 success: function (data) {
                     if (success !== undefined) {
+                        for (var n = 0; n < data.objects.length; n++) {
+                            var currentObject = data.objects[n];
+                            var result = new JsonExtentObject();
+                            result.id = currentObject.id;
+                            result.values = currentObject.values;
+                            data.objects[n] = result;
+                            data.objects[n].extentUri = uri;
+                        }
+
                         success(data);
+                    }
+                },
+                fail: function () {
+                    if (fail !== undefined) {
+                        fail();
+                    }
+                }
+            });
+        };
+
+        ServerAPI.prototype.deleteObject = function (uri, success, fail) {
+            ajax.performRequest({
+                url: this.__getUrl() + "extent/DeleteObject?uri=" + encodeURIComponent(uri),
+                prefix: 'deleteobject_',
+                success: function () {
+                    if (success !== undefined) {
+                        success();
                     }
                 },
                 fail: function () {
@@ -137,7 +178,7 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                     var serverAPI = new ServerAPI(settings);
                     serverAPI.getServerInfo(function (info) {
                         if (tthis.onConnect !== undefined) {
-                            tthis.onConnect(settings, serverAPI);
+                            tthis.onConnect(settings);
                         }
                     }, function () {
                     });
@@ -151,18 +192,75 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
     })(exports.Forms || (exports.Forms = {}));
     var Forms = exports.Forms;
 
-    (function (Tables) {
-        var ColumnDefinition = (function () {
-            function ColumnDefinition(title) {
-                this.title = title;
-                this.width = -1;
+    // Creates dynamic parts of the gui
+    (function (Gui) {
+        // Shows the extents of the server at the given DOM element
+        function showExtents(domElement) {
+            singletonAPI.getExtentInfo(function (data) {
+                var table = new DataTable(domElement);
+                table.defineColumns([
+                    new JsonExtentFieldInfo("uri"),
+                    new JsonExtentFieldInfo("type")
+                ]);
+
+                for (var n = 0; n < data.length; n++) {
+                    var obj = new JsonExtentObject();
+                    obj.id = data[n].uri;
+                    obj.values = data[n];
+                    table.addObject(obj);
+                }
+
+                table.setItemClickedEvent(function (object) {
+                    var uri = object.values.uri;
+                    showObjectsByUri(uri, $("#object_list_table"));
+                });
+
+                table.renderTable();
+            }, function () {
+            });
+        }
+        Gui.showExtents = showExtents;
+
+        function showObjectsByUri(uri, domElement) {
+            singletonAPI.getObjectsInExtent(uri, function (data) {
+                showObjects(data, domElement);
+            });
+        }
+        Gui.showObjectsByUri = showObjectsByUri;
+
+        // Shows the object of an extent in a table, created into domElement
+        function showObjects(data, domElement) {
+            var table = new DataTable(domElement);
+
+            var columns = new Array();
+            for (var n = 0; n < data.columns.length; n++) {
+                var column = data.columns[n];
+                var info = new JsonExtentFieldInfo(column.name);
+                columns.push(info);
             }
-            return ColumnDefinition;
-        })();
-        Tables.ColumnDefinition = ColumnDefinition;
+
+            table.defineColumns(columns);
+            for (var n = 0; n < data.objects.length; n++) {
+                var func = function (obj) {
+                    table.addObject(obj);
+                };
+
+                func(data.objects[n]);
+            }
+
+            table.setItemClickedEvent(function (data) {
+            });
+
+            domElement.empty();
+            table.renderTable();
+        }
+        Gui.showObjects = showObjects;
 
         var DataTable = (function () {
             function DataTable(domTable) {
+                this.allowEdit = true;
+                this.allowDelete = true;
+                this.allowNew = true;
                 this.domTable = domTable;
                 this.columns = new Array();
                 this.objects = new Array();
@@ -175,14 +273,6 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                 this.objects.push(object);
             };
 
-            DataTable.prototype.setItemClickedEvent = function (clickedEvent) {
-                this.itemClickedEvent = clickedEvent;
-            };
-
-            DataTable.prototype.setAsReadOnly = function () {
-                this.isReadOnly = true;
-            };
-
             // Renders the table for the given objects
             DataTable.prototype.renderTable = function () {
                 var tthis = this;
@@ -191,24 +281,33 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                 tableOptions.cssClass = "table";
                 var table = new t.Table(this.domTable, tableOptions);
 
+                /*
+                * Creates headline
+                */
                 table.addHeaderRow();
                 for (var n = 0; n < this.columns.length; n++) {
                     table.addColumn(this.columns[n].title);
+                }
+
+                if (this.allowDelete) {
+                    table.addColumnHtml("");
+                }
+
+                if (this.allowEdit) {
+                    table.addColumnHtml("");
                 }
 
                 for (var m = 0; m < this.objects.length; m++) {
                     var object = this.objects[m];
 
                     var func = function (object) {
+                        var values = object.values;
                         var currentRow = table.addRow();
 
+                        var columnDoms = new Array();
+
                         for (var n = 0; n < tthis.columns.length; n++) {
-                            var value = object[tthis.columns[n].title];
-                            if (value === undefined || value === null) {
-                                table.addColumnHtml("<i>undefined</i>");
-                            } else {
-                                table.addColumn(value);
-                            }
+                            columnDoms.push(table.addColumnJQuery(tthis.createReadField(object, tthis.columns[n])));
                         }
 
                         if (tthis.itemClickedEvent !== undefined) {
@@ -216,69 +315,88 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                                 tthis.itemClickedEvent(object);
                             });
                         }
+
+                        if (tthis.allowDelete) {
+                            var delColumn = table.addColumnHtml("<em>DEL</em>");
+                            var clicked = false;
+                            delColumn.click(function () {
+                                if (!clicked) {
+                                    delColumn.html("<em>Sure?</em>");
+                                    clicked = true;
+                                } else {
+                                    singletonAPI.deleteObject(object.getUri(), function () {
+                                        alert('DELETE SUCCEEDED');
+                                    });
+                                }
+                            });
+                        }
+
+                        if (tthis.allowEdit) {
+                            var editColumn = table.addColumnHtml("<em>EDIT</em>");
+                            var currentlyInEdit = false;
+                            editColumn.click(function () {
+                                if (!currentlyInEdit) {
+                                    for (var n = 0; n < columnDoms.length; n++) {
+                                        var dom = columnDoms[n];
+                                        var column = tthis.columns[n];
+                                        dom.empty();
+
+                                        dom.append(tthis.createWriteField(object, column));
+                                    }
+
+                                    currentlyInEdit = true;
+                                } else {
+                                    for (var n = 0; n < columnDoms.length; n++) {
+                                        var dom = columnDoms[n];
+                                        var column = tthis.columns[n];
+                                        dom.empty();
+
+                                        dom.append(tthis.createReadField(object, column));
+                                    }
+
+                                    currentlyInEdit = false;
+                                }
+                            });
+                        }
                     };
 
                     func(object);
                 }
             };
-            return DataTable;
-        })();
-        Tables.DataTable = DataTable;
-    })(exports.Tables || (exports.Tables = {}));
-    var Tables = exports.Tables;
 
-    // Creates dynamic parts of the gui
-    (function (Gui) {
-        // Shows the extents of the server at the given DOM element
-        function showExtents(serverConnection, domElement) {
-            serverConnection.getExtentInfo(function (data) {
-                var table = new Tables.DataTable(domElement);
-                table.defineColumns([
-                    new Tables.ColumnDefinition("uri"),
-                    new Tables.ColumnDefinition("type")
-                ]);
-
-                for (var n = 0; n < data.length; n++) {
-                    table.addObject(data[n]);
+            DataTable.prototype.createReadField = function (object, field) {
+                var span = $("<span />");
+                var value = object.values[field.name];
+                if (value === undefined || value === null) {
+                    span.html("<em>undefined</em>");
+                } else {
+                    span.text(value);
                 }
 
-                table.setItemClickedEvent(function (object) {
-                    var uri = object.uri;
-                    showObjectsByUri(serverConnection, uri, $("#object_list_table"));
-                });
+                return span;
+            };
 
-                table.renderTable();
-            }, function () {
-            });
-        }
-        Gui.showExtents = showExtents;
+            DataTable.prototype.createWriteField = function (object, field) {
+                var value = object.values[field.name];
+                var inputField = $("<input type='text' />");
+                if (value !== undefined && value !== null) {
+                    inputField.val(value);
+                }
 
-        function showObjectsByUri(serverConnection, uri, domElement) {
-            serverConnection.getObjectsInExtent(uri, function (data) {
-                showObjects(data, domElement);
-            });
-        }
-        Gui.showObjectsByUri = showObjectsByUri;
+                return inputField;
+            };
 
-        function showObjects(data, domElement) {
-            var table = new Tables.DataTable(domElement);
+            DataTable.prototype.setItemClickedEvent = function (clickedEvent) {
+                this.itemClickedEvent = clickedEvent;
+            };
 
-            var columns = new Array();
-            for (var n = 0; n < data.columns.length; n++) {
-                var column = data.columns[n];
-                var info = new Tables.ColumnDefinition(column.name);
-                columns.push(info);
-            }
-
-            table.defineColumns(columns);
-
-            for (var n = 0; n < data.objects.length; n++) {
-                table.addObject(data.objects[n]);
-            }
-
-            table.renderTable();
-        }
-        Gui.showObjects = showObjects;
+            // Called, when user wants to delete one object and has clicked on the delete icon.
+            // This method executes the server request.
+            DataTable.prototype.triggerDelete = function (object) {
+            };
+            return DataTable;
+        })();
+        Gui.DataTable = DataTable;
     })(exports.Gui || (exports.Gui = {}));
     var Gui = exports.Gui;
 });

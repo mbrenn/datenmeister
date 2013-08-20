@@ -1,4 +1,5 @@
-﻿using BurnSystems.ObjectActivation;
+﻿using BurnSystems.Logging;
+using BurnSystems.ObjectActivation;
 using BurnSystems.WebServer.Modules.MVC;
 using DatenMeister.Logic;
 using System;
@@ -11,6 +12,11 @@ namespace DatenMeister.Web
 {
     public class ExtentController : Controller
     {
+        /// <summary>
+        /// Stores the logger
+        /// </summary>
+        private static ILog logger = new ClassLogger(typeof(ExtentController));
+
         [Inject]
         public DatenMeisterPool Pool
         {
@@ -55,11 +61,11 @@ namespace DatenMeister.Web
                 throw new MVCProcessException("uri_not_found", "URI has not been found");
             }
 
-            var data = new ExtentData();
+            var data = new JsonExtentData();
             
             var elements = extent.Elements();
             var titles = elements.GetColumnTitles();
-            data.columns.AddRange(titles.Select(x => new ExtentColumnInfo()
+            data.columns.AddRange(titles.Select(x => new JsonExtentColumnInfo()
             {
                 name = x
             }));
@@ -69,13 +75,42 @@ namespace DatenMeister.Web
                 var dict = new Dictionary<string, string>();
                 foreach (var pair in element.GetAll())
                 {
-                    dict[pair.First] = pair.Second.ToString();
+                    dict[pair.PropertyName] = pair.Value.ToString();
                 }
 
-                data.objects.Add(dict);
+                data.objects.Add(new JsonExtentObject(element.Id, dict));
             }
 
             return this.Json(data);
+        }
+
+        /// <summary>
+        /// Deletes an object from extent
+        /// </summary>
+        /// <param name="uri">Uri to be deleted</param>
+        /// <returns>Action result </returns>
+        [WebMethod]
+        public IActionResult DeleteObject(string uri)
+        {
+            var uriObject = new Uri(uri);
+
+            var extentUri = uriObject.AbsolutePath;
+            var objectId = uriObject.Fragment;
+            var extent = this.Pool.Extents.Where(x => x.ContextURI() == extentUri).FirstOrDefault();
+            if (extent == null)
+            {
+                throw new MVCProcessException("uri_not_found", "URI has not been found");
+            }
+
+            var element = extent.Elements().Where(x => x.Id == objectId).FirstOrDefault();
+            if (element == null)
+            {
+                throw new MVCProcessException("object_not_found", "Object has not been found");
+            }
+
+            logger.Message("Item shall be deleted: " + uri);
+
+            return this.SuccessJson();
         }
     }
 }

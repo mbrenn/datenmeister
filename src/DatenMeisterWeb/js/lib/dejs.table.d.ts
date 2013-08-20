@@ -16,5 +16,6 @@ export declare class Table {
     public addHeaderRow(): JQuery;
     public addColumn(content: string);
     public addColumnHtml(content: string);
+    public addColumnJQuery(content: JQuery, options?: CellOptions);
     public __createColumn(options);
 }

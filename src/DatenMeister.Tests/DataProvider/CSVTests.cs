@@ -37,13 +37,13 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(elements[0].IsSet("Column 5"), Is.False);
             Assert.That(elements[0].IsSet("Unknown"), Is.False);
 
-            var column1 = elements[0].GetAll().Where(x => x.First == "Column 0").FirstOrDefault();
+            var column1 = elements[0].GetAll().Where(x => x.PropertyName == "Column 0").FirstOrDefault();
             Assert.That(column1 != null);
-            Assert.That(column1.Second.ToString() == "1");
+            Assert.That(column1.Value.ToString() == "1");
 
-            var column2 = elements[3].GetAll().Where(x => x.First == "Column 0").FirstOrDefault();
+            var column2 = elements[3].GetAll().Where(x => x.PropertyName == "Column 0").FirstOrDefault();
             Assert.That(column2 != null);
-            Assert.That(column2.Second.ToString() == "cat");
+            Assert.That(column2.Value.ToString() == "cat");
         }
 
         [Test]
@@ -84,13 +84,13 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(elements[0].IsSet("Title3"), Is.True);
             Assert.That(elements[0].IsSet("Title4"), Is.False);
 
-            var column1 = elements[0].GetAll().Where(x => x.First == "Title1").FirstOrDefault();
+            var column1 = elements[0].GetAll().Where(x => x.PropertyName == "Title1").FirstOrDefault();
             Assert.That(column1 != null);
-            Assert.That(column1.Second.ToString() == "1");
+            Assert.That(column1.Value.ToString() == "1");
 
-            var column2 = elements[3].GetAll().Where(x => x.First == "Title3").FirstOrDefault();
+            var column2 = elements[3].GetAll().Where(x => x.PropertyName == "Title3").FirstOrDefault();
             Assert.That(column2 != null);
-            Assert.That(column2.Second.ToString() == "rat");
+            Assert.That(column2.Value.ToString() == "rat");
         }
 
         [Test]
