@@ -1,5 +1,5 @@
 dependencies/BurnSystems=https://mbrenn@bitbucket.org/mbrenn/burnsystems/
 dependencies/BurnSystems.WebServer=https://mbrenn@bitbucket.org/mbrenn/burnsystems.webserver/
 dependencies/DeJS=https://mbrenn@bitbucket.org/mbrenn/dejs
-dependencies/Bootstrap=https://mbrenn@bitbucket.org/mbrenn/bootstrap.compiled
 dependencies/DefinitelyTyped=[git]https://github.com/borisyankov/DefinitelyTyped.git
+dependencies/BootstrapGit=[git]https://github.com/twbs/bootstrap.git
