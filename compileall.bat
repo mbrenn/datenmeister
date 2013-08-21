@@ -8,6 +8,7 @@ copy dependencies\Bootstrap\js\*.js src\DatenMeisterWeb\js\lib\*.js
 copy dependencies\Bootstrap\css\*.css src\DatenMeisterWeb\css\*.css
 copy dependencies\Bootstrap\img\*.* src\DatenMeisterWeb\img\*.*
 copy dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\Resources\Require\*.js src\DatenMeisterWeb\js\lib\*.js
+copy dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\Resources\Require\*.ts src\DatenMeisterWeb\js\lib\*.ts
 copy dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\Resources\JQuery\*.js src\DatenMeisterWeb\js\lib\*.js
 
 cd src
