@@ -1,4 +1,5 @@
 ﻿/// <reference path="lib/jquery.d.ts" />
+/// <reference path="lib/require.d.ts" />
 /// <reference path="datenmeister.ts" />
 define(["require", "exports", "datenmeister"], function(require, exports, __dm__) {
     var dm = __dm__;

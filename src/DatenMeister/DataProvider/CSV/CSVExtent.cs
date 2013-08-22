@@ -46,6 +46,14 @@ namespace DatenMeister.DataProvider.CSV
             return this.Objects;
         }
 
+        public void RemoveObject(CSVObject element)
+        {
+            lock (this.Objects)
+            {
+                this.Objects.Remove(element);
+            }
+        }
+
         public void StoreChanges()
         {
             throw new NotImplementedException();

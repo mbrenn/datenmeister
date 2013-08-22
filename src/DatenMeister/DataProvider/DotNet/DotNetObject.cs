@@ -45,6 +45,11 @@ namespace DatenMeister.DataProvider.DotNet
             throw new NotImplementedException();
         }
 
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Gets the id of the dotnet object
         /// </summary>

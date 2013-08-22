@@ -92,11 +92,46 @@ namespace DatenMeister.Web
         [WebMethod]
         public IActionResult DeleteObject(string uri)
         {
-            var uriObject = new Uri(uri);
+            IURIExtent extent;
+            var element = GetElementByUri(uri, out extent);
 
-            var extentUri = uriObject.AbsolutePath;
-            var objectId = uriObject.Fragment;
-            var extent = this.Pool.Extents.Where(x => x.ContextURI() == extentUri).FirstOrDefault();
+            logger.Message("Item shall be deleted: " + element.Id);
+            element.Delete();
+
+            return this.SuccessJson();
+        }
+
+
+        [WebMethod]
+        public IActionResult EditObject(string uri, [PostModel] Dictionary<string, string> values)
+        {
+            IURIExtent extent;
+            var element = this.GetElementByUri(uri, out extent);
+            foreach (var pair in values)
+            {
+                element.Set(pair.Key, pair.Value);
+            }
+
+            return this.SuccessJson();
+        }
+
+        /// <summary>
+        /// Gets an element by the uri of the element
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="extent"></param>
+        /// <returns></returns>
+        private IObject GetElementByUri(string uri, out IURIExtent extent)
+        {
+            var positionHash = uri.IndexOf('#');
+            if (positionHash == -1)
+            {
+                throw new MVCProcessException("invalid_url", "Hash ('#') is not given");
+            }
+
+            var extentUri = uri.Substring(0, positionHash);
+            var objectId = uri.Substring(positionHash + 1); ;
+            extent = this.Pool.Extents.Where(x => x.ContextURI() == extentUri).FirstOrDefault();
             if (extent == null)
             {
                 throw new MVCProcessException("uri_not_found", "URI has not been found");
@@ -108,9 +143,7 @@ namespace DatenMeister.Web
                 throw new MVCProcessException("object_not_found", "Object has not been found");
             }
 
-            logger.Message("Item shall be deleted: " + uri);
-
-            return this.SuccessJson();
+            return element;
         }
     }
 }

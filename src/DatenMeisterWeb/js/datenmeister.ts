@@ -146,6 +146,7 @@ export class ServerAPI {
         ajax.performRequest({
             url: this.__getUrl() + "extent/DeleteObject?uri=" + encodeURIComponent(uri),
             prefix: 'deleteobject_',
+            method: 'post',
             success: function () {
                 if (success !== undefined)
                 {
@@ -157,7 +158,26 @@ export class ServerAPI {
                     fail();
                 }
             }
-        });
+        });       
+    }
+
+    editObject(uri: string, data: any, success: () => void, fail?: () => void) {
+        ajax.performRequest({
+            url: this.__getUrl() + "extent/EditObject?uri=" + encodeURIComponent(uri),
+            prefix: 'editobject_',
+            method: 'post',
+            data: data,
+            success: function () {
+                if (success !== undefined) {
+                    success();
+                }
+            },
+            fail: function () {
+                if (fail !== undefined) {
+                    fail();
+                }
+            }
+        });   
     }
 }
 
@@ -209,6 +229,8 @@ export module Gui {
         singletonAPI.getExtentInfo(
             function (data) {
                 var table = new DataTable(domElement);
+                table.allowDelete = false;
+                table.allowEdit = false;
                 table.defineColumns(
                     [
                         new JsonExtentFieldInfo("uri"),
@@ -359,13 +381,13 @@ export module Gui {
                         delColumn.click(function () {
                             if (!clicked)
                             {
-                                delColumn.html("<em>Sure?</em>");
+                                delColumn.html("<em>SURE?</em>");
                                 clicked = true;
                             }
                             else
                             {
                                 singletonAPI.deleteObject(object.getUri(), function () {
-                                    alert('DELETE SUCCEEDED');
+                                    currentRow.remove();
                                 });
                             }
                         });
@@ -375,30 +397,52 @@ export module Gui {
                     {
                         var editColumn = table.addColumnHtml("<em>EDIT</em>");
                         var currentlyInEdit = false;
+                        var writeFields: Array<JQuery>;
+
                         editColumn.click(function () {
                             if (!currentlyInEdit)
                             {
+                                // Is currently in reading mode, switch to writing mode
+                                writeFields = new Array<JQuery>();
                                 for (var n = 0; n < columnDoms.length; n++)
                                 {
                                     var dom = columnDoms[n];
                                     var column = tthis.columns[n];
                                     dom.empty();
 
-                                    dom.append(tthis.createWriteField(object, column));
+                                    var writeField = tthis.createWriteField(object, column); 
+                                    writeFields.push(writeField);
+                                    dom.append(writeField);
+                                    editColumn.html("<em>ACCEPT</em>");
                                 }
 
                                 currentlyInEdit = true;
                             }
                             else
                             {
+                                // Is currently in writing mode, 
+                                // upload to server
+                                // switch to reading mode
                                 for (var n = 0; n < columnDoms.length; n++)
                                 {
-                                    var dom = columnDoms[n];
                                     var column = tthis.columns[n];
-                                    dom.empty();
+                                    tthis.setValueByWriteField(object, column, writeFields[n]);
 
-                                    dom.append(tthis.createReadField(object, column));
                                 }
+
+                                singletonAPI.editObject(
+                                    object.getUri(),
+                                    object.values,
+                                    function () {
+                                        for (var n = 0; n < columnDoms.length; n++) {
+                                            var dom = columnDoms[n];
+                                            var column = tthis.columns[n];
+                                            dom.empty();
+                                            dom.append(tthis.createReadField(object, column));
+                                        }
+
+                                        editColumn.html("<em>EDIT</em>");
+                                    });
 
                                 currentlyInEdit = false;
                             }
@@ -434,6 +478,10 @@ export module Gui {
             return inputField;
         }
 
+        setValueByWriteField(object: JsonExtentObject, field: JsonExtentFieldInfo, dom: JQuery) {
+            object.values[field.name] = dom.val();
+        }
+
         setItemClickedEvent(clickedEvent: (object: JsonExtentObject) => void ) {
             this.itemClickedEvent = clickedEvent;
         }
@@ -441,8 +489,6 @@ export module Gui {
         // Called, when user wants to delete one object and has clicked on the delete icon. 
         // This method executes the server request. 
         triggerDelete(object: JsonExtentObject): void {
-        }
-
-        
+        }        
     }
 }

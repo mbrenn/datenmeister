@@ -33,62 +33,77 @@ namespace DatenMeister.DataProvider.CSV
 
         public object Get(string propertyName)
         {
-            int number = this.GetIndexOfProperty(propertyName);
-            if (number == -1)
+            lock (this.values)
             {
-                throw new IndexOutOfRangeException();
+                int number = this.GetIndexOfProperty(propertyName);
+                if (number == -1)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                return this.values[number];
             }
-            return this.values[number];
-                
         }
 
         public IEnumerable<ObjectPropertyPair> GetAll()
         {
-            if (this.extent.Settings.HasHeader)
+            lock (this.values)
             {
-                foreach (var value in this.extent.HeaderNames)
+                if (this.extent.Settings.HasHeader)
                 {
-                    yield return new ObjectPropertyPair(
-                        value, 
-                        this.Get(value));
+                    foreach (var value in this.extent.HeaderNames)
+                    {
+                        yield return new ObjectPropertyPair(
+                            value,
+                            this.Get(value));
+                    }
                 }
-            }
-            else
-            {
-                for (var n = 0; n < this.values.Count; n++)
+                else
                 {
-                    yield return new ObjectPropertyPair(
-                        "Column " + n.ToString(), 
-                        this.values[n]);
+                    for (var n = 0; n < this.values.Count; n++)
+                    {
+                        yield return new ObjectPropertyPair(
+                            "Column " + n.ToString(),
+                            this.values[n]);
+                    }
                 }
             }
         }
 
         public bool IsSet(string propertyName)
         {
-            if (this.GetIndexOfProperty(propertyName) == -1)
+            lock (this.values)
             {
-                return false;
-            }
+                if (this.GetIndexOfProperty(propertyName) == -1)
+                {
+                    return false;
+                }
 
-            return true;
+                return true;
+            }
         }
 
         public void Set(string propertyName, object value)
         {
-            var index = this.GetIndexOfProperty(propertyName);
-            if (index != -1)
+            lock (this.values)
             {
-                this.values[index] = value.ToString();
+                var index = this.GetIndexOfProperty(propertyName);
+                if (index != -1)
+                {
+                    this.values[index] = value.ToString();
+                }
             }
         }
 
         public void Unset(string propertyName)
         {
-            var index = this.GetIndexOfProperty(propertyName);
-            if (index != -1)
+            lock (this.values)
             {
-                this.values[index] = string.Empty;
+                var index = this.GetIndexOfProperty(propertyName);
+                if (index != -1)
+                {
+                    this.values[index] = string.Empty;
+                }
             }
         }
 
@@ -113,6 +128,11 @@ namespace DatenMeister.DataProvider.CSV
             }
 
             return number;
+        }
+
+        public void Delete()
+        {
+            this.extent.RemoveObject(this);
         }
 
         /// <summary>

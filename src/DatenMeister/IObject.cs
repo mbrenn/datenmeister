@@ -48,7 +48,7 @@ namespace DatenMeister
     public interface IObject
     {
         /// <summary>
-        /// Gets the property by propertyname
+        /// Gets the property by propertyname. 
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
@@ -79,6 +79,11 @@ namespace DatenMeister
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
         void Unset(string propertyName);
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        void Delete();
 
         /// <summary>
         /// Gets the id of the object

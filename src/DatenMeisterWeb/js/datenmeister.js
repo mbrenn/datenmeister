@@ -142,6 +142,26 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
             ajax.performRequest({
                 url: this.__getUrl() + "extent/DeleteObject?uri=" + encodeURIComponent(uri),
                 prefix: 'deleteobject_',
+                method: 'post',
+                success: function () {
+                    if (success !== undefined) {
+                        success();
+                    }
+                },
+                fail: function () {
+                    if (fail !== undefined) {
+                        fail();
+                    }
+                }
+            });
+        };
+
+        ServerAPI.prototype.editObject = function (uri, data, success, fail) {
+            ajax.performRequest({
+                url: this.__getUrl() + "extent/EditObject?uri=" + encodeURIComponent(uri),
+                prefix: 'editobject_',
+                method: 'post',
+                data: data,
                 success: function () {
                     if (success !== undefined) {
                         success();
@@ -198,6 +218,8 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
         function showExtents(domElement) {
             singletonAPI.getExtentInfo(function (data) {
                 var table = new DataTable(domElement);
+                table.allowDelete = false;
+                table.allowEdit = false;
                 table.defineColumns([
                     new JsonExtentFieldInfo("uri"),
                     new JsonExtentFieldInfo("type")
@@ -325,7 +347,7 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                                     clicked = true;
                                 } else {
                                     singletonAPI.deleteObject(object.getUri(), function () {
-                                        alert('DELETE SUCCEEDED');
+                                        currentRow.remove();
                                     });
                                 }
                             });
@@ -334,25 +356,40 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                         if (tthis.allowEdit) {
                             var editColumn = table.addColumnHtml("<em>EDIT</em>");
                             var currentlyInEdit = false;
+                            var writeFields;
+
                             editColumn.click(function () {
                                 if (!currentlyInEdit) {
+                                    // Is currently in reading mode, switch to writing mode
+                                    writeFields = new Array();
                                     for (var n = 0; n < columnDoms.length; n++) {
                                         var dom = columnDoms[n];
                                         var column = tthis.columns[n];
                                         dom.empty();
 
-                                        dom.append(tthis.createWriteField(object, column));
+                                        var writeField = tthis.createWriteField(object, column);
+                                        writeFields.push(writeField);
+                                        dom.append(writeField);
+                                        editColumn.html("<em>ACCEPT</em>");
                                     }
 
                                     currentlyInEdit = true;
                                 } else {
                                     for (var n = 0; n < columnDoms.length; n++) {
-                                        var dom = columnDoms[n];
                                         var column = tthis.columns[n];
-                                        dom.empty();
-
-                                        dom.append(tthis.createReadField(object, column));
+                                        tthis.setValueByWriteField(object, column, writeFields[n]);
                                     }
+
+                                    singletonAPI.editObject(object.getUri(), object.values, function () {
+                                        for (var n = 0; n < columnDoms.length; n++) {
+                                            var dom = columnDoms[n];
+                                            var column = tthis.columns[n];
+                                            dom.empty();
+                                            dom.append(tthis.createReadField(object, column));
+                                        }
+
+                                        editColumn.html("<em>EDIT</em>");
+                                    });
 
                                     currentlyInEdit = false;
                                 }
@@ -384,6 +421,10 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                 }
 
                 return inputField;
+            };
+
+            DataTable.prototype.setValueByWriteField = function (object, field, dom) {
+                object.values[field.name] = dom.val();
             };
 
             DataTable.prototype.setItemClickedEvent = function (clickedEvent) {

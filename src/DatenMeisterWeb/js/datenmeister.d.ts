@@ -36,6 +36,7 @@ export declare class ServerAPI {
     public getExtentInfo(success: (info: ExtentInfo[]) => void, fail?: () => void): void;
     public getObjectsInExtent(uri: string, success: (extentData: JsonExtentData) => void, fail?: () => void): void;
     public deleteObject(uri: string, success: () => void, fail?: () => void): void;
+    public editObject(uri: string, data: any, success: () => void, fail?: () => void): void;
 }
 export declare module Forms {
     class ServerConnectionForm {
@@ -63,6 +64,7 @@ export declare module Gui {
         public renderTable(): void;
         public createReadField(object: JsonExtentObject, field: JsonExtentFieldInfo): JQuery;
         public createWriteField(object: JsonExtentObject, field: JsonExtentFieldInfo): JQuery;
+        public setValueByWriteField(object: JsonExtentObject, field: JsonExtentFieldInfo, dom: JQuery): void;
         public setItemClickedEvent(clickedEvent: (object: JsonExtentObject) => void): void;
         public triggerDelete(object: JsonExtentObject): void;
     }
