@@ -220,6 +220,7 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                 var table = new DataTable(domElement);
                 table.allowDelete = false;
                 table.allowEdit = false;
+                table.allowNew = false;
                 table.defineColumns([
                     new JsonExtentFieldInfo("uri"),
                     new JsonExtentFieldInfo("type")
@@ -398,6 +399,43 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                     };
 
                     func(object);
+                }
+
+                if (this.allowNew) {
+                    var row = table.addRow();
+
+                    var newCells = new Array();
+
+                    // Adds create text
+                    var createDom = $("<em>CREATE</em>");
+                    createDom.click(function () {
+                        var newObject = new JsonExtentObject();
+                        newObject.values = {};
+                        for (var n = 0; n < tthis.columns.length; n++) {
+                            newCells[n].empty();
+
+                            var dom = tthis.createWriteField(newObject, tthis.columns[n]);
+                            newCells[n].append(dom);
+                        }
+
+                        var okDom = $("<button>OK</button>");
+                        okDom.click(function () {
+                            alert('OK');
+                        });
+
+                        newCells[tthis.columns.length].append(okDom);
+                    });
+
+                    var cell = table.addColumnJQuery(createDom);
+                    newCells.push(createDom);
+
+                    for (var n = 0; n < this.columns.length - 1; n++) {
+                        cell = table.addColumn("");
+                        newCells.push(cell);
+                    }
+
+                    // Last cell, containing OK button
+                    newCells.push(table.addColumn(""));
                 }
             };
 

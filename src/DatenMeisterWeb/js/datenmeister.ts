@@ -231,6 +231,7 @@ export module Gui {
                 var table = new DataTable(domElement);
                 table.allowDelete = false;
                 table.allowEdit = false;
+                table.allowNew = false;
                 table.defineColumns(
                     [
                         new JsonExtentFieldInfo("uri"),
@@ -374,6 +375,7 @@ export module Gui {
                         });
                     }
                     
+                    // Adds delete button
                     if (tthis.allowDelete)
                     {
                         var delColumn = table.addColumnHtml("<em>DEL</em>");
@@ -393,6 +395,7 @@ export module Gui {
                         });
                     }
 
+                    // Adds allow edit button
                     if (tthis.allowEdit)
                     {
                         var editColumn = table.addColumnHtml("<em>EDIT</em>");
@@ -451,6 +454,44 @@ export module Gui {
                 }
 
                 func(object);
+            } // for (all objects)
+
+            // Adds last line for adding, if necessary
+            if (this.allowNew) {
+                var row = table.addRow();
+
+                var newCells = new Array<JQuery>();
+
+                // Adds create text
+                var createDom = $("<em>CREATE</em>");
+                createDom.click(function () {
+                    var newObject = new JsonExtentObject();                    
+                    newObject.values = {};
+                    for (var n = 0; n < tthis.columns.length; n++) {
+                        newCells[n].empty();
+
+                        var dom = tthis.createWriteField(newObject, tthis.columns[n]);
+                        newCells[n].append(dom);
+                    }
+
+                    var okDom = $("<button>OK</button>");
+                    okDom.click(function () {
+                        alert('OK');
+                    });
+
+                    newCells[tthis.columns.length].append(okDom);
+                });
+
+                var cell = table.addColumnJQuery(createDom);
+                newCells.push(createDom);
+
+                for (var n = 0; n < this.columns.length - 1; n++) {
+                    cell = table.addColumn("");
+                    newCells.push(cell);
+                }
+
+                // Last cell, containing OK button
+                newCells.push(table.addColumn(""));
             }
         }
 
