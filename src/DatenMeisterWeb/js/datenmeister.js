@@ -343,7 +343,7 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                             var clicked = false;
                             delColumn.click(function () {
                                 if (!clicked) {
-                                    delColumn.html("<em>Sure?</em>");
+                                    delColumn.html("<em>SURE?</em>");
                                     clicked = true;
                                 } else {
                                     singletonAPI.deleteObject(object.getUri(), function () {

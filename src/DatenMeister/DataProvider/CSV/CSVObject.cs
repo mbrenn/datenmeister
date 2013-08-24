@@ -28,7 +28,15 @@ namespace DatenMeister.DataProvider.CSV
         {
             this.line = line;
             this.extent = extent;
-            this.values = values;
+
+            if (values != null)
+            {
+                this.values = values;
+            }
+            else
+            {
+                this.values = new List<string>();
+            }
         }
 
         public object Get(string propertyName)
@@ -125,6 +133,12 @@ namespace DatenMeister.DataProvider.CSV
             if (number == -1)
             {
                 number = extent.HeaderNames.IndexOf(propertyName);
+            }
+
+            // Fills the internal data structure to ensure that we can assign the value directly
+            while (this.values.Count <= number && number > -1)
+            {
+                this.values.Add(string.Empty);
             }
 
             return number;

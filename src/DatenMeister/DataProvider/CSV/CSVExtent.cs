@@ -12,7 +12,7 @@ namespace DatenMeister.DataProvider.CSV
 
         private List<string> headerNames = new List<string>();
 
-        private List<CSVObject> objects = new List<CSVObject>();
+        private List<IObject> objects = new List<IObject>();
 
         public CSVSettings Settings
         {
@@ -20,7 +20,7 @@ namespace DatenMeister.DataProvider.CSV
             set;
         }
 
-        public List<CSVObject> Objects
+        public List<IObject> Objects
         {
             get { return this.objects; }
         }
@@ -46,7 +46,19 @@ namespace DatenMeister.DataProvider.CSV
             return this.Objects;
         }
 
-        public void RemoveObject(CSVObject element)
+        public IObject CreateObject()
+        {
+            lock (this.objects)
+            {
+                var nr = this.objects.Count;
+                var element = new CSVObject(nr, this, null);
+
+                this.objects.Add(element);
+                return element;
+            }
+        }
+
+        public void RemoveObject(IObject element)
         {
             lock (this.Objects)
             {

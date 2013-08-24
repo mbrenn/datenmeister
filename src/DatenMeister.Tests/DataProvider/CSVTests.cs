@@ -114,5 +114,59 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(elements[1].Get("Title2").ToString(), Is.EqualTo(string.Empty));
             Assert.That(elements[1].Get("Column 1").ToString(), Is.EqualTo(string.Empty));
         }
+
+        [Test]
+        public void TestDelete()
+        {
+            var settings = new CSVSettings()
+            {
+                HasHeader = true,
+                Separator = ","
+            };
+
+            var provider = new CSVDataProvider();
+            var extent = provider.Load("data/csv/withheader.txt", settings);
+            var elements = extent.Elements().Select(x => x as IObject).ToList();
+
+            elements[0].Set("Column 0", "Eins");
+            Assert.That(elements[0].Get("Title1").ToString(), Is.EqualTo("Eins"));
+            Assert.That(elements[1].Get("Title2").ToString(), Is.EqualTo("two"));
+
+            elements[0].Delete();
+            elements = extent.Elements().Select(x => x as IObject).ToList();
+            Assert.That(elements[0].Get("Title1").ToString(), Is.EqualTo("one"));
+        }
+
+        [Test]
+        public void TestAdd()
+        {
+            var settings = new CSVSettings()
+            {
+                HasHeader = true,
+                Separator = ","
+            };
+
+            var provider = new CSVDataProvider();
+            var extent = provider.Load("data/csv/withheader.txt", settings);
+            var elements = extent.Elements().Select(x => x as IObject).ToList();
+
+            elements[0].Set("Column 0", "Eins");
+            Assert.That(elements[0].Get("Title1").ToString(), Is.EqualTo("Eins"));
+            Assert.That(elements[1].Get("Title2").ToString(), Is.EqualTo("two"));
+            Assert.That(elements.Count, Is.EqualTo(4));
+
+            // Creates one object
+            var newElement = extent.CreateObject();
+            elements = extent.Elements().Select(x => x as IObject).ToList();
+            Assert.That(elements.Count, Is.EqualTo(5));
+
+            // Creates another object
+            newElement = extent.CreateObject();
+            newElement.Set("Title1", "Fünf");
+
+            elements = extent.Elements().Select(x => x as IObject).ToList();
+            Assert.That(elements.Count, Is.EqualTo(6));
+            Assert.That(elements.Last().Get("Title1"), Is.EqualTo("Fünf"));
+        }
     }
 }

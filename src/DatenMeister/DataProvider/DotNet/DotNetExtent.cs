@@ -49,9 +49,27 @@ namespace DatenMeister.DataProvider.DotNet
             return this.elements;
         }
 
-        public void Add(object value)
+        /// <summary>
+        /// Adds an object to the extent
+        /// </summary>
+        /// <param name="element">Element to be added</param>
+        public void Add(object element)
         {
-            this.elements.Add(new DotNetObject(value));
+            this.elements.Add(new DotNetObject(element));
         }
+
+        public IObject CreateObject()
+        {
+            throw new InvalidOperationException("Dotnet objects cannot be created, no type information is available");
+        }
+
+        public void RemoveObject(IObject element)
+        {
+            lock (this.elements)
+            {
+                this.elements.Remove(element);
+            }
+        }
+
     }
 }
