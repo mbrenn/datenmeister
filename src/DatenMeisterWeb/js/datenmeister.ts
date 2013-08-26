@@ -41,6 +41,10 @@ export class JsonExtentObject {
     values: any;
     extentUri: string;
 
+    constructor() {
+        this.values = {};
+    }
+
     getUri(): string {
         return this.extentUri + "#" + this.id;
     }
@@ -48,6 +52,7 @@ export class JsonExtentObject {
 
 // Result from GetObjectsInExtent
 export class JsonExtentData {
+    extent: ExtentInfo;
     columns: Array<JsonExtentFieldInfo>;
     objects: Array<JsonExtentObject>;
 }
@@ -179,6 +184,25 @@ export class ServerAPI {
             }
         });   
     }
+
+    addObject(uri: string, data: any, success: (data: JsonExtentObject) => void, fail?: () => void) {
+        ajax.performRequest({
+            url: this.__getUrl() + "extent/AddObject?uri=" + encodeURIComponent(uri),
+            prefix: 'editobject_',
+            method: 'post',
+            data: data,
+            success: function (data) {
+                if (success !== undefined) {
+                    success(<JsonExtentObject> data.element);
+                }
+            },
+            fail: function () {
+                if (fail !== undefined) {
+                    fail();
+                }
+            }
+        });
+    }
 }
 
 // Stores the form bindings to simple, predefined forms
@@ -228,7 +252,7 @@ export module Gui {
     export function showExtents(domElement: JQuery) {
         singletonAPI.getExtentInfo(
             function (data) {
-                var table = new DataTable(domElement);
+                var table = new DataTable(null, domElement);
                 table.allowDelete = false;
                 table.allowEdit = false;
                 table.allowNew = false;
@@ -267,7 +291,7 @@ export module Gui {
 
     // Shows the object of an extent in a table, created into domElement
     export function showObjects(data: JsonExtentData, domElement: JQuery) {
-        var table = new DataTable(domElement);
+        var table = new DataTable(data.extent, domElement);
 
         var columns = new Array<JsonExtentFieldInfo>();
         for (var n = 0; n < data.columns.length; n++)
@@ -307,10 +331,15 @@ export module Gui {
         allowDelete: boolean = true;
         allowNew: boolean = true;
 
-        constructor(domTable: JQuery) {
+        extent: ExtentInfo;
+
+        table: t.Table;
+
+        constructor(extent: ExtentInfo, domTable: JQuery) {
             this.domTable = domTable;
             this.columns = new Array<JsonExtentFieldInfo>();
             this.objects = new Array<any>();
+            this.extent = extent;
         }
 
         defineColumns(columns: Array<JsonExtentFieldInfo>) {
@@ -327,172 +356,196 @@ export module Gui {
 
             var tableOptions = new t.TableOptions();
             tableOptions.cssClass = "table";
-            var table = new t.Table(this.domTable, tableOptions);
+            this.table = new t.Table(this.domTable, tableOptions);
 
             /*
              * Creates headline
              */
-            table.addHeaderRow();
-            for (var n = 0; n < this.columns.length; n++)
-            {
-                table.addColumn(this.columns[n].title);
-            }
-            
-            if (this.allowDelete)
-            {
-                table.addColumnHtml("");
+            tthis.table.addHeaderRow();
+            for (var n = 0; n < this.columns.length; n++) {
+                tthis.table.addColumn(this.columns[n].title);
             }
 
-            if (this.allowEdit)
-            {
-                table.addColumnHtml("");
+            if (this.allowDelete) {
+                tthis.table.addColumnHtml("");
+            }
+
+            if (this.allowEdit) {
+                tthis.table.addColumnHtml("");
             }
 
             /*
              * Creates object list
              */
-            for (var m = 0; m < this.objects.length; m++)
-            {
+            for (var m = 0; m < this.objects.length; m++) {
                 var object = this.objects[m];
 
-                var func = function (object: JsonExtentObject) {
-                    var values = object.values
-                    var currentRow = table.addRow();
-
-                    var columnDoms = new Array<JQuery>();
-
-                    for (var n = 0; n < tthis.columns.length; n++)
-                    {
-                        columnDoms.push(
-                            table.addColumnJQuery(
-                                tthis.createReadField(object, tthis.columns[n])));
-                    }
-
-                    if (tthis.itemClickedEvent !== undefined)
-                    {
-                        currentRow.click(function () {
-                            tthis.itemClickedEvent(object);
-                        });
-                    }
-                    
-                    // Adds delete button
-                    if (tthis.allowDelete)
-                    {
-                        var delColumn = table.addColumnHtml("<em>DEL</em>");
-                        var clicked = false;
-                        delColumn.click(function () {
-                            if (!clicked)
-                            {
-                                delColumn.html("<em>SURE?</em>");
-                                clicked = true;
-                            }
-                            else
-                            {
-                                singletonAPI.deleteObject(object.getUri(), function () {
-                                    currentRow.remove();
-                                });
-                            }
-                        });
-                    }
-
-                    // Adds allow edit button
-                    if (tthis.allowEdit)
-                    {
-                        var editColumn = table.addColumnHtml("<em>EDIT</em>");
-                        var currentlyInEdit = false;
-                        var writeFields: Array<JQuery>;
-
-                        editColumn.click(function () {
-                            if (!currentlyInEdit)
-                            {
-                                // Is currently in reading mode, switch to writing mode
-                                writeFields = new Array<JQuery>();
-                                for (var n = 0; n < columnDoms.length; n++)
-                                {
-                                    var dom = columnDoms[n];
-                                    var column = tthis.columns[n];
-                                    dom.empty();
-
-                                    var writeField = tthis.createWriteField(object, column); 
-                                    writeFields.push(writeField);
-                                    dom.append(writeField);
-                                    editColumn.html("<em>ACCEPT</em>");
-                                }
-
-                                currentlyInEdit = true;
-                            }
-                            else
-                            {
-                                // Is currently in writing mode, 
-                                // upload to server
-                                // switch to reading mode
-                                for (var n = 0; n < columnDoms.length; n++)
-                                {
-                                    var column = tthis.columns[n];
-                                    tthis.setValueByWriteField(object, column, writeFields[n]);
-
-                                }
-
-                                singletonAPI.editObject(
-                                    object.getUri(),
-                                    object.values,
-                                    function () {
-                                        for (var n = 0; n < columnDoms.length; n++) {
-                                            var dom = columnDoms[n];
-                                            var column = tthis.columns[n];
-                                            dom.empty();
-                                            dom.append(tthis.createReadField(object, column));
-                                        }
-
-                                        editColumn.html("<em>EDIT</em>");
-                                    });
-
-                                currentlyInEdit = false;
-                            }
-                        });
-                    }
-                }
-
-                func(object);
+                this.createRow(object);
             } // for (all objects)
 
             // Adds last line for adding, if necessary
             if (this.allowNew) {
-                var row = table.addRow();
+                this.createCreateButton();
+            }
+        }
 
-                var newCells = new Array<JQuery>();
+        createRow(object: JsonExtentObject): void {
+            var tthis = this;
+            var values = object.values
+            var currentRow = tthis.table.addRow();
 
-                // Adds create text
-                var createDom = $("<em>CREATE</em>");
-                createDom.click(function () {
-                    var newObject = new JsonExtentObject();                    
-                    newObject.values = {};
-                    for (var n = 0; n < tthis.columns.length; n++) {
-                        newCells[n].empty();
+            var columnDoms = new Array<JQuery>();
 
-                        var dom = tthis.createWriteField(newObject, tthis.columns[n]);
-                        newCells[n].append(dom);
-                    }
+            for (var n = 0; n < tthis.columns.length; n++) {
+                columnDoms.push(
+                    tthis.table.addColumnJQuery(
+                        tthis.createReadField(object, tthis.columns[n])));
+            }
 
-                    var okDom = $("<button>OK</button>");
-                    okDom.click(function () {
-                        alert('OK');
-                    });
-
-                    newCells[tthis.columns.length].append(okDom);
+            if (tthis.itemClickedEvent !== undefined) {
+                currentRow.click(function () {
+                    tthis.itemClickedEvent(object);
                 });
+            }
 
-                var cell = table.addColumnJQuery(createDom);
-                newCells.push(createDom);
+            // Adds delete button
+            if (tthis.allowDelete) {
+                var delColumn = tthis.table.addColumnHtml("<em>DEL</em>");
+                var clicked = false;
+                delColumn.click(function () {
+                    if (!clicked) {
+                        delColumn.html("<em>SURE?</em>");
+                        clicked = true;
+                    }
+                    else {
+                        singletonAPI.deleteObject(object.getUri(), function () {
+                            currentRow.remove();
+                        });
+                    }
+                });
+            }
 
-                for (var n = 0; n < this.columns.length - 1; n++) {
-                    cell = table.addColumn("");
-                    newCells.push(cell);
+            // Adds allow edit button
+            if (tthis.allowEdit) {
+                var editColumn = tthis.table.addColumnHtml("<em>EDIT</em>");
+                var currentlyInEdit = false;
+                var writeFields: Array<JQuery>;
+
+                editColumn.click(function () {
+                    if (!currentlyInEdit) {
+                        // Is currently in reading mode, switch to writing mode
+                        writeFields = new Array<JQuery>();
+                        for (var n = 0; n < columnDoms.length; n++) {
+                            var dom = columnDoms[n];
+                            var column = tthis.columns[n];
+                            dom.empty();
+
+                            var writeField = tthis.createWriteField(object, column);
+                            writeFields.push(writeField);
+                            dom.append(writeField);
+                            editColumn.html("<em>ACCEPT</em>");
+                        }
+
+                        currentlyInEdit = true;
+                    }
+                    else {
+                        // Is currently in writing mode, 
+                        // upload to server
+                        // switch to reading mode
+                        for (var n = 0; n < columnDoms.length; n++) {
+                            var column = tthis.columns[n];
+                            tthis.setValueByWriteField(object, column, writeFields[n]);
+
+                        }
+
+                        singletonAPI.editObject(
+                            object.getUri(),
+                            object.values,
+                            function () {
+                                for (var n = 0; n < columnDoms.length; n++) {
+                                    var dom = columnDoms[n];
+                                    var column = tthis.columns[n];
+                                    dom.empty();
+                                    dom.append(tthis.createReadField(object, column));
+                                }
+
+                                editColumn.html("<em>EDIT</em>");
+                            });
+
+                        currentlyInEdit = false;
+                    }
+                });
+            }
+        }
+
+        // Creates the create button at the end of the table
+        createCreateButton() {
+            var tthis = this;
+            var row = tthis.table.addRow();
+
+            var newCells = new Array<JQuery>(); // Stores the 'td' elements
+            var newInputs = new Array<JQuery>(); // Stores the 'input' elements
+
+            // Adds create text
+            var createDom = $("<em>CREATE</em>");
+            createDom.click(function () {
+                newInputs.length = 0;
+
+                var newObject = new JsonExtentObject();
+                newObject.values = {};
+                for (var n = 0; n < tthis.columns.length; n++) {
+                    newCells[n].empty();
+
+                    var dom = tthis.createWriteField(newObject, tthis.columns[n]);
+                    newInputs.push(dom);
+
+                    newCells[n].append(dom);
                 }
 
-                // Last cell, containing OK button
-                newCells.push(table.addColumn(""));
+                var okDom = $("<button>OK</button>");
+                okDom.click(function () {
+                    tthis.createNewElement(newInputs, newCells);
+                    row.remove();
+                });
+
+                newCells[tthis.columns.length].append(okDom);
+            });
+
+            var cell = tthis.table.addColumnJQuery(createDom);
+            newCells.push(cell);
+
+            for (var n = 0; n < this.columns.length - 1; n++) {
+                cell = tthis.table.addColumn("");
+                newCells.push(cell);
             }
+
+            // Last cell, containing OK button
+            newCells.push(tthis.table.addColumn(""));
+        }
+
+        // Reads the values from the inputfields and 
+        // performs a request on server to add the values to database
+        // Also, the form is resetted, the uploaded information is shown as read-only fields
+        // and the 'CREATE' button is reinserted
+        createNewElement(inputs: Array<JQuery>, cells : Array<JQuery>): void {
+            var tthis = this;
+            var value = new JsonExtentObject();
+            for (var n = 0; n < this.columns.length; n++) {
+                var column = this.columns[n];
+                var input = inputs[n];
+                this.setValueByWriteField(value, column, input);
+            }
+
+            singletonAPI.addObject(
+                this.extent.uri,
+                value.values,
+                function (data) {
+                    tthis.createRow(value);
+
+                    tthis.createCreateButton();
+                },
+                function () {
+                });
         }
 
         createReadField(object: JsonExtentObject, field: JsonExtentFieldInfo): JQuery {

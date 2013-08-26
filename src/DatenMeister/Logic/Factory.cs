@@ -20,7 +20,7 @@ namespace DatenMeister.Logic
         
         public IObject create(IObject type)
         {
-            return null;
+            return extent.CreateObject();
         }
     }
 }

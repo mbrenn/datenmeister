@@ -41,6 +41,7 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
     // Defines the information for a column that has been received from server
     var JsonExtentObject = (function () {
         function JsonExtentObject() {
+            this.values = {};
         }
         JsonExtentObject.prototype.getUri = function () {
             return this.extentUri + "#" + this.id;
@@ -174,6 +175,25 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
                 }
             });
         };
+
+        ServerAPI.prototype.addObject = function (uri, data, success, fail) {
+            ajax.performRequest({
+                url: this.__getUrl() + "extent/AddObject?uri=" + encodeURIComponent(uri),
+                prefix: 'editobject_',
+                method: 'post',
+                data: data,
+                success: function (data) {
+                    if (success !== undefined) {
+                        success(data.element);
+                    }
+                },
+                fail: function () {
+                    if (fail !== undefined) {
+                        fail();
+                    }
+                }
+            });
+        };
         return ServerAPI;
     })();
     exports.ServerAPI = ServerAPI;
@@ -217,7 +237,7 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
         // Shows the extents of the server at the given DOM element
         function showExtents(domElement) {
             singletonAPI.getExtentInfo(function (data) {
-                var table = new DataTable(domElement);
+                var table = new DataTable(null, domElement);
                 table.allowDelete = false;
                 table.allowEdit = false;
                 table.allowNew = false;
@@ -253,7 +273,7 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
 
         // Shows the object of an extent in a table, created into domElement
         function showObjects(data, domElement) {
-            var table = new DataTable(domElement);
+            var table = new DataTable(data.extent, domElement);
 
             var columns = new Array();
             for (var n = 0; n < data.columns.length; n++) {
@@ -280,13 +300,14 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
         Gui.showObjects = showObjects;
 
         var DataTable = (function () {
-            function DataTable(domTable) {
+            function DataTable(extent, domTable) {
                 this.allowEdit = true;
                 this.allowDelete = true;
                 this.allowNew = true;
                 this.domTable = domTable;
                 this.columns = new Array();
                 this.objects = new Array();
+                this.extent = extent;
             }
             DataTable.prototype.defineColumns = function (columns) {
                 this.columns = columns;
@@ -302,141 +323,175 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
 
                 var tableOptions = new t.TableOptions();
                 tableOptions.cssClass = "table";
-                var table = new t.Table(this.domTable, tableOptions);
+                this.table = new t.Table(this.domTable, tableOptions);
 
                 /*
                 * Creates headline
                 */
-                table.addHeaderRow();
+                tthis.table.addHeaderRow();
                 for (var n = 0; n < this.columns.length; n++) {
-                    table.addColumn(this.columns[n].title);
+                    tthis.table.addColumn(this.columns[n].title);
                 }
 
                 if (this.allowDelete) {
-                    table.addColumnHtml("");
+                    tthis.table.addColumnHtml("");
                 }
 
                 if (this.allowEdit) {
-                    table.addColumnHtml("");
+                    tthis.table.addColumnHtml("");
                 }
 
                 for (var m = 0; m < this.objects.length; m++) {
                     var object = this.objects[m];
 
-                    var func = function (object) {
-                        var values = object.values;
-                        var currentRow = table.addRow();
-
-                        var columnDoms = new Array();
-
-                        for (var n = 0; n < tthis.columns.length; n++) {
-                            columnDoms.push(table.addColumnJQuery(tthis.createReadField(object, tthis.columns[n])));
-                        }
-
-                        if (tthis.itemClickedEvent !== undefined) {
-                            currentRow.click(function () {
-                                tthis.itemClickedEvent(object);
-                            });
-                        }
-
-                        if (tthis.allowDelete) {
-                            var delColumn = table.addColumnHtml("<em>DEL</em>");
-                            var clicked = false;
-                            delColumn.click(function () {
-                                if (!clicked) {
-                                    delColumn.html("<em>SURE?</em>");
-                                    clicked = true;
-                                } else {
-                                    singletonAPI.deleteObject(object.getUri(), function () {
-                                        currentRow.remove();
-                                    });
-                                }
-                            });
-                        }
-
-                        if (tthis.allowEdit) {
-                            var editColumn = table.addColumnHtml("<em>EDIT</em>");
-                            var currentlyInEdit = false;
-                            var writeFields;
-
-                            editColumn.click(function () {
-                                if (!currentlyInEdit) {
-                                    // Is currently in reading mode, switch to writing mode
-                                    writeFields = new Array();
-                                    for (var n = 0; n < columnDoms.length; n++) {
-                                        var dom = columnDoms[n];
-                                        var column = tthis.columns[n];
-                                        dom.empty();
-
-                                        var writeField = tthis.createWriteField(object, column);
-                                        writeFields.push(writeField);
-                                        dom.append(writeField);
-                                        editColumn.html("<em>ACCEPT</em>");
-                                    }
-
-                                    currentlyInEdit = true;
-                                } else {
-                                    for (var n = 0; n < columnDoms.length; n++) {
-                                        var column = tthis.columns[n];
-                                        tthis.setValueByWriteField(object, column, writeFields[n]);
-                                    }
-
-                                    singletonAPI.editObject(object.getUri(), object.values, function () {
-                                        for (var n = 0; n < columnDoms.length; n++) {
-                                            var dom = columnDoms[n];
-                                            var column = tthis.columns[n];
-                                            dom.empty();
-                                            dom.append(tthis.createReadField(object, column));
-                                        }
-
-                                        editColumn.html("<em>EDIT</em>");
-                                    });
-
-                                    currentlyInEdit = false;
-                                }
-                            });
-                        }
-                    };
-
-                    func(object);
+                    this.createRow(object);
                 }
 
                 if (this.allowNew) {
-                    var row = table.addRow();
+                    this.createCreateButton();
+                }
+            };
 
-                    var newCells = new Array();
+            DataTable.prototype.createRow = function (object) {
+                var tthis = this;
+                var values = object.values;
+                var currentRow = tthis.table.addRow();
 
-                    // Adds create text
-                    var createDom = $("<em>CREATE</em>");
-                    createDom.click(function () {
-                        var newObject = new JsonExtentObject();
-                        newObject.values = {};
-                        for (var n = 0; n < tthis.columns.length; n++) {
-                            newCells[n].empty();
+                var columnDoms = new Array();
 
-                            var dom = tthis.createWriteField(newObject, tthis.columns[n]);
-                            newCells[n].append(dom);
-                        }
+                for (var n = 0; n < tthis.columns.length; n++) {
+                    columnDoms.push(tthis.table.addColumnJQuery(tthis.createReadField(object, tthis.columns[n])));
+                }
 
-                        var okDom = $("<button>OK</button>");
-                        okDom.click(function () {
-                            alert('OK');
-                        });
-
-                        newCells[tthis.columns.length].append(okDom);
+                if (tthis.itemClickedEvent !== undefined) {
+                    currentRow.click(function () {
+                        tthis.itemClickedEvent(object);
                     });
+                }
 
-                    var cell = table.addColumnJQuery(createDom);
-                    newCells.push(createDom);
+                if (tthis.allowDelete) {
+                    var delColumn = tthis.table.addColumnHtml("<em>DEL</em>");
+                    var clicked = false;
+                    delColumn.click(function () {
+                        if (!clicked) {
+                            delColumn.html("<em>SURE?</em>");
+                            clicked = true;
+                        } else {
+                            singletonAPI.deleteObject(object.getUri(), function () {
+                                currentRow.remove();
+                            });
+                        }
+                    });
+                }
 
-                    for (var n = 0; n < this.columns.length - 1; n++) {
-                        cell = table.addColumn("");
-                        newCells.push(cell);
+                if (tthis.allowEdit) {
+                    var editColumn = tthis.table.addColumnHtml("<em>EDIT</em>");
+                    var currentlyInEdit = false;
+                    var writeFields;
+
+                    editColumn.click(function () {
+                        if (!currentlyInEdit) {
+                            // Is currently in reading mode, switch to writing mode
+                            writeFields = new Array();
+                            for (var n = 0; n < columnDoms.length; n++) {
+                                var dom = columnDoms[n];
+                                var column = tthis.columns[n];
+                                dom.empty();
+
+                                var writeField = tthis.createWriteField(object, column);
+                                writeFields.push(writeField);
+                                dom.append(writeField);
+                                editColumn.html("<em>ACCEPT</em>");
+                            }
+
+                            currentlyInEdit = true;
+                        } else {
+                            for (var n = 0; n < columnDoms.length; n++) {
+                                var column = tthis.columns[n];
+                                tthis.setValueByWriteField(object, column, writeFields[n]);
+                            }
+
+                            singletonAPI.editObject(object.getUri(), object.values, function () {
+                                for (var n = 0; n < columnDoms.length; n++) {
+                                    var dom = columnDoms[n];
+                                    var column = tthis.columns[n];
+                                    dom.empty();
+                                    dom.append(tthis.createReadField(object, column));
+                                }
+
+                                editColumn.html("<em>EDIT</em>");
+                            });
+
+                            currentlyInEdit = false;
+                        }
+                    });
+                }
+            };
+
+            // Creates the create button at the end of the table
+            DataTable.prototype.createCreateButton = function () {
+                var tthis = this;
+                var row = tthis.table.addRow();
+
+                var newCells = new Array();
+                var newInputs = new Array();
+
+                // Adds create text
+                var createDom = $("<em>CREATE</em>");
+                createDom.click(function () {
+                    newInputs.length = 0;
+
+                    var newObject = new JsonExtentObject();
+                    newObject.values = {};
+                    for (var n = 0; n < tthis.columns.length; n++) {
+                        newCells[n].empty();
+
+                        var dom = tthis.createWriteField(newObject, tthis.columns[n]);
+                        newInputs.push(dom);
+
+                        newCells[n].append(dom);
                     }
 
-                    // Last cell, containing OK button
-                    newCells.push(table.addColumn(""));
+                    var okDom = $("<button>OK</button>");
+                    okDom.click(function () {
+                        tthis.createNewElement(newInputs, newCells);
+                        row.remove();
+                    });
+
+                    newCells[tthis.columns.length].append(okDom);
+                });
+
+                var cell = tthis.table.addColumnJQuery(createDom);
+                newCells.push(cell);
+
+                for (var n = 0; n < this.columns.length - 1; n++) {
+                    cell = tthis.table.addColumn("");
+                    newCells.push(cell);
                 }
+
+                // Last cell, containing OK button
+                newCells.push(tthis.table.addColumn(""));
+            };
+
+            // Reads the values from the inputfields and
+            // performs a request on server to add the values to database
+            // Also, the form is resetted, the uploaded information is shown as read-only fields
+            // and the 'CREATE' button is reinserted
+            DataTable.prototype.createNewElement = function (inputs, cells) {
+                var tthis = this;
+                var value = new JsonExtentObject();
+                for (var n = 0; n < this.columns.length; n++) {
+                    var column = this.columns[n];
+                    var input = inputs[n];
+                    this.setValueByWriteField(value, column, input);
+                }
+
+                singletonAPI.addObject(this.extent.uri, value.values, function (data) {
+                    tthis.createRow(value);
+
+                    tthis.createCreateButton();
+                }, function () {
+                });
             };
 
             DataTable.prototype.createReadField = function (object, field) {

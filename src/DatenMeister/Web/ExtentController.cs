@@ -38,17 +38,10 @@ namespace DatenMeister.Web
         [WebMethod]
         public IActionResult GetExtentInfos()
         {
-            var extents = this.Pool.Extents.Select(x =>
-                 new
-                 {
-                     uri = x.ContextURI(),
-                     type = x.GetType().FullName
-                 });
-
             return this.Json(new
             {
                 success = true,
-                extents = extents
+                extents = this.Pool.Extents.Select(x => ToJson(x))
             });
         }
 
@@ -61,8 +54,10 @@ namespace DatenMeister.Web
                 throw new MVCProcessException("uri_not_found", "URI has not been found");
             }
 
+            // Converts to json object
             var data = new JsonExtentData();
-            
+            data.extent = ToJson(extent);
+
             var elements = extent.Elements();
             var titles = elements.GetColumnTitles();
             data.columns.AddRange(titles.Select(x => new JsonExtentColumnInfo()
@@ -72,13 +67,7 @@ namespace DatenMeister.Web
 
             foreach (var element in elements)
             {
-                var dict = new Dictionary<string, string>();
-                foreach (var pair in element.GetAll())
-                {
-                    dict[pair.PropertyName] = pair.Value.ToString();
-                }
-
-                data.objects.Add(new JsonExtentObject(element.Id, dict));
+                data.objects.Add(ToJson(element));
             }
 
             return this.Json(data);
@@ -101,6 +90,24 @@ namespace DatenMeister.Web
             return this.SuccessJson();
         }
 
+        [WebMethod]
+        public IActionResult AddObject(string uri, [PostModel] Dictionary<string, string> values)
+        {
+            var extent = this.GetExtentByUri(uri);
+            var factory = new Factory(extent);
+            var element = factory.create(null);
+
+            foreach (var pair in values)
+            {
+                element.Set(pair.Key, pair.Value);
+            }
+
+            return this.Json(new
+            {
+                success = true,
+                element = ToJson(element)
+            });
+        }
 
         [WebMethod]
         public IActionResult EditObject(string uri, [PostModel] Dictionary<string, string> values)
@@ -144,6 +151,52 @@ namespace DatenMeister.Web
             }
 
             return element;
+        }
+
+        /// <summary>
+        /// Gets the extent by uri
+        /// </summary>
+        /// <param name="extentUri">URI of the extent</param>
+        /// <returns>Found extent</returns>
+        private IURIExtent GetExtentByUri(string extentUri)
+        {
+            var extent = this.Pool.Extents.Where(x => x.ContextURI() == extentUri).FirstOrDefault();
+            if (extent == null)
+            {
+                throw new MVCProcessException("uri_not_found", "URI has not been found");
+            }
+
+            return extent;
+        }
+
+        /// <summary>
+        /// Converts the extent to json object
+        /// </summary>
+        /// <param name="extent">Extent to be converted</param>
+        /// <returns>Converted object</returns>
+        private static JsonExtentInfo ToJson(IURIExtent extent)
+        {
+            return new JsonExtentInfo()
+            {
+                uri = extent.ContextURI(),
+                type = extent.GetType().FullName
+            };
+        }
+
+        /// <summary>
+        /// Converts the extent to json object
+        /// </summary>
+        /// <param name="extent">Extent to be converted</param>
+        /// <returns>Converted object</returns>
+        private static JsonExtentObject ToJson(IObject element)
+        {
+            var dict = new Dictionary<string, string>();
+            foreach (var pair in element.GetAll())
+            {
+                dict[pair.PropertyName] = pair.Value.ToString();
+            }
+
+            return new JsonExtentObject(element.Id, dict);            
         }
     }
 }

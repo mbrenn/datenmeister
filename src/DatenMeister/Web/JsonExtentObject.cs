@@ -34,7 +34,7 @@ namespace DatenMeister.Web
         public Dictionary<string, string> values
         {
             get;
-            private set;
+            set;
         }
     }
 }

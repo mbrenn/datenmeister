@@ -18,6 +18,12 @@ namespace DatenMeister.Web
             this.success = true;
         }
 
+        public JsonExtentInfo extent
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Gets or sets a list of column
         /// </summary>

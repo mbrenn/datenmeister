@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider.CSV;
+using DatenMeister.Logic;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -156,12 +157,13 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(elements.Count, Is.EqualTo(4));
 
             // Creates one object
-            var newElement = extent.CreateObject();
+            var factory = new Factory(extent);
+            var newElement = factory.create(null);
             elements = extent.Elements().Select(x => x as IObject).ToList();
             Assert.That(elements.Count, Is.EqualTo(5));
 
             // Creates another object
-            newElement = extent.CreateObject();
+            newElement = factory.create(null);
             newElement.Set("Title1", "Fünf");
 
             elements = extent.Elements().Select(x => x as IObject).ToList();
