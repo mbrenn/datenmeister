@@ -64,5 +64,78 @@ namespace DatenMeister.DataProvider.CSV
         {
             return line.Split(new[] { settings.Separator }, StringSplitOptions.None);
         }
+
+        /// <summary>
+        /// Saves the extent into database.
+        /// </summary>
+        /// <param name="extent">Extent to be stored</param>
+        /// <param name="path">Path, where file shall be stored</param>
+        /// <param name="settings">Settings being used</param>
+        public void Save(CSVExtent extent, string path, CSVSettings settings)
+        {
+            var columnHeaders = new List<string>();
+
+            // Retrieve the column headers
+            if (settings.HasHeader && extent.HeaderNames.Count > 0)
+            {
+                // Column headers given by old extent
+                columnHeaders.AddRange(extent.HeaderNames);
+            }
+            else
+            {
+                // Column headers given by number
+                var maxColumnCount = extent.Objects.Select(x => x.GetAll().Count()).Max();
+                for (var n = 0; n < maxColumnCount; n++)
+                {
+                    columnHeaders.Add(string.Format("Column {0}", n));
+                }
+
+                // The values itself
+            }
+
+            // Open File
+            using (var streamWriter = new StreamWriter(path, false, settings.Encoding))
+            {
+                // Writes the header
+                if (settings.HasHeader)
+                {
+                    this.WriteRow(streamWriter, settings, columnHeaders, x=>x);
+                }
+
+                // Writes the elements
+                foreach (var element in extent.Elements())
+                {
+                    this.WriteRow(
+                        streamWriter,
+                        settings,
+                        columnHeaders,
+                        x => element.Get(x));                        
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes a columete
+        /// </summary>
+        /// <param name="streamWriter"></param>
+        /// <param name="values"></param>
+        private void WriteRow<T>(StreamWriter streamWriter, CSVSettings settings, IEnumerable<T> values, Func<T, object> conversion)
+        {
+            var builder = new StringBuilder();
+            var first = true;
+            foreach (var value in values)
+            {
+                if (!first)
+                {
+                    builder.Append(settings.Separator);
+                }
+
+                builder.Append(conversion(value).ToString());
+                
+                first = false;
+            }
+
+            streamWriter.WriteLine(builder.ToString());
+        }
     }
 }

@@ -8,8 +8,6 @@ namespace DatenMeister
 {
     public interface IURIExtent
     {
-        void StoreChanges();
-
         string ContextURI();
 
         IEnumerable<IObject> Elements();

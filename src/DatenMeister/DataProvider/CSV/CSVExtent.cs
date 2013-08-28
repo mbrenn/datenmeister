@@ -65,10 +65,5 @@ namespace DatenMeister.DataProvider.CSV
                 this.Objects.Remove(element);
             }
         }
-
-        public void StoreChanges()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -170,5 +170,95 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(elements.Count, Is.EqualTo(6));
             Assert.That(elements.Last().Get("Title1"), Is.EqualTo("Fünf"));
         }
+
+        [Test]
+        public void TestSavingHeaderHeader()
+        {
+            var settings = new CSVSettings()
+            {
+                HasHeader = true,
+                Separator = ","
+            };
+
+            var provider = new CSVDataProvider();
+            var extent = provider.Load("data/csv/withheader.txt", settings);
+
+            provider.Save(extent, "test_y_y.txt", settings);
+
+            var extent2 = provider.Load("test_y_y.txt", settings);
+            Assert.That(extent2.Elements().Count(), Is.EqualTo(extent.Elements().Count()));
+        }
+
+        [Test]
+        public void TestSavingHeaderNoHeader()
+        {
+            var settings = new CSVSettings()
+            {
+                HasHeader = true,
+                Separator = ","
+            };
+
+            var provider = new CSVDataProvider();
+            var extent = provider.Load("data/csv/withheader.txt", settings);
+
+            var newSettings = new CSVSettings()
+            {
+                HasHeader = false,
+                Separator = ","
+            };
+
+            provider.Save(extent, "test_y_n.txt", newSettings);
+
+            var extent2 = provider.Load("test_y_n.txt", newSettings);
+            Assert.That(extent2.Elements().Count(), Is.EqualTo(extent.Elements().Count()));
+        }
+
+        [Test]
+        public void TestSavingNoHeaderNoHeader()
+        {
+            var settings = new CSVSettings()
+            {
+                HasHeader = false,
+                Separator = ","
+            };
+
+            var provider = new CSVDataProvider();
+            var extent = provider.Load("data/csv/withoutheader.txt", settings);
+
+            var newSettings = new CSVSettings()
+            {
+                HasHeader = false,
+                Separator = ","
+            };
+
+            provider.Save(extent, "test_n_n.txt", newSettings);
+
+            var extent2 = provider.Load("test_n_n.txt", newSettings);
+            Assert.That(extent2.Elements().Count(), Is.EqualTo(extent.Elements().Count()));
+        }
+
+        [Test]
+        public void TestSavingNoHeaderHeader()
+        {
+            var settings = new CSVSettings()
+            {
+                HasHeader = false,
+                Separator = ","
+            };
+
+            var provider = new CSVDataProvider();
+            var extent = provider.Load("data/csv/withoutheader.txt", settings);
+
+            var newSettings = new CSVSettings()
+            {
+                HasHeader = true,
+                Separator = ","
+            };
+
+            provider.Save(extent, "test_n_y.txt", newSettings);
+
+            var extent2 = provider.Load("test_n_y.txt", newSettings);
+            Assert.That(extent2.Elements().Count(), Is.EqualTo(extent.Elements().Count()));
+        }
     }
 }
