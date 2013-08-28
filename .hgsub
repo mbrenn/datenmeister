@@ -3,3 +3,4 @@ dependencies/BurnSystems.WebServer=https://mbrenn@bitbucket.org/mbrenn/burnsyste
 dependencies/DeJS=https://mbrenn@bitbucket.org/mbrenn/dejs
 dependencies/DefinitelyTyped=[git]https://github.com/borisyankov/DefinitelyTyped.git
 dependencies/BootstrapGit=[git]https://github.com/twbs/bootstrap.git
+dependencies/UnderscoreJS=[git]https://github.com/jashkenas/underscore.git
