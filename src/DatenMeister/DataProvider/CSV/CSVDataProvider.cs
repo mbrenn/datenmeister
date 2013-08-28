@@ -71,26 +71,25 @@ namespace DatenMeister.DataProvider.CSV
         /// <param name="extent">Extent to be stored</param>
         /// <param name="path">Path, where file shall be stored</param>
         /// <param name="settings">Settings being used</param>
-        public void Save(CSVExtent extent, string path, CSVSettings settings)
+        public void Save(IURIExtent extent, string path, CSVSettings settings)
         {
             var columnHeaders = new List<string>();
+            var extentAsCSV = extent as CSVExtent;
 
             // Retrieve the column headers
-            if (settings.HasHeader && extent.HeaderNames.Count > 0)
+            if (settings.HasHeader && extentAsCSV != null && extentAsCSV.HeaderNames.Count > 0)
             {
                 // Column headers given by old extent
-                columnHeaders.AddRange(extent.HeaderNames);
+                columnHeaders.AddRange(extentAsCSV.HeaderNames);
             }
             else
             {
                 // Column headers given by number
-                var maxColumnCount = extent.Objects.Select(x => x.GetAll().Count()).Max();
+                var maxColumnCount = extent.Elements().Select(x => x.GetAll().Count()).Max();
                 for (var n = 0; n < maxColumnCount; n++)
                 {
                     columnHeaders.Add(string.Format("Column {0}", n));
                 }
-
-                // The values itself
             }
 
             // Open File

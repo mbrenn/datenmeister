@@ -8,6 +8,7 @@ using DatenMeister.DataProvider.CSV;
 using DatenMeister.Web;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,12 +32,22 @@ namespace DatenmeisterServer
             var pool = new DatenMeisterPool();
 
             var provider = new CSVDataProvider();
-            var csvExtent = provider.Load("data/test.csv", new CSVSettings()
+            var csvSettings = new CSVSettings()
                 {
                     HasHeader = true
-                });
+                };
 
-            pool.Add(csvExtent);
+            IURIExtent extent;
+            if (File.Exists("data/test_save.csv"))
+            {
+                extent = provider.Load("data/test_save.csv", csvSettings);
+            }
+            else
+            {
+                extent = provider.Load("data/test.csv", csvSettings);
+            }
+
+            pool.Add(extent);
             activationContainer.Bind<DatenMeisterPool>().ToConstant(pool);
 
             using (var server = Server.CreateDefaultServer(activationContainer))
@@ -53,6 +64,10 @@ namespace DatenmeisterServer
 
                 server.Stop();
             }
+
+            // Storing the data
+            Log.TheLog.Message("Storing data");
+            provider.Save(extent, "data/test_save.csv", csvSettings);
         }
     }
 }
