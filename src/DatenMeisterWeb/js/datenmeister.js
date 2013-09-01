@@ -96,23 +96,6 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
             });
         };
 
-        ServerAPI.prototype.getExtentInfo = function (success, fail) {
-            ajax.performRequest({
-                url: this.__getUrl() + "extent/GetExtentInfos",
-                prefix: 'loadextentinfos_',
-                fail: function () {
-                    if (fail !== undefined) {
-                        fail();
-                    }
-                },
-                success: function (data) {
-                    if (success !== undefined) {
-                        success(data.extents);
-                    }
-                }
-            });
-        };
-
         ServerAPI.prototype.getObjectsInExtent = function (uri, success, fail) {
             ajax.performRequest({
                 url: this.__getUrl() + "extent/GetObjectsInExtent?uri=" + uri,
@@ -234,31 +217,25 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
 
     // Creates dynamic parts of the gui
     (function (Gui) {
+        var TableOptions = (function () {
+            function TableOptions() {
+            }
+            return TableOptions;
+        })();
+        Gui.TableOptions = TableOptions;
+
         // Shows the extents of the server at the given DOM element
         function showExtents(domElement) {
-            singletonAPI.getExtentInfo(function (data) {
-                var table = new DataTable(null, domElement);
-                table.allowDelete = false;
-                table.allowEdit = false;
-                table.allowNew = false;
-                table.defineColumns([
-                    new JsonExtentFieldInfo("uri"),
-                    new JsonExtentFieldInfo("type")
-                ]);
-
-                for (var n = 0; n < data.length; n++) {
-                    var obj = new JsonExtentObject();
-                    obj.id = data[n].uri;
-                    obj.values = data[n];
-                    table.addObject(obj);
-                }
-
-                table.setItemClickedEvent(function (object) {
-                    var uri = object.values.uri;
-                    showObjectsByUri(uri, $("#object_list_table"));
+            singletonAPI.getObjectsInExtent("datenmeister:///pool", function (data) {
+                var table = showObjects(data, $("#extent_list_table"), {
+                    allowNew: false,
+                    allowEdit: false,
+                    allowDelete: false
                 });
 
-                table.renderTable();
+                table.setItemClickedEvent(function (object) {
+                    showObjectsByUri(object.values.uri, $("#object_list_table"));
+                });
             }, function () {
             });
         }
@@ -272,9 +249,26 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
         Gui.showObjectsByUri = showObjectsByUri;
 
         // Shows the object of an extent in a table, created into domElement
-        function showObjects(data, domElement) {
+        function showObjects(data, domElement, options) {
+            if (options === undefined) {
+                options = new TableOptions();
+            }
+
             var table = new DataTable(data.extent, domElement);
 
+            if (options.allowNew === false) {
+                table.allowNew = options.allowNew;
+            }
+
+            if (options.allowEdit === false) {
+                table.allowEdit = options.allowEdit;
+            }
+
+            if (options.allowDelete === false) {
+                table.allowDelete = options.allowDelete;
+            }
+
+            // Create the columns
             var columns = new Array();
             for (var n = 0; n < data.columns.length; n++) {
                 var column = data.columns[n];
@@ -296,6 +290,8 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
 
             domElement.empty();
             table.renderTable();
+
+            return table;
         }
         Gui.showObjects = showObjects;
 
@@ -343,7 +339,6 @@ define(["require", "exports", "lib/dejs.ajax", 'lib/dejs.table'], function(requi
 
                 for (var m = 0; m < this.objects.length; m++) {
                     var object = this.objects[m];
-
                     this.createRow(object);
                 }
 

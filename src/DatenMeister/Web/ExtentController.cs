@@ -41,7 +41,7 @@ namespace DatenMeister.Web
             return this.Json(new
             {
                 success = true,
-                extents = this.Pool.Extents.Select(x => ToJson(x))
+                extents = this.Pool.Extents.Select(x => x.ToJson())
             });
         }
 
@@ -56,7 +56,7 @@ namespace DatenMeister.Web
 
             // Converts to json object
             var data = new JsonExtentData();
-            data.extent = ToJson(extent);
+            data.extent = extent.ToJson();
 
             var elements = extent.Elements();
             var titles = elements.GetColumnTitles();
@@ -174,20 +174,6 @@ namespace DatenMeister.Web
         /// </summary>
         /// <param name="extent">Extent to be converted</param>
         /// <returns>Converted object</returns>
-        private static JsonExtentInfo ToJson(IURIExtent extent)
-        {
-            return new JsonExtentInfo()
-            {
-                uri = extent.ContextURI(),
-                type = extent.GetType().FullName
-            };
-        }
-
-        /// <summary>
-        /// Converts the extent to json object
-        /// </summary>
-        /// <param name="extent">Extent to be converted</param>
-        /// <returns>Converted object</returns>
         private static JsonExtentObject ToJson(IObject element)
         {
             var dict = new Dictionary<string, string>();
@@ -196,7 +182,7 @@ namespace DatenMeister.Web
                 dict[pair.PropertyName] = pair.Value.ToString();
             }
 
-            return new JsonExtentObject(element.Id, dict);            
+            return new JsonExtentObject(element.Id, dict);
         }
     }
 }

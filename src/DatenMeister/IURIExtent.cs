@@ -10,6 +10,10 @@ namespace DatenMeister
     {
         string ContextURI();
 
+        /// <summary>
+        /// Gets all elements of the extent
+        /// </summary>
+        /// <returns>Enumeration of extents</returns>
         IEnumerable<IObject> Elements();
 
         /// <summary>

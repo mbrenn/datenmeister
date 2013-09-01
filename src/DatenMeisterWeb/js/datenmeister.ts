@@ -99,34 +99,13 @@ export class ServerAPI {
         });
     }
 
-    getExtentInfo(success: (info: Array<ExtentInfo>) => void , fail?: () => void ) {
-        ajax.performRequest({
-            url: this.__getUrl() + "extent/GetExtentInfos",
-            prefix: 'loadextentinfos_',
-            fail: function () {
-                if (fail !== undefined)
-                {
-                    fail();
-                }
-            },
-            success: function (data) {
-                if (success !== undefined)
-                {
-                    success(<Array<ExtentInfo>> data.extents);
-                }
-            }
-        });
-    }
-
-    getObjectsInExtent(uri: string, success: (extentData: JsonExtentData) => void , fail?: () => void ) {
+    getObjectsInExtent(uri: string, success: (extentData: JsonExtentData) => void, fail?: () => void) {
         ajax.performRequest({
             url: this.__getUrl() + "extent/GetObjectsInExtent?uri=" + uri,
             prefix: 'loadobjects_',
             success: function (data: any) {
-                if (success !== undefined)
-                {
-                    for (var n = 0; n < data.objects.length; n++)
-                    {
+                if (success !== undefined) {
+                    for (var n = 0; n < data.objects.length; n++) {
                         var currentObject = data.objects[n];
                         var result = new JsonExtentObject();
                         result.id = currentObject.id;
@@ -139,22 +118,20 @@ export class ServerAPI {
                 }
             },
             fail: function () {
-                if (fail !== undefined)
-                {
+                if (fail !== undefined) {
                     fail();
                 }
             }
         });
     }
 
-    deleteObject(uri: string, success: () => void , fail?: () => void ) {
+    deleteObject(uri: string, success: () => void, fail?: () => void) {
         ajax.performRequest({
             url: this.__getUrl() + "extent/DeleteObject?uri=" + encodeURIComponent(uri),
             prefix: 'deleteobject_',
             method: 'post',
             success: function () {
-                if (success !== undefined)
-                {
+                if (success !== undefined) {
                     success();
                 }
             },
@@ -163,7 +140,7 @@ export class ServerAPI {
                     fail();
                 }
             }
-        });       
+        });
     }
 
     editObject(uri: string, data: any, success: () => void, fail?: () => void) {
@@ -248,40 +225,36 @@ export module Forms {
 
 // Creates dynamic parts of the gui
 export module Gui {
-    // Shows the extents of the server at the given DOM element
-    export function showExtents(domElement: JQuery) {
-        singletonAPI.getExtentInfo(
-            function (data) {
-                var table = new DataTable(null, domElement);
-                table.allowDelete = false;
-                table.allowEdit = false;
-                table.allowNew = false;
-                table.defineColumns(
-                    [
-                        new JsonExtentFieldInfo("uri"),
-                        new JsonExtentFieldInfo("type"),
-                    ]);
 
-                for (var n = 0; n < data.length; n++)
-                {
-                    var obj = new JsonExtentObject()
-                    obj.id = data[n].uri;
-                    obj.values = data[n];
-                    table.addObject(obj);
-                }
-
-                table.setItemClickedEvent(function (object: JsonExtentObject) {
-                    var uri = object.values.uri;
-                    showObjectsByUri(uri, $("#object_list_table"));
-                });
-
-                table.renderTable();
-            },
-            function () { }
-            );
+    export class TableOptions {
+        allowEdit: boolean;
+        allowNew: boolean;
+        allowDelete: boolean;
     }
 
-    export function showObjectsByUri(uri: string, domElement: JQuery) {
+    // Shows the extents of the server at the given DOM element
+    export function showExtents(domElement: JQuery): void {
+
+        singletonAPI.getObjectsInExtent("datenmeister:///pool",
+            function (data) {
+                var table = showObjects(
+                    data,
+                    $("#extent_list_table"),
+                    {
+                        allowNew: false,
+                        allowEdit: false,
+                        allowDelete: false
+                    });
+
+                table.setItemClickedEvent(function (object: JsonExtentObject) {
+                    showObjectsByUri(object.values.uri, $("#object_list_table"));
+                });
+            },
+            function () {
+            });
+    }
+
+    export function showObjectsByUri(uri: string, domElement: JQuery): void {
         singletonAPI.getObjectsInExtent(
             uri,
             function (data) {
@@ -290,20 +263,36 @@ export module Gui {
     }
 
     // Shows the object of an extent in a table, created into domElement
-    export function showObjects(data: JsonExtentData, domElement: JQuery) {
+    export function showObjects(data: JsonExtentData, domElement: JQuery, options?: TableOptions): DataTable {
+        if (options === undefined) {
+            options = new TableOptions();
+        }
+
         var table = new DataTable(data.extent, domElement);
 
+        // Options configuration
+        if (options.allowNew === false) {
+            table.allowNew = options.allowNew;
+        }
+
+        if (options.allowEdit === false) {
+            table.allowEdit = options.allowEdit;
+        }
+
+        if (options.allowDelete === false) {
+            table.allowDelete = options.allowDelete;
+        }
+
+        // Create the columns
         var columns = new Array<JsonExtentFieldInfo>();
-        for (var n = 0; n < data.columns.length; n++)
-        {
+        for (var n = 0; n < data.columns.length; n++) {
             var column = data.columns[n];
             var info = new JsonExtentFieldInfo(column.name);
             columns.push(info);
         }
 
         table.defineColumns(columns);
-        for (var n = 0; n < data.objects.length; n++)
-        {
+        for (var n = 0; n < data.objects.length; n++) {
             var func = function (obj: JsonExtentObject) {
                 table.addObject(obj);
             }
@@ -316,7 +305,9 @@ export module Gui {
 
         domElement.empty();
         table.renderTable();
-    }    
+
+        return table;
+    }
 
     export class DataTable {
         domTable: JQuery;
@@ -379,7 +370,6 @@ export module Gui {
              */
             for (var m = 0; m < this.objects.length; m++) {
                 var object = this.objects[m];
-
                 this.createRow(object);
             } // for (all objects)
 
@@ -455,7 +445,6 @@ export module Gui {
                         for (var n = 0; n < columnDoms.length; n++) {
                             var column = tthis.columns[n];
                             tthis.setValueByWriteField(object, column, writeFields[n]);
-
                         }
 
                         singletonAPI.editObject(
@@ -527,7 +516,7 @@ export module Gui {
         // performs a request on server to add the values to database
         // Also, the form is resetted, the uploaded information is shown as read-only fields
         // and the 'CREATE' button is reinserted
-        createNewElement(inputs: Array<JQuery>, cells : Array<JQuery>): void {
+        createNewElement(inputs: Array<JQuery>, cells: Array<JQuery>): void {
             var tthis = this;
             var value = new JsonExtentObject();
             for (var n = 0; n < this.columns.length; n++) {
@@ -564,25 +553,24 @@ export module Gui {
         createWriteField(object: JsonExtentObject, field: JsonExtentFieldInfo): JQuery {
             var value = object.values[field.name];
             var inputField = $("<input type='text' />");
-            if (value !== undefined && value !== null)
-            {
+            if (value !== undefined && value !== null) {
                 inputField.val(value);
             }
 
             return inputField;
         }
 
-        setValueByWriteField(object: JsonExtentObject, field: JsonExtentFieldInfo, dom: JQuery) {
+        setValueByWriteField(object: JsonExtentObject, field: JsonExtentFieldInfo, dom: JQuery): void {
             object.values[field.name] = dom.val();
         }
 
-        setItemClickedEvent(clickedEvent: (object: JsonExtentObject) => void ) {
+        setItemClickedEvent(clickedEvent: (object: JsonExtentObject) => void): void {
             this.itemClickedEvent = clickedEvent;
         }
 
         // Called, when user wants to delete one object and has clicked on the delete icon. 
         // This method executes the server request. 
         triggerDelete(object: JsonExtentObject): void {
-        }        
+        }
     }
 }

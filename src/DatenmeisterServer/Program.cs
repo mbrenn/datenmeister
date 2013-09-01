@@ -5,6 +5,7 @@ using BurnSystems.WebServer.Filters;
 using BurnSystems.WebServer.Modules.MVC;
 using DatenMeister;
 using DatenMeister.DataProvider.CSV;
+using DatenMeister.Logic;
 using DatenMeister.Web;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,11 @@ namespace DatenmeisterServer
                     HasHeader = true
                 };
 
+            // Adds pool
+            var poolExtent = new DatenMeisterPoolExtent(pool);
+            pool.Add(poolExtent);
+
+            // Adds the csv-extent
             IURIExtent extent;
             if (File.Exists("data/test_save.csv"))
             {

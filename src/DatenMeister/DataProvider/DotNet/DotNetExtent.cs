@@ -70,6 +70,5 @@ namespace DatenMeister.DataProvider.DotNet
                 this.elements.Remove(element);
             }
         }
-
     }
 }

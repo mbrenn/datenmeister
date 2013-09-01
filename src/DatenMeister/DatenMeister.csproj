@@ -48,9 +48,11 @@
     <Compile Include="DataProvider\GenericObject.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DatenMeisterPool.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IURIExtent.cs" />
+    <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
     <Compile Include="Logic\Factory.cs" />
     <Compile Include="Logic\ObjectHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

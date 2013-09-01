@@ -36,7 +36,6 @@ export declare class ServerAPI {
     constructor(connection: ServerSettings);
     public __getUrl(): string;
     public getServerInfo(success: (info: ServerInfo) => void, fail?: () => void): void;
-    public getExtentInfo(success: (info: ExtentInfo[]) => void, fail?: () => void): void;
     public getObjectsInExtent(uri: string, success: (extentData: JsonExtentData) => void, fail?: () => void): void;
     public deleteObject(uri: string, success: () => void, fail?: () => void): void;
     public editObject(uri: string, data: any, success: () => void, fail?: () => void): void;
@@ -51,9 +50,14 @@ export declare module Forms {
     }
 }
 export declare module Gui {
+    class TableOptions {
+        public allowEdit: boolean;
+        public allowNew: boolean;
+        public allowDelete: boolean;
+    }
     function showExtents(domElement: JQuery): void;
     function showObjectsByUri(uri: string, domElement: JQuery): void;
-    function showObjects(data: JsonExtentData, domElement: JQuery): void;
+    function showObjects(data: JsonExtentData, domElement: JQuery, options?: TableOptions): DataTable;
     class DataTable {
         public domTable: JQuery;
         public columns: JsonExtentFieldInfo[];
