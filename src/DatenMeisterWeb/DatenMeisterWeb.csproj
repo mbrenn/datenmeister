@@ -65,12 +65,20 @@
     <Content Include="img\glyphicons-halflings-white.png" />
     <Content Include="img\glyphicons-halflings.png" />
     <Content Include="index.html" />
+    <TypeScriptCompile Include="js\datenmeister.forms.ts" />
+    <TypeScriptCompile Include="js\datenmeister.gui.ts" />
     <Content Include="js\datenmeister.js" />
     <TypeScriptCompile Include="js\datenmeister.ts" />
     <TypeScriptCompile Include="js\init.ts" />
+    <TypeScriptCompile Include="js\datenmeister.objects.ts" />
+    <TypeScriptCompile Include="js\datenmeister.serverapi.ts" />
     <Content Include="js\init.js" />
+    <Content Include="js\lib\backbone-min.js" />
+    <Content Include="js\lib\backbone.d.ts" />
+    <Content Include="js\lib\backbone.js" />
     <Content Include="js\lib\bootstrap.js" />
     <Content Include="js\lib\bootstrap.min.js" />
+    <TypeScriptCompile Include="js\datenmeister.datatable.ts" />
     <Content Include="js\lib\dejs.ajax.js" />
     <Content Include="js\lib\dejs.gallery.js" />
     <Content Include="js\lib\dejs.number.js" />
@@ -86,6 +94,9 @@
     <Content Include="js\lib\jquery.scrollto.js" />
     <Content Include="js\lib\require.js" />
     <Content Include="js\lib\require.min.js" />
+    <Content Include="js\lib\underscore-min.js" />
+    <Content Include="js\lib\underscore.d.ts" />
+    <Content Include="js\lib\underscore.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -126,7 +137,7 @@
   </ProjectExtensions>
   <Target Name="TypeScriptCompile" BeforeTargets="CoreCompile">
     <Message Text="Compiling TypeScript files" />
-    <Exec Command="&quot;%AppData%\npm\tsc.cmd&quot; @(TypeScriptCompile ->'&quot;%(fullpath)&quot;', ' ') --module amd --declaration" />
+    <Exec Command="&quot;%AppData%\npm\tsc.cmd&quot; @(TypeScriptCompile ->'&quot;%(fullpath)&quot;', ' ') --module amd --declaration --sourcemap" />
   </Target>
   <Target Name="LessCompile" BeforeTargets="CoreCompile">
     <Message Text="Compiling .less files" />

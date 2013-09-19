@@ -1,16 +1,20 @@
-﻿/// <reference path="lib/jquery.d.ts" />
-/// <reference path="lib/require.d.ts" />
+﻿/// <reference path="lib/require.d.ts" />
 /// <reference path="datenmeister.ts" />
 
 import dm = require("datenmeister");
+import forms = require("datenmeister.forms");
+import gui = require("datenmeister.gui");
 
 $(document).ready(
     function () {
-        var form = new dm.Forms.ServerConnectionForm($("#server_selection"));
-        form.onConnect = function (settings) {
-            $("#extent_list_table").empty();
-            dm.Gui.showExtents($("#extent_list_table"));
-        };
+        var type: Backbone.ViewOptions =
+            {
+                el: "#server_selection"
+            };
 
-        form.bind();
+        var form = new forms .ServerConnectionView(type);
+
+        form.onConnect = function (settings) {
+            gui.showExtents($("#extent_list_table"));
+        };
     });

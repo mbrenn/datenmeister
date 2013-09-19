@@ -1,16 +1,20 @@
-﻿/// <reference path="lib/jquery.d.ts" />
-/// <reference path="lib/require.d.ts" />
+﻿/// <reference path="lib/require.d.ts" />
 /// <reference path="datenmeister.ts" />
-define(["require", "exports", "datenmeister"], function(require, exports, __dm__) {
-    var dm = __dm__;
+define(["require", "exports", "datenmeister.forms", "datenmeister.gui"], function(require, exports, __forms__, __gui__) {
+    
+    var forms = __forms__;
+    var gui = __gui__;
 
     $(document).ready(function () {
-        var form = new dm.Forms.ServerConnectionForm($("#server_selection"));
-        form.onConnect = function (settings) {
-            $("#extent_list_table").empty();
-            dm.Gui.showExtents($("#extent_list_table"));
+        var type = {
+            el: "#server_selection"
         };
 
-        form.bind();
+        var form = new forms.ServerConnectionView(type);
+
+        form.onConnect = function (settings) {
+            gui.showExtents($("#extent_list_table"));
+        };
     });
 });
+//# sourceMappingURL=init.js.map
