@@ -7,6 +7,16 @@ var __extends = this.__extends || function (d, b) {
 define(["require", "exports", "datenmeister.serverapi"], function(require, exports, __api__) {
     var api = __api__;
 
+    /*
+    * Has to be called before every view,
+    * resets the visibility for each form
+    */
+    function prepareForViewChange() {
+        $("#content div").hide();
+    }
+    exports.prepareForViewChange = prepareForViewChange;
+
+    /* Defines the view which allows the user to connect to the server */
     var ServerConnectionView = (function (_super) {
         __extends(ServerConnectionView, _super);
         function ServerConnectionView(options) {
@@ -19,6 +29,11 @@ define(["require", "exports", "datenmeister.serverapi"], function(require, expor
             this.render();
         }
         ServerConnectionView.prototype.render = function () {
+            exports.prepareForViewChange();
+
+            // Shows the current form
+            this.$el.show();
+
             var tthis = this;
             this.$(".serveraddress").val(window.localStorage.getItem("serverconnection_serveraddress"));
             return this;

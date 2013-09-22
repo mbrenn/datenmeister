@@ -1,6 +1,15 @@
 
 import api = require("datenmeister.serverapi");
 
+/* 
+ * Has to be called before every view,
+ * resets the visibility for each form
+ */
+export function prepareForViewChange() {
+    $("#content div").hide();
+}
+
+/* Defines the view which allows the user to connect to the server */
 export class ServerConnectionView extends Backbone.View {
 
     // Call back, when user has depressed connect button
@@ -21,6 +30,11 @@ export class ServerConnectionView extends Backbone.View {
     }
 
     render(): Backbone.View {
+        prepareForViewChange();
+
+        // Shows the current form
+        this.$el.show();
+
         var tthis = this;
         this.$(".serveraddress").val(window.localStorage.getItem("serverconnection_serveraddress"));
         return this;
