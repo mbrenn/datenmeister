@@ -56,6 +56,14 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects"], function
                 prefix: 'loadobjects_',
                 success: function (data) {
                     if (success !== undefined) {
+                        data.extent = new d.JsonExtentFieldInfo(data.extent);
+
+                        for (var m = 0; m < data.columns.length; m++) {
+                            var columnBackbone = new d.JsonExtentFieldInfo(data.columns[m]);
+
+                            data.columns[m] = columnBackbone;
+                        }
+
                         for (var n = 0; n < data.objects.length; n++) {
                             var currentObject = data.objects[n];
                             var result = new d.JsonExtentObject();
@@ -96,7 +104,8 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects"], function
             });
         };
 
-        ServerAPI.prototype.editObject = function (uri, data, success, fail) {
+        ServerAPI.prototype.editObject = function (uri, object, success, fail) {
+            var data = object.attributes;
             ajax.performRequest({
                 url: this.__getUrl() + "extent/EditObject?uri=" + encodeURIComponent(uri),
                 prefix: 'editobject_',

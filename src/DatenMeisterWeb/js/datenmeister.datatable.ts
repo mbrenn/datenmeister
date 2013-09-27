@@ -7,7 +7,6 @@ import d = require("datenmeister.objects");
 import api = require("datenmeister.serverapi");
 import t = require('lib/dejs.table');
 
-
 export class TableOptions {
     allowEdit: boolean;
     allowNew: boolean;
@@ -23,19 +22,36 @@ export class DataTable {
 
     itemClickedEvent: (object: d.JsonExtentObject) => void;
 
-    allowEdit: boolean = true;
-    allowDelete: boolean = true;
-    allowNew: boolean = true;
+    options: TableOptions;
 
     extent: d.ExtentInfo;
 
     table: t.Table;
 
-    constructor(extent: d.ExtentInfo, domTable: JQuery) {
+    constructor(extent: d.ExtentInfo, domTable: JQuery, options? : TableOptions) {
         this.domTable = domTable;
         this.columns = new Array<d.JsonExtentFieldInfo>();
         this.objects = new Array<any>();
         this.extent = extent;
+
+        if (options === undefined) {
+            this.options = new TableOptions();
+        }
+        else {
+            this.options = options;
+        }
+
+        if (this.options.allowDelete === undefined) {
+            this.options.allowDelete = true;
+        }
+
+        if (this.options.allowEdit === undefined) {
+            this.options.allowEdit = true;
+        }
+
+        if (this.options.allowNew === undefined) {
+            this.options.allowNew = true;
+        }
     }
 
     defineColumns(columns: Array<d.JsonExtentFieldInfo>) {
@@ -59,14 +75,14 @@ export class DataTable {
          */
         tthis.table.addHeaderRow();
         for (var n = 0; n < this.columns.length; n++) {
-            tthis.table.addColumn(this.columns[n].title);
+            tthis.table.addColumn(this.columns[n].getTitle());
         }
 
-        if (this.allowDelete) {
+        if (this.options.allowDelete) {
             tthis.table.addColumnHtml("");
         }
 
-        if (this.allowEdit) {
+        if (this.options.allowEdit) {
             tthis.table.addColumnHtml("");
         }
 
@@ -79,7 +95,7 @@ export class DataTable {
         } // for (all objects)
 
         // Adds last line for adding, if necessary
-        if (this.allowNew) {
+        if (this.options.allowNew) {
             this.createCreateButton();
         }
     }
@@ -104,7 +120,7 @@ export class DataTable {
         }
 
         // Adds delete button
-        if (tthis.allowDelete) {
+        if (tthis.options.allowDelete) {
             var delColumn = tthis.table.addColumnHtml("<em>DEL</em>");
             var clicked = false;
             delColumn.click(function () {
@@ -121,7 +137,7 @@ export class DataTable {
         }
 
         // Adds allow edit button
-        if (tthis.allowEdit) {
+        if (tthis.options.allowEdit) {
             var editColumn = tthis.table.addColumnHtml("<em>EDIT</em>");
             var currentlyInEdit = false;
             var writeFields: Array<JQuery>;
@@ -154,7 +170,7 @@ export class DataTable {
 
                     api.singletonAPI.editObject(
                         object.getUri(),
-                        object.values,
+                        object,
                         function () {
                             for (var n = 0; n < columnDoms.length; n++) {
                                 var dom = columnDoms[n];
@@ -230,8 +246,8 @@ export class DataTable {
         }
 
         api.singletonAPI.addObject(
-            this.extent.getUri(),
-            value.values,
+            this.extent.get('uri'),
+            value.attributes,
             function (data) {
                 tthis.createRow(value);
 
@@ -243,7 +259,7 @@ export class DataTable {
 
     createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
         var span = $("<span />");
-        var value = object.get(field.name);
+        var value = object.get(field.getName());
         if (value === undefined || value === null) {
             span.html("<em>undefined</em>");
         }
@@ -255,7 +271,7 @@ export class DataTable {
     }
 
     createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
-        var value = object.get(field.name);
+        var value = object.get(field.getName());
         var inputField = $("<input type='text' />");
         if (value !== undefined && value !== null) {
             inputField.val(value);
@@ -265,7 +281,7 @@ export class DataTable {
     }
 
     setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo, dom: JQuery): void {
-        object.set(field.name) = dom.val();
+        object.set(field.getName(), dom.val());
     }
 
     setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void {

@@ -6,7 +6,6 @@ import api = require("datenmeister.serverapi");
 import t = require("datenmeister.datatable");
 import d = require("datenmeister.objects");
 import forms = require("datenmeister.forms");
-import gui = require("datenmeister.gui");
 
 // Serverconnection form
 export function init() {
@@ -37,16 +36,14 @@ class AppRouter extends Backbone.Router {
     }
 
     showLoginForm() {
-
-        var type: Backbone.ViewOptions =
-            {
-                el: "#serverconnectionview"
-            };
-
-        var form = new forms.ServerConnectionView(type);
+        var form = new forms.ServerConnectionView({
+            el: "#serverconnectionview"
+        });
 
         form.onConnect = function (settings) {
-            gui.showExtents($("#extent_list_table"));
+            var allExtents = new forms.AllExtentsView({
+                el: "#extentlist"
+            });
         };
     }
 }

@@ -4,14 +4,13 @@ export declare class ExtentInfo extends Backbone.Model {
     public getUri(): string;
     public getType(): string;
 }
-export declare class ExtentInfoCollection extends Backbone.Collection {
-    public model: ExtentInfo;
-}
-export declare class JsonExtentFieldInfo {
-    public name: string;
-    public title: string;
+export declare class JsonExtentFieldInfo extends Backbone.Model {
+    public getName(): string;
+    public getTitle(): string;
+    public setName(name: string): void;
+    public setTitle(title: string): void;
     public width: number;
-    constructor(name?: string, title?: string);
+    constructor(attributes?: any, options?: any);
 }
 export declare class JsonExtentObject extends Backbone.Model {
     public id: string;

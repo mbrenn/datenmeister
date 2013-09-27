@@ -19,5 +19,14 @@ namespace DatenMeister.Web
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the title of the column as shown in header
+        /// </summary>
+        public string title
+        {
+            get;
+            set;
+        }
     }
 }

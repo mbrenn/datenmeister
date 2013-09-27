@@ -7,12 +7,11 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.forms", "datenmeister.gui"], function(require, exports, __forms__, __gui__) {
+define(["require", "exports", "datenmeister.forms"], function(require, exports, __forms__) {
     
     
     
     var forms = __forms__;
-    var gui = __gui__;
 
     // Serverconnection form
     function init() {
@@ -42,14 +41,14 @@ define(["require", "exports", "datenmeister.forms", "datenmeister.gui"], functio
         };
 
         AppRouter.prototype.showLoginForm = function () {
-            var type = {
+            var form = new forms.ServerConnectionView({
                 el: "#serverconnectionview"
-            };
-
-            var form = new forms.ServerConnectionView(type);
+            });
 
             form.onConnect = function (settings) {
-                gui.showExtents($("#extent_list_table"));
+                var allExtents = new forms.AllExtentsView({
+                    el: "#extentlist"
+                });
             };
         };
         return AppRouter;

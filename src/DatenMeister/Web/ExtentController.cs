@@ -62,7 +62,8 @@ namespace DatenMeister.Web
             var titles = elements.GetColumnTitles();
             data.columns.AddRange(titles.Select(x => new JsonExtentColumnInfo()
             {
-                name = x
+                name = x,
+                title = x
             }));
 
             foreach (var element in elements)

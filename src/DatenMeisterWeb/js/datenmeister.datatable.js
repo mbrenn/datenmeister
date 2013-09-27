@@ -15,14 +15,29 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
     exports.TableOptions = TableOptions;
 
     var DataTable = (function () {
-        function DataTable(extent, domTable) {
-            this.allowEdit = true;
-            this.allowDelete = true;
-            this.allowNew = true;
+        function DataTable(extent, domTable, options) {
             this.domTable = domTable;
             this.columns = new Array();
             this.objects = new Array();
             this.extent = extent;
+
+            if (options === undefined) {
+                this.options = new TableOptions();
+            } else {
+                this.options = options;
+            }
+
+            if (this.options.allowDelete === undefined) {
+                this.options.allowDelete = true;
+            }
+
+            if (this.options.allowEdit === undefined) {
+                this.options.allowEdit = true;
+            }
+
+            if (this.options.allowNew === undefined) {
+                this.options.allowNew = true;
+            }
         }
         DataTable.prototype.defineColumns = function (columns) {
             this.columns = columns;
@@ -45,14 +60,14 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             */
             tthis.table.addHeaderRow();
             for (var n = 0; n < this.columns.length; n++) {
-                tthis.table.addColumn(this.columns[n].title);
+                tthis.table.addColumn(this.columns[n].getTitle());
             }
 
-            if (this.allowDelete) {
+            if (this.options.allowDelete) {
                 tthis.table.addColumnHtml("");
             }
 
-            if (this.allowEdit) {
+            if (this.options.allowEdit) {
                 tthis.table.addColumnHtml("");
             }
 
@@ -61,7 +76,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 this.createRow(object);
             }
 
-            if (this.allowNew) {
+            if (this.options.allowNew) {
                 this.createCreateButton();
             }
         };
@@ -83,7 +98,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 });
             }
 
-            if (tthis.allowDelete) {
+            if (tthis.options.allowDelete) {
                 var delColumn = tthis.table.addColumnHtml("<em>DEL</em>");
                 var clicked = false;
                 delColumn.click(function () {
@@ -98,7 +113,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 });
             }
 
-            if (tthis.allowEdit) {
+            if (tthis.options.allowEdit) {
                 var editColumn = tthis.table.addColumnHtml("<em>EDIT</em>");
                 var currentlyInEdit = false;
                 var writeFields;
@@ -125,7 +140,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                             tthis.setValueByWriteField(object, column, writeFields[n]);
                         }
 
-                        api.singletonAPI.editObject(object.getUri(), object.values, function () {
+                        api.singletonAPI.editObject(object.getUri(), object, function () {
                             for (var n = 0; n < columnDoms.length; n++) {
                                 var dom = columnDoms[n];
                                 var column = tthis.columns[n];
@@ -199,7 +214,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 this.setValueByWriteField(value, column, input);
             }
 
-            api.singletonAPI.addObject(this.extent.getUri(), value.values, function (data) {
+            api.singletonAPI.addObject(this.extent.get('uri'), value.attributes, function (data) {
                 tthis.createRow(value);
 
                 tthis.createCreateButton();
@@ -209,7 +224,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
 
         DataTable.prototype.createReadField = function (object, field) {
             var span = $("<span />");
-            var value = object.get(field.name);
+            var value = object.get(field.getName());
             if (value === undefined || value === null) {
                 span.html("<em>undefined</em>");
             } else {
@@ -220,7 +235,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         };
 
         DataTable.prototype.createWriteField = function (object, field) {
-            var value = object.get(field.name);
+            var value = object.get(field.getName());
             var inputField = $("<input type='text' />");
             if (value !== undefined && value !== null) {
                 inputField.val(value);
@@ -230,7 +245,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         };
 
         DataTable.prototype.setValueByWriteField = function (object, field, dom) {
-            object.set(field.name) = dom.val();
+            object.set(field.getName(), dom.val());
         };
 
         DataTable.prototype.setItemClickedEvent = function (clickedEvent) {

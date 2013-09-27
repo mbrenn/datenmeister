@@ -4,8 +4,10 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.serverapi"], function(require, exports, __api__) {
+define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"], function(require, exports, __api__, __t__) {
     var api = __api__;
+    
+    var t = __t__;
 
     /*
     * Has to be called before every view,
@@ -60,5 +62,96 @@ define(["require", "exports", "datenmeister.serverapi"], function(require, expor
         return ServerConnectionView;
     })(Backbone.View);
     exports.ServerConnectionView = ServerConnectionView;
+
+    var ExtentTableView = (function (_super) {
+        __extends(ExtentTableView, _super);
+        function ExtentTableView(options) {
+            _.extend(this, options);
+
+            _super.call(this, options);
+
+            if (this.url !== undefined && this.extentElement === undefined) {
+                this.loadAndRender();
+            } else if (this.extentElement !== undefined && this.tableOptions !== undefined) {
+                this.render();
+            } else {
+                throw "ExtentTableView has no url and no object to render";
+            }
+        }
+        ExtentTableView.prototype.loadAndRender = function () {
+            var tthis = this;
+
+            api.singletonAPI.getObjectsInExtent(this.url, function (data) {
+                tthis.data = data;
+                tthis.render();
+            });
+            return this;
+        };
+
+        ExtentTableView.prototype.render = function () {
+            var tthis = this;
+            exports.prepareForViewChange();
+
+            var table = this.showObjects();
+
+            this.$(".datatable").empty();
+            this.$(".datatable").append(table);
+            this.$el.show();
+
+            return this;
+        };
+
+        ExtentTableView.prototype.showObjects = function () {
+            var tthis = this;
+            var table = new t.DataTable(this.data.extent, this.$el, this.tableOptions);
+
+            // Create the columns
+            table.defineColumns(this.data.columns);
+
+            for (var n = 0; n < this.data.objects.length; n++) {
+                var func = function (obj) {
+                    table.addObject(obj);
+                };
+
+                func(this.data.objects[n]);
+            }
+
+            table.setItemClickedEvent(function (object) {
+                tthis.trigger('rowclicked', object);
+            });
+
+            table.renderTable();
+
+            return table;
+        };
+        return ExtentTableView;
+    })(Backbone.View);
+    exports.ExtentTableView = ExtentTableView;
+
+    var AllExtentsView = (function (_super) {
+        __extends(AllExtentsView, _super);
+        function AllExtentsView(options) {
+            // Defines the default url
+            this.url = "datenmeister:///pool";
+
+            _super.call(this, options);
+
+            if (this.tableOptions === undefined) {
+                this.tableOptions = new t.TableOptions();
+                this.tableOptions.allowNew = false;
+                this.tableOptions.allowEdit = false;
+                this.tableOptions.allowDelete = false;
+            }
+
+            this.bind('rowclicked', function (clickedObject) {
+                var detailView = new ExtentTableView({
+                    el: $("#objectlist"),
+                    url: clickedObject.get('uri')
+                });
+            });
+        }
+        return AllExtentsView;
+    })(ExtentTableView);
+    exports.AllExtentsView = AllExtentsView;
 });
 //# sourceMappingURL=datenmeister.forms.js.map

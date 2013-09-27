@@ -14,12 +14,10 @@ export declare class DataTable {
     public columns: d.JsonExtentFieldInfo[];
     public objects: d.JsonExtentObject[];
     public itemClickedEvent: (object: d.JsonExtentObject) => void;
-    public allowEdit: boolean;
-    public allowDelete: boolean;
-    public allowNew: boolean;
+    public options: TableOptions;
     public extent: d.ExtentInfo;
     public table: t.Table;
-    constructor(extent: d.ExtentInfo, domTable: JQuery);
+    constructor(extent: d.ExtentInfo, domTable: JQuery, options?: TableOptions);
     public defineColumns(columns: d.JsonExtentFieldInfo[]): void;
     public addObject(object: d.JsonExtentObject): void;
     public renderTable(): void;

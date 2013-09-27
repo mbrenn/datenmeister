@@ -23,36 +23,38 @@ define(["require", "exports"], function(require, exports) {
     })(Backbone.Model);
     exports.ExtentInfo = ExtentInfo;
 
-    var ExtentInfoCollection = (function (_super) {
-        __extends(ExtentInfoCollection, _super);
-        function ExtentInfoCollection() {
-            _super.apply(this, arguments);
-        }
-        return ExtentInfoCollection;
-    })(Backbone.Collection);
-    exports.ExtentInfoCollection = ExtentInfoCollection;
-
     // Defines the information for a column that has been received from server
-    var JsonExtentFieldInfo = (function () {
-        function JsonExtentFieldInfo(name, title) {
-            if (name !== undefined) {
-                this.name = name;
-            }
-
-            if (title === undefined) {
-                this.title = this.name;
-            }
+    var JsonExtentFieldInfo = (function (_super) {
+        __extends(JsonExtentFieldInfo, _super);
+        function JsonExtentFieldInfo(attributes, options) {
+            _super.call(this, attributes, options);
         }
+        JsonExtentFieldInfo.prototype.getName = function () {
+            return this.get('name');
+        };
+
+        JsonExtentFieldInfo.prototype.getTitle = function () {
+            return this.get('title');
+        };
+
+        JsonExtentFieldInfo.prototype.setName = function (name) {
+            return this.set('name', name);
+        };
+
+        JsonExtentFieldInfo.prototype.setTitle = function (title) {
+            return this.set('title', title);
+        };
         return JsonExtentFieldInfo;
-    })();
+    })(Backbone.Model);
     exports.JsonExtentFieldInfo = JsonExtentFieldInfo;
 
-    // Defines the information for a column that has been received from server
+    // Defines the information for an object within the extent
     var JsonExtentObject = (function (_super) {
         __extends(JsonExtentObject, _super);
         function JsonExtentObject() {
             _super.call(this);
         }
+        // Gets the uri of the extent itself
         JsonExtentObject.prototype.getUri = function () {
             return this.extentUri + "#" + this.id;
         };

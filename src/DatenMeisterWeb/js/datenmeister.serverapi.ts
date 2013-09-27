@@ -55,6 +55,14 @@ export class ServerAPI {
             prefix: 'loadobjects_',
             success: function (data: any) {
                 if (success !== undefined) {
+                    data.extent = new d.JsonExtentFieldInfo(data.extent);
+
+                    for (var m = 0; m < data.columns.length; m++) {
+                        var columnBackbone = new d.JsonExtentFieldInfo(data.columns[m]);
+
+                        data.columns[m] = columnBackbone;
+                    }
+
                     for (var n = 0; n < data.objects.length; n++) {
                         var currentObject = data.objects[n];
                         var result = new d.JsonExtentObject();
@@ -95,7 +103,8 @@ export class ServerAPI {
         });
     }
 
-    editObject(uri: string, data: any, success: () => void, fail?: () => void) {
+    editObject(uri: string, object: Backbone.Model, success: () => void, fail?: () => void) {
+        var data = object.attributes;
         ajax.performRequest({
             url: this.__getUrl() + "extent/EditObject?uri=" + encodeURIComponent(uri),
             prefix: 'editobject_',
