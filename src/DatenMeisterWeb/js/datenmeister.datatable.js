@@ -2,6 +2,12 @@
 /// <reference path="lib/underscore.d.ts" />
 /// <reference path="lib/dejs.table.d.ts" />
 /// <reference path="datenmeister.objects.ts" />
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
 define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 'lib/dejs.table'], function(require, exports, __d__, __api__, __t__) {
     var d = __d__;
     var api = __api__;
@@ -14,8 +20,43 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
     })();
     exports.TableOptions = TableOptions;
 
-    var DataTable = (function () {
+    var DataView = (function () {
+        function DataView() {
+        }
+        DataView.prototype.createReadField = function (object, field) {
+            var span = $("<span />");
+            var value = object.get(field.getName());
+            if (value === undefined || value === null) {
+                span.html("<em>undefined</em>");
+            } else {
+                span.text(value);
+            }
+
+            return span;
+        };
+
+        DataView.prototype.createWriteField = function (object, field) {
+            var value = object.get(field.getName());
+            var inputField = $("<input type='text' />");
+            if (value !== undefined && value !== null) {
+                inputField.val(value);
+            }
+
+            return inputField;
+        };
+
+        DataView.prototype.setValueByWriteField = function (object, field, dom) {
+            object.set(field.getName(), dom.val());
+        };
+        return DataView;
+    })();
+    exports.DataView = DataView;
+
+    var DataTable = (function (_super) {
+        __extends(DataTable, _super);
         function DataTable(extent, domTable, options) {
+            _super.call(this);
+
             this.domTable = domTable;
             this.columns = new Array();
             this.objects = new Array();
@@ -224,32 +265,6 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             });
         };
 
-        DataTable.prototype.createReadField = function (object, field) {
-            var span = $("<span />");
-            var value = object.get(field.getName());
-            if (value === undefined || value === null) {
-                span.html("<em>undefined</em>");
-            } else {
-                span.text(value);
-            }
-
-            return span;
-        };
-
-        DataTable.prototype.createWriteField = function (object, field) {
-            var value = object.get(field.getName());
-            var inputField = $("<input type='text' />");
-            if (value !== undefined && value !== null) {
-                inputField.val(value);
-            }
-
-            return inputField;
-        };
-
-        DataTable.prototype.setValueByWriteField = function (object, field, dom) {
-            object.set(field.getName(), dom.val());
-        };
-
         DataTable.prototype.setItemClickedEvent = function (clickedEvent) {
             this.itemClickedEvent = clickedEvent;
         };
@@ -259,7 +274,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         DataTable.prototype.triggerDelete = function (object) {
         };
         return DataTable;
-    })();
+    })(DataView);
     exports.DataTable = DataTable;
 });
 //# sourceMappingURL=datenmeister.datatable.js.map

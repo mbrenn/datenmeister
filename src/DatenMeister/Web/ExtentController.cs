@@ -123,6 +123,27 @@ namespace DatenMeister.Web
             return this.SuccessJson();
         }
 
+        [WebMethod]
+        public IActionResult GetObject(string uri)
+        {
+            IURIExtent extent;
+            var element = this.GetElementByUri(uri, out extent);
+
+            if (element != null)
+            {
+                var result = new
+                {
+                    success = true,
+                    id = element.Id,
+                    extentUri = extent.ContextURI(),
+                    values = element.GetAll().ToDictionary(x => x.PropertyName, x => x.Value)
+                };
+                return this.Json(result);
+            }
+
+            return this.SuccessJson(false);
+        }
+
         /// <summary>
         /// Gets an element by the uri of the element
         /// </summary>

@@ -5,7 +5,7 @@
 import api = require("datenmeister.serverapi");
 import t = require("datenmeister.datatable");
 import d = require("datenmeister.objects");
-import forms = require("datenmeister.forms");
+import views = require("datenmeister.views");
 import navigation = require("datenmeister.navigation");
 
 // Serverconnection form
@@ -18,13 +18,13 @@ export function init() {
         navigation.add(Backbone.history.getFragment());
     }
 
-    new forms.BackButtonView(
+    new views.BackButtonView(
         {
             el: "#backview"
         });
 }
 
-var loginForm: forms.ServerConnectionView;
+var loginForm: views.ServerConnectionView;
 
 class AppRouter extends Backbone.Router {
     constructor(options?: Backbone.RouterOptions) {
@@ -36,29 +36,39 @@ class AppRouter extends Backbone.Router {
         {
             "login": "showLoginForm",
             "all": "showAllExtents",
-            "extent/*extent": "showExtent"
+            "extent/*extent": "showExtent",
+            "view/*object": "showObject"
         };
 
         super(options);
     }
 
-    showAllExtents() {
-        var allExtents = new forms.AllExtentsView({
+    showAllExtents(): views.AllExtentsView {
+        return new views.AllExtentsView({
             el: "#extentlist"
         });
     }
 
-    showExtent(extentUri: string) {
-        var detailView = new forms.ExtentTableView(
+    showExtent(extentUri: string): views.ExtentTableView {
+        return new views.ExtentTableView(
             {
                 el: "#objectlist",
                 url: extentUri
             });
     }
 
-    showLoginForm() {
+    showObject(objectUri: string): views.DetailView {
+
+        return new views.DetailView(
+            {
+                el: "#detailview",
+                url: objectUri
+            });
+    }
+
+    showLoginForm(): views.ServerConnectionView {
         if (loginForm == undefined) {
-            loginForm = new forms.ServerConnectionView({
+            loginForm = new views.ServerConnectionView({
                 el: "#serverconnectionview"
             });
 
@@ -70,5 +80,7 @@ class AppRouter extends Backbone.Router {
         else {
             loginForm.render();
         }
+
+        return loginForm;
     }
 }

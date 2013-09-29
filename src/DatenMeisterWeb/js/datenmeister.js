@@ -7,11 +7,11 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.forms", "datenmeister.navigation"], function(require, exports, __forms__, __navigation__) {
+define(["require", "exports", "datenmeister.views", "datenmeister.navigation"], function(require, exports, __views__, __navigation__) {
     
     
     
-    var forms = __forms__;
+    var views = __views__;
     var navigation = __navigation__;
 
     // Serverconnection form
@@ -24,7 +24,7 @@ define(["require", "exports", "datenmeister.forms", "datenmeister.navigation"], 
             navigation.add(Backbone.history.getFragment());
         }
 
-        new forms.BackButtonView({
+        new views.BackButtonView({
             el: "#backview"
         });
     }
@@ -42,27 +42,35 @@ define(["require", "exports", "datenmeister.forms", "datenmeister.navigation"], 
             options.routes = {
                 "login": "showLoginForm",
                 "all": "showAllExtents",
-                "extent/*extent": "showExtent"
+                "extent/*extent": "showExtent",
+                "view/*object": "showObject"
             };
 
             _super.call(this, options);
         }
         AppRouter.prototype.showAllExtents = function () {
-            var allExtents = new forms.AllExtentsView({
+            return new views.AllExtentsView({
                 el: "#extentlist"
             });
         };
 
         AppRouter.prototype.showExtent = function (extentUri) {
-            var detailView = new forms.ExtentTableView({
+            return new views.ExtentTableView({
                 el: "#objectlist",
                 url: extentUri
             });
         };
 
+        AppRouter.prototype.showObject = function (objectUri) {
+            return new views.DetailView({
+                el: "#detailview",
+                url: objectUri
+            });
+        };
+
         AppRouter.prototype.showLoginForm = function () {
             if (loginForm == undefined) {
-                loginForm = new forms.ServerConnectionView({
+                loginForm = new views.ServerConnectionView({
                     el: "#serverconnectionview"
                 });
 
@@ -72,6 +80,8 @@ define(["require", "exports", "datenmeister.forms", "datenmeister.navigation"], 
             } else {
                 loginForm.render();
             }
+
+            return loginForm;
         };
         return AppRouter;
     })(Backbone.Router);

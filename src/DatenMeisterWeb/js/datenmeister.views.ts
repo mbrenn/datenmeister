@@ -78,19 +78,19 @@ export class ServerConnectionView extends Backbone.View {
     }
 }
 
-export interface ExtentTableViewOptions extends Backbone.ViewOptions {
+export interface DefaultTableViewOptions extends Backbone.ViewOptions {
     extentElement?: d.JsonExtentData;
     tableOptions?: t.TableOptions;
     url?: string;
 }
 
-export class ExtentTableView extends Backbone.View {
+export class DefaultTableView extends Backbone.View {
     extentElement: d.JsonExtentData;
     tableOptions: t.TableOptions;
     url: string;
     data: d.JsonExtentData;  // Result from query, which will be shown render
 
-    constructor(options?: ExtentTableViewOptions) {
+    constructor(options?: DefaultTableViewOptions) {
         _.extend(this, options);
 
         super(options);
@@ -106,7 +106,7 @@ export class ExtentTableView extends Backbone.View {
         }
     }
 
-    loadAndRender(): ExtentTableView {
+    loadAndRender(): DefaultTableView {
         var tthis = this;
 
         api.getAPI().getObjectsInExtent(
@@ -119,7 +119,7 @@ export class ExtentTableView extends Backbone.View {
         return this;
     }
 
-    render(): ExtentTableView {
+    render(): DefaultTableView {
         prepareForViewChange();
         var tthis = this;
 
@@ -157,8 +157,19 @@ export class ExtentTableView extends Backbone.View {
     }
 }
 
-export class AllExtentsView extends ExtentTableView {
-    constructor(options?: ExtentTableViewOptions) {
+export class ExtentTableView extends DefaultTableView {
+    constructor(options?: DefaultTableViewOptions) {
+        super(options);
+
+        this.bind('rowclicked', function (clickedObject) {
+            var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
+            navigation.to(route);
+        });
+    }
+}
+
+export class AllExtentsView extends DefaultTableView {
+    constructor(options?: DefaultTableViewOptions) {
 
         // Defines the default url
         this.url = "datenmeister:///pool";
@@ -176,5 +187,53 @@ export class AllExtentsView extends ExtentTableView {
             var route = "extent/" + encodeURIComponent(clickedObject.get('uri'));
             navigation.to(route);
         });
+    }
+}
+
+export interface DetailViewOptions extends Backbone.ViewOptions {
+    object?: d.JsonExtentObject;
+    url?: string;
+}
+
+export class FormViewOptions {
+}
+
+export class DetailView extends Backbone.View {
+
+    object: d.JsonExtentObject;
+    url: string;
+    formOptions: FormViewOptions;
+
+    constructor(options: Backbone.ViewOptions) {
+        _.extend(this, options);
+
+        super(options);
+
+        if (this.url !== undefined && this.object === undefined) {
+            this.loadAndRender();
+        }
+        else if (this.object !== undefined && this.formOptions !== undefined) {
+            this.render();
+        }
+        else {
+            throw "ExtentTableView has no url and no object to render";
+        }
+    }
+
+    loadAndRender() {
+        var tthis = this;
+        api.getAPI().getObject(this.url, function (object: d.JsonExtentObject) {
+            tthis.object = object;
+            alert(object.id);
+            tthis.render();
+        });
+
+    }
+
+    render(): DetailView {
+
+        prepareForViewChange();
+        this.$el.show();
+        return this;
     }
 }

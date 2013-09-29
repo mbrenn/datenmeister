@@ -93,6 +93,29 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
             });
         };
 
+        ServerAPI.prototype.getObject = function (uri, success) {
+            ajax.performRequest({
+                url: this.__getUrl() + "extent/GetObject?uri=" + encodeURIComponent(uri),
+                success: function (data) {
+                    if (success !== undefined) {
+                        var result = new d.JsonExtentObject();
+
+                        // Sets id and extentUri of object
+                        result.id = data.id;
+                        result.extentUri = data.extentUri;
+
+                        // Sets values of the complete object
+                        _.each(data.values, function (value, key, list) {
+                            result.set(key, value);
+                        });
+
+                        // Returns result
+                        success(result);
+                    }
+                }
+            });
+        };
+
         ServerAPI.prototype.getObjectsInExtent = function (uri, success, fail) {
             ajax.performRequest({
                 url: this.__getUrl() + "extent/GetObjectsInExtent?uri=" + uri,

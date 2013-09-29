@@ -13,7 +13,38 @@ export class TableOptions {
     allowDelete: boolean;
 }
 
-export class DataTable {
+export class DataView {
+
+    createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
+        var span = $("<span />");
+        var value = object.get(field.getName());
+        if (value === undefined || value === null) {
+            span.html("<em>undefined</em>");
+        }
+        else {
+            span.text(value);
+        }
+
+        return span;
+    }
+
+    createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
+        var value = object.get(field.getName());
+        var inputField = $("<input type='text' />");
+        if (value !== undefined && value !== null) {
+            inputField.val(value);
+        }
+
+        return inputField;
+    }
+
+    setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo, dom: JQuery): void {
+        object.set(field.getName(), dom.val());
+    }
+
+}
+
+export class DataTable extends DataView{
     domTable: JQuery;
 
     columns: Array<d.JsonExtentFieldInfo>;
@@ -28,7 +59,9 @@ export class DataTable {
 
     table: t.Table;
 
-    constructor(extent: d.ExtentInfo, domTable: JQuery, options? : TableOptions) {
+    constructor(extent: d.ExtentInfo, domTable: JQuery, options?: TableOptions) {
+        super();
+
         this.domTable = domTable;
         this.columns = new Array<d.JsonExtentFieldInfo>();
         this.objects = new Array<any>();
@@ -257,33 +290,6 @@ export class DataTable {
             },
             function () {
             });
-    }
-
-    createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
-        var span = $("<span />");
-        var value = object.get(field.getName());
-        if (value === undefined || value === null) {
-            span.html("<em>undefined</em>");
-        }
-        else {
-            span.text(value);
-        }
-
-        return span;
-    }
-
-    createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
-        var value = object.get(field.getName());
-        var inputField = $("<input type='text' />");
-        if (value !== undefined && value !== null) {
-            inputField.val(value);
-        }
-
-        return inputField;
-    }
-
-    setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo, dom: JQuery): void {
-        object.set(field.getName(), dom.val());
     }
 
     setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void {

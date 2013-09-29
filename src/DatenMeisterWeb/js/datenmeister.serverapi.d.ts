@@ -12,6 +12,7 @@ export declare class ServerAPI {
     constructor(connection: ServerSettings);
     public __getUrl(): string;
     public getServerInfo(success: (info: ServerInfo) => void, fail?: () => void): void;
+    public getObject(uri: string, success: (object: d.JsonExtentObject) => void): void;
     public getObjectsInExtent(uri: string, success: (extentData: d.JsonExtentData) => void, fail?: () => void): void;
     public deleteObject(uri: string, success: () => void, fail?: () => void): void;
     public editObject(uri: string, object: Backbone.Model, success: () => void, fail?: () => void): void;

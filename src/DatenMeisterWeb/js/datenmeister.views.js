@@ -79,9 +79,9 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
     })(Backbone.View);
     exports.ServerConnectionView = ServerConnectionView;
 
-    var ExtentTableView = (function (_super) {
-        __extends(ExtentTableView, _super);
-        function ExtentTableView(options) {
+    var DefaultTableView = (function (_super) {
+        __extends(DefaultTableView, _super);
+        function DefaultTableView(options) {
             _.extend(this, options);
 
             _super.call(this, options);
@@ -94,7 +94,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
                 throw "ExtentTableView has no url and no object to render";
             }
         }
-        ExtentTableView.prototype.loadAndRender = function () {
+        DefaultTableView.prototype.loadAndRender = function () {
             var tthis = this;
 
             api.getAPI().getObjectsInExtent(this.url, function (data) {
@@ -104,7 +104,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
             return this;
         };
 
-        ExtentTableView.prototype.render = function () {
+        DefaultTableView.prototype.render = function () {
             exports.prepareForViewChange();
             var tthis = this;
 
@@ -116,7 +116,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
             return this;
         };
 
-        ExtentTableView.prototype.showObjects = function () {
+        DefaultTableView.prototype.showObjects = function () {
             var tthis = this;
             var table = new t.DataTable(this.data.extent, this.$(".datatable"), this.tableOptions);
 
@@ -139,8 +139,22 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
 
             return table;
         };
-        return ExtentTableView;
+        return DefaultTableView;
     })(Backbone.View);
+    exports.DefaultTableView = DefaultTableView;
+
+    var ExtentTableView = (function (_super) {
+        __extends(ExtentTableView, _super);
+        function ExtentTableView(options) {
+            _super.call(this, options);
+
+            this.bind('rowclicked', function (clickedObject) {
+                var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
+                navigation.to(route);
+            });
+        }
+        return ExtentTableView;
+    })(DefaultTableView);
     exports.ExtentTableView = ExtentTableView;
 
     var AllExtentsView = (function (_super) {
@@ -164,7 +178,47 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
             });
         }
         return AllExtentsView;
-    })(ExtentTableView);
+    })(DefaultTableView);
     exports.AllExtentsView = AllExtentsView;
+
+    var FormViewOptions = (function () {
+        function FormViewOptions() {
+        }
+        return FormViewOptions;
+    })();
+    exports.FormViewOptions = FormViewOptions;
+
+    var DetailView = (function (_super) {
+        __extends(DetailView, _super);
+        function DetailView(options) {
+            _.extend(this, options);
+
+            _super.call(this, options);
+
+            if (this.url !== undefined && this.object === undefined) {
+                this.loadAndRender();
+            } else if (this.object !== undefined && this.formOptions !== undefined) {
+                this.render();
+            } else {
+                throw "ExtentTableView has no url and no object to render";
+            }
+        }
+        DetailView.prototype.loadAndRender = function () {
+            var tthis = this;
+            api.getAPI().getObject(this.url, function (object) {
+                tthis.object = object;
+                alert(object.id);
+                tthis.render();
+            });
+        };
+
+        DetailView.prototype.render = function () {
+            exports.prepareForViewChange();
+            this.$el.show();
+            return this;
+        };
+        return DetailView;
+    })(Backbone.View);
+    exports.DetailView = DetailView;
 });
-//# sourceMappingURL=datenmeister.forms.js.map
+//# sourceMappingURL=datenmeister.views.js.map

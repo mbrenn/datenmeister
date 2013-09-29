@@ -92,6 +92,29 @@ export class ServerAPI {
         });
     }
 
+    getObject(uri: string, success: (object: d.JsonExtentObject) => void) {
+        ajax.performRequest({
+            url: this.__getUrl() + "extent/GetObject?uri=" + encodeURIComponent(uri),
+            success: function (data: any) {
+                if (success !== undefined) {
+                    var result = new d.JsonExtentObject();
+
+                    // Sets id and extentUri of object
+                    result.id = data.id;
+                    result.extentUri = data.extentUri;
+
+                    // Sets values of the complete object
+                    _.each(data.values, function (value, key, list) {
+                        result.set(key, value);
+                    });
+
+                    // Returns result
+                    success(result);
+                }
+            }
+        });
+    }
+
     getObjectsInExtent(uri: string, success: (extentData: d.JsonExtentData) => void, fail?: () => void) {
         ajax.performRequest({
             url: this.__getUrl() + "extent/GetObjectsInExtent?uri=" + uri,
