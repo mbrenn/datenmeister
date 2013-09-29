@@ -3,8 +3,27 @@
 
 import ajax = require("lib/dejs.ajax");
 import d = require("datenmeister.objects");
+import navigation = require("datenmeister.navigation");
 
-export var singletonAPI: ServerAPI;
+/*
+ * Gets the server API, will request loadng of server settings if required
+ */
+export function getAPI()
+{
+    if (singletonAPI == undefined) {
+        var serverSettings = retrieveServerSettings();
+        if (serverSettings == undefined) {
+            navigation.to("login");
+            return undefined;
+        }
+
+        return new ServerAPI(serverSettings);
+    }
+
+    return singletonAPI;
+}
+
+var singletonAPI: ServerAPI;
 
 export class ServerInfo {
     serverAddress: string;
@@ -13,6 +32,27 @@ export class ServerInfo {
 
 export class ServerSettings {
     serverAddress: string;
+}
+
+/*
+   Stores the server settings into Browser storage for reload
+*/
+function storeServerSettings(connectionInfo: ServerSettings): void {
+    window.sessionStorage.setItem("serverapi_currentserveraddress", connectionInfo.serverAddress);
+}
+
+/* 
+  Retrieves the server settings from browser storage
+*/
+function retrieveServerSettings(): ServerSettings {
+    var serverAddress = window.sessionStorage.getItem("serverapi_currentserveraddress");
+    if (serverAddress == undefined) {
+        return undefined;
+    }
+
+    var result = new ServerSettings();
+    result.serverAddress = serverAddress;
+    return result;
 }
 
 export class ServerAPI {
@@ -26,6 +66,9 @@ export class ServerAPI {
         }
 
         singletonAPI = this;
+
+        // Stores last server address of server API into local storage to retrieve it on automatic reload   
+        storeServerSettings(connection);
     }
 
     __getUrl(): string {

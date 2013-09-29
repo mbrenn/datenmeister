@@ -1,9 +1,28 @@
 // The Server API
-define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects"], function(require, exports, __ajax__, __d__) {
+define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmeister.navigation"], function(require, exports, __ajax__, __d__, __navigation__) {
     var ajax = __ajax__;
     var d = __d__;
+    var navigation = __navigation__;
 
-    exports.singletonAPI;
+    /*
+    * Gets the server API, will request loadng of server settings if required
+    */
+    function getAPI() {
+        if (singletonAPI == undefined) {
+            var serverSettings = retrieveServerSettings();
+            if (serverSettings == undefined) {
+                navigation.to("login");
+                return undefined;
+            }
+
+            return new ServerAPI(serverSettings);
+        }
+
+        return singletonAPI;
+    }
+    exports.getAPI = getAPI;
+
+    var singletonAPI;
 
     var ServerInfo = (function () {
         function ServerInfo() {
@@ -19,6 +38,27 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects"], function
     })();
     exports.ServerSettings = ServerSettings;
 
+    /*
+    Stores the server settings into Browser storage for reload
+    */
+    function storeServerSettings(connectionInfo) {
+        window.sessionStorage.setItem("serverapi_currentserveraddress", connectionInfo.serverAddress);
+    }
+
+    /*
+    Retrieves the server settings from browser storage
+    */
+    function retrieveServerSettings() {
+        var serverAddress = window.sessionStorage.getItem("serverapi_currentserveraddress");
+        if (serverAddress == undefined) {
+            return undefined;
+        }
+
+        var result = new ServerSettings();
+        result.serverAddress = serverAddress;
+        return result;
+    }
+
     var ServerAPI = (function () {
         function ServerAPI(connection) {
             this.connectionInfo = connection;
@@ -27,7 +67,10 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects"], function
                 this.connectionInfo.serverAddress += '/';
             }
 
-            exports.singletonAPI = this;
+            singletonAPI = this;
+
+            // Stores last server address of server API into local storage to retrieve it on automatic reload
+            storeServerSettings(connection);
         }
         ServerAPI.prototype.__getUrl = function () {
             return this.connectionInfo.serverAddress;

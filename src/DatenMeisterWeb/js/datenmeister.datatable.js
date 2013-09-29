@@ -53,6 +53,8 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
 
             var tableOptions = new t.TableOptions();
             tableOptions.cssClass = "table";
+
+            this.domTable.empty();
             this.table = new t.Table(this.domTable, tableOptions);
 
             /*
@@ -106,7 +108,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                         delColumn.html("<em>SURE?</em>");
                         clicked = true;
                     } else {
-                        api.singletonAPI.deleteObject(object.getUri(), function () {
+                        api.getAPI().deleteObject(object.getUri(), function () {
                             currentRow.remove();
                         });
                     }
@@ -140,7 +142,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                             tthis.setValueByWriteField(object, column, writeFields[n]);
                         }
 
-                        api.singletonAPI.editObject(object.getUri(), object, function () {
+                        api.getAPI().editObject(object.getUri(), object, function () {
                             for (var n = 0; n < columnDoms.length; n++) {
                                 var dom = columnDoms[n];
                                 var column = tthis.columns[n];
@@ -214,7 +216,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 this.setValueByWriteField(value, column, input);
             }
 
-            api.singletonAPI.addObject(this.extent.get('uri'), value.attributes, function (data) {
+            api.getAPI().addObject(this.extent.get('uri'), value.attributes, function (data) {
                 tthis.createRow(value);
 
                 tthis.createCreateButton();

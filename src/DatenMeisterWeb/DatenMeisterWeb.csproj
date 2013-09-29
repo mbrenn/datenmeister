@@ -71,6 +71,7 @@
     <TypeScriptCompile Include="js\init.ts" />
     <TypeScriptCompile Include="js\datenmeister.objects.ts" />
     <TypeScriptCompile Include="js\datenmeister.serverapi.ts" />
+    <TypeScriptCompile Include="js\datenmeister.navigation.ts" />
     <Content Include="js\init.js" />
     <Content Include="js\lib\backbone-min.js" />
     <Content Include="js\lib\backbone.d.ts" />

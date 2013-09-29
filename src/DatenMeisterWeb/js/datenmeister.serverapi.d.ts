@@ -1,5 +1,5 @@
 import d = require("datenmeister.objects");
-export declare var singletonAPI: ServerAPI;
+export declare function getAPI(): ServerAPI;
 export declare class ServerInfo {
     public serverAddress: string;
     public serverName: string;

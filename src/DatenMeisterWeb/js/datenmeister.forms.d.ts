@@ -2,6 +2,9 @@ import api = require("datenmeister.serverapi");
 import d = require("datenmeister.objects");
 import t = require("datenmeister.datatable");
 export declare function prepareForViewChange(): void;
+export declare class BackButtonView extends Backbone.View {
+    constructor(options: Backbone.ViewOptions);
+}
 export declare class ServerConnectionView extends Backbone.View {
     public onConnect: (settings: api.ServerSettings) => any;
     public formDom: JQuery;

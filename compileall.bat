@@ -4,6 +4,7 @@ cd ..\..\
 
 copy dependencies\DeJS\src\js\*.js src\DatenMeisterWeb\js\lib\*.js
 copy dependencies\DeJS\src\js\*.d.ts src\DatenMeisterWeb\js\lib\
+copy dependencies\DeJS\src\js\*.map src\DatenMeisterWeb\js\lib\
 copy dependencies\BootstrapGit\dist\js\*.js src\DatenMeisterWeb\js\lib\*.js
 copy dependencies\BootstrapGit\dist\css\*.css src\DatenMeisterWeb\css\*.css
 copy dependencies\BootstrapGit\dist\img\*.* src\DatenMeisterWeb\img\*.*

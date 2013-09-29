@@ -6,16 +6,25 @@ import api = require("datenmeister.serverapi");
 import t = require("datenmeister.datatable");
 import d = require("datenmeister.objects");
 import forms = require("datenmeister.forms");
+import navigation = require("datenmeister.navigation");
 
 // Serverconnection form
 export function init() {
     var router = new AppRouter();
 
     if (!Backbone.history.start({ pushState: false })) {
-        Backbone.history.navigate("login", { trigger: true });
+        navigation.to("login");
+    } else {
+        navigation.add(Backbone.history.getFragment());
     }
 
+    new forms.BackButtonView(
+        {
+            el: "#backview"
+        });
 }
+
+var loginForm: forms.ServerConnectionView;
 
 class AppRouter extends Backbone.Router {
     constructor(options?: Backbone.RouterOptions) {
@@ -26,24 +35,40 @@ class AppRouter extends Backbone.Router {
         options.routes =
         {
             "login": "showLoginForm",
-            "all": "showExtents"
+            "all": "showAllExtents",
+            "extent/*extent": "showExtent"
         };
 
         super(options);
     }
 
-    showExtents() {
+    showAllExtents() {
+        var allExtents = new forms.AllExtentsView({
+            el: "#extentlist"
+        });
+    }
+
+    showExtent(extentUri: string) {
+        var detailView = new forms.ExtentTableView(
+            {
+                el: "#objectlist",
+                url: extentUri
+            });
     }
 
     showLoginForm() {
-        var form = new forms.ServerConnectionView({
-            el: "#serverconnectionview"
-        });
-
-        form.onConnect = function (settings) {
-            var allExtents = new forms.AllExtentsView({
-                el: "#extentlist"
+        if (loginForm == undefined) {
+            loginForm = new forms.ServerConnectionView({
+                el: "#serverconnectionview"
             });
-        };
+
+            loginForm.onConnect = function (settings) {
+
+                navigation.to("all");
+            };
+        }
+        else {
+            loginForm.render();
+        }
     }
 }

@@ -7,21 +7,30 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.forms"], function(require, exports, __forms__) {
+define(["require", "exports", "datenmeister.forms", "datenmeister.navigation"], function(require, exports, __forms__, __navigation__) {
     
     
     
     var forms = __forms__;
+    var navigation = __navigation__;
 
     // Serverconnection form
     function init() {
         var router = new AppRouter();
 
         if (!Backbone.history.start({ pushState: false })) {
-            Backbone.history.navigate("login", { trigger: true });
+            navigation.to("login");
+        } else {
+            navigation.add(Backbone.history.getFragment());
         }
+
+        new forms.BackButtonView({
+            el: "#backview"
+        });
     }
     exports.init = init;
+
+    var loginForm;
 
     var AppRouter = (function (_super) {
         __extends(AppRouter, _super);
@@ -32,24 +41,37 @@ define(["require", "exports", "datenmeister.forms"], function(require, exports, 
 
             options.routes = {
                 "login": "showLoginForm",
-                "all": "showExtents"
+                "all": "showAllExtents",
+                "extent/*extent": "showExtent"
             };
 
             _super.call(this, options);
         }
-        AppRouter.prototype.showExtents = function () {
+        AppRouter.prototype.showAllExtents = function () {
+            var allExtents = new forms.AllExtentsView({
+                el: "#extentlist"
+            });
+        };
+
+        AppRouter.prototype.showExtent = function (extentUri) {
+            var detailView = new forms.ExtentTableView({
+                el: "#objectlist",
+                url: extentUri
+            });
         };
 
         AppRouter.prototype.showLoginForm = function () {
-            var form = new forms.ServerConnectionView({
-                el: "#serverconnectionview"
-            });
-
-            form.onConnect = function (settings) {
-                var allExtents = new forms.AllExtentsView({
-                    el: "#extentlist"
+            if (loginForm == undefined) {
+                loginForm = new forms.ServerConnectionView({
+                    el: "#serverconnectionview"
                 });
-            };
+
+                loginForm.onConnect = function (settings) {
+                    navigation.to("all");
+                };
+            } else {
+                loginForm.render();
+            }
         };
         return AppRouter;
     })(Backbone.Router);

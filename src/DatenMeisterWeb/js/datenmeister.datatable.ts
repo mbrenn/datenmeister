@@ -68,6 +68,8 @@ export class DataTable {
 
         var tableOptions = new t.TableOptions();
         tableOptions.cssClass = "table";
+
+        this.domTable.empty();
         this.table = new t.Table(this.domTable, tableOptions);
 
         /*
@@ -129,7 +131,7 @@ export class DataTable {
                     clicked = true;
                 }
                 else {
-                    api.singletonAPI.deleteObject(object.getUri(), function () {
+                    api.getAPI().deleteObject(object.getUri(), function () {
                         currentRow.remove();
                     });
                 }
@@ -168,7 +170,7 @@ export class DataTable {
                         tthis.setValueByWriteField(object, column, writeFields[n]);
                     }
 
-                    api.singletonAPI.editObject(
+                    api.getAPI().editObject(
                         object.getUri(),
                         object,
                         function () {
@@ -245,7 +247,7 @@ export class DataTable {
             this.setValueByWriteField(value, column, input);
         }
 
-        api.singletonAPI.addObject(
+        api.getAPI().addObject(
             this.extent.get('uri'),
             value.attributes,
             function (data) {

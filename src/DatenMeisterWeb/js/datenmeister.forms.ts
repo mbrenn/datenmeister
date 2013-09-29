@@ -2,13 +2,27 @@
 import api = require("datenmeister.serverapi");
 import d = require("datenmeister.objects");
 import t = require("datenmeister.datatable");
+import navigation = require("datenmeister.navigation");
 
 /* 
  * Has to be called before every view,
  * resets the visibility for each form
  */
 export function prepareForViewChange() {
-    $("#content div").hide();
+    $("#content > div").hide();
+}
+
+export class BackButtonView extends Backbone.View {
+    constructor(options: Backbone.ViewOptions) {
+        super(options);
+        this.delegateEvents(
+            {
+                "click .backbutton": function () {
+                    navigation.back();
+                    return false;
+                }
+            });
+    }
 }
 
 /* Defines the view which allows the user to connect to the server */
@@ -95,7 +109,7 @@ export class ExtentTableView extends Backbone.View {
     loadAndRender(): ExtentTableView {
         var tthis = this;
 
-        api.singletonAPI.getObjectsInExtent(
+        api.getAPI().getObjectsInExtent(
             this.url,
             function (data) {
 
@@ -106,13 +120,12 @@ export class ExtentTableView extends Backbone.View {
     }
 
     render(): ExtentTableView {
-        var tthis = this;
         prepareForViewChange();
-
-        var table = this.showObjects();
+        var tthis = this;
 
         this.$(".datatable").empty();
-        this.$(".datatable").append(table);
+
+        var table = this.showObjects();
         this.$el.show();
 
         return this;
@@ -120,7 +133,7 @@ export class ExtentTableView extends Backbone.View {
 
     showObjects(): t.DataTable {
         var tthis = this;
-        var table = new t.DataTable(this.data.extent, this.$el, this.tableOptions);
+        var table = new t.DataTable(this.data.extent, this.$(".datatable"), this.tableOptions);
 
         // Create the columns
         table.defineColumns(this.data.columns);
@@ -160,11 +173,8 @@ export class AllExtentsView extends ExtentTableView {
         }
 
         this.bind('rowclicked', function (clickedObject) {
-            var detailView = new ExtentTableView(
-                {
-                    el: $("#objectlist"),
-                    url: clickedObject.get('uri')
-                });
+            var route = "extent/" + encodeURIComponent(clickedObject.get('uri'));
+            navigation.to(route);
         });
     }
 }
