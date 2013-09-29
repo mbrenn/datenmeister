@@ -13,10 +13,16 @@ export class ExtentInfo extends Backbone.Model {
 
 // Defines the information for a column that has been received from server
 export class JsonExtentFieldInfo extends Backbone.Model {
+    /* 
+     * Gets the name of the property
+     */
     getName(): string {
         return this.get('name');
     }
 
+    /* 
+     * Gets the title of property as shown in table or views
+     */
     getTitle(): string {
         return this.get('title');
     }

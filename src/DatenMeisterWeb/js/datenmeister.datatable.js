@@ -13,16 +13,31 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
     var api = __api__;
     var t = __t__;
 
-    var TableOptions = (function () {
-        function TableOptions() {
+    var ViewOptions = (function () {
+        function ViewOptions() {
         }
-        return TableOptions;
+        return ViewOptions;
     })();
-    exports.TableOptions = TableOptions;
+    exports.ViewOptions = ViewOptions;
 
     var DataView = (function () {
-        function DataView() {
+        function DataView(domElement, options) {
+            this.domElement = domElement;
+            this.options = options;
+            if (this.options === undefined) {
+                this.options = new ViewOptions();
+                this.options.allowDelete = true;
+                this.options.allowNew = true;
+                this.options.allowEdit = true;
+            }
         }
+        /*
+        * Sets the field information objects
+        */
+        DataView.prototype.setFieldInfos = function (fieldInfos) {
+            this.fieldInfos = fieldInfos;
+        };
+
         DataView.prototype.createReadField = function (object, field) {
             var span = $("<span />");
             var value = object.get(field.getName());
@@ -48,6 +63,52 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         DataView.prototype.setValueByWriteField = function (object, field, dom) {
             object.set(field.getName(), dom.val());
         };
+
+        DataView.prototype.createEventsForEditButton = function (editButton, object, columnDoms) {
+            var tthis = this;
+            var currentlyInEdit = false;
+            var writeFields;
+
+            editButton.click(function () {
+                if (!currentlyInEdit) {
+                    // Is currently in reading mode, switch to writing mode
+                    writeFields = new Array();
+                    for (var n = 0; n < columnDoms.length; n++) {
+                        var dom = columnDoms[n];
+                        var column = tthis.fieldInfos[n];
+                        dom.empty();
+
+                        var writeField = tthis.createWriteField(object, column);
+                        writeFields.push(writeField);
+                        dom.append(writeField);
+                        editButton.html("<em>ACCEPT</em>");
+                    }
+
+                    currentlyInEdit = true;
+                } else {
+                    for (var n = 0; n < columnDoms.length; n++) {
+                        var column = tthis.fieldInfos[n];
+                        tthis.setValueByWriteField(object, column, writeFields[n]);
+                    }
+
+                    api.getAPI().editObject(object.getUri(), object, function () {
+                        for (var n = 0; n < columnDoms.length; n++) {
+                            var dom = columnDoms[n];
+                            var column = tthis.fieldInfos[n];
+                            dom.empty();
+                            dom.append(tthis.createReadField(object, column));
+                        }
+
+                        editButton.html("<em>EDIT</em>");
+                    });
+
+                    currentlyInEdit = false;
+                }
+
+                // No bubbling
+                return false;
+            });
+        };
         return DataView;
     })();
     exports.DataView = DataView;
@@ -55,15 +116,14 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
     var DataTable = (function (_super) {
         __extends(DataTable, _super);
         function DataTable(extent, domTable, options) {
-            _super.call(this);
+            _super.call(this, domTable, options);
 
-            this.domTable = domTable;
-            this.columns = new Array();
+            this.fieldInfos = new Array();
             this.objects = new Array();
             this.extent = extent;
 
             if (options === undefined) {
-                this.options = new TableOptions();
+                this.options = new ViewOptions();
             } else {
                 this.options = options;
             }
@@ -80,8 +140,8 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 this.options.allowNew = true;
             }
         }
-        DataTable.prototype.defineColumns = function (columns) {
-            this.columns = columns;
+        DataTable.prototype.defineFieldInfos = function (fieldInfos) {
+            this.fieldInfos = fieldInfos;
         };
 
         DataTable.prototype.addObject = function (object) {
@@ -89,30 +149,25 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         };
 
         // Renders the table for the given objects
-        DataTable.prototype.renderTable = function () {
+        DataTable.prototype.render = function () {
             var tthis = this;
 
             var tableOptions = new t.TableOptions();
             tableOptions.cssClass = "table";
 
-            this.domTable.empty();
-            this.table = new t.Table(this.domTable, tableOptions);
+            this.domElement.empty();
+            this.table = new t.Table(this.domElement, tableOptions);
 
             /*
             * Creates headline
             */
             tthis.table.addHeaderRow();
-            for (var n = 0; n < this.columns.length; n++) {
-                tthis.table.addColumn(this.columns[n].getTitle());
+            for (var n = 0; n < this.fieldInfos.length; n++) {
+                tthis.table.addColumn(this.fieldInfos[n].getTitle());
             }
 
-            if (this.options.allowDelete) {
-                tthis.table.addColumnHtml("");
-            }
-
-            if (this.options.allowEdit) {
-                tthis.table.addColumnHtml("");
-            }
+            // For the last column, containing all the settings
+            tthis.table.addColumnHtml("");
 
             for (var m = 0; m < this.objects.length; m++) {
                 var object = this.objects[m];
@@ -131,18 +186,24 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
 
             var columnDoms = new Array();
 
-            for (var n = 0; n < tthis.columns.length; n++) {
-                columnDoms.push(tthis.table.addColumnJQuery(tthis.createReadField(object, tthis.columns[n])));
+            for (var n = 0; n < tthis.fieldInfos.length; n++) {
+                columnDoms.push(tthis.table.addColumnJQuery(tthis.createReadField(object, tthis.fieldInfos[n])));
             }
 
+            var lastColumn = $("<div class='lastcolumn'></div>");
             if (tthis.itemClickedEvent !== undefined) {
-                currentRow.click(function () {
+                var detailColumn = $("<em>DETAIL</em>");
+                detailColumn.click(function () {
                     tthis.itemClickedEvent(object);
+
+                    return false;
                 });
+
+                lastColumn.append(detailColumn);
             }
 
             if (tthis.options.allowDelete) {
-                var delColumn = tthis.table.addColumnHtml("<em>DEL</em>");
+                var delColumn = $("<em>DEL</em>");
                 var clicked = false;
                 delColumn.click(function () {
                     if (!clicked) {
@@ -153,51 +214,21 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                             currentRow.remove();
                         });
                     }
+
+                    return false;
                 });
+
+                lastColumn.append(delColumn);
             }
 
             if (tthis.options.allowEdit) {
-                var editColumn = tthis.table.addColumnHtml("<em>EDIT</em>");
-                var currentlyInEdit = false;
-                var writeFields;
+                var editColumn = $("<em>EDIT</em>");
+                this.createEventsForEditButton(editColumn, object, columnDoms);
 
-                editColumn.click(function () {
-                    if (!currentlyInEdit) {
-                        // Is currently in reading mode, switch to writing mode
-                        writeFields = new Array();
-                        for (var n = 0; n < columnDoms.length; n++) {
-                            var dom = columnDoms[n];
-                            var column = tthis.columns[n];
-                            dom.empty();
-
-                            var writeField = tthis.createWriteField(object, column);
-                            writeFields.push(writeField);
-                            dom.append(writeField);
-                            editColumn.html("<em>ACCEPT</em>");
-                        }
-
-                        currentlyInEdit = true;
-                    } else {
-                        for (var n = 0; n < columnDoms.length; n++) {
-                            var column = tthis.columns[n];
-                            tthis.setValueByWriteField(object, column, writeFields[n]);
-                        }
-
-                        api.getAPI().editObject(object.getUri(), object, function () {
-                            for (var n = 0; n < columnDoms.length; n++) {
-                                var dom = columnDoms[n];
-                                var column = tthis.columns[n];
-                                dom.empty();
-                                dom.append(tthis.createReadField(object, column));
-                            }
-
-                            editColumn.html("<em>EDIT</em>");
-                        });
-
-                        currentlyInEdit = false;
-                    }
-                });
+                lastColumn.append(editColumn);
             }
+
+            this.table.addColumnJQuery(lastColumn);
         };
 
         // Creates the create button at the end of the table
@@ -214,10 +245,10 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 newInputs.length = 0;
 
                 var newObject = new d.JsonExtentObject();
-                for (var n = 0; n < tthis.columns.length; n++) {
+                for (var n = 0; n < tthis.fieldInfos.length; n++) {
                     newCells[n].empty();
 
-                    var dom = tthis.createWriteField(newObject, tthis.columns[n]);
+                    var dom = tthis.createWriteField(newObject, tthis.fieldInfos[n]);
                     newInputs.push(dom);
 
                     newCells[n].append(dom);
@@ -227,21 +258,21 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 okDom.click(function () {
                     tthis.createNewElement(newInputs, newCells);
                     row.remove();
+
+                    return false;
                 });
 
-                newCells[tthis.columns.length].append(okDom);
+                newCells[tthis.fieldInfos.length].append(okDom);
+
+                return false;
             });
 
             var cell = tthis.table.addColumnJQuery(createDom);
             newCells.push(cell);
 
-            for (var n = 0; n < this.columns.length - 1; n++) {
-                cell = tthis.table.addColumn("");
-                newCells.push(cell);
+            for (var n = 0; n < this.fieldInfos.length; n++) {
+                newCells.push(tthis.table.addColumn(""));
             }
-
-            // Last cell, containing OK button
-            newCells.push(tthis.table.addColumn(""));
         };
 
         // Reads the values from the inputfields and
@@ -251,8 +282,8 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         DataTable.prototype.createNewElement = function (inputs, cells) {
             var tthis = this;
             var value = new d.JsonExtentObject();
-            for (var n = 0; n < this.columns.length; n++) {
-                var column = this.columns[n];
+            for (var n = 0; n < this.fieldInfos.length; n++) {
+                var column = this.fieldInfos[n];
                 var input = inputs[n];
                 this.setValueByWriteField(value, column, input);
             }

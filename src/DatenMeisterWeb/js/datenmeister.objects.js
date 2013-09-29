@@ -29,10 +29,16 @@ define(["require", "exports"], function(require, exports) {
         function JsonExtentFieldInfo(attributes, options) {
             _super.call(this, attributes, options);
         }
+        /*
+        * Gets the name of the property
+        */
         JsonExtentFieldInfo.prototype.getName = function () {
             return this.get('name');
         };
 
+        /*
+        * Gets the title of property as shown in table or views
+        */
         JsonExtentFieldInfo.prototype.getTitle = function () {
             return this.get('title');
         };

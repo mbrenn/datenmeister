@@ -7,13 +7,35 @@ import d = require("datenmeister.objects");
 import api = require("datenmeister.serverapi");
 import t = require('lib/dejs.table');
 
-export class TableOptions {
+export class ViewOptions {
     allowEdit: boolean;
     allowNew: boolean;
     allowDelete: boolean;
 }
 
 export class DataView {
+
+    options: ViewOptions;
+    domElement: JQuery;
+    fieldInfos: Array<d.JsonExtentFieldInfo>;
+
+    constructor(domElement: JQuery, options: ViewOptions) {
+        this.domElement = domElement;
+        this.options = options;
+        if (this.options === undefined) {
+            this.options = new ViewOptions();
+            this.options.allowDelete = true;
+            this.options.allowNew = true;
+            this.options.allowEdit = true;
+        }
+    }
+
+    /*
+     * Sets the field information objects
+     */
+    setFieldInfos(fieldInfos: Array<d.JsonExtentFieldInfo>) {
+        this.fieldInfos = fieldInfos;
+    }
 
     createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
         var span = $("<span />");
@@ -42,33 +64,80 @@ export class DataView {
         object.set(field.getName(), dom.val());
     }
 
+    createEventsForEditButton(editButton: JQuery, object: d.JsonExtentObject, columnDoms: Array<JQuery>) {
+        var tthis = this;
+        var currentlyInEdit = false;
+        var writeFields: Array<JQuery>;
+
+        editButton.click(function () {
+            if (!currentlyInEdit) {
+                // Is currently in reading mode, switch to writing mode
+                writeFields = new Array<JQuery>();
+                for (var n = 0; n < columnDoms.length; n++) {
+                    var dom = columnDoms[n];
+                    var column = tthis.fieldInfos[n];
+                    dom.empty();
+
+                    var writeField = tthis.createWriteField(object, column);
+                    writeFields.push(writeField);
+                    dom.append(writeField);
+                    editButton.html("<em>ACCEPT</em>");
+                }
+
+                currentlyInEdit = true;
+            }
+            else {
+                // Is currently in writing mode, 
+                // upload to server
+                // switch to reading mode
+                for (var n = 0; n < columnDoms.length; n++) {
+                    var column = tthis.fieldInfos[n];
+                    tthis.setValueByWriteField(object, column, writeFields[n]);
+                }
+
+                api.getAPI().editObject(
+                    object.getUri(),
+                    object,
+                    function () {
+                        for (var n = 0; n < columnDoms.length; n++) {
+                            var dom = columnDoms[n];
+                            var column = tthis.fieldInfos[n];
+                            dom.empty();
+                            dom.append(tthis.createReadField(object, column));
+                        }
+
+                        editButton.html("<em>EDIT</em>");
+                    });
+
+                currentlyInEdit = false;
+            }
+
+            // No bubbling
+            return false;
+        });
+    }
+
 }
 
 export class DataTable extends DataView{
-    domTable: JQuery;
-
-    columns: Array<d.JsonExtentFieldInfo>;
 
     objects: Array<d.JsonExtentObject>;
 
     itemClickedEvent: (object: d.JsonExtentObject) => void;
 
-    options: TableOptions;
-
     extent: d.ExtentInfo;
 
     table: t.Table;
 
-    constructor(extent: d.ExtentInfo, domTable: JQuery, options?: TableOptions) {
-        super();
+    constructor(extent: d.ExtentInfo, domTable: JQuery, options?: ViewOptions) {
+        super(domTable, options);
 
-        this.domTable = domTable;
-        this.columns = new Array<d.JsonExtentFieldInfo>();
+        this.fieldInfos = new Array<d.JsonExtentFieldInfo>();
         this.objects = new Array<any>();
         this.extent = extent;
 
         if (options === undefined) {
-            this.options = new TableOptions();
+            this.options = new ViewOptions();
         }
         else {
             this.options = options;
@@ -87,8 +156,8 @@ export class DataTable extends DataView{
         }
     }
 
-    defineColumns(columns: Array<d.JsonExtentFieldInfo>) {
-        this.columns = columns;
+    defineFieldInfos(fieldInfos: Array<d.JsonExtentFieldInfo>) {
+        this.fieldInfos = fieldInfos;
     }
 
     addObject(object: d.JsonExtentObject) {
@@ -96,30 +165,25 @@ export class DataTable extends DataView{
     }
 
     // Renders the table for the given objects
-    renderTable() {
+    render() {
         var tthis = this;
 
         var tableOptions = new t.TableOptions();
         tableOptions.cssClass = "table";
 
-        this.domTable.empty();
-        this.table = new t.Table(this.domTable, tableOptions);
+        this.domElement.empty();
+        this.table = new t.Table(this.domElement, tableOptions);
 
         /*
          * Creates headline
          */
         tthis.table.addHeaderRow();
-        for (var n = 0; n < this.columns.length; n++) {
-            tthis.table.addColumn(this.columns[n].getTitle());
+        for (var n = 0; n < this.fieldInfos.length; n++) {
+            tthis.table.addColumn(this.fieldInfos[n].getTitle());
         }
 
-        if (this.options.allowDelete) {
-            tthis.table.addColumnHtml("");
-        }
-
-        if (this.options.allowEdit) {
-            tthis.table.addColumnHtml("");
-        }
+        // For the last column, containing all the settings
+        tthis.table.addColumnHtml("");
 
         /*
          * Creates object list
@@ -138,25 +202,31 @@ export class DataTable extends DataView{
     createRow(object: d.JsonExtentObject): void {
         var tthis = this;
         var values = object.values
-            var currentRow = tthis.table.addRow();
+        var currentRow = tthis.table.addRow();
 
         var columnDoms = new Array<JQuery>();
 
-        for (var n = 0; n < tthis.columns.length; n++) {
+        for (var n = 0; n < tthis.fieldInfos.length; n++) {
             columnDoms.push(
                 tthis.table.addColumnJQuery(
-                    tthis.createReadField(object, tthis.columns[n])));
+                    tthis.createReadField(object, tthis.fieldInfos[n])));
         }
 
+        var lastColumn = $("<div class='lastcolumn'></div>");
         if (tthis.itemClickedEvent !== undefined) {
-            currentRow.click(function () {
+            var detailColumn = $("<em>DETAIL</em>");
+            detailColumn.click(function () {
                 tthis.itemClickedEvent(object);
+
+                return false;
             });
+
+            lastColumn.append(detailColumn);
         }
 
         // Adds delete button
         if (tthis.options.allowDelete) {
-            var delColumn = tthis.table.addColumnHtml("<em>DEL</em>");
+            var delColumn = $("<em>DEL</em>");
             var clicked = false;
             delColumn.click(function () {
                 if (!clicked) {
@@ -168,59 +238,22 @@ export class DataTable extends DataView{
                         currentRow.remove();
                     });
                 }
+
+                return false;
             });
+
+            lastColumn.append(delColumn);
         }
 
         // Adds allow edit button
         if (tthis.options.allowEdit) {
-            var editColumn = tthis.table.addColumnHtml("<em>EDIT</em>");
-            var currentlyInEdit = false;
-            var writeFields: Array<JQuery>;
+            var editColumn = $("<em>EDIT</em>");
+            this.createEventsForEditButton(editColumn, object, columnDoms);
 
-            editColumn.click(function () {
-                if (!currentlyInEdit) {
-                    // Is currently in reading mode, switch to writing mode
-                    writeFields = new Array<JQuery>();
-                    for (var n = 0; n < columnDoms.length; n++) {
-                        var dom = columnDoms[n];
-                        var column = tthis.columns[n];
-                        dom.empty();
-
-                        var writeField = tthis.createWriteField(object, column);
-                        writeFields.push(writeField);
-                        dom.append(writeField);
-                        editColumn.html("<em>ACCEPT</em>");
-                    }
-
-                    currentlyInEdit = true;
-                }
-                else {
-                    // Is currently in writing mode, 
-                    // upload to server
-                    // switch to reading mode
-                    for (var n = 0; n < columnDoms.length; n++) {
-                        var column = tthis.columns[n];
-                        tthis.setValueByWriteField(object, column, writeFields[n]);
-                    }
-
-                    api.getAPI().editObject(
-                        object.getUri(),
-                        object,
-                        function () {
-                            for (var n = 0; n < columnDoms.length; n++) {
-                                var dom = columnDoms[n];
-                                var column = tthis.columns[n];
-                                dom.empty();
-                                dom.append(tthis.createReadField(object, column));
-                            }
-
-                            editColumn.html("<em>EDIT</em>");
-                        });
-
-                    currentlyInEdit = false;
-                }
-            });
+            lastColumn.append(editColumn);
         }
+
+        this.table.addColumnJQuery(lastColumn);
     }
 
     // Creates the create button at the end of the table
@@ -237,10 +270,10 @@ export class DataTable extends DataView{
             newInputs.length = 0;
 
             var newObject = new d.JsonExtentObject();
-            for (var n = 0; n < tthis.columns.length; n++) {
+            for (var n = 0; n < tthis.fieldInfos.length; n++) {
                 newCells[n].empty();
 
-                var dom = tthis.createWriteField(newObject, tthis.columns[n]);
+                var dom = tthis.createWriteField(newObject, tthis.fieldInfos[n]);
                 newInputs.push(dom);
 
                 newCells[n].append(dom);
@@ -250,21 +283,21 @@ export class DataTable extends DataView{
             okDom.click(function () {
                 tthis.createNewElement(newInputs, newCells);
                 row.remove();
+
+                return false;
             });
 
-            newCells[tthis.columns.length].append(okDom);
+            newCells[tthis.fieldInfos.length].append(okDom);
+
+            return false;
         });
 
         var cell = tthis.table.addColumnJQuery(createDom);
         newCells.push(cell);
 
-        for (var n = 0; n < this.columns.length - 1; n++) {
-            cell = tthis.table.addColumn("");
-            newCells.push(cell);
+        for (var n = 0; n < this.fieldInfos.length; n++) {
+            newCells.push(tthis.table.addColumn(""));
         }
-
-        // Last cell, containing OK button
-        newCells.push(tthis.table.addColumn(""));
     }
 
     // Reads the values from the inputfields and 
@@ -274,8 +307,8 @@ export class DataTable extends DataView{
     createNewElement(inputs: Array<JQuery>, cells: Array<JQuery>): void {
         var tthis = this;
         var value = new d.JsonExtentObject();
-        for (var n = 0; n < this.columns.length; n++) {
-            var column = this.columns[n];
+        for (var n = 0; n < this.fieldInfos.length; n++) {
+            var column = this.fieldInfos[n];
             var input = inputs[n];
             this.setValueByWriteField(value, column, input);
         }

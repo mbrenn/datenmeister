@@ -2,6 +2,7 @@
 import api = require("datenmeister.serverapi");
 import d = require("datenmeister.objects");
 import t = require("datenmeister.datatable");
+import forms = require("datenmeister.dataform");
 import navigation = require("datenmeister.navigation");
 
 /* 
@@ -80,13 +81,13 @@ export class ServerConnectionView extends Backbone.View {
 
 export interface DefaultTableViewOptions extends Backbone.ViewOptions {
     extentElement?: d.JsonExtentData;
-    tableOptions?: t.TableOptions;
+    tableOptions?: t.ViewOptions;
     url?: string;
 }
 
 export class DefaultTableView extends Backbone.View {
     extentElement: d.JsonExtentData;
-    tableOptions: t.TableOptions;
+    tableOptions: t.ViewOptions;
     url: string;
     data: d.JsonExtentData;  // Result from query, which will be shown render
 
@@ -136,7 +137,7 @@ export class DefaultTableView extends Backbone.View {
         var table = new t.DataTable(this.data.extent, this.$(".datatable"), this.tableOptions);
 
         // Create the columns
-        table.defineColumns(this.data.columns);
+        table.setFieldInfos(this.data.columns);
 
         // Adds the objects
         for (var n = 0; n < this.data.objects.length; n++) {
@@ -151,7 +152,7 @@ export class DefaultTableView extends Backbone.View {
             tthis.trigger('rowclicked', object);
         });
 
-        table.renderTable();
+        table.render();
 
         return table;
     }
@@ -172,12 +173,12 @@ export class AllExtentsView extends DefaultTableView {
     constructor(options?: DefaultTableViewOptions) {
 
         // Defines the default url
-        this.url = "datenmeister:///pool";
+        this.url = "datenmeister:///pools";
 
         super(options);
 
         if (this.tableOptions === undefined) {
-            this.tableOptions = new t.TableOptions();
+            this.tableOptions = new t.ViewOptions();
             this.tableOptions.allowNew = false;
             this.tableOptions.allowEdit = false;
             this.tableOptions.allowDelete = false;
@@ -199,7 +200,6 @@ export class FormViewOptions {
 }
 
 export class DetailView extends Backbone.View {
-
     object: d.JsonExtentObject;
     url: string;
     formOptions: FormViewOptions;
@@ -224,15 +224,21 @@ export class DetailView extends Backbone.View {
         var tthis = this;
         api.getAPI().getObject(this.url, function (object: d.JsonExtentObject) {
             tthis.object = object;
-            alert(object.id);
             tthis.render();
         });
 
     }
 
     render(): DetailView {
-
         prepareForViewChange();
+
+        this.$(".form").empty();
+
+        var form = new forms.DataForm(this.object, this.$(".form"));
+
+        form.autoGenerateFields();
+        form.render();
+
         this.$el.show();
         return this;
     }

@@ -4,28 +4,31 @@
 /// <reference path="datenmeister.objects.d.ts" />
 import d = require("datenmeister.objects");
 import t = require('lib/dejs.table');
-export declare class TableOptions {
+export declare class ViewOptions {
     public allowEdit: boolean;
     public allowNew: boolean;
     public allowDelete: boolean;
 }
 export declare class DataView {
+    public options: ViewOptions;
+    public domElement: JQuery;
+    public fieldInfos: d.JsonExtentFieldInfo[];
+    constructor(domElement: JQuery, options: ViewOptions);
+    public setFieldInfos(fieldInfos: d.JsonExtentFieldInfo[]): void;
     public createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery;
     public createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery;
     public setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo, dom: JQuery): void;
+    public createEventsForEditButton(editButton: JQuery, object: d.JsonExtentObject, columnDoms: JQuery[]): void;
 }
 export declare class DataTable extends DataView {
-    public domTable: JQuery;
-    public columns: d.JsonExtentFieldInfo[];
     public objects: d.JsonExtentObject[];
     public itemClickedEvent: (object: d.JsonExtentObject) => void;
-    public options: TableOptions;
     public extent: d.ExtentInfo;
     public table: t.Table;
-    constructor(extent: d.ExtentInfo, domTable: JQuery, options?: TableOptions);
-    public defineColumns(columns: d.JsonExtentFieldInfo[]): void;
+    constructor(extent: d.ExtentInfo, domTable: JQuery, options?: ViewOptions);
+    public defineFieldInfos(fieldInfos: d.JsonExtentFieldInfo[]): void;
     public addObject(object: d.JsonExtentObject): void;
-    public renderTable(): void;
+    public render(): void;
     public createRow(object: d.JsonExtentObject): void;
     public createCreateButton(): void;
     public createNewElement(inputs: JQuery[], cells: JQuery[]): void;

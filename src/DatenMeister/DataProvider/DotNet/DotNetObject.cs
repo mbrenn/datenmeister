@@ -14,20 +14,25 @@ namespace DatenMeister.DataProvider.DotNet
         /// <summary>
         /// Stores the id
         /// </summary>
-        private Guid id = Guid.NewGuid();
+        private string id;
 
         private object value;
 
-        public DotNetObject(IURIExtent extent, object value)
-            : this(value)
+        public DotNetObject(IURIExtent extent, object value, string id)
+            : this(value, id)
         {
+            Ensure.That(extent != null);
+
             this.extent = extent;
+            this.id = id;
         }
 
-        public DotNetObject(object value)
+        public DotNetObject(object value, string id)
         {
+            Ensure.That(id != null);
             Ensure.That(value != null);
             this.value = value;
+            this.id = id;
         }
         
         public object Get(string propertyName)
@@ -103,7 +108,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         public string Id
         {
-            get { return this.id.ToString(); }
+            get { return this.id; }
         }
 
         /// <summary>

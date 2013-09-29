@@ -4,10 +4,11 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable", "datenmeister.navigation"], function(require, exports, __api__, __t__, __navigation__) {
+define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable", "datenmeister.dataform", "datenmeister.navigation"], function(require, exports, __api__, __t__, __forms__, __navigation__) {
     var api = __api__;
     
     var t = __t__;
+    var forms = __forms__;
     var navigation = __navigation__;
 
     /*
@@ -121,7 +122,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
             var table = new t.DataTable(this.data.extent, this.$(".datatable"), this.tableOptions);
 
             // Create the columns
-            table.defineColumns(this.data.columns);
+            table.setFieldInfos(this.data.columns);
 
             for (var n = 0; n < this.data.objects.length; n++) {
                 var func = function (obj) {
@@ -135,7 +136,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
                 tthis.trigger('rowclicked', object);
             });
 
-            table.renderTable();
+            table.render();
 
             return table;
         };
@@ -161,12 +162,12 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
         __extends(AllExtentsView, _super);
         function AllExtentsView(options) {
             // Defines the default url
-            this.url = "datenmeister:///pool";
+            this.url = "datenmeister:///pools";
 
             _super.call(this, options);
 
             if (this.tableOptions === undefined) {
-                this.tableOptions = new t.TableOptions();
+                this.tableOptions = new t.ViewOptions();
                 this.tableOptions.allowNew = false;
                 this.tableOptions.allowEdit = false;
                 this.tableOptions.allowDelete = false;
@@ -207,13 +208,20 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
             var tthis = this;
             api.getAPI().getObject(this.url, function (object) {
                 tthis.object = object;
-                alert(object.id);
                 tthis.render();
             });
         };
 
         DetailView.prototype.render = function () {
             exports.prepareForViewChange();
+
+            this.$(".form").empty();
+
+            var form = new forms.DataForm(this.object, this.$(".form"));
+
+            form.autoGenerateFields();
+            form.render();
+
             this.$el.show();
             return this;
         };

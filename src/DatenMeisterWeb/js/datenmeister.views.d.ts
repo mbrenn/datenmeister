@@ -14,12 +14,12 @@ export declare class ServerConnectionView extends Backbone.View {
 }
 export interface DefaultTableViewOptions extends Backbone.ViewOptions {
     extentElement?: d.JsonExtentData;
-    tableOptions?: t.TableOptions;
+    tableOptions?: t.ViewOptions;
     url?: string;
 }
 export declare class DefaultTableView extends Backbone.View {
     public extentElement: d.JsonExtentData;
-    public tableOptions: t.TableOptions;
+    public tableOptions: t.ViewOptions;
     public url: string;
     public data: d.JsonExtentData;
     constructor(options?: DefaultTableViewOptions);

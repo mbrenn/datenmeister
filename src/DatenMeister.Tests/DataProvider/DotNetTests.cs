@@ -14,7 +14,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestGettingSetting()
         {
-            var value = new DotNetObject(new TestClass());
+            var value = new DotNetObject(new TestClass(), Guid.Empty.ToString());
 
             var properties = value.GetAll();
             Assert.That(properties.Any(x => x.PropertyName == "TextValue"));

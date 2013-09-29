@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.Logic
 {
-    public class DatenMeisterPoolExtent :IURIExtent
+    public class DatenMeisterPoolExtent : IURIExtent
     {
         /// <summary>
         /// Stores the pool
@@ -19,15 +19,23 @@ namespace DatenMeister.Logic
             this.pool = pool;
         }
 
+        /// <summary>
+        /// Gets the context uri for this extent
+        /// </summary>
+        /// <returns></returns>
         public string ContextURI()
         {
-            return "datenmeister:///pool";
+            return "datenmeister:///pools";
         }
 
+        /// <summary>
+        /// Gets the elements as DotNetObject
+        /// </summary>
+        /// <returns>Enumeration of objects within the extent as dotnet-objects</returns>
         public IEnumerable<IObject> Elements()
         {
             return this.pool.Extents.Select(
-                x => new DotNetObject(x.ToJson()));
+                x => new DotNetObject(x.ToJson(), x.ContextURI()));
         }
 
         public IObject CreateObject()
