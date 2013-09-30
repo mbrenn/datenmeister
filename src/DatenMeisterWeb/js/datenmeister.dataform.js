@@ -64,11 +64,11 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
                 var div = $("<div class='lastcolumn'></div>");
 
                 if (this.options.allowDelete) {
-                    var deleteButton = $("<em>DELETE</em>");
+                    var deleteButton = $("<button class='btn btn-default'>DELETE</button>");
                     var clicked = false;
                     deleteButton.click(function () {
                         if (!clicked) {
-                            deleteButton.html("<em>SURE?</em>");
+                            deleteButton.html("SURE?");
                             clicked = true;
                         } else {
                             api.getAPI().deleteObject(tthis.object.getUri(), function () {
@@ -81,7 +81,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
                 }
 
                 if (this.options.allowEdit) {
-                    var editButton = $("<em>EDIT</em>");
+                    var editButton = $("<button class='btn btn-default'>EDIT</button>");
                     this.createEventsForEditButton(editButton, this.object, columnDoms);
 
                     div.append(editButton);

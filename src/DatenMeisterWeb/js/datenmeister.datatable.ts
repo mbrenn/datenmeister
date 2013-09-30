@@ -81,7 +81,7 @@ export class DataView {
                     var writeField = tthis.createWriteField(object, column);
                     writeFields.push(writeField);
                     dom.append(writeField);
-                    editButton.html("<em>ACCEPT</em>");
+                    editButton.html("ACCEPT");
                 }
 
                 currentlyInEdit = true;
@@ -106,7 +106,7 @@ export class DataView {
                             dom.append(tthis.createReadField(object, column));
                         }
 
-                        editButton.html("<em>EDIT</em>");
+                        editButton.html("EDIT");
                     });
 
                 currentlyInEdit = false;
@@ -169,7 +169,7 @@ export class DataTable extends DataView{
         var tthis = this;
 
         var tableOptions = new t.TableOptions();
-        tableOptions.cssClass = "table";
+        tableOptions.cssClass = "table table-hover table-striped";
 
         this.domElement.empty();
         this.table = new t.Table(this.domElement, tableOptions);
@@ -214,7 +214,7 @@ export class DataTable extends DataView{
 
         var lastColumn = $("<div class='lastcolumn'></div>");
         if (tthis.itemClickedEvent !== undefined) {
-            var detailColumn = $("<em>DETAIL</em>");
+            var detailColumn = $("<a class='btn btn-default'>DETAIL</a>");
             detailColumn.click(function () {
                 tthis.itemClickedEvent(object);
 
@@ -226,11 +226,11 @@ export class DataTable extends DataView{
 
         // Adds delete button
         if (tthis.options.allowDelete) {
-            var delColumn = $("<em>DEL</em>");
+            var delColumn = $("<a class='btn btn-default'>DEL</a>");
             var clicked = false;
             delColumn.click(function () {
                 if (!clicked) {
-                    delColumn.html("<em>SURE?</em>");
+                    delColumn.text("SURE?");
                     clicked = true;
                 }
                 else {
@@ -247,7 +247,7 @@ export class DataTable extends DataView{
 
         // Adds allow edit button
         if (tthis.options.allowEdit) {
-            var editColumn = $("<em>EDIT</em>");
+            var editColumn = $("<a class='btn btn-default'>EDIT</a>");
             this.createEventsForEditButton(editColumn, object, columnDoms);
 
             lastColumn.append(editColumn);
@@ -265,7 +265,7 @@ export class DataTable extends DataView{
         var newInputs = new Array<JQuery>(); // Stores the 'input' elements
 
         // Adds create text
-        var createDom = $("<em>CREATE</em>");
+        var createDom = $("<button class='btn btn-default'>CREATE</button>");
         createDom.click(function () {
             newInputs.length = 0;
 
@@ -279,7 +279,7 @@ export class DataTable extends DataView{
                 newCells[n].append(dom);
             }
 
-            var okDom = $("<button>OK</button>");
+            var okDom = $("<div class='lastcolumn'><button class='btn btn-default'>ADD</button></div>");
             okDom.click(function () {
                 tthis.createNewElement(newInputs, newCells);
                 row.remove();

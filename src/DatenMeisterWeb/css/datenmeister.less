@@ -1,6 +1,33 @@
 ﻿body {
     padding: 10px;
 
+    header {
+        /* Round back button */
+        .backbutton {
+            color: black;
+            border: 3px solid black;
+            border-radius: 17px;
+            width: 34px;
+            height: 34px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: bold;
+            font-size: 20px;
+            padding-right: 1px;
+            padding-top: 5px;
+
+            &:hover {
+                background-color: orange;
+                text-decoration: none;
+            }
+
+            &:focus {
+                text-decoration: none;
+            }
+        }
+    }
+
     .defaulthidden {
         display: none;
     }

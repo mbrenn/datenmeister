@@ -13,26 +13,53 @@
     <title>Der Datenmeister</title>
 </head>
 <body>
-    <header id="headline">
-        <h1>DatenMeister</h1>
+    <header id="headline" class="container">
+        <div id="backview">
+            <h1><a href="#" class="backbutton">&lt;</a> Datenmeister</h1>
+        </div>
     </header>
-    <div id="backview">
-        <a href="#" class="backbutton">Back</a>
-    </div>
-    <div id="content">
-        <div id="serverconnectionview">
-            <h2>Define serveraddress:</h2>
-            <form id="server_selection">
-                <label>Serveradresse:</label>
-                <input type="text" class="serveraddress" /><br />
-                <button class="btn btn-primary serverconnection_button">Connect</button>
-                <p class="serverconnection_domnosuccess defaulthidden text-warning">Connection could not be established</p>
-                <p class="serverconnection_domsuccess defaulthidden text-success">Connection has been established</p>
-            </form>
+    <div id="content" class="container">
+        <div id="serverconnectionview" class="row">
+            <div class="col-md-8">
+                <div class="page-header">
+                    <h2>Define serveraddress:</h2>
+                </div>
+                <p>State your serveraddress. Please ask a Datenmeister-Provider to retrieve data.</p>
+                <form id="server_selection" role="form">
+                    <div class="form-group">
+                        <label for="connect_address">Serveradresse:</label>
+                        <input type="text" class="serveraddress form-control" id="connect_address" />
+                    </div>
+                    <button class="btn btn-default serverconnection_button">Connect to server</button>
+                    <p class="serverconnection_domnosuccess defaulthidden text-warning">Connection could not be established</p>
+                    <p class="serverconnection_domsuccess defaulthidden text-success">Connection has been established</p>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <div class="page-header">
+                    <h2>Willkommen</h2>
+                </div>
+                <p>Welcome to <strong>DatenMeister</strong>, an easy to use database for every purpose being fully operable to all different types of data sources and sinks. </p>
+                <p>Get support from <a href="mailto:brenn@depon.net">Martin Brenn</a>.</p>
+                <p>Sourcecode available under <a href="http://bitbucket.org/mbrenn/datenmeister">Bitbucket</a>.</p>
+                <p>Have fun!</p>
+            </div>
         </div>
         <div id="extentlist">
-            <h2>Extentlist</h2>
-            <div class="datatable">
+            <div class="col-md-8">
+                <div class="page-header">
+                    <h2>List of all available extents</h2>
+                </div>
+                <div class="datatable">
+                </div>
+            </div>
+            <div class="col-md-4">
+
+                <div class="page-header">
+                    <h2>Extent?</h2>
+                </div>
+                <p>Lists all available extents on the server. </p>
+                <p>An extent is collection of identifiable elements and can be seen as a container.</p>
             </div>
         </div>
         <div id="objectlist">
