@@ -93,21 +93,29 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
             });
         };
 
+        ServerAPI.prototype.convertToJsonObject = function (data) {
+            var result = new d.JsonExtentObject();
+
+            // Sets id and extentUri of object
+            result.id = data.id;
+            result.extentUri = data.extentUri;
+
+            // Sets values of the complete object
+            _.each(data.values, function (value, key, list) {
+                result.set(key, value);
+            });
+
+            // Returns result
+            return result;
+        };
+
         ServerAPI.prototype.getObject = function (uri, success) {
+            var tthis = this;
             ajax.performRequest({
                 url: this.__getUrl() + "extent/GetObject?uri=" + encodeURIComponent(uri),
                 success: function (data) {
                     if (success !== undefined) {
-                        var result = new d.JsonExtentObject();
-
-                        // Sets id and extentUri of object
-                        result.id = data.id;
-                        result.extentUri = data.extentUri;
-
-                        // Sets values of the complete object
-                        _.each(data.values, function (value, key, list) {
-                            result.set(key, value);
-                        });
+                        var result = tthis.convertToJsonObject(data);
 
                         // Returns result
                         success(result);
@@ -191,6 +199,7 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
         };
 
         ServerAPI.prototype.addObject = function (uri, data, success, fail) {
+            var tthis = this;
             ajax.performRequest({
                 url: this.__getUrl() + "extent/AddObject?uri=" + encodeURIComponent(uri),
                 prefix: 'editobject_',
@@ -198,7 +207,7 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
                 data: data,
                 success: function (data) {
                     if (success !== undefined) {
-                        success(data.element);
+                        success(tthis.convertToJsonObject(data));
                     }
                 },
                 fail: function () {

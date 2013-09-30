@@ -289,7 +289,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             }
 
             api.getAPI().addObject(this.extent.get('uri'), value.attributes, function (data) {
-                tthis.createRow(value);
+                tthis.createRow(data);
 
                 tthis.createCreateButton();
             }, function () {

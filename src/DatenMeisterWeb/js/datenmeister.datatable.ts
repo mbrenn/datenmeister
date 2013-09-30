@@ -316,8 +316,8 @@ export class DataTable extends DataView{
         api.getAPI().addObject(
             this.extent.get('uri'),
             value.attributes,
-            function (data) {
-                tthis.createRow(value);
+            function (data: d.JsonExtentObject) {
+                tthis.createRow(data);
 
                 tthis.createCreateButton();
             },

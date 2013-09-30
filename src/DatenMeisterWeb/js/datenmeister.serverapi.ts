@@ -92,21 +92,29 @@ export class ServerAPI {
         });
     }
 
+    convertToJsonObject(data: any): d.JsonExtentObject {
+        var result = new d.JsonExtentObject();
+
+        // Sets id and extentUri of object
+        result.id = data.id;
+        result.extentUri = data.extentUri;
+
+        // Sets values of the complete object
+        _.each(data.values, function (value, key, list) {
+            result.set(key, value);
+        });
+
+        // Returns result
+        return result;
+    }
+
     getObject(uri: string, success: (object: d.JsonExtentObject) => void) {
+        var tthis = this;
         ajax.performRequest({
             url: this.__getUrl() + "extent/GetObject?uri=" + encodeURIComponent(uri),
             success: function (data: any) {
                 if (success !== undefined) {
-                    var result = new d.JsonExtentObject();
-
-                    // Sets id and extentUri of object
-                    result.id = data.id;
-                    result.extentUri = data.extentUri;
-
-                    // Sets values of the complete object
-                    _.each(data.values, function (value, key, list) {
-                        result.set(key, value);
-                    });
+                    var result = tthis.convertToJsonObject(data);
 
                     // Returns result
                     success(result);
@@ -190,6 +198,7 @@ export class ServerAPI {
     }
 
     addObject(uri: string, data: any, success: (data: d.JsonExtentObject) => void, fail?: () => void) {
+        var tthis = this;
         ajax.performRequest({
             url: this.__getUrl() + "extent/AddObject?uri=" + encodeURIComponent(uri),
             prefix: 'editobject_',
@@ -197,7 +206,7 @@ export class ServerAPI {
             data: data,
             success: function (data) {
                 if (success !== undefined) {
-                    success(<d.JsonExtentObject> data.element);
+                    success(tthis.convertToJsonObject(data));
                 }
             },
             fail: function () {

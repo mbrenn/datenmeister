@@ -106,7 +106,9 @@ namespace DatenMeister.Web
             return this.Json(new
             {
                 success = true,
-                element = ToJson(element)
+                values = element.GetAll().ToDictionary(x => x.PropertyName, x => x.Value),
+                id = element.Id,
+                extentUri = extent.ContextURI()
             });
         }
 
