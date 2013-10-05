@@ -37,13 +37,17 @@ export interface DetailViewOptions extends Backbone.ViewOptions {
     object?: d.JsonExtentObject;
     url?: string;
 }
-export declare class FormViewOptions {
+export interface FormViewOptions extends Backbone.ViewOptions {
+    viewUrl?: string;
+    viewObject?: d.JsonExtentObject;
 }
 export declare class DetailView extends Backbone.View {
     public object: d.JsonExtentObject;
     public url: string;
     public formOptions: FormViewOptions;
-    constructor(options: Backbone.ViewOptions);
+    public viewUrl: string;
+    public viewObject: d.JsonExtentObject;
+    constructor(options: FormViewOptions);
     public loadAndRender(): void;
     public render(): DetailView;
 }

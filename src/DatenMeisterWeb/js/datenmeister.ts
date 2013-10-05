@@ -7,6 +7,7 @@ import t = require("datenmeister.datatable");
 import d = require("datenmeister.objects");
 import views = require("datenmeister.views");
 import navigation = require("datenmeister.navigation");
+import forms = require('datenmeister.dataform');
 
 // Serverconnection form
 export function init() {
@@ -59,10 +60,17 @@ class AppRouter extends Backbone.Router {
 
     showObject(objectUri: string): views.DetailView {
 
+        var options = new forms.FormViewOptions();
+        options.allowDelete = true;
+        options.allowEdit = true;
+        options.allowNew = true;
+        options.allowNewProperty = true;
+
         return new views.DetailView(
             {
                 el: "#detailview",
-                url: objectUri
+                url: objectUri,
+                options: options
             });
     }
 
@@ -73,7 +81,6 @@ class AppRouter extends Backbone.Router {
             });
 
             loginForm.onConnect = function (settings) {
-
                 navigation.to("all");
             };
         }

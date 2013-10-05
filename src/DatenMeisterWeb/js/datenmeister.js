@@ -7,12 +7,13 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.views", "datenmeister.navigation"], function(require, exports, __views__, __navigation__) {
+define(["require", "exports", "datenmeister.views", "datenmeister.navigation", 'datenmeister.dataform'], function(require, exports, __views__, __navigation__, __forms__) {
     
     
     
     var views = __views__;
     var navigation = __navigation__;
+    var forms = __forms__;
 
     // Serverconnection form
     function init() {
@@ -62,9 +63,16 @@ define(["require", "exports", "datenmeister.views", "datenmeister.navigation"], 
         };
 
         AppRouter.prototype.showObject = function (objectUri) {
+            var options = new forms.FormViewOptions();
+            options.allowDelete = true;
+            options.allowEdit = true;
+            options.allowNew = true;
+            options.allowNewProperty = true;
+
             return new views.DetailView({
                 el: "#detailview",
-                url: objectUri
+                url: objectUri,
+                options: options
             });
         };
 

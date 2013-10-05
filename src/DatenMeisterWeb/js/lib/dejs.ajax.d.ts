@@ -7,5 +7,14 @@ export declare class AjaxSettings {
 }
 export declare function reportError(serverResponse: string): void;
 export declare function loadWebContent(data: any): void;
-export declare function performRequest(data: any): void;
-export declare function showFormFailure(prefix: string, message: string): void;
+export interface PerformRequestSettings {
+    url?: string;
+    method?: string;
+    data?: any;
+    contentType?: string;
+    success?: (data: any) => void;
+    fail?: (data: any) => void;
+    prefix?: string;
+}
+export declare function performRequest(data: PerformRequestSettings): void;
+export declare function showFormFailure(prefix: string, failFunction: (data: any) => void): void;

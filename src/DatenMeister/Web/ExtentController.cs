@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Logging;
 using BurnSystems.ObjectActivation;
+using BurnSystems.Test;
 using BurnSystems.WebServer.Modules.MVC;
 using DatenMeister.Logic;
 using System;
@@ -144,6 +145,40 @@ namespace DatenMeister.Web
             }
 
             return this.SuccessJson(false);
+        }
+
+        [WebMethod]
+        public IActionResult GetObjects([PostModel] GetObjectsModel objects)
+        {
+            Ensure.That(objects != null);
+            var resultObjects = new List<object>();
+            foreach (var uri in objects.uris)
+            {
+                IURIExtent extent;
+                var element = this.GetElementByUri(uri, out extent);
+
+                if (element != null)
+                {
+                    var jsonElement = new
+                    {
+                        id = element.Id,
+                        extentUri = extent.ContextURI(),
+                        values = element.GetAll().ToDictionary(x => x.PropertyName, x => x.Value)
+                    };
+
+                    resultObjects.Add(jsonElement);
+                }
+                else
+                {
+                    resultObjects.Add(null);
+                }
+            }
+
+            return this.Json(new
+            {
+                success = true,
+                objects = resultObjects
+            });
         }
 
         /// <summary>

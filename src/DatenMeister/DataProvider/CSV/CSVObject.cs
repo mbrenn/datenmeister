@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Collections;
+using BurnSystems.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,11 @@ namespace DatenMeister.DataProvider.CSV
 {
     public class CSVObject : IObject
     {
+        /// <summary>
+        /// Defines the logger to be used
+        /// </summary>
+        private static ILog logger = new ClassLogger(typeof(CSVObject));
+
         /// <summary>
         /// Stores the extent, which created the object
         /// </summary>
@@ -99,6 +105,10 @@ namespace DatenMeister.DataProvider.CSV
                 if (index != -1)
                 {
                     this.values[index] = value.ToString();
+                }
+                else
+                {
+                    logger.Message("Could not set property name, due to unknown column: " + propertyName);
                 }
             }
         }

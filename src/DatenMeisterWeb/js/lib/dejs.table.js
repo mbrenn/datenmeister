@@ -48,6 +48,24 @@ define(["require", "exports"], function(require, exports) {
             return this.__currentRow;
         };
 
+        Table.prototype.insertRowAfter = function (lastRow) {
+            this.__isHeaderRow = false;
+
+            this.__currentRow = $("<tr></tr>");
+            lastRow.after(this.__currentRow);
+
+            return this.__currentRow;
+        };
+
+        Table.prototype.insertRowBefore = function (lastRow) {
+            this.__isHeaderRow = false;
+
+            this.__currentRow = $("<tr></tr>");
+            lastRow.before(this.__currentRow);
+
+            return this.__currentRow;
+        };
+
         Table.prototype.addColumn = function (content, options) {
             var currentColumn = this.__createColumn(options);
             currentColumn.text(content);

@@ -123,6 +123,26 @@ export class ServerAPI {
         });
     }
 
+    getObjects(uris: Array<string>, success: (objects: Array<d.JsonExtentObject>) => void) {
+        var tthis = this;
+        ajax.performRequest({
+            data: {
+                uris: uris
+            },
+            url: this.__getUrl() + "extent/GetObjects",
+            method: 'POST',
+            contentType: 'application/json',
+            success: function (data) {
+                var result = new Array<d.JsonExtentObject>();
+                _.each(data.objects, function (o) {
+                    result.push(tthis.convertToJsonObject(o));
+                });
+
+                success(result);
+            }
+        });
+    }
+
     getObjectsInExtent(uri: string, success: (extentData: d.JsonExtentData) => void, fail?: () => void) {
         ajax.performRequest({
             url: this.__getUrl() + "extent/GetObjectsInExtent?uri=" + uri,

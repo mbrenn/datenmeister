@@ -20,10 +20,22 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
     })();
     exports.ViewOptions = ViewOptions;
 
+    /*
+    * Supports the insertion of new properties by collecting them into the View
+    * When called by createEventsForEditButton, this information is used to send out new properties
+    */
+    var NewPropertyFields = (function () {
+        function NewPropertyFields() {
+        }
+        return NewPropertyFields;
+    })();
+    exports.NewPropertyFields = NewPropertyFields;
+
     var DataView = (function () {
         function DataView(domElement, options) {
             this.domElement = domElement;
             this.options = options;
+            this.newPropertyInfos = new Array();
             if (this.options === undefined) {
                 this.options = new ViewOptions();
                 this.options.allowDelete = true;
@@ -36,6 +48,14 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         */
         DataView.prototype.setFieldInfos = function (fieldInfos) {
             this.fieldInfos = fieldInfos;
+        };
+
+        /*
+        * Adds a new property field that will be evaluated when the edit or creation of a new object has been finished.
+        * The new property fields consists of a field containing the key and a field containing the value
+        */
+        DataView.prototype.addNewPropertyField = function (newField) {
+            this.newPropertyInfos.push(newField);
         };
 
         DataView.prototype.createReadField = function (object, field) {
@@ -51,7 +71,12 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         };
 
         DataView.prototype.createWriteField = function (object, field) {
-            var value = object.get(field.getName());
+            var value;
+
+            if (object !== undefined && field !== undefined) {
+                value = object.get(field.getName());
+            }
+
             var inputField = $("<input type='text' />");
             if (value !== undefined && value !== null) {
                 inputField.val(value);
@@ -64,7 +89,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             object.set(field.getName(), dom.val());
         };
 
-        DataView.prototype.createEventsForEditButton = function (editButton, object, columnDoms) {
+        DataView.prototype.createEventsForEditButton = function (editButton, object, columnDoms, editModeChange) {
             var tthis = this;
             var currentlyInEdit = false;
             var writeFields;
@@ -91,6 +116,32 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                         tthis.setValueByWriteField(object, column, writeFields[n]);
                     }
 
+                    // Goes through the new properties
+                    _.each(tthis.newPropertyInfos, function (info) {
+                        var key = info.keyField.val();
+                        var value = info.valueField.val();
+
+                        if (_.isEmpty(key)) {
+                            // No key had been entered, let's remove the row
+                            info.rowDom.remove();
+                        } else {
+                            object.set(key, value);
+
+                            var fieldInfo = new d.JsonExtentFieldInfo();
+                            fieldInfo.setName(key);
+                            fieldInfo.setTitle(key);
+                            tthis.fieldInfos.push(fieldInfo);
+                            columnDoms.push(info.valueField.parent());
+
+                            // making the key field as read only
+                            var keyValue = info.keyField.val();
+                            info.keyField.before($("<div></div>").text(keyValue));
+                            info.keyField.remove();
+                        }
+                    });
+
+                    tthis.newPropertyInfos.length = 0;
+
                     api.getAPI().editObject(object.getUri(), object, function () {
                         for (var n = 0; n < columnDoms.length; n++) {
                             var dom = columnDoms[n];
@@ -103,6 +154,10 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                     });
 
                     currentlyInEdit = false;
+                }
+
+                if (editModeChange !== undefined) {
+                    editModeChange(currentlyInEdit);
                 }
 
                 // No bubbling
@@ -298,11 +353,6 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
 
         DataTable.prototype.setItemClickedEvent = function (clickedEvent) {
             this.itemClickedEvent = clickedEvent;
-        };
-
-        // Called, when user wants to delete one object and has clicked on the delete icon.
-        // This method executes the server request.
-        DataTable.prototype.triggerDelete = function (object) {
         };
         return DataTable;
     })(DataView);

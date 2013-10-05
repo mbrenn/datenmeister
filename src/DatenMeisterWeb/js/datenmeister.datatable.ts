@@ -13,15 +13,27 @@ export class ViewOptions {
     allowDelete: boolean;
 }
 
+/*
+ * Supports the insertion of new properties by collecting them into the View 
+ * When called by createEventsForEditButton, this information is used to send out new properties
+ */
+export class NewPropertyFields {
+    keyField: JQuery;
+    valueField: JQuery;
+    rowDom: JQuery; // Stores the complete row, that may be deleted, if key is empty
+}
+
 export class DataView {
 
     options: ViewOptions;
     domElement: JQuery;
     fieldInfos: Array<d.JsonExtentFieldInfo>;
+    newPropertyInfos: Array<NewPropertyFields>;
 
     constructor(domElement: JQuery, options: ViewOptions) {
         this.domElement = domElement;
         this.options = options;
+        this.newPropertyInfos = new Array<NewPropertyFields>();
         if (this.options === undefined) {
             this.options = new ViewOptions();
             this.options.allowDelete = true;
@@ -35,6 +47,14 @@ export class DataView {
      */
     setFieldInfos(fieldInfos: Array<d.JsonExtentFieldInfo>) {
         this.fieldInfos = fieldInfos;
+    }
+
+    /*
+     * Adds a new property field that will be evaluated when the edit or creation of a new object has been finished.
+     * The new property fields consists of a field containing the key and a field containing the value
+     */
+    addNewPropertyField(newField: NewPropertyFields): void {
+        this.newPropertyInfos.push(newField);
     }
 
     createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
@@ -51,7 +71,12 @@ export class DataView {
     }
 
     createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
-        var value = object.get(field.getName());
+        var value;
+
+        if (object !== undefined && field !== undefined) {
+            value = object.get(field.getName());
+        }
+
         var inputField = $("<input type='text' />");
         if (value !== undefined && value !== null) {
             inputField.val(value);
@@ -64,7 +89,7 @@ export class DataView {
         object.set(field.getName(), dom.val());
     }
 
-    createEventsForEditButton(editButton: JQuery, object: d.JsonExtentObject, columnDoms: Array<JQuery>) {
+    createEventsForEditButton(editButton: JQuery, object: d.JsonExtentObject, columnDoms: Array<JQuery>, editModeChange?: (modeChange: boolean) => void): void{
         var tthis = this;
         var currentlyInEdit = false;
         var writeFields: Array<JQuery>;
@@ -95,6 +120,33 @@ export class DataView {
                     tthis.setValueByWriteField(object, column, writeFields[n]);
                 }
 
+                // Goes through the new properties
+                _.each(tthis.newPropertyInfos, function (info) {
+                    var key = info.keyField.val();
+                    var value = info.valueField.val();
+
+                    if (_.isEmpty(key)) {
+                        // No key had been entered, let's remove the row
+                        info.rowDom.remove();
+                    }
+                    else {
+                        object.set(key, value);
+
+                        var fieldInfo = new d.JsonExtentFieldInfo();
+                        fieldInfo.setName(key);
+                        fieldInfo.setTitle(key);
+                        tthis.fieldInfos.push(fieldInfo);
+                        columnDoms.push(info.valueField.parent());
+
+                        // making the key field as read only
+                        var keyValue = info.keyField.val();
+                        info.keyField.before($("<div></div>").text(keyValue));
+                        info.keyField.remove();
+                    }
+                });
+
+                tthis.newPropertyInfos.length = 0;
+
                 api.getAPI().editObject(
                     object.getUri(),
                     object,
@@ -110,6 +162,10 @@ export class DataView {
                     });
 
                 currentlyInEdit = false;
+            }
+
+            if (editModeChange !== undefined) {
+                editModeChange(currentlyInEdit);
             }
 
             // No bubbling
@@ -193,7 +249,7 @@ export class DataTable extends DataView{
             this.createRow(object);
         } // for (all objects)
 
-        // Adds last line for adding, if necessary
+        // Adds last line for adding new items, if necessary
         if (this.options.allowNew) {
             this.createCreateButton();
         }
@@ -327,10 +383,5 @@ export class DataTable extends DataView{
 
     setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void {
         this.itemClickedEvent = clickedEvent;
-    }
-
-    // Called, when user wants to delete one object and has clicked on the delete icon. 
-    // This method executes the server request. 
-    triggerDelete(object: d.JsonExtentObject): void {
     }
 }

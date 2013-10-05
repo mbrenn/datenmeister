@@ -43,7 +43,9 @@ define(["require", "exports"], function(require, exports) {
     * data: Data-structure
     * data.url: URL being used
     * data.method: HTTP-Method being used
-    * data.data: Data being send with the request
+    * data.data: Data being send with the request.
+    The data gets stringified, if contentType is 'application/json'
+    * data.contentType: Content Type of the request
     * data.success: Function being called in case of success with result
     * data.fail: Function being called in case of non-success
     * data.prefix: Prefix for message being used for translation (register_, login_, etc)
@@ -77,7 +79,11 @@ define(["require", "exports"], function(require, exports) {
         }
 
         if (data.data !== undefined) {
-            ajaxSettings.data = data.data;
+            if (data.contentType !== undefined && data.contentType.toLowerCase() == 'application/json') {
+                ajaxSettings.data = JSON.stringify(data.data);
+            } else {
+                ajaxSettings.data = data.data;
+            }
         }
 
         if (data.prefix === undefined) {
@@ -130,7 +136,7 @@ define(["require", "exports"], function(require, exports) {
     }
     exports.performRequest = performRequest;
 
-    function showFormFailure(prefix, message) {
+    function showFormFailure(prefix, failFunction) {
         //alert(message);
     }
     exports.showFormFailure = showFormFailure;

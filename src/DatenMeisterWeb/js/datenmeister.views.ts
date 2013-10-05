@@ -196,7 +196,9 @@ export interface DetailViewOptions extends Backbone.ViewOptions {
     url?: string;
 }
 
-export class FormViewOptions {
+export interface FormViewOptions extends Backbone.ViewOptions{
+    viewUrl?: string;
+    viewObject?: d.JsonExtentObject;
 }
 
 export class DetailView extends Backbone.View {
@@ -204,7 +206,12 @@ export class DetailView extends Backbone.View {
     url: string;
     formOptions: FormViewOptions;
 
-    constructor(options: Backbone.ViewOptions) {
+    // Defines the view url and or the viewObject. 
+    // If no viewObject has been given, a default view will be generated
+    viewUrl: string;
+    viewObject: d.JsonExtentObject;
+
+    constructor(options: FormViewOptions) {
         _.extend(this, options);
 
         super(options);
@@ -222,11 +229,22 @@ export class DetailView extends Backbone.View {
 
     loadAndRender() {
         var tthis = this;
-        api.getAPI().getObject(this.url, function (object: d.JsonExtentObject) {
-            tthis.object = object;
+        var urls = new Array<string>();
+        urls.push(this.url);
+
+        if (this.viewUrl !== undefined) {
+            urls.push(this.viewUrl);
+        }
+
+        api.getAPI().getObjects(urls, function (objects: Array<d.JsonExtentObject>) {
+            tthis.object = objects[0];
+
+            if (this.viewUrl !== undefined) {
+                tthis.viewObject = <d.JsonExtentFieldInfo> objects[1];
+            }
+
             tthis.render();
         });
-
     }
 
     render(): DetailView {
@@ -234,9 +252,12 @@ export class DetailView extends Backbone.View {
 
         this.$(".form").empty();
 
-        var form = new forms.DataForm(this.object, this.$(".form"));
+        var form = new forms.DataForm(this.object, this.$(".form"), this.options);
 
-        form.autoGenerateFields();
+        if (this.viewObject === undefined) {
+            form.autoGenerateFields();
+        }
+
         form.render();
 
         this.$el.show();

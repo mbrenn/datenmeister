@@ -11,6 +11,15 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
     var t = __t__;
     var navigation = __navigation__;
 
+    var FormViewOptions = (function (_super) {
+        __extends(FormViewOptions, _super);
+        function FormViewOptions() {
+            _super.apply(this, arguments);
+        }
+        return FormViewOptions;
+    })(table.ViewOptions);
+    exports.FormViewOptions = FormViewOptions;
+
     var DataForm = (function (_super) {
         __extends(DataForm, _super);
         function DataForm(object, domElement, options) {
@@ -18,6 +27,10 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
 
             this.object = object;
             this.fieldInfos = new Array();
+
+            if (this.options.allowNewProperty !== undefined) {
+                this.options.allowNewProperty = options.allowNewProperty;
+            }
         }
         /*
         * Autogenerates the fields by evaluating the contents of given object
@@ -58,7 +71,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
             });
 
             if (this.options.allowEdit || this.options.allowDelete) {
-                table.addRow();
+                var lastRow = table.addRow();
                 table.addColumn("");
 
                 var div = $("<div class='lastcolumn'></div>");
@@ -82,7 +95,22 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
 
                 if (this.options.allowEdit) {
                     var editButton = $("<button class='btn btn-default'>EDIT</button>");
-                    this.createEventsForEditButton(editButton, this.object, columnDoms);
+                    var newPropertyRows = new Array();
+
+                    this.createEventsForEditButton(editButton, this.object, columnDoms, function (inEditMode) {
+                        if (tthis.options.allowNewProperty === true) {
+                            if (inEditMode) {
+                                tthis.createNewPropertyRow(table, lastRow);
+                            } else {
+                                // Remove everything and delete array
+                                _.each(newPropertyRows, function (x) {
+                                    x.remove();
+                                });
+
+                                newPropertyRows.length = 0;
+                            }
+                        }
+                    });
 
                     div.append(editButton);
                 }
@@ -91,6 +119,40 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
             }
 
             return this;
+        };
+
+        DataForm.prototype.createNewPropertyRow = function (table, lastRow) {
+            var tthis = this;
+            var newPropertyRow = table.insertRowBefore(lastRow);
+
+            var keyElement = this.createWriteField(undefined, undefined);
+            var valueElement = this.createWriteField(undefined, undefined);
+            this.addNewPropertyField({
+                rowDom: newPropertyRow,
+                keyField: keyElement,
+                valueField: valueElement
+            });
+
+            table.addColumnJQuery(keyElement);
+            table.addColumnJQuery(valueElement);
+
+            // Adds event to insert new property row, if content is entered into fields
+            var hasEntered = false;
+
+            var changeFunction = function () {
+                if (keyElement.val().length > 0 && valueElement.val().length > 0) {
+                    if (!hasEntered) {
+                        tthis.createNewPropertyRow(table, lastRow);
+                        hasEntered = true;
+
+                        keyElement.off('keypress', changeFunction);
+                        keyElement.off('keypress', changeFunction);
+                    }
+                }
+            };
+
+            keyElement.keypress(changeFunction);
+            valueElement.keypress(changeFunction);
         };
         return DataForm;
     })(table.DataView);

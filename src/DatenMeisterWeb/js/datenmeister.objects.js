@@ -23,11 +23,25 @@ define(["require", "exports"], function(require, exports) {
     })(Backbone.Model);
     exports.ExtentInfo = ExtentInfo;
 
+    // Defines the information for an object within the extent
+    var JsonExtentObject = (function (_super) {
+        __extends(JsonExtentObject, _super);
+        function JsonExtentObject(attributes) {
+            _super.call(this, attributes);
+        }
+        // Gets the uri of the extent itself
+        JsonExtentObject.prototype.getUri = function () {
+            return this.extentUri + "#" + this.id;
+        };
+        return JsonExtentObject;
+    })(Backbone.Model);
+    exports.JsonExtentObject = JsonExtentObject;
+
     // Defines the information for a column that has been received from server
     var JsonExtentFieldInfo = (function (_super) {
         __extends(JsonExtentFieldInfo, _super);
-        function JsonExtentFieldInfo(attributes, options) {
-            _super.call(this, attributes, options);
+        function JsonExtentFieldInfo(attributes) {
+            _super.call(this, attributes);
         }
         /*
         * Gets the name of the property
@@ -51,22 +65,8 @@ define(["require", "exports"], function(require, exports) {
             return this.set('title', title);
         };
         return JsonExtentFieldInfo;
-    })(Backbone.Model);
+    })(JsonExtentObject);
     exports.JsonExtentFieldInfo = JsonExtentFieldInfo;
-
-    // Defines the information for an object within the extent
-    var JsonExtentObject = (function (_super) {
-        __extends(JsonExtentObject, _super);
-        function JsonExtentObject() {
-            _super.call(this);
-        }
-        // Gets the uri of the extent itself
-        JsonExtentObject.prototype.getUri = function () {
-            return this.extentUri + "#" + this.id;
-        };
-        return JsonExtentObject;
-    })(Backbone.Model);
-    exports.JsonExtentObject = JsonExtentObject;
 
     // Result from GetObjectsInExtent
     var JsonExtentData = (function () {

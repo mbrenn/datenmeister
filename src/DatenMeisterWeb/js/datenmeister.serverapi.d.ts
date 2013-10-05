@@ -14,6 +14,7 @@ export declare class ServerAPI {
     public getServerInfo(success: (info: ServerInfo) => void, fail?: () => void): void;
     public convertToJsonObject(data: any): d.JsonExtentObject;
     public getObject(uri: string, success: (object: d.JsonExtentObject) => void): void;
+    public getObjects(uris: string[], success: (objects: d.JsonExtentObject[]) => void): void;
     public getObjectsInExtent(uri: string, success: (extentData: d.JsonExtentData) => void, fail?: () => void): void;
     public deleteObject(uri: string, success: () => void, fail?: () => void): void;
     public editObject(uri: string, object: Backbone.Model, success: () => void, fail?: () => void): void;

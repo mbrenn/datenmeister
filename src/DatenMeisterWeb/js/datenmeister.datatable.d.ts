@@ -9,16 +9,23 @@ export declare class ViewOptions {
     public allowNew: boolean;
     public allowDelete: boolean;
 }
+export declare class NewPropertyFields {
+    public keyField: JQuery;
+    public valueField: JQuery;
+    public rowDom: JQuery;
+}
 export declare class DataView {
     public options: ViewOptions;
     public domElement: JQuery;
     public fieldInfos: d.JsonExtentFieldInfo[];
+    public newPropertyInfos: NewPropertyFields[];
     constructor(domElement: JQuery, options: ViewOptions);
     public setFieldInfos(fieldInfos: d.JsonExtentFieldInfo[]): void;
+    public addNewPropertyField(newField: NewPropertyFields): void;
     public createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery;
     public createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery;
     public setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo, dom: JQuery): void;
-    public createEventsForEditButton(editButton: JQuery, object: d.JsonExtentObject, columnDoms: JQuery[]): void;
+    public createEventsForEditButton(editButton: JQuery, object: d.JsonExtentObject, columnDoms: JQuery[], editModeChange?: (modeChange: boolean) => void): void;
 }
 export declare class DataTable extends DataView {
     public objects: d.JsonExtentObject[];
@@ -33,5 +40,4 @@ export declare class DataTable extends DataView {
     public createCreateButton(): void;
     public createNewElement(inputs: JQuery[], cells: JQuery[]): void;
     public setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void;
-    public triggerDelete(object: d.JsonExtentObject): void;
 }

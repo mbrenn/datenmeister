@@ -5,15 +5,24 @@ import api = require("datenmeister.serverapi");
 import t = require('lib/dejs.table');
 import navigation = require('datenmeister.navigation');
 
+export class FormViewOptions extends table.ViewOptions {
+    allowNewProperty: boolean;
+}
+
 export class DataForm extends table.DataView {
     object: d.JsonExtentObject;
     domElement: JQuery;
+    options: FormViewOptions;
 
-    constructor(object: d.JsonExtentObject, domElement: JQuery, options?: table.ViewOptions) {
+    constructor(object: d.JsonExtentObject, domElement: JQuery, options?: FormViewOptions) {
         super(domElement, options);
 
         this.object = object;
         this.fieldInfos = new Array<d.JsonExtentFieldInfo>();
+
+        if (this.options.allowNewProperty !== undefined) {
+            this.options.allowNewProperty = options.allowNewProperty;
+        }
     }
 
     /*
@@ -55,7 +64,7 @@ export class DataForm extends table.DataView {
         });
 
         if (this.options.allowEdit || this.options.allowDelete) {
-            table.addRow();
+            var lastRow = table.addRow();
             table.addColumn("");
 
             var div = $("<div class='lastcolumn'></div>");
@@ -80,7 +89,28 @@ export class DataForm extends table.DataView {
 
             if (this.options.allowEdit) {
                 var editButton = $("<button class='btn btn-default'>EDIT</button>");
-                this.createEventsForEditButton(editButton, this.object, columnDoms);
+                var newPropertyRows = new Array<JQuery>();
+
+                this.createEventsForEditButton(
+                    editButton,
+                    this.object,
+                    columnDoms,
+                    function (inEditMode) {
+                        // Called, if the user switches from view mode to edit mode or back
+                        if (tthis.options.allowNewProperty === true) {
+                            if (inEditMode) {
+                                tthis.createNewPropertyRow(table, lastRow);
+                            }
+                            else {
+                                // Remove everything and delete array
+                                _.each(newPropertyRows, function (x) {
+                                    x.remove();
+                                });
+
+                                newPropertyRows.length = 0;
+                            }
+                        }
+                    });
 
                 div.append(editButton);
             }
@@ -89,5 +119,40 @@ export class DataForm extends table.DataView {
         }
 
         return this;
+    }
+
+    createNewPropertyRow(table: t.Table, lastRow: JQuery): void {
+        var tthis = this;
+        var newPropertyRow = table.insertRowBefore(lastRow);
+
+        var keyElement = this.createWriteField(undefined, undefined);
+        var valueElement = this.createWriteField(undefined, undefined);
+        this.addNewPropertyField(
+            {
+                rowDom: newPropertyRow,
+                keyField: keyElement,
+                valueField: valueElement
+            });
+
+        table.addColumnJQuery(keyElement);
+        table.addColumnJQuery(valueElement);
+
+        // Adds event to insert new property row, if content is entered into fields
+        var hasEntered = false;
+
+        var changeFunction = function () {
+            if (keyElement.val().length > 0 && valueElement.val().length > 0) {
+                if (!hasEntered) {
+                    tthis.createNewPropertyRow(table, lastRow);
+                    hasEntered = true;
+
+                    keyElement.off('keypress', changeFunction);
+                    keyElement.off('keypress', changeFunction);
+                }
+            }
+        };
+
+        keyElement.keypress(changeFunction);
+        valueElement.keypress(changeFunction);
     }
 }

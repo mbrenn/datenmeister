@@ -14,6 +14,8 @@ export declare class Table {
     public getTableDom(): JQuery;
     public addRow(): JQuery;
     public addHeaderRow(): JQuery;
+    public insertRowAfter(lastRow: JQuery): JQuery;
+    public insertRowBefore(lastRow: JQuery): JQuery;
     public addColumn(content: string): JQuery;
     public addColumnHtml(content: string): JQuery;
     public addColumnJQuery(content: JQuery, options?: CellOptions): JQuery;

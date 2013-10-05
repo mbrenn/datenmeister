@@ -182,13 +182,6 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
     })(DefaultTableView);
     exports.AllExtentsView = AllExtentsView;
 
-    var FormViewOptions = (function () {
-        function FormViewOptions() {
-        }
-        return FormViewOptions;
-    })();
-    exports.FormViewOptions = FormViewOptions;
-
     var DetailView = (function (_super) {
         __extends(DetailView, _super);
         function DetailView(options) {
@@ -206,8 +199,20 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
         }
         DetailView.prototype.loadAndRender = function () {
             var tthis = this;
-            api.getAPI().getObject(this.url, function (object) {
-                tthis.object = object;
+            var urls = new Array();
+            urls.push(this.url);
+
+            if (this.viewUrl !== undefined) {
+                urls.push(this.viewUrl);
+            }
+
+            api.getAPI().getObjects(urls, function (objects) {
+                tthis.object = objects[0];
+
+                if (this.viewUrl !== undefined) {
+                    tthis.viewObject = objects[1];
+                }
+
                 tthis.render();
             });
         };
@@ -217,9 +222,12 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
 
             this.$(".form").empty();
 
-            var form = new forms.DataForm(this.object, this.$(".form"));
+            var form = new forms.DataForm(this.object, this.$(".form"), this.options);
 
-            form.autoGenerateFields();
+            if (this.viewObject === undefined) {
+                form.autoGenerateFields();
+            }
+
             form.render();
 
             this.$el.show();

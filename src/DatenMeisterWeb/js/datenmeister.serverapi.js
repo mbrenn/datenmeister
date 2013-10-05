@@ -124,6 +124,26 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
             });
         };
 
+        ServerAPI.prototype.getObjects = function (uris, success) {
+            var tthis = this;
+            ajax.performRequest({
+                data: {
+                    uris: uris
+                },
+                url: this.__getUrl() + "extent/GetObjects",
+                method: 'POST',
+                contentType: 'application/json',
+                success: function (data) {
+                    var result = new Array();
+                    _.each(data.objects, function (o) {
+                        result.push(tthis.convertToJsonObject(o));
+                    });
+
+                    success(result);
+                }
+            });
+        };
+
         ServerAPI.prototype.getObjectsInExtent = function (uri, success, fail) {
             ajax.performRequest({
                 url: this.__getUrl() + "extent/GetObjectsInExtent?uri=" + uri,

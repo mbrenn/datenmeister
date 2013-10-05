@@ -11,8 +11,23 @@ export class ExtentInfo extends Backbone.Model {
     }
 }
 
+// Defines the information for an object within the extent
+export class JsonExtentObject extends Backbone.Model {
+    id: string;
+    extentUri: string;
+
+    constructor(attributes?: any) {
+        super(attributes);
+    }
+
+    // Gets the uri of the extent itself
+    getUri(): string {
+        return this.extentUri + "#" + this.id;
+    }
+}
+
 // Defines the information for a column that has been received from server
-export class JsonExtentFieldInfo extends Backbone.Model {
+export class JsonExtentFieldInfo extends JsonExtentObject {
     /* 
      * Gets the name of the property
      */
@@ -35,27 +50,8 @@ export class JsonExtentFieldInfo extends Backbone.Model {
         return this.set('title', title);
     }
 
-    // Number in pixels
-    width: number;
-
-    constructor(attributes?: any, options?: any) {
-
-        super(attributes, options);
-    }
-}
-
-// Defines the information for an object within the extent
-export class JsonExtentObject extends Backbone.Model {
-    id: string;
-    extentUri: string;
-
-    constructor() {
-        super();
-    }
-
-    // Gets the uri of the extent itself
-    getUri(): string {
-        return this.extentUri + "#" + this.id;
+    constructor(attributes?: any) {
+        super(attributes);
     }
 }
 
