@@ -35,7 +35,7 @@ namespace DatenMeister.Logic
         public IEnumerable<IObject> Elements()
         {
             return this.pool.Extents.Select(
-                x => new DotNetObject(x.ToJson(), x.ContextURI()));
+                x => new DotNetObject(this, x.ToJson(), x.ContextURI()));
         }
 
         public IObject CreateObject()

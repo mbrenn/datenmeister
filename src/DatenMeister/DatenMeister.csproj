@@ -64,7 +64,6 @@
     <Compile Include="Web\ExtentController.cs" />
     <Compile Include="Web\JsonExtentData.cs" />
     <Compile Include="Web\JsonExtentInfo.cs" />
-    <Compile Include="Web\JsonExtentObject.cs" />
     <Compile Include="Web\ServerInfo.cs" />
   </ItemGroup>
   <ItemGroup>

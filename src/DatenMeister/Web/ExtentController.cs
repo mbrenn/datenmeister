@@ -2,6 +2,7 @@
 using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using BurnSystems.WebServer.Modules.MVC;
+using DatenMeister.DataProvider;
 using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,7 @@ namespace DatenMeister.Web
 
             foreach (var element in elements)
             {
-                data.objects.Add(ToJson(element));
+                data.objects.Add(ToJson(extent, element));
             }
 
             return this.Json(data);
@@ -107,7 +108,7 @@ namespace DatenMeister.Web
             return this.Json(new
             {
                 success = true,
-                values = element.GetAll().ToDictionary(x => x.PropertyName, x => x.Value),
+                values = element.ToFlatObject(),
                 id = element.Id,
                 extentUri = extent.ContextURI()
             });
@@ -139,7 +140,7 @@ namespace DatenMeister.Web
                     success = true,
                     id = element.Id,
                     extentUri = extent.ContextURI(),
-                    values = element.GetAll().ToDictionary(x => x.PropertyName, x => x.Value)
+                    values = element.ToFlatObject()
                 };
                 return this.Json(result);
             }
@@ -163,7 +164,7 @@ namespace DatenMeister.Web
                     {
                         id = element.Id,
                         extentUri = extent.ContextURI(),
-                        values = element.GetAll().ToDictionary(x => x.PropertyName, x => x.Value)
+                        values = element.ToFlatObject()
                     };
 
                     resultObjects.Add(jsonElement);
@@ -233,15 +234,16 @@ namespace DatenMeister.Web
         /// </summary>
         /// <param name="extent">Extent to be converted</param>
         /// <returns>Converted object</returns>
-        private static JsonExtentObject ToJson(IObject element)
+        private static object ToJson(IURIExtent extent, IObject element)
         {
-            var dict = new Dictionary<string, string>();
-            foreach (var pair in element.GetAll())
+            var result = new
             {
-                dict[pair.PropertyName] = pair.Value.ToString();
-            }
+                id = element.Id,
+                extentUri = extent.ContextURI(),
+                values = element.ToFlatObject()
+            };
 
-            return new JsonExtentObject(element.Id, dict);
+            return result;
         }
     }
 }

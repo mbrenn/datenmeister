@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.DataProvider;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace DatenMeister.Web
         public JsonExtentData()
         {
             this.columns = new List<JsonExtentColumnInfo>();
-            this.objects = new List<JsonExtentObject>();
+            this.objects = new List<object>();
             this.success = true;
         }
 
@@ -36,7 +37,7 @@ namespace DatenMeister.Web
         /// <summary>
         /// Gets or sets a list of objects that shall be sent to browser
         /// </summary>
-        public List<JsonExtentObject> objects
+        public List<object> objects
         {
             get;
             set;

@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,14 +28,19 @@ namespace DatenMeister.DataProvider.DotNet
             this.id = id;
         }
 
-        public DotNetObject(object value, string id)
+        private DotNetObject(object value, string id)
         {
             Ensure.That(id != null);
             Ensure.That(value != null);
             this.value = value;
             this.id = id;
         }
-        
+
+        /// <summary>
+        /// Gets the property of a certain .Net Object
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Object that has been queried</returns>
         public object Get(string propertyName)
         {
             var property = GetProperty(propertyName);
@@ -45,7 +51,8 @@ namespace DatenMeister.DataProvider.DotNet
                 throw new ArgumentException("Getter for " + propertyName + " not found");
             }
 
-            return method.Invoke(this.value, null);
+            var value = method.Invoke(this.value, null);
+            return this.ConvertIfNecessary(value, propertyName);
         }
 
         public void Set(string propertyName, object value)
@@ -65,9 +72,11 @@ namespace DatenMeister.DataProvider.DotNet
         {
             foreach (var property in this.value.GetType().GetProperties())
             {
+                var value = property.GetValue(this.value);
+
                 yield return new ObjectPropertyPair(
                     property.Name,
-                    property.GetValue(this.value));
+                    this.ConvertIfNecessary(value, property.Name));
             }
         }
 
@@ -125,6 +134,28 @@ namespace DatenMeister.DataProvider.DotNet
             }
 
             return property;
+        }
+
+        /// <summary>
+        /// Converts the object to the required datatype as necessary
+        /// </summary>
+        /// <param name="checkObject">Object to be converted</param>
+        /// <returns>Converted object</returns>
+        private object ConvertIfNecessary(object checkObject, string propertyName)
+        {
+            if (Extensions.IsNative(checkObject))
+            {
+                return checkObject;
+            }
+            else if (checkObject is IEnumerable)
+            {
+                // Not 100% MOF-Compliant, but acceptable
+                return checkObject;
+            }
+            else
+            {
+                return new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName);
+            }
         }
     }
 }
