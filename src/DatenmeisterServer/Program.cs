@@ -5,6 +5,7 @@ using BurnSystems.WebServer.Filters;
 using BurnSystems.WebServer.Modules.MVC;
 using DatenMeister;
 using DatenMeister.DataProvider.CSV;
+using DatenMeister.DataProvider.Views;
 using DatenMeister.Logic;
 using DatenMeister.Web;
 using System;
@@ -41,6 +42,11 @@ namespace DatenmeisterServer
             // Adds pool
             var poolExtent = new DatenMeisterPoolExtent(pool);
             pool.Add(poolExtent);
+
+            // Add view pool
+            var viewExtent = new ViewsExtent("datenmeister:///defaultviews");
+            viewExtent.Fill();
+            pool.Add(viewExtent);
 
             // Adds the csv-extent
             IURIExtent extent;

@@ -47,6 +47,9 @@
     <Compile Include="DataProvider\DotNet\DotNetObject.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
+    <Compile Include="DataProvider\Views\FieldInfo.cs" />
+    <Compile Include="DataProvider\Views\View.cs" />
+    <Compile Include="DataProvider\Views\ViewsExtent.cs" />
     <Compile Include="DatenMeisterPool.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IFactory.cs" />
