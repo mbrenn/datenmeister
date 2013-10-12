@@ -149,8 +149,15 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else if (checkObject is IEnumerable)
             {
-                // Not 100% MOF-Compliant, but acceptable
-                return checkObject;
+                var sequence = new DotNetSequence();
+                var n = 0L;
+                foreach (var value in (checkObject as IEnumerable))
+                {
+                    sequence.Add(new DotNetObject(this.extent, value, this.Id + "[" + n.ToString() + "]"));
+                    n++;
+                }
+                
+                return sequence;
             }
             else
             {

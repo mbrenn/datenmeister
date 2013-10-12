@@ -25,6 +25,8 @@ export class NewPropertyFields {
 
 export class DataView {
 
+    itemClickedEvent: (object: d.JsonExtentObject) => void;
+
     options: ViewOptions;
     domElement: JQuery;
     fieldInfos: Array<d.JsonExtentFieldInfo>;
@@ -43,6 +45,13 @@ export class DataView {
     }
 
     /*
+     * Defines the function that will be executed when user clicks on a certain object
+     */
+    setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void {
+        this.itemClickedEvent = clickedEvent;
+    }
+
+    /*
      * Sets the field information objects
      */
     setFieldInfos(fieldInfos: Array<d.JsonExtentFieldInfo>) {
@@ -58,10 +67,28 @@ export class DataView {
     }
 
     createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
+        var tthis = this;
         var span = $("<span />");
         var value = object.get(field.getName());
         if (value === undefined || value === null) {
             span.html("<em>undefined</em>");
+        }
+        else if (_.isArray(value)) {
+            span.text('Array with ' + value.length + " items:");
+            var ul = $("<ul></ul>");
+            _.each(value, function (item: d.JsonExtentFieldInfo) {
+                var div = $("<li></li>");
+                div.text(JSON.stringify(item.toJSON()) + " | " + item.id);
+                div.click(function () {
+                    if (tthis.itemClickedEvent !== undefined) {
+                        tthis.itemClickedEvent(item);
+                    }
+                });
+
+                ul.append(div);
+            });
+
+            span.append(ul);
         }
         else {
             span.text(value);
@@ -178,8 +205,6 @@ export class DataView {
 export class DataTable extends DataView{
 
     objects: Array<d.JsonExtentObject>;
-
-    itemClickedEvent: (object: d.JsonExtentObject) => void;
 
     extent: d.ExtentInfo;
 
@@ -379,9 +404,5 @@ export class DataTable extends DataView{
             },
             function () {
             });
-    }
-
-    setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void {
-        this.itemClickedEvent = clickedEvent;
     }
 }

@@ -44,6 +44,13 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             }
         }
         /*
+        * Defines the function that will be executed when user clicks on a certain object
+        */
+        DataView.prototype.setItemClickedEvent = function (clickedEvent) {
+            this.itemClickedEvent = clickedEvent;
+        };
+
+        /*
         * Sets the field information objects
         */
         DataView.prototype.setFieldInfos = function (fieldInfos) {
@@ -59,10 +66,27 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         };
 
         DataView.prototype.createReadField = function (object, field) {
+            var tthis = this;
             var span = $("<span />");
             var value = object.get(field.getName());
             if (value === undefined || value === null) {
                 span.html("<em>undefined</em>");
+            } else if (_.isArray(value)) {
+                span.text('Array with ' + value.length + " items:");
+                var ul = $("<ul></ul>");
+                _.each(value, function (item) {
+                    var div = $("<li></li>");
+                    div.text(JSON.stringify(item.toJSON()) + " | " + item.id);
+                    div.click(function () {
+                        if (tthis.itemClickedEvent !== undefined) {
+                            tthis.itemClickedEvent(item);
+                        }
+                    });
+
+                    ul.append(div);
+                });
+
+                span.append(ul);
             } else {
                 span.text(value);
             }
@@ -349,10 +373,6 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 tthis.createCreateButton();
             }, function () {
             });
-        };
-
-        DataTable.prototype.setItemClickedEvent = function (clickedEvent) {
-            this.itemClickedEvent = clickedEvent;
         };
         return DataTable;
     })(DataView);

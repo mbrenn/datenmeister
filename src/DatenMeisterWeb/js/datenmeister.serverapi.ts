@@ -93,6 +93,7 @@ export class ServerAPI {
     }
 
     convertToJsonObject(data: any): d.JsonExtentObject {
+        var tthis = this;
         var result = new d.JsonExtentObject();
 
         // Sets id and extentUri of object
@@ -101,7 +102,22 @@ export class ServerAPI {
 
         // Sets values of the complete object
         _.each(data.values, function (value, key, list) {
-            result.set(key, value);
+            if (_.isArray(value)) {
+
+                var list = new Array();
+                _.each(value, function (v) {
+                    var c = tthis.convertToJsonObject(v);
+                    list.push(c);
+                });
+
+                result.set(key, list);
+            }
+            else if (_.isObject(value)) {
+                result.set(key, <any> tthis.convertToJsonObject(value));
+            }
+            else {
+                result.set(key, value);
+            }
         });
 
         // Returns result
@@ -144,6 +160,7 @@ export class ServerAPI {
     }
 
     getObjectsInExtent(uri: string, success: (extentData: d.JsonExtentData) => void, fail?: () => void) {
+        var tthis = this;
         ajax.performRequest({
             url: this.__getUrl() + "extent/GetObjectsInExtent?uri=" + uri,
             prefix: 'loadobjects_',
@@ -159,11 +176,8 @@ export class ServerAPI {
 
                     for (var n = 0; n < data.objects.length; n++) {
                         var currentObject = data.objects[n];
-                        var result = new d.JsonExtentObject();
-                        result.id = currentObject.id;
-                        _.each(currentObject.values, function (value, key, list) {
-                            result.set(key, value);
-                        });
+                        var result = tthis.convertToJsonObject(currentObject);
+
                         data.objects[n] = result;
                         data.objects[n].extentUri = uri;
                     }

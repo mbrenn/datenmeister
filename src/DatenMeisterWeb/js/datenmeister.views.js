@@ -133,7 +133,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
             }
 
             table.setItemClickedEvent(function (object) {
-                tthis.trigger('rowclicked', object);
+                tthis.trigger('itemclicked', object);
             });
 
             table.render();
@@ -149,7 +149,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
         function ExtentTableView(options) {
             _super.call(this, options);
 
-            this.bind('rowclicked', function (clickedObject) {
+            this.bind('itemclicked', function (clickedObject) {
                 var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
                 navigation.to(route);
             });
@@ -173,7 +173,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
                 this.tableOptions.allowDelete = false;
             }
 
-            this.bind('rowclicked', function (clickedObject) {
+            this.bind('itemclicked', function (clickedObject) {
                 var route = "extent/" + encodeURIComponent(clickedObject.get('uri'));
                 navigation.to(route);
             });
@@ -196,6 +196,11 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
             } else {
                 throw "ExtentTableView has no url and no object to render";
             }
+
+            this.bind('itemclicked', function (clickedObject) {
+                var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
+                navigation.to(route);
+            });
         }
         DetailView.prototype.loadAndRender = function () {
             var tthis = this;
@@ -218,6 +223,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
         };
 
         DetailView.prototype.render = function () {
+            var tthis = this;
             exports.prepareForViewChange();
 
             this.$(".form").empty();
@@ -231,6 +237,11 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
             form.render();
 
             this.$el.show();
+
+            form.setItemClickedEvent(function (object) {
+                tthis.trigger('itemclicked', object);
+            });
+
             return this;
         };
         return DetailView;

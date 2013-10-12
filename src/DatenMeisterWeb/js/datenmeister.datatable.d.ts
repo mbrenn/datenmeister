@@ -15,11 +15,13 @@ export declare class NewPropertyFields {
     public rowDom: JQuery;
 }
 export declare class DataView {
+    public itemClickedEvent: (object: d.JsonExtentObject) => void;
     public options: ViewOptions;
     public domElement: JQuery;
     public fieldInfos: d.JsonExtentFieldInfo[];
     public newPropertyInfos: NewPropertyFields[];
     constructor(domElement: JQuery, options: ViewOptions);
+    public setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void;
     public setFieldInfos(fieldInfos: d.JsonExtentFieldInfo[]): void;
     public addNewPropertyField(newField: NewPropertyFields): void;
     public createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery;
@@ -29,7 +31,6 @@ export declare class DataView {
 }
 export declare class DataTable extends DataView {
     public objects: d.JsonExtentObject[];
-    public itemClickedEvent: (object: d.JsonExtentObject) => void;
     public extent: d.ExtentInfo;
     public table: t.Table;
     constructor(extent: d.ExtentInfo, domTable: JQuery, options?: ViewOptions);
@@ -39,5 +40,4 @@ export declare class DataTable extends DataView {
     public createRow(object: d.JsonExtentObject): void;
     public createCreateButton(): void;
     public createNewElement(inputs: JQuery[], cells: JQuery[]): void;
-    public setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void;
 }

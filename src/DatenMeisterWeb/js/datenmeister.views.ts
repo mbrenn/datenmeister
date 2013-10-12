@@ -149,7 +149,7 @@ export class DefaultTableView extends Backbone.View {
         }
 
         table.setItemClickedEvent(function (object: d.JsonExtentObject) {
-            tthis.trigger('rowclicked', object);
+            tthis.trigger('itemclicked', object);
         });
 
         table.render();
@@ -162,7 +162,7 @@ export class ExtentTableView extends DefaultTableView {
     constructor(options?: DefaultTableViewOptions) {
         super(options);
 
-        this.bind('rowclicked', function (clickedObject) {
+        this.bind('itemclicked', function (clickedObject) {
             var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
             navigation.to(route);
         });
@@ -184,7 +184,7 @@ export class AllExtentsView extends DefaultTableView {
             this.tableOptions.allowDelete = false;
         }
 
-        this.bind('rowclicked', function (clickedObject) {
+        this.bind('itemclicked', function (clickedObject) {
             var route = "extent/" + encodeURIComponent(clickedObject.get('uri'));
             navigation.to(route);
         });
@@ -225,6 +225,11 @@ export class DetailView extends Backbone.View {
         else {
             throw "ExtentTableView has no url and no object to render";
         }
+
+        this.bind('itemclicked', function (clickedObject) {
+            var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
+            navigation.to(route);
+        });
     }
 
     loadAndRender() {
@@ -248,6 +253,7 @@ export class DetailView extends Backbone.View {
     }
 
     render(): DetailView {
+        var tthis = this;
         prepareForViewChange();
 
         this.$(".form").empty();
@@ -261,6 +267,11 @@ export class DetailView extends Backbone.View {
         form.render();
 
         this.$el.show();
+        
+        form.setItemClickedEvent(function (object: d.JsonExtentObject) {
+            tthis.trigger('itemclicked', object);
+        });
+
         return this;
     }
 }

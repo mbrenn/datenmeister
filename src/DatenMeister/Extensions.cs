@@ -20,17 +20,34 @@ namespace DatenMeister
         }
 
         /// <summary>
+        /// Converts the extent to json object
+        /// </summary>
+        /// <param name="extent">Extent to be converted</param>
+        /// <returns>Converted object</returns>
+        public static object ToJson(this IObject element, IURIExtent extent)
+        {
+            var result = new
+            {
+                id = element.Id,
+                extentUri = extent.ContextURI(),
+                values = element.ToFlatObject(extent)
+            };
+
+            return result;
+        }
+
+        /// <summary>
         /// Transforms the given object to a pure Json-Object that can be used for web interaction
         /// </summary>
         /// <param name="value">Value to be converted</param>
         /// <returns>Converted object</returns>
-        public static Dictionary<string, object> ToFlatObject(this IObject value)
+        public static Dictionary<string, object> ToFlatObject(this IObject value, IURIExtent extent)
         {
             var result = new Dictionary<string, object>();
 
             foreach (var pair in value.GetAll())
             {
-                var pairValue = ConvertAsFlatObject(pair.Value);
+                var pairValue = ConvertAsFlatObject(pair.Value, extent);
 
                 result[pair.PropertyName] = pairValue;
             }
@@ -38,7 +55,7 @@ namespace DatenMeister
             return result;
         }
 
-        private static object ConvertAsFlatObject(object pairValue)
+        private static object ConvertAsFlatObject(object pairValue, IURIExtent extent)
         {
             if (IsNative(pairValue))
             {
@@ -50,7 +67,7 @@ namespace DatenMeister
                 var listElements = new List<object>();
                 foreach (var enumerationValue in pairValue as IEnumerable)
                 {
-                    listElements.Add(ConvertAsFlatObject(enumerationValue));
+                    listElements.Add(ConvertAsFlatObject(enumerationValue, extent));
                 }
 
                 return listElements;
@@ -58,7 +75,7 @@ namespace DatenMeister
             
             if (pairValue is IObject)
             {
-                return ToFlatObject(pairValue as IObject);
+                return ToJson(pairValue as IObject, extent);
             }
 
             return pairValue;
