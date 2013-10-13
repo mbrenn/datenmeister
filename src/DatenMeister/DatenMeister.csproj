@@ -63,7 +63,6 @@
     <Compile Include="Transformations\Extensions.cs" />
     <Compile Include="Transformations\RecurseObjectTransformation.cs" />
     <Compile Include="Web\GetObjectsModel.cs" />
-    <Compile Include="Web\JsonExtentColumnInfo.cs" />
     <Compile Include="Web\ExtentController.cs" />
     <Compile Include="Web\JsonExtentData.cs" />
     <Compile Include="Web\JsonExtentInfo.cs" />

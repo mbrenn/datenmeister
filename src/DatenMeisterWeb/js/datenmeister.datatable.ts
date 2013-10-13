@@ -23,6 +23,143 @@ export class NewPropertyFields {
     rowDom: JQuery; // Stores the complete row, that may be deleted, if key is empty
 }
 
+/* 
+ * This handler is offering the switch from edit to view by providing methods.
+ */
+export class DataViewEditHandler extends Backbone.Model {
+
+    // Stores the object that will be evaluated
+    currentObject: d.JsonExtentObject;
+
+    // Stores the 'input' fields
+    writeFields: Array<JQuery>;
+
+    // Stores the td-Elements
+    columnDoms: Array<JQuery>;
+
+    // Stores the JQuery DOM item of the edit button
+    editButton: JQuery;
+
+    // Stores the view being used
+    view: DataView;
+
+    // Array of new properties
+    newPropertyInfos: Array<NewPropertyFields>;
+
+    constructor() {
+        super();
+        this.newPropertyInfos = new Array<NewPropertyFields>();
+        this.writeFields = new Array<JQuery>();
+    }
+
+    /*
+     * Adds a new property field that will be evaluated when the edit or creation of a new object has been finished.
+     * The new property fields consists of a field containing the key and a field containing the value
+     */
+    addNewPropertyField(newField: NewPropertyFields): void {
+        this.newPropertyInfos.push(newField);
+    }
+
+    switchToEdit(): void {
+        // Is currently in reading mode, switch to writing mode
+        this.writeFields = new Array<JQuery>();
+        for (var n = 0; n < this.columnDoms.length; n++) {
+            var dom = this.columnDoms[n];
+            var column = this.view.fieldInfos[n];
+            dom.empty();
+
+            var writeField = this.view.createWriteField(this.currentObject, column);
+            this.writeFields.push(writeField);
+            dom.append(writeField);
+            this.editButton.html("ACCEPT");
+        }
+
+        this.trigger('editModeChange', true);
+    }
+
+    switchToRead(): void {
+        var tthis = this;
+
+        // Is currently in writing mode, 
+        // upload to server
+        // switch to reading mode
+        for (var n = 0; n < this.columnDoms.length; n++) {
+            var column = this.view.fieldInfos[n];
+            this.view.setValueByWriteField(this.currentObject, column, this.writeFields[n]);
+        }
+
+        // Goes through the new properties being created during the detail view
+        _.each(this.newPropertyInfos, function (info) {
+            var key = info.keyField.val();
+            var value = info.valueField.val();
+
+            if (_.isEmpty(key)) {
+                // No key had been entered, let's remove the row
+                info.rowDom.remove();
+            }
+            else {
+                tthis.currentObject.set(key, value);
+
+                var fieldInfo = new d.JsonExtentFieldInfo();
+                fieldInfo.setName(key);
+                fieldInfo.setTitle(key);
+                tthis.view.fieldInfos.push(fieldInfo);
+                tthis.columnDoms.push(info.valueField.parent());
+
+                // making the key field as read only
+                var keyValue = info.keyField.val();
+                info.keyField.before($("<div></div>").text(keyValue));
+                info.keyField.remove();
+            }
+        });
+
+        tthis.newPropertyInfos.length = 0;
+
+        api.getAPI().editObject(
+            this.currentObject.getUri(),
+            this.currentObject,
+            function () {
+                for (var n = 0; n < tthis.columnDoms.length; n++) {
+                    var dom = tthis.columnDoms[n];
+                    var column = tthis.view.fieldInfos[n];
+                    dom.empty();
+                    dom.append(tthis.view.createReadField(tthis.currentObject, column));
+                }
+
+                tthis.editButton.html("EDIT");
+            });
+
+        // Throw the necessary event
+        this.trigger('editModeChange', false);
+    }
+
+    bindToEditButton(view: DataView, editButton: JQuery, object: d.JsonExtentObject, columnDoms: Array<JQuery>): void {
+        var tthis = this;
+
+        this.columnDoms = columnDoms;
+        this.currentObject = object;
+        this.view = view;
+        this.editButton = editButton;
+
+        var currentlyInEdit = false;
+        var writeFields: Array<JQuery>;
+
+        editButton.click(function () {
+            if (!currentlyInEdit) {
+                tthis.switchToEdit();
+                currentlyInEdit = true;
+            }
+            else {
+                tthis.switchToRead();
+                currentlyInEdit = false;
+            }
+
+            // No bubbling
+            return false;
+        });
+    }
+}
+
 export class DataView {
 
     itemClickedEvent: (object: d.JsonExtentObject) => void;
@@ -30,25 +167,16 @@ export class DataView {
     options: ViewOptions;
     domElement: JQuery;
     fieldInfos: Array<d.JsonExtentFieldInfo>;
-    newPropertyInfos: Array<NewPropertyFields>;
 
     constructor(domElement: JQuery, options: ViewOptions) {
         this.domElement = domElement;
         this.options = options;
-        this.newPropertyInfos = new Array<NewPropertyFields>();
         if (this.options === undefined) {
             this.options = new ViewOptions();
             this.options.allowDelete = true;
             this.options.allowNew = true;
             this.options.allowEdit = true;
         }
-    }
-
-    /*
-     * Defines the function that will be executed when user clicks on a certain object
-     */
-    setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void {
-        this.itemClickedEvent = clickedEvent;
     }
 
     /*
@@ -59,11 +187,10 @@ export class DataView {
     }
 
     /*
-     * Adds a new property field that will be evaluated when the edit or creation of a new object has been finished.
-     * The new property fields consists of a field containing the key and a field containing the value
+     * Defines the function that will be executed when user clicks on a certain object
      */
-    addNewPropertyField(newField: NewPropertyFields): void {
-        this.newPropertyInfos.push(newField);
+    setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void {
+        this.itemClickedEvent = clickedEvent;
     }
 
     createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
@@ -104,102 +231,37 @@ export class DataView {
             value = object.get(field.getName());
         }
 
-        var inputField = $("<input type='text' />");
-        if (value !== undefined && value !== null) {
-            inputField.val(value);
+        // Checks, if writing is possible
+        var offerWriting = true;
+        if (_.isArray(value) || _.isObject(value)) {
+            offerWriting = false;
         }
 
-        return inputField;
+        // Creates the necessary controls
+        if (offerWriting) {
+            // Offer writing
+            var inputField = $("<input type='text' />");
+            if (value !== undefined && value !== null) {
+                inputField.val(value);
+            }
+
+            return inputField;
+        }
+        else {
+            return this.createReadField(object, field);
+
+        }
     }
 
     setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo, dom: JQuery): void {
+        if (field.getReadOnly() === true) {
+            // Do nothing
+            return;
+        }
+
+        // Reads the value
         object.set(field.getName(), dom.val());
     }
-
-    createEventsForEditButton(editButton: JQuery, object: d.JsonExtentObject, columnDoms: Array<JQuery>, editModeChange?: (modeChange: boolean) => void): void{
-        var tthis = this;
-        var currentlyInEdit = false;
-        var writeFields: Array<JQuery>;
-
-        editButton.click(function () {
-            if (!currentlyInEdit) {
-                // Is currently in reading mode, switch to writing mode
-                writeFields = new Array<JQuery>();
-                for (var n = 0; n < columnDoms.length; n++) {
-                    var dom = columnDoms[n];
-                    var column = tthis.fieldInfos[n];
-                    dom.empty();
-
-                    var writeField = tthis.createWriteField(object, column);
-                    writeFields.push(writeField);
-                    dom.append(writeField);
-                    editButton.html("ACCEPT");
-                }
-
-                currentlyInEdit = true;
-            }
-            else {
-                // Is currently in writing mode, 
-                // upload to server
-                // switch to reading mode
-                for (var n = 0; n < columnDoms.length; n++) {
-                    var column = tthis.fieldInfos[n];
-                    tthis.setValueByWriteField(object, column, writeFields[n]);
-                }
-
-                // Goes through the new properties
-                _.each(tthis.newPropertyInfos, function (info) {
-                    var key = info.keyField.val();
-                    var value = info.valueField.val();
-
-                    if (_.isEmpty(key)) {
-                        // No key had been entered, let's remove the row
-                        info.rowDom.remove();
-                    }
-                    else {
-                        object.set(key, value);
-
-                        var fieldInfo = new d.JsonExtentFieldInfo();
-                        fieldInfo.setName(key);
-                        fieldInfo.setTitle(key);
-                        tthis.fieldInfos.push(fieldInfo);
-                        columnDoms.push(info.valueField.parent());
-
-                        // making the key field as read only
-                        var keyValue = info.keyField.val();
-                        info.keyField.before($("<div></div>").text(keyValue));
-                        info.keyField.remove();
-                    }
-                });
-
-                tthis.newPropertyInfos.length = 0;
-
-                api.getAPI().editObject(
-                    object.getUri(),
-                    object,
-                    function () {
-                        for (var n = 0; n < columnDoms.length; n++) {
-                            var dom = columnDoms[n];
-                            var column = tthis.fieldInfos[n];
-                            dom.empty();
-                            dom.append(tthis.createReadField(object, column));
-                        }
-
-                        editButton.html("EDIT");
-                    });
-
-                currentlyInEdit = false;
-            }
-
-            if (editModeChange !== undefined) {
-                editModeChange(currentlyInEdit);
-            }
-
-            // No bubbling
-            return false;
-        });
-    }
-
 }
 
 export class DataTable extends DataView{
@@ -329,7 +391,9 @@ export class DataTable extends DataView{
         // Adds allow edit button
         if (tthis.options.allowEdit) {
             var editColumn = $("<a class='btn btn-default'>EDIT</a>");
-            this.createEventsForEditButton(editColumn, object, columnDoms);
+
+            var handler = new DataViewEditHandler();
+            handler.bindToEditButton(this, editColumn, object, columnDoms);
 
             lastColumn.append(editColumn);
         }

@@ -57,12 +57,26 @@ define(["require", "exports"], function(require, exports) {
             return this.get('title');
         };
 
+        /*
+        * Gets the read-only status
+        */
+        JsonExtentFieldInfo.prototype.getReadOnly = function () {
+            return this.get('isReadonly');
+        };
+
         JsonExtentFieldInfo.prototype.setName = function (name) {
             return this.set('name', name);
         };
 
         JsonExtentFieldInfo.prototype.setTitle = function (title) {
             return this.set('title', title);
+        };
+
+        /*
+        * Sets the read only
+        */
+        JsonExtentFieldInfo.prototype.setReadOnly = function (isReadOnly) {
+            return this.set('isReadonly', isReadOnly);
         };
         return JsonExtentFieldInfo;
     })(JsonExtentObject);

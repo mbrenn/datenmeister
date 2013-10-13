@@ -42,12 +42,26 @@ export class JsonExtentFieldInfo extends JsonExtentObject {
         return this.get('title');
     }
 
+    /*
+     * Gets the read-only status
+     */
+    getReadOnly(): boolean {
+        return this.get('isReadonly');
+    }
+
     setName(name: string): void {
         return this.set('name', name);
     }
 
     setTitle(title: string): void {
         return this.set('title', title);
+    }
+
+    /*
+     * Sets the read only
+     */
+    setReadOnly(isReadOnly: boolean): void {
+        return this.set('isReadonly', isReadOnly);
     }
 
     constructor(attributes?: any) {

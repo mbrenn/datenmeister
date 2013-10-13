@@ -3,6 +3,7 @@ using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using BurnSystems.WebServer.Modules.MVC;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Views;
 using DatenMeister.Logic;
 using DatenMeister.Transformations;
 using System;
@@ -62,13 +63,17 @@ namespace DatenMeister.Web
             data.extent = extent.ToJson();
 
             var elements = extent.Elements();
-            var titles = elements.GetColumnTitles();
-            data.columns.AddRange(titles.Select(x => new JsonExtentColumnInfo()
-            {
-                name = x,
-                title = x
-            }));
 
+            // Adds the titles
+            var titles = elements.GetColumnTitles();
+            data.columns.AddRange(titles.Select(x => 
+                new FieldInfo()
+                {
+                    title = x,
+                    name = x
+                }));
+
+            // Adds the elements
             foreach (var element in elements)
             {
                 data.objects.Add(element.ToJson(extent));

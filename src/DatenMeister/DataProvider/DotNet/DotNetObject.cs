@@ -65,7 +65,10 @@ namespace DatenMeister.DataProvider.DotNet
                 throw new ArgumentException("Setter for " + propertyName + " not found");
             }
 
-            method.Invoke(this.value, new object[] { value });
+            // Converts to target type
+            var targetType = property.PropertyType;
+            var convertedValue = Convert.ChangeType(value, targetType);
+            method.Invoke(this.value, new object[] { convertedValue });
         }
 
         public IEnumerable<ObjectPropertyPair> GetAll()

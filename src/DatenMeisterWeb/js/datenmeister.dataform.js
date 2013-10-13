@@ -4,8 +4,8 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", "datenmeister.serverapi", 'lib/dejs.table', 'datenmeister.navigation'], function(require, exports, __table__, __d__, __api__, __t__, __navigation__) {
-    var table = __table__;
+define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", "datenmeister.serverapi", 'lib/dejs.table', 'datenmeister.navigation'], function(require, exports, __dt__, __d__, __api__, __t__, __navigation__) {
+    var dt = __dt__;
     var d = __d__;
     var api = __api__;
     var t = __t__;
@@ -17,7 +17,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
             _super.apply(this, arguments);
         }
         return FormViewOptions;
-    })(table.ViewOptions);
+    })(dt.ViewOptions);
     exports.FormViewOptions = FormViewOptions;
 
     var DataForm = (function (_super) {
@@ -97,10 +97,12 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
                     var editButton = $("<button class='btn btn-default'>EDIT</button>");
                     var newPropertyRows = new Array();
 
-                    this.createEventsForEditButton(editButton, this.object, columnDoms, function (inEditMode) {
+                    var handler = new dt.DataViewEditHandler();
+                    handler.bindToEditButton(this, editButton, this.object, columnDoms);
+                    handler.bind('editModeChange', function (inEditMode) {
                         if (tthis.options.allowNewProperty === true) {
                             if (inEditMode) {
-                                tthis.createNewPropertyRow(table, lastRow);
+                                tthis.createNewPropertyRow(table, lastRow, handler);
                             } else {
                                 // Remove everything and delete array
                                 _.each(newPropertyRows, function (x) {
@@ -121,13 +123,13 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
             return this;
         };
 
-        DataForm.prototype.createNewPropertyRow = function (table, lastRow) {
+        DataForm.prototype.createNewPropertyRow = function (table, lastRow, handler) {
             var tthis = this;
             var newPropertyRow = table.insertRowBefore(lastRow);
 
             var keyElement = this.createWriteField(undefined, undefined);
             var valueElement = this.createWriteField(undefined, undefined);
-            this.addNewPropertyField({
+            handler.addNewPropertyField({
                 rowDom: newPropertyRow,
                 keyField: keyElement,
                 valueField: valueElement
@@ -142,20 +144,20 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
             var changeFunction = function () {
                 if (keyElement.val().length > 0 && valueElement.val().length > 0) {
                     if (!hasEntered) {
-                        tthis.createNewPropertyRow(table, lastRow);
+                        tthis.createNewPropertyRow(table, lastRow, handler);
                         hasEntered = true;
 
                         keyElement.off('keypress', changeFunction);
-                        keyElement.off('keypress', changeFunction);
+                        valueElement.off('keypress', changeFunction);
                     }
                 }
             };
 
-            keyElement.keypress(changeFunction);
-            valueElement.keypress(changeFunction);
+            keyElement.on('keypress', changeFunction);
+            valueElement.on('keypress', changeFunction);
         };
         return DataForm;
-    })(table.DataView);
+    })(dt.DataView);
     exports.DataForm = DataForm;
 });
 //# sourceMappingURL=datenmeister.dataform.js.map

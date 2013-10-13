@@ -14,7 +14,7 @@ namespace DatenMeister.Web
     {
         public JsonExtentData()
         {
-            this.columns = new List<JsonExtentColumnInfo>();
+            this.columns = new List<object>();
             this.objects = new List<object>();
             this.success = true;
         }
@@ -28,7 +28,7 @@ namespace DatenMeister.Web
         /// <summary>
         /// Gets or sets a list of column
         /// </summary>
-        public List<JsonExtentColumnInfo> columns
+        public List<object> columns
         {
             get;
             set;

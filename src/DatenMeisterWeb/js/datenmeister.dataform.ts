@@ -1,18 +1,24 @@
 
-import table = require ('datenmeister.datatable');
+import dt = require ('datenmeister.datatable');
 import d = require("datenmeister.objects");
 import api = require("datenmeister.serverapi");
 import t = require('lib/dejs.table');
 import navigation = require('datenmeister.navigation');
 
-export class FormViewOptions extends table.ViewOptions {
+export class FormViewOptions extends dt.ViewOptions {
     allowNewProperty: boolean;
 }
 
-export class DataForm extends table.DataView {
+export class DataForm extends dt.DataView {
     object: d.JsonExtentObject;
     domElement: JQuery;
     options: FormViewOptions;
+
+    /* 
+     * Stores the information whether the form shall be used to create a new item.
+     * A 'create' form is per default 'writable'. And a new item will be created, when user clicks on 'create'. 
+     */
+    createNewItem: boolean; 
 
     constructor(object: d.JsonExtentObject, domElement: JQuery, options?: FormViewOptions) {
         super(domElement, options);
@@ -91,15 +97,15 @@ export class DataForm extends table.DataView {
                 var editButton = $("<button class='btn btn-default'>EDIT</button>");
                 var newPropertyRows = new Array<JQuery>();
 
-                this.createEventsForEditButton(
-                    editButton,
-                    this.object,
-                    columnDoms,
+                var handler = new dt.DataViewEditHandler();
+                handler.bindToEditButton(this, editButton, this.object, columnDoms);
+                handler.bind(
+                    'editModeChange', 
                     function (inEditMode) {
                         // Called, if the user switches from view mode to edit mode or back
                         if (tthis.options.allowNewProperty === true) {
                             if (inEditMode) {
-                                tthis.createNewPropertyRow(table, lastRow);
+                                tthis.createNewPropertyRow(table, lastRow, handler);
                             }
                             else {
                                 // Remove everything and delete array
@@ -121,13 +127,13 @@ export class DataForm extends table.DataView {
         return this;
     }
 
-    createNewPropertyRow(table: t.Table, lastRow: JQuery): void {
+    createNewPropertyRow(table: t.Table, lastRow: JQuery, handler: dt.DataViewEditHandler): void {
         var tthis = this;
         var newPropertyRow = table.insertRowBefore(lastRow);
 
         var keyElement = this.createWriteField(undefined, undefined);
         var valueElement = this.createWriteField(undefined, undefined);
-        this.addNewPropertyField(
+        handler.addNewPropertyField(
             {
                 rowDom: newPropertyRow,
                 keyField: keyElement,
@@ -143,16 +149,16 @@ export class DataForm extends table.DataView {
         var changeFunction = function () {
             if (keyElement.val().length > 0 && valueElement.val().length > 0) {
                 if (!hasEntered) {
-                    tthis.createNewPropertyRow(table, lastRow);
+                    tthis.createNewPropertyRow(table, lastRow, handler);
                     hasEntered = true;
 
                     keyElement.off('keypress', changeFunction);
-                    keyElement.off('keypress', changeFunction);
+                    valueElement.off('keypress', changeFunction);
                 }
             }
         };
 
-        keyElement.keypress(changeFunction);
-        valueElement.keypress(changeFunction);
+        keyElement.on('keypress', changeFunction);
+        valueElement.on('keypress', changeFunction);
     }
 }
