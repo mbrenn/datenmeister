@@ -196,7 +196,7 @@ export class DataView {
     createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
         var tthis = this;
         var span = $("<span />");
-        var value = object.get(field.getName());
+        var value = object.get(field.get('name'));
         if (value === undefined || value === null) {
             span.html("<em>undefined</em>");
         }

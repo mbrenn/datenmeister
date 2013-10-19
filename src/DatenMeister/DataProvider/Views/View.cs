@@ -8,7 +8,7 @@ namespace DatenMeister.DataProvider.Views
 {
     public class View
     {
-        public string title
+        public string name
         {
             get;
             set;

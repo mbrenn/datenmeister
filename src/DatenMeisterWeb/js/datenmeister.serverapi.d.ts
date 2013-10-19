@@ -7,6 +7,7 @@ export declare class ServerInfo {
 export declare class ServerSettings {
     public serverAddress: string;
 }
+export declare function deleteBrowserStorage(): void;
 export declare class ServerAPI {
     public connectionInfo: ServerSettings;
     constructor(connection: ServerSettings);

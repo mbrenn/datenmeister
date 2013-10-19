@@ -5,12 +5,12 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
     var navigation = __navigation__;
 
     /*
-    * Gets the server API, will request loadng of server settings if required
+    * Gets the server API, will request loading of server settings if required
     */
     function getAPI() {
         if (singletonAPI == undefined) {
             var serverSettings = retrieveServerSettings();
-            if (serverSettings == undefined) {
+            if (serverSettings === undefined) {
                 navigation.to("login");
                 return undefined;
             }
@@ -45,12 +45,18 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
         window.sessionStorage.setItem("serverapi_currentserveraddress", connectionInfo.serverAddress);
     }
 
+    function deleteBrowserStorage() {
+        window.sessionStorage.clear();
+        window.localStorage.clear();
+    }
+    exports.deleteBrowserStorage = deleteBrowserStorage;
+
     /*
     Retrieves the server settings from browser storage
     */
     function retrieveServerSettings() {
         var serverAddress = window.sessionStorage.getItem("serverapi_currentserveraddress");
-        if (serverAddress == undefined) {
+        if (_.isEmpty(serverAddress)) {
             return undefined;
         }
 

@@ -66,7 +66,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
             _.each(this.fieldInfos, function (f) {
                 table.addRow();
 
-                table.addColumn(f.getTitle());
+                table.addColumn(f.get('title'));
                 columnDoms.push(table.addColumnJQuery(tthis.createReadField(tthis.object, f)));
             });
 
@@ -123,6 +123,10 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.objects", 
             return this;
         };
 
+        /*
+        * Creates a new property,
+        * this is inserted before the 'lastRow' and will be attached to the edit handler.
+        */
         DataForm.prototype.createNewPropertyRow = function (table, lastRow, handler) {
             var tthis = this;
             var newPropertyRow = table.insertRowBefore(lastRow);

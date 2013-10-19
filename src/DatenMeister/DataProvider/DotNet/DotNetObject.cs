@@ -19,6 +19,30 @@ namespace DatenMeister.DataProvider.DotNet
 
         private object value;
 
+        /// <summary>
+        /// Initializes a new instance of the dot net object. 
+        /// The id is retrieved from the property 'name'. If the property is not existing, an exception will be thrown. 
+        /// </summary>
+        /// <param name="extent"></param>
+        /// <param name="value"></param>
+        public DotNetObject(IURIExtent extent, object value)
+        {
+            Ensure.That(extent != null);
+            Ensure.That(value != null);
+
+            this.extent = extent;
+            this.value = value;
+
+            if (!this.IsSet("name"))
+            {
+                this.id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                this.id = this.Get("name").ToString();
+            }
+        }
+
         public DotNetObject(IURIExtent extent, object value, string id)
             : this(value, id)
         {

@@ -67,13 +67,11 @@
     <Content Include="index.html" />
     <TypeScriptCompile Include="js\datenmeister.views.ts" />
     <TypeScriptCompile Include="js\datenmeister.dataform.ts" />
-    <Content Include="js\datenmeister.js" />
     <TypeScriptCompile Include="js\datenmeister.ts" />
     <TypeScriptCompile Include="js\init.ts" />
     <TypeScriptCompile Include="js\datenmeister.objects.ts" />
     <TypeScriptCompile Include="js\datenmeister.serverapi.ts" />
     <TypeScriptCompile Include="js\datenmeister.navigation.ts" />
-    <Content Include="js\init.js" />
     <Content Include="js\lib\backbone-min.js" />
     <Content Include="js\lib\backbone.d.ts" />
     <Content Include="js\lib\backbone.js" />

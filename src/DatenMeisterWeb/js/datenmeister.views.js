@@ -185,11 +185,12 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
     var DetailView = (function (_super) {
         __extends(DetailView, _super);
         function DetailView(options) {
+            var tthis = this;
             _.extend(this, options);
 
             _super.call(this, options);
 
-            if (this.url !== undefined && this.object === undefined) {
+            if (!_.isEmpty(this.url) && _.isEmpty(this.object)) {
                 this.loadAndRender();
             } else if (this.object !== undefined && this.formOptions !== undefined) {
                 this.render();
@@ -201,20 +202,38 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
                 var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
                 navigation.to(route);
             });
+
+            var viewSelectorModel = new ViewSelectorModel();
+            viewSelectorModel.setCurrentView(this.viewUrl);
+
+            var viewSelector = new ViewSelector({
+                el: '#detailview',
+                model: viewSelectorModel
+            });
+
+            viewSelector.unbind('viewselected');
+            viewSelector.bind('viewselected', function (viewUrl) {
+                var route = "view/" + encodeURIComponent(tthis.url);
+                if (!_.isEmpty(viewUrl)) {
+                    route += "/" + encodeURIComponent(viewUrl);
+                }
+
+                navigation.to(route);
+            });
         }
         DetailView.prototype.loadAndRender = function () {
             var tthis = this;
             var urls = new Array();
             urls.push(this.url);
 
-            if (this.viewUrl !== undefined) {
+            if (!_.isEmpty(this.viewUrl)) {
                 urls.push(this.viewUrl);
             }
 
             api.getAPI().getObjects(urls, function (objects) {
                 tthis.object = objects[0];
 
-                if (this.viewUrl !== undefined) {
+                if (tthis.viewUrl !== undefined) {
                     tthis.viewObject = objects[1];
                 }
 
@@ -232,6 +251,8 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
 
             if (this.viewObject === undefined) {
                 form.autoGenerateFields();
+            } else {
+                form.setFieldInfos(this.viewObject.get('fieldInfos'));
             }
 
             form.render();
@@ -247,5 +268,74 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.datatable"
         return DetailView;
     })(Backbone.View);
     exports.DetailView = DetailView;
+
+    var ViewSelectorModel = (function (_super) {
+        __extends(ViewSelectorModel, _super);
+        function ViewSelectorModel() {
+            _super.apply(this, arguments);
+        }
+        ViewSelectorModel.prototype.getCurrentView = function () {
+            return this.get('currentView');
+        };
+
+        ViewSelectorModel.prototype.setCurrentView = function (viewUri) {
+            this.set('currentView', viewUri);
+        };
+        return ViewSelectorModel;
+    })(Backbone.Model);
+    exports.ViewSelectorModel = ViewSelectorModel;
+
+    var ViewSelector = (function (_super) {
+        __extends(ViewSelector, _super);
+        function ViewSelector(options) {
+            _super.call(this, options);
+
+            // Loads the views
+            this.loadAndUpdateViews();
+        }
+        ViewSelector.prototype.loadAndUpdateViews = function () {
+            var tthis = this;
+
+            var select = this.$('.view_selector');
+            select.empty();
+            select.append($("<option class='default' value=''>--- Default view ---</option>"));
+
+            api.getAPI().getObjectsInExtent("datenmeister:///defaultviews/", function (views) {
+                _.each(views.objects, function (view) {
+                    var name = view.get('name');
+                    var option = $("<option></option>");
+                    option.val(view.getUri());
+                    option.text(name);
+
+                    if (view.getUri() === tthis.model.getCurrentView()) {
+                        option.attr('selected', 'selected');
+                    }
+
+                    select.append(option);
+                });
+            });
+
+            this.model.bind('change:currentView', function (model, newCurrentView) {
+                // Selects the correct item
+                $("option", select).each(function () {
+                    this.selected = ((this.value == newCurrentView) ? "selected" : "");
+                });
+            });
+
+            select.unbind('change');
+            select.bind('change', function () {
+                var selectedView = select.val();
+                tthis.model.setCurrentView(selectedView);
+                if (!_.isEmpty(selectedView)) {
+                    tthis.trigger('viewselected', selectedView);
+                } else {
+                    // Default selection, when no view has been selected
+                    tthis.trigger('viewselected', null);
+                }
+            });
+        };
+        return ViewSelector;
+    })(Backbone.View);
+    exports.ViewSelector = ViewSelector;
 });
 //# sourceMappingURL=datenmeister.views.js.map

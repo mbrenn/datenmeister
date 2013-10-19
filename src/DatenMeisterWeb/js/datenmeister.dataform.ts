@@ -65,7 +65,7 @@ export class DataForm extends dt.DataView {
         _.each(this.fieldInfos, function (f) {
             table.addRow();
 
-            table.addColumn(f.getTitle());
+            table.addColumn(f.get('title'));
             columnDoms.push(table.addColumnJQuery(tthis.createReadField(tthis.object, f)));
         });
 
@@ -127,6 +127,10 @@ export class DataForm extends dt.DataView {
         return this;
     }
 
+    /*
+     * Creates a new property,
+     * this is inserted before the 'lastRow' and will be attached to the edit handler.
+     */
     createNewPropertyRow(table: t.Table, lastRow: JQuery, handler: dt.DataViewEditHandler): void {
         var tthis = this;
         var newPropertyRow = table.insertRowBefore(lastRow);

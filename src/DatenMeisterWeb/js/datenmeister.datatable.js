@@ -171,7 +171,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         DataView.prototype.createReadField = function (object, field) {
             var tthis = this;
             var span = $("<span />");
-            var value = object.get(field.getName());
+            var value = object.get(field.get('name'));
             if (value === undefined || value === null) {
                 span.html("<em>undefined</em>");
             } else if (_.isArray(value)) {

@@ -6,13 +6,13 @@ import d = require("datenmeister.objects");
 import navigation = require("datenmeister.navigation");
 
 /*
- * Gets the server API, will request loadng of server settings if required
+ * Gets the server API, will request loading of server settings if required
  */
 export function getAPI()
 {
     if (singletonAPI == undefined) {
         var serverSettings = retrieveServerSettings();
-        if (serverSettings == undefined) {
+        if (serverSettings === undefined) {
             navigation.to("login");
             return undefined;
         }
@@ -41,12 +41,16 @@ function storeServerSettings(connectionInfo: ServerSettings): void {
     window.sessionStorage.setItem("serverapi_currentserveraddress", connectionInfo.serverAddress);
 }
 
+export function deleteBrowserStorage(): void {
+    window.sessionStorage.clear();
+    window.localStorage.clear();
+}
 /* 
   Retrieves the server settings from browser storage
 */
 function retrieveServerSettings(): ServerSettings {
     var serverAddress = window.sessionStorage.getItem("serverapi_currentserveraddress");
-    if (serverAddress == undefined) {
+    if (_.isEmpty(serverAddress)) {
         return undefined;
     }
 

@@ -64,7 +64,7 @@ namespace DatenMeister.Transformations
 
             if (value is IEnumerable)
             {
-                foreach ( var item in (value as IEnumerable))
+                foreach (var item in (value as IEnumerable))
                 {
                     foreach (var x in this.Recurse(item))
                     {

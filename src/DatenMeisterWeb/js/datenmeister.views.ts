@@ -204,6 +204,7 @@ export interface FormViewOptions extends Backbone.ViewOptions{
 export class DetailView extends Backbone.View {
     object: d.JsonExtentObject;
     url: string;
+    urlView: string;
     formOptions: FormViewOptions;
 
     // Defines the view url and or the viewObject. 
@@ -212,11 +213,12 @@ export class DetailView extends Backbone.View {
     viewObject: d.JsonExtentObject;
 
     constructor(options: FormViewOptions) {
+        var tthis = this;
         _.extend(this, options);
 
         super(options);
 
-        if (this.url !== undefined && this.object === undefined) {
+        if (!_.isEmpty(this.url) && _.isEmpty(this.object)) {
             this.loadAndRender();
         }
         else if (this.object !== undefined && this.formOptions !== undefined) {
@@ -230,6 +232,25 @@ export class DetailView extends Backbone.View {
             var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
             navigation.to(route);
         });
+
+        var viewSelectorModel = new ViewSelectorModel();
+        viewSelectorModel.setCurrentView(this.viewUrl);
+
+        var viewSelector = new ViewSelector(
+            {
+                el: '#detailview',
+                model: viewSelectorModel           
+            });
+
+        viewSelector.unbind('viewselected');
+        viewSelector.bind('viewselected', function (viewUrl: string) {
+            var route = "view/" + encodeURIComponent(tthis.url);
+            if (!_.isEmpty(viewUrl)) {
+                route += "/" + encodeURIComponent(viewUrl);
+            }
+
+            navigation.to(route);
+        });
     }
 
     loadAndRender() {
@@ -237,14 +258,14 @@ export class DetailView extends Backbone.View {
         var urls = new Array<string>();
         urls.push(this.url);
 
-        if (this.viewUrl !== undefined) {
+        if (!_.isEmpty(this.viewUrl)) {
             urls.push(this.viewUrl);
         }
 
         api.getAPI().getObjects(urls, function (objects: Array<d.JsonExtentObject>) {
             tthis.object = objects[0];
 
-            if (this.viewUrl !== undefined) {
+            if (tthis.viewUrl !== undefined) {
                 tthis.viewObject = <d.JsonExtentFieldInfo> objects[1];
             }
 
@@ -263,6 +284,9 @@ export class DetailView extends Backbone.View {
         if (this.viewObject === undefined) {
             form.autoGenerateFields();
         }
+        else {
+            form.setFieldInfos(this.viewObject.get('fieldInfos'));
+        }
 
         form.render();
 
@@ -273,5 +297,75 @@ export class DetailView extends Backbone.View {
         });
 
         return this;
+    }
+}
+
+export class ViewSelectorModel extends Backbone.Model {
+    getCurrentView(): string {
+        return this.get('currentView');
+    }
+
+    setCurrentView(viewUri: string): void {
+        this.set('currentView', viewUri);
+    }
+}
+
+export class ViewSelector extends Backbone.View {
+
+    model: ViewSelectorModel;
+
+    constructor(options: Backbone.ViewOptions) {
+        super(options);
+
+        // Loads the views
+        this.loadAndUpdateViews();
+    }
+
+    loadAndUpdateViews() {
+        var tthis = this;
+
+        var select = this.$('.view_selector');
+        select.empty();
+        select.append($("<option class='default' value=''>--- Default view ---</option>"));
+
+        api.getAPI().getObjectsInExtent(
+            "datenmeister:///defaultviews/",
+            function (views: d.JsonExtentData) {
+                _.each(
+                    views.objects,
+                    function (view) {
+                        var name = view.get('name');
+                        var option = $("<option></option>");
+                        option.val(view.getUri());
+                        option.text(name);
+
+                        if (view.getUri() === tthis.model.getCurrentView()) {
+                            option.attr('selected', 'selected');
+                        }
+
+                        select.append(option);
+                    })
+            });
+
+        this.model.bind('change:currentView', function (model, newCurrentView) {
+
+            // Selects the correct item
+            $("option", select).each(function () {
+                this.selected = ((this.value == newCurrentView) ? "selected" : "");
+            });
+        });
+
+        select.unbind('change');
+        select.bind('change', function () {
+            var selectedView = select.val();
+            tthis.model.setCurrentView(selectedView);
+            if (!_.isEmpty(selectedView)) {
+                tthis.trigger('viewselected', selectedView);
+            }
+            else {
+                // Default selection, when no view has been selected
+                tthis.trigger('viewselected', null);
+            }
+        });
     }
 }

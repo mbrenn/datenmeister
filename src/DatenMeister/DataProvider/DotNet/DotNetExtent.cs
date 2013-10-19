@@ -54,8 +54,8 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="element">Element to be added</param>
         public void Add(object element)
-        {
-            this.elements.Add(new DotNetObject(this, element, Guid.NewGuid().ToString()));
+        {            
+            this.elements.Add(new DotNetObject(this, element));
         }
 
         public IObject CreateObject()
