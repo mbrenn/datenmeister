@@ -71,7 +71,7 @@ export class JsonExtentFieldInfo extends JsonExtentObject {
 
 // Result from GetObjectsInExtent
 export class JsonExtentData {
-    extent: ExtentInfo;
-    columns: Array<JsonExtentFieldInfo>;
+    extent: ExtentInfo;    
+    // columns: Array<JsonExtentFieldInfo>;
     objects: Array<JsonExtentObject>;
 }

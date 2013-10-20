@@ -21,6 +21,5 @@ export declare class JsonExtentFieldInfo extends JsonExtentObject {
 }
 export declare class JsonExtentData {
     public extent: ExtentInfo;
-    public columns: JsonExtentFieldInfo[];
     public objects: JsonExtentObject[];
 }

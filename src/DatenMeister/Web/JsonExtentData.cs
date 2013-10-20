@@ -14,21 +14,11 @@ namespace DatenMeister.Web
     {
         public JsonExtentData()
         {
-            this.columns = new List<object>();
             this.objects = new List<object>();
             this.success = true;
         }
 
         public JsonExtentInfo extent
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a list of column
-        /// </summary>
-        public List<object> columns
         {
             get;
             set;

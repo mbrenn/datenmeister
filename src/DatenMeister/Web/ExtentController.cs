@@ -64,15 +64,6 @@ namespace DatenMeister.Web
 
             var elements = extent.Elements();
 
-            // Adds the titles
-            var titles = elements.GetColumnTitles();
-            data.columns.AddRange(titles.Select(x => 
-                new FieldInfo()
-                {
-                    title = x,
-                    name = x
-                }));
-
             // Adds the elements
             foreach (var element in elements)
             {

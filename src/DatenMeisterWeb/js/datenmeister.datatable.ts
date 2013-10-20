@@ -7,10 +7,13 @@ import d = require("datenmeister.objects");
 import api = require("datenmeister.serverapi");
 import t = require('lib/dejs.table');
 
+/* 
+ * Defines the view options for a table or detail view as a complete table
+ */
 export class ViewOptions {
-    allowEdit: boolean;
-    allowNew: boolean;
-    allowDelete: boolean;
+    allowEdit: boolean = true;
+    allowNew: boolean = true;
+    allowDelete: boolean = true;
 }
 
 /*
@@ -301,6 +304,31 @@ export class DataTable extends DataView{
 
     defineFieldInfos(fieldInfos: Array<d.JsonExtentFieldInfo>) {
         this.fieldInfos = fieldInfos;
+    }
+
+    /* 
+     * Performs an auto-generation of 
+     */
+    autoGenerateColumns(): void {
+        var tthis = this;
+
+        // Goes through every object
+        _.each(this.objects, function (obj: d.JsonExtentObject) {
+            // Goes through the attributes    
+            for (var key in obj.attributes) {
+                // Checks, if already in
+                if (!(_.some(tthis.fieldInfos, function (info) {
+                    return info.attributes.name == key;
+                }))) {
+                    // No, so create new field info
+                    var fieldInfo = new d.JsonExtentFieldInfo();
+                    fieldInfo.setName(key);
+                    fieldInfo.setTitle(key);
+                    fieldInfo.setReadOnly(false);
+                    tthis.fieldInfos.push(fieldInfo);
+                }
+            }
+        });
     }
 
     addObject(object: d.JsonExtentObject) {

@@ -45,6 +45,7 @@ export declare class DataTable extends DataView {
     public table: t.Table;
     constructor(extent: d.ExtentInfo, domTable: JQuery, options?: ViewOptions);
     public defineFieldInfos(fieldInfos: d.JsonExtentFieldInfo[]): void;
+    public autoGenerateColumns(): void;
     public addObject(object: d.JsonExtentObject): void;
     public render(): void;
     public createRow(object: d.JsonExtentObject): void;

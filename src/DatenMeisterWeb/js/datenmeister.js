@@ -52,7 +52,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.views", "d
             options.routes = {
                 "login": "showLoginForm",
                 "all": "showAllExtents",
-                "extent/*extent": "showExtent",
+                "extent/*extent(/:viewUri)": "showExtent",
                 "view/:objectUri(/:viewUri)": "showObject"
             };
 

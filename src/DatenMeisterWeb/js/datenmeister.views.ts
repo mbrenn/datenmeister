@@ -90,6 +90,12 @@ export class DefaultTableView extends Backbone.View {
     tableOptions: t.ViewOptions;
     url: string;
     data: d.JsonExtentData;  // Result from query, which will be shown render
+    columns: Array<d.JsonExtentFieldInfo>;
+
+    // Defines the view url and or the viewObject. 
+    // If no viewObject has been given, a default view will be generated
+    viewUrl: string;
+    viewObject: d.JsonExtentObject;
 
     constructor(options?: DefaultTableViewOptions) {
         _.extend(this, options);
@@ -114,7 +120,7 @@ export class DefaultTableView extends Backbone.View {
             this.url,
             function (data) {
 
-                tthis.data = data;
+                tthis.data = data; // Stores the objects
                 tthis.render()
             });
         return this;
@@ -135,10 +141,7 @@ export class DefaultTableView extends Backbone.View {
     showObjects(): t.DataTable {
         var tthis = this;
         var table = new t.DataTable(this.data.extent, this.$(".datatable"), this.tableOptions);
-
-        // Create the columns
-        table.setFieldInfos(this.data.columns);
-
+        
         // Adds the objects
         for (var n = 0; n < this.data.objects.length; n++) {
             var func = function (obj: d.JsonExtentObject) {
@@ -148,6 +151,15 @@ export class DefaultTableView extends Backbone.View {
             func(this.data.objects[n]);
         }
 
+        // Create the columns
+        if (this.columns === undefined) {
+            table.autoGenerateColumns();
+        }
+        else {
+            table.setFieldInfos(this.columns);
+        }
+
+        // Sets the 'item clicked' event
         table.setItemClickedEvent(function (object: d.JsonExtentObject) {
             tthis.trigger('itemclicked', object);
         });
@@ -160,10 +172,30 @@ export class DefaultTableView extends Backbone.View {
 
 export class ExtentTableView extends DefaultTableView {
     constructor(options?: DefaultTableViewOptions) {
+        var tthis = this;
         super(options);
 
         this.bind('itemclicked', function (clickedObject) {
             var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
+            navigation.to(route);
+        });
+        
+        // Updates the selector view
+        var viewSelectorModel = new ViewSelectorModel();
+        viewSelectorModel.setCurrentView(this.viewUrl);
+        var viewSelector = new ViewSelector(
+            {
+                el: this.$(".view_selector"),
+                model: viewSelectorModel
+            });
+
+        viewSelector.unbind('viewselected');
+        viewSelector.bind('viewselected', function (viewUrl: string) {
+            var route = "extent/" + encodeURIComponent(tthis.url);
+            if (!_.isEmpty(viewUrl)) {
+                route += "/" + encodeURIComponent(viewUrl);
+            }
+
             navigation.to(route);
         });
     }
@@ -238,7 +270,7 @@ export class DetailView extends Backbone.View {
 
         var viewSelector = new ViewSelector(
             {
-                el: '#detailview',
+                el: this.$(".view_selector"),
                 model: viewSelectorModel           
             });
 
@@ -324,7 +356,7 @@ export class ViewSelector extends Backbone.View {
     loadAndUpdateViews() {
         var tthis = this;
 
-        var select = this.$('.view_selector');
+        var select = this.$el;
         select.empty();
         select.append($("<option class='default' value=''>--- Default view ---</option>"));
 

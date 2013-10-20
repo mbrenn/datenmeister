@@ -22,6 +22,9 @@ export declare class DefaultTableView extends Backbone.View {
     public tableOptions: t.ViewOptions;
     public url: string;
     public data: d.JsonExtentData;
+    public columns: d.JsonExtentFieldInfo[];
+    public viewUrl: string;
+    public viewObject: d.JsonExtentObject;
     constructor(options?: DefaultTableViewOptions);
     public loadAndRender(): DefaultTableView;
     public render(): DefaultTableView;

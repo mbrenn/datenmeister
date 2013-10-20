@@ -172,12 +172,6 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
                     if (success !== undefined) {
                         data.extent = new d.JsonExtentFieldInfo(data.extent);
 
-                        for (var m = 0; m < data.columns.length; m++) {
-                            var columnBackbone = new d.JsonExtentFieldInfo(data.columns[m]);
-
-                            data.columns[m] = columnBackbone;
-                        }
-
                         for (var n = 0; n < data.objects.length; n++) {
                             var currentObject = data.objects[n];
                             var result = tthis.convertToJsonObject(currentObject);

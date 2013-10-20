@@ -51,7 +51,7 @@ class AppRouter extends Backbone.Router {
         {
             "login": "showLoginForm",
             "all": "showAllExtents",
-            "extent/*extent": "showExtent",
+            "extent/*extent(/:viewUri)": "showExtent",
             "view/:objectUri(/:viewUri)": "showObject"
         };
 

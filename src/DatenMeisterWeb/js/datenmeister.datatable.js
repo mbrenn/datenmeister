@@ -13,8 +13,14 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
     var api = __api__;
     var t = __t__;
 
+    /*
+    * Defines the view options for a table or detail view as a complete table
+    */
     var ViewOptions = (function () {
         function ViewOptions() {
+            this.allowEdit = true;
+            this.allowNew = true;
+            this.allowDelete = true;
         }
         return ViewOptions;
     })();
@@ -265,6 +271,29 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         }
         DataTable.prototype.defineFieldInfos = function (fieldInfos) {
             this.fieldInfos = fieldInfos;
+        };
+
+        /*
+        * Performs an auto-generation of
+        */
+        DataTable.prototype.autoGenerateColumns = function () {
+            var tthis = this;
+
+            // Goes through every object
+            _.each(this.objects, function (obj) {
+                for (var key in obj.attributes) {
+                    if (!(_.some(tthis.fieldInfos, function (info) {
+                        return info.attributes.name == key;
+                    }))) {
+                        // No, so create new field info
+                        var fieldInfo = new d.JsonExtentFieldInfo();
+                        fieldInfo.setName(key);
+                        fieldInfo.setTitle(key);
+                        fieldInfo.setReadOnly(false);
+                        tthis.fieldInfos.push(fieldInfo);
+                    }
+                }
+            });
         };
 
         DataTable.prototype.addObject = function (object) {
