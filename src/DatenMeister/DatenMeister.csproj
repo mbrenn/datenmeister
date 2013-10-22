@@ -59,6 +59,7 @@
     <Compile Include="Logic\Factory.cs" />
     <Compile Include="Logic\ObjectHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transformations\ITransformation.cs" />
     <Compile Include="Web\GetObjectsModel.cs" />
     <Compile Include="Web\JsonExtentColumnInfo.cs" />
     <Compile Include="Web\ExtentController.cs" />
