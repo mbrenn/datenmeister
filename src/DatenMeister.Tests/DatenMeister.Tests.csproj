@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="DataProvider\CSVTests.cs" />
     <Compile Include="DataProvider\DotNetTests.cs" />
+    <Compile Include="DataProvider\XmlTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

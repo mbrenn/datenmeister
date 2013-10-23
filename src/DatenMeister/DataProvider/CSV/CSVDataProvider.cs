@@ -21,14 +21,9 @@ namespace DatenMeister.DataProvider.CSV
         public CSVExtent Import(string path, IURIExtent source, CSVSettings settings)
         {
             var extent = new CSVExtent(path, settings);
+            // TODO: Import source into the given extent
 
             return extent;
-            throw new NotImplementedException();
-        }
-
-        public void StoreChanges()
-        {
-            throw new NotImplementedException();
         }
 
         private void ReadFromFile(string path, CSVSettings settings, CSVExtent extent)
