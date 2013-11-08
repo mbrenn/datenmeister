@@ -15,49 +15,6 @@ namespace DatenMeister.DataProvider.CSV
             this.ReadFromFile(source, settings, extent);
 
             return extent;
-            throw new NotImplementedException();
-        }
-
-        public CSVExtent Import(string path, IURIExtent source, CSVSettings settings)
-        {
-            var extent = new CSVExtent(path, settings);
-            // TODO: Import source into the given extent
-
-            return extent;
-        }
-
-        private void ReadFromFile(string path, CSVSettings settings, CSVExtent extent)
-        {
-            using (var stream = new StreamReader(path, settings.Encoding))
-            {
-                // Reads header, if necessary
-                if (settings.HasHeader)
-                {
-                    extent.HeaderNames.AddRange(this.SplitLine(stream.ReadLine(), settings));
-                }
-
-                // Reads the data itself
-                string line;
-                var lineNumber = 1L;
-                while ((line = stream.ReadLine()) != null)
-                {
-                    var values = this.SplitLine(line, settings);
-
-                    var csvObject = new CSVObject(lineNumber, extent, values);
-                    extent.Objects.Add(csvObject);
-
-                    lineNumber++;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Splits a CSV line into columns
-        /// </summary>
-        /// <returns>List of column values</returns>
-        private IList<string> SplitLine(string line, CSVSettings settings)
-        {
-            return line.Split(new[] { settings.Separator }, StringSplitOptions.None);
         }
 
         /// <summary>
@@ -106,6 +63,40 @@ namespace DatenMeister.DataProvider.CSV
                         x => element.Get(x));                        
                 }
             }
+        }
+
+        private void ReadFromFile(string path, CSVSettings settings, CSVExtent extent)
+        {
+            using (var stream = new StreamReader(path, settings.Encoding))
+            {
+                // Reads header, if necessary
+                if (settings.HasHeader)
+                {
+                    extent.HeaderNames.AddRange(this.SplitLine(stream.ReadLine(), settings));
+                }
+
+                // Reads the data itself
+                string line;
+                var lineNumber = 1L;
+                while ((line = stream.ReadLine()) != null)
+                {
+                    var values = this.SplitLine(line, settings);
+
+                    var csvObject = new CSVObject(lineNumber, extent, values);
+                    extent.Objects.Add(csvObject);
+
+                    lineNumber++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Splits a CSV line into columns
+        /// </summary>
+        /// <returns>List of column values</returns>
+        private IList<string> SplitLine(string line, CSVSettings settings)
+        {
+            return line.Split(new[] { settings.Separator }, StringSplitOptions.None);
         }
 
         /// <summary>

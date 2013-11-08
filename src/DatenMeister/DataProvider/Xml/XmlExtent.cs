@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BurnSystems.Test;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,9 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         public XmlExtent(XDocument document, string uri)
         {
+            Ensure.That(document != null);
+            Ensure.That(!string.IsNullOrEmpty(uri));
+
             this.XmlDocument = document;
             this.Uri = uri;
         }
@@ -51,7 +55,8 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Enumeration of all elements</returns>
         public IEnumerable<IObject> Elements()
         {
-            throw new NotImplementedException();
+            var rootElement = new XmlObject(this.XmlDocument.Root);
+            yield return rootElement;
         }
 
         /// <summary>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<list>
+  <item id="1">
+    <text>A</text>
+    <roman>I</roman>
+  </item>
+  <item id="2">
+    <text>B</text>
+    <roman>II</roman>
+  </item>
+  <item id="3">
+    <text>C</text>
+    <roman>III</roman>
+  </item>
+  <item id="4">
+    <text>D</text>
+    <roman>IV</roman>
+  </item>
+  <item id="5">
+    <text>E</text>
+    <roman>V</roman>
+  </item>
+  <item id="6">
+    <text>F</text>
+    <roman>VI</roman>
+  </item>
+</list>
