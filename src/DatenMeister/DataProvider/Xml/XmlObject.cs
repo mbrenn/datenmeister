@@ -183,6 +183,7 @@ namespace DatenMeister.DataProvider.Xml
             // Finds the container for the property
             if (string.IsNullOrEmpty(propertyName)) 
             {
+                // Content of the node will be set
                 if (Helper.IsNativeObject(value))
                 {
                     if (value == null)
@@ -206,8 +207,18 @@ namespace DatenMeister.DataProvider.Xml
             }
 
             // Checks, if we have multiple objects, if yes, throw exception. 
-            // Change is not supported until now
             
+            // Check, if we have an attribute with the given name, if yes, set the property
+            if ( this.Node.Attribute ( propertyName) != null)
+            {
+                this.Node.Attribute(propertyName).Value = value.ToString();
+            }
+            else if (this.Node.Element(propertyName) != null)
+            {
+                if (Helper.IsNativeObject(value))
+                {
+                }
+            }
 
             throw new NotImplementedException();
         }

@@ -66,5 +66,40 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(firstElement.Get(string.Empty).AsSingle(), Is.EqualTo("Test"));
             Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").First().Value, Is.EqualTo("Test"));
         }
+
+        [Test]
+        public void TestGetGetAllAndSetByAttributes()
+        {
+            var xmlProvider = new XmlDataProvider();
+            var xmlExtent = xmlProvider.Load("data/xml/simplelistinattribute.xml", new XmlSettings());
+            Assert.That(xmlExtent, Is.Not.Null);
+
+            // Gets the first object '/list/item[0]'
+            var firstElement = xmlExtent.Elements().AsIObject().Get("item").AsEnumeration().First().AsIObject();
+            Assert.That(firstElement, Is.Not.Null);
+
+            Assert.That(firstElement.Get(string.Empty).AsSingle(), Is.EqualTo("One"));
+            Assert.That(firstElement.Get("letter").AsSingle(), Is.EqualTo("a"));
+
+            var pairs = firstElement.GetAll();
+            Assert.That(pairs.Any(x => x.PropertyName == string.Empty), Is.True);
+            Assert.That(pairs.Any(x => x.PropertyName == "id"), Is.True);
+            Assert.That(pairs.Any(x => x.PropertyName == "letter"), Is.True);
+            Assert.That(pairs.Any(x => x.PropertyName == "nix"), Is.False);
+
+            // Gets second item '/list/item[1]'
+            var secondElement = xmlExtent.Elements().AsIObject().Get("item").AsEnumeration().ElementAt(1).AsIObject();
+            Assert.That(secondElement, Is.Not.Null);
+
+            Assert.That(secondElement.Get(string.Empty).AsSingle(), Is.EqualTo("Two"));
+            Assert.That(secondElement.Get("letter").AsSingle(), Is.EqualTo("b"));
+
+            // Sets the content of second item
+            secondElement.Set("letter", "to be");
+
+            Assert.That(secondElement.Get("letter").AsSingle(), Is.EqualTo("to be"));
+            Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").ElementAt(2).Attribute("letter").Value,
+                Is.EqualTo("to be"));
+        }
     }
 }
