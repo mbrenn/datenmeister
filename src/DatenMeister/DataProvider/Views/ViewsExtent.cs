@@ -17,15 +17,18 @@ namespace DatenMeister.DataProvider.Views
         {
         }
 
+        /// <summary>
+        /// Fills the defaultview with items
+        /// </summary>
         public void Fill()
         {
             var view = new View();
-            view.title = "View for views";
+            view.name = "Views.DatenMeister.View";
             view.fieldInfos.Add(
                 new FieldInfo()
                 {
-                    title = "Title",
-                    name = "title"
+                    title = "Name of view",
+                    name = "name"
                 });
 
             this.Add(view);

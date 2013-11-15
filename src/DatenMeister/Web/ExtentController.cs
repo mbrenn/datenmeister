@@ -2,7 +2,10 @@
 using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using BurnSystems.WebServer.Modules.MVC;
+using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Views;
 using DatenMeister.Logic;
+using DatenMeister.Transformations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,16 +63,11 @@ namespace DatenMeister.Web
             data.extent = extent.ToJson();
 
             var elements = extent.Elements();
-            var titles = elements.GetColumnTitles();
-            data.columns.AddRange(titles.Select(x => new JsonExtentColumnInfo()
-            {
-                name = x,
-                title = x
-            }));
 
+            // Adds the elements
             foreach (var element in elements)
             {
-                data.objects.Add(ToJson(element));
+                data.objects.Add(element.ToJson(extent));
             }
 
             return this.Json(data);
@@ -107,7 +105,7 @@ namespace DatenMeister.Web
             return this.Json(new
             {
                 success = true,
-                values = element.GetAll().ToDictionary(x => x.PropertyName, x => x.Value),
+                values = element.ToFlatObject(extent),
                 id = element.Id,
                 extentUri = extent.ContextURI()
             });
@@ -139,7 +137,7 @@ namespace DatenMeister.Web
                     success = true,
                     id = element.Id,
                     extentUri = extent.ContextURI(),
-                    values = element.GetAll().ToDictionary(x => x.PropertyName, x => x.Value)
+                    values = element.ToFlatObject(extent)
                 };
                 return this.Json(result);
             }
@@ -163,7 +161,7 @@ namespace DatenMeister.Web
                     {
                         id = element.Id,
                         extentUri = extent.ContextURI(),
-                        values = element.GetAll().ToDictionary(x => x.PropertyName, x => x.Value)
+                        values = element.ToFlatObject(extent)
                     };
 
                     resultObjects.Add(jsonElement);
@@ -196,14 +194,15 @@ namespace DatenMeister.Web
             }
 
             var extentUri = uri.Substring(0, positionHash);
-            var objectId = uri.Substring(positionHash + 1); ;
+            var objectId = uri.Substring(positionHash + 1);
             extent = this.Pool.Extents.Where(x => x.ContextURI() == extentUri).FirstOrDefault();
             if (extent == null)
             {
                 throw new MVCProcessException("uri_not_found", "URI has not been found");
             }
 
-            var element = extent.Elements().Where(x => x.Id == objectId).FirstOrDefault();
+            var allElements = extent.Recurse().Elements();
+            var element = allElements.Where(x => x.Id == objectId).FirstOrDefault();
             if (element == null)
             {
                 throw new MVCProcessException("object_not_found", "Object has not been found");
@@ -226,22 +225,6 @@ namespace DatenMeister.Web
             }
 
             return extent;
-        }
-
-        /// <summary>
-        /// Converts the extent to json object
-        /// </summary>
-        /// <param name="extent">Extent to be converted</param>
-        /// <returns>Converted object</returns>
-        private static JsonExtentObject ToJson(IObject element)
-        {
-            var dict = new Dictionary<string, string>();
-            foreach (var pair in element.GetAll())
-            {
-                dict[pair.PropertyName] = pair.Value.ToString();
-            }
-
-            return new JsonExtentObject(element.Id, dict);
         }
     }
 }

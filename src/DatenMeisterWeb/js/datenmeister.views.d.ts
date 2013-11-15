@@ -22,6 +22,9 @@ export declare class DefaultTableView extends Backbone.View {
     public tableOptions: t.ViewOptions;
     public url: string;
     public data: d.JsonExtentData;
+    public columns: d.JsonExtentFieldInfo[];
+    public viewUrl: string;
+    public viewObject: d.JsonExtentObject;
     constructor(options?: DefaultTableViewOptions);
     public loadAndRender(): DefaultTableView;
     public render(): DefaultTableView;
@@ -44,10 +47,20 @@ export interface FormViewOptions extends Backbone.ViewOptions {
 export declare class DetailView extends Backbone.View {
     public object: d.JsonExtentObject;
     public url: string;
+    public urlView: string;
     public formOptions: FormViewOptions;
     public viewUrl: string;
     public viewObject: d.JsonExtentObject;
     constructor(options: FormViewOptions);
     public loadAndRender(): void;
     public render(): DetailView;
+}
+export declare class ViewSelectorModel extends Backbone.Model {
+    public getCurrentView(): string;
+    public setCurrentView(viewUri: string): void;
+}
+export declare class ViewSelector extends Backbone.View {
+    public model: ViewSelectorModel;
+    constructor(options: Backbone.ViewOptions);
+    public loadAndUpdateViews(): void;
 }

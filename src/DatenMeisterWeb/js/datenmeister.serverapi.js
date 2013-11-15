@@ -5,12 +5,12 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
     var navigation = __navigation__;
 
     /*
-    * Gets the server API, will request loadng of server settings if required
+    * Gets the server API, will request loading of server settings if required
     */
     function getAPI() {
         if (singletonAPI == undefined) {
             var serverSettings = retrieveServerSettings();
-            if (serverSettings == undefined) {
+            if (serverSettings === undefined) {
                 navigation.to("login");
                 return undefined;
             }
@@ -45,12 +45,18 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
         window.sessionStorage.setItem("serverapi_currentserveraddress", connectionInfo.serverAddress);
     }
 
+    function deleteBrowserStorage() {
+        window.sessionStorage.clear();
+        window.localStorage.clear();
+    }
+    exports.deleteBrowserStorage = deleteBrowserStorage;
+
     /*
     Retrieves the server settings from browser storage
     */
     function retrieveServerSettings() {
         var serverAddress = window.sessionStorage.getItem("serverapi_currentserveraddress");
-        if (serverAddress == undefined) {
+        if (_.isEmpty(serverAddress)) {
             return undefined;
         }
 
@@ -94,6 +100,7 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
         };
 
         ServerAPI.prototype.convertToJsonObject = function (data) {
+            var tthis = this;
             var result = new d.JsonExtentObject();
 
             // Sets id and extentUri of object
@@ -102,7 +109,19 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
 
             // Sets values of the complete object
             _.each(data.values, function (value, key, list) {
-                result.set(key, value);
+                if (_.isArray(value)) {
+                    var list = new Array();
+                    _.each(value, function (v) {
+                        var c = tthis.convertToJsonObject(v);
+                        list.push(c);
+                    });
+
+                    result.set(key, list);
+                } else if (_.isObject(value)) {
+                    result.set(key, tthis.convertToJsonObject(value));
+                } else {
+                    result.set(key, value);
+                }
             });
 
             // Returns result
@@ -145,6 +164,7 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
         };
 
         ServerAPI.prototype.getObjectsInExtent = function (uri, success, fail) {
+            var tthis = this;
             ajax.performRequest({
                 url: this.__getUrl() + "extent/GetObjectsInExtent?uri=" + uri,
                 prefix: 'loadobjects_',
@@ -152,19 +172,10 @@ define(["require", "exports", "lib/dejs.ajax", "datenmeister.objects", "datenmei
                     if (success !== undefined) {
                         data.extent = new d.JsonExtentFieldInfo(data.extent);
 
-                        for (var m = 0; m < data.columns.length; m++) {
-                            var columnBackbone = new d.JsonExtentFieldInfo(data.columns[m]);
-
-                            data.columns[m] = columnBackbone;
-                        }
-
                         for (var n = 0; n < data.objects.length; n++) {
                             var currentObject = data.objects[n];
-                            var result = new d.JsonExtentObject();
-                            result.id = currentObject.id;
-                            _.each(currentObject.values, function (value, key, list) {
-                                result.set(key, value);
-                            });
+                            var result = tthis.convertToJsonObject(currentObject);
+
                             data.objects[n] = result;
                             data.objects[n].extentUri = uri;
                         }

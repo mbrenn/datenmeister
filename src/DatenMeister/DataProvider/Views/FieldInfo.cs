@@ -19,5 +19,32 @@ namespace DatenMeister.DataProvider.Views
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the read only status of the column
+        /// </summary>
+        public bool isReadonly
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the height in pixels
+        /// </summary>
+        public double height
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the width in pixels
+        /// </summary>
+        public double width
+        {
+            get;
+            set;
+        }
     }
 }

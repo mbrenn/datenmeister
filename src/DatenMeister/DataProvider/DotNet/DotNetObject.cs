@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,30 @@ namespace DatenMeister.DataProvider.DotNet
 
         private object value;
 
+        /// <summary>
+        /// Initializes a new instance of the dot net object. 
+        /// The id is retrieved from the property 'name'. If the property is not existing, an exception will be thrown. 
+        /// </summary>
+        /// <param name="extent"></param>
+        /// <param name="value"></param>
+        public DotNetObject(IURIExtent extent, object value)
+        {
+            Ensure.That(extent != null);
+            Ensure.That(value != null);
+
+            this.extent = extent;
+            this.value = value;
+
+            if (!this.IsSet("name"))
+            {
+                this.id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                this.id = this.Get("name").ToString();
+            }
+        }
+
         public DotNetObject(IURIExtent extent, object value, string id)
             : this(value, id)
         {
@@ -27,14 +52,19 @@ namespace DatenMeister.DataProvider.DotNet
             this.id = id;
         }
 
-        public DotNetObject(object value, string id)
+        private DotNetObject(object value, string id)
         {
             Ensure.That(id != null);
             Ensure.That(value != null);
             this.value = value;
             this.id = id;
         }
-        
+
+        /// <summary>
+        /// Gets the property of a certain .Net Object
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Object that has been queried</returns>
         public object Get(string propertyName)
         {
             var property = GetProperty(propertyName);
@@ -45,7 +75,8 @@ namespace DatenMeister.DataProvider.DotNet
                 throw new ArgumentException("Getter for " + propertyName + " not found");
             }
 
-            return method.Invoke(this.value, null);
+            var value = method.Invoke(this.value, null);
+            return this.ConvertIfNecessary(value, propertyName);
         }
 
         public void Set(string propertyName, object value)
@@ -58,16 +89,21 @@ namespace DatenMeister.DataProvider.DotNet
                 throw new ArgumentException("Setter for " + propertyName + " not found");
             }
 
-            method.Invoke(this.value, new object[] { value });
+            // Converts to target type
+            var targetType = property.PropertyType;
+            var convertedValue = Convert.ChangeType(value, targetType);
+            method.Invoke(this.value, new object[] { convertedValue });
         }
 
         public IEnumerable<ObjectPropertyPair> GetAll()
         {
             foreach (var property in this.value.GetType().GetProperties())
             {
+                var value = property.GetValue(this.value);
+
                 yield return new ObjectPropertyPair(
                     property.Name,
-                    property.GetValue(this.value));
+                    this.ConvertIfNecessary(value, property.Name));
             }
         }
 
@@ -125,6 +161,35 @@ namespace DatenMeister.DataProvider.DotNet
             }
 
             return property;
+        }
+
+        /// <summary>
+        /// Converts the object to the required datatype as necessary
+        /// </summary>
+        /// <param name="checkObject">Object to be converted</param>
+        /// <returns>Converted object</returns>
+        private object ConvertIfNecessary(object checkObject, string propertyName)
+        {
+            if (Extensions.IsNative(checkObject))
+            {
+                return checkObject;
+            }
+            else if (checkObject is IEnumerable)
+            {
+                var sequence = new DotNetSequence();
+                var n = 0L;
+                foreach (var value in (checkObject as IEnumerable))
+                {
+                    sequence.Add(new DotNetObject(this.extent, value, this.Id + "[" + n.ToString() + "]"));
+                    n++;
+                }
+                
+                return sequence;
+            }
+            else
+            {
+                return new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName);
+            }
         }
     }
 }

@@ -44,7 +44,7 @@ namespace DatenmeisterServer
             pool.Add(poolExtent);
 
             // Add view pool
-            var viewExtent = new ViewsExtent("datenmeister:///defaultviews");
+            var viewExtent = new ViewsExtent("datenmeister:///defaultviews/");
             viewExtent.Fill();
             pool.Add(viewExtent);
 

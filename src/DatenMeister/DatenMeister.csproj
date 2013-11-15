@@ -45,6 +45,7 @@
     <Compile Include="DataProvider\CSV\CSVSettings.cs" />
     <Compile Include="DataProvider\DotNet\DotNetExtent.cs" />
     <Compile Include="DataProvider\DotNet\DotNetObject.cs" />
+    <Compile Include="DataProvider\DotNet\DotNetSequence.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataProvider\Views\FieldInfo.cs" />
@@ -64,6 +65,8 @@
     <Compile Include="Logic\ObjectHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transformations\ITransformation.cs" />
+    <Compile Include="Transformations\Extensions.cs" />
+    <Compile Include="Transformations\RecurseObjectTransformation.cs" />
     <Compile Include="Web\GetObjectsModel.cs" />
     <Compile Include="Web\JsonExtentColumnInfo.cs" />
     <Compile Include="Web\ExtentController.cs" />

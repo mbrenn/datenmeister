@@ -13,8 +13,14 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
     var api = __api__;
     var t = __t__;
 
+    /*
+    * Defines the view options for a table or detail view as a complete table
+    */
     var ViewOptions = (function () {
         function ViewOptions() {
+            this.allowEdit = true;
+            this.allowNew = true;
+            this.allowDelete = true;
         }
         return ViewOptions;
     })();
@@ -31,11 +37,122 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
     })();
     exports.NewPropertyFields = NewPropertyFields;
 
+    /*
+    * This handler is offering the switch from edit to view by providing methods.
+    */
+    var DataViewEditHandler = (function (_super) {
+        __extends(DataViewEditHandler, _super);
+        function DataViewEditHandler() {
+            _super.call(this);
+            this.newPropertyInfos = new Array();
+            this.writeFields = new Array();
+        }
+        /*
+        * Adds a new property field that will be evaluated when the edit or creation of a new object has been finished.
+        * The new property fields consists of a field containing the key and a field containing the value
+        */
+        DataViewEditHandler.prototype.addNewPropertyField = function (newField) {
+            this.newPropertyInfos.push(newField);
+        };
+
+        DataViewEditHandler.prototype.switchToEdit = function () {
+            // Is currently in reading mode, switch to writing mode
+            this.writeFields = new Array();
+            for (var n = 0; n < this.columnDoms.length; n++) {
+                var dom = this.columnDoms[n];
+                var column = this.view.fieldInfos[n];
+                dom.empty();
+
+                var writeField = this.view.createWriteField(this.currentObject, column);
+                this.writeFields.push(writeField);
+                dom.append(writeField);
+                this.editButton.html("ACCEPT");
+            }
+
+            this.trigger('editModeChange', true);
+        };
+
+        DataViewEditHandler.prototype.switchToRead = function () {
+            var tthis = this;
+
+            for (var n = 0; n < this.columnDoms.length; n++) {
+                var column = this.view.fieldInfos[n];
+                this.view.setValueByWriteField(this.currentObject, column, this.writeFields[n]);
+            }
+
+            // Goes through the new properties being created during the detail view
+            _.each(this.newPropertyInfos, function (info) {
+                var key = info.keyField.val();
+                var value = info.valueField.val();
+
+                if (_.isEmpty(key)) {
+                    // No key had been entered, let's remove the row
+                    info.rowDom.remove();
+                } else {
+                    tthis.currentObject.set(key, value);
+
+                    var fieldInfo = new d.JsonExtentFieldInfo();
+                    fieldInfo.setName(key);
+                    fieldInfo.setTitle(key);
+                    tthis.view.fieldInfos.push(fieldInfo);
+                    tthis.columnDoms.push(info.valueField.parent());
+
+                    // making the key field as read only
+                    var keyValue = info.keyField.val();
+                    info.keyField.before($("<div></div>").text(keyValue));
+                    info.keyField.remove();
+                }
+            });
+
+            tthis.newPropertyInfos.length = 0;
+
+            api.getAPI().editObject(this.currentObject.getUri(), this.currentObject, function () {
+                for (var n = 0; n < tthis.columnDoms.length; n++) {
+                    var dom = tthis.columnDoms[n];
+                    var column = tthis.view.fieldInfos[n];
+                    dom.empty();
+                    dom.append(tthis.view.createReadField(tthis.currentObject, column));
+                }
+
+                tthis.editButton.html("EDIT");
+            });
+
+            // Throw the necessary event
+            this.trigger('editModeChange', false);
+        };
+
+        DataViewEditHandler.prototype.bindToEditButton = function (view, editButton, object, columnDoms) {
+            var tthis = this;
+
+            this.columnDoms = columnDoms;
+            this.currentObject = object;
+            this.view = view;
+            this.editButton = editButton;
+
+            var currentlyInEdit = false;
+            var writeFields;
+
+            editButton.click(function () {
+                if (!currentlyInEdit) {
+                    tthis.switchToEdit();
+                    currentlyInEdit = true;
+                } else {
+                    tthis.switchToRead();
+                    currentlyInEdit = false;
+                }
+
+                // No bubbling
+                return false;
+            });
+        };
+        return DataViewEditHandler;
+    })(Backbone.Model);
+    exports.DataViewEditHandler = DataViewEditHandler;
+
     var DataView = (function () {
         function DataView(domElement, options) {
             this.domElement = domElement;
             this.options = options;
-            this.newPropertyInfos = new Array();
             if (this.options === undefined) {
                 this.options = new ViewOptions();
                 this.options.allowDelete = true;
@@ -51,18 +168,34 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         };
 
         /*
-        * Adds a new property field that will be evaluated when the edit or creation of a new object has been finished.
-        * The new property fields consists of a field containing the key and a field containing the value
+        * Defines the function that will be executed when user clicks on a certain object
         */
-        DataView.prototype.addNewPropertyField = function (newField) {
-            this.newPropertyInfos.push(newField);
+        DataView.prototype.setItemClickedEvent = function (clickedEvent) {
+            this.itemClickedEvent = clickedEvent;
         };
 
         DataView.prototype.createReadField = function (object, field) {
+            var tthis = this;
             var span = $("<span />");
-            var value = object.get(field.getName());
+            var value = object.get(field.get('name'));
             if (value === undefined || value === null) {
                 span.html("<em>undefined</em>");
+            } else if (_.isArray(value)) {
+                span.text('Array with ' + value.length + " items:");
+                var ul = $("<ul></ul>");
+                _.each(value, function (item) {
+                    var div = $("<li></li>");
+                    div.text(JSON.stringify(item.toJSON()) + " | " + item.id);
+                    div.click(function () {
+                        if (tthis.itemClickedEvent !== undefined) {
+                            tthis.itemClickedEvent(item);
+                        }
+                    });
+
+                    ul.append(div);
+                });
+
+                span.append(ul);
             } else {
                 span.text(value);
             }
@@ -77,92 +210,33 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 value = object.get(field.getName());
             }
 
-            var inputField = $("<input type='text' />");
-            if (value !== undefined && value !== null) {
-                inputField.val(value);
+            // Checks, if writing is possible
+            var offerWriting = true;
+            if (_.isArray(value) || _.isObject(value)) {
+                offerWriting = false;
             }
 
-            return inputField;
+            if (offerWriting) {
+                // Offer writing
+                var inputField = $("<input type='text' />");
+                if (value !== undefined && value !== null) {
+                    inputField.val(value);
+                }
+
+                return inputField;
+            } else {
+                return this.createReadField(object, field);
+            }
         };
 
         DataView.prototype.setValueByWriteField = function (object, field, dom) {
+            if (field.getReadOnly() === true) {
+                // Do nothing
+                return;
+            }
+
+            // Reads the value
             object.set(field.getName(), dom.val());
-        };
-
-        DataView.prototype.createEventsForEditButton = function (editButton, object, columnDoms, editModeChange) {
-            var tthis = this;
-            var currentlyInEdit = false;
-            var writeFields;
-
-            editButton.click(function () {
-                if (!currentlyInEdit) {
-                    // Is currently in reading mode, switch to writing mode
-                    writeFields = new Array();
-                    for (var n = 0; n < columnDoms.length; n++) {
-                        var dom = columnDoms[n];
-                        var column = tthis.fieldInfos[n];
-                        dom.empty();
-
-                        var writeField = tthis.createWriteField(object, column);
-                        writeFields.push(writeField);
-                        dom.append(writeField);
-                        editButton.html("ACCEPT");
-                    }
-
-                    currentlyInEdit = true;
-                } else {
-                    for (var n = 0; n < columnDoms.length; n++) {
-                        var column = tthis.fieldInfos[n];
-                        tthis.setValueByWriteField(object, column, writeFields[n]);
-                    }
-
-                    // Goes through the new properties
-                    _.each(tthis.newPropertyInfos, function (info) {
-                        var key = info.keyField.val();
-                        var value = info.valueField.val();
-
-                        if (_.isEmpty(key)) {
-                            // No key had been entered, let's remove the row
-                            info.rowDom.remove();
-                        } else {
-                            object.set(key, value);
-
-                            var fieldInfo = new d.JsonExtentFieldInfo();
-                            fieldInfo.setName(key);
-                            fieldInfo.setTitle(key);
-                            tthis.fieldInfos.push(fieldInfo);
-                            columnDoms.push(info.valueField.parent());
-
-                            // making the key field as read only
-                            var keyValue = info.keyField.val();
-                            info.keyField.before($("<div></div>").text(keyValue));
-                            info.keyField.remove();
-                        }
-                    });
-
-                    tthis.newPropertyInfos.length = 0;
-
-                    api.getAPI().editObject(object.getUri(), object, function () {
-                        for (var n = 0; n < columnDoms.length; n++) {
-                            var dom = columnDoms[n];
-                            var column = tthis.fieldInfos[n];
-                            dom.empty();
-                            dom.append(tthis.createReadField(object, column));
-                        }
-
-                        editButton.html("EDIT");
-                    });
-
-                    currentlyInEdit = false;
-                }
-
-                if (editModeChange !== undefined) {
-                    editModeChange(currentlyInEdit);
-                }
-
-                // No bubbling
-                return false;
-            });
         };
         return DataView;
     })();
@@ -197,6 +271,29 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         }
         DataTable.prototype.defineFieldInfos = function (fieldInfos) {
             this.fieldInfos = fieldInfos;
+        };
+
+        /*
+        * Performs an auto-generation of
+        */
+        DataTable.prototype.autoGenerateColumns = function () {
+            var tthis = this;
+
+            // Goes through every object
+            _.each(this.objects, function (obj) {
+                for (var key in obj.attributes) {
+                    if (!(_.some(tthis.fieldInfos, function (info) {
+                        return info.attributes.name == key;
+                    }))) {
+                        // No, so create new field info
+                        var fieldInfo = new d.JsonExtentFieldInfo();
+                        fieldInfo.setName(key);
+                        fieldInfo.setTitle(key);
+                        fieldInfo.setReadOnly(false);
+                        tthis.fieldInfos.push(fieldInfo);
+                    }
+                }
+            });
         };
 
         DataTable.prototype.addObject = function (object) {
@@ -278,7 +375,9 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
 
             if (tthis.options.allowEdit) {
                 var editColumn = $("<a class='btn btn-default'>EDIT</a>");
-                this.createEventsForEditButton(editColumn, object, columnDoms);
+
+                var handler = new DataViewEditHandler();
+                handler.bindToEditButton(this, editColumn, object, columnDoms);
 
                 lastColumn.append(editColumn);
             }
@@ -349,10 +448,6 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 tthis.createCreateButton();
             }, function () {
             });
-        };
-
-        DataTable.prototype.setItemClickedEvent = function (clickedEvent) {
-            this.itemClickedEvent = clickedEvent;
         };
         return DataTable;
     })(DataView);

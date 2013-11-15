@@ -13,12 +13,13 @@ export declare class JsonExtentObject extends Backbone.Model {
 export declare class JsonExtentFieldInfo extends JsonExtentObject {
     public getName(): string;
     public getTitle(): string;
+    public getReadOnly(): boolean;
     public setName(name: string): void;
     public setTitle(title: string): void;
+    public setReadOnly(isReadOnly: boolean): void;
     constructor(attributes?: any);
 }
 export declare class JsonExtentData {
     public extent: ExtentInfo;
-    public columns: JsonExtentFieldInfo[];
     public objects: JsonExtentObject[];
 }
