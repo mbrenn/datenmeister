@@ -98,7 +98,7 @@ namespace DatenMeister.Tests.DataProvider
             secondElement.Set("letter", "to be");
 
             Assert.That(secondElement.Get("letter").AsSingle(), Is.EqualTo("to be"));
-            Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").ElementAt(2).Attribute("letter").Value,
+            Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").ElementAt(1).Attribute("letter").Value,
                 Is.EqualTo("to be"));
         }
     }

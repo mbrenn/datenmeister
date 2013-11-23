@@ -75,6 +75,8 @@ namespace DatenMeister
             }
 
             throw new InvalidOperationException("Given object is not a valid object");
+        }
+
         /// Converts the extent to json object
         /// </summary>
         /// <param name="extent">Extent to be converted</param>
@@ -156,6 +158,13 @@ namespace DatenMeister
         /// <returns>true, if object is not native</returns>
         public static bool IsNative(object checkObject)
         {
+            // An empty object is null
+            if (checkObject == null)
+            {
+                return true;
+            }
+
+            // Initializes list of primitiveTypes if necessary
             if (primitiveTypes.Count == 0)
             {
                 lock (primitiveTypes)
@@ -171,6 +180,7 @@ namespace DatenMeister
                 }
             }
 
+            // Checks, if type of given object is in the list above
             return primitiveTypes.Contains(checkObject.GetType());
         }
     }
