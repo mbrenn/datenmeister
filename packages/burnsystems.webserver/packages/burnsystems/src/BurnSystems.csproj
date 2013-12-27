@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{42023D16-AFD1-4D99-BC39-9EF46982EB54}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BurnSystems</RootNamespace>
+    <AssemblyName>BurnSystems</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>BurnSystems_AGPL.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\src\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\uidv0898\AppData\Roaming\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\BurnSystems.xml</DocumentationFile>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\BurnSystems.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\Debug\BurnSystems.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Compile Include="AdoNet\Queries\DeleteQuery.cs" />
+    <Compile Include="AdoNet\Queries\DropColumnQuery.cs" />
+    <Compile Include="AdoNet\Queries\DropTableQuery.cs" />
+    <Compile Include="AdoNet\Queries\FreeQuery.cs" />
+    <Compile Include="AdoNet\Queries\InsertQuery.cs" />
+    <Compile Include="AdoNet\Queries\Query.cs" />
+    <Compile Include="AdoNet\Queries\QueryExtensions.cs" />
+    <Compile Include="AdoNet\Queries\SelectQuery.cs" />
+    <Compile Include="AdoNet\Queries\ShowColumnsQuery.cs" />
+    <Compile Include="AdoNet\Queries\ShowTablesQuery.cs" />
+    <Compile Include="AdoNet\Queries\UpdateQuery.cs" />
+    <Compile Include="Collections\AutoDictionary.cs" />
+    <Compile Include="Collections\Container.cs" />
+    <Compile Include="Collections\IHasKey.cs" />
+    <Compile Include="Collections\IHasId.cs" />
+    <Compile Include="Collections\ListHelper.cs" />
+    <Compile Include="Collections\NiceDictionary.cs" />
+    <Compile Include="Collections\ObjectContainer.cs" />
+    <Compile Include="Collections\Pair.cs" />
+    <Compile Include="Collections\PriorityQueue.cs" />
+    <Compile Include="Collections\TypedContainer.cs" />
+    <Compile Include="Collections\XmlList.cs" />
+    <Compile Include="Collections\XmlSetList.cs" />
+    <Compile Include="CommandLineEvaluater.cs" />
+    <Compile Include="CommandLine\ICommandLineDefinition.cs" />
+    <Compile Include="CommandLine\OptionalArgument.cs" />
+    <Compile Include="CommandLine\RequiresArgument.cs" />
+    <Compile Include="Database\ConnectionFactory.cs" />
+    <Compile Include="Database\Helper.cs" />
+    <Compile Include="Database\Objects\AssignmentInfo.cs" />
+    <Compile Include="Database\Objects\DatabaseClassAttribute.cs" />
+    <Compile Include="Database\Objects\DatabaseKeyAttribute.cs" />
+    <Compile Include="Database\Objects\DatabasePropertyAttribute.cs" />
+    <Compile Include="Database\Objects\Converter.cs" />
+    <Compile Include="Database\Objects\IConverter.cs" />
+    <Compile Include="Database\Objects\Mapper.cs" />
+    <Compile Include="DateTimeHelper.cs" />
+    <Compile Include="EnvironmentHelper.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\ObjectProperty.cs" />
+    <Compile Include="FileHelper.cs" />
+    <Compile Include="Interfaces\IXElement.cs" />
+    <Compile Include="Interfaces\IHasWritableIndex.cs" />
+    <Compile Include="Interfaces\IParserDictionary.cs" />
+    <Compile Include="Interfaces\IParserObject.cs" />
+    <Compile Include="Interfaces\IXElementConverter.cs" />
+    <Compile Include="LocalizationBS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalizationBS.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Logging\ClassLogger.cs" />
+    <Compile Include="Logging\DebugProvider.cs" />
+    <Compile Include="Logging\Extensions.cs" />
+    <Compile Include="Net\Json\IJsonObject.cs" />
+    <Compile Include="Net\Json\JsonBoolean.cs" />
+    <Compile Include="Net\Json\JsonList.cs" />
+    <Compile Include="Net\Json\JsonNumber.cs" />
+    <Compile Include="Net\Json\JsonObject.cs" />
+    <Compile Include="Net\Json\JsonString.cs" />
+    <Compile Include="ObjectActivation\ActivationBlock.cs" />
+    <Compile Include="ObjectActivation\ActivationContainer.cs" />
+    <Compile Include="ObjectActivation\ActivationContainerExtensions.cs" />
+    <Compile Include="ObjectActivation\ActivationInfo.cs" />
+    <Compile Include="ObjectActivation\ActiveInstance.cs" />
+    <Compile Include="ObjectActivation\ActiveInstanceCollection.cs" />
+    <Compile Include="ObjectActivation\BindAlsoToAttribute.cs" />
+    <Compile Include="ObjectActivation\BindingHelperExtension.cs" />
+    <Compile Include="ObjectActivation\BindingHelper.cs" />
+    <Compile Include="ObjectActivation\InjectAttribute.cs" />
+    <Compile Include="ObjectActivation\IActivates.cs" />
+    <Compile Include="ObjectActivation\InstanceBuilder.cs" />
+    <Compile Include="ObjectActivation\InstantiationCacheEntry.cs" />
+    <Compile Include="ObjectActivation\ObjectActivationException.cs" />
+    <Compile Include="ObjectActivation\PostActivationInfo.cs" />
+    <Compile Include="ObjectActivation\Criteria\ByNameCriteria.cs" />
+    <Compile Include="ObjectActivation\Criteria\ByTypeCriteria.cs" />
+    <Compile Include="ObjectActivation\CriteriaCatalogue.cs" />
+    <Compile Include="ObjectActivation\Enabler\ByNameEnabler.cs" />
+    <Compile Include="ObjectActivation\Enabler\ByTypeEnabler.cs" />
+    <Compile Include="ObjectActivation\ICriteria.cs" />
+    <Compile Include="ObjectActivation\IEnabler.cs" />
+    <Compile Include="ObjectActivation\StatementLoader.cs" />
+    <Compile Include="Plugins\PluginDependencyAttribute.cs" />
+    <Compile Include="Plugins\PluginInfo.cs" />
+    <Compile Include="Plugins\PluginLoader.cs" />
+    <Compile Include="Serialization\ArrayHeader.cs" />
+    <Compile Include="Serialization\BinaryReader.cs" />
+    <Compile Include="Serialization\BinaryWriter.cs" />
+    <Compile Include="Serialization\ComplexHeader.cs" />
+    <Compile Include="Serialization\Composer.cs" />
+    <Compile Include="Serialization\Deserializer.cs" />
+    <Compile Include="Serialization\Helper.cs" />
+    <Compile Include="Serialization\FieldEntry.cs" />
+    <Compile Include="Serialization\ObjectContainer.cs" />
+    <Compile Include="Serialization\ReferenceHeader.cs" />
+    <Compile Include="Serialization\SerializationBase.cs" />
+    <Compile Include="Serialization\Serializer.cs" />
+    <Compile Include="Serialization\TypeContainer.cs" />
+    <Compile Include="Serialization\TypeEntry.cs" />
+    <Compile Include="Serialization\Visitor.cs" />
+    <Compile Include="Test\Ensure.cs" />
+    <Compile Include="Graphics\ColorHelper.cs" />
+    <Compile Include="Graphics\ImageHandler.cs" />
+    <Compile Include="Graphics\FloatRectangle.cs" />
+    <Compile Include="Interfaces\IFactory.cs" />
+    <Compile Include="Interfaces\IHasIndex.cs" />
+    <Compile Include="Interfaces\ILockable.cs" />
+    <Compile Include="Interfaces\IUserAuthentication.cs" />
+    <Compile Include="Interfaces\IXmlNode.cs" />
+    <Compile Include="IO\DirectTextReader.cs" />
+    <Compile Include="Logging\ConsoleProvider.cs" />
+    <Compile Include="Logging\FileProvider.cs" />
+    <Compile Include="Logging\ILog.cs" />
+    <Compile Include="Logging\ILogProvider.cs" />
+    <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\LogCreator.cs" />
+    <Compile Include="Logging\LogEntry.cs" />
+    <Compile Include="MathHelper.cs" />
+    <Compile Include="Net\HttpPostRequest.cs" />
+    <Compile Include="Net\MultipartFormData.cs" />
+    <Compile Include="Net\MultipartFormDataPart.cs" />
+    <Compile Include="Net\MultipartFormDataReader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringManipulation.cs" />
+    <Compile Include="Synchronisation\ReadWriteLock.cs" />
+    <Compile Include="Synchronisation\SimpleLock.cs" />
+    <Compile Include="Synchronisation\ThreadWatcher.cs" />
+    <Compile Include="Synchronisation\ThreadWatcherItem.cs" />
+    <Compile Include="Test\EnsureFailedException.cs" />
+    <Compile Include="XmlHelper.cs" />
+    <Compile Include="Xml\Html\HtmlDocument.cs" />
+    <Compile Include="Xml\Html\HtmlElement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="LocalizationBS.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalizationBS.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BurnSystems_AGPL.snk" />
+  </ItemGroup>
+  <ItemGroup />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <TextStylePolicy RemoveTrailingWhitespace="True" EolMarker="Windows" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
+          <TextStylePolicy RemoveTrailingWhitespace="True" EolMarker="Windows" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
+          <CSharpFormattingPolicy BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" BeforeIndexerDeclarationBracket="False" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" IfParentheses="False" ForParentheses="False" ForeachParentheses="False" CatchParentheses="False" SwitchParentheses="False" LockParentheses="False" UsingParentheses="False" SpacesBeforeBrackets="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="Hierarchical" ResourceNamePolicy="FileName" />
+          <TextStylePolicy RemoveTrailingWhitespace="True" EolMarker="Windows" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="application/xml" />
+          <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/xml" />
+          <ChangeLogPolicy UpdateMode="ProjectRoot" VcsIntegration="None" inheritsSet="Mono">
+            <MessageStyle LineAlign="0" />
+          </ChangeLogPolicy>
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>
