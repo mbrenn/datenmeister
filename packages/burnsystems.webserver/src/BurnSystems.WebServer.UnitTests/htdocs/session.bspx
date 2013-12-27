@@ -1,0 +1,23 @@
+﻿<% 
+<DynamicPage ControllerType="BurnSystems.WebServer.UnitTests.Controller.SessionController" WebMethod="SessionTest">
+</DynamicPage>
+%>
+<html>
+	<body>
+		<h1>Neuen Wert setzen</h1>
+		<form action="?" method="POST">
+			<fieldset>
+				Wert: <input type="text" name="Value" /><br />				
+				<input type="submit" value="Abschicken" />
+			</fieldset>
+		</form>
+
+		<h2>Aktueller Wert</h2>
+		<table>
+			<tr>
+				<td>Wert:</td>
+				<td>@[=Model->SessionValue]</td>
+			</tr>
+		</table>		
+	</body>
+</html>
