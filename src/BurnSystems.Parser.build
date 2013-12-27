@@ -1,0 +1,40 @@
+<Project DefaultTargets="Compile"
+    xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+    ToolsVersion="3.5">
+  
+  <PropertyGroup>
+    <BuiltDir>bin/</BuiltDir>
+	<CompiledFile>BurnSystems.Parser.dll</CompiledFile>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <CSFile Include="**/*.cs" />
+	
+    <Reference Include="System.Drawing.dll" />
+    <Reference Include="System.Web.dll" />
+    <Reference Include="$(ReferencePath)BurnSystems.dll" />
+    
+    <Resx Include="Localization_Parser.resx" />
+    
+    <Resource Include="BurnSystems.Parser.Localization_Parser.resources" />
+  </ItemGroup>
+  
+  <Target Name="Compile">
+    <MakeDir Directories="$(BuiltDir)" />
+    <GenerateResource Sources="@(Resx)"
+                      OutputResources="@(Resource)" />
+    <Csc Sources="@(CSFile)" 
+        Resources="@(Resource)"
+    	TargetType="library" 
+    	References="@(Reference)" 
+    	KeyFile="BurnSystems_AGPL.snk" 
+    	OutputAssembly="$(BuiltDir)$(CompiledFile)"
+    	WarningLevel="4">
+    </Csc>
+	<Message Text="BurnSystems.Parser compiled" />
+  </Target>
+  
+  <Target Name="Clean">
+    <RemoveDir Directories="$(BuiltDir)" />
+  </Target>
+</Project>
