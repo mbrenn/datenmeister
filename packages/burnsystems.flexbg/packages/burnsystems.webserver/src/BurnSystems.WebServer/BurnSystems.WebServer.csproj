@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B31DF31A-F19E-4FF9-B50F-B70F4F5949F4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BurnSystems.WebServer</RootNamespace>
+    <AssemblyName>BurnSystems.WebServer</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\src\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="dotless.Core">
+      <HintPath>..\..\packages\dotless.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="BurnSystems">
+      <HintPath>..\..\packages\bin\BurnSystems.dll</HintPath>
+    </Reference>
+    <Reference Include="BurnSystems.Parser">
+      <HintPath>..\..\packages\bin\BurnSystems.Parser.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dispatcher\BaseDispatcher.cs" />
+    <Compile Include="Dispatcher\ContextDispatchInformation.cs" />
+    <Compile Include="Dispatcher\DispatchFilter.cs" />
+    <Compile Include="Dispatcher\FactoryDispatcher.cs" />
+    <Compile Include="Dispatcher\FileSystemDispatcher.cs" />
+    <Compile Include="Dispatcher\IFileRequestDispatcher.cs" />
+    <Compile Include="Dispatcher\OptionsRequestIs200Dispatcher.cs" />
+    <Compile Include="Dispatcher\RelocationDispatcher.cs" />
+    <Compile Include="Dispatcher\Test\ExceptionDispatcher.cs" />
+    <Compile Include="Dispatcher\UrlDispatcher.cs" />
+    <Compile Include="Filters\AddCorsHeaderFilter.cs" />
+    <Compile Include="Filters\DenyAllFilter.cs" />
+    <Compile Include="Filters\DenyByUrlFilter.cs" />
+    <Compile Include="Helper\ContextHelper.cs" />
+    <Compile Include="Helper\MimeTypeInfo.cs" />
+    <Compile Include="Modules\Cookies\DummyCookieManagement.cs" />
+    <Compile Include="Modules\Cookies\Rfc6265CookieManagement.cs" />
+    <Compile Include="Modules\Cookies\ICookieManagement.cs" />
+    <Compile Include="Modules\MVC\BaseActionResult.cs" />
+    <Compile Include="Modules\MVC\Extensions.cs" />
+    <Compile Include="Modules\MVC\HtmlActionResult.cs" />
+    <Compile Include="Modules\MVC\IActionResult.cs" />
+    <Compile Include="Modules\MVC\JsonActionResult.cs" />
+    <Compile Include="Modules\MVC\BinaryActionResult.cs" />
+    <Compile Include="Modules\MVC\MVCProcessException.cs" />
+    <Compile Include="Modules\MVC\NoActionResult.cs" />
+    <Compile Include="Modules\MVC\PostModelJsonDeserializer.cs" />
+    <Compile Include="Modules\MVC\RawPostAttribute.cs" />
+    <Compile Include="Modules\MVC\RedirectActionResult.cs" />
+    <Compile Include="Modules\MVC\StreamActionResult.cs" />
+    <Compile Include="Modules\MVC\TemplateOrJsonResult.cs" />
+    <Compile Include="Modules\MVC\TextActionResult.cs" />
+    <Compile Include="Modules\MVC\ValueActionResult.cs" />
+    <Compile Include="Modules\PostVariables\PostVariableReader.cs" />
+    <Compile Include="Modules\PostVariables\PostVariableReaderConfig.cs" />
+    <Compile Include="IRequestFilter.cs" />
+    <Compile Include="Modules\MVC\Controller.cs" />
+    <Compile Include="Modules\MVC\ControllerDispatcher.cs" />
+    <Compile Include="Modules\MVC\IfMethodIsAttribute.cs" />
+    <Compile Include="Modules\MVC\PostModelAttribute.cs" />
+    <Compile Include="Modules\MVC\UrlParameterAttribute.cs" />
+    <Compile Include="Modules\MVC\WebMethodAttribute.cs" />
+    <Compile Include="Modules\MVC\WebMethodInfo.cs" />
+    <Compile Include="Modules\PostVariables\WebFile.cs" />
+    <Compile Include="Modules\UserManagement\Authentication.cs" />
+    <Compile Include="Modules\UserManagement\IAuthentication.cs" />
+    <Compile Include="Modules\UserManagement\InMemory\UserManagement.cs" />
+    <Compile Include="Modules\UserManagement\InMemory\UserStorage.cs" />
+    <Compile Include="Modules\UserManagement\IWebUser.cs" />
+    <Compile Include="Modules\UserManagement\IWebUserManagement.cs" />
+    <Compile Include="Modules\UserManagement\Token.cs" />
+    <Compile Include="Modules\UserManagement\TokenCheckpoint.cs" />
+    <Compile Include="Modules\UserManagement\TokenFinder.cs" />
+    <Compile Include="Modules\UserManagement\TokenSet.cs" />
+    <Compile Include="Modules\UserManagement\InMemory\User.cs" />
+    <Compile Include="Modules\UserManagement\UserManagementController.cs" />
+    <Compile Include="Modules\UserManagement\WebAuthorisation.cs" />
+    <Compile Include="Modules\UserManagement\WebAuthorisationEntry.cs" />
+    <Compile Include="Parser\ITemplateParser.cs" />
+    <Compile Include="Responses\ErrorResponse.cs" />
+    <Compile Include="HttpStatusCode.cs" />
+    <Compile Include="IRequestDispatcher.cs" />
+    <Compile Include="Listener.cs" />
+    <Compile Include="Localization_WebServer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localization_WebServer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Parser\TemplateParser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Responses\FileRequests\BspxFileRequest.cs" />
+    <Compile Include="Responses\FileRequests\LessFileRequest.cs" />
+    <Compile Include="Responses\PhysicalFileResponse.cs" />
+    <Compile Include="Responses\StaticContentResponse.cs" />
+    <Compile Include="Responses\Tests\TestController.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="Helper\MimeTypeConverter.cs" />
+    <Compile Include="Modules\Sessions\SessionConfiguration.cs" />
+    <Compile Include="Modules\Sessions\ISessionInterface.cs" />
+    <Compile Include="Modules\Sessions\Session.cs" />
+    <Compile Include="Modules\Sessions\SessionContainer.cs" />
+    <Compile Include="Modules\Sessions\SessionInterface.cs" />
+    <Compile Include="Modules\Sessions\SessionStorage.cs" />
+    <Compile Include="Modules\UserManagement\InMemory\PersistentToken.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization_WebServer.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Localization_WebServer.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\DateFormat\dateformat.js" />
+    <Content Include="Resources\DateFormat\dateformat.min.js" />
+    <Content Include="Resources\Error.txt" />
+    <Content Include="Resources\JQuery\jquery.endless-scroll.js" />
+    <None Include="packages.config" />
+    <None Include="Resources\Require\require.min.js" />
+    <Content Include="Resources\JQuery\jquery.infinitescroll.js" />
+    <Content Include="Resources\JQuery\jquery.js" />
+    <None Include="Resources\JQuery\jquery.min.js" />
+    <Content Include="Resources\JQuery\jquery.cookie.js" />
+    <Content Include="Resources\JQuery\jquery.hotkeys.js" />
+    <Content Include="Resources\JQuery\jquery.scrollto.js" />
+    <Content Include="Resources\JSTree\jquery.jstree.js" />
+    <Content Include="Resources\JSTree\themes\default\d.gif" />
+    <Content Include="Resources\JSTree\themes\default\d.png" />
+    <Content Include="Resources\JSTree\themes\default\style.css" />
+    <Content Include="Resources\JSTree\themes\default\throbber.gif" />
+    <TypeScriptCompile Include="Resources\Require\require.d.ts" />
+    <Content Include="Resources\Require\require.js" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

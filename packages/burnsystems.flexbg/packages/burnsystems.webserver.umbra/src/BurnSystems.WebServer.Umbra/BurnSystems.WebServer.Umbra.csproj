@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0D3E61D8-1A3E-47C3-B90A-E89FDE6F4E90}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BurnSystems.WebServer.Umbra</RootNamespace>
+    <AssemblyName>BurnSystems.WebServer.Umbra</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="BurnSystems">
+      <HintPath>..\..\packages\bin\BurnSystems.dll</HintPath>
+    </Reference>
+    <Reference Include="BurnSystems.Parser">
+      <HintPath>..\..\packages\bin\BurnSystems.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="BurnSystems.WebServer">
+      <HintPath>..\..\packages\bin\BurnSystems.WebServer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Requests\BaseUmbraRequest.cs" />
+    <Compile Include="Requests\ConsoleUmbraRequest.cs" />
+    <Compile Include="Requests\VersionUmbraRequest.cs" />
+    <Compile Include="Resources_Umbra.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources_Umbra.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Umbra.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UmbraConfiguration.cs" />
+    <Compile Include="UmbraDispatcher.cs" />
+    <Compile Include="Views\DetailView\BasicDetailViewResolver.cs" />
+    <Compile Include="Views\DetailView\DetailViewDispatcher.cs" />
+    <Compile Include="Views\DetailView\DotNetObjectView.cs" />
+    <Compile Include="Views\DetailView\Entities\EntityView.cs" />
+    <Compile Include="Views\DetailView\Entities\EntityViewConfig.cs" />
+    <Compile Include="Views\DetailView\Entities\EntityViewElement.cs" />
+    <Compile Include="Views\DetailView\Entities\EntityViewElementProperty.cs" />
+    <Compile Include="Views\DetailView\Entities\EntityViewDetailTable.cs" />
+    <Compile Include="Views\DetailView\Entities\EntityViewListTable.cs" />
+    <Compile Include="Views\DetailView\Entities\EntityViewTable.cs" />
+    <Compile Include="Views\DetailView\Extensions.cs" />
+    <Compile Include="Views\DetailView\DetailView.cs" />
+    <Compile Include="Views\DetailView\IDetailViewResolver.cs" />
+    <Compile Include="Views\SimpleContentView\StaticContentView.cs" />
+    <Compile Include="Views\Treeview\GenericTreeViewItem.cs" />
+    <Compile Include="Views\Treeview\ITreeViewItem.cs" />
+    <Compile Include="Views\Treeview\BaseTreeViewItem.cs" />
+    <Compile Include="Views\Treeview\TreeviewEntityDispatcher.cs" />
+    <Compile Include="Views\Treeview\Extensions.cs" />
+    <Compile Include="Views\Treeview\TreeviewWindowDispatcher.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="htdocs\i\page_go.png" />
+    <Content Include="htdocs\js\lib\lychee.events.js" />
+    <Content Include="htdocs\js\lib\umbra.ribbonelement.js" />
+    <Content Include="htdocs\js\lib\viewtypes\umbra.viewtypes.entityview.js" />
+    <Content Include="htdocs\js\lib\viewtypes\umbra.viewtypes.dotnetobjectview.js" />
+    <Content Include="htdocs\js\lib\viewtypes\umbra.viewtypes.staticcontentview.js" />
+    <Content Include="htdocs\js\lib\viewtypes\umbra.viewtypes.treeview.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="htdocs\css\umbra.css" />
+    <Content Include="htdocs\data\umbraversion.txt" />
+    <Content Include="htdocs\index.html">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="htdocs\js\init.js" />
+    <Content Include="htdocs\js\lib\umbra.instance.js" />
+    <Content Include="htdocs\js\lib\umbra.eventbus.js" />
+    <Content Include="htdocs\js\lib\umbra.dragbar.js" />
+    <Content Include="htdocs\js\lib\umbra.ribbonbar.js" />
+    <Content Include="htdocs\js\lib\umbra.ribbonbutton.js" />
+    <Content Include="htdocs\js\lib\umbra.ribbontab.js" />
+    <Content Include="htdocs\js\lib\umbra.viewtype.js" />
+    <Content Include="htdocs\js\lib\umbra.area.js" />
+    <Content Include="htdocs\js\lib\umbra.viewpoint.js" />
+    <Content Include="htdocs\js\lib\umbra.view.js" />
+    <Content Include="htdocs\js\lib\umbra.workspace.js" />
+    <Content Include="htdocs\js\test.js" />
+    <Content Include="htdocs\js\lib\plugins\umbra.console.js" />
+    <Content Include="htdocs\js\lib\umbra.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources_Umbra.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources_Umbra.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="htdocs\js\lib\umbra.ribbongroup.js" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
