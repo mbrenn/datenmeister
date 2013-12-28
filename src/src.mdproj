@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ItemType>GenericProject</ItemType>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1A25B1AE-6940-4EF5-9F22-02D4FD3491D5}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="index.html" />
+    <None Include="tests\dejs.gallery.html" />
+    <None Include="tests\dejs.table.html" />
+    <None Include="tests\img\blume1gross.jpeg" />
+    <None Include="tests\img\blume2gross.jpeg" />
+    <None Include="tests\img\blume3gross.jpeg" />
+    <None Include="tests\img\blume4gross.jpeg" />
+    <None Include="tests\img\blume5gross.jpeg" />
+    <None Include="tests\img\blume6gross.jpeg" />
+    <None Include="js\dejs.gallery.ts" />
+    <None Include="js\dejs.number.ts" />
+    <None Include="js\dejs.string.ts" />
+    <None Include="js\dejs.table.ts" />
+    <None Include="js\init\init.gallery.js" />
+    <None Include="js\init\init.table.js" />
+    <None Include="js\lib\jquery.d.ts" />
+    <None Include="js\lib\jquery.js" />
+    <None Include="js\lib\require.js" />
+    <None Include="makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="tests\" />
+    <Folder Include="js\" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="makefile" ExecuteTargetName="run">
+          <BuildFilesVar />
+          <DeployFilesVar />
+          <ResourcesVar />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>
