@@ -125,7 +125,24 @@ namespace BurnSystems.Serialization
             {
                 nativeTypeToNumber[pair.Value] = pair.Key;
             }
+        }        
+
+        /// <summary>
+        /// Checks, if the given value is of a native type
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <returns>true, if the given value is of a native type</returns>
+        public static bool IsNativeObject(object value)
+        {
+            if (value == null)
+            {
+                // Null value is valid
+                return true;
+            }
+
+            return IsNativeType(value.GetType());
         }
+
 
         /// <summary>
         /// Checks, if the given type is a native type, which can be serialized directly
