@@ -108,13 +108,13 @@ export class ServerAPI {
         _.each(data.values, function (value, key, list) {
             if (_.isArray(value)) {
 
-                var list = new Array();
-                _.each(value, function (v) {
+                var newList = new Array();
+                _.each(<Array<any>> value, function (v) {
                     var c = tthis.convertToJsonObject(v);
-                    list.push(c);
+                    newList.push(c);
                 });
 
-                result.set(key, list);
+                result.set(key, newList);
             }
             else if (_.isObject(value)) {
                 result.set(key, <any> tthis.convertToJsonObject(value));

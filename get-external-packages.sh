@@ -11,7 +11,7 @@ then
 fi 
 
 cd DefinitelyTyped
-git checkout 0123ffd567072d72249c7ccfeb90b14081128809
+git checkout ea3efa8377050a0464a21a88bd3251c6f34938b8
 cd ..
 
 # Loading bootstrap
