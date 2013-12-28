@@ -21,7 +21,7 @@ build_burnsystems_flexbg:
 	make -C packages/burnsystems.flexbg
 
 .PHONY: build_dejs
-build_burnsystems:
+build_dejs:
 	make -C packages/dejs
 
 copy_packagefiles:
@@ -57,6 +57,7 @@ build_web: datenmeister
 	mkdir -p bin/web/js/lib/
 	mkdir -p bin/web/css
 	mkdir -p bin/web/img
+	mkdir -p bin/web/fonts
 
 	cp -r src/DatenMeisterWeb/* bin/web/
 
@@ -66,7 +67,7 @@ build_web: datenmeister
 
 	cp ext-packages/bootstrap/dist/js/*.js bin/web/js/lib/
 	cp ext-packages/bootstrap/dist/css/*.css bin/web/css/
-	cp ext-packages/bootstrap/dist/img/*.* bin/web/img/
+	cp ext-packages/bootstrap/dist/fonts/* bin/web/fonts/
 
 	cp ext-packages/backbone/backbone-min.js bin/web/js/lib/
 	cp ext-packages/backbone/backbone.js bin/web/js/lib/
@@ -90,7 +91,22 @@ clean:
 	make clean -C packages/burnsystems.parser
 	make clean -C packages/burnsystems.webserver
 	make clean -C packages/burnsystems.flexbg
+	make clean -C packages/dejs
 	rm -rf packages/bin
 	rm -rf bin
 
+.PHONY: clean-all
+clean-all:
+	rm -rf ext-packages/
+
+
+.PHONY: client-run
+client-run:
+	firefox http://127.0.0.1:8080/ &
+	xsp2 --root $(abspath bin/web/) 
+
+
+.PHONY: server-run
+server-run: 
+	cd bin; mono DatenmeisterServer.exe
 
