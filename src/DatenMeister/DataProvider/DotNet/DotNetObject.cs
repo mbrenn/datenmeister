@@ -99,7 +99,7 @@ namespace DatenMeister.DataProvider.DotNet
         {
             foreach (var property in this.value.GetType().GetProperties())
             {
-                var value = property.GetValue(this.value);
+                var value = property.GetValue(this.value, null);
 
                 yield return new ObjectPropertyPair(
                     property.Name,

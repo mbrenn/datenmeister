@@ -1,6 +1,6 @@
 CS_FILES = $(shell find src/ -type f -name *.cs)
 
-all: build_burnsystems build_burnsystems_parser build_burnsystems_webserver build_burnsystems_flexbg datenmeister \
+all: build_burnsystems build_burnsystems_parser build_burnsystems_webserver build_burnsystems_flexbg build_dejs datenmeister \
 	bin/DatenMeister.dll bin/DatenMeister.Tests.dll bin/DatenmeisterServer.exe build_web
 
 .PHONY: build_burnsystems
@@ -19,6 +19,10 @@ build_burnsystems_webserver:
 .PHONY: build_burnsystems_flexbg
 build_burnsystems_flexbg:
 	make -C packages/burnsystems.flexbg
+
+.PHONY: build_dejs
+build_burnsystems:
+	make -C packages/dejs
 
 copy_packagefiles:
 	mkdir -p packages/bin
@@ -40,17 +44,45 @@ bin/DatenMeister.dll: prepare_datenmeister copy_packagefiles
 bin/DatenMeister.Tests.dll: prepare_datenmeister copy_packagefiles
 	xbuild src/DatenMeister.Tests/DatenMeister.Tests.csproj
 	mkdir -p bin
-	cp src/DatenMeister.Tests/bin/Debug/* bin/
+	cp -r src/DatenMeister.Tests/bin/Debug/* bin/
 
 bin/DatenmeisterServer.exe: prepare_datenmeister copy_packagefiles
 	xbuild src/DatenmeisterServer/DatenmeisterServer.csproj
 	mkdir -p bin
-	cp src/DatenmeisterServer/bin/Debug/* bin/
+	cp -r src/DatenmeisterServer/bin/Debug/* bin/
 
 .PHONY:
 build_web: datenmeister
-	mkdir -p bin/Web
-	cp -r src/DatenMeisterWeb/* bin/Web/
+	mkdir -p bin/web/
+	mkdir -p bin/web/js/lib/
+	mkdir -p bin/web/css
+	mkdir -p bin/web/img
+
+	cp -r src/DatenMeisterWeb/* bin/web/
+
+	cp packages/dejs/src/js/*.js bin/web/js/lib/
+	cp packages/dejs/src/js/*.d.ts bin/web/js/lib/
+	cp packages/dejs/src/js/*.map bin/web/js/lib/
+
+	cp ext-packages/bootstrap/dist/js/*.js bin/web/js/lib/
+	cp ext-packages/bootstrap/dist/css/*.css bin/web/css/
+	cp ext-packages/bootstrap/dist/img/*.* bin/web/img/
+
+	cp ext-packages/backbone/backbone-min.js bin/web/js/lib/
+	cp ext-packages/backbone/backbone.js bin/web/js/lib/
+
+	cp ext-packages/underscore/underscore-min.js bin/web/js/lib/
+	cp ext-packages/underscore/underscore.js bin/web/js/lib/
+
+	cp ext-packages/DefinitelyTyped/underscore/*.d.ts bin/web/js/lib/
+	cp ext-packages/DefinitelyTyped/jquery/*.d.ts bin/web/js/lib/
+
+	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/Require/*.js bin/web/js/lib/
+	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/Require/*.ts bin/web/js/lib/
+	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/JQuery/*.js bin/web/js/lib/
+
+	cp -r bin/web src/DatenMeisterWeb/bin/Debug/
+
 
 .PHONY: clean
 clean:
