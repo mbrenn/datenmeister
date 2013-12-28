@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DatenmeisterServer</RootNamespace>
     <AssemblyName>DatenmeisterServer</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,6 +44,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="BurnSystems">
+      <HintPath>..\..\packages\bin\BurnSystems.dll</HintPath>
+    </Reference>
+    <Reference Include="BurnSystems.WebServer">
+      <HintPath>..\..\packages\bin\BurnSystems.WebServer.dll</HintPath>
+    </Reference>
+    <Reference Include="BurnSystems.FlexBG">
+      <HintPath>..\..\packages\bin\BurnSystems.FlexBG.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -56,16 +66,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\dependencies\BurnSystems.WebServer\src\BurnSystems.WebServer\BurnSystems.WebServer.csproj">
-      <Project>{b31df31a-f19e-4ff9-b50f-b70f4f5949f4}</Project>
-      <Name>BurnSystems.WebServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\dependencies\BurnSystems\src\BurnSystems.csproj">
-      <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
-      <Name>BurnSystems</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DatenMeister\DatenMeister.csproj">
-      <Project>{d0c28956-4eee-4af0-a0ed-a500a558c5d8}</Project>
+      <Project>{D0C28956-4EEE-4AF0-A0ED-A500A558C5D8}</Project>
       <Name>DatenMeister</Name>
     </ProjectReference>
   </ItemGroup>

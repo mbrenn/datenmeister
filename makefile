@@ -1,6 +1,8 @@
 CS_FILES = $(shell find src/ -type f -name *.cs)
 
-all: build_burnsystems build_burnsystems_parser build_burnsystems_webserver build_burnsystems_flexbg
+all: build_burnsystems build_burnsystems_parser build_burnsystems_webserver build_burnsystems_flexbg datenmeister \
+	bin/DatenMeister.dll bin/DatenMeister.Tests.dll bin/DatenmeisterServer.exe build_web
+
 .PHONY: build_burnsystems
 build_burnsystems:
 	make -C packages/burnsystems
@@ -18,28 +20,37 @@ build_burnsystems_webserver:
 build_burnsystems_flexbg:
 	make -C packages/burnsystems.flexbg
 
-packages/bin/BurnSystems.dll: packages/burnsystems/bin/BurnSystems.dll
-	mkdir -p packages/bin
-	cp packages/burnsystems/bin/* packages/bin/
-
-packages/bin/BurnSystems.Parser.dll: packages/burnsystems/bin/BurnSystems.dll
-	mkdir -p packages/bin
-	cp packages/burnsystems.parser/bin/* packages/bin/
-
-packages/bin/BurnSystems.WebServer.dll: packages/burnsystems/bin/BurnSystems.dll packages/burnsystems.parser/bin/BurnSystems.Parser.dll
-	mkdir -p packages/bin
-	cp packages/burnsystems.webserver/bin/*.dll packages/bin/
-	cp packages/burnsystems.webserver/bin/*.mdb packages/bin/
-
-packages/bin/BurnSystems.FlexBG.dll: packages/burnsystems.webserver/bin/BurnSystems.WebServer.dll
+copy_packagefiles:
 	mkdir -p packages/bin
 	cp -r packages/burnsystems.flexbg/bin/* packages/bin/
+	cp packages/burnsystems.webserver/bin/*.dll packages/bin/
+	cp packages/burnsystems.webserver/bin/*.mdb packages/bin/
+	cp packages/burnsystems.parser/bin/* packages/bin/
+	cp packages/burnsystems/bin/* packages/bin/
 
-#bin/BurnSystems.Website.Social.dll: packages/bin/BurnSystems.dll packages/bin/BurnSystems.Parser.dll packages/bin/BurnSystems.WebServer.dll packages/bin/BurnSystems.FlexBG.dll $(CS_FILES)
-#	xbuild src/BurnSystems.Website.Social/BurnSystems.Website.Social.csproj
-#	mkdir -p bin
-#	cp -r src/BurnSystems.Website.Social/bin/Debug/* bin/
+.PHONY: datenmeister
+prepare_datenmeister: 
+	./get-external-packages.sh
 
+bin/DatenMeister.dll: prepare_datenmeister copy_packagefiles
+	xbuild src/DatenMeister/DatenMeister.csproj
+	mkdir -p bin
+	cp src/DatenMeister/bin/Debug/* bin/
+
+bin/DatenMeister.Tests.dll: prepare_datenmeister copy_packagefiles
+	xbuild src/DatenMeister.Tests/DatenMeister.Tests.csproj
+	mkdir -p bin
+	cp src/DatenMeister.Tests/bin/Debug/* bin/
+
+bin/DatenmeisterServer.exe: prepare_datenmeister copy_packagefiles
+	xbuild src/DatenmeisterServer/DatenmeisterServer.csproj
+	mkdir -p bin
+	cp src/DatenmeisterServer/bin/Debug/* bin/
+
+.PHONY:
+build_web: datenmeister
+	mkdir -p bin/Web
+	cp -r src/DatenMeisterWeb/* bin/Web/
 
 .PHONY: clean
 clean:
