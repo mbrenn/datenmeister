@@ -19,5 +19,5 @@ export declare class Table {
     public addColumn(content: string): JQuery;
     public addColumnHtml(content: string): JQuery;
     public addColumnJQuery(content: JQuery, options?: CellOptions): JQuery;
-    public __createColumn(options): JQuery;
+    public __createColumn(options: any): JQuery;
 }
