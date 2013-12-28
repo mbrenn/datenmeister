@@ -17,10 +17,12 @@ all: bin/js/dejs.ajax.js bin/js/dejs.gallery.js bin/js/dejs.string.js bin/js/dej
 
 # Rule to transfer Typescript files to JavaScript files
 bin/js/%.js : src/js/%.ts
-	tsc $< --module amd
+	tsc $< --module amd --declaration --sourcemap
 	mkdir -p bin
 	mkdir -p bin/js
 	cp src/js/$(@F) bin/js
+	cp src/js/$(subst .js,.d.ts,$(@F)) bin/js
+	cp src/js/$(@F).map bin/js
 
 bin/js/dejs.ajax.js: src/js/dejs.ajax.ts
 
@@ -36,6 +38,7 @@ bin/js/dejs.number.js: src/js/dejs.number.ts
 clean:
 	rm -rf bin
 	rm src/js/*.js
+	rm src/js/*.map
 
 run: all
 	firefox http://127.0.0.1:8080/ & 
