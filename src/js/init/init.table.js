@@ -1,7 +1,7 @@
 ﻿define([],
     function () {
         // First load
-        require(['../js/dejs.table.js'],
+        require(['../js/dejs/dejs.table.js'],
             function (tableClass) {
                 
                 var table1 = new tableClass.Table($("#table1"));

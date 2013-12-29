@@ -3,7 +3,7 @@ define([],
     function () {
         // First load
         $(document).ready(function () {
-            require(['../js/dejs.gallery.js'],
+            require(['../js/dejs/dejs.gallery.js'],
                 function (galleryClass) {
 
                     $('.start').click(function () {
