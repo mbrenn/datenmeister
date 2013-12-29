@@ -49,18 +49,18 @@ export class JsonExtentFieldInfo extends JsonExtentObject {
         return this.get('isReadonly');
     }
 
-    setName(name: string): void {
+    setName(name: string): Backbone.Model {
         return this.set('name', name);
     }
 
-    setTitle(title: string): void {
+    setTitle(title: string): Backbone.Model {
         return this.set('title', title);
     }
 
     /*
      * Sets the read only
      */
-    setReadOnly(isReadOnly: boolean): void {
+    setReadOnly(isReadOnly: boolean): Backbone.Model {
         return this.set('isReadonly', isReadOnly);
     }
 

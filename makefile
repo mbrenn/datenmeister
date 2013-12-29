@@ -52,20 +52,34 @@ get_external_packages:
 
 .PHONY: copy_typescript_definitions
 copy_typescript_definitions: get_external_packages
+	mkdir -p bin/web/js/lib/
+	mkdir -p bin/web/js/jquery/
 	cp ext-packages/DefinitelyTyped/underscore/*.d.ts bin/web/js/lib/
 	cp ext-packages/DefinitelyTyped/jquery/*.d.ts bin/web/js/lib/
-	cp ext-packages/underscore/underscore-min.js bin/web/js/lib/
-	cp ext-packages/underscore/underscore.js bin/web/js/lib/
+	cp ext-packages/DefinitelyTyped/jquery/*.d.ts bin/web/js/jquery/
+	cp ext-packages/DefinitelyTyped/requirejs/*.d.ts bin/web/js/lib/
+	cp ext-packages/DefinitelyTyped/backbone/*.d.ts bin/web/js/lib/
+	cp -r packages/dejs/bin/js/* bin/web/js/lib
 
-	cp bin/web/js/lib/*.d.ts src/DatenMeisterWeb/js/lib/
+bin/web/js/init.js: src/DatenMeisterWeb/js/init.ts \
+	bin/web/js/datenmeister.js
 
-bin/web/js/init.js: src/DatenMeisterWeb/js/init.ts
-bin/web/js/datenmeister.js: src/DatenMeisterWeb/js/datenmeister.ts
-bin/web/js/datenmeister.datatable.js: src/DatenMeisterWeb/js/datenmeister.datatable.ts
-bin/web/js/datenmeister.gui.js: src/DatenMeisterWeb/js/datenmeister.gui.ts
+bin/web/js/datenmeister.js: src/DatenMeisterWeb/js/datenmeister.ts \
+	bin/web/js/datenmeister.datatable.js \
+	bin/web/js/datenmeister.navigation.js \
+	bin/web/js/datenmeister.objects.js \
+	bin/web/js/datenmeister.serverapi.js \
+	bin/web/js/datenmeister.views.js
+
+bin/web/js/datenmeister.datatable.js: src/DatenMeisterWeb/js/datenmeister.datatable.ts \
+	bin/web/js/datenmeister.objects.js \
+	bin/web/js/datenmeister.serverapi.js
+
 bin/web/js/datenmeister.navigation.js: src/DatenMeisterWeb/js/datenmeister.navigation.ts
 bin/web/js/datenmeister.objects.js: src/DatenMeisterWeb/js/datenmeister.objects.ts
-bin/web/js/datenmeister.serverapi.js: src/DatenMeisterWeb/js/datenmeister.serverapi.ts
+bin/web/js/datenmeister.serverapi.js: src/DatenMeisterWeb/js/datenmeister.serverapi.ts \
+	bin/web/js/datenmeister.navigation.js
+
 bin/web/js/datenmeister.views.js: src/DatenMeisterWeb/js/datenmeister.views.ts
 
 .PHONY: compile_typescript
@@ -99,6 +113,9 @@ build_web: compile_typescript
 	cp ext-packages/backbone/backbone-min.js bin/web/js/lib/
 	cp ext-packages/backbone/backbone.js bin/web/js/lib/
 
+	cp ext-packages/underscore/underscore-min.js bin/web/js/lib/
+	cp ext-packages/underscore/underscore.js bin/web/js/lib/
+
 	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/Require/*.js bin/web/js/lib/
 	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/Require/*.ts bin/web/js/lib/
 	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/JQuery/*.js bin/web/js/lib/
@@ -106,13 +123,10 @@ build_web: compile_typescript
 	cp -r bin/web src/DatenMeisterWeb/bin/Debug/
 
 # Rule to transfer Typescript files to JavaScript files
-bin/web/js/%.js : src/DatenMeisterWeb/js/%.ts copy_typescript_definitions
-	tsc $< --module amd --declaration --sourcemap
-	mkdir -p bin
-	mkdir -p bin/js
-	cp src/DatenMeisterWeb/js/$(@F) bin/web/js/
-	cp src/DatenMeisterWeb/js/$(subst .js,.d.ts,$(@F)) bin/web/js/
-	cp src/DatenMeisterWeb/js/$(@F).map bin/web/js
+bin/web/js/%.js : src/DatenMeisterWeb/js/%.ts 
+	mkdir -p bin/web/js
+	cp $< bin/web/js
+	tsc bin/web/js/$(<F) --module amd --declaration --sourcemap
 
 .PHONY: clean
 clean:

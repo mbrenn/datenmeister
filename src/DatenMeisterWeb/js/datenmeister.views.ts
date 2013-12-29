@@ -175,7 +175,7 @@ export class ExtentTableView extends DefaultTableView {
         var tthis = this;
         super(options);
 
-        this.bind('itemclicked', function (clickedObject) {
+       tthis.bind('itemclicked', (clickedObject) => {
             var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
             navigation.to(route);
         });
@@ -190,7 +190,7 @@ export class ExtentTableView extends DefaultTableView {
             });
 
         viewSelector.unbind('viewselected');
-        viewSelector.bind('viewselected', function (viewUrl: string) {
+        viewSelector.bind('viewselected', (viewUrl: string) => {
             var route = "extent/" + encodeURIComponent(tthis.url);
             if (!_.isEmpty(viewUrl)) {
                 route += "/" + encodeURIComponent(viewUrl);
