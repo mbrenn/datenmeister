@@ -1,6 +1,6 @@
-/// <reference path="lib/backbone.d.ts" />
-/// <reference path="lib/underscore.d.ts" />
-/// <reference path="lib/dejs.table.d.ts" />
+/// <reference path="../backbone/backbone.d.ts" />
+/// <reference path="../underscore/underscore.d.ts" />
+/// <reference path="../dejs/dejs.table.d.ts" />
 /// <reference path="datenmeister.objects.ts" />
 
 import d = require("datenmeister.objects");

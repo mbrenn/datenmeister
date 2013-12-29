@@ -1,7 +1,7 @@
 
 // The Server API
 
-import ajax = require("lib/dejs.ajax");
+import ajax = require("../dejs/dejs.ajax");
 import d = require("datenmeister.objects");
 import navigation = require("datenmeister.navigation");
 

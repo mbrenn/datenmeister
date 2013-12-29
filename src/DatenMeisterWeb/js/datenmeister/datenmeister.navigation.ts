@@ -1,4 +1,4 @@
-/// <reference path="lib/backbone.d.ts" />
+/// <reference path="../backbone/backbone.d.ts" />
 
 /*
  * Stores the last navigation points

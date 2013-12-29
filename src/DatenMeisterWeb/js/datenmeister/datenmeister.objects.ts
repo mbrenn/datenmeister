@@ -1,5 +1,5 @@
-/// <reference path="lib/backbone.d.ts" />
-/// <reference path="lib/underscore.d.ts" />
+/// <reference path="../backbone/backbone.d.ts" />
+/// <reference path="../underscore/underscore.d.ts" />
 
 export class ExtentInfo extends Backbone.Model {
     getUri(): string {

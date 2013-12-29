@@ -52,49 +52,52 @@ get_external_packages:
 
 .PHONY: copy_typescript_definitions
 copy_typescript_definitions: get_external_packages
-	mkdir -p bin/web/js/lib/
+	mkdir -p bin/web/js/dejs/
+	mkdir -p bin/web/js/requirejs/
+	mkdir -p bin/web/js/underscore/
 	mkdir -p bin/web/js/jquery/
-	cp ext-packages/DefinitelyTyped/underscore/*.d.ts bin/web/js/lib/
-	cp ext-packages/DefinitelyTyped/jquery/*.d.ts bin/web/js/lib/
+	mkdir -p bin/web/js/backbone/
+	mkdir -p bin/web/js/datenmeister/
+	cp ext-packages/DefinitelyTyped/underscore/*.d.ts bin/web/js/underscore/
 	cp ext-packages/DefinitelyTyped/jquery/*.d.ts bin/web/js/jquery/
-	cp ext-packages/DefinitelyTyped/requirejs/*.d.ts bin/web/js/lib/
-	cp ext-packages/DefinitelyTyped/backbone/*.d.ts bin/web/js/lib/
-	cp -r packages/dejs/bin/js/* bin/web/js/lib
+	cp ext-packages/DefinitelyTyped/requirejs/*.d.ts bin/web/js/requirejs/
+	cp ext-packages/DefinitelyTyped/backbone/*.d.ts bin/web/js/backbone/
+	cp -r packages/dejs/bin/js/* bin/web/js/dejs/
 
-bin/web/js/init.js: src/DatenMeisterWeb/js/init.ts \
-	bin/web/js/datenmeister.js
+bin/web/js/datenmeister/init.js: src/DatenMeisterWeb/js/datenmeister/init.ts \
+	bin/web/js/datenmeister/datenmeister.js
 
-bin/web/js/datenmeister.js: src/DatenMeisterWeb/js/datenmeister.ts \
-	bin/web/js/datenmeister.datatable.js \
-	bin/web/js/datenmeister.navigation.js \
-	bin/web/js/datenmeister.objects.js \
-	bin/web/js/datenmeister.serverapi.js \
-	bin/web/js/datenmeister.views.js
+bin/web/js/datenmeister/datenmeister.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.ts \
+	bin/web/js/datenmeister/datenmeister.datatable.js \
+	bin/web/js/datenmeister/datenmeister.navigation.js \
+	bin/web/js/datenmeister/datenmeister.objects.js \
+	bin/web/js/datenmeister/datenmeister.serverapi.js \
+	bin/web/js/datenmeister/datenmeister.views.js
 
-bin/web/js/datenmeister.datatable.js: src/DatenMeisterWeb/js/datenmeister.datatable.ts \
-	bin/web/js/datenmeister.objects.js \
-	bin/web/js/datenmeister.serverapi.js
+bin/web/js/datenmeister/datenmeister.datatable.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.datatable.ts \
+	bin/web/js/datenmeister/datenmeister.objects.js \
+	bin/web/js/datenmeister/datenmeister.serverapi.js
 
-bin/web/js/datenmeister.navigation.js: src/DatenMeisterWeb/js/datenmeister.navigation.ts
-bin/web/js/datenmeister.objects.js: src/DatenMeisterWeb/js/datenmeister.objects.ts
-bin/web/js/datenmeister.serverapi.js: src/DatenMeisterWeb/js/datenmeister.serverapi.ts \
-	bin/web/js/datenmeister.navigation.js
+bin/web/js/datenmeister/datenmeister.navigation.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.navigation.ts
+bin/web/js/datenmeister/datenmeister.objects.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.objects.ts
+bin/web/js/datenmeister/datenmeister.serverapi.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.serverapi.ts \
+	bin/web/js/datenmeister/datenmeister.navigation.js
 
-bin/web/js/datenmeister.views.js: src/DatenMeisterWeb/js/datenmeister.views.ts
+bin/web/js/datenmeister/datenmeister.views.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.views.ts
 
 .PHONY: compile_typescript
-compile_typescript: bin/web/js/init.js \
-	bin/web/js/datenmeister.js \
-	bin/web/js/datenmeister.datatable.js \
-	bin/web/js/datenmeister.navigation.js \
-	bin/web/js/datenmeister.objects.js \
-	bin/web/js/datenmeister.serverapi.js \
-	bin/web/js/datenmeister.views.js
+compile_typescript: bin/web/js/datenmeister/init.js \
+	bin/web/js/datenmeister/datenmeister.js \
+	bin/web/js/datenmeister/datenmeister.datatable.js \
+	bin/web/js/datenmeister/datenmeister.navigation.js \
+	bin/web/js/datenmeister/datenmeister.objects.js \
+	bin/web/js/datenmeister/datenmeister.serverapi.js \
+	bin/web/js/datenmeister/datenmeister.views.js
 
 .PHONY:
-build_web: compile_typescript
+build_web: copy_typescript_definitions compile_typescript
 	mkdir -p bin/web/
-	mkdir -p bin/web/js/lib/
+	mkdir -p bin/web/js/bootstrap/
 	mkdir -p bin/web/css
 	mkdir -p bin/web/img
 	mkdir -p bin/web/fonts
@@ -102,31 +105,31 @@ build_web: compile_typescript
 
 	cp -r src/DatenMeisterWeb/* bin/web/
 
-	cp packages/dejs/src/js/*.js bin/web/js/lib/
-	cp packages/dejs/src/js/*.d.ts bin/web/js/lib/
-	cp packages/dejs/src/js/*.map bin/web/js/lib/
+	cp packages/dejs/src/js/*.js bin/web/js/dejs/
+	cp packages/dejs/src/js/*.d.ts bin/web/js/dejs/
+	cp packages/dejs/src/js/*.map bin/web/js/dejs/
 
-	cp ext-packages/bootstrap/dist/js/*.js bin/web/js/lib/
+	cp ext-packages/bootstrap/dist/js/*.js bin/web/js/bootstrap/
 	cp ext-packages/bootstrap/dist/css/*.css bin/web/css/
 	cp ext-packages/bootstrap/dist/fonts/* bin/web/fonts/
 
-	cp ext-packages/backbone/backbone-min.js bin/web/js/lib/
-	cp ext-packages/backbone/backbone.js bin/web/js/lib/
+	cp ext-packages/backbone/backbone-min.js bin/web/js/backbone/
+	cp ext-packages/backbone/backbone.js bin/web/js/backbone/
 
-	cp ext-packages/underscore/underscore-min.js bin/web/js/lib/
-	cp ext-packages/underscore/underscore.js bin/web/js/lib/
+	cp ext-packages/underscore/underscore-min.js bin/web/js/underscore/
+	cp ext-packages/underscore/underscore.js bin/web/js/underscore/
 
-	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/Require/*.js bin/web/js/lib/
-	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/Require/*.ts bin/web/js/lib/
-	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/JQuery/*.js bin/web/js/lib/
+	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/Require/*.js bin/web/js/requirejs/
+	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/Require/*.ts bin/web/js/requirejs/
+	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/JQuery/*.js bin/web/js/jquery/
 
 	cp -r bin/web src/DatenMeisterWeb/bin/Debug/
 
 # Rule to transfer Typescript files to JavaScript files
-bin/web/js/%.js : src/DatenMeisterWeb/js/%.ts 
-	mkdir -p bin/web/js
-	cp $< bin/web/js
-	tsc bin/web/js/$(<F) --module amd --declaration --sourcemap
+bin/web/js/datenmeister/%.js : src/DatenMeisterWeb/js/datenmeister/%.ts 
+	mkdir -p bin/web/js/datenmeister
+	cp $< bin/web/js/datenmeister
+	tsc bin/web/js/datenmeister/$(<F) --module amd --declaration --sourcemap
 
 .PHONY: clean
 clean:

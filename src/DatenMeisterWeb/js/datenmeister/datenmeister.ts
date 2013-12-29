@@ -1,6 +1,6 @@
-﻿/// <reference path="lib/dejs.ajax.d.ts" />
-/// <reference path="lib/backbone.d.ts" />
-/// <reference path="lib/underscore.d.ts" />
+﻿/// <reference path="../dejs/dejs.ajax.d.ts" />
+/// <reference path="../backbone/backbone.d.ts" />
+/// <reference path="../underscore/underscore.d.ts" />
 
 import api = require("datenmeister.serverapi");
 import t = require("datenmeister.datatable");
