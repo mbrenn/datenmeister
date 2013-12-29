@@ -62,7 +62,7 @@ copy_typescript_definitions: get_external_packages
 	cp ext-packages/DefinitelyTyped/jquery/*.d.ts bin/web/js/jquery/
 	cp ext-packages/DefinitelyTyped/requirejs/*.d.ts bin/web/js/requirejs/
 	cp ext-packages/DefinitelyTyped/backbone/*.d.ts bin/web/js/backbone/
-	cp -r packages/dejs/bin/js/* bin/web/js/dejs/
+	cp -r packages/dejs/bin/js/dejs/* bin/web/js/dejs/
 
 bin/web/js/datenmeister/init.js: src/DatenMeisterWeb/js/datenmeister/init.ts \
 	bin/web/js/datenmeister/datenmeister.js
@@ -83,7 +83,8 @@ bin/web/js/datenmeister/datenmeister.objects.js: src/DatenMeisterWeb/js/datenmei
 bin/web/js/datenmeister/datenmeister.serverapi.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.serverapi.ts \
 	bin/web/js/datenmeister/datenmeister.navigation.js
 
-bin/web/js/datenmeister/datenmeister.views.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.views.ts
+bin/web/js/datenmeister/datenmeister.views.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.views.ts \
+	bin/web/js/datenmeister/datenmeister.dataform.js \
 
 .PHONY: compile_typescript
 compile_typescript: bin/web/js/datenmeister/init.js \
@@ -104,10 +105,6 @@ build_web: copy_typescript_definitions compile_typescript
 	mkdir -p src/DatenMeisterWeb/bin/Debug/
 
 	cp -r src/DatenMeisterWeb/* bin/web/
-
-	cp packages/dejs/src/js/*.js bin/web/js/dejs/
-	cp packages/dejs/src/js/*.d.ts bin/web/js/dejs/
-	cp packages/dejs/src/js/*.map bin/web/js/dejs/
 
 	cp ext-packages/bootstrap/dist/js/*.js bin/web/js/bootstrap/
 	cp ext-packages/bootstrap/dist/css/*.css bin/web/css/
@@ -140,6 +137,10 @@ clean:
 	make clean -C packages/dejs
 	rm -rf packages/bin
 	rm -rf bin
+
+.PHONY: clean_web
+clean_web:
+	rm -rf bin/web
 
 .PHONY: clean-all
 clean-all:

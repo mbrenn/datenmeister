@@ -1,4 +1,4 @@
-﻿/// <reference path="lib/require.d.ts" />
+﻿/// <reference path="../requirejs/require.d.ts" />
 /// <reference path="datenmeister.ts" />
 
 import dm = require("datenmeister");

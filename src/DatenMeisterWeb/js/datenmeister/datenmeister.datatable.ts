@@ -5,7 +5,7 @@
 
 import d = require("datenmeister.objects");
 import api = require("datenmeister.serverapi");
-import t = require('lib/dejs.table');
+import t = require('../dejs/dejs.table');
 
 /* 
  * Defines the view options for a table or detail view as a complete table

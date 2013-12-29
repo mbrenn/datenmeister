@@ -2,7 +2,7 @@
 import dt = require ('datenmeister.datatable');
 import d = require("datenmeister.objects");
 import api = require("datenmeister.serverapi");
-import t = require('lib/dejs.table');
+import t = require('../dejs/dejs.table');
 import navigation = require('datenmeister.navigation');
 
 export class FormViewOptions extends dt.ViewOptions {
