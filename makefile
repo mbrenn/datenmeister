@@ -1,7 +1,6 @@
-CS_FILES = $(shell find src/ -type f -name *.cs)
 
 all: build_burnsystems build_burnsystems_parser build_burnsystems_webserver build_burnsystems_flexbg build_dejs \
-	bin/DatenMeister.dll bin/DatenMeister.Tests.dll bin/DatenmeisterServer.exe build_web
+	bin/DatenMeister.dll bin/DatenMeister.Tests.dll bin/DatenmeisterServer.exe build-web
 
 .PHONY: build_burnsystems
 build_burnsystems:
@@ -41,7 +40,7 @@ bin/DatenMeister.Tests.dll: copy_packagefiles
 	mkdir -p bin
 	cp -r src/DatenMeister.Tests/bin/Debug/* bin/
 
-bin/DatenmeisterServer.exe: copy_packagefiles build_web
+bin/DatenmeisterServer.exe: copy_packagefiles build-web
 	xbuild src/DatenmeisterServer/DatenmeisterServer.csproj
 	mkdir -p bin
 	cp -r src/DatenmeisterServer/bin/Debug/* bin/
@@ -78,17 +77,22 @@ bin/web/js/datenmeister/datenmeister.datatable.js: src/DatenMeisterWeb/js/datenm
 	bin/web/js/datenmeister/datenmeister.objects.js \
 	bin/web/js/datenmeister/datenmeister.serverapi.js
 
+bin/web/js/datenmeister/datenmeister.dataform.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.dataform.ts \
+	bin/web/js/datenmeister/datenmeister.datatable.js
+
 bin/web/js/datenmeister/datenmeister.navigation.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.navigation.ts
+
 bin/web/js/datenmeister/datenmeister.objects.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.objects.ts
+
 bin/web/js/datenmeister/datenmeister.serverapi.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.serverapi.ts \
 	bin/web/js/datenmeister/datenmeister.navigation.js
 
 bin/web/js/datenmeister/datenmeister.views.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.views.ts \
 	bin/web/js/datenmeister/datenmeister.dataform.js
-	
+
 bin/web/js/datenmeister/datenmeister.fieldinfo.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.fieldinfo.ts \
 	bin/web/js/datenmeister/datenmeister.objects.js
-	
+
 
 .PHONY: compile_typescript
 compile_typescript: bin/web/js/datenmeister/init.js \
@@ -101,8 +105,8 @@ compile_typescript: bin/web/js/datenmeister/init.js \
 	bin/web/js/datenmeister/datenmeister.serverapi.js \
 	bin/web/js/datenmeister/datenmeister.views.js
 
-.PHONY: build_web
-build_web: copy_typescript_definitions compile_typescript
+.PHONY: build-web
+build-web: copy_typescript_definitions compile_typescript
 	mkdir -p bin/web/
 	mkdir -p bin/web/js/bootstrap/
 	mkdir -p bin/web/css
@@ -127,12 +131,12 @@ build_web: copy_typescript_definitions compile_typescript
 	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/JQuery/*.js bin/web/js/jquery/
 
 	cp -r bin/web src/DatenMeisterWeb/bin/Debug/
-
+	
 # Rule to transfer Typescript files to JavaScript files
 bin/web/js/datenmeister/%.js : src/DatenMeisterWeb/js/datenmeister/%.ts 
-	mkdir -p bin/web/js/datenmeister
-	cp $< bin/web/js/datenmeister
-	tsc bin/web/js/datenmeister/$(<F) --module amd --declaration --sourcemap
+	mkdir -p $(@D)
+	cp $< $(@D)
+	tsc $(@D)/$(<F) --module amd --declaration --sourcemap
 
 .PHONY: clean
 clean:
@@ -144,12 +148,12 @@ clean:
 	rm -rf packages/bin
 	rm -rf bin
 
-.PHONY: clean_web
-clean_web:
+.PHONY: clean-web
+clean-web:
 	rm -rf bin/web
 
 .PHONY: clean-all
-clean-all:
+clean-all: clean
 	rm -rf ext-packages/
 
 
