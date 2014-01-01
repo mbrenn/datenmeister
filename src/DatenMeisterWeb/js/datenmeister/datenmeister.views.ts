@@ -46,10 +46,10 @@ export class ServerConnectionView extends Backbone.View {
     }
 
     render(): Backbone.View {
-    
+
         var templatedElement = _.template($("#serverconnectiontemplate").html(), {} );
         this.$el.html(templatedElement);
-        
+
         this.$(".serveraddress").val(window.localStorage.getItem("serverconnection_serveraddress"));
         return this;
     }

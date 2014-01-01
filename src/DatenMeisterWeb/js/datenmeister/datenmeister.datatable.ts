@@ -188,6 +188,14 @@ export class DataView {
     setFieldInfos(fieldInfos: Array<d.JsonExtentFieldInfo>) {
         this.fieldInfos = fieldInfos;
     }
+    
+    /*
+     * Adds a field info to the current data view
+     */
+    addFieldInfo(fieldInfo: d.JsonExtentFieldInfo)
+    {
+        this.fieldInfos.push(fieldInfo);
+    }
 
     /*
      * Defines the function that will be executed when user clicks on a certain object

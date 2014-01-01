@@ -58,10 +58,12 @@ export class DataForm extends dt.DataView {
         tableOptions.cssClass = "table";
         var table = new t.Table(this.domElement, tableOptions);
 
+        // Creates Column headers for the table
         table.addHeaderRow();
         table.addColumn("Key");
         table.addColumn("Value");
 
+        // Go through each field and show the field in an appropriate column
         _.each(this.fieldInfos, function (f) {
             table.addRow();
 
@@ -69,6 +71,7 @@ export class DataForm extends dt.DataView {
             columnDoms.push(table.addColumnJQuery(tthis.createReadField(tthis.object, f)));
         });
 
+        // Creates the action field for Edit and Delete
         if (this.options.allowEdit || this.options.allowDelete) {
             var lastRow = table.addRow();
             table.addColumn("");

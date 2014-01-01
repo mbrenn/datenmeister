@@ -84,18 +84,24 @@ bin/web/js/datenmeister/datenmeister.serverapi.js: src/DatenMeisterWeb/js/datenm
 	bin/web/js/datenmeister/datenmeister.navigation.js
 
 bin/web/js/datenmeister/datenmeister.views.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.views.ts \
-	bin/web/js/datenmeister/datenmeister.dataform.js \
+	bin/web/js/datenmeister/datenmeister.dataform.js
+	
+bin/web/js/datenmeister/datenmeister.fieldinfo.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.fieldinfo.ts \
+	bin/web/js/datenmeister/datenmeister.objects.js
+	
 
 .PHONY: compile_typescript
 compile_typescript: bin/web/js/datenmeister/init.js \
 	bin/web/js/datenmeister/datenmeister.js \
+	bin/web/js/datenmeister/datenmeister.dataform.js \
 	bin/web/js/datenmeister/datenmeister.datatable.js \
+	bin/web/js/datenmeister/datenmeister.fieldinfo.js \
 	bin/web/js/datenmeister/datenmeister.navigation.js \
 	bin/web/js/datenmeister/datenmeister.objects.js \
 	bin/web/js/datenmeister/datenmeister.serverapi.js \
 	bin/web/js/datenmeister/datenmeister.views.js
 
-.PHONY:
+.PHONY: build_web
 build_web: copy_typescript_definitions compile_typescript
 	mkdir -p bin/web/
 	mkdir -p bin/web/js/bootstrap/
