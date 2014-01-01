@@ -10,9 +10,9 @@ Installation
 ------------
 
 - Install prerequisites:
-- - Mono
-- - node.js
-- - Typescript Compiler: 'npm install -g typescript'
+-- Mono
+-- node.js
+-- Typescript Compiler: 'npm install -g typescript'
 
 - Clone repository
 
