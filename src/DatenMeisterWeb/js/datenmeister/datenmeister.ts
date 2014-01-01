@@ -9,7 +9,7 @@ import views = require("datenmeister.views");
 import navigation = require("datenmeister.navigation");
 import forms = require('datenmeister.dataform');
 
-// Serverconnection form
+// Initializes the whole application by creating the form
 export function init() {
     var router = new AppRouter();
 
@@ -18,7 +18,7 @@ export function init() {
 
     });
 
-
+    // Performs the login screen, where user can connect to a database server
     if (!Backbone.history.start({ pushState: false })) {
         navigation.to("login");
     } else {
@@ -35,8 +35,6 @@ export function init() {
         alert('Storage deleted');
     });
 }
-
-var loginForm: views.ServerConnectionView;
 
 class AppRouter extends Backbone.Router {
 
@@ -80,7 +78,7 @@ class AppRouter extends Backbone.Router {
             });
     }
 
-    showObject(objectUri: string, viewUri: string): views.DetailView {        
+    showObject(objectUri: string, viewUri: string): views.DetailView {
         if (this.triggerLoginEvent() === false) {
             return;
         }
@@ -106,19 +104,17 @@ class AppRouter extends Backbone.Router {
             return;
         }
 
-        if (loginForm == undefined) {
-            loginForm = new views.ServerConnectionView({
-                el: "#serverconnectionview"
-            });
+        var loginForm = new views.ServerConnectionView({
+            el: ".serverconnectionview"
+        });
 
-            loginForm.onConnect = function (settings) {
-                tthis.triggerLoginEvent();
-                navigation.to("all");
-            };
-        }
-        else {
-            loginForm.render();
-        }
+        views.prepareForViewChange();
+        $(".serverconnection_container").show();
+
+        loginForm.onConnect = function (settings) {
+            tthis.triggerLoginEvent();
+            navigation.to("all");
+        };
 
         return loginForm;
     }

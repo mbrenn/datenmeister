@@ -20,21 +20,8 @@
         <a href="#" id="delete_storage_link">Delete session storage</a>
     </header>
     <div id="content" class="container">
-        <div id="serverconnectionview" class="row">
-            <div class="col-md-8">
-                <div class="page-header">
-                    <h2>Define serveraddress:</h2>
-                </div>
-                <p>State your serveraddress. Please ask a Datenmeister-Provider to retrieve data.</p>
-                <form id="server_selection" role="form">
-                    <div class="form-group">
-                        <label for="connect_address">Serveradresse:</label>
-                        <input type="text" class="serveraddress form-control" id="connect_address" />
-                    </div>
-                    <button class="btn btn-default serverconnection_button">Connect to server</button>
-                    <p class="serverconnection_domnosuccess defaulthidden text-warning">Connection could not be established</p>
-                    <p class="serverconnection_domsuccess defaulthidden text-success">Connection has been established</p>
-                </form>
+        <div class="row serverconnection_container">
+            <div class="col-md-8 serverconnectionview">
             </div>
             <div class="col-md-4">
                 <div class="page-header">
@@ -42,7 +29,7 @@
                 </div>
                 <p>Welcome to <strong>DatenMeister</strong>, an easy to use database for every purpose being fully operable to all different types of data sources and sinks. </p>
                 <p>Get support from <a href="mailto:brenn@depon.net">Martin Brenn</a>.</p>
-                <p>Sourcecode available under <a href="http://bitbucket.org/mbrenn/datenmeister">Bitbucket</a>.</p>
+                <p>Sourcecode available under <a href="http://github.com/mbrenn/datenmeister">Github</a>.</p>
                 <p>Have fun!</p>
             </div>
         </div>
@@ -76,6 +63,23 @@
             <h2>Select view</h2>
             <select id="detail_view_select" class="view_selector"></select>
         </div>
+    </div>
+    <div id="templates">
+      <script type="text/template" id="serverconnectiontemplate">
+	<div class="page-header">
+	  <h2>Define serveraddress:</h2>
+        </div>
+        <p>State your serveraddress. Please ask a Datenmeister-Provider to retrieve data.</p>
+        <form id="server_selection" role="form">
+          <div class="form-group">
+            <label for="connect_address">Serveradresse:</label>
+            <input type="text" class="serveraddress form-control" id="connect_address" />
+          </div>
+          <button class="btn btn-default serverconnection_button">Connect to server</button>
+          <p class="serverconnection_domnosuccess defaulthidden text-warning">Connection could not be established</p>
+          <p class="serverconnection_domsuccess defaulthidden text-success">Connection has been established</p>
+        </form>
+      </script>
     </div>
 </body>
 </html>

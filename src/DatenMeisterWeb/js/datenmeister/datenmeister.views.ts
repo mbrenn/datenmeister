@@ -46,12 +46,10 @@ export class ServerConnectionView extends Backbone.View {
     }
 
     render(): Backbone.View {
-        prepareForViewChange();
-
-        // Shows the current form
-        this.$el.show();
-
-        var tthis = this;
+    
+        var templatedElement = _.template($("#serverconnectiontemplate").html(), {} );
+        this.$el.html(templatedElement);
+        
         this.$(".serveraddress").val(window.localStorage.getItem("serverconnection_serveraddress"));
         return this;
     }
@@ -61,6 +59,7 @@ export class ServerConnectionView extends Backbone.View {
         var settings = new api.ServerSettings();
         settings.serverAddress = $(".serveraddress", this.formDom).val();
 
+        // Stores the selected 
         window.localStorage.setItem("serverconnection_serveraddress", settings.serverAddress);
 
         // Check, if connection is possible
