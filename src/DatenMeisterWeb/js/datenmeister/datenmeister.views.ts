@@ -4,6 +4,7 @@ import d = require("datenmeister.objects");
 import t = require("datenmeister.datatable");
 import forms = require("datenmeister.dataform");
 import navigation = require("datenmeister.navigation");
+import fieldinfo = require("datenmeister.fieldinfo");
 
 /* 
  * Has to be called before every view,
@@ -13,6 +14,9 @@ export function prepareForViewChange() {
     $("#content > div").hide();
 }
 
+/* 
+ * Connects a simple backbutton with navigation.back call on click
+ */ 
 export class BackButtonView extends Backbone.View {
     constructor(options: Backbone.ViewOptions) {
         super(options);
@@ -26,7 +30,10 @@ export class BackButtonView extends Backbone.View {
     }
 }
 
-/* Defines the view which allows the user to connect to the server */
+/* 
+ * Defines the view which allows the user to connect to the server . 
+ * This interface can also be seen as login screen
+ */
 export class ServerConnectionView extends Backbone.View {
 
     // Call back, when user has depressed connect button
@@ -78,12 +85,22 @@ export class ServerConnectionView extends Backbone.View {
     }
 }
 
+/* 
+ * Defines the arguments to create a view, which contains a table for a list of object. 
+ * - extentElement: contains an array of all elements to be shown
+ * - url: can be used alternatively to download the extent data
+ * - tableOptions: Additional options (like: Edit allowed, etc)
+ */
 export interface DefaultTableViewOptions extends Backbone.ViewOptions {
-    extentElement?: d.JsonExtentData;
     tableOptions?: t.ViewOptions;
+    extentElement?: d.JsonExtentData;
     url?: string;
 }
 
+/*
+ * Creates a view by loading or using the given extent data and creating a datatable 
+ * by using field information.
+ */
 export class DefaultTableView extends Backbone.View {
     extentElement: d.JsonExtentData;
     tableOptions: t.ViewOptions;
@@ -126,7 +143,6 @@ export class DefaultTableView extends Backbone.View {
     }
 
     render(): DefaultTableView {
-        prepareForViewChange();
         var tthis = this;
 
         this.$(".datatable").empty();
@@ -169,6 +185,11 @@ export class DefaultTableView extends Backbone.View {
     }
 }
 
+/* 
+ * Create a table for an extent list. 
+ * When the user clicks a certain event, he is forwarded to the detail view
+ * He also gets a selector to switch views
+ */
 export class ExtentTableView extends DefaultTableView {
     constructor(options?: DefaultTableViewOptions) {
         var tthis = this;
@@ -200,6 +221,10 @@ export class ExtentTableView extends DefaultTableView {
     }
 }
 
+/* 
+ * Creates a list of all extents. 
+ * When the user clicks one view, he will be forwarded to a list of all elements of the extent
+ */
 export class AllExtentsView extends DefaultTableView {
     constructor(options?: DefaultTableViewOptions) {
 
@@ -222,28 +247,39 @@ export class AllExtentsView extends DefaultTableView {
     }
 }
 
-export interface DetailViewOptions extends Backbone.ViewOptions {
-    object?: d.JsonExtentObject;
-    url?: string;
-}
+/* 
+ * Stores the view that shall be shown that shall be shown. 
+ */
+export interface DetailViewOptions extends Backbone.ViewOptions{
 
-export interface FormViewOptions extends Backbone.ViewOptions{
-    viewUrl?: string;
+    // Object to be shown
+    object?: d.JsonExtentObject;
+    
+    // Url of object to be shown. The loaded object will be stored in 'object'
+    url?: string;
+    
+    // View object to be used
     viewObject?: d.JsonExtentObject;
+    
+    // The url of the view object. The loaded object will be stored in 'viewObject'
+    viewUrl?: string;
+    
+    // Defines the options for the create of the form (Like editable, etc)
+    options?: forms.FormViewOptions;
 }
 
 export class DetailView extends Backbone.View {
     object: d.JsonExtentObject;
     url: string;
-    urlView: string;
-    formOptions: FormViewOptions;
 
     // Defines the view url and or the viewObject. 
     // If no viewObject has been given, a default view will be generated
     viewUrl: string;
     viewObject: d.JsonExtentObject;
+    
+    options: forms.FormViewOptions;
 
-    constructor(options: FormViewOptions) {
+    constructor(options: DetailViewOptions) {
         var tthis = this;
         _.extend(this, options);
 
@@ -252,7 +288,7 @@ export class DetailView extends Backbone.View {
         if (!_.isEmpty(this.url) && _.isEmpty(this.object)) {
             this.loadAndRender();
         }
-        else if (this.object !== undefined && this.formOptions !== undefined) {
+        else if (this.object !== undefined && this.viewObject !== undefined) {
             this.render();
         }
         else {
@@ -264,6 +300,7 @@ export class DetailView extends Backbone.View {
             navigation.to(route);
         });
 
+        // Loads the view selection
         var viewSelectorModel = new ViewSelectorModel();
         viewSelectorModel.setCurrentView(this.viewUrl);
 
@@ -306,17 +343,16 @@ export class DetailView extends Backbone.View {
 
     render(): DetailView {
         var tthis = this;
-        prepareForViewChange();
 
         this.$(".form").empty();
 
-        var form = new forms.DataForm(this.object, this.$(".form"), this.options);
+        var form = new forms.DataForm(this.object, this.$el, this.options);
 
         if (this.viewObject === undefined) {
             form.autoGenerateFields();
         }
         else {
-            form.setFieldInfos(this.viewObject.get('fieldInfos'));
+            form.setFieldInfos(this.viewObject.get('fieldinfos'));
         }
 
         form.render();
@@ -331,6 +367,10 @@ export class DetailView extends Backbone.View {
     }
 }
 
+/*
+ * Defines the model for the ViewSelector View. 
+ * Just the chosen view as string
+ */
 export class ViewSelectorModel extends Backbone.Model {
     getCurrentView(): string {
         return this.get('currentView');
@@ -341,6 +381,11 @@ export class ViewSelectorModel extends Backbone.Model {
     }
 }
 
+/*
+ * Returns a view containing a drop down, where user can select
+ * the view to be applied. 
+ * - Throws an 'change:currentView' event, when user has selected a specific view
+ */
 export class ViewSelector extends Backbone.View {
 
     model: ViewSelectorModel;
@@ -398,5 +443,26 @@ export class ViewSelector extends Backbone.View {
                 tthis.trigger('viewselected', null);
             }
         });
+    }
+}
+
+export class CreateNewExtentView extends DetailView
+{
+    constructor(options: DetailViewOptions) {
+        options.options = new forms.FormViewOptions();
+        options.options.allowEdit = false;
+        options.options.allowNew = false;
+        options.options.allowDelete = false;
+        
+        var view = fieldinfo.View.create();
+        fieldinfo.View.pushFieldInfo(view, fieldinfo.Comment.create("Information", "Please give a title and filename for the new extent (without file extension)"));
+        fieldinfo.View.pushFieldInfo(view, fieldinfo.TextField.create("Name", "name"));
+        fieldinfo.View.pushFieldInfo(view, fieldinfo.TextField.create("Filename", "filename"));
+        
+        this.viewObject = view;
+        this.object = new d.JsonExtentObject();
+        
+        // This method already calls renders
+        super(options);
     }
 }

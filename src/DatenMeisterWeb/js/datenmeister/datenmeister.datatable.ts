@@ -16,6 +16,13 @@ export class ViewOptions {
     allowDelete: boolean = true;
 }
 
+/* 
+ * Defines the options being allowed for table
+ */
+export class TableViewOptions extends ViewOptions
+{
+}
+
 /*
  * Supports the insertion of new properties by collecting them into the View 
  * When called by createEventsForEditButton, this information is used to send out new properties
@@ -29,7 +36,7 @@ export class NewPropertyFields {
 /* 
  * This handler is offering the switch from edit to view by providing methods.
  */
-export class DataViewEditHandler extends Backbone.Model {
+export class DataViewEditHandler extends Backbone.Events {
 
     // Stores the object that will be evaluated
     currentObject: d.JsonExtentObject;
@@ -80,19 +87,26 @@ export class DataViewEditHandler extends Backbone.Model {
         this.trigger('editModeChange', true);
     }
 
-    switchToRead(): void {
-        var tthis = this;
-
-        // Is currently in writing mode, 
-        // upload to server
-        // switch to reading mode
+    // Stores the changes, being done by user or webscripts into object
+    storeChangesInObject(): void
+    {
         for (var n = 0; n < this.columnDoms.length; n++) {
             var column = this.view.fieldInfos[n];
             this.view.setValueByWriteField(this.currentObject, column, this.writeFields[n]);
         }
-
+    }
+    
+    // Switches the current form (whether table or form) to read
+    // Sets necessary information to field, if necessary
+    switchToRead(): void {
+        var tthis = this;
+        
+        // Stores the changes into the given object
+        this.storeChangesInObject();
+                
         // Goes through the new properties being created during the detail view
         _.each(this.newPropertyInfos, function (info) {
+            // This is quite special
             var key = info.keyField.val();
             var value = info.valueField.val();
 
@@ -118,6 +132,7 @@ export class DataViewEditHandler extends Backbone.Model {
 
         tthis.newPropertyInfos.length = 0;
 
+        // Changes the object on server
         api.getAPI().editObject(
             this.currentObject.getUri(),
             this.currentObject,
@@ -136,6 +151,12 @@ export class DataViewEditHandler extends Backbone.Model {
         this.trigger('editModeChange', false);
     }
 
+    // Binds the current form to the switch to an edit view
+    // @view: View to be attached
+    // @editButton: Button that shall be used to switch between both views
+    // @object: The object that shall store the object data
+    // @columnDoms: An array of Dom-Elements, that store the DOM-content being created by 'createReadField' and 'createWriteField'. 
+    //              The content will be erased during each switch
     bindToEditButton(view: DataView, editButton: JQuery, object: d.JsonExtentObject, columnDoms: Array<JQuery>): void {
         var tthis = this;
 
@@ -167,15 +188,15 @@ export class DataView {
 
     itemClickedEvent: (object: d.JsonExtentObject) => void;
 
-    options: ViewOptions;
+    options: TableViewOptions;
     domElement: JQuery;
     fieldInfos: Array<d.JsonExtentFieldInfo>;
 
-    constructor(domElement: JQuery, options: ViewOptions) {
+    constructor(domElement: JQuery, options: TableViewOptions) {
         this.domElement = domElement;
         this.options = options;
         if (this.options === undefined) {
-            this.options = new ViewOptions();
+            this.options = new TableViewOptions();
             this.options.allowDelete = true;
             this.options.allowNew = true;
             this.options.allowEdit = true;
@@ -186,6 +207,11 @@ export class DataView {
      * Sets the field information objects
      */
     setFieldInfos(fieldInfos: Array<d.JsonExtentFieldInfo>) {
+        if(fieldInfos === undefined)
+        {
+            throw "FieldInfos === undefined";
+        }
+        
         this.fieldInfos = fieldInfos;
     }
     
@@ -194,6 +220,11 @@ export class DataView {
      */
     addFieldInfo(fieldInfo: d.JsonExtentFieldInfo)
     {
+        if(fieldInfo === undefined)
+        {
+            throw "FieldInfo === undefined";
+        }
+        
         this.fieldInfos.push(fieldInfo);
     }
 

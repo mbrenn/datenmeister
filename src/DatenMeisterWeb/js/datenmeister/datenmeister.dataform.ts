@@ -5,6 +5,7 @@ import api = require("datenmeister.serverapi");
 import t = require('../dejs/dejs.table');
 import navigation = require('datenmeister.navigation');
 
+// Defines the options that may be used to define a form
 export class FormViewOptions extends dt.ViewOptions {
     allowNewProperty: boolean;
 }

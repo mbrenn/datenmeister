@@ -1,6 +1,41 @@
 
 import d = require("datenmeister.objects");
 
+/*
+ * Defines the view element, which contains a list of field information. 
+ * - fieldinfos: Array of fieldinfos to be added
+ */
+export module View
+{
+    export function create() : d.JsonExtentObject
+    {
+        var result = new d.JsonExtentObject();
+        result.set('fieldinfos', new Array<d.JsonExtentObject>());
+        return result;
+    }
+    
+    export function getFieldInfos(value: d.JsonExtentObject) : Array<d.JsonExtentObject>
+    {
+        return <Array<d.JsonExtentObject>> this.get('fieldinfos') ;
+    }
+    
+    export function pushFieldInfo(value: d.JsonExtentObject, fieldInfo: d.JsonExtentObject) : void
+    {
+        var infos = <Array<d.JsonExtentObject>> value.get('fieldinfos')
+        if (infos === undefined)
+        {
+            infos = new Array <d.JsonExtentObject>();
+        }
+        
+        infos.push(fieldInfo);        
+        setFieldInfos(value, infos);
+    }
+    
+    export function setFieldInfos(value: d.JsonExtentObject, fieldInfos: Array<d.JsonExtentObject>) : void
+    {
+        value.set('fieldinfos', fieldInfos);
+    }
+}
 /* 
  * Describes the most generic functions
  */
@@ -47,7 +82,7 @@ export module Comment
     {
         var result = new d.JsonExtentObject();
         
-        if ( title !== undefined )
+        if (title !== undefined)
         {
             setTitle(result, title);
         }
@@ -79,6 +114,8 @@ export module Comment
  * - title: Title being shown to user
  * - name: Name of the property, where value will be stored
  * - readonly: True, if field is read-only
+ * - width: Width of the element
+ * - height: Height of the element
  */
 export module TextField
 {
