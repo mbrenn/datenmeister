@@ -85,7 +85,7 @@ bin/web/js/datenmeister/datenmeister.serverapi.js: src/DatenMeisterWeb/js/datenm
 
 bin/web/js/datenmeister/datenmeister.views.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.views.ts \
 	bin/web/js/datenmeister/datenmeister.dataform.js
-	
+
 bin/web/js/datenmeister/datenmeister.fieldinfo.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.fieldinfo.ts \
 	bin/web/js/datenmeister/datenmeister.objects.js
 	
