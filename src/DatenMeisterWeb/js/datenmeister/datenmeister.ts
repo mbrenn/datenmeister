@@ -60,7 +60,13 @@ class AppRouter extends Backbone.Router {
         if (this.triggerLoginEvent() === false) {
             return;
         }
-
+        
+        views.prepareForViewChange();
+        
+        // Creates new form for NewExtentForm
+        new views.CreateNewExtentView({el: ".newextent_form" });
+        
+        // Creates form for all extents
         return new views.AllExtentsView({
             el: "#extentlist"
         });
@@ -70,6 +76,8 @@ class AppRouter extends Backbone.Router {
         if (this.triggerLoginEvent() === false) {
             return;
         }
+        
+        views.prepareForViewChange();
 
         return new views.ExtentTableView(
             {
@@ -88,6 +96,8 @@ class AppRouter extends Backbone.Router {
         options.allowEdit = true;
         options.allowNew = true;
         options.allowNewProperty = true;
+        
+        views.prepareForViewChange();
 
         return new views.DetailView(
             {

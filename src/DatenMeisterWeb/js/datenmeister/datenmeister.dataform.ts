@@ -5,6 +5,7 @@ import api = require("datenmeister.serverapi");
 import t = require('../dejs/dejs.table');
 import navigation = require('datenmeister.navigation');
 
+// Defines the options that may be used to define a form
 export class FormViewOptions extends dt.ViewOptions {
     allowNewProperty: boolean;
 }
@@ -72,7 +73,7 @@ export class DataForm extends dt.DataView {
         });
 
         // Creates the action field for Edit and Delete
-        if (this.options.allowEdit || this.options.allowDelete) {
+        if (this.options.allowEdit || this.options.allowDelete || this.options.startInEditMode) {
             var lastRow = table.addRow();
             table.addColumn("");
 
@@ -96,7 +97,7 @@ export class DataForm extends dt.DataView {
                 div.append(deleteButton);
             }
 
-            if (this.options.allowEdit) {
+            if (this.options.allowEdit === true || this.options.startInEditMode === true) {
                 var editButton = $("<button class='btn btn-default'>EDIT</button>");
                 var newPropertyRows = new Array<JQuery>();
 
@@ -121,12 +122,22 @@ export class DataForm extends dt.DataView {
                         }
                     });
 
-                div.append(editButton);
+                if(this.options.allowEdit === true)
+                {
+                    // Button is only added, when user is allowed to switch between edit and non-edit
+                    div.append(editButton);
+                }               
+        
+                if(this.options.startInEditMode === true)
+                {
+                    handler.switchToEdit();
+                }
+
             }
 
             table.addColumnJQuery(div);
         }
-
+        
         return this;
     }
 
