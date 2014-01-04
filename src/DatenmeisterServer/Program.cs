@@ -19,67 +19,68 @@ namespace DatenmeisterServer
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            Log.TheLog.AddLogProvider(new ConsoleProvider(false));
-            Log.TheLog.AddLogProvider(new FileProvider("log.txt"));
-            Log.TheLog.FilterLevel = LogLevel.Verbose;
+        public static void Main (string[] args)
+		{
+			Log.TheLog.AddLogProvider (new ConsoleProvider (false));
+			Log.TheLog.AddLogProvider (new FileProvider ("log.txt"));
+			Log.TheLog.FilterLevel = LogLevel.Verbose;
 
-            // Starting up
-            Log.TheLog.LogEntry(LogLevel.Message, "Datenmeister");
+			// Starting up
+			Log.TheLog.LogEntry (LogLevel.Message, "Datenmeister");
 
-            var activationContainer = new ActivationContainer("Website");
+			var activationContainer = new ActivationContainer ("Website");
 
-            // Initialize DatenMeisterPool
-            var pool = new DatenMeisterPool();
+			// Initialize DatenMeisterPool
+			var pool = new DatenMeisterPool ();
 
-            var provider = new CSVDataProvider();
-            var csvSettings = new CSVSettings()
+			var provider = new CSVDataProvider ();
+			var csvSettings = new CSVSettings ()
                 {
                     HasHeader = true
                 };
 
-            // Adds pool
-            var poolExtent = new DatenMeisterPoolExtent(pool);
-            pool.Add(poolExtent);
+			// Adds pool
+			var poolExtent = new DatenMeisterPoolExtent (pool);
+			pool.Add (poolExtent);
 
-            // Add view pool
-            var viewExtent = new ViewsExtent("datenmeister:///defaultviews/");
-            viewExtent.Fill();
-            pool.Add(viewExtent);
+			// Add view pool
+			var viewExtent = new ViewsExtent ("datenmeister:///defaultviews/");
+			viewExtent.Fill ();
+			pool.Add (viewExtent);
 
-            // Adds the csv-extent
-            IURIExtent extent;
-            if (File.Exists("data/test_save.csv"))
-            {
-                extent = provider.Load("data/test_save.csv", csvSettings);
-            }
-            else
-            {
-                extent = provider.Load("data/test.csv", csvSettings);
-            }
+			// Adds the csv-extent
+			IURIExtent extent;
+			if (File.Exists ("data/test_save.csv")) {
+				extent = provider.Load ("data/test_save.csv", csvSettings);
+			} else {
+				extent = provider.Load ("data/test.csv", csvSettings);
+			}
 
-            pool.Add(extent);
-            activationContainer.Bind<DatenMeisterPool>().ToConstant(pool);
+			pool.Add (extent);
+			activationContainer.Bind<DatenMeisterPool> ().ToConstant (pool);
 
-            using (var server = Server.CreateDefaultServer(activationContainer))
-            {
-                activationContainer.Bind<IRequestFilter>().ToConstant(new AddCorsHeaderFilter());
+			using (var server = Server.CreateDefaultServer(activationContainer)) {
+				activationContainer.Bind<IRequestFilter> ().ToConstant (new AddCorsHeaderFilter ());
 
-                server.Add(new ControllerDispatcher<ExtentController>(BurnSystems.WebServer.Dispatcher.DispatchFilter.ByUrl("/extent/"), "/extent/"));
-                
-                server.AddPrefix("http://127.0.0.1:8081/");
+				server.Add (new ControllerDispatcher<ExtentController> (
+					BurnSystems.WebServer.Dispatcher.DispatchFilter.ByUrl ("/extent/"),
+					"/extent/"
+				)
+				);
 
-                server.Start();
-                Console.WriteLine("Press Key to stop server");
-                Console.ReadKey();
+				server.AddPrefix ("http://127.0.0.1:8081/");
+				server.AddPrefix ("http://*:8081/");
 
-                server.Stop();
-            }
+				server.Start ();
+				Console.WriteLine ("Press Key to stop server");
+				Console.ReadKey ();
 
-            // Storing the data
-            Log.TheLog.Message("Storing data");
-            provider.Save(extent, "data/test_save.csv", csvSettings);
-        }
-    }
+				server.Stop ();
+			}
+
+			// Storing the data
+			Log.TheLog.Message ("Storing data");
+			provider.Save (extent, "data/test_save.csv", csvSettings);
+		}
+	}
 }
