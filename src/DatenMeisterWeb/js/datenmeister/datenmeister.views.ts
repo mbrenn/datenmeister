@@ -453,6 +453,7 @@ export class CreateNewExtentView extends DetailView
         options.options.allowEdit = false;
         options.options.allowNew = false;
         options.options.allowDelete = false;
+        options.options.startInEditMode = true;
         
         var view = fieldinfo.View.create();
         fieldinfo.View.pushFieldInfo(view, fieldinfo.Comment.create("Information", "Please give a title and filename for the new extent (without file extension)"));

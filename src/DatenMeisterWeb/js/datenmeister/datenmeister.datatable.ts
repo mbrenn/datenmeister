@@ -14,6 +14,9 @@ export class ViewOptions {
     allowEdit: boolean = true;
     allowNew: boolean = true;
     allowDelete: boolean = true;
+    
+    // True, if the form shall be shown in edit mode
+    startInEditMode: boolean = false; 
 }
 
 /* 
@@ -36,7 +39,7 @@ export class NewPropertyFields {
 /* 
  * This handler is offering the switch from edit to view by providing methods.
  */
-export class DataViewEditHandler extends Backbone.Events {
+export class DataViewEditHandler extends Backbone.Model {
 
     // Stores the object that will be evaluated
     currentObject: d.JsonExtentObject;
@@ -57,9 +60,10 @@ export class DataViewEditHandler extends Backbone.Events {
     newPropertyInfos: Array<NewPropertyFields>;
 
     constructor() {
-        super();
         this.newPropertyInfos = new Array<NewPropertyFields>();
         this.writeFields = new Array<JQuery>();
+        
+        super();
     }
 
     /*
