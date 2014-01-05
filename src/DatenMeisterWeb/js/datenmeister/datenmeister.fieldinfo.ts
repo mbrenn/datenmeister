@@ -1,6 +1,15 @@
 
 import d = require("datenmeister.objects");
 
+export interface IRenderer
+{
+    createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery;
+    
+    createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery;
+    
+    setValueByWriteField(dom : JQuery, object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : void;
+}
+
 /*
  * Defines the view element, which contains a list of field information. 
  * - fieldinfos: Array of fieldinfos to be added
@@ -36,6 +45,7 @@ export module View
         value.set('fieldinfos', fieldInfos);
     }
 }
+
 /* 
  * Describes the most generic functions
  */
@@ -105,6 +115,21 @@ export module Comment
     export function setComment(value: d.JsonExtentObject, commentText : string)
     {
         value.set("comment", commentText);
+    }
+    
+    export class Renderer implements IRenderer
+    {
+        createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery {
+            throw "Not implemented";
+        }
+        
+        createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery {
+            throw "Not implemented";
+        }
+    
+        setValueByWriteField(dom : JQuery, object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : void {
+            throw "Not implemented";
+        }         
     }
 }
 
@@ -186,5 +211,77 @@ export module TextField
     export function getHeight(value : d.JsonExtentObject)
     {
         return value.get("height");
+    }
+    
+    export class Renderer implements IRenderer
+    {
+        createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery {
+            var tthis = this;
+            var span = $("<span />");
+            var value = object.get(field.get('name'));
+            if (value === undefined || value === null) {
+                span.html("<em>undefined</em>");
+            }
+            else if (_.isArray(value)) {
+                span.text('Array with ' + value.length + " items:");
+                var ul = $("<ul></ul>");
+                _.each(value, function (item: d.JsonExtentFieldInfo) {
+                    var div = $("<li></li>");
+                    div.text(JSON.stringify(item.toJSON()) + " | " + item.id);
+                    /*div.click(function () {
+                        if (tthis.itemClickedEvent !== undefined) {
+                            tthis.itemClickedEvent(item);
+                        }
+                    });*/
+
+                    ul.append(div);
+                });
+
+                span.append(ul);
+            }
+            else {
+                span.text(value);
+            }
+
+            return span;
+        }
+        
+        createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery {
+            var value;
+
+            if (object !== undefined && field !== undefined) {
+                value = object.get(field.getName());
+            }
+
+            // Checks, if writing is possible
+            var offerWriting = true;
+            if (_.isArray(value) || _.isObject(value)) {
+                offerWriting = false;
+            }
+
+            // Creates the necessary controls
+            if (offerWriting) {
+                // Offer writing
+                var inputField = $("<input type='text' />");
+                if (value !== undefined && value !== null) {
+                    inputField.val(value);
+                }
+
+                return inputField;
+            }
+            else {
+                return this.createReadField(object, field);
+            }
+        }
+    
+        setValueByWriteField(dom : JQuery, object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : void {
+            if (field.getReadOnly() === true) {
+                // Do nothing
+                return;
+            }
+
+            // Reads the value
+            object.set(field.getName(), dom.val());
+        }         
     }
 }

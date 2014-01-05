@@ -295,7 +295,6 @@ export class DataView {
         }
         else {
             return this.createReadField(object, field);
-
         }
     }
 
