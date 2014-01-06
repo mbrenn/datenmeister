@@ -26,52 +26,9 @@ export class JsonExtentObject extends Backbone.Model {
     }
 }
 
-// Defines the information for a column that has been received from server
-export class JsonExtentFieldInfo extends JsonExtentObject {
-    /* 
-     * Gets the name of the property
-     */
-    getName(): string {
-        return this.get('name');
-    }
-
-    /* 
-     * Gets the title of property as shown in table or views
-     */
-    getTitle(): string {
-        return this.get('title');
-    }
-
-    /*
-     * Gets the read-only status
-     */
-    getReadOnly(): boolean {
-        return this.get('isReadonly');
-    }
-
-    setName(name: string): Backbone.Model {
-        return this.set('name', name);
-    }
-
-    setTitle(title: string): Backbone.Model {
-        return this.set('title', title);
-    }
-
-    /*
-     * Sets the read only
-     */
-    setReadOnly(isReadOnly: boolean): Backbone.Model {
-        return this.set('isReadonly', isReadOnly);
-    }
-
-    constructor(attributes?: any) {
-        super(attributes);
-    }
-}
-
 // Result from GetObjectsInExtent
 export class JsonExtentData {
     extent: ExtentInfo;    
-    // columns: Array<JsonExtentFieldInfo>;
+    // columns: Array<JsonExtentInfo>;
     objects: Array<JsonExtentObject>;
 }

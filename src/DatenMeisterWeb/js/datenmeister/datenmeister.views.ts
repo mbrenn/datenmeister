@@ -106,7 +106,7 @@ export class DefaultTableView extends Backbone.View {
     tableOptions: t.ViewOptions;
     url: string;
     data: d.JsonExtentData;  // Result from query, which will be shown render
-    columns: Array<d.JsonExtentFieldInfo>;
+    columns: Array<d.JsonExtentObject>;
 
     // Defines the view url and or the viewObject. 
     // If no viewObject has been given, a default view will be generated
@@ -334,7 +334,7 @@ export class DetailView extends Backbone.View {
             tthis.object = objects[0];
 
             if (tthis.viewUrl !== undefined) {
-                tthis.viewObject = <d.JsonExtentFieldInfo> objects[1];
+                tthis.viewObject = objects[1];
             }
 
             tthis.render();

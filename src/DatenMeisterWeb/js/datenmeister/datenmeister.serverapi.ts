@@ -170,7 +170,7 @@ export class ServerAPI {
             prefix: 'loadobjects_',
             success: function (data: any) {
                 if (success !== undefined) {
-                    data.extent = new d.JsonExtentFieldInfo(data.extent);
+                    data.extent = new d.JsonExtentObject(data.extent);
 
                     for (var n = 0; n < data.objects.length; n++) {
                         var currentObject = data.objects[n];

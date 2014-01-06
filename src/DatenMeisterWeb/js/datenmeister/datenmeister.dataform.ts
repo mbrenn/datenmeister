@@ -4,7 +4,7 @@ import d = require("datenmeister.objects");
 import api = require("datenmeister.serverapi");
 import t = require('../dejs/dejs.table');
 import navigation = require('datenmeister.navigation');
-import fieldinfo = require('datenmeister.fieldinfo');
+import fi = require('datenmeister.fieldinfo');
 
 // Defines the options that may be used to define a form
 export class FormViewOptions extends dt.ViewOptions {
@@ -26,7 +26,7 @@ export class DataForm extends dt.DataView {
         super(domElement, options);
 
         this.object = object;
-        this.fieldInfos = new Array<d.JsonExtentFieldInfo>();
+        this.fieldInfos = new Array<d.JsonExtentObject>();
 
         if (this.options.allowNewProperty !== undefined) {
             this.options.allowNewProperty = options.allowNewProperty;
@@ -42,7 +42,7 @@ export class DataForm extends dt.DataView {
             var k = keys[i];
             var v = this.object.attributes[k];
             
-            this.fieldInfos.push(fieldinfo.TextField.create(k, k));
+            this.fieldInfos.push(fi.TextField.create(k, k));
         }
     }
 
@@ -64,10 +64,11 @@ export class DataForm extends dt.DataView {
 
         // Go through each field and show the field in an appropriate column
         _.each(this.fieldInfos, function (f) {
+            var renderer = fi.getRendererByObject(f);
             table.addRow();
 
             table.addColumn(f.get('title'));
-            columnDoms.push(table.addColumnJQuery(tthis.createReadField(tthis.object, f)));
+            columnDoms.push(table.addColumnJQuery(renderer.createReadField(tthis.object, f)));
         });
 
         // Creates the action field for Edit and Delete
@@ -146,9 +147,11 @@ export class DataForm extends dt.DataView {
     createNewPropertyRow(table: t.Table, lastRow: JQuery, handler: dt.DataViewEditHandler): void {
         var tthis = this;
         var newPropertyRow = table.insertRowBefore(lastRow);
+        
+        var renderer = new fi.TextField.Renderer();
 
-        var keyElement = this.createWriteField(undefined, undefined);
-        var valueElement = this.createWriteField(undefined, undefined);
+        var keyElement = renderer.createWriteField(undefined, undefined);
+        var valueElement = renderer.createWriteField(undefined, undefined);
         handler.addNewPropertyField(
             {
                 rowDom: newPropertyRow,

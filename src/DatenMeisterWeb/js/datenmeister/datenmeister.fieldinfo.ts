@@ -3,11 +3,16 @@ import d = require("datenmeister.objects");
 
 export interface IRenderer
 {
-    createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery;
+    createReadField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject) : JQuery;
     
-    createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery;
+    createWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject) : JQuery;
     
-    setValueByWriteField(dom : JQuery, object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : void;
+    setValueByWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, dom: JQuery) : void;
+}
+
+export function getRendererByObject(object: d.JsonExtentObject): IRenderer
+{
+    return getRenderer(object.get("type"));
 }
 
 export function getRenderer(type: string): IRenderer
@@ -22,7 +27,7 @@ export function getRenderer(type: string): IRenderer
         return new TextField.Renderer();
     }
     
-    throw type + " as Renderer is unknown";
+    return new TextField.Renderer();
 }
 
 /*
@@ -91,7 +96,7 @@ export module General
         return value.get("name");
     }
     
-    export function getReadOnly(value: d.JsonExtentObject)
+    export function isReadOnly(value: d.JsonExtentObject)
     {
         return value.get("readonly");
     }    
@@ -136,16 +141,20 @@ export module Comment
     
     export class Renderer implements IRenderer
     {
-        createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery {
-            throw "Not implemented";
+        createReadField(object: d.JsonExtentObject, field: d.JsonExtentObject) : JQuery {
+            var result = $("<div></div>");
+            result.text(object.get(General.getName(field)));
+            return result;
         }
         
-        createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery {
-            throw "Not implemented";
+        createWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject) : JQuery {
+            // Same as read field
+            return this.createReadField(object, field);
         }
     
-        setValueByWriteField(dom : JQuery, object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : void {
-            throw "Not implemented";
+        setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject, dom: JQuery) : void {
+            // Just a comment, nothing to do here
+            return;
         }
     }
 }
@@ -207,9 +216,9 @@ export module TextField
         General.setReadOnly(value, isReadOnly);
     }
     
-    export function getReadOnly(value: d.JsonExtentObject)
+    export function isReadOnly(value: d.JsonExtentObject)
     {
-        General.getReadOnly(value);
+        General.isReadOnly(value);
     }
     
     export function setWidth(value : d.JsonExtentObject, width : number)
@@ -234,17 +243,17 @@ export module TextField
     
     export class Renderer implements IRenderer
     {
-        createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery {
+        createReadField(object: d.JsonExtentObject, field: d.JsonExtentObject) : JQuery {
             var tthis = this;
             var span = $("<span />");
-            var value = object.get(field.get('name'));
+            var value = object.get(General.getName(field));
             if (value === undefined || value === null) {
                 span.html("<em>undefined</em>");
             }
             else if (_.isArray(value)) {
                 span.text('Array with ' + value.length + " items:");
                 var ul = $("<ul></ul>");
-                _.each(value, function (item: d.JsonExtentFieldInfo) {
+                _.each(value, function (item: d.JsonExtentObject) {
                     var div = $("<li></li>");
                     div.text(JSON.stringify(item.toJSON()) + " | " + item.id);
                     /*div.click(function () {
@@ -265,11 +274,11 @@ export module TextField
             return span;
         }
         
-        createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : JQuery {
+        createWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject) : JQuery {
             var value;
 
             if (object !== undefined && field !== undefined) {
-                value = object.get(field.getName());
+                value = object.get(General.getName(field));
             }
 
             // Checks, if writing is possible
@@ -293,14 +302,14 @@ export module TextField
             }
         }
     
-        setValueByWriteField(dom : JQuery, object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : void {
-            if (field.getReadOnly() === true) {
+        setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject, dom: JQuery) : void {
+            if (General.isReadOnly(field) === true) {
                 // Do nothing
                 return;
             }
 
             // Reads the value
-            object.set(field.getName(), dom.val());
+            object.set(General.getName(field), dom.val());
         }         
     }
 }

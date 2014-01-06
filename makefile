@@ -74,6 +74,7 @@ bin/web/js/datenmeister/datenmeister.js: src/DatenMeisterWeb/js/datenmeister/dat
 	bin/web/js/datenmeister/datenmeister.views.js
 
 bin/web/js/datenmeister/datenmeister.datatable.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.datatable.ts \
+	bin/web/js/datenmeister/datenmeister.fieldinfo.js \
 	bin/web/js/datenmeister/datenmeister.objects.js \
 	bin/web/js/datenmeister/datenmeister.serverapi.js
 

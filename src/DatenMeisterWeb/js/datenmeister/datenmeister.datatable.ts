@@ -5,6 +5,7 @@
 
 import d = require("datenmeister.objects");
 import api = require("datenmeister.serverapi");
+import fi = require("datenmeister.fieldinfo");
 import t = require('../dejs/dejs.table');
 
 /* 
@@ -80,9 +81,11 @@ export class DataViewEditHandler extends Backbone.Model {
         for (var n = 0; n < this.columnDoms.length; n++) {
             var dom = this.columnDoms[n];
             var column = this.view.fieldInfos[n];
-            dom.empty();
+            var renderer = fi.getRendererByObject(column);
+            
+            dom.empty();           
 
-            var writeField = this.view.createWriteField(this.currentObject, column);
+            var writeField = renderer.createWriteField(this.currentObject, column);
             this.writeFields.push(writeField);
             dom.append(writeField);
             this.editButton.html("ACCEPT");
@@ -96,7 +99,9 @@ export class DataViewEditHandler extends Backbone.Model {
     {
         for (var n = 0; n < this.columnDoms.length; n++) {
             var column = this.view.fieldInfos[n];
-            this.view.setValueByWriteField(this.currentObject, column, this.writeFields[n]);
+            
+            var renderer = fi.getRendererByObject(column);
+            renderer.setValueByWriteField(this.currentObject, column, this.writeFields[n]);
         }
     }
     
@@ -121,9 +126,9 @@ export class DataViewEditHandler extends Backbone.Model {
             else {
                 tthis.currentObject.set(key, value);
 
-                var fieldInfo = new d.JsonExtentFieldInfo();
-                fieldInfo.setName(key);
-                fieldInfo.setTitle(key);
+                var fieldInfo = new d.JsonExtentObject();
+                fi.General.setName(fieldInfo, key);
+                fi.General.setTitle(fieldInfo, key);
                 tthis.view.fieldInfos.push(fieldInfo);
                 tthis.columnDoms.push(info.valueField.parent());
 
@@ -144,8 +149,9 @@ export class DataViewEditHandler extends Backbone.Model {
                 for (var n = 0; n < tthis.columnDoms.length; n++) {
                     var dom = tthis.columnDoms[n];
                     var column = tthis.view.fieldInfos[n];
+                    var renderer = fi.getRendererByObject(column);
                     dom.empty();
-                    dom.append(tthis.view.createReadField(tthis.currentObject, column));
+                    dom.append(renderer.createReadField(tthis.currentObject, column));
                 }
 
                 tthis.editButton.html("EDIT");
@@ -239,7 +245,8 @@ export class DataView {
         this.itemClickedEvent = clickedEvent;
     }
 
-    createReadField(object: d.JsonExtentObject, field: d.JsonExtentObject): JQuery {
+    /*createReadField(object: d.JsonExtentObject, field: d.JsonExtentObject): JQuery {
+        
         var tthis = this;
         var span = $("<span />");
         var value = object.get(field.get('name'));
@@ -249,7 +256,7 @@ export class DataView {
         else if (_.isArray(value)) {
             span.text('Array with ' + value.length + " items:");
             var ul = $("<ul></ul>");
-            _.each(value, function (item: d.JsonExtentFieldInfo) {
+            _.each(value, function (item: d.JsonExtentObject) {
                 var div = $("<li></li>");
                 div.text(JSON.stringify(item.toJSON()) + " | " + item.id);
                 div.click(function () {
@@ -274,7 +281,7 @@ export class DataView {
         var value;
 
         if (object !== undefined && field !== undefined) {
-            value = object.get(field.getName());
+            value = object.get(fi.General.getName(field));
         }
 
         // Checks, if writing is possible
@@ -298,15 +305,15 @@ export class DataView {
         }
     }
 
-    setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo, dom: JQuery): void {
-        if (field.getReadOnly() === true) {
+    setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject, dom: JQuery): void {
+        if (fi.General.isReadOnly(field) === true) {
             // Do nothing
             return;
         }
 
         // Reads the value
-        object.set(field.getName(), dom.val());
-    }
+        object.set(fi.General.getName(field), dom.val());
+    }*/
 }
 
 export class DataTable extends DataView{
@@ -320,7 +327,7 @@ export class DataTable extends DataView{
     constructor(extent: d.ExtentInfo, domTable: JQuery, options?: ViewOptions) {
         super(domTable, options);
 
-        this.fieldInfos = new Array<d.JsonExtentFieldInfo>();
+        this.fieldInfos = new Array<d.JsonExtentObject>();
         this.objects = new Array<any>();
         this.extent = extent;
 
@@ -344,7 +351,7 @@ export class DataTable extends DataView{
         }
     }
 
-    defineFieldInfos(fieldInfos: Array<d.JsonExtentFieldInfo>) {
+    defineFieldInfos(fieldInfos: Array<d.JsonExtentObject>) {
         this.fieldInfos = fieldInfos;
     }
 
@@ -363,10 +370,10 @@ export class DataTable extends DataView{
                     return info.attributes.name == key;
                 }))) {
                     // No, so create new field info
-                    var fieldInfo = new d.JsonExtentFieldInfo();
-                    fieldInfo.setName(key);
-                    fieldInfo.setTitle(key);
-                    fieldInfo.setReadOnly(false);
+                    var fieldInfo = new d.JsonExtentObject();
+                    fi.General.setName(fieldInfo, key);
+                    fi.General.setTitle(fieldInfo, key);
+                    fi.General.setReadOnly(fieldInfo, false);
                     tthis.fieldInfos.push(fieldInfo);
                 }
             }
@@ -392,7 +399,7 @@ export class DataTable extends DataView{
          */
         tthis.table.addHeaderRow();
         for (var n = 0; n < this.fieldInfos.length; n++) {
-            tthis.table.addColumn(this.fieldInfos[n].getTitle());
+            tthis.table.addColumn(fi.General.getTitle(this.fieldInfos[n]));
         }
 
         // For the last column, containing all the settings
@@ -420,9 +427,11 @@ export class DataTable extends DataView{
         var columnDoms = new Array<JQuery>();
 
         for (var n = 0; n < tthis.fieldInfos.length; n++) {
+            var fieldInfo = tthis.fieldInfos[n];
+            var renderer = fi.getRendererByObject(fieldInfo);
             columnDoms.push(
                 tthis.table.addColumnJQuery(
-                    tthis.createReadField(object, tthis.fieldInfos[n])));
+                    renderer.createReadField(object, tthis.fieldInfos[n])));
         }
 
         var lastColumn = $("<div class='lastcolumn'></div>");
@@ -487,8 +496,10 @@ export class DataTable extends DataView{
             var newObject = new d.JsonExtentObject();
             for (var n = 0; n < tthis.fieldInfos.length; n++) {
                 newCells[n].empty();
+                
+                var renderer = fi.getRendererByObject(tthis.fieldInfos[n]);
 
-                var dom = tthis.createWriteField(newObject, tthis.fieldInfos[n]);
+                var dom = renderer.createWriteField(newObject, tthis.fieldInfos[n]);
                 newInputs.push(dom);
 
                 newCells[n].append(dom);
@@ -525,7 +536,9 @@ export class DataTable extends DataView{
         for (var n = 0; n < this.fieldInfos.length; n++) {
             var column = this.fieldInfos[n];
             var input = inputs[n];
-            this.setValueByWriteField(value, column, input);
+            var renderer = fi.getRendererByObject(column);
+            
+            renderer.setValueByWriteField(value, column, input);
         }
 
         api.getAPI().addObject(
