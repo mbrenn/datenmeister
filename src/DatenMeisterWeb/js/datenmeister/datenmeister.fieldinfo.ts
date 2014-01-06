@@ -10,6 +10,21 @@ export interface IRenderer
     setValueByWriteField(dom : JQuery, object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : void;
 }
 
+export function getRenderer(type: string): IRenderer
+{
+    if(type == Comment.TypeName)
+    {
+        return new Comment.Renderer();
+    }
+    
+    if(type == TextField.TypeName)
+    {
+        return new TextField.Renderer();
+    }
+    
+    throw type + " as Renderer is unknown";
+}
+
 /*
  * Defines the view element, which contains a list of field information. 
  * - fieldinfos: Array of fieldinfos to be added
@@ -36,7 +51,7 @@ export module View
             infos = new Array <d.JsonExtentObject>();
         }
         
-        infos.push(fieldInfo);        
+        infos.push(fieldInfo);
         setFieldInfos(value, infos);
     }
     
@@ -88,6 +103,8 @@ export module General
  */
 export module Comment
 {
+    export var TypeName = "DatenMeister.DataFields.Comment";
+    
     export function create(title : string, commentText? : string) : d.JsonExtentObject
     {
         var result = new d.JsonExtentObject();
@@ -129,7 +146,7 @@ export module Comment
     
         setValueByWriteField(dom : JQuery, object: d.JsonExtentObject, field: d.JsonExtentFieldInfo) : void {
             throw "Not implemented";
-        }         
+        }
     }
 }
 
@@ -144,6 +161,8 @@ export module Comment
  */
 export module TextField
 {
+    export var TypeName = "DatenMeister.DataFields.TextField";
+    
     export function create(title : string, key : string) : d.JsonExtentObject
     {
         var result = new d.JsonExtentObject();

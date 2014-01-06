@@ -4,6 +4,7 @@ import d = require("datenmeister.objects");
 import api = require("datenmeister.serverapi");
 import t = require('../dejs/dejs.table');
 import navigation = require('datenmeister.navigation');
+import fieldinfo = require('datenmeister.fieldinfo');
 
 // Defines the options that may be used to define a form
 export class FormViewOptions extends dt.ViewOptions {
@@ -40,11 +41,8 @@ export class DataForm extends dt.DataView {
         for (var i = 0, len = keys.length; i < len; i++) {
             var k = keys[i];
             var v = this.object.attributes[k];
-
-            var fieldInfo = new d.JsonExtentFieldInfo();
-            fieldInfo.setTitle(k);
-            fieldInfo.setName(k);
-            this.fieldInfos.push(fieldInfo);
+            
+            this.fieldInfos.push(fieldinfo.TextField.create(k, k));
         }
     }
 

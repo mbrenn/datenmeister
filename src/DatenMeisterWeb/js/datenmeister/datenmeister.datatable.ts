@@ -194,7 +194,7 @@ export class DataView {
 
     options: TableViewOptions;
     domElement: JQuery;
-    fieldInfos: Array<d.JsonExtentFieldInfo>;
+    fieldInfos: Array<d.JsonExtentObject>;
 
     constructor(domElement: JQuery, options: TableViewOptions) {
         this.domElement = domElement;
@@ -210,7 +210,7 @@ export class DataView {
     /*
      * Sets the field information objects
      */
-    setFieldInfos(fieldInfos: Array<d.JsonExtentFieldInfo>) {
+    setFieldInfos(fieldInfos: Array<d.JsonExtentObject>) {
         if(fieldInfos === undefined)
         {
             throw "FieldInfos === undefined";
@@ -222,7 +222,7 @@ export class DataView {
     /*
      * Adds a field info to the current data view
      */
-    addFieldInfo(fieldInfo: d.JsonExtentFieldInfo)
+    addFieldInfo(fieldInfo: d.JsonExtentObject)
     {
         if(fieldInfo === undefined)
         {
@@ -239,7 +239,7 @@ export class DataView {
         this.itemClickedEvent = clickedEvent;
     }
 
-    createReadField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
+    createReadField(object: d.JsonExtentObject, field: d.JsonExtentObject): JQuery {
         var tthis = this;
         var span = $("<span />");
         var value = object.get(field.get('name'));
@@ -270,7 +270,7 @@ export class DataView {
         return span;
     }
 
-    createWriteField(object: d.JsonExtentObject, field: d.JsonExtentFieldInfo): JQuery {
+    createWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject): JQuery {
         var value;
 
         if (object !== undefined && field !== undefined) {
