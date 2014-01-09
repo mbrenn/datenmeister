@@ -66,6 +66,10 @@ export module View
     }
 }
 
+export module FormView
+{
+}
+
 /* 
  * Describes the most generic functions
  */
@@ -86,17 +90,17 @@ export module General
         value.set("readonly", isReadOnly);
     }    
     
-    export function getTitle(value: d.JsonExtentObject)
+    export function getTitle(value: d.JsonExtentObject) : string
     {
         return value.get("title");
     }
     
-    export function getName(value: d.JsonExtentObject)
+    export function getName(value: d.JsonExtentObject) : string
     {
         return value.get("name");
     }
     
-    export function isReadOnly(value: d.JsonExtentObject)
+    export function isReadOnly(value: d.JsonExtentObject) : boolean
     {
         return value.get("readonly");
     }    
@@ -138,12 +142,21 @@ export module Comment
     {
         value.set("comment", commentText);
     }
+    export function getTitle(value: d.JsonExtentObject) : string
+    {
+        return General.getTitle(value);
+    }
+    
+    export function getComment(value: d.JsonExtentObject) : string
+    {
+        return value.get("comment");
+    }
     
     export class Renderer implements IRenderer
     {
         createReadField(object: d.JsonExtentObject, field: d.JsonExtentObject) : JQuery {
             var result = $("<div></div>");
-            result.text(object.get(General.getName(field)));
+            result.text(Comment.getComment(field));
             return result;
         }
         
@@ -196,9 +209,9 @@ export module TextField
         General.setTitle(value, title);
     }
     
-    export function getTitle(value: d.JsonExtentObject)
+    export function getTitle(value: d.JsonExtentObject) : string
     {
-        General.getTitle(value);
+        return General.getTitle(value);
     }
     
     export function setName(value : d.JsonExtentObject, name: string)
@@ -206,9 +219,9 @@ export module TextField
         General.setName(value, name);
     }
     
-    export function getName(value: d.JsonExtentObject)
+    export function getName(value: d.JsonExtentObject) : string
     {
-        General.getName(value);
+        return General.getName(value);
     }
     
     export function setReadOnly(value: d.JsonExtentObject, isReadOnly: boolean)
@@ -216,9 +229,9 @@ export module TextField
         General.setReadOnly(value, isReadOnly);
     }
     
-    export function isReadOnly(value: d.JsonExtentObject)
+    export function isReadOnly(value: d.JsonExtentObject) : boolean
     {
-        General.isReadOnly(value);
+        return General.isReadOnly(value);
     }
     
     export function setWidth(value : d.JsonExtentObject, width : number)
@@ -226,7 +239,7 @@ export module TextField
         value.set("width", width);
     }
     
-    export function getWidth(value : d.JsonExtentObject)
+    export function getWidth(value : d.JsonExtentObject) : number
     {
         return value.get("width");
     }
@@ -236,7 +249,7 @@ export module TextField
         value.set("height", height);
     }
     
-    export function getHeight(value : d.JsonExtentObject)
+    export function getHeight(value : d.JsonExtentObject) : number
     {
         return value.get("height");
     }
