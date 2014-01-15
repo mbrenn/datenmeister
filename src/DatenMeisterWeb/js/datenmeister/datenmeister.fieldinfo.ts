@@ -45,7 +45,13 @@ export module View
     
     export function getFieldInfos(value: d.JsonExtentObject) : Array<d.JsonExtentObject>
     {
-        return <Array<d.JsonExtentObject>> this.get('fieldinfos') ;
+        var result = <Array<d.JsonExtentObject>> value.get('fieldinfos') ;
+        if ( result === undefined )
+        {
+            return new Array<d.JsonExtentObject>();
+        }
+        
+        return result;        
     }
     
     export function pushFieldInfo(value: d.JsonExtentObject, fieldInfo: d.JsonExtentObject) : void
@@ -64,10 +70,104 @@ export module View
     {
         value.set('fieldinfos', fieldInfos);
     }
+    
+    export function setAllowEdit(value: d.JsonExtentObject, allowEdit: boolean)
+    {
+        value.set('allowEdit', allowEdit);
+    }
+    
+    export function getAllowEdit(value: d.JsonExtentObject) : boolean    
+    {
+        return value.get('allowEdit');
+    }
+    
+    export function setAllowNew(value: d.JsonExtentObject, allowNew: boolean)
+    {
+        value.set('allowNew', allowNew);
+    }
+    
+    export function getAllowNew(value: d.JsonExtentObject) : boolean    
+    {
+        return value.get('allowNew');
+    }
+    
+    export function setAllowDelete(value: d.JsonExtentObject, allowDelete: boolean)
+    {
+        value.set('allowDelete', allowDelete);
+    }
+    
+    export function getAllowDelete(value: d.JsonExtentObject) : boolean    
+    {
+        return value.get('allowDelete');
+    }
+    
+    export function setStartInEditMode(value: d.JsonExtentObject, startInEditMode: boolean) : void
+    {
+        value.set('startInEditMode', startInEditMode);
+    }
+    
+    export function getStartInEditMode(value: d.JsonExtentObject)
+    {
+        return value.get('startInEditMode');
+    }
 }
 
+/*
+ * Defines additional properties which are used for a formview and not for a table view
+ * All properties derived from View are also valid
+ */
 export module FormView
 {
+    export function create()
+    {
+        return View.create();
+    }
+    
+    export function setTitle(value: d.JsonExtentObject, title: string) : void
+    {
+        General.setTitle(value, title);
+    }
+    
+    export function getTitle(value: d.JsonExtentObject)
+    {
+        return General.getTitle(value);
+    }
+    
+    export function setShowColumnHeaders(value: d.JsonExtentObject, flag: boolean) : void
+    {
+        value.set('showcolumnheaders', flag);
+    }
+    
+    export function getShowColumnHeaders(value: d.JsonExtentObject) : boolean
+    {
+        return value.get('showcolumnheaders');
+    }
+    
+    export function setAllowNewProperty(value: d.JsonExtentObject, allowNewProperty: boolean) : void
+    {
+        value.set('allowNewProperty', allowNewProperty);
+    }
+    
+    export function getAllowNewProperty(value: d.JsonExtentObject) : boolean
+    {
+        return value.get('allowNewProperty');
+    }
+}
+
+/*
+ * Defines additional properties which are used for a tableview and not for a form view
+ * All properties derived from View are also valid
+ */
+export module TableView
+{
+    export function create() : d.JsonExtentObject
+    {
+        var result = View.create();
+        View.setAllowDelete(result, true);
+        View.setAllowNew(result, true);
+        View.setAllowEdit(result, true);
+        return result;
+    }
 }
 
 /* 

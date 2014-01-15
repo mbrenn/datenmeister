@@ -6,15 +6,9 @@ import t = require('../dejs/dejs.table');
 import navigation = require('datenmeister.navigation');
 import fi = require('datenmeister.fieldinfo');
 
-// Defines the options that may be used to define a form
-export class FormViewOptions extends dt.ViewOptions {
-    allowNewProperty: boolean;
-}
-
 export class DataForm extends dt.DataView {
     object: d.JsonExtentObject;
     domElement: JQuery;
-    options: FormViewOptions;
 
     /* 
      * Stores the information whether the form shall be used to create a new item.
@@ -22,15 +16,10 @@ export class DataForm extends dt.DataView {
      */
     createNewItem: boolean; 
 
-    constructor(object: d.JsonExtentObject, domElement: JQuery, options?: FormViewOptions) {
-        super(domElement, options);
+    constructor(object: d.JsonExtentObject, domElement: JQuery, viewInfo?: d.JsonExtentObject) {
+        super(domElement, viewInfo);
 
         this.object = object;
-        this.fieldInfos = new Array<d.JsonExtentObject>();
-
-        if (this.options.allowNewProperty !== undefined) {
-            this.options.allowNewProperty = options.allowNewProperty;
-        }
     }
 
     /*
@@ -42,7 +31,7 @@ export class DataForm extends dt.DataView {
             var k = keys[i];
             var v = this.object.attributes[k];
             
-            this.fieldInfos.push(fi.TextField.create(k, k));
+            this.addFieldInfo(fi.TextField.create(k, k));
         }
     }
 
@@ -58,12 +47,17 @@ export class DataForm extends dt.DataView {
         var table = new t.Table(this.domElement, tableOptions);
 
         // Creates Column headers for the table
-        table.addHeaderRow();
-        table.addColumn("Key");
-        table.addColumn("Value");
+        
+        if(fi.FormView.getShowColumnHeaders(this.viewInfo) !== false)
+        {
+            table.addHeaderRow();
+            table.addColumn("Key");
+            table.addColumn("Value");
+        }
 
         // Go through each field and show the field in an appropriate column
-        _.each(this.fieldInfos, function (f) {
+        var fieldInfos = this.getFieldInfos();
+        _.each(fieldInfos, function (f) {
             var renderer = fi.getRendererByObject(f);
             table.addRow();
 
@@ -72,14 +66,16 @@ export class DataForm extends dt.DataView {
         });
 
         // Creates the action field for Edit and Delete
-        if (this.options.allowEdit || this.options.allowDelete || this.options.startInEditMode) {
+        if (fi.View.getAllowEdit(this.viewInfo) 
+            || fi.View.getAllowDelete(this.viewInfo) 
+            || fi.View.getStartInEditMode(this.viewInfo)) {
             var lastRow = table.addRow();
             table.addColumn("");
 
             var div = $("<div class='lastcolumn'></div>");
 
-            if (this.options.allowDelete) {
                 var deleteButton = $("<button class='btn btn-default'>DELETE</button>");
+            if (fi.View.getAllowEdit(this.viewInfo)) {
                 var clicked = false;
                 deleteButton.click(function () {
                     if (!clicked) {
@@ -96,7 +92,7 @@ export class DataForm extends dt.DataView {
                 div.append(deleteButton);
             }
 
-            if (this.options.allowEdit === true || this.options.startInEditMode === true) {
+            if (fi.View.getAllowEdit(this.viewInfo) === true || fi.View.getStartInEditMode(this.viewInfo) === true) {
                 var editButton = $("<button class='btn btn-default'>EDIT</button>");
                 var newPropertyRows = new Array<JQuery>();
 
@@ -106,7 +102,7 @@ export class DataForm extends dt.DataView {
                     'editModeChange', 
                     function (inEditMode) {
                         // Called, if the user switches from view mode to edit mode or back
-                        if (tthis.options.allowNewProperty === true) {
+                        if (fi.FormView.getAllowNewProperty(tthis.viewInfo) === true) {
                             if (inEditMode) {
                                 tthis.createNewPropertyRow(table, lastRow, handler);
                             }
@@ -121,13 +117,13 @@ export class DataForm extends dt.DataView {
                         }
                     });
 
-                if(this.options.allowEdit === true)
+                if(fi.View.getAllowEdit(this.viewInfo) === true)
                 {
                     // Button is only added, when user is allowed to switch between edit and non-edit
                     div.append(editButton);
                 }               
         
-                if(this.options.startInEditMode === true)
+                if(fi.View.getStartInEditMode(this.viewInfo) === true)
                 {
                     handler.switchToEdit();
                 }

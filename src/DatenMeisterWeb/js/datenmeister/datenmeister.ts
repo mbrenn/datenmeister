@@ -8,6 +8,7 @@ import d = require("datenmeister.objects");
 import views = require("datenmeister.views");
 import navigation = require("datenmeister.navigation");
 import forms = require('datenmeister.dataform');
+import fi = require('datenmeister.fieldinfo');
 
 // Initializes the whole application by creating the form
 export function init() {
@@ -91,11 +92,11 @@ class AppRouter extends Backbone.Router {
             return;
         }
 
-        var options = new forms.FormViewOptions();
-        options.allowDelete = true;
-        options.allowEdit = true;
-        options.allowNew = true;
-        options.allowNewProperty = true;
+        var options = fi.FormView.create();
+        fi.View.setAllowDelete(options, true);
+        fi.View.setAllowEdit(options, true);
+        fi.View.setAllowNew(options, true);
+        fi.FormView.setAllowNewProperty(options, true);
         
         views.prepareForViewChange();
 

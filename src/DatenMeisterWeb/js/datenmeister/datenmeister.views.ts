@@ -4,7 +4,7 @@ import d = require("datenmeister.objects");
 import t = require("datenmeister.datatable");
 import forms = require("datenmeister.dataform");
 import navigation = require("datenmeister.navigation");
-import fieldinfo = require("datenmeister.fieldinfo");
+import fi = require("datenmeister.fieldinfo");
 
 /* 
  * Has to be called before every view,
@@ -92,9 +92,9 @@ export class ServerConnectionView extends Backbone.View {
  * - tableOptions: Additional options (like: Edit allowed, etc)
  */
 export interface DefaultTableViewOptions extends Backbone.ViewOptions {
-    tableOptions?: t.ViewOptions;
     extentElement?: d.JsonExtentData;
     url?: string;
+    viewObject?: d.JsonExtentObject;
 }
 
 /*
@@ -103,7 +103,6 @@ export interface DefaultTableViewOptions extends Backbone.ViewOptions {
  */
 export class DefaultTableView extends Backbone.View {
     extentElement: d.JsonExtentData;
-    tableOptions: t.ViewOptions;
     url: string;
     data: d.JsonExtentData;  // Result from query, which will be shown render
     columns: Array<d.JsonExtentObject>;
@@ -121,7 +120,7 @@ export class DefaultTableView extends Backbone.View {
         if (this.url !== undefined && this.extentElement === undefined) {
             this.loadAndRender();
         }
-        else if (this.extentElement !== undefined && this.tableOptions !== undefined) {
+        else if (this.extentElement !== undefined && this.viewObject !== undefined) {
             this.render();
         }
         else {
@@ -155,7 +154,7 @@ export class DefaultTableView extends Backbone.View {
 
     showObjects(): t.DataTable {
         var tthis = this;
-        var table = new t.DataTable(this.data.extent, this.$(".datatable"), this.tableOptions);
+        var table = new t.DataTable(this.data.extent, this.$(".datatable"), this.viewObject);
         
         // Adds the objects
         for (var n = 0; n < this.data.objects.length; n++) {
@@ -233,11 +232,11 @@ export class AllExtentsView extends DefaultTableView {
 
         super(options);
 
-        if (this.tableOptions === undefined) {
-            this.tableOptions = new t.ViewOptions();
-            this.tableOptions.allowNew = false;
-            this.tableOptions.allowEdit = false;
-            this.tableOptions.allowDelete = false;
+        if (this.viewObject === undefined) {
+            this.viewObject = fi.TableView.create();
+            fi.View.setAllowNew(this.viewObject, false);
+            fi.View.setAllowEdit(this.viewObject, false);
+            fi.View.setAllowDelete(this.viewObject, false);
         }
 
         this.bind('itemclicked', function (clickedObject) {
@@ -263,9 +262,6 @@ export interface DetailViewOptions extends Backbone.ViewOptions{
     
     // The url of the view object. The loaded object will be stored in 'viewObject'
     viewUrl?: string;
-    
-    // Defines the options for the create of the form (Like editable, etc)
-    options?: forms.FormViewOptions;
 }
 
 export class DetailView extends Backbone.View {
@@ -276,8 +272,6 @@ export class DetailView extends Backbone.View {
     // If no viewObject has been given, a default view will be generated
     viewUrl: string;
     viewObject: d.JsonExtentObject;
-    
-    options: forms.FormViewOptions;
 
     constructor(options: DetailViewOptions) {
         var tthis = this;
@@ -449,16 +443,15 @@ export class ViewSelector extends Backbone.View {
 export class CreateNewExtentView extends DetailView
 {
     constructor(options: DetailViewOptions) {
-        options.options = new forms.FormViewOptions();
-        options.options.allowEdit = false;
-        options.options.allowNew = false;
-        options.options.allowDelete = false;
-        options.options.startInEditMode = true;
+        var view = fi.FormView.create();
+        fi.View.setAllowEdit(view,false);
+        fi.View.setAllowNew(view,false);
+        fi.View.setAllowDelete(view,false);
+        fi.View.setStartInEditMode(view,false);
         
-        var view = fieldinfo.View.create();
-        fieldinfo.View.pushFieldInfo(view, fieldinfo.Comment.create("Information", "Please give a title and filename for the new extent (without file extension)"));
-        fieldinfo.View.pushFieldInfo(view, fieldinfo.TextField.create("Name", "name"));
-        fieldinfo.View.pushFieldInfo(view, fieldinfo.TextField.create("Filename", "filename"));
+        fi.View.pushFieldInfo(view, fi.Comment.create("Information", "Please give a title and filename for the new extent (without file extension)"));
+        fi.View.pushFieldInfo(view, fi.TextField.create("Name", "name"));
+        fi.View.pushFieldInfo(view, fi.TextField.create("Filename", "filename"));
         
         this.viewObject = view;
         this.object = new d.JsonExtentObject();

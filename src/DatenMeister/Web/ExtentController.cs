@@ -112,9 +112,9 @@ namespace DatenMeister.Web
         }
 
         [WebMethod]
-        public IActionResult EditObject(string uri, [PostModel] Dictionary<string, string> values)
-        {
-            IURIExtent extent;
+		public IActionResult EditObject (string uri, [PostModel] Dictionary<string, string> values)
+		{
+			IURIExtent extent;
             var element = this.GetElementByUri(uri, out extent);
             foreach (var pair in values)
             {
