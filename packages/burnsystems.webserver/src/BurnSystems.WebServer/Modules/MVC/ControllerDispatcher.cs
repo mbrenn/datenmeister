@@ -243,8 +243,6 @@ namespace BurnSystems.WebServer.Modules.MVC
 
 						// Rest is Get-Parameter
 						var value = info.Context.Request.QueryString [parameter.Name];
-						Console.WriteLine (info.Context.Request.Url.ToString ());
-						Console.WriteLine ("Parameter: " + parameter.Name + " = " + value);
                         if (value == null)
                         {
                             callArguments.Add(this.GetDefaultArgument(parameter));
