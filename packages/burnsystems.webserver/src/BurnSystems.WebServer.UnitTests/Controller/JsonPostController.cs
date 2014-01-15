@@ -9,9 +9,10 @@ namespace BurnSystems.WebServer.UnitTests.Controller
     public class JsonPostController: Modules.MVC.Controller
     {
         [WebMethod]
-        public IActionResult Load([PostModel] JsonPostTestStructure structure)
-        {
-            return this.Html("Property: " + structure.prop + "\r\nName: " + structure.substructure.name);
+		public IActionResult Load (string uri, [PostModel] JsonPostTestStructure structure)
+		{
+			Console.WriteLine (uri);
+            return this.Html("Uri: " + uri + "\r\nProperty: " + structure.prop + "\r\nName: " + structure.substructure.name);
         }
     }
 }

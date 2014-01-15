@@ -1,6 +1,6 @@
 CS_FILES = $(shell find src/ -type f -name *.cs)
 
-all: build_burnsystems build_burnsystems_parser bin/BurnSystems.WebServer.dll bin/BurnSystems.WebServer.UnitTests.dll bin/test-server/SimpleTestServer.exe
+all: build_burnsystems build_burnsystems_parser bin/BurnSystems.WebServer.dll bin/BurnSystems.WebServer.UnitTests.dll bin/test-server/SimpleTestServer.exe copy_files
 
 .PHONY: build_burnsystems
 build_burnsystems:
@@ -32,6 +32,9 @@ build_SimpleTestServer: bin/SimpleTestServer.exe
 
 bin/test-server/SimpleTestServer.exe: $(CS_FILES) bin/BurnSystems.WebServer.dll
 	xbuild src/SimpleTestServer/SimpleTestServer.csproj
+
+.PHONY: copy_files
+copy_files:
 	mkdir -p bin/
 	mkdir -p bin/test-server
 	cp -r src/SimpleTestServer/bin/Debug/* bin/test-server

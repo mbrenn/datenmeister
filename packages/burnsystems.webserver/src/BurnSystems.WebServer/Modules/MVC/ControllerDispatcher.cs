@@ -143,122 +143,108 @@ namespace BurnSystems.WebServer.Modules.MVC
         /// <param name="context">WebContext for request</param>
         /// <param name="controller">Controller to be used</param>
         /// <param name="methodName">Requested web method</param>
-        public void DispatchForWebMethod(ObjectActivation.IActivates activates, ContextDispatchInformation info, string methodName)
-        {
-            try
-            {
-                // Creates controller
-                var controller = activates.Create(this.controllerType) as Controller;
-                Ensure.That(controller != null, "Not a ControllerType: " + this.controllerType.FullName);
+        public void DispatchForWebMethod (ObjectActivation.IActivates activates, ContextDispatchInformation info, string methodName)
+		{
+			try {
+				// Creates controller
+				var controller = activates.Create (this.controllerType) as Controller;
+				Ensure.That (controller != null, "Not a ControllerType: " + this.controllerType.FullName);
 
-                // Try to find the method
-                foreach (var webMethodInfo in this.webMethodInfos
-                    .Where(x => x.Name == methodName))
-                {
-                    // Check for http Method
-                    if (!string.IsNullOrEmpty(webMethodInfo.IfMethodIs))
-                    {
-                        if (webMethodInfo.IfMethodIs != info.HttpMethod.ToLower())
-                        {
-                            // No match, 
-                            continue;
-                        }
-                    }
+				// Try to find the method
+				foreach (var webMethodInfo in this.webMethodInfos
+                    .Where(x => x.Name == methodName)) {
+					// Check for http Method
+					if (!string.IsNullOrEmpty (webMethodInfo.IfMethodIs)) {
+						if (webMethodInfo.IfMethodIs != info.HttpMethod.ToLower ()) {
+							// No match, 
+							continue;
+						}
+					}
 
-                    // Ok, now look for get variables
-                    var parameters = webMethodInfo.MethodInfo.GetParameters();
-                    var callArguments = new List<object>();
-                    foreach (var parameter in parameters)
-                    {
-                        var parameterAttributes = parameter.GetCustomAttributes(false);
+					// Ok, now look for get variables
+					var parameters = webMethodInfo.MethodInfo.GetParameters ();
+					var callArguments = new List<object> ();
+					foreach (var parameter in parameters) {
+						var parameterAttributes = parameter.GetCustomAttributes (false);
 
-                        /////////////////////////////////
-                        // Check for POST-Parameter
-                        var postParameterAttribute = parameterAttributes.Where(x => x is PostModelAttribute).Cast<PostModelAttribute>().FirstOrDefault();
-                        if (postParameterAttribute != null)
-                        {
-                            if (info.HttpMethod.ToLower() != "post")
-                            {
-                                callArguments.Add(null);
-                            }
-                            else
-                            {
-                                callArguments.Add(
-                                    this.CreatePostModel(activates, parameter));
-                            }
+						/////////////////////////////////
+						// Check for POST-Parameter
+						var postParameterAttribute = parameterAttributes.Where (x => x is PostModelAttribute).Cast<PostModelAttribute> ()
+							.FirstOrDefault ();
+						if (postParameterAttribute != null) {
+							if (info.HttpMethod.ToLower () != "post") {
+								callArguments.Add (null);
+							} else {
+								callArguments.Add (
+                                    this.CreatePostModel (activates, parameter));
+							}
 
-                            continue;
-                        }
+							continue;
+						}
 
-                        /////////////////////////////////
-                        // Check for RawPost
-                        var rawPostAttribute = parameterAttributes.Where(x => x is RawPostAttribute).Cast<RawPostAttribute>().FirstOrDefault();
-                        if (rawPostAttribute != null)
-                        {
-                            using (var requestStream = info.Context.Request.InputStream)
-                            {
-                                using (var reader = new BinaryReader(requestStream))
-                                {
-                                    var length = (int)info.Context.Request.ContentLength64;
-                                    Ensure.That(info.Context.Request.ContentLength64 < 10 * 1024 * 1024);
+						/////////////////////////////////
+						// Check for RawPost
+						var rawPostAttribute = parameterAttributes.Where (x => x is RawPostAttribute).Cast<RawPostAttribute> ()
+							.FirstOrDefault ();
+						if (rawPostAttribute != null) {
+							using (var requestStream = info.Context.Request.InputStream) {
+								using (var reader = new BinaryReader(requestStream)) {
+									var length = (int)info.Context.Request.ContentLength64;
+									Ensure.That (info.Context.Request.ContentLength64 < 10 * 1024 * 1024);
 
-                                    var data = new byte[length];
-                                    var toBeRead = length;
-                                    var alreadyRead = 0;
+									var data = new byte[length];
+									var toBeRead = length;
+									var alreadyRead = 0;
 
-                                    while (toBeRead > 0)
-                                    {
-                                        var read = reader.Read(data, alreadyRead, length - alreadyRead);
-                                        Ensure.That(read > 0, "Less bytes read than expected");
+									while (toBeRead > 0) {
+										var read = reader.Read (data, alreadyRead, length - alreadyRead);
+										Ensure.That (read > 0, "Less bytes read than expected");
 
-                                        toBeRead -= read;
-                                        alreadyRead += read;
-                                    }
+										toBeRead -= read;
+										alreadyRead += read;
+									}
 
-                                    callArguments.Add(data);
-                                }
-                            }
+									callArguments.Add (data);
+								}
+							}
 
-                            continue;
-                        }
+							continue;
+						}
 
-                        /////////////////////////////////
-                        // Check for injection parameter
-                        var injectParameterAttribute = parameterAttributes.Where(x => x is InjectAttribute).Cast<InjectAttribute>().FirstOrDefault();
-                        if (injectParameterAttribute != null)
-                        {
-                            object argument;
-                            if (string.IsNullOrEmpty(injectParameterAttribute.ByName))
-                            {
-                                // Ok, we are NOT by name, injection by type
-                                argument = activates.Get(parameter.ParameterType);
-                            }
-                            else
-                            {
-                                argument = activates.GetByName(injectParameterAttribute.ByName);
-                            }
+						/////////////////////////////////
+						// Check for injection parameter
+						var injectParameterAttribute = parameterAttributes.Where (x => x is InjectAttribute).Cast<InjectAttribute> ()
+							.FirstOrDefault ();
+						if (injectParameterAttribute != null) {
+							object argument;
+							if (string.IsNullOrEmpty (injectParameterAttribute.ByName)) {
+								// Ok, we are NOT by name, injection by type
+								argument = activates.Get (parameter.ParameterType);
+							} else {
+								argument = activates.GetByName (injectParameterAttribute.ByName);
+							}
 
-                            if (argument == null && injectParameterAttribute.IsMandatory)
-                            {
-                                throw new InvalidOperationException("Parameter '" + injectParameterAttribute.ByName + "' is required as mandatory but has not been set");
-                            }
+							if (argument == null && injectParameterAttribute.IsMandatory) {
+								throw new InvalidOperationException ("Parameter '" + injectParameterAttribute.ByName + "' is required as mandatory but has not been set");
+							}
 
-                            callArguments.Add(argument);
-                            continue;
-                        }
+							callArguments.Add (argument);
+							continue;
+						}
 
-                        /////////////////////////////////
-                        // Check for Url-Parameter
-                        var urlParameterAttributes = parameterAttributes.Where(x => x is UrlParameterAttribute).FirstOrDefault();
-                        if (urlParameterAttributes != null)
-                        {
-                            callArguments.Add(null);
-                            // Is a url parameter attribute, do not like this
-                            continue;
-                        }
+						/////////////////////////////////
+						// Check for Url-Parameter
+						var urlParameterAttributes = parameterAttributes.Where (x => x is UrlParameterAttribute).FirstOrDefault ();
+						if (urlParameterAttributes != null) {
+							callArguments.Add (null);
+							// Is a url parameter attribute, do not like this
+							continue;
+						}
 
-                        // Rest is Get-Parameter
-                        var value = info.Context.Request.QueryString[parameter.Name];
+						// Rest is Get-Parameter
+						var value = info.Context.Request.QueryString [parameter.Name];
+						Console.WriteLine (info.Context.Request.Url.ToString ());
+						Console.WriteLine ("Parameter: " + parameter.Name + " = " + value);
                         if (value == null)
                         {
                             callArguments.Add(this.GetDefaultArgument(parameter));

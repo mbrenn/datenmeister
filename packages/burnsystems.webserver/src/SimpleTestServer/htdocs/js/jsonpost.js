@@ -13,13 +13,13 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: 'controller/jsontest/Load',
+            url: 'controller/jsontest/Load?uri=' + encodeURIComponent(encodeURIComponent('abc.html#abs?abc=123&x=1')),
             data: JSON.stringify(dataToBeSent),
             headers: { 'Content-Type': 'application/json' },
             success: function (data) {
                 alert(data);
             }
-        });
-
+        });       
+        
     });
 });
