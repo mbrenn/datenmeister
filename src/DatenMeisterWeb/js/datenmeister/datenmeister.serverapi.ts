@@ -78,6 +78,16 @@ export class ServerAPI {
     __getUrl(): string {
         return this.connectionInfo.serverAddress;
     }
+    
+    /*
+     * Encodes the URI twice to transmit via QueryString
+     * Mono HttpWebserver decodes the uri once when it has been received.
+     */
+    __doubleEncodeUri(uri: string)
+    {
+        return encodeURIComponent(encodeURIComponent(uri));
+    }
+    
 
     getServerInfo(success: (info: ServerInfo) => void, fail?: () => void) {
         ajax.performRequest({
@@ -131,7 +141,7 @@ export class ServerAPI {
     getObject(uri: string, success: (object: d.JsonExtentObject) => void) {
         var tthis = this;
         ajax.performRequest({
-            url: this.__getUrl() + "extent/GetObject?uri=" + encodeURIComponent(uri),
+            url: this.__getUrl() + "extent/GetObject?uri=" + this.__doubleEncodeUri(uri),
             success: function (data: any) {
                 if (success !== undefined) {
                     var result = tthis.convertToJsonObject(data);
@@ -166,7 +176,7 @@ export class ServerAPI {
     getObjectsInExtent(uri: string, success: (extentData: d.JsonExtentData) => void, fail?: () => void) {
         var tthis = this;
         ajax.performRequest({
-            url: this.__getUrl() + "extent/GetObjectsInExtent?uri=" + uri,
+            url: this.__getUrl() + "extent/GetObjectsInExtent?uri=" + this.__doubleEncodeUri(uri),
             prefix: 'loadobjects_',
             success: function (data: any) {
                 if (success !== undefined) {
@@ -193,7 +203,7 @@ export class ServerAPI {
 
     deleteObject(uri: string, success: () => void, fail?: () => void) {
         ajax.performRequest({
-            url: this.__getUrl() + "extent/DeleteObject?uri=" + encodeURIComponent(uri),
+            url: this.__getUrl() + "extent/DeleteObject?uri=" + this.__doubleEncodeUri(uri),
             prefix: 'deleteobject_',
             method: 'post',
             success: function () {
@@ -212,7 +222,7 @@ export class ServerAPI {
     editObject(uri: string, object: Backbone.Model, success: () => void, fail?: () => void) {
         var data = object.attributes;
         ajax.performRequest({
-            url: this.__getUrl() + "extent/EditObject?uri=" + encodeURIComponent(uri),
+            url: this.__getUrl() + "extent/EditObject?uri=" + this.__doubleEncodeUri(uri),
             prefix: 'editobject_',
             method: 'post',
             data: data,
@@ -232,7 +242,7 @@ export class ServerAPI {
     addObject(uri: string, data: any, success: (data: d.JsonExtentObject) => void, fail?: () => void) {
         var tthis = this;
         ajax.performRequest({
-            url: this.__getUrl() + "extent/AddObject?uri=" + encodeURIComponent(uri),
+            url: this.__getUrl() + "extent/AddObject?uri=" + this.__doubleEncodeUri(uri),
             prefix: 'editobject_',
             method: 'post',
             data: data,

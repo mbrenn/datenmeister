@@ -198,7 +198,7 @@ export class ExtentTableView extends DefaultTableView {
             var route = "view/" + encodeURIComponent(clickedObject.extentUri + "#" + clickedObject.id);
             navigation.to(route);
         });
-        
+
         // Updates the selector view
         var viewSelectorModel = new ViewSelectorModel();
         viewSelectorModel.setCurrentView(this.viewUrl);
@@ -301,7 +301,7 @@ export class DetailView extends Backbone.View {
         var viewSelector = new ViewSelector(
             {
                 el: this.$(".view_selector"),
-                model: viewSelectorModel           
+                model: viewSelectorModel
             });
 
         viewSelector.unbind('viewselected');
@@ -340,7 +340,7 @@ export class DetailView extends Backbone.View {
 
         this.$(".form").empty();
 
-        var form = new forms.DataForm(this.object, this.$el, this.options);
+        var form = new forms.DataForm(this.object, this.$el, this.viewObject);
 
         if (this.viewObject === undefined) {
             form.autoGenerateFields();
@@ -447,15 +447,16 @@ export class CreateNewExtentView extends DetailView
         fi.View.setAllowEdit(view,false);
         fi.View.setAllowNew(view,false);
         fi.View.setAllowDelete(view,false);
-        fi.View.setStartInEditMode(view,false);
-        
+        fi.View.setStartInEditMode(view,true);
+        fi.FormView.setShowColumnHeaders(view, false);
+
         fi.View.pushFieldInfo(view, fi.Comment.create("Information", "Please give a title and filename for the new extent (without file extension)"));
         fi.View.pushFieldInfo(view, fi.TextField.create("Name", "name"));
         fi.View.pushFieldInfo(view, fi.TextField.create("Filename", "filename"));
-        
+
         this.viewObject = view;
         this.object = new d.JsonExtentObject();
-        
+
         // This method already calls renders
         super(options);
     }

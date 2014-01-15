@@ -130,7 +130,7 @@ build-web: copy_typescript_definitions compile_typescript
 	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/Require/*.js bin/web/js/requirejs/
 	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/Require/*.ts bin/web/js/requirejs/
 	cp packages/burnsystems.webserver/src/BurnSystems.WebServer/Resources/JQuery/*.js bin/web/js/jquery/
-	
+
 # Rule to transfer Typescript files to JavaScript files
 bin/web/js/datenmeister/%.js : src/DatenMeisterWeb/js/datenmeister/%.ts 
 	mkdir -p $(@D)

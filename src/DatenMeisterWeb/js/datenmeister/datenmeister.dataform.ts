@@ -30,7 +30,7 @@ export class DataForm extends dt.DataView {
         for (var i = 0, len = keys.length; i < len; i++) {
             var k = keys[i];
             var v = this.object.attributes[k];
-            
+
             this.addFieldInfo(fi.TextField.create(k, k));
         }
     }
@@ -47,7 +47,6 @@ export class DataForm extends dt.DataView {
         var table = new t.Table(this.domElement, tableOptions);
 
         // Creates Column headers for the table
-        
         if(fi.FormView.getShowColumnHeaders(this.viewInfo) !== false)
         {
             table.addHeaderRow();
