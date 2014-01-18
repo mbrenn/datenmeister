@@ -68,7 +68,7 @@ export class DataViewEditHandler extends Backbone.Model {
             
             dom.empty();           
 
-            var writeField = renderer.createWriteField(this.currentObject, column);
+            var writeField = renderer.createWriteField(this.currentObject, column, this.view);
             this.writeFields.push(writeField);
             dom.append(writeField);
             this.editButton.html("ACCEPT");
@@ -86,7 +86,7 @@ export class DataViewEditHandler extends Backbone.Model {
             var column = fieldInfos[n];
             
             var renderer = fi.getRendererByObject(column);
-            renderer.setValueByWriteField(this.currentObject, column, this.writeFields[n]);
+            renderer.setValueByWriteField(this.currentObject, column, this.writeFields[n], this.view);
         }
     }
     
@@ -137,7 +137,7 @@ export class DataViewEditHandler extends Backbone.Model {
                     var column = fieldInfos[n];
                     var renderer = fi.getRendererByObject(column);
                     dom.empty();
-                    dom.append(renderer.createReadField(tthis.currentObject, column));
+                    dom.append(renderer.createReadField(tthis.currentObject, column, this.view));
                 }
 
                 tthis.editButton.html("EDIT");
@@ -180,7 +180,7 @@ export class DataViewEditHandler extends Backbone.Model {
     }
 }
 
-export class DataView {
+export class DataView implements fi.IDataView {
 
     itemClickedEvent: (object: d.JsonExtentObject) => void;
 
@@ -343,7 +343,7 @@ export class DataTable extends DataView{
             var renderer = fi.getRendererByObject(fieldInfo);
             columnDoms.push(
                 tthis.table.addColumnJQuery(
-                    renderer.createReadField(object, fieldInfos[n])));
+                    renderer.createReadField(object, fieldInfos[n], this)));
         }
 
         var lastColumn = $("<div class='lastcolumn'></div>");
@@ -412,7 +412,7 @@ export class DataTable extends DataView{
                 
                 var renderer = fi.getRendererByObject(fieldInfos[n]);
 
-                var dom = renderer.createWriteField(newObject, fieldInfos[n]);
+                var dom = renderer.createWriteField(newObject, fieldInfos[n], this);
                 newInputs.push(dom);
 
                 newCells[n].append(dom);
@@ -454,7 +454,7 @@ export class DataTable extends DataView{
             var input = inputs[n];
             var renderer = fi.getRendererByObject(column);
             
-            renderer.setValueByWriteField(value, column, input);
+            renderer.setValueByWriteField(value, column, input, this);
         }
 
         api.getAPI().addObject(

@@ -1,13 +1,25 @@
 
 import d = require("datenmeister.objects");
 
+/*
+ * Defines the interface for the view objects, which contain
+ * creates the view for the browser. 
+ * For example dt.DataForm and dt.DataTable should implement this interface
+ */
+export interface IDataView
+{
+}
+
+/*
+ * Defines the renderer interface for the objects
+ */
 export interface IRenderer
 {
-    createReadField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject) : JQuery;
+    createReadField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : JQuery;
     
-    createWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject) : JQuery;
+    createWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : JQuery;
     
-    setValueByWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, dom: JQuery) : void;
+    setValueByWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, dom: JQuery, form: IDataView) : void;
 }
 
 export function getRendererByObject(object: d.JsonExtentObject): IRenderer
@@ -15,6 +27,9 @@ export function getRendererByObject(object: d.JsonExtentObject): IRenderer
     return getRenderer(object.get("type"));
 }
 
+/* 
+ * Gets the renderer for a specific object type
+ */
 export function getRenderer(type: string): IRenderer
 {
     if(type == Comment.TypeName)
@@ -42,7 +57,7 @@ export module View
         result.set('fieldinfos', new Array<d.JsonExtentObject>());
         return result;
     }
-    
+
     export function getFieldInfos(value: d.JsonExtentObject) : Array<d.JsonExtentObject>
     {
         var result = <Array<d.JsonExtentObject>> value.get('fieldinfos') ;
@@ -50,8 +65,8 @@ export module View
         {
             return new Array<d.JsonExtentObject>();
         }
-        
-        return result;        
+
+        return result;
     }
     
     export function pushFieldInfo(value: d.JsonExtentObject, fieldInfo: d.JsonExtentObject) : void
@@ -254,18 +269,18 @@ export module Comment
     
     export class Renderer implements IRenderer
     {
-        createReadField(object: d.JsonExtentObject, field: d.JsonExtentObject) : JQuery {
+        createReadField(object: d.JsonExtentObject, field: d.JsonExtentObject, form: IDataView) : JQuery {
             var result = $("<div></div>");
             result.text(Comment.getComment(field));
             return result;
         }
         
-        createWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject) : JQuery {
+        createWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject, form: IDataView) : JQuery {
             // Same as read field
-            return this.createReadField(object, field);
+            return this.createReadField(object, field, form);
         }
     
-        setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject, dom: JQuery) : void {
+        setValueByWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject, dom: JQuery, form: IDataView) : void {
             // Just a comment, nothing to do here
             return;
         }
@@ -356,7 +371,7 @@ export module TextField
     
     export class Renderer implements IRenderer
     {
-        createReadField(object: d.JsonExtentObject, field: d.JsonExtentObject) : JQuery {
+        createReadField(object: d.JsonExtentObject, field: d.JsonExtentObject, form: IDataView) : JQuery {
             var tthis = this;
             var span = $("<span />");
             var value = object.get(General.getName(field));
@@ -387,7 +402,7 @@ export module TextField
             return span;
         }
         
-        createWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject) : JQuery {
+        createWriteField(object: d.JsonExtentObject, field: d.JsonExtentObject, form: IDataView) : JQuery {
             var value;
 
             if (object !== undefined && field !== undefined) {
@@ -411,7 +426,7 @@ export module TextField
                 return inputField;
             }
             else {
-                return this.createReadField(object, field);
+                return this.createReadField(object, field, form);
             }
         }
     
@@ -424,5 +439,30 @@ export module TextField
             // Reads the value
             object.set(General.getName(field), dom.val());
         }         
+    }
+}
+
+/*
+ * Defines the module for the button
+ */
+export module ActionButton
+{
+    export class Renderer implements IRenderer
+    { 
+        createReadField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : JQuery
+        {
+            return null;
+        }
+        
+        createWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : JQuery
+        {
+            return this.createReadField(object, fieldInfo, form);
+        }
+        
+        setValueByWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, dom: JQuery, form: IDataView) : void
+        {
+            // Buttons don't have action stuff
+            return;
+        }
     }
 }

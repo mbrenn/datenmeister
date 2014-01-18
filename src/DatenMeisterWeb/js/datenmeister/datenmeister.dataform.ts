@@ -6,7 +6,7 @@ import t = require('../dejs/dejs.table');
 import navigation = require('datenmeister.navigation');
 import fi = require('datenmeister.fieldinfo');
 
-export class DataForm extends dt.DataView {
+export class DataForm extends dt.DataView implements fi.IDataView {
     object: d.JsonExtentObject;
     domElement: JQuery;
 
@@ -61,7 +61,7 @@ export class DataForm extends dt.DataView {
             table.addRow();
 
             table.addColumn(f.get('title'));
-            columnDoms.push(table.addColumnJQuery(renderer.createReadField(tthis.object, f)));
+            columnDoms.push(table.addColumnJQuery(renderer.createReadField(tthis.object, f, this)));
         });
 
         // Creates the action field for Edit and Delete
@@ -145,8 +145,8 @@ export class DataForm extends dt.DataView {
         
         var renderer = new fi.TextField.Renderer();
 
-        var keyElement = renderer.createWriteField(undefined, undefined);
-        var valueElement = renderer.createWriteField(undefined, undefined);
+        var keyElement = renderer.createWriteField(undefined, undefined, this);
+        var valueElement = renderer.createWriteField(undefined, undefined, this);
         handler.addNewPropertyField(
             {
                 rowDom: newPropertyRow,
