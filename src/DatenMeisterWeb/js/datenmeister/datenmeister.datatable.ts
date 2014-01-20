@@ -1,7 +1,6 @@
 /// <reference path="../backbone/backbone.d.ts" />
 /// <reference path="../underscore/underscore.d.ts" />
 /// <reference path="../dejs/dejs.table.d.ts" />
-/// <reference path="datenmeister.objects.ts" />
 
 import d = require("datenmeister.objects");
 import api = require("datenmeister.serverapi");
@@ -66,7 +65,7 @@ export class DataViewEditHandler extends Backbone.Model {
             var column = fieldInfos[n];
             var renderer = fi.getRendererByObject(column);
             
-            dom.empty();           
+            dom.empty();
 
             var writeField = renderer.createWriteField(this.currentObject, column, this.view);
             this.writeFields.push(writeField);
@@ -97,7 +96,7 @@ export class DataViewEditHandler extends Backbone.Model {
         
         // Stores the changes into the given object
         this.storeChangesInObject();
-                
+
         // Goes through the new properties being created during the detail view
         _.each(this.newPropertyInfos, function (info) {
             // This is quite special
@@ -221,6 +220,14 @@ export class DataView implements fi.IDataView {
      */
     setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void {
         this.itemClickedEvent = clickedEvent;
+    }
+    
+    /*
+     * This method is not implemented by DataView, it has to be implemented by subclasses
+     */
+    convertViewContentToObject() : d.JsonExtentObject
+    {
+        throw "Not implemented";
     }
 }
 
@@ -467,5 +474,10 @@ export class DataTable extends DataView{
             },
             function () {
             });
+    }
+    
+    convertViewContentToObject() : d.JsonExtentObject
+    {
+        throw "Not implemented";
     }
 }
