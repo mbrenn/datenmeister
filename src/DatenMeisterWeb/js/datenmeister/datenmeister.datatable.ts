@@ -225,9 +225,18 @@ export class DataView implements fi.IDataView {
     /*
      * This method is not implemented by DataView, it has to be implemented by subclasses
      */
-    convertViewContentToObject() : d.JsonExtentObject
+    convertViewToObject() : d.JsonExtentObject
     {
         throw "Not implemented";
+    }
+
+    /*
+     * Evaluates the response from a server action, that has direct consequences for models
+     * and/or views
+     */
+    evaluateActionResponse(data: any) : void
+    {
+        alert('ACTION RESPONSE');
     }
 }
 
@@ -476,7 +485,7 @@ export class DataTable extends DataView{
             });
     }
     
-    convertViewContentToObject() : d.JsonExtentObject
+    convertViewToObject() : d.JsonExtentObject
     {
         throw "Not implemented";
     }

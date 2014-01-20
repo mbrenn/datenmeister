@@ -82,6 +82,7 @@
     <Compile Include="Web\JsonExtentData.cs" />
     <Compile Include="Web\JsonExtentInfo.cs" />
     <Compile Include="Web\ServerInfo.cs" />
+    <Compile Include="Web\CreateExtentModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

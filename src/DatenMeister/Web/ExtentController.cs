@@ -178,6 +178,12 @@ namespace DatenMeister.Web
                 objects = resultObjects
             });
         }
+		
+		[WebMethod]		 
+		public IActionResult Create([PostModel] CreateExtentModel model)
+		{
+			throw new NotImplementedException();
+		}
 
         /// <summary>
         /// Gets an element by the uri of the element

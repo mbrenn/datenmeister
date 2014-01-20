@@ -1,5 +1,6 @@
 
 import d = require("datenmeister.objects");
+import serverapi = require("datenmeister.serverapi");
 
 /*
  * Defines the interface for the view objects, which contain
@@ -12,7 +13,13 @@ export interface IDataView
      * Converts the view content to a JsonExtentObject object, that contains
      * all the properties of the form. 
      */
-    convertViewContentToObject() : d.JsonExtentObject;
+    convertViewToObject(): d.JsonExtentObject;
+
+    /*
+     * Evaluates the response from a server action.
+     * This might lead to a model update, change of view or many other things.
+     */
+    evaluateActionResponse(data: any): void;
 }
 
 /*
@@ -483,6 +490,11 @@ export module ActionButton
     
     export function setClickUrl(value: d.JsonExtentObject, url: string): void
     {
+        if(url === undefined || url.length == 0 || url[0] == '/')
+        {
+            throw "Action URL should not be undefined, '' or start with '/'";
+        }
+
         value.set('clickUrl', url);
     }
     
@@ -518,7 +530,14 @@ export module ActionButton
         
         onClick(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : void
         {
-            alert ( 'NEW CLICK' );
+            var convertedObject = form.convertViewToObject();
+            alert (convertedObject.get('name'));
+
+            // Everything seemed to be successful, now send back to server
+            serverapi.getAPI().sendObjectToServer(
+                getClickUrl(fieldInfo),
+                convertedObject,
+                function(data) { form.evaluateActionResponse(data); });
         }
     }
 }

@@ -1,3 +1,4 @@
+/// <reference path="../backbone/backbone.d.ts" />
 
 // The Server API
 
@@ -59,10 +60,12 @@ function retrieveServerSettings(): ServerSettings {
     return result;
 }
 
-export class ServerAPI {
+export class ServerAPI extends Backbone.Model {
     connectionInfo: ServerSettings;
 
     constructor(connection: ServerSettings) {
+        super();
+
         this.connectionInfo = connection;
 
         if (this.connectionInfo.serverAddress[connection.serverAddress.length - 1] != '/') {
@@ -87,7 +90,6 @@ export class ServerAPI {
     {
         return encodeURIComponent(encodeURIComponent(uri));
     }
-    
 
     getServerInfo(success: (info: ServerInfo) => void, fail?: () => void) {
         ajax.performRequest({
@@ -257,5 +259,50 @@ export class ServerAPI {
                 }
             }
         });
+    }
+
+    /*
+     * Sends the object to server and waits for answer
+     * The answer will be converted to a d.JsonExtentObject
+     * @actionUrl: This url will be directly used to trigger the object
+     */
+    sendObjectToServer(actionUrl: string, data: d.JsonExtentObject, success: (data: any) => void, fail?: (data: any) => void)
+    {
+        if(actionUrl === undefined || actionUrl.length == 0 || actionUrl[0] == '/')
+        {
+            throw "Action URL should not be undefined, '' or start with '/'";
+        }
+
+        var tthis = this;
+        ajax.performRequest({
+            url: this.__getUrl() + actionUrl,
+            method: 'post',
+            data: data.toJSON(),
+            success: function(responseData)
+            {
+                if(success !== undefined)
+                {
+                    success(responseData);
+                }
+            },
+            fail: function(responseData)
+            {
+                if(fail !== undefined)
+                {
+                    fail(responseData);
+                }
+
+                tthis.onError(responseData);
+            }
+        });
+    }
+
+    /*
+     * Throws the fail event
+     * */
+    onError(data: any): void
+    {
+        this.trigger('error', data);
+        alert('FAIL');
     }
 }

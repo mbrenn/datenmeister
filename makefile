@@ -93,7 +93,8 @@ bin/web/js/datenmeister/datenmeister.views.js: src/DatenMeisterWeb/js/datenmeist
 	bin/web/js/datenmeister/datenmeister.fieldinfo.js
 
 bin/web/js/datenmeister/datenmeister.fieldinfo.js: src/DatenMeisterWeb/js/datenmeister/datenmeister.fieldinfo.ts \
-	bin/web/js/datenmeister/datenmeister.objects.js
+	bin/web/js/datenmeister/datenmeister.objects.js \
+	bin/web/js/datenmeister/datenmeister.serverapi.js
 
 
 compile_typescript: bin/web/js/datenmeister/init.js \

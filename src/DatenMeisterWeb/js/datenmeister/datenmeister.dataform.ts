@@ -186,8 +186,14 @@ export class DataForm extends dt.DataView implements fi.IDataView {
         valueElement.on('keypress', changeFunction);
     }
     
-    convertViewContentToObject() : d.JsonExtentObject
+    convertViewToObject() : d.JsonExtentObject
     {
-        throw "Not implemented";
+        if(this.formHandler === undefined)
+        {
+            throw "Undefined Form Handler";
+        }
+
+        this.formHandler.storeChangesInObject();
+        return this.formHandler.currentObject;
     }
 }
