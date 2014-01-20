@@ -8,6 +8,11 @@ import d = require("datenmeister.objects");
  */
 export interface IDataView
 {
+    /*
+     * Converts the view content to a JsonExtentObject object, that contains
+     * all the properties of the form. 
+     */
+    convertViewContentToObject() : d.JsonExtentObject;
 }
 
 /*
@@ -40,6 +45,11 @@ export function getRenderer(type: string): IRenderer
     if(type == TextField.TypeName)
     {
         return new TextField.Renderer();
+    }
+    
+    if(type == ActionButton.TypeName)
+    {
+        return new ActionButton.Renderer();
     }
     
     return new TextField.Renderer();
@@ -243,7 +253,7 @@ export module Comment
             setComment(result, commentText);
         }
         
-        result.set("type", "DatenMeister.DataFields.Comment");
+        result.set("type", TypeName);
         
         return result;
     }
@@ -443,15 +453,56 @@ export module TextField
 }
 
 /*
- * Defines the module for the button
+ * Defines the module for an action button, which sends the form data to a certain 
+ * form
  */
 export module ActionButton
 {
+    export var TypeName = "DatenMeister.DataFields.ActionButton";
+    
+    export function create(text: string, clickUrl: string)
+    {
+        var result = new d.JsonExtentObject();
+        setText(result, text);
+        setClickUrl(result, clickUrl);
+        
+        result.set("type", TypeName);
+        
+        return result;
+    }
+    
+    export function setText(value: d.JsonExtentObject, text: string) : void
+    {
+        value.set('text', text);
+    }
+    
+    export function getText(value: d.JsonExtentObject) : string
+    {
+        return value.get('text');
+    }
+    
+    export function setClickUrl(value: d.JsonExtentObject, url: string): void
+    {
+        value.set('clickUrl', url);
+    }
+    
+    export function getClickUrl(value: d.JsonExtentObject): string
+    {
+        return value.get('clickUrl');
+    }
+    
     export class Renderer implements IRenderer
     { 
         createReadField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : JQuery
         {
-            return null;
+            var tthis = this;
+            var inputField = $("<input type='button'></input>");
+            inputField.attr('value', getText(fieldInfo));
+            inputField.click(function() { 
+                tthis.onClick(object, fieldInfo, form);
+            });
+            
+            return inputField;
         }
         
         createWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : JQuery
@@ -463,6 +514,11 @@ export module ActionButton
         {
             // Buttons don't have action stuff
             return;
+        }
+        
+        onClick(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : void
+        {
+            alert ( 'NEW CLICK' );
         }
     }
 }

@@ -7,8 +7,15 @@ import navigation = require('datenmeister.navigation');
 import fi = require('datenmeister.fieldinfo');
 
 export class DataForm extends dt.DataView implements fi.IDataView {
+
+    /* The object, that is shown */
     object: d.JsonExtentObject;
+    
+    /* The domElement, which will contain the data form */
     domElement: JQuery;
+    
+    /* Stores the form handler, that is used for the data form */
+    formHandler: dt.DataViewEditHandler;
 
     /* 
      * Stores the information whether the form shall be used to create a new item.
@@ -120,12 +127,15 @@ export class DataForm extends dt.DataView implements fi.IDataView {
                 {
                     // Button is only added, when user is allowed to switch between edit and non-edit
                     div.append(editButton);
-                }               
-        
+                }
+
                 if(fi.View.getStartInEditMode(this.viewInfo) === true)
                 {
                     handler.switchToEdit();
                 }
+
+                // Stores the form handler in the instance
+                this.formHandler = handler;
 
             }
 
@@ -174,5 +184,10 @@ export class DataForm extends dt.DataView implements fi.IDataView {
 
         keyElement.on('keypress', changeFunction);
         valueElement.on('keypress', changeFunction);
+    }
+    
+    convertViewContentToObject() : d.JsonExtentObject
+    {
+        throw "Not implemented";
     }
 }

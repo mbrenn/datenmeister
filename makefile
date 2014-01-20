@@ -96,7 +96,6 @@ bin/web/js/datenmeister/datenmeister.fieldinfo.js: src/DatenMeisterWeb/js/datenm
 	bin/web/js/datenmeister/datenmeister.objects.js
 
 
-.PHONY: compile_typescript
 compile_typescript: bin/web/js/datenmeister/init.js \
 	bin/web/js/datenmeister/datenmeister.js \
 	bin/web/js/datenmeister/datenmeister.dataform.js \
