@@ -28,6 +28,17 @@ namespace DatenMeister
 			get;
 			set;
 		}
+		
+		/// <summary>
+		/// Gets or sets the URL which is used by the extent
+		/// </summary>
+		/// <value>
+		/// The URL.
+		/// </value>
+		public string url {
+			get;
+			set;
+		}
 	}
 }
 

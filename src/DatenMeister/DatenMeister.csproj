@@ -83,6 +83,9 @@
     <Compile Include="Web\JsonExtentInfo.cs" />
     <Compile Include="Web\ServerInfo.cs" />
     <Compile Include="Web\CreateExtentModel.cs" />
+    <Compile Include="Logic\ExtentPoolLogic.cs" />
+    <Compile Include="Logic\DatenMeisterPoolDataProvider.cs" />
+    <Compile Include="Logic\ExtentInstance.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

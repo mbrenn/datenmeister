@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace DatenMeister.Logic
 {
     /// <summary>
-    /// Implements the IFactory class
+    /// Implements the IFactory class in a very simple way by just calling 
+	/// IURIExtent.CreateObject
     /// </summary>
     public class Factory : IFactory
     {

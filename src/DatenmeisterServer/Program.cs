@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatenMeister.DataProvider.Xml;
 
 namespace DatenmeisterServer
 {
@@ -26,29 +27,37 @@ namespace DatenmeisterServer
 			Log.TheLog.FilterLevel = LogLevel.Verbose;
 
 			// Starting up
-			Log.TheLog.LogEntry (LogLevel.Message, "Datenmeister");
+			Log.TheLog.LogEntry (LogLevel.Message, "Datenmeister is starting up");
+			
+			// Checks, if data directory exists
+			if (!Directory.Exists ("data")) {
+				Directory.CreateDirectory ("data");
+			}
 
 			var activationContainer = new ActivationContainer ("Website");
 
 			// Initialize DatenMeisterPool
 			var pool = new DatenMeisterPool ();
 
+			// Adds pool
+			var poolExtent = new DatenMeisterPoolExtent (pool);
+			pool.Add (poolExtent, null);
+
+			// Add view pool
+			var viewExtent = new ViewsExtent ("datenmeister:///defaultviews/");
+			viewExtent.Fill ();
+			pool.Add (viewExtent, null);
+			
+			var poolProvider = new DatenMeisterPoolDataProvider ();
+			poolProvider.Load (pool, "data/pools.xml");
+
+			// Adds the csv-extent
+			/*
 			var provider = new CSVDataProvider ();
 			var csvSettings = new CSVSettings ()
                 {
                     HasHeader = true
                 };
-
-			// Adds pool
-			var poolExtent = new DatenMeisterPoolExtent (pool);
-			pool.Add (poolExtent);
-
-			// Add view pool
-			var viewExtent = new ViewsExtent ("datenmeister:///defaultviews/");
-			viewExtent.Fill ();
-			pool.Add (viewExtent);
-
-			// Adds the csv-extent
 			IURIExtent extent;
 			if (File.Exists ("data/test_save.csv")) {
 				extent = provider.Load ("data/test_save.csv", csvSettings);
@@ -56,8 +65,9 @@ namespace DatenmeisterServer
 				extent = provider.Load ("data/test.csv", csvSettings);
 			}
 
-			pool.Add (extent);
+			pool.Add (extent, "data/test_save.csv");*/
 			activationContainer.Bind<DatenMeisterPool> ().ToConstant (pool);
+			activationContainer.Bind<XmlDataProvider> ().To<XmlDataProvider> ();
 
 			using (var server = Server.CreateDefaultServer(activationContainer)) {
 				activationContainer.Bind<IRequestFilter> ().ToConstant (new AddCorsHeaderFilter ());
@@ -80,7 +90,7 @@ namespace DatenmeisterServer
 
 			// Storing the data
 			Log.TheLog.Message ("Storing data");
-			provider.Save (extent, "data/test_save.csv", csvSettings);
+			poolProvider.Save (pool, "pool.xml");
 		}
 	}
 }

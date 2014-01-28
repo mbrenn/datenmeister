@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatenMeister.Logic;
 
 namespace DatenMeister
 {
@@ -19,31 +20,41 @@ namespace DatenMeister
         /// <summary>
         /// Stores the extents itself
         /// </summary>
-        private List<IURIExtent> extents = new List<IURIExtent>();
+        private List<ExtentInstance> extents = new List<ExtentInstance>();
 
         /// <summary>
         /// Gets the extents as a read copty
         /// </summary>
-        public IList<IURIExtent> Extents
+        public IEnumerable<IURIExtent> Extents
         {
             get
             {
                 lock (this.syncObject)
                 {
-                    return this.extents.ToList();
+					return this.extents.Select(x=>x.Extent).ToList ();
                 }
-            }
-        }
+			}
+		}
+		
+		public IEnumerable<ExtentInstance> Instances {
+			get { 
+				lock (this.syncObject) {
+					return this.extents.ToList ();
+				}
+			}
+		}
+				
 
         /// <summary>
         /// Adds the uri extent to datenmeister pool
         /// </summary>
         /// <param name="extent">Extent to be added</param>
-        public void Add(IURIExtent extent)
+        public void Add(IURIExtent extent, string path)
         {
             lock (this.syncObject)
             {
-                this.extents.Add(extent);
+                this.extents.Add(
+					new ExtentInstance(extent, path));
             }
         }
     }
