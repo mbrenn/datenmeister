@@ -43,6 +43,7 @@ namespace BurnSystems.Logging
         public ConsoleProvider(bool simpleOutput)
         {
             this.SimpleOutput = simpleOutput;
+            this.NoColors = false;
 
             consoleColors[LogLevel.Verbose] = ConsoleColor.DarkGray;
             consoleColors[LogLevel.Notify] = ConsoleColor.DarkGreen;
@@ -56,8 +57,7 @@ namespace BurnSystems.Logging
         /// Gets or sets a value indicating whether a simple output without
         /// date and loglevel should be used.
         /// </summary>
-        public bool SimpleOutput
-        {
+        public bool SimpleOutput {
             get;
             set;
         }
@@ -66,8 +66,18 @@ namespace BurnSystems.Logging
         /// Gets or sets a value indicating whether the categories shall be shown 
         /// on console
         /// </summary>
-        public bool ShowCategories
-        {
+        public bool ShowCategories {
+            get;
+            set;
+        }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="BurnSystems.Logging.ConsoleProvider"/> returns color on output colors.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if no colors; otherwise, <c>false</c>.
+        /// </value>
+        public bool NoColors {
             get;
             set;
         }
@@ -97,28 +107,23 @@ namespace BurnSystems.Logging
             var color = Console.ForegroundColor;
             ConsoleColor newColor;
 
-            if (!this.consoleColors.TryGetValue(entry.LogLevel, out newColor))
-            {
+            if(!this.consoleColors.TryGetValue(entry.LogLevel, out newColor)) {
                 newColor = ConsoleColor.White;
             }
 
-            Console.ForegroundColor = newColor;
+            if(!this.NoColors) {
+                Console.ForegroundColor = newColor;
+            }
 
-            if (this.SimpleOutput)
-            {
-                if (!string.IsNullOrEmpty(entry.Categories))
-                {
+            if(this.SimpleOutput) {
+                if(!string.IsNullOrEmpty(entry.Categories)) {
                     Console.Write(entry.Categories + ": ");
                 }
 
                 Console.WriteLine(entry.Message);
-            }
-            else
-            {
-                if (this.ShowCategories)
-                {
-                    if (!string.IsNullOrEmpty(entry.Categories))
-                    {
+            } else {
+                if(this.ShowCategories) {
+                    if(!string.IsNullOrEmpty(entry.Categories)) {
                         Console.Write(entry.Categories + ": ");
                     }
                 }
@@ -130,7 +135,9 @@ namespace BurnSystems.Logging
                     entry.Message);
             }
 
-            Console.ForegroundColor = color;
+            if(!this.NoColors) {
+                Console.ForegroundColor = color;
+            }
         }
 
         #endregion
