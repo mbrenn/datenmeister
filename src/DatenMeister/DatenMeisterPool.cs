@@ -49,13 +49,25 @@ namespace DatenMeister
         /// Adds the uri extent to datenmeister pool
         /// </summary>
         /// <param name="extent">Extent to be added</param>
-        public void Add(IURIExtent extent, string path)
+        public void Add (IURIExtent extent, string path)
+		{
+			this.Add (extent, path, null);
+		}
+		
+		public void Add(IURIExtent extent, string path, string name)
         {
             lock (this.syncObject)
             {
                 this.extents.Add(
-					new ExtentInstance(extent, path));
+					new ExtentInstance(extent, path, name));
             }
         }
+		
+		public void Add (ExtentInstance instance)
+		{
+			lock (this.syncObject) {
+				this.extents.Add (instance);
+			}
+		}
     }
 }

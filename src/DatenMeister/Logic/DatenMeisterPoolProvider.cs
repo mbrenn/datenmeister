@@ -13,11 +13,11 @@ namespace DatenMeister.Logic
 	/// 
 	/// An XmlFile will be storing the extent information
 	/// </summary>
-	public class DatenMeisterPoolDataProvider
+	public class DatenMeisterPoolProvider
 	{
-		private static ILog logger = new ClassLogger(typeof ( DatenMeisterPoolDataProvider ) );
+		private static ILog logger = new ClassLogger(typeof ( DatenMeisterPoolProvider ) );
 		
-		public DatenMeisterPoolDataProvider ()
+		public DatenMeisterPoolProvider ()
 		{
 		}
 		
@@ -48,7 +48,15 @@ namespace DatenMeister.Logic
 					continue;
 				}
 				var uri = xmlElement.Attribute ("uri").Value;
-				// var xmlName = xmlElement.Attribute ("name");
+				
+				// Loads the name
+				var xmlName = xmlElement.Attribute ("name");
+				string extentName = string.Empty;
+				if (xmlName != null) {
+					extentName = xmlName.Value;
+				}
+				
+				// Loads the path
 				var xmlPath = xmlElement.Attribute ("path");
 				
 				if (xmlPath == null) {
@@ -57,11 +65,13 @@ namespace DatenMeister.Logic
 					continue;
 				}
 				
+				var extentPath = xmlPath.Value;
+				
 				var dataProvider = new XmlDataProvider ();
-				var extent = dataProvider.Load (path, null);
+				var extent = dataProvider.Load (extentPath, null);
 				
 				// Store the new provider
-				pool.Add (extent, path);
+				pool.Add (extent, extentPath, extentName);
 			}
 		}
 		
@@ -88,7 +98,8 @@ namespace DatenMeister.Logic
 					
 					var extentElement = new XElement ("extent");
 					extentElement.Add (new XAttribute ("type", "xml"));
-					extentElement.Add (new XAttribute ("uri", instance.Extent.ContextURI()));
+					extentElement.Add (new XAttribute ("uri", instance.Extent.ContextURI ()));
+					extentElement.Add (new XAttribute ("name", instance.Name));
 				
 					if (!string.IsNullOrEmpty (instance.Path)) {
 						extentElement.Add (new XAttribute ("path", instance.Path));
@@ -97,7 +108,7 @@ namespace DatenMeister.Logic
 					element.Add (extentElement);
 				} else {
 					
-					logger.Fail ("Extent to be stored is not of type 'xml': " + instance.Extent.ContextURI());
+					logger.Message ("Extent to be stored is not of type 'xml': " + instance.Extent.ContextURI());
 				}
 			}
 			

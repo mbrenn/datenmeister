@@ -31,6 +31,24 @@ namespace DatenMeister.Logic
 			get;
 			set;
 		}
+	
+		/// <summary>
+		/// Gets or sets the name of the extent
+		/// </summary>
+		/// <value>
+		/// The name.
+		/// </value>
+		public string Name
+		{
+			get;
+			set;
+		}
+		
+		public ExtentInstance (IURIExtent extent, string path)
+		{
+			this.Extent = extent;
+			this.Path = path;
+		}
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DatenMeister.PoolInstance"/> class.
@@ -41,10 +59,11 @@ namespace DatenMeister.Logic
 		/// <param name='path'>
 		/// Path.
 		/// </param>
-		public ExtentInstance (IURIExtent extent, string path)
+		public ExtentInstance (IURIExtent extent, string path, string name)
 		{
 			this.Extent = extent;
 			this.Path = path;
+			this.Name = name;
 		}
 	}
 }

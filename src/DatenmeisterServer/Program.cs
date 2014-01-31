@@ -22,7 +22,10 @@ namespace DatenmeisterServer
     {
         public static void Main (string[] args)
 		{
-			Log.TheLog.AddLogProvider (new ConsoleProvider (false));
+			var consoleProvider = new ConsoleProvider (false);
+			consoleProvider.NoColors = true;	
+			
+			Log.TheLog.AddLogProvider (consoleProvider);
 			Log.TheLog.AddLogProvider (new FileProvider ("log.txt"));
 			Log.TheLog.FilterLevel = LogLevel.Verbose;
 
@@ -48,7 +51,7 @@ namespace DatenmeisterServer
 			viewExtent.Fill ();
 			pool.Add (viewExtent, null);
 			
-			var poolProvider = new DatenMeisterPoolDataProvider ();
+			var poolProvider = new DatenMeisterPoolProvider ();
 			poolProvider.Load (pool, "data/pools.xml");
 
 			// Adds the csv-extent
@@ -90,7 +93,7 @@ namespace DatenmeisterServer
 
 			// Storing the data
 			Log.TheLog.Message ("Storing data");
-			poolProvider.Save (pool, "pool.xml");
+			poolProvider.Save (pool, "data/pools.xml");
 		}
 	}
 }

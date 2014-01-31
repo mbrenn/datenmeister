@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml;
+using DatenMeister.Logic;
 
 namespace DatenMeister.DataProvider.Xml
 {
@@ -45,7 +46,7 @@ namespace DatenMeister.DataProvider.Xml
 		/// <param name='name'>
 		/// The name of the extent. This name will be used for the name of the root node
 		/// </paramm
-		public XmlExtent CreateEmpty (string path, string url, string name)
+		public ExtentInstance CreateEmpty (string path, string url, string name)
 		{
 			// Create the node
 			var document = new XDocument ();
@@ -56,7 +57,8 @@ namespace DatenMeister.DataProvider.Xml
 			
 			// Add the extent			
 			var extent = new XmlExtent (document, url);
-			return extent;
+			
+			return new ExtentInstance(extent, path, name);
 		}
     }
 }

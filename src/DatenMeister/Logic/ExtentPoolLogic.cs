@@ -55,7 +55,7 @@ namespace DatenMeister.Logic
 		/// <param name='filename'>
 		/// Name of the file, which shall be stored into the database
 		/// </param>
-		public IURIExtent CreateEmpty (string name, string url, string filename)
+		public ExtentInstance CreateEmpty (string name, string url, string filename)
 		{
 			Ensure.That (this.Pool != null);
 			
