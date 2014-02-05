@@ -531,13 +531,12 @@ export module ActionButton
         onClick(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : void
         {
             var convertedObject = form.convertViewToObject();
-            alert (convertedObject.get('name'));
 
             // Everything seemed to be successful, now send back to server
             serverapi.getAPI().sendObjectToServer(
                 getClickUrl(fieldInfo),
                 convertedObject,
-                function(data) { form.evaluateActionResponse(data); });
+                function(data) { alert('Successfully sent'); form.evaluateActionResponse(data); });
         }
     }
 }
