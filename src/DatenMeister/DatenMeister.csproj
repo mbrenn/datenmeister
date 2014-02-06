@@ -38,15 +38,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="BurnSystems">
-      <HintPath>..\..\packages\bin\BurnSystems.dll</HintPath>
-    </Reference>
-    <Reference Include="BurnSystems.FlexBG">
-      <HintPath>..\..\packages\bin\BurnSystems.FlexBG.dll</HintPath>
-    </Reference>
-    <Reference Include="BurnSystems.WebServer">
-      <HintPath>..\..\packages\bin\BurnSystems.WebServer.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataProvider\CSV\CSVDataProvider.cs" />
@@ -87,7 +78,24 @@
     <Compile Include="Logic\ExtentInstance.cs" />
     <Compile Include="Logic\DatenMeisterPoolProvider.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\burnsystems.flexbg\src\BurnSystems.FlexBG\BurnSystems.FlexBG.csproj">
+      <Project>{23cc80d3-2e80-4263-bf25-87e0da25b329}</Project>
+      <Name>BurnSystems.FlexBG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\burnsystems.webserver.umbra\src\BurnSystems.WebServer.Umbra\BurnSystems.WebServer.Umbra.csproj">
+      <Project>{0d3e61d8-1a3e-47c3-b90a-e89fde6f4e90}</Project>
+      <Name>BurnSystems.WebServer.Umbra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\burnsystems.webserver\src\BurnSystems.WebServer\BurnSystems.WebServer.csproj">
+      <Project>{b31df31a-f19e-4ff9-b50f-b70f4f5949f4}</Project>
+      <Name>BurnSystems.WebServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\burnsystems\src\BurnSystems.csproj">
+      <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
+      <Name>BurnSystems</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
