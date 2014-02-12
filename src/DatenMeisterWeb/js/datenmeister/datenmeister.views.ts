@@ -338,7 +338,7 @@ export class DetailView extends Backbone.View {
     render(): DetailView {
         var tthis = this;
 
-        this.$(".form").empty();
+        this.$el.empty();
 
         var form = new forms.DataForm(this.object, this.$el, this.viewObject);
 

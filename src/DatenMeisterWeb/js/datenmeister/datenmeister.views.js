@@ -285,7 +285,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", 
         DetailView.prototype.render = function () {
             var tthis = this;
 
-            this.$(".form").empty();
+            this.$el.empty();
 
             var form = new forms.DataForm(this.object, this.$el, this.viewObject);
 
