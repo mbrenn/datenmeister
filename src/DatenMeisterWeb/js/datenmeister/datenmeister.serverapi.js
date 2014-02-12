@@ -97,7 +97,13 @@ define(["require", "exports", "../dejs/dejs.ajax", "datenmeister.objects", "date
         * Mono HttpWebserver decodes the uri once when it has been received.
         */
         ServerAPI.prototype.__doubleEncodeUri = function (uri) {
-            return encodeURIComponent(encodeURIComponent(uri));
+            if (true) {
+                // When connected to IIS, just a single encoding is necessary
+                return encodeURIComponent(uri);
+            } else {
+                // When connected to Mono, a double encoding is necessary
+                return encodeURIComponent(encodeURIComponent(uri));
+            }
         };
 
         ServerAPI.prototype.getServerInfo = function (success, fail) {

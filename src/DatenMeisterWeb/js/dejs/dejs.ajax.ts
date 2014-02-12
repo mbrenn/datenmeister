@@ -11,13 +11,18 @@ export class AjaxSettings {
 }
 
 export function reportError(serverResponse: string) {
-    var data = $.parseJSON(serverResponse);
+    try {
+        var data = $.parseJSON(serverResponse);
 
-    if (data !== undefined && data !== null && data["message"] !== undefined) {
-        $("#errorlog").text(data["message"]);
+        if (data !== undefined && data !== null && data["message"] !== undefined) {
+            $("#errorlog").text(data["message"]);
+        }
+        else {
+            $("#errorlog").text("Unknown Message: " + serverResponse);
+        }
     }
-    else {
-        $("#errorlog").text("Unknown Message: " + serverResponse);
+    catch (exc) {
+        alert(exc);
     }
 }
 

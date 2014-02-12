@@ -88,7 +88,14 @@ export class ServerAPI extends Backbone.Model {
      */
     __doubleEncodeUri(uri: string)
     {
-        return encodeURIComponent(encodeURIComponent(uri));
+        if (true) {
+            // When connected to IIS, just a single encoding is necessary
+            return encodeURIComponent(uri);
+        }
+        else {
+            // When connected to Mono, a double encoding is necessary
+            return encodeURIComponent(encodeURIComponent(uri));
+        }
     }
 
     getServerInfo(success: (info: ServerInfo) => void, fail?: () => void) {

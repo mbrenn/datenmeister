@@ -41,6 +41,8 @@ namespace DatenmeisterServer
 
 			// Initialize DatenMeisterPool
 			var pool = new DatenMeisterPool ();
+            activationContainer.Bind<DatenMeisterPool>().ToConstant(pool);
+            activationContainer.Bind<ExtentPoolLogic>().To<ExtentPoolLogic>();
 
 			// Adds pool
 			var poolExtent = new DatenMeisterPoolExtent (pool);

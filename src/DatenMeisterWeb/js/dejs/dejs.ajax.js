@@ -8,12 +8,16 @@ define(["require", "exports"], function(require, exports) {
     exports.AjaxSettings = AjaxSettings;
 
     function reportError(serverResponse) {
-        var data = $.parseJSON(serverResponse);
+        try  {
+            var data = $.parseJSON(serverResponse);
 
-        if (data !== undefined && data !== null && data["message"] !== undefined) {
-            $("#errorlog").text(data["message"]);
-        } else {
-            $("#errorlog").text("Unknown Message: " + serverResponse);
+            if (data !== undefined && data !== null && data["message"] !== undefined) {
+                $("#errorlog").text(data["message"]);
+            } else {
+                $("#errorlog").text("Unknown Message: " + serverResponse);
+            }
+        } catch (exc) {
+            alert(exc);
         }
     }
     exports.reportError = reportError;
