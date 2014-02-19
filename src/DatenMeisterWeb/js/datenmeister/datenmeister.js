@@ -7,15 +7,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.serverapi", "datenmeister.views", "datenmeister.navigation", 'datenmeister.fieldinfo'], function(require, exports, __api__, __views__, __navigation__, __fi__) {
-    var api = __api__;
-    
-    
-    var views = __views__;
-    var navigation = __navigation__;
-    
-    var fi = __fi__;
-
+define(["require", "exports", "datenmeister.serverapi", "datenmeister.views", "datenmeister.navigation", 'datenmeister.fieldinfo'], function(require, exports, api, views, navigation, fi) {
     // Initializes the whole application by creating the form
     function init() {
         var router = new AppRouter();
@@ -24,6 +16,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.views", "d
         router.bind('login', function () {
         });
 
+        // Performs the login screen, where user can connect to a database server
         if (!Backbone.history.start({ pushState: false })) {
             navigation.to("login");
         } else {

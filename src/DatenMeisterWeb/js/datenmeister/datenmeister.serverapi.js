@@ -5,12 +5,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "../dejs/dejs.ajax", "datenmeister.objects", "datenmeister.navigation"], function(require, exports, __ajax__, __d__, __navigation__) {
-    // The Server API
-    var ajax = __ajax__;
-    var d = __d__;
-    var navigation = __navigation__;
-
+define(["require", "exports", "../dejs/dejs.ajax", "datenmeister.objects", "datenmeister.navigation"], function(require, exports, ajax, d, navigation) {
     /*
     * Gets the server API, will request loading of server settings if required
     */

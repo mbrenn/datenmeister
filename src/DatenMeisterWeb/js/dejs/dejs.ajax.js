@@ -77,13 +77,14 @@ define(["require", "exports"], function(require, exports) {
         var domButton = $("." + data.prefix + "button");
 
         var ajaxSettings = {};
-        ajaxSettings.headers = { 'X-Requested-With': 2 };
+        ajaxSettings.headers = { 'X-Requested-With': 1 };
 
         if (data.method !== undefined) {
             ajaxSettings.type = data.method;
         }
 
         if (data.data !== undefined) {
+            // Checks, if contentType is 'application/json', if yes, stringify the data
             if (data.contentType !== undefined && data.contentType.toLowerCase() == 'application/json') {
                 ajaxSettings.data = JSON.stringify(data.data);
             } else {
@@ -146,4 +147,3 @@ define(["require", "exports"], function(require, exports) {
     }
     exports.showFormFailure = showFormFailure;
 });
-//# sourceMappingURL=dejs.ajax.js.map

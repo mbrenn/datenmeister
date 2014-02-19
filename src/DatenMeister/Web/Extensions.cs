@@ -11,9 +11,15 @@ namespace DatenMeister.Web
     {
         public static IActionResult ReturnClientAction(
             this Controller controller,
-            params IClientAction[] clientAction)
+            params IClientAction[] clientActions)
         {
-            throw new NotImplementedException();
+            var result = new
+            {
+                success = true, 
+                actions = clientActions
+            };
+
+            return controller.Json(result);
         }
     }
 }

@@ -4,14 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi", '../dejs/dejs.table', 'datenmeister.navigation', 'datenmeister.fieldinfo'], function(require, exports, __dt__, __api__, __t__, __navigation__, __fi__) {
-    var dt = __dt__;
-    
-    var api = __api__;
-    var t = __t__;
-    var navigation = __navigation__;
-    var fi = __fi__;
-
+define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi", '../dejs/dejs.table', 'datenmeister.navigation', 'datenmeister.fieldinfo'], function(require, exports, dt, api, t, navigation, fi) {
     var DataForm = (function (_super) {
         __extends(DataForm, _super);
         function DataForm(object, domElement, viewInfo) {
@@ -43,6 +36,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
             tableOptions.cssClass = "table";
             var table = new t.Table(this.domElement, tableOptions);
 
+            // Creates Column headers for the table
             if (fi.FormView.getShowColumnHeaders(this.viewInfo) !== false) {
                 table.addHeaderRow();
                 table.addColumn("Key");
@@ -59,6 +53,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
                 columnDoms.push(table.addColumnJQuery(renderer.createReadField(tthis.object, f, this)));
             });
 
+            // Creates the action field for Edit and Delete
             if (fi.View.getAllowEdit(this.viewInfo) || fi.View.getAllowDelete(this.viewInfo) || fi.View.getStartInEditMode(this.viewInfo)) {
                 var lastRow = table.addRow();
                 table.addColumn("");
@@ -89,6 +84,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
                     var handler = new dt.DataViewEditHandler();
                     handler.bindToEditButton(this, editButton, this.object, columnDoms);
                     handler.bind('editModeChange', function (inEditMode) {
+                        // Called, if the user switches from view mode to edit mode or back
                         if (fi.FormView.getAllowNewProperty(tthis.viewInfo) === true) {
                             if (inEditMode) {
                                 tthis.createNewPropertyRow(table, lastRow, handler);
