@@ -61,6 +61,9 @@
     <Compile Include="IFactory.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IURIExtent.cs" />
+    <Compile Include="Logic\ClientActions\ClientActionInformation.cs" />
+    <Compile Include="Logic\ClientActions\IClientAction.cs" />
+    <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
     <Compile Include="Logic\Factory.cs" />
     <Compile Include="Logic\ObjectHelper.cs" />
@@ -68,6 +71,7 @@
     <Compile Include="Transformations\ITransformation.cs" />
     <Compile Include="Transformations\Extensions.cs" />
     <Compile Include="Transformations\RecurseObjectTransformation.cs" />
+    <Compile Include="Web\Extensions.cs" />
     <Compile Include="Web\GetObjectsModel.cs" />
     <Compile Include="Web\ExtentController.cs" />
     <Compile Include="Web\JsonExtentData.cs" />

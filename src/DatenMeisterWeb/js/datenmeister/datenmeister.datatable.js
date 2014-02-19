@@ -208,7 +208,17 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         * and/or views
         */
         DataView.prototype.evaluateActionResponse = function (data) {
-            alert('ACTION RESPONSE');
+            if (data.actions !== undefined) {
+                for (var n = 0; n < data.actions.length; n++) {
+                    this.executeAction(data.actions[n]);
+                }
+            }
+        };
+
+        DataView.prototype.executeAction = function (action) {
+            if (action.type === 'RefreshBrowserWinder') {
+                window.location.reload(true);
+            }
         };
         return DataView;
     })();

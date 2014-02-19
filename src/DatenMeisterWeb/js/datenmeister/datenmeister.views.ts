@@ -453,6 +453,7 @@ export class CreateNewExtentView extends DetailView
         fi.View.pushFieldInfo(view, fi.Comment.create("Information", "Please give a title and filename for the new extent (without file extension)"));
         fi.View.pushFieldInfo(view, fi.TextField.create("Name", "name"));
         fi.View.pushFieldInfo(view, fi.TextField.create("Filename", "filename"));
+        fi.View.pushFieldInfo(view, fi.TextField.create("Url", "url"));
         fi.View.pushFieldInfo(view, fi.ActionButton.create("Create", "extent/Create"));
 
         this.viewObject = view;

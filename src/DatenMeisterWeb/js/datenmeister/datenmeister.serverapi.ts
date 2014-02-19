@@ -280,8 +280,6 @@ export class ServerAPI extends Backbone.Model {
             throw "Action URL should not be undefined, '' or start with '/'";
         }
 
-        alert ( 'will be sent');
-
         var tthis = this;
         ajax.performRequest({
             url: this.__getUrl() + actionUrl,

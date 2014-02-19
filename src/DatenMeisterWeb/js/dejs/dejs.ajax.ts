@@ -90,7 +90,8 @@ export function performRequest(data: PerformRequestSettings) {
     var domNosuccess = $("." + data.prefix + "domnosuccess");
     var domButton = $("." + data.prefix + "button");
 
-    var ajaxSettings = new AjaxSettings();
+    var ajaxSettings: JQueryAjaxSettings = {};
+    ajaxSettings.headers = { 'X-Requested-With': 2 };
 
     if (data.method !== undefined) {
         ajaxSettings.type = data.method;

@@ -19,7 +19,15 @@ export interface IDataView
      * Evaluates the response from a server action.
      * This might lead to a model update, change of view or many other things.
      */
-    evaluateActionResponse(data: any): void;
+    evaluateActionResponse(data: ClientActionInformation): void;
+}
+
+/*
+ * Contains actions which were sent back from server to client
+ * The actions contain the information what to be done on browser
+ */ 
+export class ClientActionInformation {
+    actions: Array<any>;
 }
 
 /*
@@ -536,7 +544,7 @@ export module ActionButton
             serverapi.getAPI().sendObjectToServer(
                 getClickUrl(fieldInfo),
                 convertedObject,
-                function(data) { alert('Successfully sent'); form.evaluateActionResponse(data); });
+                function(data) { form.evaluateActionResponse(data); });
         }
     }
 }

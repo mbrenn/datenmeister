@@ -198,20 +198,18 @@ export class DataView implements fi.IDataView {
      * Sets the field information objects
      */
     setFieldInfos(fieldInfos: Array<d.JsonExtentObject>) {
-        
+
         return fi.View.setFieldInfos(this.viewInfo, fieldInfos);
     }
-    
+
     /*
      * Adds a field info to the current data view
      */
-    addFieldInfo(fieldInfo: d.JsonExtentObject)
-    {
+    addFieldInfo(fieldInfo: d.JsonExtentObject) {
         return fi.View.pushFieldInfo(this.viewInfo, fieldInfo);
     }
-    
-    getFieldInfos() : Array<d.JsonExtentObject>
-    {
+
+    getFieldInfos(): Array<d.JsonExtentObject> {
         return fi.View.getFieldInfos(this.viewInfo);
     }
 
@@ -221,12 +219,11 @@ export class DataView implements fi.IDataView {
     setItemClickedEvent(clickedEvent: (object: d.JsonExtentObject) => void): void {
         this.itemClickedEvent = clickedEvent;
     }
-    
+
     /*
      * This method is not implemented by DataView, it has to be implemented by subclasses
      */
-    convertViewToObject() : d.JsonExtentObject
-    {
+    convertViewToObject(): d.JsonExtentObject {
         throw "Not implemented";
     }
 
@@ -234,9 +231,18 @@ export class DataView implements fi.IDataView {
      * Evaluates the response from a server action, that has direct consequences for models
      * and/or views
      */
-    evaluateActionResponse(data: any) : void
-    {
-        alert('ACTION RESPONSE');
+    evaluateActionResponse(data: fi.ClientActionInformation): void {
+        if (data.actions !== undefined) {
+            for (var n = 0; n < data.actions.length; n++) {
+                this.executeAction(data.actions[n]);
+            }
+        }
+    }
+
+    executeAction(action: any): void {
+        if (action.type === 'RefreshBrowserWinder') {
+            window.location.reload(true);
+        }
     }
 }
 

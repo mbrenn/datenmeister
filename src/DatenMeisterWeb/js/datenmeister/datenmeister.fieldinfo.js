@@ -2,6 +2,17 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
     var d = __d__;
     var serverapi = __serverapi__;
 
+    /*
+    * Contains actions which were sent back from server to client
+    * The actions contain the information what to be done on browser
+    */
+    var ClientActionInformation = (function () {
+        function ClientActionInformation() {
+        }
+        return ClientActionInformation;
+    })();
+    exports.ClientActionInformation = ClientActionInformation;
+
     function getRendererByObject(object) {
         return exports.getRenderer(object.get("type"));
     }
@@ -490,7 +501,6 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
 
                 // Everything seemed to be successful, now send back to server
                 serverapi.getAPI().sendObjectToServer(getClickUrl(fieldInfo), convertedObject, function (data) {
-                    alert('Successfully sent');
                     form.evaluateActionResponse(data);
                 });
             };

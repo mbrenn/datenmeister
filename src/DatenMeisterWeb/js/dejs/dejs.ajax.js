@@ -76,7 +76,8 @@ define(["require", "exports"], function(require, exports) {
         var domNosuccess = $("." + data.prefix + "domnosuccess");
         var domButton = $("." + data.prefix + "button");
 
-        var ajaxSettings = new AjaxSettings();
+        var ajaxSettings = {};
+        ajaxSettings.headers = { 'X-Requested-With': 2 };
 
         if (data.method !== undefined) {
             ajaxSettings.type = data.method;
