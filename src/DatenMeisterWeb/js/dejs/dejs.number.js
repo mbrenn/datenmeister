@@ -6,3 +6,4 @@
     })();
     exports.Number = Number;
 });
+//# sourceMappingURL=dejs.number.js.map

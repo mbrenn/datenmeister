@@ -265,3 +265,4 @@ define(["require", "exports"], function(require, exports) {
     })();
     exports.Gallery = Gallery;
 });
+//# sourceMappingURL=dejs.gallery.js.map

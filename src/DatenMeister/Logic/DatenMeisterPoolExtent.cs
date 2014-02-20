@@ -34,8 +34,8 @@ namespace DatenMeister.Logic
         /// <returns>Enumeration of objects within the extent as dotnet-objects</returns>
         public IEnumerable<IObject> Elements()
         {
-            return this.pool.Extents.Select(
-                x => new DotNetObject(this, x.ToJson(), x.ContextURI()));
+            return this.pool.Instances.Select(
+                x => new DotNetObject(this, x.ToJson(), x.Extent.ContextURI()));
         }
 
         public IObject CreateObject()

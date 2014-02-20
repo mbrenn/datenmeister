@@ -20,82 +20,82 @@ namespace DatenmeisterServer
 {
     public class Program
     {
-        public static void Main (string[] args)
-		{
-			var consoleProvider = new ConsoleProvider (false);
-			consoleProvider.NoColors = true;	
-			
-			Log.TheLog.AddLogProvider (consoleProvider);
-			Log.TheLog.AddLogProvider (new FileProvider ("log.txt"));
-			Log.TheLog.FilterLevel = LogLevel.Verbose;
+        public static void Main(string[] args)
+        {
+            var consoleProvider = new ConsoleProvider(false);
+            consoleProvider.NoColors = true;
 
-			// Starting up
-			Log.TheLog.LogEntry (LogLevel.Message, "Datenmeister is starting up");
-			
-			// Checks, if data directory exists
-			if (!Directory.Exists ("data")) {
-				Directory.CreateDirectory ("data");
-			}
+            Log.TheLog.AddLogProvider(consoleProvider);
+            Log.TheLog.AddLogProvider(new FileProvider("log.txt"));
+            Log.TheLog.FilterLevel = LogLevel.Verbose;
 
-			var activationContainer = new ActivationContainer ("Website");
+            // Starting up
+            Log.TheLog.LogEntry(LogLevel.Message, "Datenmeister is starting up");
 
-			// Initialize DatenMeisterPool
-			var pool = new DatenMeisterPool ();
+            // Checks, if data directory exists
+            if (!Directory.Exists("data"))
+            {
+                Directory.CreateDirectory("data");
+            }
+
+            var activationContainer = new ActivationContainer("Website");
+
+            // Initialize DatenMeisterPool
+            var pool = new DatenMeisterPool();
             activationContainer.Bind<DatenMeisterPool>().ToConstant(pool);
             activationContainer.Bind<ExtentPoolLogic>().To<ExtentPoolLogic>();
 
-			// Adds pool
-			var poolExtent = new DatenMeisterPoolExtent (pool);
-			pool.Add (poolExtent, null);
+            // Adds pool
+            var poolExtent = new DatenMeisterPoolExtent(pool);
+            pool.Add(poolExtent, null);
 
-			// Add view pool
-			var viewExtent = new ViewsExtent ("datenmeister:///defaultviews/");
-			viewExtent.Fill ();
-			pool.Add (viewExtent, null);
-			
-			var poolProvider = new DatenMeisterPoolProvider ();
-			poolProvider.Load (pool, "data/pools.xml");
+            // Add view pool
+            var viewExtent = new ViewsExtent("datenmeister:///defaultviews/");
+            viewExtent.Fill();
+            pool.Add(viewExtent, null);
 
-			// Adds the csv-extent
-			/*
-			var provider = new CSVDataProvider ();
-			var csvSettings = new CSVSettings ()
+            var poolProvider = new DatenMeisterPoolProvider();
+            poolProvider.Load(pool, "data/pools.xml");
+
+            // Adds the csv-extent
+            /*
+            var provider = new CSVDataProvider ();
+            var csvSettings = new CSVSettings ()
                 {
                     HasHeader = true
                 };
-			IURIExtent extent;
-			if (File.Exists ("data/test_save.csv")) {
-				extent = provider.Load ("data/test_save.csv", csvSettings);
-			} else {
-				extent = provider.Load ("data/test.csv", csvSettings);
-			}
+            IURIExtent extent;
+            if (File.Exists ("data/test_save.csv")) {
+                extent = provider.Load ("data/test_save.csv", csvSettings);
+            } else {
+                extent = provider.Load ("data/test.csv", csvSettings);
+            }
 
-			pool.Add (extent, "data/test_save.csv");*/
-			activationContainer.Bind<DatenMeisterPool> ().ToConstant (pool);
-			activationContainer.Bind<XmlDataProvider> ().To<XmlDataProvider> ();
+            pool.Add (extent, "data/test_save.csv");*/
+            activationContainer.Bind<DatenMeisterPool>().ToConstant(pool);
+            activationContainer.Bind<XmlDataProvider>().To<XmlDataProvider>();
 
-			using (var server = Server.CreateDefaultServer(activationContainer)) {
-				activationContainer.Bind<IRequestFilter> ().ToConstant (new AddCorsHeaderFilter ());
+            using (var server = Server.CreateDefaultServer(activationContainer))
+            {
+                activationContainer.Bind<IRequestFilter>().ToConstant(new AddCorsHeaderFilter());
 
-				server.Add (new ControllerDispatcher<ExtentController> (
-					BurnSystems.WebServer.Dispatcher.DispatchFilter.ByUrl ("/extent/"),
-					"/extent/"
-				)
-				);
+                server.Add(new ControllerDispatcher<ExtentController>(
+                    BurnSystems.WebServer.Dispatcher.DispatchFilter.ByUrl("/extent/"),
+                    "/extent/"));
 
-				server.AddPrefix ("http://127.0.0.1:8081/");
-				server.AddPrefix ("http://*:8081/");
+                server.AddPrefix("http://127.0.0.1:8081/");
+                server.AddPrefix("http://*:8081/");
 
-				server.Start ();
-				Console.WriteLine ("Press Key to stop server");
-				Console.ReadKey ();
+                server.Start();
+                Console.WriteLine("Press Key to stop server");
+                Console.ReadKey();
 
-				server.Stop ();
-			}
+                server.Stop();
+            }
 
-			// Storing the data
-			Log.TheLog.Message ("Storing data");
-			poolProvider.Save (pool, "data/pools.xml");
-		}
-	}
+            // Storing the data
+            Log.TheLog.Message("Storing data");
+            poolProvider.Save(pool, "data/pools.xml");
+        }
+    }
 }

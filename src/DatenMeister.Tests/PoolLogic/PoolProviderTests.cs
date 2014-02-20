@@ -62,8 +62,8 @@ namespace DatenMeister.Tests.PoolLogic
 			Assert.That (first, Is.Not.Null);
 			Assert.That (second, Is.Not.Null);
 			
-			Assert.That (first.Path == "data/empty1.xml");
-			Assert.That (second.Path == "data/empty2.xml");
+			Assert.That (first.StoragePath == "data/empty1.xml");
+			Assert.That (second.StoragePath == "data/empty2.xml");
 			
 			Assert.That (first.Extent, Is.Not.Null);
 			Assert.That (second.Extent, Is.Not.Null);
