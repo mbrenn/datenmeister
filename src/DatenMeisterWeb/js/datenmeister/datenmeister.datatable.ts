@@ -43,7 +43,7 @@ export class DataViewEditHandler extends Backbone.Model {
     constructor() {
         this.newPropertyInfos = new Array<NewPropertyFields>();
         this.writeFields = new Array<JQuery>();
-        
+
         super();
     }
 
@@ -59,12 +59,12 @@ export class DataViewEditHandler extends Backbone.Model {
         // Is currently in reading mode, switch to writing mode
         this.writeFields = new Array<JQuery>();
         var fieldInfos = this.view.getFieldInfos();
-        
+
         for (var n = 0; n < this.columnDoms.length; n++) {
             var dom = this.columnDoms[n];
             var column = fieldInfos[n];
             var renderer = fi.getRendererByObject(column);
-            
+
             dom.empty();
 
             var writeField = renderer.createWriteField(this.currentObject, column, this.view);
@@ -77,23 +77,22 @@ export class DataViewEditHandler extends Backbone.Model {
     }
 
     // Stores the changes, being done by user or webscripts into object
-    storeChangesInObject(): void
-    {   
+    storeChangesInObject(): void {
         var fieldInfos = this.view.getFieldInfos();
-        
+
         for (var n = 0; n < this.columnDoms.length; n++) {
             var column = fieldInfos[n];
-            
+
             var renderer = fi.getRendererByObject(column);
             renderer.setValueByWriteField(this.currentObject, column, this.writeFields[n], this.view);
         }
     }
-    
+
     // Switches the current form (whether table or form) to read
     // Sets necessary information to field, if necessary
     switchToRead(): void {
         var tthis = this;
-        
+
         // Stores the changes into the given object
         this.storeChangesInObject();
 
@@ -246,7 +245,7 @@ export class DataView implements fi.IDataView {
     }
 }
 
-export class DataTable extends DataView{
+export class DataTable extends DataView {
 
     objects: Array<d.JsonExtentObject>;
 
@@ -267,28 +266,25 @@ export class DataTable extends DataView{
             this.viewInfo = viewInfo;
         }
 
-        if(fi.View.getAllowDelete(this.viewInfo) === undefined)
-        {
+        if (fi.View.getAllowDelete(this.viewInfo) === undefined) {
             fi.View.setAllowDelete(this.viewInfo, true);
         }
 
-        if(fi.View.getAllowEdit(this.viewInfo) === undefined)
-        {
+        if (fi.View.getAllowEdit(this.viewInfo) === undefined) {
             fi.View.setAllowEdit(this.viewInfo, true);
         }
 
-        if(fi.View.getAllowNew(this.viewInfo) === undefined)
-        {
+        if (fi.View.getAllowNew(this.viewInfo) === undefined) {
             fi.View.setAllowNew(this.viewInfo, true);
         }
     }
-    
+
     /* 
      * Performs an auto-generation of 
      */
     autoGenerateColumns(): void {
         var tthis = this;
-        
+
         var fieldInfos = tthis.getFieldInfos();
 
         // Goes through every object
@@ -315,9 +311,9 @@ export class DataTable extends DataView{
     }
 
     // Renders the table for the given objects
-    render() : void {
+    render(): void {
         var tthis = this;
-        
+
         var fieldInfos = tthis.getFieldInfos();
 
         var tableOptions = new t.TableOptions();
@@ -330,7 +326,7 @@ export class DataTable extends DataView{
          * Creates headline
          */
         tthis.table.addHeaderRow();
-        
+
         for (var n = 0; n < fieldInfos.length; n++) {
             tthis.table.addColumn(fi.General.getTitle(fieldInfos[n]));
         }
@@ -423,7 +419,7 @@ export class DataTable extends DataView{
         var newInputs = new Array<JQuery>(); // Stores the 'input' elements
 
         // Adds create text
-            var fieldInfos = tthis.getFieldInfos();
+        var fieldInfos = tthis.getFieldInfos();
         var createDom = $("<button class='btn btn-default'>CREATE</button>");
         createDom.click(function () {
             newInputs.length = 0;
@@ -431,7 +427,7 @@ export class DataTable extends DataView{
             var newObject = new d.JsonExtentObject();
             for (var n = 0; n < fieldInfos.length; n++) {
                 newCells[n].empty();
-                
+
                 var renderer = fi.getRendererByObject(fieldInfos[n]);
 
                 var dom = renderer.createWriteField(newObject, fieldInfos[n], this);
@@ -468,14 +464,14 @@ export class DataTable extends DataView{
     createNewElement(inputs: Array<JQuery>, cells: Array<JQuery>): void {
         var tthis = this;
         var value = new d.JsonExtentObject();
-        
+
         var fieldInfos = tthis.getFieldInfos();
-            
+
         for (var n = 0; n < fieldInfos.length; n++) {
             var column = fieldInfos[n];
             var input = inputs[n];
             var renderer = fi.getRendererByObject(column);
-            
+
             renderer.setValueByWriteField(value, column, input, this);
         }
 
@@ -490,9 +486,8 @@ export class DataTable extends DataView{
             function () {
             });
     }
-    
-    convertViewToObject() : d.JsonExtentObject
-    {
+
+    convertViewToObject(): d.JsonExtentObject {
         throw "Not implemented";
     }
 }

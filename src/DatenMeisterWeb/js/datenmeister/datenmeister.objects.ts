@@ -28,7 +28,7 @@ export class JsonExtentObject extends Backbone.Model {
 
 // Result from GetObjectsInExtent
 export class JsonExtentData {
-    extent: ExtentInfo;    
+    extent: ExtentInfo;
     // columns: Array<JsonExtentInfo>;
     objects: Array<JsonExtentObject>;
 }

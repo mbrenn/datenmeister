@@ -54,7 +54,7 @@ export class ServerConnectionView extends Backbone.View {
 
     render(): Backbone.View {
 
-        var templatedElement = _.template($("#serverconnectiontemplate").html(), {} );
+        var templatedElement = _.template($("#serverconnectiontemplate").html(), {});
         this.$el.html(templatedElement);
 
         this.$(".serveraddress").val(window.localStorage.getItem("serverconnection_serveraddress"));
@@ -440,14 +440,13 @@ export class ViewSelector extends Backbone.View {
     }
 }
 
-export class CreateNewExtentView extends DetailView
-{
+export class CreateNewExtentView extends DetailView {
     constructor(options: DetailViewOptions) {
         var view = fi.FormView.create();
-        fi.View.setAllowEdit(view,false);
-        fi.View.setAllowNew(view,false);
-        fi.View.setAllowDelete(view,false);
-        fi.View.setStartInEditMode(view,true);
+        fi.View.setAllowEdit(view, false);
+        fi.View.setAllowNew(view, false);
+        fi.View.setAllowDelete(view, false);
+        fi.View.setStartInEditMode(view, true);
         fi.FormView.setShowColumnHeaders(view, false);
 
         fi.View.pushFieldInfo(view, fi.Comment.create("Information", "Please give a title and filename for the new extent (without file extension)"));

@@ -81,13 +81,12 @@ export class ServerAPI extends Backbone.Model {
     __getUrl(): string {
         return this.connectionInfo.serverAddress;
     }
-    
+
     /*
      * Encodes the URI twice to transmit via QueryString
      * Mono HttpWebserver decodes the uri once when it has been received.
      */
-    __doubleEncodeUri(uri: string)
-    {
+    __doubleEncodeUri(uri: string) {
         if (true) {
             // When connected to IIS, just a single encoding is necessary
             return encodeURIComponent(uri);
@@ -273,10 +272,8 @@ export class ServerAPI extends Backbone.Model {
      * The answer will be converted to a d.JsonExtentObject
      * @actionUrl: This url will be directly used to trigger the object
      */
-    sendObjectToServer(actionUrl: string, data: d.JsonExtentObject, success: (data: any) => void, fail?: (data: any) => void)
-    {
-        if(actionUrl === undefined || actionUrl.length == 0 || actionUrl[0] == '/')
-        {
+    sendObjectToServer(actionUrl: string, data: d.JsonExtentObject, success: (data: any) => void, fail?: (data: any) => void) {
+        if (actionUrl === undefined || actionUrl.length == 0 || actionUrl[0] == '/') {
             throw "Action URL should not be undefined, '' or start with '/'";
         }
 
@@ -285,17 +282,13 @@ export class ServerAPI extends Backbone.Model {
             url: this.__getUrl() + actionUrl,
             method: 'post',
             data: data.toJSON(),
-            success: function(responseData)
-            {
-                if(success !== undefined)
-                {
+            success: function (responseData) {
+                if (success !== undefined) {
                     success(responseData);
                 }
             },
-            fail: function(responseData)
-            {
-                if(fail !== undefined)
-                {
+            fail: function (responseData) {
+                if (fail !== undefined) {
                     fail(responseData);
                 }
 
@@ -307,8 +300,7 @@ export class ServerAPI extends Backbone.Model {
     /*
      * Throws the fail event
      * */
-    onError(data: any): void
-    {
+    onError(data: any): void {
         this.trigger('error', data);
         alert('FAIL');
     }

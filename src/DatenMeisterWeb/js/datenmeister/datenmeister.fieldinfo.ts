@@ -96,7 +96,7 @@ export module View
     
     export function pushFieldInfo(value: d.JsonExtentObject, fieldInfo: d.JsonExtentObject) : void
     {
-        var infos = <Array<d.JsonExtentObject>> value.get('fieldinfos')
+        var infos = <Array<d.JsonExtentObject>> value.get('fieldinfos');
         if (infos === undefined)
         {
             infos = new Array <d.JsonExtentObject>();
@@ -471,80 +471,68 @@ export module TextField
  * Defines the module for an action button, which sends the form data to a certain 
  * form
  */
-export module ActionButton
-{
+export module ActionButton {
     export var TypeName = "DatenMeister.DataFields.ActionButton";
-    
-    export function create(text: string, clickUrl: string)
-    {
+
+    export function create(text: string, clickUrl: string) {
         var result = new d.JsonExtentObject();
         setText(result, text);
         setClickUrl(result, clickUrl);
-        
+
         result.set("type", TypeName);
-        
+
         return result;
     }
-    
-    export function setText(value: d.JsonExtentObject, text: string) : void
-    {
+
+    export function setText(value: d.JsonExtentObject, text: string): void {
         value.set('text', text);
     }
-    
-    export function getText(value: d.JsonExtentObject) : string
-    {
+
+    export function getText(value: d.JsonExtentObject): string {
         return value.get('text');
     }
-    
-    export function setClickUrl(value: d.JsonExtentObject, url: string): void
-    {
-        if(url === undefined || url.length == 0 || url[0] == '/')
-        {
+
+    export function setClickUrl(value: d.JsonExtentObject, url: string): void {
+        if (url === undefined || url.length == 0 || url[0] == '/') {
             throw "Action URL should not be undefined, '' or start with '/'";
         }
 
         value.set('clickUrl', url);
     }
-    
-    export function getClickUrl(value: d.JsonExtentObject): string
-    {
+
+    export function getClickUrl(value: d.JsonExtentObject): string {
         return value.get('clickUrl');
     }
-    
-    export class Renderer implements IRenderer
-    { 
-        createReadField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : JQuery
-        {
+
+    export class Renderer implements IRenderer {
+        createReadField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView): JQuery {
             var tthis = this;
             var inputField = $("<input type='button'></input>");
             inputField.attr('value', getText(fieldInfo));
-            inputField.click(function() { 
+            inputField.click(function () {
                 tthis.onClick(object, fieldInfo, form);
             });
-            
+
             return inputField;
         }
-        
-        createWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : JQuery
-        {
+
+        createWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView): JQuery {
             return this.createReadField(object, fieldInfo, form);
         }
-        
-        setValueByWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, dom: JQuery, form: IDataView) : void
-        {
+
+        setValueByWriteField(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, dom: JQuery, form: IDataView): void {
             // Buttons don't have action stuff
             return;
         }
-        
-        onClick(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView) : void
-        {
+
+        onClick(object: d.JsonExtentObject, fieldInfo: d.JsonExtentObject, form: IDataView): void {
             var convertedObject = form.convertViewToObject();
 
             // Everything seemed to be successful, now send back to server
             serverapi.getAPI().sendObjectToServer(
                 getClickUrl(fieldInfo),
                 convertedObject,
-                function(data) { form.evaluateActionResponse(data); });
+                function (data) { form.evaluateActionResponse(data); });
         }
     }
 }
