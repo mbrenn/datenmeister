@@ -80,7 +80,7 @@ namespace DatenMeister.Logic
             return new
             {
                 name = this.Name,
-                url = this.Extent.ContextURI(),
+                uri = this.Extent.ContextURI(),
                 type = this.Extent.GetType().Name,
                 filename = this.StoragePath
             };

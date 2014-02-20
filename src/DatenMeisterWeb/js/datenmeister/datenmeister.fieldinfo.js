@@ -1,4 +1,4 @@
-﻿define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"], function(require, exports, d, serverapi) {
+define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"], function(require, exports, d, serverapi) {
     
 
     /*
