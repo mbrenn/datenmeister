@@ -1,5 +1,5 @@
 using System;
-namespace DatenMeister
+namespace DatenMeister.Web
 {
 	/// <summary>
 	/// Contains the model, which is used to create a new extent.
