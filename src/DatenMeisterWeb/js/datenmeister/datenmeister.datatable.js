@@ -7,12 +7,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", "datenmeister.fieldinfo", '../dejs/dejs.table'], function(require, exports, __d__, __api__, __fi__, __t__) {
-    var d = __d__;
-    var api = __api__;
-    var fi = __fi__;
-    var t = __t__;
-
+define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", "datenmeister.fieldinfo", '../dejs/dejs.table'], function(require, exports, d, api, fi, t) {
     /*
     * Supports the insertion of new properties by collecting them into the View
     * When called by createEventsForEditButton, this information is used to send out new properties
@@ -261,6 +256,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             // Goes through every object
             _.each(this.objects, function (obj) {
                 for (var key in obj.attributes) {
+                    // Checks, if already in
                     if (!(_.some(fieldInfos, function (info) {
                         return fi.General.getName(info) == key;
                     }))) {
@@ -308,6 +304,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 this.createRow(object);
             }
 
+            // Adds last line for adding new items, if necessary
             if (fi.View.getAllowNew(this.viewInfo)) {
                 this.createCreateButton();
             }
@@ -339,6 +336,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 lastColumn.append(detailColumn);
             }
 
+            // Adds delete button
             if (fi.View.getAllowDelete(this.viewInfo)) {
                 var delColumn = $("<a class='btn btn-default'>DEL</a>");
                 var clicked = false;
@@ -358,6 +356,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 lastColumn.append(delColumn);
             }
 
+            // Adds allow edit button
             if (fi.View.getAllowEdit(this.viewInfo)) {
                 var editColumn = $("<a class='btn btn-default'>EDIT</a>");
 

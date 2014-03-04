@@ -23,6 +23,21 @@ namespace DatenMeister.DataProvider.Xml
         }
 
         /// <summary>
+        /// Loads the extent from a file and sets the corresponding uri
+        /// </summary>
+        /// <param name="path">Path, where extent will get loaded from</param>
+        /// <param name="uri"></param>
+        /// <param name="setttings"></param>
+        /// <returns></returns>
+        public XmlExtent Load(string path, string uri, XmlSettings settings)
+        {
+            var extent = this.Load(path, settings);
+            extent.Uri = uri;
+
+            return extent;
+        }
+
+        /// <summary>
         /// Saves the extent into database.
         /// </summary>
         /// <param name="extent">Extent to be stored</param>

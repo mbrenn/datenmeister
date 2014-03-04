@@ -4,14 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", "datenmeister.datatable", "datenmeister.dataform", "datenmeister.navigation", "datenmeister.fieldinfo"], function(require, exports, __api__, __d__, __t__, __forms__, __navigation__, __fi__) {
-    var api = __api__;
-    var d = __d__;
-    var t = __t__;
-    var forms = __forms__;
-    var navigation = __navigation__;
-    var fi = __fi__;
-
+define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", "datenmeister.datatable", "datenmeister.dataform", "datenmeister.navigation", "datenmeister.fieldinfo"], function(require, exports, api, d, t, forms, navigation, fi) {
     /*
     * Has to be called before every view,
     * resets the visibility for each form
@@ -73,6 +66,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", 
             // Check, if connection is possible
             var serverAPI = new api.ServerAPI(settings);
             serverAPI.getServerInfo(function (info) {
+                // Yes, do the connect
                 if (tthis.onConnect !== undefined) {
                     tthis.onConnect(settings);
                 }
@@ -84,6 +78,8 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", 
         return ServerConnectionView;
     })(Backbone.View);
     exports.ServerConnectionView = ServerConnectionView;
+
+    
 
     /*
     * Creates a view by loading or using the given extent data and creating a datatable
@@ -108,7 +104,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", 
             var tthis = this;
 
             api.getAPI().getObjectsInExtent(this.url, function (data) {
-                tthis.data = data;
+                tthis.data = data; // Stores the objects
                 tthis.render();
             });
             return this;
@@ -137,6 +133,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", 
                 func(this.data.objects[n]);
             }
 
+            // Create the columns
             if (this.columns === undefined) {
                 table.autoGenerateColumns();
             } else {
@@ -221,6 +218,8 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", 
         return AllExtentsView;
     })(DefaultTableView);
     exports.AllExtentsView = AllExtentsView;
+
+    
 
     var DetailView = (function (_super) {
         __extends(DetailView, _super);

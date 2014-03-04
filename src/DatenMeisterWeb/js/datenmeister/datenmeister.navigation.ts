@@ -17,7 +17,7 @@ export function add(navigationUrl: string): void {
     lastNavigations.push(navigationUrl);
 }
 
-export function back() :void {
+export function back(): void {
     if (lastNavigations.length <= 1) {
         // If nothing gets found, return to 'login'
         to("login");

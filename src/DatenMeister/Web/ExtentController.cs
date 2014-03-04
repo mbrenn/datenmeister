@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic.ClientActions;
 
 namespace DatenMeister.Web
 {
@@ -198,12 +199,11 @@ namespace DatenMeister.Web
         public IActionResult Create([PostModel] CreateExtentModel model)
         {
             // At the moment, just xml files are supported
-            this.PoolLogic.CreateEmpty(model.name, model.url, model.filename);
+            var newPool = this.PoolLogic.CreateEmpty(model.name, model.url, model.filename);
+            this.Pool.Add(newPool);
 
-            return this.Json(new
-                {
-                    success = true
-                });
+            return this.ReturnClientAction(
+                new RefreshBrowserWindow());
         }
 
         /// <summary>

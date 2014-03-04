@@ -50,7 +50,7 @@ namespace DatenMeister.DataProvider.CSV
                 // Writes the header
                 if (settings.HasHeader)
                 {
-                    this.WriteRow(streamWriter, settings, columnHeaders, x=>x);
+                    this.WriteRow(streamWriter, settings, columnHeaders, x => x);
                 }
 
                 // Writes the elements
@@ -60,7 +60,7 @@ namespace DatenMeister.DataProvider.CSV
                         streamWriter,
                         settings,
                         columnHeaders,
-                        x => element.Get(x));                        
+                        x => element.Get(x));
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace DatenMeister.DataProvider.CSV
                 }
 
                 builder.Append(conversion(value).ToString());
-                
+
                 first = false;
             }
 

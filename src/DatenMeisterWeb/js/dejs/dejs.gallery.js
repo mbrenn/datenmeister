@@ -199,6 +199,7 @@ define(["require", "exports"], function(require, exports) {
 
             this.currentImageId = this.currentImage.id;
 
+            // Shows the image
             if (this.imageDomNow !== undefined) {
                 this.imageDomFadeout = this.imageDomNow;
 
@@ -252,6 +253,7 @@ define(["require", "exports"], function(require, exports) {
             }
 
             for (var n = first; n <= last; n++) {
+                // Checks, if image is already loaded, otherwise load
                 if (this.imagesPreload[n] === undefined) {
                     var image = new Image();
                     image.src = this.__getUrlOfImage(this.galleryData.images[n]);

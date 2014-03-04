@@ -8,7 +8,7 @@ namespace DatenMeister.Logic
 {
     /// <summary>
     /// Implements the IFactory class in a very simple way by just calling 
-	/// IURIExtent.CreateObject
+    /// IURIExtent.CreateObject
     /// </summary>
     public class Factory : IFactory
     {
@@ -18,7 +18,7 @@ namespace DatenMeister.Logic
         {
             this.extent = extent;
         }
-        
+
         public IObject create(IObject type)
         {
             return extent.CreateObject();

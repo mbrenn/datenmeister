@@ -10,10 +10,10 @@ export class DataForm extends dt.DataView implements fi.IDataView {
 
     /* The object, that is shown */
     object: d.JsonExtentObject;
-    
+
     /* The domElement, which will contain the data form */
     domElement: JQuery;
-    
+
     /* Stores the form handler, that is used for the data form */
     formHandler: dt.DataViewEditHandler;
 
@@ -21,7 +21,7 @@ export class DataForm extends dt.DataView implements fi.IDataView {
      * Stores the information whether the form shall be used to create a new item.
      * A 'create' form is per default 'writable'. And a new item will be created, when user clicks on 'create'. 
      */
-    createNewItem: boolean; 
+    createNewItem: boolean;
 
     constructor(object: d.JsonExtentObject, domElement: JQuery, viewInfo?: d.JsonExtentObject) {
         super(domElement, viewInfo);
@@ -31,7 +31,7 @@ export class DataForm extends dt.DataView implements fi.IDataView {
 
     /*
      * Autogenerates the fields by evaluating the contents of given object
-     */ 
+     */
     autoGenerateFields(): void {
         var keys = _.keys(this.object.attributes);
         for (var i = 0, len = keys.length; i < len; i++) {
@@ -54,8 +54,7 @@ export class DataForm extends dt.DataView implements fi.IDataView {
         var table = new t.Table(this.domElement, tableOptions);
 
         // Creates Column headers for the table
-        if(fi.FormView.getShowColumnHeaders(this.viewInfo) !== false)
-        {
+        if (fi.FormView.getShowColumnHeaders(this.viewInfo) !== false) {
             table.addHeaderRow();
             table.addColumn("Key");
             table.addColumn("Value");
@@ -72,15 +71,15 @@ export class DataForm extends dt.DataView implements fi.IDataView {
         });
 
         // Creates the action field for Edit and Delete
-        if (fi.View.getAllowEdit(this.viewInfo) 
-            || fi.View.getAllowDelete(this.viewInfo) 
+        if (fi.View.getAllowEdit(this.viewInfo)
+            || fi.View.getAllowDelete(this.viewInfo)
             || fi.View.getStartInEditMode(this.viewInfo)) {
             var lastRow = table.addRow();
             table.addColumn("");
 
             var div = $("<div class='lastcolumn'></div>");
 
-                var deleteButton = $("<button class='btn btn-default'>DELETE</button>");
+            var deleteButton = $("<button class='btn btn-default'>DELETE</button>");
             if (fi.View.getAllowEdit(this.viewInfo)) {
                 var clicked = false;
                 deleteButton.click(function () {
@@ -105,7 +104,7 @@ export class DataForm extends dt.DataView implements fi.IDataView {
                 var handler = new dt.DataViewEditHandler();
                 handler.bindToEditButton(this, editButton, this.object, columnDoms);
                 handler.bind(
-                    'editModeChange', 
+                    'editModeChange',
                     function (inEditMode) {
                         // Called, if the user switches from view mode to edit mode or back
                         if (fi.FormView.getAllowNewProperty(tthis.viewInfo) === true) {
@@ -123,14 +122,12 @@ export class DataForm extends dt.DataView implements fi.IDataView {
                         }
                     });
 
-                if(fi.View.getAllowEdit(this.viewInfo) === true)
-                {
+                if (fi.View.getAllowEdit(this.viewInfo) === true) {
                     // Button is only added, when user is allowed to switch between edit and non-edit
                     div.append(editButton);
                 }
 
-                if(fi.View.getStartInEditMode(this.viewInfo) === true)
-                {
+                if (fi.View.getStartInEditMode(this.viewInfo) === true) {
                     handler.switchToEdit();
                 }
 
@@ -141,7 +138,7 @@ export class DataForm extends dt.DataView implements fi.IDataView {
 
             table.addColumnJQuery(div);
         }
-        
+
         return this;
     }
 
@@ -152,7 +149,7 @@ export class DataForm extends dt.DataView implements fi.IDataView {
     createNewPropertyRow(table: t.Table, lastRow: JQuery, handler: dt.DataViewEditHandler): void {
         var tthis = this;
         var newPropertyRow = table.insertRowBefore(lastRow);
-        
+
         var renderer = new fi.TextField.Renderer();
 
         var keyElement = renderer.createWriteField(undefined, undefined, this);
@@ -185,11 +182,9 @@ export class DataForm extends dt.DataView implements fi.IDataView {
         keyElement.on('keypress', changeFunction);
         valueElement.on('keypress', changeFunction);
     }
-    
-    convertViewToObject() : d.JsonExtentObject
-    {
-        if(this.formHandler === undefined)
-        {
+
+    convertViewToObject(): d.JsonExtentObject {
+        if (this.formHandler === undefined) {
             throw "Undefined Form Handler";
         }
 

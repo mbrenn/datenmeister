@@ -1,6 +1,5 @@
-define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"], function(require, exports, __d__, __serverapi__) {
-    var d = __d__;
-    var serverapi = __serverapi__;
+define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"], function(require, exports, d, serverapi) {
+    
 
     /*
     * Contains actions which were sent back from server to client
@@ -12,6 +11,8 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
         return ClientActionInformation;
     })();
     exports.ClientActionInformation = ClientActionInformation;
+
+    
 
     function getRendererByObject(object) {
         return exports.getRenderer(object.get("type"));
@@ -403,6 +404,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
                     offerWriting = false;
                 }
 
+                // Creates the necessary controls
                 if (offerWriting) {
                     // Offer writing
                     var inputField = $("<input type='text' />");

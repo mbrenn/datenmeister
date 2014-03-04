@@ -1,5 +1,5 @@
+/// <reference path="../backbone/backbone.d.ts" />
 define(["require", "exports"], function(require, exports) {
-    /// <reference path="../backbone/backbone.d.ts" />
     /*
     * Stores the last navigation points
     */

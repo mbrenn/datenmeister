@@ -91,7 +91,7 @@ export function performRequest(data: PerformRequestSettings) {
     var domButton = $("." + data.prefix + "button");
 
     var ajaxSettings: JQueryAjaxSettings = {};
-    ajaxSettings.headers = { 'X-Requested-With': 2 };
+    ajaxSettings.headers = { 'X-Requested-With': 1 };
 
     if (data.method !== undefined) {
         ajaxSettings.type = data.method;
