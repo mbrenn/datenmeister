@@ -4,7 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi", '../dejs/dejs.table', 'datenmeister.navigation', 'datenmeister.fieldinfo'], function(require, exports, dt, api, t, navigation, fi) {
+define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi", '../dejs/dejs.table', 'datenmeister.navigation', 'datenmeister.fieldinfo', 'datenmeister.fieldinfo.objects'], function(require, exports, dt, api, t, navigation, fi, fo) {
     var DataForm = (function (_super) {
         __extends(DataForm, _super);
         function DataForm(object, domElement, viewInfo) {
@@ -21,7 +21,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
                 var k = keys[i];
                 var v = this.object.attributes[k];
 
-                this.addFieldInfo(fi.TextField.create(k, k));
+                this.addFieldInfo(fo.TextField.create(k, k));
             }
         };
 
@@ -37,7 +37,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
             var table = new t.Table(this.domElement, tableOptions);
 
             // Creates Column headers for the table
-            if (fi.FormView.getShowColumnHeaders(this.viewInfo) !== false) {
+            if (fo.FormView.getShowColumnHeaders(this.viewInfo) !== false) {
                 table.addHeaderRow();
                 table.addColumn("Key");
                 table.addColumn("Value");
@@ -54,14 +54,14 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
             });
 
             // Creates the action field for Edit and Delete
-            if (fi.View.getAllowEdit(this.viewInfo) || fi.View.getAllowDelete(this.viewInfo) || fi.View.getStartInEditMode(this.viewInfo)) {
+            if (fo.View.getAllowEdit(this.viewInfo) || fo.View.getAllowDelete(this.viewInfo) || fo.View.getStartInEditMode(this.viewInfo)) {
                 var lastRow = table.addRow();
                 table.addColumn("");
 
                 var div = $("<div class='lastcolumn'></div>");
 
                 var deleteButton = $("<button class='btn btn-default'>DELETE</button>");
-                if (fi.View.getAllowEdit(this.viewInfo)) {
+                if (fo.View.getAllowEdit(this.viewInfo)) {
                     var clicked = false;
                     deleteButton.click(function () {
                         if (!clicked) {
@@ -77,7 +77,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
                     div.append(deleteButton);
                 }
 
-                if (fi.View.getAllowEdit(this.viewInfo) === true || fi.View.getStartInEditMode(this.viewInfo) === true) {
+                if (fo.View.getAllowEdit(this.viewInfo) === true || fo.View.getStartInEditMode(this.viewInfo) === true) {
                     var editButton = $("<button class='btn btn-default'>EDIT</button>");
                     var newPropertyRows = new Array();
 
@@ -85,7 +85,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
                     handler.bindToEditButton(this, editButton, this.object, columnDoms);
                     handler.bind('editModeChange', function (inEditMode) {
                         // Called, if the user switches from view mode to edit mode or back
-                        if (fi.FormView.getAllowNewProperty(tthis.viewInfo) === true) {
+                        if (fo.FormView.getAllowNewProperty(tthis.viewInfo) === true) {
                             if (inEditMode) {
                                 tthis.createNewPropertyRow(table, lastRow, handler);
                             } else {
@@ -99,12 +99,12 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
                         }
                     });
 
-                    if (fi.View.getAllowEdit(this.viewInfo) === true) {
+                    if (fo.View.getAllowEdit(this.viewInfo) === true) {
                         // Button is only added, when user is allowed to switch between edit and non-edit
                         div.append(editButton);
                     }
 
-                    if (fi.View.getStartInEditMode(this.viewInfo) === true) {
+                    if (fo.View.getStartInEditMode(this.viewInfo) === true) {
                         handler.switchToEdit();
                     }
 

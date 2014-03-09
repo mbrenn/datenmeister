@@ -57,6 +57,13 @@
     <Compile Include="DataProvider\Xml\XmlObject.cs" />
     <Compile Include="DataProvider\Xml\XmlSettings.cs" />
     <Compile Include="DatenMeisterPool.cs" />
+    <Compile Include="Entities\FieldInfos\ActionButton.cs" />
+    <Compile Include="Entities\FieldInfos\Comment.cs" />
+    <Compile Include="Entities\FieldInfos\FormView.cs" />
+    <Compile Include="Entities\FieldInfos\General.cs" />
+    <Compile Include="Entities\FieldInfos\TableView.cs" />
+    <Compile Include="Entities\FieldInfos\TextField.cs" />
+    <Compile Include="Entities\FieldInfos\View.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IObject.cs" />

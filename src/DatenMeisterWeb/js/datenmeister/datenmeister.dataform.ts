@@ -5,6 +5,7 @@ import api = require("datenmeister.serverapi");
 import t = require('../dejs/dejs.table');
 import navigation = require('datenmeister.navigation');
 import fi = require('datenmeister.fieldinfo');
+import fo = require('datenmeister.fieldinfo.objects');
 
 export class DataForm extends dt.DataView implements fi.IDataView {
 
@@ -38,7 +39,7 @@ export class DataForm extends dt.DataView implements fi.IDataView {
             var k = keys[i];
             var v = this.object.attributes[k];
 
-            this.addFieldInfo(fi.TextField.create(k, k));
+            this.addFieldInfo(fo.TextField.create(k, k));
         }
     }
 
@@ -54,7 +55,7 @@ export class DataForm extends dt.DataView implements fi.IDataView {
         var table = new t.Table(this.domElement, tableOptions);
 
         // Creates Column headers for the table
-        if (fi.FormView.getShowColumnHeaders(this.viewInfo) !== false) {
+        if (fo.FormView.getShowColumnHeaders(this.viewInfo) !== false) {
             table.addHeaderRow();
             table.addColumn("Key");
             table.addColumn("Value");
@@ -71,16 +72,16 @@ export class DataForm extends dt.DataView implements fi.IDataView {
         });
 
         // Creates the action field for Edit and Delete
-        if (fi.View.getAllowEdit(this.viewInfo)
-            || fi.View.getAllowDelete(this.viewInfo)
-            || fi.View.getStartInEditMode(this.viewInfo)) {
+        if (fo.View.getAllowEdit(this.viewInfo)
+            || fo.View.getAllowDelete(this.viewInfo)
+            || fo.View.getStartInEditMode(this.viewInfo)) {
             var lastRow = table.addRow();
             table.addColumn("");
 
             var div = $("<div class='lastcolumn'></div>");
 
             var deleteButton = $("<button class='btn btn-default'>DELETE</button>");
-            if (fi.View.getAllowEdit(this.viewInfo)) {
+            if (fo.View.getAllowEdit(this.viewInfo)) {
                 var clicked = false;
                 deleteButton.click(function () {
                     if (!clicked) {
@@ -97,7 +98,7 @@ export class DataForm extends dt.DataView implements fi.IDataView {
                 div.append(deleteButton);
             }
 
-            if (fi.View.getAllowEdit(this.viewInfo) === true || fi.View.getStartInEditMode(this.viewInfo) === true) {
+            if (fo.View.getAllowEdit(this.viewInfo) === true || fo.View.getStartInEditMode(this.viewInfo) === true) {
                 var editButton = $("<button class='btn btn-default'>EDIT</button>");
                 var newPropertyRows = new Array<JQuery>();
 
@@ -107,7 +108,7 @@ export class DataForm extends dt.DataView implements fi.IDataView {
                     'editModeChange',
                     function (inEditMode) {
                         // Called, if the user switches from view mode to edit mode or back
-                        if (fi.FormView.getAllowNewProperty(tthis.viewInfo) === true) {
+                        if (fo.FormView.getAllowNewProperty(tthis.viewInfo) === true) {
                             if (inEditMode) {
                                 tthis.createNewPropertyRow(table, lastRow, handler);
                             }
@@ -122,12 +123,12 @@ export class DataForm extends dt.DataView implements fi.IDataView {
                         }
                     });
 
-                if (fi.View.getAllowEdit(this.viewInfo) === true) {
+                if (fo.View.getAllowEdit(this.viewInfo) === true) {
                     // Button is only added, when user is allowed to switch between edit and non-edit
                     div.append(editButton);
                 }
 
-                if (fi.View.getStartInEditMode(this.viewInfo) === true) {
+                if (fo.View.getStartInEditMode(this.viewInfo) === true) {
                     handler.switchToEdit();
                 }
 

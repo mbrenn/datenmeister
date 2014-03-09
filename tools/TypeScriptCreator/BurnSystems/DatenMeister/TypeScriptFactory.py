@@ -7,6 +7,7 @@ def createFiles(file, types):
     dotNetTypes = [clr.GetClrType(x) for x in types]
     provider = DotNetTypeProvider(dotNetTypes)
     sourceFactory = TypeScriptSourceFactory(provider)
+    sourceFactory.SetParentClass("JsonExtentObject", "datenmeister.objects");
     sourceFactory.CreateFile(file)
 
 
