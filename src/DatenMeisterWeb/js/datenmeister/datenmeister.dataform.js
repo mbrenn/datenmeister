@@ -54,14 +54,14 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
             });
 
             // Creates the action field for Edit and Delete
-            if (fo.View.getAllowEdit(this.viewInfo) || fo.View.getAllowDelete(this.viewInfo) || fo.View.getStartInEditMode(this.viewInfo)) {
+            if (fo.FormView.getAllowEdit(this.viewInfo) || fo.FormView.getAllowDelete(this.viewInfo) || fo.View.getStartInEditMode(this.viewInfo)) {
                 var lastRow = table.addRow();
                 table.addColumn("");
 
                 var div = $("<div class='lastcolumn'></div>");
 
                 var deleteButton = $("<button class='btn btn-default'>DELETE</button>");
-                if (fo.View.getAllowEdit(this.viewInfo)) {
+                if (fo.FormView.getAllowEdit(this.viewInfo)) {
                     var clicked = false;
                     deleteButton.click(function () {
                         if (!clicked) {
@@ -77,7 +77,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
                     div.append(deleteButton);
                 }
 
-                if (fo.View.getAllowEdit(this.viewInfo) === true || fo.View.getStartInEditMode(this.viewInfo) === true) {
+                if (fo.FormView.getAllowEdit(this.viewInfo) === true || fo.View.getStartInEditMode(this.viewInfo) === true) {
                     var editButton = $("<button class='btn btn-default'>EDIT</button>");
                     var newPropertyRows = new Array();
 
@@ -99,7 +99,7 @@ define(["require", "exports", 'datenmeister.datatable', "datenmeister.serverapi"
                         }
                     });
 
-                    if (fo.View.getAllowEdit(this.viewInfo) === true) {
+                    if (fo.FormView.getAllowEdit(this.viewInfo) === true) {
                         // Button is only added, when user is allowed to switch between edit and non-edit
                         div.append(editButton);
                     }

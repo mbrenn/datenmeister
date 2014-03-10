@@ -233,44 +233,14 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
 
         function pushFieldInfo(item, value) {
             var a = item.get('fieldInfos');
-            if (a == undefined) {
+            if (a === undefined) {
                 a = new Array();
             }
 
             a.push(value);
-            item.set('fieldInfos', value);
+            item.set('fieldInfos', a);
         }
         View.pushFieldInfo = pushFieldInfo;
-
-        function getAllowEdit(item) {
-            return item.get('allowEdit');
-        }
-        View.getAllowEdit = getAllowEdit;
-
-        function setAllowEdit(item, value) {
-            item.set('allowEdit', value);
-        }
-        View.setAllowEdit = setAllowEdit;
-
-        function getAllowDelete(item) {
-            return item.get('allowDelete');
-        }
-        View.getAllowDelete = getAllowDelete;
-
-        function setAllowDelete(item, value) {
-            item.set('allowDelete', value);
-        }
-        View.setAllowDelete = setAllowDelete;
-
-        function getAllowNew(item) {
-            return item.get('allowNew');
-        }
-        View.getAllowNew = getAllowNew;
-
-        function setAllowNew(item, value) {
-            item.set('allowNew', value);
-        }
-        View.setAllowNew = setAllowNew;
 
         function getStartInEditMode(item) {
             return item.get('startInEditMode');
@@ -320,9 +290,42 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         function create() {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'FormView');
+            result.set('allowEdit', true);
+            result.set('allowDelete', true);
+            result.set('allowNew', true);
             return result;
         }
         FormView.create = create;
+
+        function getAllowEdit(item) {
+            return item.get('allowEdit');
+        }
+        FormView.getAllowEdit = getAllowEdit;
+
+        function setAllowEdit(item, value) {
+            item.set('allowEdit', value);
+        }
+        FormView.setAllowEdit = setAllowEdit;
+
+        function getAllowDelete(item) {
+            return item.get('allowDelete');
+        }
+        FormView.getAllowDelete = getAllowDelete;
+
+        function setAllowDelete(item, value) {
+            item.set('allowDelete', value);
+        }
+        FormView.setAllowDelete = setAllowDelete;
+
+        function getAllowNew(item) {
+            return item.get('allowNew');
+        }
+        FormView.getAllowNew = getAllowNew;
+
+        function setAllowNew(item, value) {
+            item.set('allowNew', value);
+        }
+        FormView.setAllowNew = setAllowNew;
 
         function getShowColumnHeaders(item) {
             return item.get('showColumnHeaders');
@@ -356,44 +359,14 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
 
         function pushFieldInfo(item, value) {
             var a = item.get('fieldInfos');
-            if (a == undefined) {
+            if (a === undefined) {
                 a = new Array();
             }
 
             a.push(value);
-            item.set('fieldInfos', value);
+            item.set('fieldInfos', a);
         }
         FormView.pushFieldInfo = pushFieldInfo;
-
-        function getAllowEdit(item) {
-            return item.get('allowEdit');
-        }
-        FormView.getAllowEdit = getAllowEdit;
-
-        function setAllowEdit(item, value) {
-            item.set('allowEdit', value);
-        }
-        FormView.setAllowEdit = setAllowEdit;
-
-        function getAllowDelete(item) {
-            return item.get('allowDelete');
-        }
-        FormView.getAllowDelete = getAllowDelete;
-
-        function setAllowDelete(item, value) {
-            item.set('allowDelete', value);
-        }
-        FormView.setAllowDelete = setAllowDelete;
-
-        function getAllowNew(item) {
-            return item.get('allowNew');
-        }
-        FormView.getAllowNew = getAllowNew;
-
-        function setAllowNew(item, value) {
-            item.set('allowNew', value);
-        }
-        FormView.setAllowNew = setAllowNew;
 
         function getStartInEditMode(item) {
             return item.get('startInEditMode');
@@ -443,30 +416,12 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         function create() {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'TableView');
+            result.set('allowEdit', true);
+            result.set('allowDelete', true);
+            result.set('allowNew', true);
             return result;
         }
         TableView.create = create;
-
-        function getFieldInfos(item) {
-            return item.get('fieldInfos');
-        }
-        TableView.getFieldInfos = getFieldInfos;
-
-        function setFieldInfos(item, value) {
-            item.set('fieldInfos', value);
-        }
-        TableView.setFieldInfos = setFieldInfos;
-
-        function pushFieldInfo(item, value) {
-            var a = item.get('fieldInfos');
-            if (a == undefined) {
-                a = new Array();
-            }
-
-            a.push(value);
-            item.set('fieldInfos', value);
-        }
-        TableView.pushFieldInfo = pushFieldInfo;
 
         function getAllowEdit(item) {
             return item.get('allowEdit');
@@ -497,6 +452,27 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('allowNew', value);
         }
         TableView.setAllowNew = setAllowNew;
+
+        function getFieldInfos(item) {
+            return item.get('fieldInfos');
+        }
+        TableView.getFieldInfos = getFieldInfos;
+
+        function setFieldInfos(item, value) {
+            item.set('fieldInfos', value);
+        }
+        TableView.setFieldInfos = setFieldInfos;
+
+        function pushFieldInfo(item, value) {
+            var a = item.get('fieldInfos');
+            if (a === undefined) {
+                a = new Array();
+            }
+
+            a.push(value);
+            item.set('fieldInfos', a);
+        }
+        TableView.pushFieldInfo = pushFieldInfo;
 
         function getStartInEditMode(item) {
             return item.get('startInEditMode');

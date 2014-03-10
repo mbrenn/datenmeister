@@ -233,16 +233,16 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                 this.viewInfo = viewInfo;
             }
 
-            if (fo.View.getAllowDelete(this.viewInfo) === undefined) {
-                fo.View.setAllowDelete(this.viewInfo, true);
+            if (fo.TableView.getAllowDelete(this.viewInfo) === undefined) {
+                fo.TableView.setAllowDelete(this.viewInfo, true);
             }
 
-            if (fo.View.getAllowEdit(this.viewInfo) === undefined) {
-                fo.View.setAllowEdit(this.viewInfo, true);
+            if (fo.TableView.getAllowEdit(this.viewInfo) === undefined) {
+                fo.TableView.setAllowEdit(this.viewInfo, true);
             }
 
-            if (fo.View.getAllowNew(this.viewInfo) === undefined) {
-                fo.View.setAllowNew(this.viewInfo, true);
+            if (fo.TableView.getAllowNew(this.viewInfo) === undefined) {
+                fo.TableView.setAllowNew(this.viewInfo, true);
             }
         }
         /*
@@ -305,7 +305,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             }
 
             // Adds last line for adding new items, if necessary
-            if (fo.View.getAllowNew(this.viewInfo)) {
+            if (fo.TableView.getAllowNew(this.viewInfo)) {
                 this.createCreateButton();
             }
         };
@@ -337,7 +337,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             }
 
             // Adds delete button
-            if (fo.View.getAllowDelete(this.viewInfo)) {
+            if (fo.TableView.getAllowDelete(this.viewInfo)) {
                 var delColumn = $("<a class='btn btn-default'>DEL</a>");
                 var clicked = false;
                 delColumn.click(function () {
@@ -357,7 +357,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             }
 
             // Adds allow edit button
-            if (fo.View.getAllowEdit(this.viewInfo)) {
+            if (fo.TableView.getAllowEdit(this.viewInfo)) {
                 var editColumn = $("<a class='btn btn-default'>EDIT</a>");
 
                 var handler = new DataViewEditHandler();

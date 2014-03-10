@@ -16,7 +16,7 @@ types = [
          DatenMeister.Entities.FieldInfos.View,
          DatenMeister.Entities.FieldInfos.FormView,
          DatenMeister.Entities.FieldInfos.TableView]
-TypeScriptFactory.createFiles(filename, types)
+TypeScriptFactory.createFiles(filename, types)  
 
 print('Compiling the file')
 TypeScriptFactory.compile(filename)

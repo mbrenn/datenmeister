@@ -5,6 +5,9 @@ using System.Text;
 
 namespace DatenMeister.Logic.SourceFactory
 {
+    /// <summary>
+    /// Defines the interface which is necessary to create TypeScript files
+    /// </summary>
     public interface ITypeInfoProvider
     {
         /// <summary>
@@ -16,17 +19,25 @@ namespace DatenMeister.Logic.SourceFactory
         /// <summary>
         /// Gets the properties of a given type
         /// </summary>
-        /// <param name="type">Type, whose properties are requested</param>
+        /// <param name="typeName">Type, whose properties are requested</param>
         /// <returns>Enumeration of properties</returns>
-        IEnumerable<string> GetProperties(string type);
+        IEnumerable<string> GetProperties(string typeName);
 
         /// <summary>
         /// Returns the type of a property
         /// </summary>
-        /// <param name="type">Name of the type</param>
-        /// <param name="property">Type, whose property will be retrieved</param>
+        /// <param name="typeName">Name of the type</param>
+        /// <param name="propertyName">Type, whose property will be retrieved</param>
         /// <returns>Type of the given property</returns>
-        Type GetTypeOfProperty(string type, string property);
+        Type GetTypeOfProperty(string typeName, string propertyName);
+
+        /// <summary>
+        /// Gets the default value for a certain property. 
+        /// </summary>
+        /// <param name="typeName">Name of the type</param>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Default value or null, if property has no default value</returns>
+        object GetDefaultValueForProperty(string typeName, string propertyName);
 
         /// <summary>
         /// Returns the argument-names for the constructor 

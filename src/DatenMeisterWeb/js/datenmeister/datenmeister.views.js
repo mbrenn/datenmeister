@@ -205,9 +205,9 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", 
 
             if (this.viewObject === undefined) {
                 this.viewObject = fo.TableView.create();
-                fo.View.setAllowNew(this.viewObject, false);
-                fo.View.setAllowEdit(this.viewObject, false);
-                fo.View.setAllowDelete(this.viewObject, false);
+                fo.TableView.setAllowNew(this.viewObject, false);
+                fo.TableView.setAllowEdit(this.viewObject, false);
+                fo.TableView.setAllowDelete(this.viewObject, false);
             }
 
             this.bind('itemclicked', function (clickedObject) {
@@ -390,9 +390,9 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", 
         __extends(CreateNewExtentView, _super);
         function CreateNewExtentView(options) {
             var view = fo.FormView.create();
-            fo.View.setAllowEdit(view, false);
-            fo.View.setAllowNew(view, false);
-            fo.View.setAllowDelete(view, false);
+            fo.FormView.setAllowEdit(view, false);
+            fo.FormView.setAllowNew(view, false);
+            fo.FormView.setAllowDelete(view, false);
             fo.View.setStartInEditMode(view, true);
             fo.FormView.setShowColumnHeaders(view, false);
 

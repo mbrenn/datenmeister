@@ -121,9 +121,9 @@ namespace DatenMeister.Logic.SourceFactory
             this.CreateConstructor(writer, typeName);
 
             // Creates the property access methods
-            foreach (var property in this.provider.GetProperties(typeName))
+            foreach (var propertyName in this.provider.GetProperties(typeName))
             {
-                this.CreateProperty(writer, typeName, property);
+                this.CreateProperty(writer, typeName, propertyName);
             }
 
             // Ends the module
@@ -141,7 +141,7 @@ namespace DatenMeister.Logic.SourceFactory
         {
             var arguments = this.provider.GetArgumentsForConstructor(typeName);
 
-            // Create the constructor
+            // Create the constructor function header
             var constructorLine = new StringBuilder(FourSpaces + "export function create(");
 
             var first = true;
@@ -158,6 +158,7 @@ namespace DatenMeister.Logic.SourceFactory
 
             constructorLine.AppendLine(") {");
 
+            // Creates the assignments
             constructorLine.AppendLine(
                 string.Format(
                     EightSpaces + "var result = new {0}();",
@@ -165,8 +166,43 @@ namespace DatenMeister.Logic.SourceFactory
             constructorLine.AppendLine(
                 string.Format(
                     EightSpaces + "result.set('type', '{0}');",
-                    typeName));
+                    typeName)); 
+            
+            // Creates the assignments by default values
+            foreach (var propertyName in this.provider.GetProperties(typeName))
+            {
+                var defaultValue = this.provider.GetDefaultValueForProperty(typeName, propertyName);
+                if (defaultValue == null)
+                {
+                    continue;
+                }
 
+                // Ok, we have a value, now create
+                constructorLine.AppendLine(
+                    string.Format(
+                        EightSpaces + "result.set('{0}', {1});",
+                        propertyName,
+                        TypeScriptBuilder.ConvertToLiteral(defaultValue)));
+            }
+
+            // Creates the assignments by the constructor
+            BuildAssignmentsForConstructor(arguments, constructorLine);
+
+            // Returns
+            constructorLine.AppendLine(EightSpaces + "return result;");
+            constructorLine.AppendLine(FourSpaces + "}");
+
+            writer.WriteLine(constructorLine);
+            writer.WriteLine();
+        }
+
+        /// <summary>
+        /// Builds the assignments for the constructor
+        /// </summary>
+        /// <param name="arguments">List of arguments being assigned</param>
+        /// <param name="constructorLine">StringBuilder being used to create the construction</param>
+        private static void BuildAssignmentsForConstructor(List<string> arguments, StringBuilder constructorLine)
+        {
             foreach (var argument in arguments)
             {
                 constructorLine.AppendLine(
@@ -182,13 +218,6 @@ namespace DatenMeister.Logic.SourceFactory
                     EightSpaces + "}");
                 constructorLine.AppendLine();
             }
-
-            constructorLine.AppendLine(EightSpaces + "return result;");
-
-            constructorLine.AppendLine(FourSpaces + "}");
-
-            writer.WriteLine(constructorLine);
-            writer.WriteLine();
         }
 
         /// <summary>
@@ -303,16 +332,16 @@ namespace DatenMeister.Logic.SourceFactory
             // var a = <Array<{this.parentClass}>> item.get('{propertyName}');
             writer.WriteLine(
                 string.Format(
-                    EightSpaces + "var a = <Array<{0}>> item.get('{1}');",
+                    EightSpaces + "var a = <Array<any>> item.get('{1}');",
                     this.parentClass,
                     propertyName
                 ));
             // if (a == undefined) {
-            writer.WriteLine(EightSpaces + "if (a == undefined) {");
+            writer.WriteLine(EightSpaces + "if (a === undefined) {");
             //     a = new Array<{this.parentClass}>();
             writer.WriteLine(
                 string.Format(
-                    FourSpaces + EightSpaces + "a = new Array<{0}>();",
+                    FourSpaces + EightSpaces + "a = new Array<any>();",
                     this.parentClass));
             // }
             writer.WriteLine(EightSpaces + "}");
@@ -324,7 +353,7 @@ namespace DatenMeister.Logic.SourceFactory
             // item.set('{propertyName}'
             writer.WriteLine(
                 string.Format(
-                    EightSpaces + "item.set('{0}', value);",
+                    EightSpaces + "item.set('{0}', a);",
                     propertyName));
 
             // }

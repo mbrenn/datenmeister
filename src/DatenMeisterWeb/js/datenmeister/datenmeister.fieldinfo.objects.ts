@@ -204,37 +204,13 @@ export module View {
     }
 
     export function pushFieldInfo(item : __d__.JsonExtentObject, value: any) {
-        var a = <Array<__d__.JsonExtentObject>> item.get('fieldInfos');
-        if (a == undefined) {
-            a = new Array<__d__.JsonExtentObject>();
+        var a = <Array<any>> item.get('fieldInfos');
+        if (a === undefined) {
+            a = new Array<any>();
         }
 
         a.push(value);
-        item.set('fieldInfos', value);
-    }
-
-    export function getAllowEdit(item: __d__.JsonExtentObject) {
-        return item.get('allowEdit');
-    }
-
-    export function setAllowEdit(item : __d__.JsonExtentObject, value: any) {
-        item.set('allowEdit', value);
-    }
-
-    export function getAllowDelete(item: __d__.JsonExtentObject) {
-        return item.get('allowDelete');
-    }
-
-    export function setAllowDelete(item : __d__.JsonExtentObject, value: any) {
-        item.set('allowDelete', value);
-    }
-
-    export function getAllowNew(item: __d__.JsonExtentObject) {
-        return item.get('allowNew');
-    }
-
-    export function setAllowNew(item : __d__.JsonExtentObject, value: any) {
-        item.set('allowNew', value);
+        item.set('fieldInfos', a);
     }
 
     export function getStartInEditMode(item: __d__.JsonExtentObject) {
@@ -277,9 +253,36 @@ export module FormView {
     export function create() {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'FormView');
+        result.set('allowEdit', true);
+        result.set('allowDelete', true);
+        result.set('allowNew', true);
         return result;
     }
 
+
+    export function getAllowEdit(item: __d__.JsonExtentObject) {
+        return item.get('allowEdit');
+    }
+
+    export function setAllowEdit(item : __d__.JsonExtentObject, value: any) {
+        item.set('allowEdit', value);
+    }
+
+    export function getAllowDelete(item: __d__.JsonExtentObject) {
+        return item.get('allowDelete');
+    }
+
+    export function setAllowDelete(item : __d__.JsonExtentObject, value: any) {
+        item.set('allowDelete', value);
+    }
+
+    export function getAllowNew(item: __d__.JsonExtentObject) {
+        return item.get('allowNew');
+    }
+
+    export function setAllowNew(item : __d__.JsonExtentObject, value: any) {
+        item.set('allowNew', value);
+    }
 
     export function getShowColumnHeaders(item: __d__.JsonExtentObject) {
         return item.get('showColumnHeaders');
@@ -306,37 +309,13 @@ export module FormView {
     }
 
     export function pushFieldInfo(item : __d__.JsonExtentObject, value: any) {
-        var a = <Array<__d__.JsonExtentObject>> item.get('fieldInfos');
-        if (a == undefined) {
-            a = new Array<__d__.JsonExtentObject>();
+        var a = <Array<any>> item.get('fieldInfos');
+        if (a === undefined) {
+            a = new Array<any>();
         }
 
         a.push(value);
-        item.set('fieldInfos', value);
-    }
-
-    export function getAllowEdit(item: __d__.JsonExtentObject) {
-        return item.get('allowEdit');
-    }
-
-    export function setAllowEdit(item : __d__.JsonExtentObject, value: any) {
-        item.set('allowEdit', value);
-    }
-
-    export function getAllowDelete(item: __d__.JsonExtentObject) {
-        return item.get('allowDelete');
-    }
-
-    export function setAllowDelete(item : __d__.JsonExtentObject, value: any) {
-        item.set('allowDelete', value);
-    }
-
-    export function getAllowNew(item: __d__.JsonExtentObject) {
-        return item.get('allowNew');
-    }
-
-    export function setAllowNew(item : __d__.JsonExtentObject, value: any) {
-        item.set('allowNew', value);
+        item.set('fieldInfos', a);
     }
 
     export function getStartInEditMode(item: __d__.JsonExtentObject) {
@@ -379,27 +358,12 @@ export module TableView {
     export function create() {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'TableView');
+        result.set('allowEdit', true);
+        result.set('allowDelete', true);
+        result.set('allowNew', true);
         return result;
     }
 
-
-    export function getFieldInfos(item: __d__.JsonExtentObject) {
-        return item.get('fieldInfos');
-    }
-
-    export function setFieldInfos(item : __d__.JsonExtentObject, value: any) {
-        item.set('fieldInfos', value);
-    }
-
-    export function pushFieldInfo(item : __d__.JsonExtentObject, value: any) {
-        var a = <Array<__d__.JsonExtentObject>> item.get('fieldInfos');
-        if (a == undefined) {
-            a = new Array<__d__.JsonExtentObject>();
-        }
-
-        a.push(value);
-        item.set('fieldInfos', value);
-    }
 
     export function getAllowEdit(item: __d__.JsonExtentObject) {
         return item.get('allowEdit');
@@ -423,6 +387,24 @@ export module TableView {
 
     export function setAllowNew(item : __d__.JsonExtentObject, value: any) {
         item.set('allowNew', value);
+    }
+
+    export function getFieldInfos(item: __d__.JsonExtentObject) {
+        return item.get('fieldInfos');
+    }
+
+    export function setFieldInfos(item : __d__.JsonExtentObject, value: any) {
+        item.set('fieldInfos', value);
+    }
+
+    export function pushFieldInfo(item : __d__.JsonExtentObject, value: any) {
+        var a = <Array<any>> item.get('fieldInfos');
+        if (a === undefined) {
+            a = new Array<any>();
+        }
+
+        a.push(value);
+        item.set('fieldInfos', a);
     }
 
     export function getStartInEditMode(item: __d__.JsonExtentObject) {

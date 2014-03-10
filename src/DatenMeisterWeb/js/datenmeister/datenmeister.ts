@@ -94,9 +94,9 @@ class AppRouter extends Backbone.Router {
         }
 
         var options = fo.FormView.create();
-        fo.View.setAllowDelete(options, true);
-        fo.View.setAllowEdit(options, true);
-        fo.View.setAllowNew(options, true);
+        fo.FormView.setAllowDelete(options, true);
+        fo.FormView.setAllowEdit(options, true);
+        fo.FormView.setAllowNew(options, true);
         fo.FormView.setAllowNewProperty(options, true);
 
         views.prepareForViewChange();

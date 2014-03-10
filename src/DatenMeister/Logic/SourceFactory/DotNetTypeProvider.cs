@@ -1,8 +1,9 @@
 ﻿using BurnSystems.Test;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 
 namespace DatenMeister.Logic.SourceFactory
 {
@@ -36,10 +37,7 @@ namespace DatenMeister.Logic.SourceFactory
         /// <returns>Enumeration of properties to the type</returns>
         public IEnumerable<string> GetProperties(string typeName)
         {
-            Ensure.That(typeName != null);
-
-            var type = this.types.First(x => x.Name == typeName);
-            Ensure.That(type != null);
+            var type = this.FindType(typeName);
 
             return type.GetProperties().Where(x => x.CanRead && x.CanWrite).Select(x => x.Name);
         }
@@ -48,13 +46,14 @@ namespace DatenMeister.Logic.SourceFactory
         /// Returns the type of a property
         /// </summary>
         /// <param name="typeName">Name of the type</param>
-        /// <param name="property">Type, whose property will be retrieved</param>
+        /// <param name="propertyName">Type, whose property will be retrieved</param>
         /// <returns>Type of the given property</returns>
-        public Type GetTypeOfProperty(string typeName, string property)
+        public Type GetTypeOfProperty(string typeName, string propertyName)
         {
             var type = this.FindType(typeName);
 
-            var resultProperty = type.GetProperties().Where(x => x.CanRead && x.CanWrite).Where(x => x.Name == property).FirstOrDefault();
+            var resultProperty = FindProperty(type, propertyName);
+
             if (resultProperty == null)
             {
                 return null;
@@ -91,6 +90,36 @@ namespace DatenMeister.Logic.SourceFactory
             return constructor.GetParameters().Select(x => x.Name).ToList();
         }
 
+        /// <summary>
+        /// Gets the default value for a certain property. 
+        /// </summary>
+        /// <param name="typeName">Name of the type</param>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Default value or null, if property has no default value</returns>
+        public object GetDefaultValueForProperty(string typeName, string propertyName)
+        {
+            var type = this.FindType(typeName);
+            var property = FindProperty(type, propertyName);
+
+            var defaultValueAttribute =
+                property
+                    .GetCustomAttributes(typeof(DefaultValueAttribute), false).FirstOrDefault()
+                as DefaultValueAttribute;
+
+            if (defaultValueAttribute == null)
+            {
+                return null;
+            }
+
+            // Gets value
+            return defaultValueAttribute.Value;
+        }
+
+        /// <summary>
+        /// Finds the type by name
+        /// </summary>
+        /// <param name="typeName">Name of type</param>
+        /// <returns>Type being found</returns>
         private Type FindType(string typeName)
         {
             Ensure.That(typeName != null);
@@ -98,6 +127,18 @@ namespace DatenMeister.Logic.SourceFactory
             var type = this.types.First(x => x.Name == typeName);
             Ensure.That(type != null);
             return type;
+        }
+
+        /// <summary>
+        /// Finds the property
+        /// </summary>
+        /// <param name="type">Name of type</param>
+        /// <param name="propertyName">Name of property</param>
+        /// <returns>PropertyInfo of the property or null</returns>
+        private static PropertyInfo FindProperty(Type type, string propertyName)
+        {
+            var resultProperty = type.GetProperties().Where(x => x.CanRead && x.CanWrite).Where(x => x.Name == propertyName).FirstOrDefault();
+            return resultProperty;
         }
     }
 }
