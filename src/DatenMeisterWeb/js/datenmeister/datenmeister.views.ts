@@ -347,7 +347,7 @@ export class DetailView extends Backbone.View {
             form.autoGenerateFields();
         }
         else {
-            form.setFieldInfos(this.viewObject.get('fieldinfos'));
+            form.setFieldInfos(fo.FormView.getFieldInfos(this.viewObject));
         }
 
         form.render();

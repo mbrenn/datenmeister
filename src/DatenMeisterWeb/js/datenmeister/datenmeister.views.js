@@ -291,7 +291,7 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.objects", 
             if (this.viewObject === undefined) {
                 form.autoGenerateFields();
             } else {
-                form.setFieldInfos(this.viewObject.get('fieldinfos'));
+                form.setFieldInfos(fo.FormView.getFieldInfos(this.viewObject));
             }
 
             form.render();

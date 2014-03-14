@@ -251,12 +251,11 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         DataTable.prototype.autoGenerateColumns = function () {
             var tthis = this;
 
-            var fieldInfos = tthis.getFieldInfos();
-
             // Goes through every object
             _.each(this.objects, function (obj) {
                 for (var key in obj.attributes) {
                     // Checks, if already in
+                    var fieldInfos = tthis.getFieldInfos();
                     if (!(_.some(fieldInfos, function (info) {
                         return fo.General.getName(info) == key;
                     }))) {

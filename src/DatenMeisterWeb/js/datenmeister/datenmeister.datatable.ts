@@ -286,13 +286,12 @@ export class DataTable extends DataView {
     autoGenerateColumns(): void {
         var tthis = this;
 
-        var fieldInfos = tthis.getFieldInfos();
-
         // Goes through every object
         _.each(this.objects, function (obj: d.JsonExtentObject) {
             // Goes through the attributes    
             for (var key in obj.attributes) {
                 // Checks, if already in
+                var fieldInfos = tthis.getFieldInfos();
                 if (!(_.some(fieldInfos, function (info) {
                     return fo.General.getName(<d.JsonExtentObject> info) == key;
                 }))) {
