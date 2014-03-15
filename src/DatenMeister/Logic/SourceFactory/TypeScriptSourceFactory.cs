@@ -96,7 +96,7 @@ namespace DatenMeister.Logic.SourceFactory
 
             foreach (var type in this.provider.GetTypes())
             {
-                this.Emit(writer, type);
+                this.EmitType(writer, type);
             }
         }
 
@@ -104,7 +104,7 @@ namespace DatenMeister.Logic.SourceFactory
         /// Creates a typescript class for a specific type
         /// </summary>
         /// <param name="writer"></param>
-        private void Emit(StreamWriter writer, string typeName)
+        private void EmitType(StreamWriter writer, string typeName)
         {
             // Starts the module
             writer.WriteLine(
@@ -118,12 +118,12 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine();
 
             // Creates the constructor if necessary
-            this.CreateConstructor(writer, typeName);
+            this.EmitConstructor(writer, typeName);
 
             // Creates the property access methods
             foreach (var propertyName in this.provider.GetProperties(typeName))
             {
-                this.CreateProperty(writer, typeName, propertyName);
+                this.EmitProperty(writer, typeName, propertyName);
             }
 
             // Ends the module
@@ -137,7 +137,7 @@ namespace DatenMeister.Logic.SourceFactory
         /// </summary>
         /// <param name="writer">Streamwriter to be used</param>
         /// <param name="typeName">Name of the types</param>
-        private void CreateConstructor(StreamWriter writer, string typeName)
+        private void EmitConstructor(StreamWriter writer, string typeName)
         {
             var arguments = this.provider.GetArgumentsForConstructor(typeName);
 
@@ -186,7 +186,7 @@ namespace DatenMeister.Logic.SourceFactory
             }
 
             // Creates the assignments by the constructor
-            BuildAssignmentsForConstructor(arguments, constructorLine);
+            EmitAssignmentsForConstructor(arguments, constructorLine);
 
             // Returns
             constructorLine.AppendLine(EightSpaces + "return result;");
@@ -201,7 +201,7 @@ namespace DatenMeister.Logic.SourceFactory
         /// </summary>
         /// <param name="arguments">List of arguments being assigned</param>
         /// <param name="constructorLine">StringBuilder being used to create the construction</param>
-        private static void BuildAssignmentsForConstructor(List<string> arguments, StringBuilder constructorLine)
+        private static void EmitAssignmentsForConstructor(List<string> arguments, StringBuilder constructorLine)
         {
             foreach (var argument in arguments)
             {
@@ -226,21 +226,21 @@ namespace DatenMeister.Logic.SourceFactory
         /// <param name="writer">Writer being used</param>
         /// <param name="typeName">Name of the type</param>
         /// <param name="propertyName">Name of the property</param>
-        private void CreateProperty(StreamWriter writer, string typeName, string propertyName)
+        private void EmitProperty(StreamWriter writer, string typeName, string propertyName)
         {
             var propertyType = this.provider.GetTypeOfProperty(typeName, propertyName);
 
-            this.CreateGetMethod(writer, propertyName, propertyType);
+            this.EmitGetMethod(writer, propertyName, propertyType);
 
-            this.CreateSetMethod(writer, propertyName, propertyType);
+            this.EmitSetMethod(writer, propertyName, propertyType);
 
             if (typeof(IEnumerable).IsAssignableFrom(propertyType) && propertyType != typeof(string))
             {
-                this.CreatePushMethod(writer, propertyName);
+                this.EmitPushMethod(writer, propertyName);
             }
         }
 
-        private void CreateGetMethod(StreamWriter writer, string propertyName, Type propertyType)
+        private void EmitGetMethod(StreamWriter writer, string propertyName, Type propertyType)
         {
             ///////////////////////////////
             // Creates the get method
@@ -275,7 +275,7 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine();
         }
 
-        private void CreateSetMethod(StreamWriter writer, string propertyName, Type propertyType)
+        private void EmitSetMethod(StreamWriter writer, string propertyName, Type propertyType)
         {
             ///////////////////////////////
             // Creates the set method
@@ -309,7 +309,7 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine();
         }
 
-        private void CreatePushMethod(StreamWriter writer, string propertyName)
+        private void EmitPushMethod(StreamWriter writer, string propertyName)
         {
             ///////////////////////////////
             // Creates the push method
