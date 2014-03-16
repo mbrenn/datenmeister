@@ -12,5 +12,5 @@ def createFiles(file, types):
 
 
 def compile(file):
-    subprocess.call(["tsc", file, "--module", "amd", "--target", "es5", "--sourcemap"])
+    subprocess.call(["tsc.cmd", file, "--module", "amd", "--target", "es5", "--sourcemap"])
     pass

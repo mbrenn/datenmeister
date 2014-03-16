@@ -8,7 +8,7 @@ from BurnSystems.DatenMeister import CSharpFactory
 # Creating the TypeScript-File
 
 print('Creating the TypeScript-File')
-filename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.fieldinfo.objects.ts"
+tsFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.fieldinfo.objects.ts"
 types = [
          DatenMeister.Entities.FieldInfos.Comment, 
          DatenMeister.Entities.FieldInfos.General, 
@@ -17,7 +17,7 @@ types = [
          DatenMeister.Entities.FieldInfos.View,
          DatenMeister.Entities.FieldInfos.FormView,
          DatenMeister.Entities.FieldInfos.TableView]
-TypeScriptFactory.createFiles(filename, types)
+TypeScriptFactory.createFiles(tsFilename, types)
 
 print('Creating the C#-File')
 
@@ -25,6 +25,6 @@ csFilename = "FieldInfoObjects.cs"
 CSharpFactory.createFiles(csFilename, types, "BurnSystems.Test");
 
 print('Compiling the TypeScript-File')
-TypeScriptFactory.compile(filename)
+TypeScriptFactory.compile(tsFilename)
 
 print('Files have been created and compiled')
