@@ -57,6 +57,13 @@
     <Compile Include="DataProvider\Xml\XmlObject.cs" />
     <Compile Include="DataProvider\Xml\XmlSettings.cs" />
     <Compile Include="DatenMeisterPool.cs" />
+    <Compile Include="Entities\FieldInfos\ActionButton.cs" />
+    <Compile Include="Entities\FieldInfos\Comment.cs" />
+    <Compile Include="Entities\FieldInfos\FormView.cs" />
+    <Compile Include="Entities\FieldInfos\General.cs" />
+    <Compile Include="Entities\FieldInfos\TableView.cs" />
+    <Compile Include="Entities\FieldInfos\TextField.cs" />
+    <Compile Include="Entities\FieldInfos\View.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IObject.cs" />
@@ -67,7 +74,17 @@
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
     <Compile Include="Logic\Factory.cs" />
     <Compile Include="Logic\ObjectHelper.cs" />
+    <Compile Include="Logic\SourceFactory\CSharpSourceFactory.cs" />
+    <Compile Include="Logic\SourceFactory\DotNetTypeProvider.cs" />
+    <Compile Include="Logic\SourceFactory\ITypeInfoProvider.cs" />
+    <Compile Include="Logic\SourceFactory\TypeScriptBuilder.cs" />
+    <Compile Include="Logic\SourceFactory\TypeScriptSourceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources_DatenMeister.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources_DatenMeister.resx</DependentUpon>
+    </Compile>
     <Compile Include="Transformations\ITransformation.cs" />
     <Compile Include="Transformations\Extensions.cs" />
     <Compile Include="Transformations\RecurseObjectTransformation.cs" />
@@ -99,6 +116,16 @@
       <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
       <Name>BurnSystems</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources_DatenMeister.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources_DatenMeister.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Logic\SourceFactory\Resources\IObjectImplementation.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

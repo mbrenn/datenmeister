@@ -7,7 +7,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", "datenmeister.fieldinfo", '../dejs/dejs.table'], function(require, exports, d, api, fi, t) {
+define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", "datenmeister.fieldinfo", "datenmeister.fieldinfo.objects", '../dejs/dejs.table'], function(require, exports, d, api, fi, fo, t) {
     /*
     * Supports the insertion of new properties by collecting them into the View
     * When called by createEventsForEditButton, this information is used to send out new properties
@@ -92,8 +92,8 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
                     tthis.currentObject.set(key, value);
 
                     var fieldInfo = new d.JsonExtentObject();
-                    fi.General.setName(fieldInfo, key);
-                    fi.General.setTitle(fieldInfo, key);
+                    fo.General.setName(fieldInfo, key);
+                    fo.General.setTitle(fieldInfo, key);
                     tthis.view.addFieldInfo(fieldInfo);
                     tthis.columnDoms.push(info.valueField.parent());
 
@@ -163,25 +163,25 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             this.domElement = domElement;
             this.viewInfo = viewInfo;
             if (this.viewInfo === undefined) {
-                this.viewInfo = fi.TableView.create();
+                this.viewInfo = fo.TableView.create();
             }
         }
         /*
         * Sets the field information objects
         */
         DataView.prototype.setFieldInfos = function (fieldInfos) {
-            return fi.View.setFieldInfos(this.viewInfo, fieldInfos);
+            return fo.View.setFieldInfos(this.viewInfo, fieldInfos);
         };
 
         /*
         * Adds a field info to the current data view
         */
         DataView.prototype.addFieldInfo = function (fieldInfo) {
-            return fi.View.pushFieldInfo(this.viewInfo, fieldInfo);
+            return fo.View.pushFieldInfo(this.viewInfo, fieldInfo);
         };
 
         DataView.prototype.getFieldInfos = function () {
-            return fi.View.getFieldInfos(this.viewInfo);
+            return fo.View.getFieldInfos(this.viewInfo);
         };
 
         /*
@@ -228,21 +228,21 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             this.extent = extent;
 
             if (viewInfo === undefined) {
-                this.viewInfo = fi.TableView.create();
+                this.viewInfo = fo.TableView.create();
             } else {
                 this.viewInfo = viewInfo;
             }
 
-            if (fi.View.getAllowDelete(this.viewInfo) === undefined) {
-                fi.View.setAllowDelete(this.viewInfo, true);
+            if (fo.TableView.getAllowDelete(this.viewInfo) === undefined) {
+                fo.TableView.setAllowDelete(this.viewInfo, true);
             }
 
-            if (fi.View.getAllowEdit(this.viewInfo) === undefined) {
-                fi.View.setAllowEdit(this.viewInfo, true);
+            if (fo.TableView.getAllowEdit(this.viewInfo) === undefined) {
+                fo.TableView.setAllowEdit(this.viewInfo, true);
             }
 
-            if (fi.View.getAllowNew(this.viewInfo) === undefined) {
-                fi.View.setAllowNew(this.viewInfo, true);
+            if (fo.TableView.getAllowNew(this.viewInfo) === undefined) {
+                fo.TableView.setAllowNew(this.viewInfo, true);
             }
         }
         /*
@@ -251,20 +251,19 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
         DataTable.prototype.autoGenerateColumns = function () {
             var tthis = this;
 
-            var fieldInfos = tthis.getFieldInfos();
-
             // Goes through every object
             _.each(this.objects, function (obj) {
                 for (var key in obj.attributes) {
                     // Checks, if already in
+                    var fieldInfos = tthis.getFieldInfos();
                     if (!(_.some(fieldInfos, function (info) {
-                        return fi.General.getName(info) == key;
+                        return fo.General.getName(info) == key;
                     }))) {
                         // No, so create new field info
                         var fieldInfo = new d.JsonExtentObject();
-                        fi.General.setName(fieldInfo, key);
-                        fi.General.setTitle(fieldInfo, key);
-                        fi.General.setReadOnly(fieldInfo, false);
+                        fo.General.setName(fieldInfo, key);
+                        fo.General.setTitle(fieldInfo, key);
+                        fo.General.setReadOnly(fieldInfo, false);
                         tthis.addFieldInfo(fieldInfo);
                     }
                 }
@@ -293,7 +292,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             tthis.table.addHeaderRow();
 
             for (var n = 0; n < fieldInfos.length; n++) {
-                tthis.table.addColumn(fi.General.getTitle(fieldInfos[n]));
+                tthis.table.addColumn(fo.General.getTitle(fieldInfos[n]));
             }
 
             // For the last column, containing all the settings
@@ -305,7 +304,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             }
 
             // Adds last line for adding new items, if necessary
-            if (fi.View.getAllowNew(this.viewInfo)) {
+            if (fo.TableView.getAllowNew(this.viewInfo)) {
                 this.createCreateButton();
             }
         };
@@ -337,7 +336,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             }
 
             // Adds delete button
-            if (fi.View.getAllowDelete(this.viewInfo)) {
+            if (fo.TableView.getAllowDelete(this.viewInfo)) {
                 var delColumn = $("<a class='btn btn-default'>DEL</a>");
                 var clicked = false;
                 delColumn.click(function () {
@@ -357,7 +356,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi", 
             }
 
             // Adds allow edit button
-            if (fi.View.getAllowEdit(this.viewInfo)) {
+            if (fo.TableView.getAllowEdit(this.viewInfo)) {
                 var editColumn = $("<a class='btn btn-default'>EDIT</a>");
 
                 var handler = new DataViewEditHandler();

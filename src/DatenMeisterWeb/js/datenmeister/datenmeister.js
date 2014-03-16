@@ -7,7 +7,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "datenmeister.serverapi", "datenmeister.views", "datenmeister.navigation", 'datenmeister.fieldinfo'], function(require, exports, api, views, navigation, fi) {
+define(["require", "exports", "datenmeister.serverapi", "datenmeister.views", "datenmeister.navigation", 'datenmeister.fieldinfo.objects'], function(require, exports, api, views, navigation, fo) {
     // Initializes the whole application by creating the form
     function init() {
         var router = new AppRouter();
@@ -84,11 +84,11 @@ define(["require", "exports", "datenmeister.serverapi", "datenmeister.views", "d
                 return;
             }
 
-            var options = fi.FormView.create();
-            fi.View.setAllowDelete(options, true);
-            fi.View.setAllowEdit(options, true);
-            fi.View.setAllowNew(options, true);
-            fi.FormView.setAllowNewProperty(options, true);
+            var options = fo.FormView.create();
+            fo.FormView.setAllowDelete(options, true);
+            fo.FormView.setAllowEdit(options, true);
+            fo.FormView.setAllowNew(options, true);
+            fo.FormView.setAllowNewProperty(options, true);
 
             views.prepareForViewChange();
 

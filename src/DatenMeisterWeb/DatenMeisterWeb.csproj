@@ -96,6 +96,7 @@
     <TypeScriptCompile Include="js\backbone\backbone.d.ts" />
     <TypeScriptCompile Include="js\datenmeister\datenmeister.dataform.ts" />
     <TypeScriptCompile Include="js\datenmeister\datenmeister.datatable.ts" />
+    <TypeScriptCompile Include="js\datenmeister\datenmeister.fieldinfo.objects.ts" />
     <TypeScriptCompile Include="js\datenmeister\datenmeister.fieldinfo.ts" />
     <TypeScriptCompile Include="js\datenmeister\datenmeister.navigation.ts" />
     <TypeScriptCompile Include="js\datenmeister\datenmeister.objects.ts" />

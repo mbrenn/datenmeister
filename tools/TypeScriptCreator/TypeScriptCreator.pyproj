@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>d0d6e716-07f9-417e-adac-77d6a7566881</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>TypeScriptCreator.py</StartupFile>
+    <SearchPath>..\..\src\DatenMeister\bin\Debug;..\TypeScriptCreator</SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <InterpreterId>{80659ab7-4d53-4e0c-8588-a766116cbd46}</InterpreterId>
+    <LaunchProvider>IronPython (.NET) launcher</LaunchProvider>
+    <InterpreterVersion>2.7</InterpreterVersion>
+    <OutputPath>.</OutputPath>
+    <Name>TypeScriptCreator</Name>
+    <RootNamespace>TypeScriptCreator</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="TypeScriptCreator.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{80659ab7-4d53-4e0c-8588-a766116cbd46}\2.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DatenMeister, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Name>DatenMeister</Name>
+      <AssemblyName>DatenMeister.dll</AssemblyName>
+      <HintPath>..\..\src\DatenMeister\bin\Debug\DatenMeister.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BurnSystems\" />
+    <Folder Include="BurnSystems\DatenMeister\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BurnSystems\DatenMeister\TypeScriptFactory.py" />
+    <Compile Include="BurnSystems\DatenMeister\CSharpFactory.py" />
+    <Compile Include="BurnSystems\DatenMeister\__init__.py" />
+    <Compile Include="BurnSystems\__init__.py" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+</Project>

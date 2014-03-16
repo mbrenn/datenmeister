@@ -5,6 +5,7 @@ import t = require("datenmeister.datatable");
 import forms = require("datenmeister.dataform");
 import navigation = require("datenmeister.navigation");
 import fi = require("datenmeister.fieldinfo");
+import fo = require("datenmeister.fieldinfo.objects");
 
 /* 
  * Has to be called before every view,
@@ -233,10 +234,10 @@ export class AllExtentsView extends DefaultTableView {
         super(options);
 
         if (this.viewObject === undefined) {
-            this.viewObject = fi.TableView.create();
-            fi.View.setAllowNew(this.viewObject, false);
-            fi.View.setAllowEdit(this.viewObject, false);
-            fi.View.setAllowDelete(this.viewObject, false);
+            this.viewObject = fo.TableView.create();
+            fo.TableView.setAllowNew(this.viewObject, false);
+            fo.TableView.setAllowEdit(this.viewObject, false);
+            fo.TableView.setAllowDelete(this.viewObject, false);
         }
 
         this.bind('itemclicked', function (clickedObject) {
@@ -346,7 +347,7 @@ export class DetailView extends Backbone.View {
             form.autoGenerateFields();
         }
         else {
-            form.setFieldInfos(this.viewObject.get('fieldinfos'));
+            form.setFieldInfos(fo.FormView.getFieldInfos(this.viewObject));
         }
 
         form.render();
@@ -442,18 +443,18 @@ export class ViewSelector extends Backbone.View {
 
 export class CreateNewExtentView extends DetailView {
     constructor(options: DetailViewOptions) {
-        var view = fi.FormView.create();
-        fi.View.setAllowEdit(view, false);
-        fi.View.setAllowNew(view, false);
-        fi.View.setAllowDelete(view, false);
-        fi.View.setStartInEditMode(view, true);
-        fi.FormView.setShowColumnHeaders(view, false);
+        var view = fo.FormView.create();
+        fo.FormView.setAllowEdit(view, false);
+        fo.FormView.setAllowNew(view, false);
+        fo.FormView.setAllowDelete(view, false);
+        fo.View.setStartInEditMode(view, true);
+        fo.FormView.setShowColumnHeaders(view, false);
 
-        fi.View.pushFieldInfo(view, fi.Comment.create("Information", "Please give a title and filename for the new extent (without file extension)"));
-        fi.View.pushFieldInfo(view, fi.TextField.create("Name", "name"));
-        fi.View.pushFieldInfo(view, fi.TextField.create("Filename", "filename"));
-        fi.View.pushFieldInfo(view, fi.TextField.create("Url", "url"));
-        fi.View.pushFieldInfo(view, fi.ActionButton.create("Create", "extent/Create"));
+        fo.View.pushFieldInfo(view, fo.Comment.create("Information", "Please give a title and filename for the new extent (without file extension)"));
+        fo.View.pushFieldInfo(view, fo.TextField.create("Name", "name"));
+        fo.View.pushFieldInfo(view, fo.TextField.create("Filename", "filename"));
+        fo.View.pushFieldInfo(view, fo.TextField.create("Url", "url"));
+        fo.View.pushFieldInfo(view, fo.ActionButton.create("Create", "extent/Create"));
 
         this.viewObject = view;
         this.object = new d.JsonExtentObject();

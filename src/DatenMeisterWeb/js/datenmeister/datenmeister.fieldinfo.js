@@ -1,4 +1,4 @@
-define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"], function(require, exports, d, serverapi) {
+define(["require", "exports", "datenmeister.fieldinfo.objects", "datenmeister.serverapi"], function(require, exports, fo, serverapi) {
     
 
     /*
@@ -23,15 +23,15 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
     * Gets the renderer for a specific object type
     */
     function getRenderer(type) {
-        if (type == Comment.TypeName) {
+        if (type == fo.Comment.TypeName) {
             return new Comment.Renderer();
         }
 
-        if (type == TextField.TypeName) {
+        if (type == fo.TextField.TypeName) {
             return new TextField.Renderer();
         }
 
-        if (type == ActionButton.TypeName) {
+        if (type == fo.ActionButton.TypeName) {
             return new ActionButton.Renderer();
         }
 
@@ -40,228 +40,16 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
     exports.getRenderer = getRenderer;
 
     /*
-    * Defines the view element, which contains a list of field information.
-    * - fieldinfos: Array of fieldinfos to be added
-    */
-    (function (View) {
-        function create() {
-            var result = new d.JsonExtentObject();
-            result.set('fieldinfos', new Array());
-            return result;
-        }
-        View.create = create;
-
-        function getFieldInfos(value) {
-            var result = value.get('fieldinfos');
-            if (result === undefined) {
-                return new Array();
-            }
-
-            return result;
-        }
-        View.getFieldInfos = getFieldInfos;
-
-        function pushFieldInfo(value, fieldInfo) {
-            var infos = value.get('fieldinfos');
-            if (infos === undefined) {
-                infos = new Array();
-            }
-
-            infos.push(fieldInfo);
-            setFieldInfos(value, infos);
-        }
-        View.pushFieldInfo = pushFieldInfo;
-
-        function setFieldInfos(value, fieldInfos) {
-            value.set('fieldinfos', fieldInfos);
-        }
-        View.setFieldInfos = setFieldInfos;
-
-        function setAllowEdit(value, allowEdit) {
-            value.set('allowEdit', allowEdit);
-        }
-        View.setAllowEdit = setAllowEdit;
-
-        function getAllowEdit(value) {
-            return value.get('allowEdit');
-        }
-        View.getAllowEdit = getAllowEdit;
-
-        function setAllowNew(value, allowNew) {
-            value.set('allowNew', allowNew);
-        }
-        View.setAllowNew = setAllowNew;
-
-        function getAllowNew(value) {
-            return value.get('allowNew');
-        }
-        View.getAllowNew = getAllowNew;
-
-        function setAllowDelete(value, allowDelete) {
-            value.set('allowDelete', allowDelete);
-        }
-        View.setAllowDelete = setAllowDelete;
-
-        function getAllowDelete(value) {
-            return value.get('allowDelete');
-        }
-        View.getAllowDelete = getAllowDelete;
-
-        function setStartInEditMode(value, startInEditMode) {
-            value.set('startInEditMode', startInEditMode);
-        }
-        View.setStartInEditMode = setStartInEditMode;
-
-        function getStartInEditMode(value) {
-            return value.get('startInEditMode');
-        }
-        View.getStartInEditMode = getStartInEditMode;
-    })(exports.View || (exports.View = {}));
-    var View = exports.View;
-
-    /*
-    * Defines additional properties which are used for a formview and not for a table view
-    * All properties derived from View are also valid
-    */
-    (function (FormView) {
-        function create() {
-            return View.create();
-        }
-        FormView.create = create;
-
-        function setTitle(value, title) {
-            General.setTitle(value, title);
-        }
-        FormView.setTitle = setTitle;
-
-        function getTitle(value) {
-            return General.getTitle(value);
-        }
-        FormView.getTitle = getTitle;
-
-        function setShowColumnHeaders(value, flag) {
-            value.set('showcolumnheaders', flag);
-        }
-        FormView.setShowColumnHeaders = setShowColumnHeaders;
-
-        function getShowColumnHeaders(value) {
-            return value.get('showcolumnheaders');
-        }
-        FormView.getShowColumnHeaders = getShowColumnHeaders;
-
-        function setAllowNewProperty(value, allowNewProperty) {
-            value.set('allowNewProperty', allowNewProperty);
-        }
-        FormView.setAllowNewProperty = setAllowNewProperty;
-
-        function getAllowNewProperty(value) {
-            return value.get('allowNewProperty');
-        }
-        FormView.getAllowNewProperty = getAllowNewProperty;
-    })(exports.FormView || (exports.FormView = {}));
-    var FormView = exports.FormView;
-
-    /*
-    * Defines additional properties which are used for a tableview and not for a form view
-    * All properties derived from View are also valid
-    */
-    (function (TableView) {
-        function create() {
-            var result = View.create();
-            View.setAllowDelete(result, true);
-            View.setAllowNew(result, true);
-            View.setAllowEdit(result, true);
-            return result;
-        }
-        TableView.create = create;
-    })(exports.TableView || (exports.TableView = {}));
-    var TableView = exports.TableView;
-
-    /*
-    * Describes the most generic functions
-    */
-    (function (General) {
-        function setTitle(value, title) {
-            value.set("title", title);
-        }
-        General.setTitle = setTitle;
-
-        function setName(value, name) {
-            value.set("name", name);
-        }
-        General.setName = setName;
-
-        function setReadOnly(value, isReadOnly) {
-            value.set("readonly", isReadOnly);
-        }
-        General.setReadOnly = setReadOnly;
-
-        function getTitle(value) {
-            return value.get("title");
-        }
-        General.getTitle = getTitle;
-
-        function getName(value) {
-            return value.get("name");
-        }
-        General.getName = getName;
-
-        function isReadOnly(value) {
-            return value.get("readonly");
-        }
-        General.isReadOnly = isReadOnly;
-    })(exports.General || (exports.General = {}));
-    var General = exports.General;
-
-    /*
     * Describes one field element, that is just a read-only description text with pre-default content
     * This field will contain the title on the left column and the commentText as Encoded Text in table
     */
     (function (Comment) {
-        Comment.TypeName = "DatenMeister.DataFields.Comment";
-
-        function create(title, commentText) {
-            var result = new d.JsonExtentObject();
-
-            if (title !== undefined) {
-                setTitle(result, title);
-            }
-
-            if (commentText !== undefined) {
-                setComment(result, commentText);
-            }
-
-            result.set("type", Comment.TypeName);
-
-            return result;
-        }
-        Comment.create = create;
-
-        function setTitle(value, title) {
-            General.setTitle(value, title);
-        }
-        Comment.setTitle = setTitle;
-
-        function setComment(value, commentText) {
-            value.set("comment", commentText);
-        }
-        Comment.setComment = setComment;
-        function getTitle(value) {
-            return General.getTitle(value);
-        }
-        Comment.getTitle = getTitle;
-
-        function getComment(value) {
-            return value.get("comment");
-        }
-        Comment.getComment = getComment;
-
         var Renderer = (function () {
             function Renderer() {
             }
             Renderer.prototype.createReadField = function (object, field, form) {
                 var result = $("<div></div>");
-                result.text(Comment.getComment(field));
+                result.text(fo.Comment.getComment(field));
                 return result;
             };
 
@@ -290,82 +78,13 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
     * - height: Height of the element
     */
     (function (TextField) {
-        TextField.TypeName = "DatenMeister.DataFields.TextField";
-
-        function create(title, key) {
-            var result = new d.JsonExtentObject();
-
-            if (title !== undefined) {
-                setTitle(result, title);
-            }
-
-            if (key !== undefined) {
-                setName(result, key);
-            }
-
-            result.set("type", "DatenMeister.DataFields.TextField");
-
-            return result;
-        }
-        TextField.create = create;
-
-        function setTitle(value, title) {
-            General.setTitle(value, title);
-        }
-        TextField.setTitle = setTitle;
-
-        function getTitle(value) {
-            return General.getTitle(value);
-        }
-        TextField.getTitle = getTitle;
-
-        function setName(value, name) {
-            General.setName(value, name);
-        }
-        TextField.setName = setName;
-
-        function getName(value) {
-            return General.getName(value);
-        }
-        TextField.getName = getName;
-
-        function setReadOnly(value, isReadOnly) {
-            General.setReadOnly(value, isReadOnly);
-        }
-        TextField.setReadOnly = setReadOnly;
-
-        function isReadOnly(value) {
-            return General.isReadOnly(value);
-        }
-        TextField.isReadOnly = isReadOnly;
-
-        function setWidth(value, width) {
-            value.set("width", width);
-        }
-        TextField.setWidth = setWidth;
-
-        function getWidth(value) {
-            return value.get("width");
-        }
-        TextField.getWidth = getWidth;
-
-        function setHeight(value, height) {
-            value.set("height", height);
-        }
-        TextField.setHeight = setHeight;
-
-        function getHeight(value) {
-            return value.get("height");
-        }
-        TextField.getHeight = getHeight;
-
         var Renderer = (function () {
             function Renderer() {
             }
             Renderer.prototype.createReadField = function (object, field, form) {
                 var tthis = this;
                 var span = $("<span />");
-                var value = object.get(General.getName(field));
+                var value = object.get(fo.General.getName(field));
                 if (value === undefined || value === null) {
                     span.html("<em>undefined</em>");
                 } else if (_.isArray(value)) {
@@ -395,7 +114,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
                 var value;
 
                 if (object !== undefined && field !== undefined) {
-                    value = object.get(General.getName(field));
+                    value = object.get(fo.General.getName(field));
                 }
 
                 // Checks, if writing is possible
@@ -419,13 +138,13 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
             };
 
             Renderer.prototype.setValueByWriteField = function (object, field, dom) {
-                if (General.isReadOnly(field) === true) {
+                if (fo.General.isReadOnly(field) === true) {
                     // Do nothing
                     return;
                 }
 
                 // Reads the value
-                object.set(General.getName(field), dom.val());
+                object.set(fo.General.getName(field), dom.val());
             };
             return Renderer;
         })();
@@ -438,50 +157,13 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
     * form
     */
     (function (ActionButton) {
-        ActionButton.TypeName = "DatenMeister.DataFields.ActionButton";
-
-        function create(text, clickUrl) {
-            var result = new d.JsonExtentObject();
-            setText(result, text);
-            setClickUrl(result, clickUrl);
-
-            result.set("type", ActionButton.TypeName);
-
-            return result;
-        }
-        ActionButton.create = create;
-
-        function setText(value, text) {
-            value.set('text', text);
-        }
-        ActionButton.setText = setText;
-
-        function getText(value) {
-            return value.get('text');
-        }
-        ActionButton.getText = getText;
-
-        function setClickUrl(value, url) {
-            if (url === undefined || url.length == 0 || url[0] == '/') {
-                throw "Action URL should not be undefined, '' or start with '/'";
-            }
-
-            value.set('clickUrl', url);
-        }
-        ActionButton.setClickUrl = setClickUrl;
-
-        function getClickUrl(value) {
-            return value.get('clickUrl');
-        }
-        ActionButton.getClickUrl = getClickUrl;
-
         var Renderer = (function () {
             function Renderer() {
             }
             Renderer.prototype.createReadField = function (object, fieldInfo, form) {
                 var tthis = this;
                 var inputField = $("<input type='button'></input>");
-                inputField.attr('value', getText(fieldInfo));
+                inputField.attr('value', fo.ActionButton.getText(fieldInfo));
                 inputField.click(function () {
                     tthis.onClick(object, fieldInfo, form);
                 });
@@ -502,7 +184,7 @@ define(["require", "exports", "datenmeister.objects", "datenmeister.serverapi"],
                 var convertedObject = form.convertViewToObject();
 
                 // Everything seemed to be successful, now send back to server
-                serverapi.getAPI().sendObjectToServer(getClickUrl(fieldInfo), convertedObject, function (data) {
+                serverapi.getAPI().sendObjectToServer(fo.ActionButton.getClickUrl(fieldInfo), convertedObject, function (data) {
                     form.evaluateActionResponse(data);
                 });
             };

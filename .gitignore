@@ -1,5 +1,7 @@
 bin/
 obj/
 *.userprefs
-ext-packages/ 
 *~
+/ext-packages
+*.suo
+/src/DatenMeisterWeb/*.user
