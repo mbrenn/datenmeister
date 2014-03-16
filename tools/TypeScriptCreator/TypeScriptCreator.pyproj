@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BurnSystems\DatenMeister\TypeScriptFactory.py" />
+    <Compile Include="BurnSystems\DatenMeister\CSharpFactory.py" />
     <Compile Include="BurnSystems\DatenMeister\__init__.py" />
     <Compile Include="BurnSystems\__init__.py" />
   </ItemGroup>

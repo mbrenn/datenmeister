@@ -3,10 +3,11 @@ import clr
 clr.AddReferenceToFile("DatenMeister")
 import DatenMeister
 from BurnSystems.DatenMeister import TypeScriptFactory
+from BurnSystems.DatenMeister import CSharpFactory
 
 # Creating the TypeScript-File
 
-print('Creating the file')
+print('Creating the TypeScript-File')
 filename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.fieldinfo.objects.ts"
 types = [
          DatenMeister.Entities.FieldInfos.Comment, 
@@ -16,9 +17,14 @@ types = [
          DatenMeister.Entities.FieldInfos.View,
          DatenMeister.Entities.FieldInfos.FormView,
          DatenMeister.Entities.FieldInfos.TableView]
-TypeScriptFactory.createFiles(filename, types)  
+TypeScriptFactory.createFiles(filename, types)
 
-print('Compiling the file')
+print('Creating the C#-File')
+
+csFilename = "FieldInfoObjects.cs"
+CSharpFactory.createFiles(csFilename, types, "BurnSystems.Test");
+
+print('Compiling the TypeScript-File')
 TypeScriptFactory.compile(filename)
 
-print('Files have been created')
+print('Files have been created and compiled')
