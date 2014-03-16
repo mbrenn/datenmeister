@@ -65,7 +65,12 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Exception will be returned</returns>
         public IObject CreateObject()
         {
-            throw new InvalidOperationException("Object cannot be created");
+            // Adds a simple object 
+            var newObject = new XElement("element");
+            newObject.Add(new XAttribute("id", Guid.NewGuid().ToString()));
+            this.XmlDocument.Root.Add(newObject);
+
+            return new XmlObject(newObject);
         }
 
         /// <summary>
