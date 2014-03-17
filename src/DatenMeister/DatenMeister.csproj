@@ -57,6 +57,7 @@
     <Compile Include="DataProvider\Xml\XmlObject.cs" />
     <Compile Include="DataProvider\Xml\XmlSettings.cs" />
     <Compile Include="DatenMeisterPool.cs" />
+    <Compile Include="Entities\AsObject\FieldInfo.Objects.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
     <Compile Include="Entities\FieldInfos\Comment.cs" />
     <Compile Include="Entities\FieldInfos\FormView.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Logic\SourceFactory\CSharpSourceFactory.cs" />
     <Compile Include="Logic\SourceFactory\DotNetTypeProvider.cs" />
     <Compile Include="Logic\SourceFactory\ITypeInfoProvider.cs" />
+    <Compile Include="Logic\SourceFactory\SourceFactoryBase.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptBuilder.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptSourceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,7 +125,9 @@
       <LastGenOutput>Resources_DatenMeister.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Entities\FieldInfos\IObject\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Logic\SourceFactory\Resources\IObjectImplementation.txt" />
   </ItemGroup>

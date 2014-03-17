@@ -11,22 +11,8 @@ namespace DatenMeister.Logic.SourceFactory
     /// <summary>
     /// This factory is able to create a type script file, containing
     /// </summary>    
-    public class TypeScriptSourceFactory
+    public class TypeScriptSourceFactory : SourceFactoryBase
     {
-        /// <summary>
-        /// Contains four spaces
-        /// </summary>
-        internal static string FourSpaces = "    ";
-
-        /// <summary>
-        /// Contains eight spaces
-        /// </summary>
-        internal static string EightSpaces = "        ";
-
-        /// <summary>
-        /// Stores the provider
-        /// </summary>
-        private ITypeInfoProvider provider;
 
         /// <summary>
         /// Defines the parent class of the created types
@@ -43,8 +29,8 @@ namespace DatenMeister.Logic.SourceFactory
         /// </summary>
         /// <param name="provider">Provider to be used</param>
         public TypeScriptSourceFactory(ITypeInfoProvider provider)
+            : base(provider)
         {
-            this.provider = provider;
         }
 
         /// <summary>
@@ -234,9 +220,9 @@ namespace DatenMeister.Logic.SourceFactory
 
             this.EmitSetMethod(writer, propertyName, propertyType);
 
-            if (typeof(IEnumerable).IsAssignableFrom(propertyType) && propertyType != typeof(string))
+            if (this.HasPushMethod(propertyType))
             {
-                this.EmitPushMethod(writer, propertyName);
+                this.EmitPushMethod(writer, propertyName, propertyType);
             }
         }
 
@@ -246,18 +232,7 @@ namespace DatenMeister.Logic.SourceFactory
             // Creates the get method
 
             // Check, if propertyname needs to get transformed
-            var functionName = string.Empty;
-            if (propertyName.ToLower().StartsWith("is") && propertyType == typeof(Boolean))
-            {
-                // Some heuristics:
-                // Boolean properties, starting with 'is' will have a get method without modification
-                // bool isReadOnly -> bool isReadOnly
-                functionName = propertyName;
-            }
-            else
-            {
-                functionName = "get" + StringManipulation.ToUpperFirstLetter(propertyName);
-            }
+            var functionName = this.GetGetMethodName(propertyName, propertyType);
 
             // get{Property}(item: {this.parentClass}) {
             writer.WriteLine(
@@ -280,18 +255,7 @@ namespace DatenMeister.Logic.SourceFactory
             ///////////////////////////////
             // Creates the set method
             // Check, if propertyname needs to get transformed
-            var functionName = string.Empty;
-            if (propertyName.ToLower().StartsWith("is") && propertyType == typeof(Boolean))
-            {
-                // Some heuristics:
-                // Boolean properties, starting with 'is' will have a set method without 'is'
-                // bool isReadOnly -> bool setReadOnly
-                functionName = "set" + StringManipulation.ToUpperFirstLetter(propertyName.Substring(2));
-            }
-            else
-            {
-                functionName = "set" + StringManipulation.ToUpperFirstLetter(propertyName);
-            }
+            var functionName = this.GetSetMethodName(propertyName, propertyType);
 
             // set{Property}(item: {this.parentClass}, value: any) {
             writer.WriteLine(
@@ -309,23 +273,17 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine();
         }
 
-        private void EmitPushMethod(StreamWriter writer, string propertyName)
+        private void EmitPushMethod(StreamWriter writer, string propertyName, Type propertyType)
         {
             ///////////////////////////////
             // Creates the push method
-
-            var singularPropertyName = propertyName;
-            // Check, if propertyname has plural 's' at end
-            if (propertyName.EndsWith("s"))
-            {
-                singularPropertyName = propertyName.Substring(0, propertyName.Length - 1);
-            }
+            var functionName = this.GetPushMethodName(propertyName, propertyType);
 
             // push{Property}(item: {this.parentClass}, value: any) {
             writer.WriteLine(
                 string.Format(
-                    FourSpaces + "export function push{0}(item : {1}, value: any) {2}",
-                    StringManipulation.ToUpperFirstLetter(singularPropertyName),
+                    FourSpaces + "export function {0}(item : {1}, value: any) {2}",
+                    functionName,
                     this.parentClass,
                     "{"));
 

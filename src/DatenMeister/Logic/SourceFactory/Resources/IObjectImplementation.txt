@@ -1,1 +1,70 @@
-﻿
+﻿        #region IObject Implementation
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public object Get(string propertyName)
+        {
+            return this.obj.Get(propertyName);
+        }
+
+        /// <summary>
+        /// Gets all properties as key value pairs
+        /// </summary>
+        /// <returns></returns>
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> GetAll()
+        {
+            return this.obj.GetAll();
+        }
+
+        /// <summary>
+        /// Checks, if a certain property is set
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if set</returns>
+        public bool IsSet(string propertyName)
+        {
+            return this.obj.IsSet(propertyName);
+        }
+
+        /// <summary>
+        /// Sets the value of the property 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="value">Value to be set</param>
+        public void Set(string propertyName, object value)
+        {
+            this.obj.Set(propertyName, value);
+        }
+
+        /// <summary>
+        /// Unsets the property
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be removed</param>
+        public void Unset(string propertyName)
+        {
+            this.obj.Unset(propertyName);
+        }
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        public void Delete()
+        {
+            this.obj.Delete();
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                return this.obj.Id;
+            }
+        }
+
+        #endregion
