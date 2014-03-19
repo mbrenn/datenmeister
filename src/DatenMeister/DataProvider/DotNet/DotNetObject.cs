@@ -33,13 +33,13 @@ namespace DatenMeister.DataProvider.DotNet
             this.extent = extent;
             this.value = value;
 
-            if (!this.IsSet("name"))
+            if (!this.isSet("name"))
             {
                 this.id = Guid.NewGuid().ToString();
             }
             else
             {
-                this.id = this.Get("name").ToString();
+                this.id = this.get("name").ToString();
             }
         }
 
@@ -65,7 +65,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Object that has been queried</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
             var property = GetProperty(propertyName);
 
@@ -79,7 +79,7 @@ namespace DatenMeister.DataProvider.DotNet
             return this.ConvertIfNecessary(value, propertyName);
         }
 
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
             var property = GetProperty(propertyName);
 
@@ -95,7 +95,7 @@ namespace DatenMeister.DataProvider.DotNet
             method.Invoke(this.value, new object[] { convertedValue });
         }
 
-        public IEnumerable<ObjectPropertyPair> GetAll()
+        public IEnumerable<ObjectPropertyPair> getAll()
         {
             foreach (var property in this.value.GetType().GetProperties())
             {
@@ -107,7 +107,7 @@ namespace DatenMeister.DataProvider.DotNet
             }
         }
 
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
             var property = GetProperty(propertyName);
 
@@ -120,7 +120,7 @@ namespace DatenMeister.DataProvider.DotNet
             return true;
         }
 
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
             var property = GetProperty(propertyName);
 
@@ -133,7 +133,7 @@ namespace DatenMeister.DataProvider.DotNet
             method.Invoke(this.value, null);
         }
 
-        public void Delete()
+        public void delete()
         {
             Ensure.That(extent != null, "No extent had been given");
             this.extent.RemoveObject(this);

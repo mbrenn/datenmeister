@@ -45,7 +45,7 @@ namespace DatenMeister.DataProvider.CSV
             }
         }
 
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
             lock (this.values)
             {
@@ -59,7 +59,7 @@ namespace DatenMeister.DataProvider.CSV
             }
         }
 
-        public IEnumerable<ObjectPropertyPair> GetAll()
+        public IEnumerable<ObjectPropertyPair> getAll()
         {
             lock (this.values)
             {
@@ -69,7 +69,7 @@ namespace DatenMeister.DataProvider.CSV
                     {
                         yield return new ObjectPropertyPair(
                             value,
-                            this.Get(value));
+                            this.get(value));
                     }
                 }
                 else
@@ -84,7 +84,7 @@ namespace DatenMeister.DataProvider.CSV
             }
         }
 
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
             lock (this.values)
             {
@@ -97,7 +97,7 @@ namespace DatenMeister.DataProvider.CSV
             }
         }
 
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
             lock (this.values)
             {
@@ -113,7 +113,7 @@ namespace DatenMeister.DataProvider.CSV
             }
         }
 
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
             lock (this.values)
             {
@@ -154,7 +154,7 @@ namespace DatenMeister.DataProvider.CSV
             return number;
         }
 
-        public void Delete()
+        public void delete()
         {
             this.extent.RemoveObject(this);
         }

@@ -29,20 +29,20 @@ namespace DatenMeister.Tests.DataProvider
             var elements = extent.Elements().Select(x => x as IObject).ToList();
             Assert.That(elements.Count, Is.EqualTo(4));
 
-            Assert.That(elements[0].Get("Column 0").ToString(), Is.EqualTo("1"));
-            Assert.That(elements[0].Get("Column 1").ToString(), Is.EqualTo("2"));
-            Assert.That(elements[1].Get("Column 2").ToString(), Is.EqualTo("three"));
-            Assert.That(elements[2].Get("Column 2").ToString(), Is.EqualTo("example3"));
+            Assert.That(elements[0].get("Column 0").ToString(), Is.EqualTo("1"));
+            Assert.That(elements[0].get("Column 1").ToString(), Is.EqualTo("2"));
+            Assert.That(elements[1].get("Column 2").ToString(), Is.EqualTo("three"));
+            Assert.That(elements[2].get("Column 2").ToString(), Is.EqualTo("example3"));
 
-            Assert.That(elements[0].IsSet("Column 0"), Is.True);
-            Assert.That(elements[0].IsSet("Column 5"), Is.False);
-            Assert.That(elements[0].IsSet("Unknown"), Is.False);
+            Assert.That(elements[0].isSet("Column 0"), Is.True);
+            Assert.That(elements[0].isSet("Column 5"), Is.False);
+            Assert.That(elements[0].isSet("Unknown"), Is.False);
 
-            var column1 = elements[0].GetAll().Where(x => x.PropertyName == "Column 0").FirstOrDefault();
+            var column1 = elements[0].getAll().Where(x => x.PropertyName == "Column 0").FirstOrDefault();
             Assert.That(column1 != null);
             Assert.That(column1.Value.ToString() == "1");
 
-            var column2 = elements[3].GetAll().Where(x => x.PropertyName == "Column 0").FirstOrDefault();
+            var column2 = elements[3].getAll().Where(x => x.PropertyName == "Column 0").FirstOrDefault();
             Assert.That(column2 != null);
             Assert.That(column2.Value.ToString() == "cat");
         }
@@ -67,29 +67,29 @@ namespace DatenMeister.Tests.DataProvider
             var elements = extent.Elements().Select(x => x as IObject).ToList();
             Assert.That(elements.Count, Is.EqualTo(4));
 
-            Assert.That(elements[0].Get("Column 0").ToString(), Is.EqualTo("1"));
-            Assert.That(elements[0].Get("Column 1").ToString(), Is.EqualTo("2"));
-            Assert.That(elements[1].Get("Column 2").ToString(), Is.EqualTo("three"));
-            Assert.That(elements[2].Get("Column 2").ToString(), Is.EqualTo("example3"));
+            Assert.That(elements[0].get("Column 0").ToString(), Is.EqualTo("1"));
+            Assert.That(elements[0].get("Column 1").ToString(), Is.EqualTo("2"));
+            Assert.That(elements[1].get("Column 2").ToString(), Is.EqualTo("three"));
+            Assert.That(elements[2].get("Column 2").ToString(), Is.EqualTo("example3"));
 
-            Assert.That(elements[0].Get("Title1").ToString(), Is.EqualTo("1"));
-            Assert.That(elements[0].Get("Title2").ToString(), Is.EqualTo("2"));
-            Assert.That(elements[1].Get("Title3").ToString(), Is.EqualTo("three"));
-            Assert.That(elements[2].Get("Title3").ToString(), Is.EqualTo("example3"));
+            Assert.That(elements[0].get("Title1").ToString(), Is.EqualTo("1"));
+            Assert.That(elements[0].get("Title2").ToString(), Is.EqualTo("2"));
+            Assert.That(elements[1].get("Title3").ToString(), Is.EqualTo("three"));
+            Assert.That(elements[2].get("Title3").ToString(), Is.EqualTo("example3"));
 
-            Assert.That(elements[0].IsSet("Column 0"), Is.True);
-            Assert.That(elements[0].IsSet("Column 5"), Is.False);
-            Assert.That(elements[0].IsSet("Unknown"), Is.False);
-            Assert.That(elements[0].IsSet("Title1"), Is.True);
-            Assert.That(elements[0].IsSet("Title2"), Is.True);
-            Assert.That(elements[0].IsSet("Title3"), Is.True);
-            Assert.That(elements[0].IsSet("Title4"), Is.False);
+            Assert.That(elements[0].isSet("Column 0"), Is.True);
+            Assert.That(elements[0].isSet("Column 5"), Is.False);
+            Assert.That(elements[0].isSet("Unknown"), Is.False);
+            Assert.That(elements[0].isSet("Title1"), Is.True);
+            Assert.That(elements[0].isSet("Title2"), Is.True);
+            Assert.That(elements[0].isSet("Title3"), Is.True);
+            Assert.That(elements[0].isSet("Title4"), Is.False);
 
-            var column1 = elements[0].GetAll().Where(x => x.PropertyName == "Title1").FirstOrDefault();
+            var column1 = elements[0].getAll().Where(x => x.PropertyName == "Title1").FirstOrDefault();
             Assert.That(column1 != null);
             Assert.That(column1.Value.ToString() == "1");
 
-            var column2 = elements[3].GetAll().Where(x => x.PropertyName == "Title3").FirstOrDefault();
+            var column2 = elements[3].getAll().Where(x => x.PropertyName == "Title3").FirstOrDefault();
             Assert.That(column2 != null);
             Assert.That(column2.Value.ToString() == "rat");
         }
@@ -107,13 +107,13 @@ namespace DatenMeister.Tests.DataProvider
             var extent = provider.Load("data/csv/withheader.txt", settings);
             var elements = extent.Elements().Select(x => x as IObject).ToList();
 
-            elements[0].Set("Column 0", "Eins");
-            Assert.That(elements[0].Get("Title1").ToString(), Is.EqualTo("Eins"));
-            Assert.That(elements[1].Get("Title2").ToString(), Is.EqualTo("two"));
+            elements[0].set("Column 0", "Eins");
+            Assert.That(elements[0].get("Title1").ToString(), Is.EqualTo("Eins"));
+            Assert.That(elements[1].get("Title2").ToString(), Is.EqualTo("two"));
 
-            elements[1].Unset("Column 1");
-            Assert.That(elements[1].Get("Title2").ToString(), Is.EqualTo(string.Empty));
-            Assert.That(elements[1].Get("Column 1").ToString(), Is.EqualTo(string.Empty));
+            elements[1].unset("Column 1");
+            Assert.That(elements[1].get("Title2").ToString(), Is.EqualTo(string.Empty));
+            Assert.That(elements[1].get("Column 1").ToString(), Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -129,13 +129,13 @@ namespace DatenMeister.Tests.DataProvider
             var extent = provider.Load("data/csv/withheader.txt", settings);
             var elements = extent.Elements().Select(x => x as IObject).ToList();
 
-            elements[0].Set("Column 0", "Eins");
-            Assert.That(elements[0].Get("Title1").ToString(), Is.EqualTo("Eins"));
-            Assert.That(elements[1].Get("Title2").ToString(), Is.EqualTo("two"));
+            elements[0].set("Column 0", "Eins");
+            Assert.That(elements[0].get("Title1").ToString(), Is.EqualTo("Eins"));
+            Assert.That(elements[1].get("Title2").ToString(), Is.EqualTo("two"));
 
-            elements[0].Delete();
+            elements[0].delete();
             elements = extent.Elements().Select(x => x as IObject).ToList();
-            Assert.That(elements[0].Get("Title1").ToString(), Is.EqualTo("one"));
+            Assert.That(elements[0].get("Title1").ToString(), Is.EqualTo("one"));
         }
 
         [Test]
@@ -151,9 +151,9 @@ namespace DatenMeister.Tests.DataProvider
             var extent = provider.Load("data/csv/withheader.txt", settings);
             var elements = extent.Elements().Select(x => x as IObject).ToList();
 
-            elements[0].Set("Column 0", "Eins");
-            Assert.That(elements[0].Get("Title1").ToString(), Is.EqualTo("Eins"));
-            Assert.That(elements[1].Get("Title2").ToString(), Is.EqualTo("two"));
+            elements[0].set("Column 0", "Eins");
+            Assert.That(elements[0].get("Title1").ToString(), Is.EqualTo("Eins"));
+            Assert.That(elements[1].get("Title2").ToString(), Is.EqualTo("two"));
             Assert.That(elements.Count, Is.EqualTo(4));
 
             // Creates one object
@@ -164,11 +164,11 @@ namespace DatenMeister.Tests.DataProvider
 
             // Creates another object
             newElement = factory.create(null);
-            newElement.Set("Title1", "Fünf");
+            newElement.set("Title1", "Fünf");
 
             elements = extent.Elements().Select(x => x as IObject).ToList();
             Assert.That(elements.Count, Is.EqualTo(6));
-            Assert.That(elements.Last().Get("Title1"), Is.EqualTo("Fünf"));
+            Assert.That(elements.Last().get("Title1"), Is.EqualTo("Fünf"));
         }
 
         [Test]

@@ -70,7 +70,7 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="propertyName">Name of the property to be retrieved</param>
         /// <returns>Retrieval a property</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
             var result = new List<object>();
             if (string.IsNullOrEmpty(propertyName))
@@ -107,7 +107,7 @@ namespace DatenMeister.DataProvider.Xml
         /// Gets all properties by name and pair
         /// </summary>
         /// <returns>Enumeration of property pairs</returns>
-        public IEnumerable<ObjectPropertyPair> GetAll()
+        public IEnumerable<ObjectPropertyPair> getAll()
         {
             if (!string.IsNullOrEmpty(this.Node.Value))
             {
@@ -159,10 +159,10 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="propertyName">Name of the property to be checked</param>
         /// <returns>true, if this property exists</returns>
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
             // Checks, if we have a value
-            var result = this.Get(propertyName) as IEnumerable<object>;
+            var result = this.get(propertyName) as IEnumerable<object>;
             if (result == null)
             {
                 return false;
@@ -178,7 +178,7 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
             // Finds the container for the property
             if (string.IsNullOrEmpty(propertyName))
@@ -239,7 +239,7 @@ namespace DatenMeister.DataProvider.Xml
         /// Removes the properties
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
             throw new NotImplementedException();
         }
@@ -247,7 +247,7 @@ namespace DatenMeister.DataProvider.Xml
         /// <summary>
         /// Deletes the node from the extent
         /// </summary>
-        public void Delete()
+        public void delete()
         {            
             this.Node.Remove();
         }

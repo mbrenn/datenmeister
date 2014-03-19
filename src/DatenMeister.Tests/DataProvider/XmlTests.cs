@@ -27,13 +27,13 @@ namespace DatenMeister.Tests.DataProvider
             var xmlRootElementsAsList = xmlRootElement.ToList();
             Assert.That(xmlRootElementsAsList.Count, Is.EqualTo(1));
 
-            var items = xmlRootElementsAsList.Single().Get("item").AsEnumeration().ToList();
+            var items = xmlRootElementsAsList.Single().get("item").AsEnumeration().ToList();
             Assert.That(items.Count, Is.EqualTo(6));
 
             var item0 = items[0].AsIObject();
-            var value = item0.Get("").AsSingle();
+            var value = item0.get("").AsSingle();
             Assert.That(value, Is.EqualTo("This is content"));
-            Assert.Throws<ArgumentException>(() => item0.Get("Nix"));
+            Assert.Throws<ArgumentException>(() => item0.get("Nix"));
         }
 
         [Test]
@@ -43,9 +43,9 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml", new XmlSettings());
 
             // Gets the first object '/list/item[0]'
-            var firstElement = xmlExtent.Elements().AsIObject().Get("item").AsIObject();
+            var firstElement = xmlExtent.Elements().AsIObject().get("item").AsIObject();
             Assert.That(firstElement != null);
-            var allProperties = firstElement.GetAll();
+            var allProperties = firstElement.getAll();
             Assert.That(allProperties.Any(x => x.PropertyName == string.Empty), Is.True);
             Assert.That(allProperties.Any(x => x.PropertyName == "id"), Is.True);
             Assert.That(allProperties.First(x => x.PropertyName == string.Empty).PropertyName, Is.EqualTo(String.Empty));
@@ -59,11 +59,11 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml", new XmlSettings());
 
             // Gets the first object '/list/item[0]'
-            var firstElement = xmlExtent.Elements().AsIObject().Get("item").AsEnumeration().First().AsIObject();
+            var firstElement = xmlExtent.Elements().AsIObject().get("item").AsEnumeration().First().AsIObject();
 
             Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").First().Value, Is.EqualTo("This is content"));
-            firstElement.Set(string.Empty, "Test");
-            Assert.That(firstElement.Get(string.Empty).AsSingle(), Is.EqualTo("Test"));
+            firstElement.set(string.Empty, "Test");
+            Assert.That(firstElement.get(string.Empty).AsSingle(), Is.EqualTo("Test"));
             Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").First().Value, Is.EqualTo("Test"));
         }
 
@@ -75,29 +75,29 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(xmlExtent, Is.Not.Null);
 
             // Gets the first object '/list/item[0]'
-            var firstElement = xmlExtent.Elements().AsIObject().Get("item").AsEnumeration().First().AsIObject();
+            var firstElement = xmlExtent.Elements().AsIObject().get("item").AsEnumeration().First().AsIObject();
             Assert.That(firstElement, Is.Not.Null);
 
-            Assert.That(firstElement.Get(string.Empty).AsSingle(), Is.EqualTo("One"));
-            Assert.That(firstElement.Get("letter").AsSingle(), Is.EqualTo("a"));
+            Assert.That(firstElement.get(string.Empty).AsSingle(), Is.EqualTo("One"));
+            Assert.That(firstElement.get("letter").AsSingle(), Is.EqualTo("a"));
 
-            var pairs = firstElement.GetAll();
+            var pairs = firstElement.getAll();
             Assert.That(pairs.Any(x => x.PropertyName == string.Empty), Is.True);
             Assert.That(pairs.Any(x => x.PropertyName == "id"), Is.True);
             Assert.That(pairs.Any(x => x.PropertyName == "letter"), Is.True);
             Assert.That(pairs.Any(x => x.PropertyName == "nix"), Is.False);
 
             // Gets second item '/list/item[1]'
-            var secondElement = xmlExtent.Elements().AsIObject().Get("item").AsEnumeration().ElementAt(1).AsIObject();
+            var secondElement = xmlExtent.Elements().AsIObject().get("item").AsEnumeration().ElementAt(1).AsIObject();
             Assert.That(secondElement, Is.Not.Null);
 
-            Assert.That(secondElement.Get(string.Empty).AsSingle(), Is.EqualTo("Two"));
-            Assert.That(secondElement.Get("letter").AsSingle(), Is.EqualTo("b"));
+            Assert.That(secondElement.get(string.Empty).AsSingle(), Is.EqualTo("Two"));
+            Assert.That(secondElement.get("letter").AsSingle(), Is.EqualTo("b"));
 
             // Sets the content of second item
-            secondElement.Set("letter", "to be");
+            secondElement.set("letter", "to be");
 
-            Assert.That(secondElement.Get("letter").AsSingle(), Is.EqualTo("to be"));
+            Assert.That(secondElement.get("letter").AsSingle(), Is.EqualTo("to be"));
             Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").ElementAt(1).Attribute("letter").Value,
                 Is.EqualTo("to be"));
         }

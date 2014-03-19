@@ -37,7 +37,7 @@ namespace DatenMeister.DataProvider.CSV
             else
             {
                 // Column headers given by number
-                var maxColumnCount = extent.Elements().Select(x => x.GetAll().Count()).Max();
+                var maxColumnCount = extent.Elements().Select(x => x.getAll().Count()).Max();
                 for (var n = 0; n < maxColumnCount; n++)
                 {
                     columnHeaders.Add(string.Format("Column {0}", n));
@@ -60,7 +60,7 @@ namespace DatenMeister.DataProvider.CSV
                         streamWriter,
                         settings,
                         columnHeaders,
-                        x => element.Get(x));
+                        x => element.get(x));
                 }
             }
         }

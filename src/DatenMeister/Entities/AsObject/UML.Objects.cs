@@ -15,18 +15,18 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
-            return this.obj.Get(propertyName);
+            return this.obj.get(propertyName);
         }
 
         /// <summary>
         /// Gets all properties as key value pairs
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> GetAll()
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
         {
-            return this.obj.GetAll();
+            return this.obj.getAll();
         }
 
         /// <summary>
@@ -34,9 +34,9 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>true, if set</returns>
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
-            return this.obj.IsSet(propertyName);
+            return this.obj.isSet(propertyName);
         }
 
         /// <summary>
@@ -44,26 +44,26 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
-            this.obj.Set(propertyName, value);
+            this.obj.set(propertyName, value);
         }
 
         /// <summary>
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
-            this.obj.Unset(propertyName);
+            this.obj.unset(propertyName);
         }
 
         /// <summary>
         /// Deletes this object and all composed elements
         /// </summary>
-        public void Delete()
+        public void delete()
         {
-            this.obj.Delete();
+            this.obj.delete();
         }
 
         /// <summary>
@@ -81,12 +81,12 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public object getName()
         {
-            return this.Get("name");
+            return this.get("name");
         }
 
         public void setName(object value)
         {
-            this.Set("name", value);
+            this.set("name", value);
         }
 
     }
@@ -106,18 +106,18 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
-            return this.obj.Get(propertyName);
+            return this.obj.get(propertyName);
         }
 
         /// <summary>
         /// Gets all properties as key value pairs
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> GetAll()
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
         {
-            return this.obj.GetAll();
+            return this.obj.getAll();
         }
 
         /// <summary>
@@ -125,9 +125,9 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>true, if set</returns>
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
-            return this.obj.IsSet(propertyName);
+            return this.obj.isSet(propertyName);
         }
 
         /// <summary>
@@ -135,26 +135,26 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
-            this.obj.Set(propertyName, value);
+            this.obj.set(propertyName, value);
         }
 
         /// <summary>
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
-            this.obj.Unset(propertyName);
+            this.obj.unset(propertyName);
         }
 
         /// <summary>
         /// Deletes this object and all composed elements
         /// </summary>
-        public void Delete()
+        public void delete()
         {
-            this.obj.Delete();
+            this.obj.delete();
         }
 
         /// <summary>
@@ -172,12 +172,12 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public object getName()
         {
-            return this.Get("name");
+            return this.get("name");
         }
 
         public void setName(object value)
         {
-            this.Set("name", value);
+            this.set("name", value);
         }
 
     }

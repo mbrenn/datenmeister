@@ -102,7 +102,7 @@ namespace DatenMeister
         {
             var result = new Dictionary<string, object>();
 
-            foreach (var pair in value.GetAll())
+            foreach (var pair in value.getAll())
             {
                 var pairValue = ConvertAsFlatObject(pair.Value, extent);
 
@@ -142,7 +142,7 @@ namespace DatenMeister
         {
             foreach (var pair in values)
             {
-                value.Set(pair.Key, pair.Value);
+                value.set(pair.Key, pair.Value);
             }
         }
 

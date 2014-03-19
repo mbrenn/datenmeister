@@ -53,7 +53,7 @@ namespace DatenMeister.Transformations
             if (value is IObject)
             {
                 yield return value as IObject;
-                foreach (var pair in (value as IObject).GetAll())
+                foreach (var pair in (value as IObject).getAll())
                 {
                     foreach (var x in this.Recurse(pair.Value))
                     {

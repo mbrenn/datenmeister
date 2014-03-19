@@ -17,25 +17,25 @@ namespace DatenMeister.Tests.DataProvider
             var extent = new DotNetExtent("test:///");
             var value = new DotNetObject(extent, new TestClass(), Guid.Empty.ToString());
 
-            var properties = value.GetAll();
+            var properties = value.getAll();
             Assert.That(properties.Any(x => x.PropertyName == "TextValue"));
             Assert.That(properties.Any(x => x.PropertyName == "NumberValue"));
 
-            value.Set("TextValue", "Dies ist ein Test");
-            value.Set("NumberValue", 123L);
+            value.set("TextValue", "Dies ist ein Test");
+            value.set("NumberValue", 123L);
 
             Assert.Throws<ArgumentException>(() =>
                 {
-                    value.Set("XYZ", "T");
+                    value.set("XYZ", "T");
                 });
 
-            var textValue = value.Get("TextValue");
-            var numberValue = value.Get("NumberValue");
+            var textValue = value.get("TextValue");
+            var numberValue = value.get("NumberValue");
 
             Assert.That(textValue, Is.EqualTo("Dies ist ein Test"));
             Assert.That(numberValue, Is.EqualTo(123L));
 
-            properties = value.GetAll();
+            properties = value.getAll();
             Assert.That(properties.Any(x => x.PropertyName == "TextValue"));
             Assert.That(properties.Any(x => x.PropertyName == "NumberValue"));
 

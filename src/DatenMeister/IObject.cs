@@ -52,38 +52,38 @@ namespace DatenMeister
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        object Get(string propertyName);
+        object get(string propertyName);
 
         /// <summary>
         /// Gets all properties as key value pairs
         /// </summary>
         /// <returns></returns>
-        IEnumerable<ObjectPropertyPair> GetAll();
+        IEnumerable<ObjectPropertyPair> getAll();
 
         /// <summary>
         /// Checks, if a certain property is set
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>true, if set</returns>
-        bool IsSet(string propertyName);
+        bool isSet(string propertyName);
 
         /// <summary>
         /// Sets the value of the property 
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        void Set(string propertyName, object value);
+        void set(string propertyName, object value);
 
         /// <summary>
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        void Unset(string propertyName);
+        void unset(string propertyName);
 
         /// <summary>
         /// Deletes this object and all composed elements
         /// </summary>
-        void Delete();
+        void delete();
 
         /// <summary>
         /// Gets the id of the object

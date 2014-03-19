@@ -33,7 +33,7 @@ namespace DatenMeister.DataProvider
         /// </summary>
         private Dictionary<string, object> values = new Dictionary<string, object>();
         
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
             lock (this.values)
             {
@@ -41,7 +41,7 @@ namespace DatenMeister.DataProvider
             }
         }
 
-        public IEnumerable<ObjectPropertyPair> GetAll()
+        public IEnumerable<ObjectPropertyPair> getAll()
         {
             lock (this.values)
             {
@@ -49,7 +49,7 @@ namespace DatenMeister.DataProvider
             }
         }
 
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
             lock (this.values)
             {
@@ -57,7 +57,7 @@ namespace DatenMeister.DataProvider
             }
         }
 
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
             lock (this.values)
             {
@@ -65,7 +65,7 @@ namespace DatenMeister.DataProvider
             }
         }
 
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
             lock (this.values)
             {
@@ -73,7 +73,7 @@ namespace DatenMeister.DataProvider
             }
         }
 
-        public void Delete()
+        public void delete()
         {
             this.owner.RemoveObject(this);
         }

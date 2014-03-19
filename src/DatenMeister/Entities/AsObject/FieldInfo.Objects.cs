@@ -15,18 +15,18 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
-            return this.obj.Get(propertyName);
+            return this.obj.get(propertyName);
         }
 
         /// <summary>
         /// Gets all properties as key value pairs
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> GetAll()
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
         {
-            return this.obj.GetAll();
+            return this.obj.getAll();
         }
 
         /// <summary>
@@ -34,9 +34,9 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>true, if set</returns>
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
-            return this.obj.IsSet(propertyName);
+            return this.obj.isSet(propertyName);
         }
 
         /// <summary>
@@ -44,26 +44,26 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
-            this.obj.Set(propertyName, value);
+            this.obj.set(propertyName, value);
         }
 
         /// <summary>
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
-            this.obj.Unset(propertyName);
+            this.obj.unset(propertyName);
         }
 
         /// <summary>
         /// Deletes this object and all composed elements
         /// </summary>
-        public void Delete()
+        public void delete()
         {
-            this.obj.Delete();
+            this.obj.delete();
         }
 
         /// <summary>
@@ -81,42 +81,42 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         public object getComment()
         {
-            return this.Get("comment");
+            return this.get("comment");
         }
 
         public void setComment(object value)
         {
-            this.Set("comment", value);
+            this.set("comment", value);
         }
 
         public object getTitle()
         {
-            return this.Get("title");
+            return this.get("title");
         }
 
         public void setTitle(object value)
         {
-            this.Set("title", value);
+            this.set("title", value);
         }
 
         public object getName()
         {
-            return this.Get("name");
+            return this.get("name");
         }
 
         public void setName(object value)
         {
-            this.Set("name", value);
+            this.set("name", value);
         }
 
         public object isReadOnly()
         {
-            return this.Get("isReadOnly");
+            return this.get("isReadOnly");
         }
 
         public void setReadOnly(object value)
         {
-            this.Set("isReadOnly", value);
+            this.set("isReadOnly", value);
         }
 
     }
@@ -136,18 +136,18 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
-            return this.obj.Get(propertyName);
+            return this.obj.get(propertyName);
         }
 
         /// <summary>
         /// Gets all properties as key value pairs
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> GetAll()
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
         {
-            return this.obj.GetAll();
+            return this.obj.getAll();
         }
 
         /// <summary>
@@ -155,9 +155,9 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>true, if set</returns>
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
-            return this.obj.IsSet(propertyName);
+            return this.obj.isSet(propertyName);
         }
 
         /// <summary>
@@ -165,26 +165,26 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
-            this.obj.Set(propertyName, value);
+            this.obj.set(propertyName, value);
         }
 
         /// <summary>
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
-            this.obj.Unset(propertyName);
+            this.obj.unset(propertyName);
         }
 
         /// <summary>
         /// Deletes this object and all composed elements
         /// </summary>
-        public void Delete()
+        public void delete()
         {
-            this.obj.Delete();
+            this.obj.delete();
         }
 
         /// <summary>
@@ -202,32 +202,32 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         public object getTitle()
         {
-            return this.Get("title");
+            return this.get("title");
         }
 
         public void setTitle(object value)
         {
-            this.Set("title", value);
+            this.set("title", value);
         }
 
         public object getName()
         {
-            return this.Get("name");
+            return this.get("name");
         }
 
         public void setName(object value)
         {
-            this.Set("name", value);
+            this.set("name", value);
         }
 
         public object isReadOnly()
         {
-            return this.Get("isReadOnly");
+            return this.get("isReadOnly");
         }
 
         public void setReadOnly(object value)
         {
-            this.Set("isReadOnly", value);
+            this.set("isReadOnly", value);
         }
 
     }
@@ -247,18 +247,18 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
-            return this.obj.Get(propertyName);
+            return this.obj.get(propertyName);
         }
 
         /// <summary>
         /// Gets all properties as key value pairs
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> GetAll()
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
         {
-            return this.obj.GetAll();
+            return this.obj.getAll();
         }
 
         /// <summary>
@@ -266,9 +266,9 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>true, if set</returns>
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
-            return this.obj.IsSet(propertyName);
+            return this.obj.isSet(propertyName);
         }
 
         /// <summary>
@@ -276,26 +276,26 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
-            this.obj.Set(propertyName, value);
+            this.obj.set(propertyName, value);
         }
 
         /// <summary>
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
-            this.obj.Unset(propertyName);
+            this.obj.unset(propertyName);
         }
 
         /// <summary>
         /// Deletes this object and all composed elements
         /// </summary>
-        public void Delete()
+        public void delete()
         {
-            this.obj.Delete();
+            this.obj.delete();
         }
 
         /// <summary>
@@ -313,52 +313,52 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         public object getWidth()
         {
-            return this.Get("width");
+            return this.get("width");
         }
 
         public void setWidth(object value)
         {
-            this.Set("width", value);
+            this.set("width", value);
         }
 
         public object getHeight()
         {
-            return this.Get("height");
+            return this.get("height");
         }
 
         public void setHeight(object value)
         {
-            this.Set("height", value);
+            this.set("height", value);
         }
 
         public object getTitle()
         {
-            return this.Get("title");
+            return this.get("title");
         }
 
         public void setTitle(object value)
         {
-            this.Set("title", value);
+            this.set("title", value);
         }
 
         public object getName()
         {
-            return this.Get("name");
+            return this.get("name");
         }
 
         public void setName(object value)
         {
-            this.Set("name", value);
+            this.set("name", value);
         }
 
         public object isReadOnly()
         {
-            return this.Get("isReadOnly");
+            return this.get("isReadOnly");
         }
 
         public void setReadOnly(object value)
         {
-            this.Set("isReadOnly", value);
+            this.set("isReadOnly", value);
         }
 
     }
@@ -378,18 +378,18 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
-            return this.obj.Get(propertyName);
+            return this.obj.get(propertyName);
         }
 
         /// <summary>
         /// Gets all properties as key value pairs
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> GetAll()
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
         {
-            return this.obj.GetAll();
+            return this.obj.getAll();
         }
 
         /// <summary>
@@ -397,9 +397,9 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>true, if set</returns>
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
-            return this.obj.IsSet(propertyName);
+            return this.obj.isSet(propertyName);
         }
 
         /// <summary>
@@ -407,26 +407,26 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
-            this.obj.Set(propertyName, value);
+            this.obj.set(propertyName, value);
         }
 
         /// <summary>
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
-            this.obj.Unset(propertyName);
+            this.obj.unset(propertyName);
         }
 
         /// <summary>
         /// Deletes this object and all composed elements
         /// </summary>
-        public void Delete()
+        public void delete()
         {
-            this.obj.Delete();
+            this.obj.delete();
         }
 
         /// <summary>
@@ -444,22 +444,22 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         public object getText()
         {
-            return this.Get("text");
+            return this.get("text");
         }
 
         public void setText(object value)
         {
-            this.Set("text", value);
+            this.set("text", value);
         }
 
         public object getClickUrl()
         {
-            return this.Get("clickUrl");
+            return this.get("clickUrl");
         }
 
         public void setClickUrl(object value)
         {
-            this.Set("clickUrl", value);
+            this.set("clickUrl", value);
         }
 
     }
@@ -479,18 +479,18 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
-            return this.obj.Get(propertyName);
+            return this.obj.get(propertyName);
         }
 
         /// <summary>
         /// Gets all properties as key value pairs
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> GetAll()
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
         {
-            return this.obj.GetAll();
+            return this.obj.getAll();
         }
 
         /// <summary>
@@ -498,9 +498,9 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>true, if set</returns>
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
-            return this.obj.IsSet(propertyName);
+            return this.obj.isSet(propertyName);
         }
 
         /// <summary>
@@ -508,26 +508,26 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
-            this.obj.Set(propertyName, value);
+            this.obj.set(propertyName, value);
         }
 
         /// <summary>
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
-            this.obj.Unset(propertyName);
+            this.obj.unset(propertyName);
         }
 
         /// <summary>
         /// Deletes this object and all composed elements
         /// </summary>
-        public void Delete()
+        public void delete()
         {
-            this.obj.Delete();
+            this.obj.delete();
         }
 
         /// <summary>
@@ -545,59 +545,59 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         public object getFieldInfos()
         {
-            return this.Get("fieldInfos");
+            return this.get("fieldInfos");
         }
 
         public void setFieldInfos(object value)
         {
-            this.Set("fieldInfos", value);
+            this.set("fieldInfos", value);
         }
 
         public void pushFieldInfo(object value)
         {
-            var list = this.Get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
+            var list = this.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
             list.Add(value);
-            this.Set("fieldInfos", list);
+            this.set("fieldInfos", list);
         }
 
         public object getStartInEditMode()
         {
-            return this.Get("startInEditMode");
+            return this.get("startInEditMode");
         }
 
         public void setStartInEditMode(object value)
         {
-            this.Set("startInEditMode", value);
+            this.set("startInEditMode", value);
         }
 
         public object getTitle()
         {
-            return this.Get("title");
+            return this.get("title");
         }
 
         public void setTitle(object value)
         {
-            this.Set("title", value);
+            this.set("title", value);
         }
 
         public object getName()
         {
-            return this.Get("name");
+            return this.get("name");
         }
 
         public void setName(object value)
         {
-            this.Set("name", value);
+            this.set("name", value);
         }
 
         public object isReadOnly()
         {
-            return this.Get("isReadOnly");
+            return this.get("isReadOnly");
         }
 
         public void setReadOnly(object value)
         {
-            this.Set("isReadOnly", value);
+            this.set("isReadOnly", value);
         }
 
     }
@@ -617,18 +617,18 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
-            return this.obj.Get(propertyName);
+            return this.obj.get(propertyName);
         }
 
         /// <summary>
         /// Gets all properties as key value pairs
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> GetAll()
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
         {
-            return this.obj.GetAll();
+            return this.obj.getAll();
         }
 
         /// <summary>
@@ -636,9 +636,9 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>true, if set</returns>
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
-            return this.obj.IsSet(propertyName);
+            return this.obj.isSet(propertyName);
         }
 
         /// <summary>
@@ -646,26 +646,26 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
-            this.obj.Set(propertyName, value);
+            this.obj.set(propertyName, value);
         }
 
         /// <summary>
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
-            this.obj.Unset(propertyName);
+            this.obj.unset(propertyName);
         }
 
         /// <summary>
         /// Deletes this object and all composed elements
         /// </summary>
-        public void Delete()
+        public void delete()
         {
-            this.obj.Delete();
+            this.obj.delete();
         }
 
         /// <summary>
@@ -683,109 +683,109 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         public object getAllowEdit()
         {
-            return this.Get("allowEdit");
+            return this.get("allowEdit");
         }
 
         public void setAllowEdit(object value)
         {
-            this.Set("allowEdit", value);
+            this.set("allowEdit", value);
         }
 
         public object getAllowDelete()
         {
-            return this.Get("allowDelete");
+            return this.get("allowDelete");
         }
 
         public void setAllowDelete(object value)
         {
-            this.Set("allowDelete", value);
+            this.set("allowDelete", value);
         }
 
         public object getAllowNew()
         {
-            return this.Get("allowNew");
+            return this.get("allowNew");
         }
 
         public void setAllowNew(object value)
         {
-            this.Set("allowNew", value);
+            this.set("allowNew", value);
         }
 
         public object getShowColumnHeaders()
         {
-            return this.Get("showColumnHeaders");
+            return this.get("showColumnHeaders");
         }
 
         public void setShowColumnHeaders(object value)
         {
-            this.Set("showColumnHeaders", value);
+            this.set("showColumnHeaders", value);
         }
 
         public object getAllowNewProperty()
         {
-            return this.Get("allowNewProperty");
+            return this.get("allowNewProperty");
         }
 
         public void setAllowNewProperty(object value)
         {
-            this.Set("allowNewProperty", value);
+            this.set("allowNewProperty", value);
         }
 
         public object getFieldInfos()
         {
-            return this.Get("fieldInfos");
+            return this.get("fieldInfos");
         }
 
         public void setFieldInfos(object value)
         {
-            this.Set("fieldInfos", value);
+            this.set("fieldInfos", value);
         }
 
         public void pushFieldInfo(object value)
         {
-            var list = this.Get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
+            var list = this.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
             list.Add(value);
-            this.Set("fieldInfos", list);
+            this.set("fieldInfos", list);
         }
 
         public object getStartInEditMode()
         {
-            return this.Get("startInEditMode");
+            return this.get("startInEditMode");
         }
 
         public void setStartInEditMode(object value)
         {
-            this.Set("startInEditMode", value);
+            this.set("startInEditMode", value);
         }
 
         public object getTitle()
         {
-            return this.Get("title");
+            return this.get("title");
         }
 
         public void setTitle(object value)
         {
-            this.Set("title", value);
+            this.set("title", value);
         }
 
         public object getName()
         {
-            return this.Get("name");
+            return this.get("name");
         }
 
         public void setName(object value)
         {
-            this.Set("name", value);
+            this.set("name", value);
         }
 
         public object isReadOnly()
         {
-            return this.Get("isReadOnly");
+            return this.get("isReadOnly");
         }
 
         public void setReadOnly(object value)
         {
-            this.Set("isReadOnly", value);
+            this.set("isReadOnly", value);
         }
 
     }
@@ -805,18 +805,18 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object Get(string propertyName)
+        public object get(string propertyName)
         {
-            return this.obj.Get(propertyName);
+            return this.obj.get(propertyName);
         }
 
         /// <summary>
         /// Gets all properties as key value pairs
         /// </summary>
         /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> GetAll()
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
         {
-            return this.obj.GetAll();
+            return this.obj.getAll();
         }
 
         /// <summary>
@@ -824,9 +824,9 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>true, if set</returns>
-        public bool IsSet(string propertyName)
+        public bool isSet(string propertyName)
         {
-            return this.obj.IsSet(propertyName);
+            return this.obj.isSet(propertyName);
         }
 
         /// <summary>
@@ -834,26 +834,26 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <param name="value">Value to be set</param>
-        public void Set(string propertyName, object value)
+        public void set(string propertyName, object value)
         {
-            this.obj.Set(propertyName, value);
+            this.obj.set(propertyName, value);
         }
 
         /// <summary>
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void Unset(string propertyName)
+        public void unset(string propertyName)
         {
-            this.obj.Unset(propertyName);
+            this.obj.unset(propertyName);
         }
 
         /// <summary>
         /// Deletes this object and all composed elements
         /// </summary>
-        public void Delete()
+        public void delete()
         {
-            this.obj.Delete();
+            this.obj.delete();
         }
 
         /// <summary>
@@ -871,89 +871,89 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         public object getAllowEdit()
         {
-            return this.Get("allowEdit");
+            return this.get("allowEdit");
         }
 
         public void setAllowEdit(object value)
         {
-            this.Set("allowEdit", value);
+            this.set("allowEdit", value);
         }
 
         public object getAllowDelete()
         {
-            return this.Get("allowDelete");
+            return this.get("allowDelete");
         }
 
         public void setAllowDelete(object value)
         {
-            this.Set("allowDelete", value);
+            this.set("allowDelete", value);
         }
 
         public object getAllowNew()
         {
-            return this.Get("allowNew");
+            return this.get("allowNew");
         }
 
         public void setAllowNew(object value)
         {
-            this.Set("allowNew", value);
+            this.set("allowNew", value);
         }
 
         public object getFieldInfos()
         {
-            return this.Get("fieldInfos");
+            return this.get("fieldInfos");
         }
 
         public void setFieldInfos(object value)
         {
-            this.Set("fieldInfos", value);
+            this.set("fieldInfos", value);
         }
 
         public void pushFieldInfo(object value)
         {
-            var list = this.Get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
+            var list = this.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
             list.Add(value);
-            this.Set("fieldInfos", list);
+            this.set("fieldInfos", list);
         }
 
         public object getStartInEditMode()
         {
-            return this.Get("startInEditMode");
+            return this.get("startInEditMode");
         }
 
         public void setStartInEditMode(object value)
         {
-            this.Set("startInEditMode", value);
+            this.set("startInEditMode", value);
         }
 
         public object getTitle()
         {
-            return this.Get("title");
+            return this.get("title");
         }
 
         public void setTitle(object value)
         {
-            this.Set("title", value);
+            this.set("title", value);
         }
 
         public object getName()
         {
-            return this.Get("name");
+            return this.get("name");
         }
 
         public void setName(object value)
         {
-            this.Set("name", value);
+            this.set("name", value);
         }
 
         public object isReadOnly()
         {
-            return this.Get("isReadOnly");
+            return this.get("isReadOnly");
         }
 
         public void setReadOnly(object value)
         {
-            this.Set("isReadOnly", value);
+            this.set("isReadOnly", value);
         }
 
     }

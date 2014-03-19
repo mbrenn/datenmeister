@@ -99,7 +99,7 @@ namespace DatenMeister.Web
             var element = GetElementByUri(uri, out extent);
 
             logger.Message("Item shall be deleted: " + element.Id);
-            element.Delete();
+            element.delete();
 
             return this.SuccessJson();
         }
@@ -113,7 +113,7 @@ namespace DatenMeister.Web
 
             foreach (var pair in values)
             {
-                element.Set(pair.Key, pair.Value);
+                element.set(pair.Key, pair.Value);
             }
 
             return this.Json(new
@@ -133,7 +133,7 @@ namespace DatenMeister.Web
             var element = this.GetElementByUri(uri, out extent);
             foreach (var pair in values)
             {
-                element.Set(pair.Key, pair.Value);
+                element.set(pair.Key, pair.Value);
             }
 
             return this.SuccessJson();
