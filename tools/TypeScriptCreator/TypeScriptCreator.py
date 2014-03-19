@@ -21,7 +21,7 @@ TypeScriptFactory.createFiles(tsFilename, types)
 
 print('Creating the C#-File')
 
-csFilename = "FieldInfoObjects.cs"
+csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Objects.cs"
 CSharpFactory.createFiles(csFilename, types, "BurnSystems.Test");
 
 print('Compiling the TypeScript-File')
