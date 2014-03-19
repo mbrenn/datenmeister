@@ -7,7 +7,7 @@ from BurnSystems.DatenMeister import CSharpFactory
 
 # Creating the TypeScript-File
 
-print('Creating the TypeScript-File')
+print('Creating the Fieldinfo-File')
 tsFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.fieldinfo.objects.ts"
 types = [
          DatenMeister.Entities.FieldInfos.Comment, 
@@ -29,10 +29,10 @@ TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 print('Creating the C#-File')
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Objects.cs"
-CSharpFactory.createFiles(csFilename, types, "BurnSystems.Test");
+CSharpFactory.createFiles(csFilename, types, "DatenMeister.Entities.AsObject.Uml.FieldInfo");
 
-csFilename = "UML.Objects.cs"
-CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject");
+csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Objects.cs"
+CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml");
 
 print('Compiling the TypeScript-File')
 TypeScriptFactory.compile(tsFilename)
