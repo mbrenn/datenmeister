@@ -19,12 +19,23 @@ types = [
          DatenMeister.Entities.FieldInfos.TableView]
 TypeScriptFactory.createFiles(tsFilename, types)
 
+print('Creating the UML-File')
+tsUMLFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.uml.objects.ts"
+umlTypes = [
+         DatenMeister.Entities.UML.NamedElement,       
+         DatenMeister.Entities.UML.Type ]
+TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
+
 print('Creating the C#-File')
 
 csFilename = "FieldInfoObjects.cs"
 CSharpFactory.createFiles(csFilename, types, "BurnSystems.Test");
 
+csFilename = "UML.Objects.cs"
+CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject");
+
 print('Compiling the TypeScript-File')
 TypeScriptFactory.compile(tsFilename)
-
+TypeScriptFactory.compile(tsUMLFilename)
+ 
 print('Files have been created and compiled')

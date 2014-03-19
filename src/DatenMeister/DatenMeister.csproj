@@ -65,6 +65,8 @@
     <Compile Include="Entities\FieldInfos\TableView.cs" />
     <Compile Include="Entities\FieldInfos\TextField.cs" />
     <Compile Include="Entities\FieldInfos\View.cs" />
+    <Compile Include="Entities\UML\Type.cs" />
+    <Compile Include="Entities\UML\NamedElement.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IObject.cs" />
@@ -127,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\FieldInfos\IObject\" />
+    <Folder Include="Entities\MOF\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logic\SourceFactory\Resources\IObjectImplementation.txt" />

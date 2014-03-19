@@ -61,13 +61,13 @@ namespace DatenMeister.Logic
         /// <param name='extent'>
         /// Extent.
         /// </param>
-        /// <param name='path'>
+        /// <param name='storagePath'>
         /// Path.
         /// </param>
-        public ExtentInstance(IURIExtent extent, string path, string name)
+        public ExtentInstance(IURIExtent extent, string storagePath, string name)
         {
             this.Extent = extent;
-            this.StoragePath = path;
+            this.StoragePath = storagePath;
             this.Name = name;
         }
 
