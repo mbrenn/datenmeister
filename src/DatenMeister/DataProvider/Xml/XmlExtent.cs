@@ -55,7 +55,7 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Enumeration of all elements</returns>
         public IEnumerable<IObject> Elements()
         {
-            var rootElement = new XmlObject(this.XmlDocument.Root);
+            var rootElement = new XmlObject(this, this.XmlDocument.Root);
             yield return rootElement;
         }
 
@@ -70,7 +70,7 @@ namespace DatenMeister.DataProvider.Xml
             newObject.Add(new XAttribute("id", Guid.NewGuid().ToString()));
             this.XmlDocument.Root.Add(newObject);
 
-            return new XmlObject(newObject);
+            return new XmlObject(this, newObject);
         }
 
         /// <summary>

@@ -15,6 +15,15 @@ namespace DatenMeister.DataProvider.Xml
     public class XmlObject : IElement
     {
         /// <summary>
+        /// Gets or sets the extent, where this element belongs to
+        /// </summary>
+        public XmlExtent Extent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the node
         /// </summary>
         public XElement Node
@@ -37,8 +46,9 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="node">Node being used</param>
         /// <param name="parent">The parent node, which is used for id derivation</param>
-        public XmlObject(XElement node, XmlObject parent = null)
+        public XmlObject(XmlExtent xmlExtent,  XElement node, XmlObject parent = null)
         {
+            Ensure.That(xmlExtent != null);
             Ensure.That(node != null);
             this.Node = node;
             this.Parent = parent;
@@ -90,7 +100,7 @@ namespace DatenMeister.DataProvider.Xml
                 // Checks, if we have elements
                 foreach (var element in this.Node.Elements(propertyName))
                 {
-                    result.Add(new XmlObject(element, this));
+                    result.Add(new XmlObject(this.Extent, element, this));
                 }
             }
 
@@ -126,7 +136,7 @@ namespace DatenMeister.DataProvider.Xml
                     returns[element.Name.ToString()] = found;
                 }
 
-                found.Add(new XmlObject(element, this));
+                found.Add(new XmlObject(this.Extent, element, this));
             }
 
             foreach (var attribute in this.Node.Attributes())
@@ -259,6 +269,24 @@ namespace DatenMeister.DataProvider.Xml
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Returns the meta class, if known
+        /// </summary>
+        /// <returns></returns>
+        public IObject getMetaClass()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Returns the object, which contains this element
+        /// </summary>
+        /// <returns>Object, which is returned</returns>
+        public IObject container()
+        {
+            return this.Parent;
         }
     }
 }
