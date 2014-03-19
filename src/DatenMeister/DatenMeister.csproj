@@ -69,6 +69,7 @@
     <Compile Include="Entities\UML\Type.cs" />
     <Compile Include="Entities\UML\NamedElement.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="IElement.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IURIExtent.cs" />

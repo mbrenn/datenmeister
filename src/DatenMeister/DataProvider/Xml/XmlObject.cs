@@ -12,7 +12,7 @@ namespace DatenMeister.DataProvider.Xml
     /// <summary>
     /// Defines one xml object being used by Datenmeister
     /// </summary>
-    public class XmlObject : IObject
+    public class XmlObject : IElement
     {
         /// <summary>
         /// Gets or sets the node
