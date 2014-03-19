@@ -61,6 +61,8 @@ namespace DatenMeister.Logic.SourceFactory
 
         private void EmitType(StreamWriter writer, string typeName)
         {
+            writer.WriteLine(FourSpaces + "[global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"DatenMeister.Logic.SourceFactory.CSharpSourceFactory\", \"1.0.0.0\")]");
+            writer.WriteLine(FourSpaces + "[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]");
             writer.WriteLine(
                 string.Format(
                     FourSpaces + "public class {0} : DatenMeister.IObject",

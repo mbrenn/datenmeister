@@ -1,5 +1,7 @@
 namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Comment : DatenMeister.IObject
     {
         private DatenMeister.IObject obj;
@@ -128,6 +130,8 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class General : DatenMeister.IObject
     {
         private DatenMeister.IObject obj;
@@ -239,6 +243,8 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TextField : DatenMeister.IObject
     {
         private DatenMeister.IObject obj;
@@ -377,6 +383,8 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ActionButton : DatenMeister.IObject
     {
         private DatenMeister.IObject obj;
@@ -485,6 +493,8 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class View : DatenMeister.IObject
     {
         private DatenMeister.IObject obj;
@@ -623,6 +633,8 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class FormView : DatenMeister.IObject
     {
         private DatenMeister.IObject obj;
@@ -811,6 +823,8 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TableView : DatenMeister.IObject
     {
         private DatenMeister.IObject obj;

@@ -1,5 +1,7 @@
 namespace DatenMeister.Entities.AsObject.Uml
 {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class NamedElement : DatenMeister.IObject
     {
         private DatenMeister.IObject obj;
@@ -91,6 +93,8 @@ namespace DatenMeister.Entities.AsObject.Uml
 
     }
 
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Type : DatenMeister.IObject
     {
         private DatenMeister.IObject obj;
