@@ -58,7 +58,7 @@ namespace DatenMeister.DataProvider.DotNet
             this.elements.Add(new DotNetObject(this, element));
         }
 
-        public IObject CreateObject()
+        public IObject CreateObject(IObject type)
         {
             throw new InvalidOperationException("Dotnet objects cannot be created, no type information is available");
         }

@@ -19,8 +19,9 @@ namespace DatenMeister
         /// <summary>
         /// Creates an empty object that already had been assigned to extent
         /// </summary>
+        /// <param name="type">Type of the object, may be null, if not known</param>
         /// <returns>Created object that is returned</returns>
-        IObject CreateObject();
+        IObject CreateObject(IObject type = null);
 
         /// <summary>
         /// Removes the object from extent. 

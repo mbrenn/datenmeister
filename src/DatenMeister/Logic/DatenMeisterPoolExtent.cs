@@ -38,7 +38,7 @@ namespace DatenMeister.Logic
                 x => new DotNetObject(this, x.ToJson(), x.Extent.ContextURI()));
         }
 
-        public IObject CreateObject()
+        public IObject CreateObject(IObject type)
         {
             throw new NotImplementedException();
         }

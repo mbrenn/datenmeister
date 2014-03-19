@@ -78,11 +78,11 @@ namespace DatenMeister.Transformations
         /// Creates a new object
         /// </summary>
         /// <returns>Object that had been created</returns>
-        public IObject CreateObject()
+        public IObject CreateObject(IObject type)
         {
             this.CheckSource();
 
-            return this.source.CreateObject();
+            return this.source.CreateObject(type);
         }
 
         /// <summary>

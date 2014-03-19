@@ -56,6 +56,8 @@
     <Compile Include="DataProvider\Xml\XmlExtent.cs" />
     <Compile Include="DataProvider\Xml\XmlObject.cs" />
     <Compile Include="DataProvider\Xml\XmlSettings.cs" />
+    <Compile Include="DataProvider\Xml\XmlTypeInformation.cs" />
+    <Compile Include="DataProvider\Xml\XmlTypeMapping.cs" />
     <Compile Include="DatenMeisterPool.cs" />
     <Compile Include="Entities\AsObject\FieldInfo.Objects.cs" />
     <Compile Include="Entities\AsObject\UML.Objects.cs" />

@@ -27,6 +27,16 @@ namespace DatenMeister.DataProvider.Xml
             get;
             set;
         }
+        
+        /// <summary>
+        /// Stores the type mapping between 
+        /// </summary>
+        public XmlTypeMapping Mapping
+        {
+            get;
+            set;
+        }
+        
        
         /// <summary>
         /// Initializes a new instance of the XmlExtent
@@ -38,6 +48,7 @@ namespace DatenMeister.DataProvider.Xml
 
             this.XmlDocument = document;
             this.Uri = uri;
+            this.Mapping = new XmlTypeMapping();
         }
 
         /// <summary>
@@ -63,7 +74,7 @@ namespace DatenMeister.DataProvider.Xml
         /// Creates a new object, won't work completely, due to the required name of the xml node
         /// </summary>
         /// <returns>Exception will be returned</returns>
-        public IObject CreateObject()
+        public IObject CreateObject(IObject type)
         {
             // Adds a simple object 
             var newObject = new XElement("element");

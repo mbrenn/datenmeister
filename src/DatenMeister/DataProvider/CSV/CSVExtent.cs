@@ -46,7 +46,7 @@ namespace DatenMeister.DataProvider.CSV
             return this.Objects;
         }
 
-        public IObject CreateObject()
+        public IObject CreateObject(IObject type)
         {
             lock (this.objects)
             {
