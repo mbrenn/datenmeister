@@ -76,10 +76,21 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Exception will be returned</returns>
         public IObject CreateObject(IObject type)
         {
+            var parentElement = this.XmlDocument.Root;
+
+            // Checks, if we have a better element, where new node can be added
+            var info = this.Mapping.FindByType(type);
+            if (info != null)
+            {
+                parentElement = info.RootNode;
+            }
+
             // Adds a simple object 
             var newObject = new XElement("element");
             newObject.Add(new XAttribute("id", Guid.NewGuid().ToString()));
-            this.XmlDocument.Root.Add(newObject);
+            parentElement.Add(newObject);
+
+            
 
             return new XmlObject(this, newObject);
         }

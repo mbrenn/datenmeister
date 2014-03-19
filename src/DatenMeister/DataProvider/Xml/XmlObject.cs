@@ -274,10 +274,17 @@ namespace DatenMeister.DataProvider.Xml
         /// <summary>
         /// Returns the meta class, if known
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Found Metaclass or null, if not found</returns>
         public IObject getMetaClass()
         {
-            return null;
+            var nodeName = this.Node.Name.ToString();
+            var info = this.Extent.Mapping.FindByNodeName(nodeName);
+            if (info == null)
+            {
+                return null;
+            }
+
+            return info.Type;
         }
 
         /// <summary>
