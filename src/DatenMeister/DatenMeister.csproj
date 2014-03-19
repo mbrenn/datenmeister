@@ -129,7 +129,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entities\FieldInfos\IObject\" />
     <Folder Include="Entities\MOF\" />
   </ItemGroup>
   <ItemGroup>
