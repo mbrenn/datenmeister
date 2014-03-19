@@ -28,7 +28,7 @@ TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 
 print('Creating the C#-File')
 
-csFilename = "FieldInfoObjects.cs"
+csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Objects.cs"
 CSharpFactory.createFiles(csFilename, types, "BurnSystems.Test");
 
 csFilename = "UML.Objects.cs"
