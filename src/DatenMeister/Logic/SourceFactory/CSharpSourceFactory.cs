@@ -71,15 +71,7 @@ namespace DatenMeister.Logic.SourceFactory
             // Property for the reference to IObject
             writer.WriteLine(EightSpaces + "private DatenMeister.IObject obj;");
 
-            // Most simple Constructor for the object
-            writer.WriteLine(
-                string.Format(
-                    EightSpaces + "public {0}(DatenMeister.IObject obj)",
-                    typeName));
-            writer.WriteLine(EightSpaces + "{");
-            writer.WriteLine(TwelveSpaces + "this.obj = obj;");
-            writer.WriteLine(EightSpaces + "}");
-            writer.WriteLine();
+            this.EmitConstructor(writer, typeName);
 
             // Implements the IObject interface
             writer.WriteLine(Resources_DatenMeister.IObjectImplementation);
@@ -95,6 +87,49 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine();
         }
 
+        private void EmitConstructor(StreamWriter writer, string typeName)
+        {
+
+            // Most simple Constructor for the object
+            writer.WriteLine(
+                string.Format(
+                    EightSpaces + "public {0}(DatenMeister.IObject obj)",
+                    typeName));
+            writer.WriteLine(EightSpaces + "{");
+            writer.WriteLine(TwelveSpaces + "this.obj = obj;");
+            writer.WriteLine(EightSpaces + "}");
+            writer.WriteLine();
+
+            // Emits all other constructors
+            var constructorArguments = this.provider.GetArgumentsForConstructor(typeName);
+            if (constructorArguments != null && constructorArguments.Count != 0)
+            {
+                writer.Write(
+                    string.Format(
+                        EightSpaces + "public {0}(DatenMeister.IObject obj",
+                        typeName));
+
+                foreach (var argument in constructorArguments)
+                {
+                    writer.Write(string.Format(", object {0}", argument));
+                }
+
+                writer.WriteLine(")");
+                writer.WriteLine(TwelveSpaces + ": this(obj)");
+                writer.WriteLine(EightSpaces + "{");
+                foreach (var argument in constructorArguments)
+                {
+                    writer.WriteLine(
+                        string.Format(
+                            TwelveSpaces + "this.set(\"{0}\", {0});",
+                            argument));
+                }
+
+                writer.WriteLine(EightSpaces + "}");
+                writer.WriteLine();
+            }
+        }
+
         /// <summary>
         /// Emits the property for the given type
         /// </summary>
@@ -105,7 +140,7 @@ namespace DatenMeister.Logic.SourceFactory
         {
             var propertyType = this.provider.GetTypeOfProperty(typeName, propertyName);
 
-            // Writes Get-Method
+            // Emits Get-Method
             writer.WriteLine(
                 string.Format(
                     EightSpaces + "public object {0}()",
@@ -113,12 +148,12 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(
                 string.Format(
-                    TwelveSpaces + "return this.Get(\"{0}\");",
+                    TwelveSpaces + "return this.get(\"{0}\");",
                     propertyName));
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 
-            // Writes Set-Method
+            // Emits Set-Method
             writer.WriteLine(
                 string.Format(
                     EightSpaces + "public void {0}(object value)",
@@ -126,12 +161,12 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(
                 string.Format(
-                    TwelveSpaces + "this.Set(\"{0}\", value);",
+                    TwelveSpaces + "this.set(\"{0}\", value);",
                     propertyName));
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 
-            // Writes push method
+            // Emits push method
             if (this.HasPushMethod(propertyType))
             {
                 writer.WriteLine(
@@ -141,12 +176,12 @@ namespace DatenMeister.Logic.SourceFactory
                 writer.WriteLine(EightSpaces + "{");
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var list = this.Get(\"{0}\") as System.Collections.IList ?? new System.Collections.Generic.List<object>();",
+                        TwelveSpaces + "var list = this.get(\"{0}\") as System.Collections.IList ?? new System.Collections.Generic.List<object>();",
                         propertyName));
                 writer.WriteLine(TwelveSpaces + "list.Add(value);");
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "this.Set(\"{0}\", list);",
+                        TwelveSpaces + "this.set(\"{0}\", list);",
                         propertyName));
 
                 writer.WriteLine(EightSpaces + "}");

@@ -90,8 +90,6 @@ namespace DatenMeister.DataProvider.Xml
             newObject.Add(new XAttribute("id", Guid.NewGuid().ToString()));
             parentElement.Add(newObject);
 
-            
-
             return new XmlObject(this, newObject);
         }
 

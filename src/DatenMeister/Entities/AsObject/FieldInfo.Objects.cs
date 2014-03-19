@@ -8,6 +8,13 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
             this.obj = obj;
         }
 
+        public Comment(DatenMeister.IObject obj, object title, object comment)
+            : this(obj)
+        {
+            this.set("title", title);
+            this.set("comment", comment);
+        }
+
         #region IObject Implementation
 
         /// <summary>
@@ -240,6 +247,13 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
             this.obj = obj;
         }
 
+        public TextField(DatenMeister.IObject obj, object title, object name)
+            : this(obj)
+        {
+            this.set("title", title);
+            this.set("name", name);
+        }
+
         #region IObject Implementation
 
         /// <summary>
@@ -369,6 +383,13 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         public ActionButton(DatenMeister.IObject obj)
         {
             this.obj = obj;
+        }
+
+        public ActionButton(DatenMeister.IObject obj, object text, object clickUrl)
+            : this(obj)
+        {
+            this.set("text", text);
+            this.set("clickUrl", clickUrl);
         }
 
         #region IObject Implementation
