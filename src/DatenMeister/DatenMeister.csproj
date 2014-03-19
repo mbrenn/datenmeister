@@ -58,6 +58,7 @@
     <Compile Include="DataProvider\Xml\XmlSettings.cs" />
     <Compile Include="DatenMeisterPool.cs" />
     <Compile Include="Entities\AsObject\FieldInfo.Objects.cs" />
+    <Compile Include="Entities\AsObject\UML.Objects.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
     <Compile Include="Entities\FieldInfos\Comment.cs" />
     <Compile Include="Entities\FieldInfos\FormView.cs" />

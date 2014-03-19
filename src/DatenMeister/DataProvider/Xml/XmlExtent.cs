@@ -60,7 +60,7 @@ namespace DatenMeister.DataProvider.Xml
         }
 
         /// <summary>
-        /// Creates a new object, won't work, due to the required name of the xml node
+        /// Creates a new object, won't work completely, due to the required name of the xml node
         /// </summary>
         /// <returns>Exception will be returned</returns>
         public IObject CreateObject()

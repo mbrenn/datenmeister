@@ -221,6 +221,16 @@ namespace DatenMeister.DataProvider.Xml
                     return;
                 }
             }
+            else
+            {
+                // Ok, we have no attribute and no element with the name.
+                // If this is a simple type, we just assume that this is a property, otherwise no suppurt
+                if (Helper.IsNativeObject(value))
+                {
+                    this.Node.Add(new XAttribute(propertyName, value));
+                    return;
+                }
+            }
 
             throw new NotImplementedException();
         }

@@ -1,4 +1,4 @@
-namespace BurnSystems.Test
+namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 {
     public class Comment : DatenMeister.IObject
     {
