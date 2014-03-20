@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -91,7 +92,6 @@ namespace DatenMeister.Logic.SourceFactory
 
         private void EmitConstructor(StreamWriter writer, string typeName)
         {
-
             // Most simple Constructor for the object
             writer.WriteLine(
                 string.Format(
@@ -141,25 +141,32 @@ namespace DatenMeister.Logic.SourceFactory
         private void EmitProperty(StreamWriter writer, string typeName, string propertyName)
         {
             var propertyType = this.provider.GetTypeOfProperty(typeName, propertyName);
+            var propertyTypeName = this.GetPropertyTypeName(propertyType);
 
             // Emits Get-Method
             writer.WriteLine(
                 string.Format(
-                    EightSpaces + "public object {0}()",
-                    this.GetGetMethodName(propertyName, propertyType)));
+                    EightSpaces + "public {1} {0}()",
+                    this.GetGetMethodName(propertyName, propertyType),
+                    propertyTypeName));
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(
                 string.Format(
-                    TwelveSpaces + "return this.get(\"{0}\");",
+                    TwelveSpaces + "var result = this.get(\"{0}\");",
                     propertyName));
+            writer.WriteLine(
+                string.Format(
+                    TwelveSpaces + "return (result is {0}) ? (({0}) result) : default({0});",
+                    propertyTypeName));
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 
             // Emits Set-Method
             writer.WriteLine(
                 string.Format(
-                    EightSpaces + "public void {0}(object value)",
-                    this.GetSetMethodName(propertyName, propertyType)));
+                    EightSpaces + "public void {0}({1} value)",
+                    this.GetSetMethodName(propertyName, propertyType), 
+                    propertyTypeName));
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(
                 string.Format(
@@ -173,8 +180,9 @@ namespace DatenMeister.Logic.SourceFactory
             {
                 writer.WriteLine(
                     string.Format(
-                        EightSpaces + "public void {0}(object value)",
-                        this.GetPushMethodName(propertyName, propertyType)));
+                        EightSpaces + "public void {0}({1} value)",
+                        this.GetPushMethodName(propertyName, propertyType),
+                        propertyTypeName));
                 writer.WriteLine(EightSpaces + "{");
                 writer.WriteLine(
                     string.Format(
@@ -189,6 +197,34 @@ namespace DatenMeister.Logic.SourceFactory
                 writer.WriteLine(EightSpaces + "}");
                 writer.WriteLine();
             }
+        }
+
+        /// <summary>
+        /// Gets the type name as being used in C#-File for a given type
+        /// Generally spoken, it just returns the type itself, except the type
+        /// is a list, a collection or any other enumeration, implementing IEnumerable. 
+        /// In this case, the IEnumerable interface will be returned
+        /// </summary>
+        /// <param name="type">Type to be used</param>
+        /// <returns>Typename as being used in C# file</returns>
+        public string GetPropertyTypeName(Type type)
+        {
+            if (type != typeof(string))
+            {
+                // Ok, we might have an enumeration, which is a list, a collection or any other type
+                // All enumerations will be handled as IEnumerable
+                foreach (var ifs in type.GetInterfaces())
+                {
+                    if (ifs.IsGenericType && (ifs.GetGenericTypeDefinition() == typeof(IEnumerable<>)))
+                    {
+                        return string.Format(
+                            "System.Collections.Generic.IEnumerable<{0}>",
+                            this.GetPropertyTypeName(ifs.GetGenericArguments().First()));
+                    }
+                }
+            }
+
+            return type.ToString();
         }
     }
 

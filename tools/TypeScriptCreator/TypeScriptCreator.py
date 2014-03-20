@@ -29,7 +29,7 @@ TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 print('Creating the C#-File')
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Objects.cs"
-CSharpFactory.createFiles(csFilename, types, "DatenMeister.Entities.AsObject.Uml.FieldInfo");
+CSharpFactory.createFiles(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo");
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Objects.cs"
 CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml");

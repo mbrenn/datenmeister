@@ -1,4 +1,4 @@
-namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
+namespace DatenMeister.Entities.AsObject.FieldInfo
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -24,123 +24,10 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName)
+        public IObject Value
         {
-            return this.obj.get(propertyName);
+            get { return this.obj; }
         }
-
-        /// <summary>
-        /// Gets all properties as key value pairs
-        /// </summary>
-        /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
-        {
-            return this.obj.getAll();
-        }
-
-        /// <summary>
-        /// Checks, if a certain property is set
-        /// </summary>
-        /// <param name="propertyName">Name of the property</param>
-        /// <returns>true, if set</returns>
-        public bool isSet(string propertyName)
-        {
-            return this.obj.isSet(propertyName);
-        }
-
-        /// <summary>
-        /// Sets the value of the property 
-        /// </summary>
-        /// <param name="propertyName">Name of the property</param>
-        /// <param name="value">Value to be set</param>
-        public void set(string propertyName, object value)
-        {
-            this.obj.set(propertyName, value);
-        }
-
-        /// <summary>
-        /// Unsets the property
-        /// </summary>
-        /// <param name="propertyName">Name of the property to be removed</param>
-        public void unset(string propertyName)
-        {
-            this.obj.unset(propertyName);
-        }
-
-        /// <summary>
-        /// Deletes this object and all composed elements
-        /// </summary>
-        public void delete()
-        {
-            this.obj.delete();
-        }
-
-        /// <summary>
-        /// Gets the id of the object
-        /// </summary>
-        public string Id
-        {
-            get
-            {
-                return this.obj.Id;
-            }
-        }
-
-        #endregion
-
-        public object getComment()
-        {
-            return this.get("comment");
-        }
-
-        public void setComment(object value)
-        {
-            this.set("comment", value);
-        }
-
-        public object getTitle()
-        {
-            return this.get("title");
-        }
-
-        public void setTitle(object value)
-        {
-            this.set("title", value);
-        }
-
-        public object getName()
-        {
-            return this.get("name");
-        }
-
-        public void setName(object value)
-        {
-            this.set("name", value);
-        }
-
-        public object isReadOnly()
-        {
-            return this.get("isReadOnly");
-        }
-
-        public void setReadOnly(object value)
-        {
-            this.set("isReadOnly", value);
-        }
-
-    }
-
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class General : DatenMeister.IObject
-    {
-        private DatenMeister.IObject obj;
-        public General(DatenMeister.IObject obj)
-        {
-            this.obj = obj;
-        }
-
-        #region IObject Implementation
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -211,32 +98,172 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         #endregion
 
-        public object getTitle()
+        public System.String getComment()
         {
-            return this.get("title");
+            var result = this.get("comment");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public void setTitle(object value)
+        public void setComment(System.String value)
+        {
+            this.set("comment", value);
+        }
+
+        public System.String getTitle()
+        {
+            var result = this.get("title");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setTitle(System.String value)
         {
             this.set("title", value);
         }
 
-        public object getName()
+        public System.String getName()
         {
-            return this.get("name");
+            var result = this.get("name");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public void setName(object value)
+        public void setName(System.String value)
         {
             this.set("name", value);
         }
 
-        public object isReadOnly()
+        public System.Boolean isReadOnly()
         {
-            return this.get("isReadOnly");
+            var result = this.get("isReadOnly");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
-        public void setReadOnly(object value)
+        public void setReadOnly(System.Boolean value)
+        {
+            this.set("isReadOnly", value);
+        }
+
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class General : DatenMeister.IObject
+    {
+        private DatenMeister.IObject obj;
+        public General(DatenMeister.IObject obj)
+        {
+            this.obj = obj;
+        }
+
+        #region IObject Implementation
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public object get(string propertyName)
+        {
+            return this.obj.get(propertyName);
+        }
+
+        /// <summary>
+        /// Gets all properties as key value pairs
+        /// </summary>
+        /// <returns></returns>
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
+        {
+            return this.obj.getAll();
+        }
+
+        /// <summary>
+        /// Checks, if a certain property is set
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if set</returns>
+        public bool isSet(string propertyName)
+        {
+            return this.obj.isSet(propertyName);
+        }
+
+        /// <summary>
+        /// Sets the value of the property 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="value">Value to be set</param>
+        public void set(string propertyName, object value)
+        {
+            this.obj.set(propertyName, value);
+        }
+
+        /// <summary>
+        /// Unsets the property
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be removed</param>
+        public void unset(string propertyName)
+        {
+            this.obj.unset(propertyName);
+        }
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        public void delete()
+        {
+            this.obj.delete();
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                return this.obj.Id;
+            }
+        }
+
+        #endregion
+
+        public System.String getTitle()
+        {
+            var result = this.get("title");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setTitle(System.String value)
+        {
+            this.set("title", value);
+        }
+
+        public System.String getName()
+        {
+            var result = this.get("name");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setName(System.String value)
+        {
+            this.set("name", value);
+        }
+
+        public System.Boolean isReadOnly()
+        {
+            var result = this.get("isReadOnly");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+        }
+
+        public void setReadOnly(System.Boolean value)
         {
             this.set("isReadOnly", value);
         }
@@ -267,6 +294,16 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
+        public IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
         public object get(string propertyName)
         {
             return this.obj.get(propertyName);
@@ -331,52 +368,57 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         #endregion
 
-        public object getWidth()
+        public System.Int32 getWidth()
         {
-            return this.get("width");
+            var result = this.get("width");
+            return (result is System.Int32) ? ((System.Int32) result) : default(System.Int32);
         }
 
-        public void setWidth(object value)
+        public void setWidth(System.Int32 value)
         {
             this.set("width", value);
         }
 
-        public object getHeight()
+        public System.Int32 getHeight()
         {
-            return this.get("height");
+            var result = this.get("height");
+            return (result is System.Int32) ? ((System.Int32) result) : default(System.Int32);
         }
 
-        public void setHeight(object value)
+        public void setHeight(System.Int32 value)
         {
             this.set("height", value);
         }
 
-        public object getTitle()
+        public System.String getTitle()
         {
-            return this.get("title");
+            var result = this.get("title");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public void setTitle(object value)
+        public void setTitle(System.String value)
         {
             this.set("title", value);
         }
 
-        public object getName()
+        public System.String getName()
         {
-            return this.get("name");
+            var result = this.get("name");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public void setName(object value)
+        public void setName(System.String value)
         {
             this.set("name", value);
         }
 
-        public object isReadOnly()
+        public System.Boolean isReadOnly()
         {
-            return this.get("isReadOnly");
+            var result = this.get("isReadOnly");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
-        public void setReadOnly(object value)
+        public void setReadOnly(System.Boolean value)
         {
             this.set("isReadOnly", value);
         }
@@ -407,6 +449,16 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
+        public IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
         public object get(string propertyName)
         {
             return this.obj.get(propertyName);
@@ -471,22 +523,24 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         #endregion
 
-        public object getText()
+        public System.String getText()
         {
-            return this.get("text");
+            var result = this.get("text");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public void setText(object value)
+        public void setText(System.String value)
         {
             this.set("text", value);
         }
 
-        public object getClickUrl()
+        public System.String getClickUrl()
         {
-            return this.get("clickUrl");
+            var result = this.get("clickUrl");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public void setClickUrl(object value)
+        public void setClickUrl(System.String value)
         {
             this.set("clickUrl", value);
         }
@@ -510,6 +564,16 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
+        public IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
         public object get(string propertyName)
         {
             return this.obj.get(propertyName);
@@ -574,59 +638,64 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         #endregion
 
-        public object getFieldInfos()
+        public System.Collections.Generic.IEnumerable<DatenMeister.IObject> getFieldInfos()
         {
-            return this.get("fieldInfos");
+            var result = this.get("fieldInfos");
+            return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
         }
 
-        public void setFieldInfos(object value)
+        public void setFieldInfos(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
         {
             this.set("fieldInfos", value);
         }
 
-        public void pushFieldInfo(object value)
+        public void pushFieldInfo(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
         {
             var list = this.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
             list.Add(value);
             this.set("fieldInfos", list);
         }
 
-        public object getStartInEditMode()
+        public System.Boolean getStartInEditMode()
         {
-            return this.get("startInEditMode");
+            var result = this.get("startInEditMode");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
-        public void setStartInEditMode(object value)
+        public void setStartInEditMode(System.Boolean value)
         {
             this.set("startInEditMode", value);
         }
 
-        public object getTitle()
+        public System.String getTitle()
         {
-            return this.get("title");
+            var result = this.get("title");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public void setTitle(object value)
+        public void setTitle(System.String value)
         {
             this.set("title", value);
         }
 
-        public object getName()
+        public System.String getName()
         {
-            return this.get("name");
+            var result = this.get("name");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public void setName(object value)
+        public void setName(System.String value)
         {
             this.set("name", value);
         }
 
-        public object isReadOnly()
+        public System.Boolean isReadOnly()
         {
-            return this.get("isReadOnly");
+            var result = this.get("isReadOnly");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
-        public void setReadOnly(object value)
+        public void setReadOnly(System.Boolean value)
         {
             this.set("isReadOnly", value);
         }
@@ -650,190 +719,10 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName)
+        public IObject Value
         {
-            return this.obj.get(propertyName);
+            get { return this.obj; }
         }
-
-        /// <summary>
-        /// Gets all properties as key value pairs
-        /// </summary>
-        /// <returns></returns>
-        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
-        {
-            return this.obj.getAll();
-        }
-
-        /// <summary>
-        /// Checks, if a certain property is set
-        /// </summary>
-        /// <param name="propertyName">Name of the property</param>
-        /// <returns>true, if set</returns>
-        public bool isSet(string propertyName)
-        {
-            return this.obj.isSet(propertyName);
-        }
-
-        /// <summary>
-        /// Sets the value of the property 
-        /// </summary>
-        /// <param name="propertyName">Name of the property</param>
-        /// <param name="value">Value to be set</param>
-        public void set(string propertyName, object value)
-        {
-            this.obj.set(propertyName, value);
-        }
-
-        /// <summary>
-        /// Unsets the property
-        /// </summary>
-        /// <param name="propertyName">Name of the property to be removed</param>
-        public void unset(string propertyName)
-        {
-            this.obj.unset(propertyName);
-        }
-
-        /// <summary>
-        /// Deletes this object and all composed elements
-        /// </summary>
-        public void delete()
-        {
-            this.obj.delete();
-        }
-
-        /// <summary>
-        /// Gets the id of the object
-        /// </summary>
-        public string Id
-        {
-            get
-            {
-                return this.obj.Id;
-            }
-        }
-
-        #endregion
-
-        public object getAllowEdit()
-        {
-            return this.get("allowEdit");
-        }
-
-        public void setAllowEdit(object value)
-        {
-            this.set("allowEdit", value);
-        }
-
-        public object getAllowDelete()
-        {
-            return this.get("allowDelete");
-        }
-
-        public void setAllowDelete(object value)
-        {
-            this.set("allowDelete", value);
-        }
-
-        public object getAllowNew()
-        {
-            return this.get("allowNew");
-        }
-
-        public void setAllowNew(object value)
-        {
-            this.set("allowNew", value);
-        }
-
-        public object getShowColumnHeaders()
-        {
-            return this.get("showColumnHeaders");
-        }
-
-        public void setShowColumnHeaders(object value)
-        {
-            this.set("showColumnHeaders", value);
-        }
-
-        public object getAllowNewProperty()
-        {
-            return this.get("allowNewProperty");
-        }
-
-        public void setAllowNewProperty(object value)
-        {
-            this.set("allowNewProperty", value);
-        }
-
-        public object getFieldInfos()
-        {
-            return this.get("fieldInfos");
-        }
-
-        public void setFieldInfos(object value)
-        {
-            this.set("fieldInfos", value);
-        }
-
-        public void pushFieldInfo(object value)
-        {
-            var list = this.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
-            list.Add(value);
-            this.set("fieldInfos", list);
-        }
-
-        public object getStartInEditMode()
-        {
-            return this.get("startInEditMode");
-        }
-
-        public void setStartInEditMode(object value)
-        {
-            this.set("startInEditMode", value);
-        }
-
-        public object getTitle()
-        {
-            return this.get("title");
-        }
-
-        public void setTitle(object value)
-        {
-            this.set("title", value);
-        }
-
-        public object getName()
-        {
-            return this.get("name");
-        }
-
-        public void setName(object value)
-        {
-            this.set("name", value);
-        }
-
-        public object isReadOnly()
-        {
-            return this.get("isReadOnly");
-        }
-
-        public void setReadOnly(object value)
-        {
-            this.set("isReadOnly", value);
-        }
-
-    }
-
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class TableView : DatenMeister.IObject
-    {
-        private DatenMeister.IObject obj;
-        public TableView(DatenMeister.IObject obj)
-        {
-            this.obj = obj;
-        }
-
-        #region IObject Implementation
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -904,89 +793,307 @@ namespace DatenMeister.Entities.AsObject.Uml.FieldInfo
 
         #endregion
 
-        public object getAllowEdit()
+        public System.Boolean getAllowEdit()
         {
-            return this.get("allowEdit");
+            var result = this.get("allowEdit");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
-        public void setAllowEdit(object value)
+        public void setAllowEdit(System.Boolean value)
         {
             this.set("allowEdit", value);
         }
 
-        public object getAllowDelete()
+        public System.Boolean getAllowDelete()
         {
-            return this.get("allowDelete");
+            var result = this.get("allowDelete");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
-        public void setAllowDelete(object value)
+        public void setAllowDelete(System.Boolean value)
         {
             this.set("allowDelete", value);
         }
 
-        public object getAllowNew()
+        public System.Boolean getAllowNew()
         {
-            return this.get("allowNew");
+            var result = this.get("allowNew");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
-        public void setAllowNew(object value)
+        public void setAllowNew(System.Boolean value)
         {
             this.set("allowNew", value);
         }
 
-        public object getFieldInfos()
+        public System.Boolean getShowColumnHeaders()
         {
-            return this.get("fieldInfos");
+            var result = this.get("showColumnHeaders");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
-        public void setFieldInfos(object value)
+        public void setShowColumnHeaders(System.Boolean value)
+        {
+            this.set("showColumnHeaders", value);
+        }
+
+        public System.Boolean getAllowNewProperty()
+        {
+            var result = this.get("allowNewProperty");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+        }
+
+        public void setAllowNewProperty(System.Boolean value)
+        {
+            this.set("allowNewProperty", value);
+        }
+
+        public System.Collections.Generic.IEnumerable<DatenMeister.IObject> getFieldInfos()
+        {
+            var result = this.get("fieldInfos");
+            return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
+        }
+
+        public void setFieldInfos(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
         {
             this.set("fieldInfos", value);
         }
 
-        public void pushFieldInfo(object value)
+        public void pushFieldInfo(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
         {
             var list = this.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
             list.Add(value);
             this.set("fieldInfos", list);
         }
 
-        public object getStartInEditMode()
+        public System.Boolean getStartInEditMode()
         {
-            return this.get("startInEditMode");
+            var result = this.get("startInEditMode");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
-        public void setStartInEditMode(object value)
+        public void setStartInEditMode(System.Boolean value)
         {
             this.set("startInEditMode", value);
         }
 
-        public object getTitle()
+        public System.String getTitle()
         {
-            return this.get("title");
+            var result = this.get("title");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public void setTitle(object value)
+        public void setTitle(System.String value)
         {
             this.set("title", value);
         }
 
-        public object getName()
+        public System.String getName()
         {
-            return this.get("name");
+            var result = this.get("name");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public void setName(object value)
+        public void setName(System.String value)
         {
             this.set("name", value);
         }
 
-        public object isReadOnly()
+        public System.Boolean isReadOnly()
         {
-            return this.get("isReadOnly");
+            var result = this.get("isReadOnly");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
-        public void setReadOnly(object value)
+        public void setReadOnly(System.Boolean value)
+        {
+            this.set("isReadOnly", value);
+        }
+
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class TableView : DatenMeister.IObject
+    {
+        private DatenMeister.IObject obj;
+        public TableView(DatenMeister.IObject obj)
+        {
+            this.obj = obj;
+        }
+
+        #region IObject Implementation
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public object get(string propertyName)
+        {
+            return this.obj.get(propertyName);
+        }
+
+        /// <summary>
+        /// Gets all properties as key value pairs
+        /// </summary>
+        /// <returns></returns>
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
+        {
+            return this.obj.getAll();
+        }
+
+        /// <summary>
+        /// Checks, if a certain property is set
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if set</returns>
+        public bool isSet(string propertyName)
+        {
+            return this.obj.isSet(propertyName);
+        }
+
+        /// <summary>
+        /// Sets the value of the property 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="value">Value to be set</param>
+        public void set(string propertyName, object value)
+        {
+            this.obj.set(propertyName, value);
+        }
+
+        /// <summary>
+        /// Unsets the property
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be removed</param>
+        public void unset(string propertyName)
+        {
+            this.obj.unset(propertyName);
+        }
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        public void delete()
+        {
+            this.obj.delete();
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                return this.obj.Id;
+            }
+        }
+
+        #endregion
+
+        public System.Boolean getAllowEdit()
+        {
+            var result = this.get("allowEdit");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+        }
+
+        public void setAllowEdit(System.Boolean value)
+        {
+            this.set("allowEdit", value);
+        }
+
+        public System.Boolean getAllowDelete()
+        {
+            var result = this.get("allowDelete");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+        }
+
+        public void setAllowDelete(System.Boolean value)
+        {
+            this.set("allowDelete", value);
+        }
+
+        public System.Boolean getAllowNew()
+        {
+            var result = this.get("allowNew");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+        }
+
+        public void setAllowNew(System.Boolean value)
+        {
+            this.set("allowNew", value);
+        }
+
+        public System.Collections.Generic.IEnumerable<DatenMeister.IObject> getFieldInfos()
+        {
+            var result = this.get("fieldInfos");
+            return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
+        }
+
+        public void setFieldInfos(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        {
+            this.set("fieldInfos", value);
+        }
+
+        public void pushFieldInfo(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        {
+            var list = this.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
+            list.Add(value);
+            this.set("fieldInfos", list);
+        }
+
+        public System.Boolean getStartInEditMode()
+        {
+            var result = this.get("startInEditMode");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+        }
+
+        public void setStartInEditMode(System.Boolean value)
+        {
+            this.set("startInEditMode", value);
+        }
+
+        public System.String getTitle()
+        {
+            var result = this.get("title");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setTitle(System.String value)
+        {
+            this.set("title", value);
+        }
+
+        public System.String getName()
+        {
+            var result = this.get("name");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setName(System.String value)
+        {
+            this.set("name", value);
+        }
+
+        public System.Boolean isReadOnly()
+        {
+            var result = this.get("isReadOnly");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+        }
+
+        public void setReadOnly(System.Boolean value)
         {
             this.set("isReadOnly", value);
         }

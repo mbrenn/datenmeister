@@ -8,7 +8,7 @@ namespace DatenMeister.Entities.FieldInfos
 {
     public class View : General
     {
-        public List<object> fieldInfos
+        public List<IObject> fieldInfos
         {
             get;
             set;
