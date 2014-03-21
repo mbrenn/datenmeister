@@ -92,10 +92,19 @@ namespace DatenMeister.DataProvider.DotNet
                 throw new ArgumentException("Setter for " + propertyName + " not found");
             }
 
-            // Converts to target type
+            // Converts to target type, if necessary
             var targetType = property.PropertyType;
-            var convertedValue = Convert.ChangeType(value, targetType);
-            method.Invoke(this.value, new object[] { convertedValue });
+            if (targetType.IsAssignableFrom(value.GetType()))
+            {
+                // We can directly assign
+                method.Invoke(this.value, new object[] { value });
+            }
+            else
+            {
+                // It is necessary to convert
+                var convertedValue = Convert.ChangeType(value, targetType);
+                method.Invoke(this.value, new object[] { convertedValue });
+            }
         }
 
         public IEnumerable<ObjectPropertyPair> getAll()

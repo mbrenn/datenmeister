@@ -638,18 +638,18 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #endregion
 
-        public System.Collections.Generic.IEnumerable<DatenMeister.IObject> getFieldInfos()
+        public System.Collections.Generic.IEnumerable<System.Object> getFieldInfos()
         {
             var result = this.get("fieldInfos");
-            return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
+            return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
-        public void setFieldInfos(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        public void setFieldInfos(System.Collections.Generic.IEnumerable<System.Object> value)
         {
             this.set("fieldInfos", value);
         }
 
-        public void pushFieldInfo(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        public void pushFieldInfo(System.Collections.Generic.IEnumerable<System.Object> value)
         {
             var list = this.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
             list.Add(value);
@@ -815,18 +815,18 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("allowNewProperty", value);
         }
 
-        public System.Collections.Generic.IEnumerable<DatenMeister.IObject> getFieldInfos()
+        public System.Collections.Generic.IEnumerable<System.Object> getFieldInfos()
         {
             var result = this.get("fieldInfos");
-            return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
+            return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
-        public void setFieldInfos(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        public void setFieldInfos(System.Collections.Generic.IEnumerable<System.Object> value)
         {
             this.set("fieldInfos", value);
         }
 
-        public void pushFieldInfo(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        public void pushFieldInfo(System.Collections.Generic.IEnumerable<System.Object> value)
         {
             var list = this.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
             list.Add(value);
@@ -970,18 +970,18 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("allowNew", value);
         }
 
-        public System.Collections.Generic.IEnumerable<DatenMeister.IObject> getFieldInfos()
+        public System.Collections.Generic.IEnumerable<System.Object> getFieldInfos()
         {
             var result = this.get("fieldInfos");
-            return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
+            return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
-        public void setFieldInfos(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        public void setFieldInfos(System.Collections.Generic.IEnumerable<System.Object> value)
         {
             this.set("fieldInfos", value);
         }
 
-        public void pushFieldInfo(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        public void pushFieldInfo(System.Collections.Generic.IEnumerable<System.Object> value)
         {
             var list = this.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
             list.Add(value);

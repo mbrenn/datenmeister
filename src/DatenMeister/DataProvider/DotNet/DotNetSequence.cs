@@ -13,6 +13,22 @@ namespace DatenMeister.DataProvider.DotNet
     {
         private List<object> content = new List<object>();
 
+        /// <summary>
+        /// Initializes a new instance of the DotNetSequence clas
+        /// </summary>
+        public DotNetSequence()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DotNetSequence class and adds the array
+        /// </summary>
+        /// <param name="content">Objects to be added</param>
+        public DotNetSequence(params object[] content)
+        {
+            this.content.AddRange(content);
+        }
+
         public int IndexOf(object item)
         {
             return this.content.IndexOf(item);
