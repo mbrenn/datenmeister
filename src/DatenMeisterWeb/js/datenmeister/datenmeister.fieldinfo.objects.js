@@ -251,36 +251,6 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('startInEditMode', value);
         }
         View.setStartInEditMode = setStartInEditMode;
-
-        function getTitle(item) {
-            return item.get('title');
-        }
-        View.getTitle = getTitle;
-
-        function setTitle(item, value) {
-            item.set('title', value);
-        }
-        View.setTitle = setTitle;
-
-        function getName(item) {
-            return item.get('name');
-        }
-        View.getName = getName;
-
-        function setName(item, value) {
-            item.set('name', value);
-        }
-        View.setName = setName;
-
-        function isReadOnly(item) {
-            return item.get('isReadOnly');
-        }
-        View.isReadOnly = isReadOnly;
-
-        function setReadOnly(item, value) {
-            item.set('isReadOnly', value);
-        }
-        View.setReadOnly = setReadOnly;
     })(exports.View || (exports.View = {}));
     var View = exports.View;
 
@@ -377,36 +347,6 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('startInEditMode', value);
         }
         FormView.setStartInEditMode = setStartInEditMode;
-
-        function getTitle(item) {
-            return item.get('title');
-        }
-        FormView.getTitle = getTitle;
-
-        function setTitle(item, value) {
-            item.set('title', value);
-        }
-        FormView.setTitle = setTitle;
-
-        function getName(item) {
-            return item.get('name');
-        }
-        FormView.getName = getName;
-
-        function setName(item, value) {
-            item.set('name', value);
-        }
-        FormView.setName = setName;
-
-        function isReadOnly(item) {
-            return item.get('isReadOnly');
-        }
-        FormView.isReadOnly = isReadOnly;
-
-        function setReadOnly(item, value) {
-            item.set('isReadOnly', value);
-        }
-        FormView.setReadOnly = setReadOnly;
     })(exports.FormView || (exports.FormView = {}));
     var FormView = exports.FormView;
 
@@ -483,36 +423,6 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('startInEditMode', value);
         }
         TableView.setStartInEditMode = setStartInEditMode;
-
-        function getTitle(item) {
-            return item.get('title');
-        }
-        TableView.getTitle = getTitle;
-
-        function setTitle(item, value) {
-            item.set('title', value);
-        }
-        TableView.setTitle = setTitle;
-
-        function getName(item) {
-            return item.get('name');
-        }
-        TableView.getName = getName;
-
-        function setName(item, value) {
-            item.set('name', value);
-        }
-        TableView.setName = setName;
-
-        function isReadOnly(item) {
-            return item.get('isReadOnly');
-        }
-        TableView.isReadOnly = isReadOnly;
-
-        function setReadOnly(item, value) {
-            item.set('isReadOnly', value);
-        }
-        TableView.setReadOnly = setReadOnly;
     })(exports.TableView || (exports.TableView = {}));
     var TableView = exports.TableView;
 });

@@ -221,30 +221,6 @@ export module View {
         item.set('startInEditMode', value);
     }
 
-    export function getTitle(item: __d__.JsonExtentObject) {
-        return item.get('title');
-    }
-
-    export function setTitle(item : __d__.JsonExtentObject, value: any) {
-        item.set('title', value);
-    }
-
-    export function getName(item: __d__.JsonExtentObject) {
-        return item.get('name');
-    }
-
-    export function setName(item : __d__.JsonExtentObject, value: any) {
-        item.set('name', value);
-    }
-
-    export function isReadOnly(item: __d__.JsonExtentObject) {
-        return item.get('isReadOnly');
-    }
-
-    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
-        item.set('isReadOnly', value);
-    }
-
 }
 
 export module FormView {
@@ -326,30 +302,6 @@ export module FormView {
         item.set('startInEditMode', value);
     }
 
-    export function getTitle(item: __d__.JsonExtentObject) {
-        return item.get('title');
-    }
-
-    export function setTitle(item : __d__.JsonExtentObject, value: any) {
-        item.set('title', value);
-    }
-
-    export function getName(item: __d__.JsonExtentObject) {
-        return item.get('name');
-    }
-
-    export function setName(item : __d__.JsonExtentObject, value: any) {
-        item.set('name', value);
-    }
-
-    export function isReadOnly(item: __d__.JsonExtentObject) {
-        return item.get('isReadOnly');
-    }
-
-    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
-        item.set('isReadOnly', value);
-    }
-
 }
 
 export module TableView {
@@ -413,30 +365,6 @@ export module TableView {
 
     export function setStartInEditMode(item : __d__.JsonExtentObject, value: any) {
         item.set('startInEditMode', value);
-    }
-
-    export function getTitle(item: __d__.JsonExtentObject) {
-        return item.get('title');
-    }
-
-    export function setTitle(item : __d__.JsonExtentObject, value: any) {
-        item.set('title', value);
-    }
-
-    export function getName(item: __d__.JsonExtentObject) {
-        return item.get('name');
-    }
-
-    export function setName(item : __d__.JsonExtentObject, value: any) {
-        item.set('name', value);
-    }
-
-    export function isReadOnly(item: __d__.JsonExtentObject) {
-        return item.get('isReadOnly');
-    }
-
-    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
-        item.set('isReadOnly', value);
     }
 
 }

@@ -5,7 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+    <StackPanel>
+        <StackPanel x:Name="areaToolbar" Orientation="Horizontal">
+            <Button x:Name="buttonNew">New...</Button>
+            <Button x:Name="buttonEdit">Edit...</Button>
+            <Button x:Name="buttonDelete">Delete</Button>
+        </StackPanel>
+        <StackPanel x:Name="areaContent"></StackPanel>
+    </StackPanel>
 </UserControl>

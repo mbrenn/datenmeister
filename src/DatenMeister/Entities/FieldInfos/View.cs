@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DatenMeister.Entities.FieldInfos
 {
-    public class View : General
+    public class View
     {
         public List<IObject> fieldInfos
         {

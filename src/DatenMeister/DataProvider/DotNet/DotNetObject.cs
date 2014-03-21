@@ -10,6 +10,9 @@ namespace DatenMeister.DataProvider.DotNet
 {
     public class DotNetObject : IObject
     {
+        /// <summary>
+        /// Defines the extent being
+        /// </summary>
         private IURIExtent extent;
 
         /// <summary>
@@ -109,7 +112,11 @@ namespace DatenMeister.DataProvider.DotNet
 
         public bool isSet(string propertyName)
         {
-            var property = GetProperty(propertyName);
+            var property = GetProperty(propertyName, false);
+            if (property == null)
+            {
+                return false;
+            }
 
             var method = property.GetGetMethod();
             if (method == null)
@@ -152,10 +159,10 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Info of property or exception</returns>
-        private System.Reflection.PropertyInfo GetProperty(string propertyName)
+        private System.Reflection.PropertyInfo GetProperty(string propertyName, bool throwException = true)
         {
             var property = this.value.GetType().GetProperty(propertyName);
-            if (property == null)
+            if (property == null && throwException)
             {
                 throw new ArgumentException(propertyName + " not found");
             }

@@ -667,39 +667,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("startInEditMode", value);
         }
 
-        public System.String getTitle()
-        {
-            var result = this.get("title");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setTitle(System.String value)
-        {
-            this.set("title", value);
-        }
-
-        public System.String getName()
-        {
-            var result = this.get("name");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setName(System.String value)
-        {
-            this.set("name", value);
-        }
-
-        public System.Boolean isReadOnly()
-        {
-            var result = this.get("isReadOnly");
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
-        }
-
-        public void setReadOnly(System.Boolean value)
-        {
-            this.set("isReadOnly", value);
-        }
-
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
@@ -877,39 +844,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("startInEditMode", value);
         }
 
-        public System.String getTitle()
-        {
-            var result = this.get("title");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setTitle(System.String value)
-        {
-            this.set("title", value);
-        }
-
-        public System.String getName()
-        {
-            var result = this.get("name");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setName(System.String value)
-        {
-            this.set("name", value);
-        }
-
-        public System.Boolean isReadOnly()
-        {
-            var result = this.get("isReadOnly");
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
-        }
-
-        public void setReadOnly(System.Boolean value)
-        {
-            this.set("isReadOnly", value);
-        }
-
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
@@ -1063,39 +997,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public void setStartInEditMode(System.Boolean value)
         {
             this.set("startInEditMode", value);
-        }
-
-        public System.String getTitle()
-        {
-            var result = this.get("title");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setTitle(System.String value)
-        {
-            this.set("title", value);
-        }
-
-        public System.String getName()
-        {
-            var result = this.get("name");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setName(System.String value)
-        {
-            this.set("name", value);
-        }
-
-        public System.Boolean isReadOnly()
-        {
-            var result = this.get("isReadOnly");
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
-        }
-
-        public void setReadOnly(System.Boolean value)
-        {
-            this.set("isReadOnly", value);
         }
 
     }
