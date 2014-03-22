@@ -13,7 +13,7 @@ namespace DatenMeister.DataProvider.Views
     public class ViewsExtent : DotNetExtent
     {
         public ViewsExtent(string extentUri)
-            : base ( extentUri )
+            : base(extentUri)
         {
         }
 

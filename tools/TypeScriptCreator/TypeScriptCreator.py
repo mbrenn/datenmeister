@@ -30,9 +30,13 @@ print('Creating the C#-File')
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Objects.cs"
 CSharpFactory.createFiles(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo");
+csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Types.cs"
+CSharpFactory.createTypeFile(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo", "Types");
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Objects.cs"
 CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml");
+csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Types.cs"
+CSharpFactory.createTypeFile(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml", "Types");
 
 print('Compiling the TypeScript-File')
 TypeScriptFactory.compile(tsFilename)

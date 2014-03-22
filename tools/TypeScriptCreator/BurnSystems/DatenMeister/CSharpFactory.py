@@ -9,3 +9,9 @@ def createFiles(file, types, nameSpace):
     sourceFactory = CSharpSourceFactory(provider, nameSpace)
     sourceFactory.CreateFile(file)
 
+def createTypeFile(file, types, nameSpace, className):
+    dotNetTypes = [clr.GetClrType(x) for x in types]
+    provider = DotNetTypeProvider(dotNetTypes)
+    sourceFactory = CSharpTypeDefinitionFactory(provider, nameSpace, className)
+    sourceFactory.CreateFile(file)
+

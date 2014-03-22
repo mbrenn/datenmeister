@@ -47,6 +47,8 @@
     <Compile Include="DataProvider\DotNet\DotNetExtent.cs" />
     <Compile Include="DataProvider\DotNet\DotNetObject.cs" />
     <Compile Include="DataProvider\DotNet\DotNetSequence.cs" />
+    <Compile Include="DataProvider\DotNet\DotNetTypeInformation.cs" />
+    <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataProvider\Views\FieldInfo.cs" />
@@ -60,7 +62,9 @@
     <Compile Include="DataProvider\Xml\XmlTypeMapping.cs" />
     <Compile Include="DatenMeisterPool.cs" />
     <Compile Include="Entities\AsObject\FieldInfo.Objects.cs" />
+    <Compile Include="Entities\AsObject\FieldInfo.Types.cs" />
     <Compile Include="Entities\AsObject\UML.Objects.cs" />
+    <Compile Include="Entities\AsObject\UML.Types.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
     <Compile Include="Entities\FieldInfos\Comment.cs" />
     <Compile Include="Entities\FieldInfos\FormView.cs" />
@@ -82,6 +86,7 @@
     <Compile Include="Logic\Factory.cs" />
     <Compile Include="Logic\ObjectHelper.cs" />
     <Compile Include="Logic\SourceFactory\CSharpSourceFactory.cs" />
+    <Compile Include="Logic\SourceFactory\CSharpTypeDefinitionFactory.cs" />
     <Compile Include="Logic\SourceFactory\DotNetTypeProvider.cs" />
     <Compile Include="Logic\SourceFactory\ITypeInfoProvider.cs" />
     <Compile Include="Logic\SourceFactory\SourceFactoryBase.cs" />

@@ -9,25 +9,39 @@ namespace DatenMeister.DataProvider.DotNet
     public class DotNetExtent : IURIExtent
     {
         /// <summary>
+        /// Gets or sets the mapping between .Net Types and DatenMeister Types
+        /// </summary>
+        public DotNetTypeMapping Mapping
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Stores the context uri
         /// </summary>
-        private string contextUri;
+        private string extentUri;
 
         /// <summary>
         /// Stores the elements
         /// </summary>
         private List<IObject> elements = new List<IObject>();
 
-        public DotNetExtent(string contextUri)
+        /// <summary>
+        /// Initializes a new instance of the DotNetExtent
+        /// </summary>
+        /// <param name="extentUri">Uri of the context</param>
+        public DotNetExtent(string extentUri)
         {
-            this.contextUri = contextUri;
+            this.Mapping = new DotNetTypeMapping();
+            this.extentUri = extentUri;
         }
 
         /// <summary>
         /// Stores the changes
         /// </summary>
         public void StoreChanges()
-        {            
+        {
             // Not required. 
         }
 
@@ -37,7 +51,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// <returns>The context uri</returns>
         public string ContextURI()
         {
-            return this.contextUri;
+            return this.extentUri;
         }
 
         /// <summary>
@@ -54,7 +68,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="element">Element to be added</param>
         public void Add(object element)
-        {            
+        {
             this.elements.Add(new DotNetObject(this, element));
         }
 
