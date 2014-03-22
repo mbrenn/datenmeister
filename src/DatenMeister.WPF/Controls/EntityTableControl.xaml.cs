@@ -19,7 +19,7 @@ namespace DatenMeister.WPF.Controls
     /// <summary>
     /// Interaktionslogik für ObjectTable.xaml
     /// </summary>
-    public partial class ObjectTable : UserControl
+    public partial class EntityTableControl : UserControl
     {
         /// <summary>
         /// Stores the information of the table view.
@@ -47,12 +47,22 @@ namespace DatenMeister.WPF.Controls
             }
         }
 
-        public ObjectTable()
+        /// <summary>
+        /// Gets or sets the view information, that will be used for the detail forms
+        /// </summary>
+        public IObject DetailViewInfo
+        {
+            get;
+            set;
+        }
+
+
+        public EntityTableControl()
         {
             InitializeComponent();
         }
 
-        public ObjectTable(IObject tableView)
+        public EntityTableControl(IObject tableView)
             : this()
         {
             this.tableViewInfo = new TableView(tableViewInfo);
@@ -76,6 +86,24 @@ namespace DatenMeister.WPF.Controls
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
             this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+        }
+
+        private void buttonNew_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new DetailDialog();
+            form.DetailForm.EditMode = EditMode.New;
+            form.DetailForm.FormViewInfo = this.DetailViewInfo;
+            form.Show();
+        }
+
+        private void buttonEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

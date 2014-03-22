@@ -7,7 +7,7 @@ namespace DatenMeister.Entities.FieldInfos
 {
     public class ActionButton
     {
-        public ActionButton ( string text, string clickUrl)
+        public ActionButton(string text, string clickUrl)
         {
             this.text = text;
             this.clickUrl = clickUrl;

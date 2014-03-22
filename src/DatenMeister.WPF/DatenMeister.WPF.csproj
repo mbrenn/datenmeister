@@ -44,20 +44,28 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ObjectForm.xaml.cs">
-      <DependentUpon>ObjectForm.xaml</DependentUpon>
+    <Compile Include="Controls\DetailDialog.xaml.cs">
+      <DependentUpon>DetailDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ObjectTable.xaml.cs">
-      <DependentUpon>ObjectTable.xaml</DependentUpon>
+    <Compile Include="Controls\EntityFormControl.xaml.cs">
+      <DependentUpon>EntityFormControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditMode.cs" />
+    <Compile Include="Controls\EntityTableControl.xaml.cs">
+      <DependentUpon>EntityTableControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\ObjectForm.xaml">
+    <Page Include="Controls\DetailDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ObjectTable.xaml">
+    <Page Include="Controls\EntityFormControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\EntityTableControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

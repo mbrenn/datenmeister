@@ -170,6 +170,7 @@ namespace DatenMeister
                 lock (primitiveTypes)
                 {
                     primitiveTypes.Clear();
+                    primitiveTypes.Add(typeof(Boolean));
                     primitiveTypes.Add(typeof(Int16));
                     primitiveTypes.Add(typeof(Int32));
                     primitiveTypes.Add(typeof(Int64));
@@ -177,6 +178,7 @@ namespace DatenMeister
                     primitiveTypes.Add(typeof(Single));
                     primitiveTypes.Add(typeof(String));
                     primitiveTypes.Add(typeof(DateTime));
+                    primitiveTypes.Add(typeof(TimeSpan));
                 }
             }
 

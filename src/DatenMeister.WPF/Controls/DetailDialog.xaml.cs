@@ -16,13 +16,28 @@ using System.Windows.Shapes;
 namespace DatenMeister.WPF.Controls
 {
     /// <summary>
-    /// Interaktionslogik für ObjectForm.xaml
+    /// Interaction logic for DetailDialog.xaml
     /// </summary>
-    public partial class ObjectForm : UserControl
+    public partial class DetailDialog : Window
     {
-        public ObjectForm()
+        public EntityFormControl DetailForm
+        {
+            get { return this.detailForm; }
+        }
+
+        public DetailDialog()
         {
             InitializeComponent();
+        }
+
+        private void detailForm_Accepted(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void detailForm_Cancelled(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

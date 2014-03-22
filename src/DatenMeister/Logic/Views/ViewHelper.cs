@@ -30,6 +30,7 @@ namespace DatenMeister.Logic.Views
         /// <param name="provider">Provider to be used</param>
         public static void AutoGenerateViewDefinition(IObject viewDefinition, ITypeInfoProvider provider)
         {
+            throw new NotImplementedException();
         }
     }
 }

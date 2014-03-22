@@ -8,6 +8,16 @@ namespace DatenMeister.Entities.FieldInfos
 {
     public class TableView : View
     {
+        /// <summary>
+        /// Initializes a new instance of the TableView class.
+        /// </summary>
+        public TableView()
+        {
+            this.allowEdit = true;
+            this.allowNew = true;
+            this.allowDelete = true;
+        }
+
         [DefaultValue(true)]
         public bool allowEdit
         {

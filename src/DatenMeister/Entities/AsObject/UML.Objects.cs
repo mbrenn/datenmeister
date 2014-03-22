@@ -205,7 +205,6 @@ namespace DatenMeister.Entities.AsObject.Uml
         {
             this.set("name", value);
         }
-
     }
 
 }
