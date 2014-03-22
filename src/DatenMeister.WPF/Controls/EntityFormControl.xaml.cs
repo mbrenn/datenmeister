@@ -110,7 +110,7 @@ namespace DatenMeister.WPF.Controls
                     nameLabel.Content = name;
                     Grid.SetRow(nameLabel, currentRow);
 
-                    formGrid.RowDefinitions.Add(new RowDefinition());
+                    formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
                     formGrid.Children.Add(nameLabel);
 
                     currentRow++;

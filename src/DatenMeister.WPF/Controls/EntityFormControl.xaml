@@ -7,8 +7,9 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid x:Name="formGrid">
             <Grid.ColumnDefinitions>
@@ -16,7 +17,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
         </Grid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="btnCancel" Click="btnCancel_Click">Cancel</Button>
             <Button x:Name="btnOK" Click="btnOK_Click">OK</Button>
         </StackPanel>
