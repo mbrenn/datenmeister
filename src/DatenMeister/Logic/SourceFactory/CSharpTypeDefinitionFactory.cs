@@ -41,17 +41,23 @@ namespace DatenMeister.Logic.SourceFactory
                 this.className));
             writer.WriteLine(FourSpaces + "{");
 
-            var types = new StringBuilder();
+            var typeProperties = new StringBuilder();
+            var assignFunction = new StringBuilder();
             writer.WriteLine(EightSpaces + "public static DatenMeister.IURIExtent Init()");
             writer.WriteLine(EightSpaces + "{");
-            writer.WriteLine ( TwelveSpaces + "var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(\"datenmeister:///types\");");
+            writer.WriteLine(TwelveSpaces + "var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(\"datenmeister:///types\");");
+
+            assignFunction.AppendLine(EightSpaces + "public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)");
+            assignFunction.AppendLine(EightSpaces + "{");
 
             foreach (var type in provider.GetTypes())
             {
-                types.AppendFormat(EightSpaces + "public static DatenMeister.IObject {0};", type);
-                types.AppendLine();
-                types.AppendLine();
+                // Creates property for the type
+                typeProperties.AppendFormat(EightSpaces + "public static DatenMeister.IObject {0};", type);
+                typeProperties.AppendLine();
+                typeProperties.AppendLine();
 
+                // Creates the object instance for the type
                 writer.WriteLine(TwelveSpaces + "{");
                 writer.WriteLine(SixteenSpaces + "var type = new DatenMeister.Entities.UML.Type();");
                 writer.WriteLine(string.Format(SixteenSpaces + "type.name = \"{0}\";", type));
@@ -59,13 +65,24 @@ namespace DatenMeister.Logic.SourceFactory
                 writer.WriteLine(string.Format(SixteenSpaces + "extent.Add({1}.{0});", type, this.className));
                 writer.WriteLine(TwelveSpaces + "}");
                 writer.WriteLine();
+
+                // Performs the assignment
+                assignFunction.AppendFormat(
+                    TwelveSpaces + "extent.Mapping.Add(typeof({0}), {2}.{1});",
+                    this.provider.GetFullTypeName(type),
+                    type,
+                    this.className);
+                assignFunction.AppendLine();
             }
 
             writer.WriteLine(TwelveSpaces + "return extent;");
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 
-            writer.WriteLine(types.ToString());
+            assignFunction.AppendLine(EightSpaces + "}");
+
+            writer.WriteLine(typeProperties.ToString());
+            writer.WriteLine(assignFunction.ToString());
 
             writer.WriteLine(FourSpaces + "}");
             writer.WriteLine("}");

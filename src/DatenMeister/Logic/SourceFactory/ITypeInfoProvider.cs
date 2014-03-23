@@ -49,5 +49,10 @@ namespace DatenMeister.Logic.SourceFactory
         /// <returns>List of names of the arguments.</returns>
         List<string> GetArgumentsForConstructor(string typeName);
 
+        /// <summary>
+        /// Gets the full type name for the given type, which had been retrieved by <c>GetTypes</c>
+        /// </summary>
+        /// <returns>Full name of type </returns>
+        string GetFullTypeName(string type);
     }
 }

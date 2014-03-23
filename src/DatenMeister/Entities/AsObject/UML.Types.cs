@@ -27,5 +27,11 @@ namespace DatenMeister.Entities.AsObject.Uml
         public static DatenMeister.IObject Type;
 
 
+        public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
+        {
+            extent.Mapping.Add(typeof(DatenMeister.Entities.UML.NamedElement), Types.NamedElement);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), Types.Type);
+        }
+
     }
 }

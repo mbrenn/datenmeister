@@ -1,4 +1,4 @@
-﻿using BurnSystems.Test;
+﻿ using BurnSystems.Test;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -113,6 +113,16 @@ namespace DatenMeister.Logic.SourceFactory
 
             // Gets value
             return defaultValueAttribute.Value;
+        }
+        
+        /// <summary>
+        /// Gets the full type name for the given type, which had been retrieved by <c>GetTypes</c>
+        /// </summary>
+        /// <returns>Full name of type </returns>
+        public string GetFullTypeName(string typeName)
+        {
+            var type = this.FindType(typeName);
+            return type.FullName;
         }
 
         /// <summary>

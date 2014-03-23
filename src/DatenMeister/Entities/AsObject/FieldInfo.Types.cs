@@ -72,5 +72,16 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static DatenMeister.IObject TableView;
 
 
+        public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
+        {
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.Comment), Types.Comment);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.General), Types.General);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TextField), Types.TextField);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ActionButton), Types.ActionButton);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.View), Types.View);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.FormView), Types.FormView);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TableView), Types.TableView);
+        }
+
     }
 }
