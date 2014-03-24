@@ -1,4 +1,5 @@
 ﻿using DatenMeister.Entities.AsObject.FieldInfo;
+using DatenMeister.WPF.Controls.GuiElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,13 @@ namespace DatenMeister.WPF.Controls
     /// <summary>
     /// Interaktionslogik für ObjectForm.xaml
     /// </summary>
-    public partial class EntityFormControl : UserControl
+    public partial class EntityFormControl : UserControl, IDataPresentationState
     {
+        /// <summary>
+        /// Stores the list of wpf elements
+        /// </summary>
+        private List<ElementCacheEntry> wpfElements = new List<ElementCacheEntry>();
+
         #region Event handlers
 
         private event EventHandler cancelled;
@@ -49,6 +55,14 @@ namespace DatenMeister.WPF.Controls
             set;
         }
 
+        /// <summary>
+        /// Defines the display mode
+        /// </summary>
+        public DisplayMode DisplayMode
+        {
+            get { return Controls.DisplayMode.Form; }
+        }
+        
         public EntityFormControl()
         {
             InitializeComponent();
@@ -93,13 +107,17 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private void Relayout()
         {
+            this.wpfElements.Clear();
+
             if (this.formView != null)
             {
                 var fieldInfos = this.formView.getFieldInfos();
 
                 var currentRow = 0;
+                // Goes through each element
                 foreach (var fieldInfo in fieldInfos.Cast<IObject>())
                 {
+                    // Creates the key element for the form
                     var name = (fieldInfo.get("title") ?? "").ToString();
                     if (string.IsNullOrEmpty(name))
                     {
@@ -112,6 +130,16 @@ namespace DatenMeister.WPF.Controls
 
                     formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
                     formGrid.Children.Add(nameLabel);
+
+                    // Creates the value element for the form
+                    var fieldInfoAsElement = fieldInfo as IElement;
+                    var wpfElementCreator = WPFElementMapping.Map(fieldInfoAsElement);
+                    var wpfElement = wpfElementCreator.GenerateElement(this.DetailObject, fieldInfo, this);
+                    Grid.SetRow(wpfElement, currentRow);
+                    Grid.SetColumn(wpfElement, 1);
+                    formGrid.Children.Add(wpfElement);
+
+                    this.wpfElements.Add(new ElementCacheEntry(wpfElementCreator, wpfElement, fieldInfo));
 
                     currentRow++;
                 }

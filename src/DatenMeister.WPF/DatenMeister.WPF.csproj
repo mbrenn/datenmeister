@@ -47,6 +47,7 @@
     <Compile Include="Controls\DetailDialog.xaml.cs">
       <DependentUpon>DetailDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GuiElements\ElementCacheEntry.cs" />
     <Compile Include="Controls\EntityFormControl.xaml.cs">
       <DependentUpon>EntityFormControl.xaml</DependentUpon>
     </Compile>
@@ -54,6 +55,10 @@
     <Compile Include="Controls\EntityTableControl.xaml.cs">
       <DependentUpon>EntityTableControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GuiElements\WPFElementMapping.cs" />
+    <Compile Include="Controls\GuiElements\IWPFElementGenerator.cs" />
+    <Compile Include="Controls\GuiElements\WPFTextField.cs" />
+    <Compile Include="Controls\IDataPresentationState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

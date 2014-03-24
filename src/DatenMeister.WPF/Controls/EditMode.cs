@@ -18,6 +18,17 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Edit mode is editing a currently existing element
         /// </summary>
-        Edit
+        Edit,
+
+        /// <summary>
+        /// Shows a read-only view of the element
+        /// </summary>
+        Read
+    }
+
+    public enum DisplayMode
+    {
+        Table, 
+        Form
     }
 }

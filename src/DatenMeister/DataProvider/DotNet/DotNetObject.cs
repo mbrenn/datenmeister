@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.DataProvider.DotNet
 {
-    public class DotNetObject : IObject
+    public class DotNetObject : IElement
     {
         /// <summary>
         /// Defines the extent being
         /// </summary>
-        private IURIExtent extent;
+        private DotNetExtent extent;
 
         /// <summary>
         /// Stores the id
@@ -28,7 +28,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="extent"></param>
         /// <param name="value"></param>
-        public DotNetObject(IURIExtent extent, object value)
+        public DotNetObject(DotNetExtent extent, object value)
         {
             Ensure.That(extent != null);
             Ensure.That(value != null);
@@ -46,7 +46,7 @@ namespace DatenMeister.DataProvider.DotNet
             }
         }
 
-        public DotNetObject(IURIExtent extent, object value, string id)
+        public DotNetObject(DotNetExtent extent, object value, string id)
             : this(value, id)
         {
             Ensure.That(extent != null);
@@ -206,6 +206,37 @@ namespace DatenMeister.DataProvider.DotNet
             {
                 return new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName);
             }
+        }
+
+        /// <summary>
+        /// Gets the metaclass of the object. 
+        /// The metaclasses need to be assigned to the mapping in DotNetTypeMapping
+        /// </summary>
+        /// <returns>The metaclass of the object</returns>
+        public IObject getMetaClass()
+        {
+            if (this.value == null)
+            {
+                return null;
+            }
+
+            var result = this.extent.Mapping.FindByDotNetType(this.value.GetType());
+            if (result != null)
+            {
+                return result.Type;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the container of the element. .Net objects are never in a container. 
+        /// At least for now
+        /// </summary>
+        /// <returns>Usually null</returns>
+        public IObject container()
+        {
+            return null;
         }
     }
 }
