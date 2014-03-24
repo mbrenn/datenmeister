@@ -1,4 +1,5 @@
-﻿using DatenMeister.Entities.AsObject.FieldInfo;
+﻿using BurnSystems.Test;
+using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.WPF.Controls.GuiElements;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,16 @@ namespace DatenMeister.WPF.Controls
         public DisplayMode DisplayMode
         {
             get { return Controls.DisplayMode.Form; }
+        }
+
+        /// <summary>
+        /// Gets or sets the element factory being used to create the element, 
+        /// if we are in EditMode = New
+        /// </summary>
+        public Func<IObject> ElementFactory
+        {
+            get;
+            set;
         }
         
         public EntityFormControl()
@@ -148,6 +159,21 @@ namespace DatenMeister.WPF.Controls
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            // Store values into object
+            if ( this.EditMode == Controls.EditMode.New)
+            {
+                Ensure.That(this.ElementFactory != null, "Element Factory is not given");
+
+                this.DetailObject = this.ElementFactory();
+                Ensure.That(this.DetailObject != null, "Element Factory has not returned a value");
+            }
+
+            foreach (var cacheEntry in this.wpfElements)
+            {
+                cacheEntry.WPFElementCreator.SetData(this.DetailObject, cacheEntry);
+            }
+
+            // And now throw the event for the window
             var ev = this.accepted;
             if (ev != null)
             {
@@ -157,6 +183,9 @@ namespace DatenMeister.WPF.Controls
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            // Do nothing...
+
+            // And throw the event for the window
             var ev = this.cancelled;
             if (ev != null)
             {

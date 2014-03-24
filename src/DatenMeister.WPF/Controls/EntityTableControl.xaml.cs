@@ -57,6 +57,16 @@ namespace DatenMeister.WPF.Controls
         }
 
 
+        /// <summary>
+        /// Gets or sets the element factory being used to create the element, 
+        /// if we are in EditMode = New
+        /// </summary>
+        public Func<IObject> ElementFactory
+        {
+            get;
+            set;
+        }
+
         public EntityTableControl()
         {
             InitializeComponent();
@@ -93,6 +103,7 @@ namespace DatenMeister.WPF.Controls
             var form = new DetailDialog();
             form.DetailForm.EditMode = EditMode.New;
             form.DetailForm.FormViewInfo = this.DetailViewInfo;
+            form.DetailForm.ElementFactory = this.ElementFactory;
             form.Show();
         }
 

@@ -31,7 +31,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         public void SetData(IObject detailObject, ElementCacheEntry entry)
         {
             var textBox = entry.WPFElement as TextBox;
-            detailObject.set(entry.FieldInfo.get("name").ToString(), textBox);
+            detailObject.set(entry.FieldInfo.get("name").ToString(), textBox.Text);
         }
     }
 }
