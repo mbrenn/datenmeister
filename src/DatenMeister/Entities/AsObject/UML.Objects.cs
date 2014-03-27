@@ -65,9 +65,9 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void unset(string propertyName)
+        public bool unset(string propertyName)
         {
-            this.obj.unset(propertyName);
+            return this.obj.unset(propertyName);
         }
 
         /// <summary>
@@ -169,9 +169,9 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        public void unset(string propertyName)
+        public bool unset(string propertyName)
         {
-            this.obj.unset(propertyName);
+            return this.obj.unset(propertyName);
         }
 
         /// <summary>

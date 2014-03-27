@@ -78,7 +78,7 @@ namespace DatenMeister
         /// Unsets the property
         /// </summary>
         /// <param name="propertyName">Name of the property to be removed</param>
-        void unset(string propertyName);
+        bool unset(string propertyName);
 
         /// <summary>
         /// Deletes this object and all composed elements

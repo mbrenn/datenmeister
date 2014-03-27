@@ -28,6 +28,15 @@ namespace DatenMeister.WPF.Controls
         public TableView tableViewInfo;
 
         /// <summary>
+        /// Defines the extent that shall be shown
+        /// </summary>
+        public IURIExtent Extent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the table view info
         /// </summary>
         public IObject TableViewInfo
@@ -90,12 +99,32 @@ namespace DatenMeister.WPF.Controls
                 return;
             }
 
+            // Checks status of buttons
             this.buttonNew.Visibility = this.tableViewInfo.getAllowNew() ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
             this.buttonEdit.Visibility = this.tableViewInfo.getAllowEdit() ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
             this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+
+            foreach (var fieldInfo in this.tableViewInfo.getFieldInfos().Cast<IObject>())
+            {
+                var title = fieldInfo.get("title").ToString();
+                var name = fieldInfo.get("name").ToString();
+                var column = new DataGridTextColumn();
+                column.Header = title;
+                column.Binding = new Binding(name);
+
+                this.gridContent.Columns.Add(column);
+            }
+
+            this.gridContent.ItemsSource = this.Extent.Elements();
+        }
+
+        private void RefreshItems()
+        {
+            this.gridContent.ItemsSource = this.Extent.Elements();
+            this.gridContent.Items.Refresh();
         }
 
         private void buttonNew_Click(object sender, RoutedEventArgs e)
@@ -104,6 +133,8 @@ namespace DatenMeister.WPF.Controls
             form.DetailForm.EditMode = EditMode.New;
             form.DetailForm.FormViewInfo = this.DetailViewInfo;
             form.DetailForm.ElementFactory = this.ElementFactory;
+
+            form.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
             form.Show();
         }
 

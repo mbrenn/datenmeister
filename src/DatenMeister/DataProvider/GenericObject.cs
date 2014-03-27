@@ -65,11 +65,11 @@ namespace DatenMeister.DataProvider
             }
         }
 
-        public void unset(string propertyName)
+        public bool unset(string propertyName)
         {
             lock (this.values)
             {
-                this.values.Remove(propertyName);
+                return this.values.Remove(propertyName);
             }
         }
 

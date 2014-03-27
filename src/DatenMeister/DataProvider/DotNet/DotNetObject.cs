@@ -136,7 +136,7 @@ namespace DatenMeister.DataProvider.DotNet
             return true;
         }
 
-        public void unset(string propertyName)
+        public bool unset(string propertyName)
         {
             var property = GetProperty(propertyName);
 
@@ -147,6 +147,8 @@ namespace DatenMeister.DataProvider.DotNet
             }
 
             method.Invoke(this.value, null);
+
+            return true;
         }
 
         public void delete()

@@ -84,6 +84,7 @@
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
     <Compile Include="Logic\Factory.cs" />
+    <Compile Include="Logic\ObjectDictionary.cs" />
     <Compile Include="Logic\ObjectHelper.cs" />
     <Compile Include="Logic\SourceFactory\CSharpSourceFactory.cs" />
     <Compile Include="Logic\SourceFactory\CSharpTypeDefinitionFactory.cs" />

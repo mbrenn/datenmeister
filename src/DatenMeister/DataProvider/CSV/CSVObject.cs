@@ -113,7 +113,7 @@ namespace DatenMeister.DataProvider.CSV
             }
         }
 
-        public void unset(string propertyName)
+        public bool unset(string propertyName)
         {
             lock (this.values)
             {
@@ -121,7 +121,10 @@ namespace DatenMeister.DataProvider.CSV
                 if (index != -1)
                 {
                     this.values[index] = string.Empty;
+                    return true;
                 }
+
+                return false;
             }
         }
 

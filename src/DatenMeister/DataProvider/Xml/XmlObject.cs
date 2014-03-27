@@ -249,7 +249,7 @@ namespace DatenMeister.DataProvider.Xml
         /// Removes the properties
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
-        public void unset(string propertyName)
+        public bool unset(string propertyName)
         {
             throw new NotImplementedException();
         }
