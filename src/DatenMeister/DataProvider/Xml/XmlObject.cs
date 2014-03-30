@@ -52,6 +52,7 @@ namespace DatenMeister.DataProvider.Xml
             Ensure.That(node != null);
             this.Node = node;
             this.Parent = parent;
+            this.Extent = xmlExtent;
 
             // Check, if we have an id attribute
             // TODO: Check with RFC about xml.

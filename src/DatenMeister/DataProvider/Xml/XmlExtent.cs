@@ -68,6 +68,16 @@ namespace DatenMeister.DataProvider.Xml
         {
             var rootElement = new XmlObject(this, this.XmlDocument.Root);
             yield return rootElement;
+
+            // Goes through the mapping table to find additional objects
+            foreach (var mapInfo in this.Mapping.GetAll())
+            {
+                foreach (var xmlSubnode in mapInfo.RootNode.Elements())
+                {
+                    var result = new XmlObject(this, xmlSubnode, null);
+                    yield return result;
+                }
+            }
         }
 
         /// <summary>

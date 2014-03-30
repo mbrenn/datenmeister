@@ -1,4 +1,5 @@
 ﻿using DatenMeister.Entities.AsObject.FieldInfo;
+using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -118,7 +119,7 @@ namespace DatenMeister.WPF.Controls
                 this.gridContent.Columns.Add(column);
             }
 
-            this.gridContent.ItemsSource = this.Extent.Elements();
+            this.gridContent.ItemsSource = this.Extent.Elements().Select(x => new ObjectDictionary(x));
         }
 
         private void RefreshItems()

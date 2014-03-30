@@ -17,6 +17,15 @@ namespace DatenMeister.DataProvider.Xml
         private List<XmlTypeInformation> information = new List<XmlTypeInformation>();
 
         /// <summary>
+        /// Returns all type information
+        /// </summary>
+        /// <returns></returns>
+        public List<XmlTypeInformation> GetAll()
+        {
+            return this.information;
+        }
+
+        /// <summary>
         /// Adds a mapping between the node name and the type
         /// </summary>
         /// <param name="nodeName">Name of the Xml-Element to be used</param>

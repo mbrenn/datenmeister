@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BurnSystems.Test;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace DatenMeister.Logic
         /// <param name="value">Value to be set</param>
         public ObjectDictionary(IObject value)
         {
+            Ensure.That(value != null);
             this.value = value;
         }
 
