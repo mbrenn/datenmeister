@@ -114,12 +114,14 @@ namespace DatenMeister.WPF.Controls
                 var name = fieldInfo.get("name").ToString();
                 var column = new DataGridTextColumn();
                 column.Header = title;
-                column.Binding = new Binding(name);
+                column.Binding = new Binding("["+name+"]");
 
                 this.gridContent.Columns.Add(column);
             }
 
-            this.gridContent.ItemsSource = this.Extent.Elements().Select(x => new ObjectDictionary(x));
+            // Gets the elements
+            var elements = this.Extent.Elements().Select(x => new ObjectDictionary(x)).ToList();
+            this.gridContent.ItemsSource = elements;
         }
 
         private void RefreshItems()

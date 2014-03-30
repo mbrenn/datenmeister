@@ -67,7 +67,8 @@ namespace DatenMeister.Logic
         {
             get
             {
-                return this.value.get(key);
+                var result = this.value.get(key);
+                return result.AsSingle();
             }
             set
             {

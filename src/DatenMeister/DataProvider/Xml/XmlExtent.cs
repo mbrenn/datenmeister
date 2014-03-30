@@ -36,7 +36,15 @@ namespace DatenMeister.DataProvider.Xml
             get;
             set;
         }
-        
+
+        /// <summary>
+        /// Gets or sets the skips the root node by the enumeration of elements
+        /// </summary>
+        public bool SkipRootNode
+        {
+            get;
+            set;
+        }
        
         /// <summary>
         /// Initializes a new instance of the XmlExtent
@@ -66,8 +74,11 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Enumeration of all elements</returns>
         public IEnumerable<IObject> Elements()
         {
-            var rootElement = new XmlObject(this, this.XmlDocument.Root);
-            yield return rootElement;
+            if (!this.SkipRootNode)
+            {
+                var rootElement = new XmlObject(this, this.XmlDocument.Root);
+                yield return rootElement;
+            }
 
             // Goes through the mapping table to find additional objects
             foreach (var mapInfo in this.Mapping.GetAll())
