@@ -59,6 +59,11 @@
     <Compile Include="Controls\GuiElements\IWPFElementGenerator.cs" />
     <Compile Include="Controls\GuiElements\WPFTextField.cs" />
     <Compile Include="Controls\IDataPresentationState.cs" />
+    <Compile Include="Localization_DatenMeister_WPF.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localization_DatenMeister_WPF.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +89,12 @@
       <Project>{d0c28956-4eee-4af0-a0ed-a500a558c5d8}</Project>
       <Name>DatenMeister</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization_DatenMeister_WPF.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localization_DatenMeister_WPF.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

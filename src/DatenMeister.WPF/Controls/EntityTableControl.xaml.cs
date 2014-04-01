@@ -27,15 +27,27 @@ namespace DatenMeister.WPF.Controls
         /// Stores the information of the table view.
         /// It defines how the table should look like
         /// </summary>
-        public TableView tableViewInfo;
+        private TableView tableViewInfo;
+
+        /// <summary>
+        /// Stores the extent
+        /// </summary>
+        private IURIExtent extent;
 
         /// <summary>
         /// Defines the extent that shall be shown
         /// </summary>
         public IURIExtent Extent
         {
-            get;
-            set;
+            get { return this.extent; }
+            set
+            {
+                this.extent = value;
+                if (this.extent != null)
+                {
+                    this.RefreshItems();
+                }
+            }
         }
 
         /// <summary>
@@ -124,10 +136,16 @@ namespace DatenMeister.WPF.Controls
             this.RefreshItems();
         }
 
+        /// <summary>
+        /// Refreshes the list of items
+        /// </summary>
         private void RefreshItems()
         {
-            var elements = this.Extent.Elements().Select(x => new ObjectDictionary(x)).ToList();
-            this.gridContent.ItemsSource = elements;
+            if (this.Extent != null)
+            {
+                var elements = this.Extent.Elements().Select(x => new ObjectDictionary(x)).ToList();
+                this.gridContent.ItemsSource = elements;
+            }
         }
 
         private void buttonNew_Click(object sender, RoutedEventArgs e)
@@ -143,19 +161,31 @@ namespace DatenMeister.WPF.Controls
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
-
+            this.ShowDetailDialog();
         }
 
         private void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            this.DeleteCurrentlySelected();
         }
 
         private void gridContent_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            this.ShowDetailDialog();
+        }
+
+        /// <summary>
+        /// Shows the detail dialog, where the user can modify the content
+        /// </summary>
+        private void ShowDetailDialog()
+        {
             var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
 
-            if (selectedItem != null)
+            if (selectedItem == null)
+            {
+                MessageBox.Show(Localization_DatenMeister_WPF.NoObjectSelected);
+            }
+            else
             {
                 Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
 
@@ -167,6 +197,20 @@ namespace DatenMeister.WPF.Controls
 
                 form.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
                 form.Show();
+            }
+        }
+
+        /// <summary>
+        /// Deletes the items that are currently selected
+        /// </summary>
+        private void DeleteCurrentlySelected()
+        {
+            var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
+
+            if (selectedItem.Value != null)
+            {
+                selectedItem.Value.delete();
+                this.RefreshItems();
             }
         }
     }
