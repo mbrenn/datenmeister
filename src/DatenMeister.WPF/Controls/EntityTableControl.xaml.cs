@@ -1,4 +1,5 @@
-﻿using DatenMeister.Entities.AsObject.FieldInfo;
+﻿using BurnSystems.Test;
+using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
@@ -120,14 +121,13 @@ namespace DatenMeister.WPF.Controls
             }
 
             // Gets the elements
-            var elements = this.Extent.Elements().Select(x => new ObjectDictionary(x)).ToList();
-            this.gridContent.ItemsSource = elements;
+            this.RefreshItems();
         }
 
         private void RefreshItems()
         {
-            this.gridContent.ItemsSource = this.Extent.Elements();
-            this.gridContent.Items.Refresh();
+            var elements = this.Extent.Elements().Select(x => new ObjectDictionary(x)).ToList();
+            this.gridContent.ItemsSource = elements;
         }
 
         private void buttonNew_Click(object sender, RoutedEventArgs e)
@@ -149,6 +149,25 @@ namespace DatenMeister.WPF.Controls
         private void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void gridContent_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
+
+            if (selectedItem != null)
+            {
+                Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
+
+                var form = new DetailDialog();
+                form.DetailForm.EditMode = EditMode.Edit;
+                form.DetailForm.FormViewInfo = this.DetailViewInfo;
+                form.DetailForm.ElementFactory = this.ElementFactory;
+                form.DetailForm.DetailObject = selectedItem.Value;
+
+                form.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+                form.Show();
+            }
         }
     }
 }

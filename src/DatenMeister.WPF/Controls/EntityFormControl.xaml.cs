@@ -114,6 +114,16 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
+        /// Called, when user control had been initialized
+        /// </summary>
+        /// <param name="sender">Sender of event</param>
+        /// <param name="e">Arguments of event</param>
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Relayout();
+        }
+
+        /// <summary>
         /// Does the relayout
         /// </summary>
         private void Relayout()
@@ -159,15 +169,15 @@ namespace DatenMeister.WPF.Controls
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            // Store values into object
-            if ( this.EditMode == Controls.EditMode.New)
+            // Creates Detailobject if necessary
+            if (this.EditMode == Controls.EditMode.New)
             {
                 Ensure.That(this.ElementFactory != null, "Element Factory is not given");
-
                 this.DetailObject = this.ElementFactory();
                 Ensure.That(this.DetailObject != null, "Element Factory has not returned a value");
             }
 
+            // Store values into object
             foreach (var cacheEntry in this.wpfElements)
             {
                 cacheEntry.WPFElementCreator.SetData(this.DetailObject, cacheEntry);

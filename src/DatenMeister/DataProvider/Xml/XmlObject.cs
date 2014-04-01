@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Serialization;
 using BurnSystems.Test;
+using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,7 +109,7 @@ namespace DatenMeister.DataProvider.Xml
             // Checks, if we have an item, if not, throw exception
             if (result == null || result.Count == 0)
             {
-                throw new ArgumentException("Property '" + propertyName + "' is not known");
+                return ObjectHelper.NotSet;
             }
 
             return result;

@@ -15,9 +15,14 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             var textBox = new System.Windows.Controls.TextBox();
 
-            if (state.EditMode == EditMode.Edit)
+            if (state.EditMode == EditMode.Edit && detailObject != null)
             {
-                textBox.Text = detailObject.get(fieldInfo.get("name").ToString()).ToString();
+                var fieldName = fieldInfo.get("name").ToString();
+                var propertyValue = detailObject.get(fieldName);
+                if (propertyValue != null)
+                {
+                    textBox.Text = propertyValue.AsSingle().ToString();
+                }
             }
 
             return textBox;

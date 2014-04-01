@@ -17,6 +17,14 @@ namespace DatenMeister.Logic
         private IObject value;
 
         /// <summary>
+        /// Gets the value being associated
+        /// </summary>
+        public IObject Value
+        {
+            get { return this.value; }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the ObjectDictionary class
         /// </summary>
         /// <param name="value">Value to be set</param>

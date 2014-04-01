@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.Logic;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -75,7 +76,7 @@ namespace DatenMeister.DataProvider.DotNet
             var method = property.GetGetMethod();
             if (method == null)
             {
-                throw new ArgumentException("Getter for " + propertyName + " not found");
+                return ObjectHelper.NotSet;
             }
 
             var value = method.Invoke(this.value, null);

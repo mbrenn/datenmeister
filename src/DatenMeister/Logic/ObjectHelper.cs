@@ -21,5 +21,10 @@ namespace DatenMeister.Logic
             var titles = objects.SelectMany(x => x.getAll().Select(y => y.PropertyName)).Distinct();
             return titles;
         }
+
+        /// <summary>
+        /// This value has to be returned, if a property has been requested from an IObject an is not available
+        /// </summary>
+        public static object NotSet = new StringBuilder("NOT SET");
     }
 }

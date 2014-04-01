@@ -16,6 +16,7 @@
             <Button x:Name="buttonDelete" Click="buttonDelete_Click">Delete</Button>
         </StackPanel>
         <DataGrid x:Name="gridContent" Grid.Row="1" 
-                  IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False"/>
+                  IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False"
+                  MouseDoubleClick="gridContent_MouseDoubleClick"/>
     </Grid>
 </UserControl>
