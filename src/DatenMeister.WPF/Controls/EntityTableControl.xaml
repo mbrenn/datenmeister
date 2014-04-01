@@ -14,6 +14,7 @@
             <Button x:Name="buttonNew" Click="buttonNew_Click">New...</Button>
             <Button x:Name="buttonEdit" Click="buttonEdit_Click">Edit...</Button>
             <Button x:Name="buttonDelete" Click="buttonDelete_Click">Delete</Button>
+            <Button x:Name="reloadDelete" Click="reloadDelete_Click">Reload</Button>
         </StackPanel>
         <DataGrid x:Name="gridContent" Grid.Row="1" 
                   IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False"

@@ -169,6 +169,11 @@ namespace DatenMeister.WPF.Controls
             this.DeleteCurrentlySelected();
         }
 
+        private void reloadDelete_Click(object sender, RoutedEventArgs e)
+        {
+            this.RefreshItems();
+        }
+
         private void gridContent_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             this.ShowDetailDialog();
