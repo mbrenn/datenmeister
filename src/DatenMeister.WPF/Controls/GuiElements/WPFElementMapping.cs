@@ -24,6 +24,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 return new WPFTextField();
             }
 
+            if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.Comment)
+            {
+                return new WPFComment();
+            }
+
             throw new NotImplementedException(metaClass.get("name")  + " is not a known WPF Element");
         }
     }
