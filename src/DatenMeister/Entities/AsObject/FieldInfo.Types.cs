@@ -21,6 +21,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
             {
                 var type = new DatenMeister.Entities.UML.Type();
+                type.name = "Checkbox";
+                Types.Checkbox = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                extent.Add(Types.Checkbox);
+            }
+
+            {
+                var type = new DatenMeister.Entities.UML.Type();
                 type.name = "TextField";
                 Types.TextField = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Add(Types.TextField);
@@ -61,6 +68,8 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject General;
 
+        public static DatenMeister.IObject Checkbox;
+
         public static DatenMeister.IObject TextField;
 
         public static DatenMeister.IObject ActionButton;
@@ -76,6 +85,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         {
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.Comment), Types.Comment);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.General), Types.General);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.Checkbox), Types.Checkbox);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TextField), Types.TextField);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ActionButton), Types.ActionButton);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.View), Types.View);

@@ -89,6 +89,50 @@ export module General {
 
 }
 
+export module Checkbox {
+    export var TypeName='Checkbox';
+
+    export function create(title?: any, name?: any) {
+        var result = new __d__.JsonExtentObject();
+        result.set('type', 'Checkbox');
+        if (title !== undefined) {
+            result.set('title', title);
+        }
+
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        return result;
+    }
+
+
+    export function getTitle(item: __d__.JsonExtentObject) {
+        return item.get('title');
+    }
+
+    export function setTitle(item : __d__.JsonExtentObject, value: any) {
+        item.set('title', value);
+    }
+
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
+    export function isReadOnly(item: __d__.JsonExtentObject) {
+        return item.get('isReadOnly');
+    }
+
+    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
+        item.set('isReadOnly', value);
+    }
+
+}
+
 export module TextField {
     export var TypeName='TextField';
 

@@ -12,6 +12,7 @@ tsFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.field
 types = [
          DatenMeister.Entities.FieldInfos.Comment, 
          DatenMeister.Entities.FieldInfos.General, 
+         DatenMeister.Entities.FieldInfos.Checkbox, 
          DatenMeister.Entities.FieldInfos.TextField,
          DatenMeister.Entities.FieldInfos.ActionButton,
          DatenMeister.Entities.FieldInfos.View,
