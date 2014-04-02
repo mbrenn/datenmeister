@@ -55,6 +55,7 @@
     <Compile Include="Controls\EntityTableControl.xaml.cs">
       <DependentUpon>EntityTableControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GuiElements\WPFCheckbox.cs" />
     <Compile Include="Controls\GuiElements\WPFComment.cs" />
     <Compile Include="Controls\GuiElements\WPFElementMapping.cs" />
     <Compile Include="Controls\GuiElements\IWPFElementGenerator.cs" />
