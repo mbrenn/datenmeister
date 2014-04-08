@@ -61,6 +61,15 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changes of extent may be lost. Shall closing of application continue?.
+        /// </summary>
+        internal static string ChangesMayBeLost {
+            get {
+                return ResourceManager.GetString("ChangesMayBeLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No object has been selected. .
         /// </summary>
         internal static string NoObjectSelected {
