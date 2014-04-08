@@ -27,20 +27,11 @@ namespace DatenMeister.DataProvider.Xml
             get;
             set;
         }
-        
-        /// <summary>
-        /// Stores the type mapping between 
-        /// </summary>
-        public XmlTypeMapping Mapping
-        {
-            get;
-            set;
-        }
 
         /// <summary>
-        /// Gets or sets the skips the root node by the enumeration of elements
+        /// Gets or sets the settings for the Xml file
         /// </summary>
-        public bool SkipRootNode
+        public XmlSettings Settings
         {
             get;
             set;
@@ -49,14 +40,19 @@ namespace DatenMeister.DataProvider.Xml
         /// <summary>
         /// Initializes a new instance of the XmlExtent
         /// </summary>
-        public XmlExtent(XDocument document, string uri)
+        public XmlExtent(XDocument document, string uri, XmlSettings settings = null)
         {
             Ensure.That(document != null);
             Ensure.That(!string.IsNullOrEmpty(uri));
 
             this.XmlDocument = document;
             this.Uri = uri;
-            this.Mapping = new XmlTypeMapping();
+            this.Settings = settings;
+
+            if (this.Settings == null)
+            {
+                this.Settings = new XmlSettings();
+            }
         }
 
         /// <summary>
@@ -74,16 +70,16 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Enumeration of all elements</returns>
         public IEnumerable<IObject> Elements()
         {
-            if (!this.SkipRootNode)
+            if (!this.Settings.SkipRootNode)
             {
                 var rootElement = new XmlObject(this, this.XmlDocument.Root);
                 yield return rootElement;
             }
 
             // Goes through the mapping table to find additional objects
-            foreach (var mapInfo in this.Mapping.GetAll())
+            foreach (var mapInfo in this.Settings.Mapping.GetAll())
             {
-                foreach (var xmlSubnode in mapInfo.RootNode.Elements())
+                foreach (var xmlSubnode in mapInfo.RetrieveRootNode(this.XmlDocument).Elements())
                 {
                     var result = new XmlObject(this, xmlSubnode, null);
                     yield return result;
@@ -100,14 +96,16 @@ namespace DatenMeister.DataProvider.Xml
             var parentElement = this.XmlDocument.Root;
 
             // Checks, if we have a better element, where new node can be added
-            var info = this.Mapping.FindByType(type);
+            var info = this.Settings.Mapping.FindByType(type);
+            var nodeName = "element";
             if (info != null)
             {
-                parentElement = info.RootNode;
+                parentElement = info.RetrieveRootNode(this.XmlDocument);
+                nodeName = info.NodeName;
             }
 
             // Adds a simple object 
-            var newObject = new XElement("element");
+            var newObject = new XElement(nodeName);
             newObject.Add(new XAttribute("id", Guid.NewGuid().ToString()));
             parentElement.Add(newObject);
 

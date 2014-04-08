@@ -30,14 +30,14 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="nodeName">Name of the Xml-Element to be used</param>
         /// <param name="type">Type to be used</param>
-        /// <param name="rootNode">Root node being used to insert new elements</param>
-        public void Add(string nodeName, IObject type, XElement rootNode)
+        /// <param name="retrieveRootNode">Function which retrieves the root node for a certain type</param>
+        public void Add(string nodeName, IObject type, Func<XDocument, XElement> retrieveRootNode)
         {
             var info = new XmlTypeInformation()
             {
                 NodeName = nodeName,
                 Type = type,
-                RootNode = rootNode
+                RetrieveRootNode = retrieveRootNode
             };
 
             this.information.Add(info);

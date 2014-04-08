@@ -32,7 +32,7 @@ namespace DatenMeister.DataProvider.Xml
         /// <summary>
         /// Defines the elem
         /// </summary>
-        public XElement RootNode
+        public Func<XDocument, XElement> RetrieveRootNode
         {
             get;
             set;

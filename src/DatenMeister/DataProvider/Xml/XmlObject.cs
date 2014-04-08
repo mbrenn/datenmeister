@@ -280,7 +280,7 @@ namespace DatenMeister.DataProvider.Xml
         public IObject getMetaClass()
         {
             var nodeName = this.Node.Name.ToString();
-            var info = this.Extent.Mapping.FindByNodeName(nodeName);
+            var info = this.Extent.Settings.Mapping.FindByNodeName(nodeName);
             if (info == null)
             {
                 return null;
