@@ -66,6 +66,7 @@
     <Compile Include="Entities\AsObject\UML.Objects.cs" />
     <Compile Include="Entities\AsObject\UML.Types.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
+    <Compile Include="Entities\FieldInfos\Checkbox.cs" />
     <Compile Include="Entities\FieldInfos\Comment.cs" />
     <Compile Include="Entities\FieldInfos\FormView.cs" />
     <Compile Include="Entities\FieldInfos\General.cs" />

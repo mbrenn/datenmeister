@@ -101,6 +101,56 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     })(exports.General || (exports.General = {}));
     var General = exports.General;
 
+    (function (Checkbox) {
+        Checkbox.TypeName = 'Checkbox';
+
+        function create(title, name) {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'Checkbox');
+            if (title !== undefined) {
+                result.set('title', title);
+            }
+
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            return result;
+        }
+        Checkbox.create = create;
+
+        function getTitle(item) {
+            return item.get('title');
+        }
+        Checkbox.getTitle = getTitle;
+
+        function setTitle(item, value) {
+            item.set('title', value);
+        }
+        Checkbox.setTitle = setTitle;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        Checkbox.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        Checkbox.setName = setName;
+
+        function isReadOnly(item) {
+            return item.get('isReadOnly');
+        }
+        Checkbox.isReadOnly = isReadOnly;
+
+        function setReadOnly(item, value) {
+            item.set('isReadOnly', value);
+        }
+        Checkbox.setReadOnly = setReadOnly;
+    })(exports.Checkbox || (exports.Checkbox = {}));
+    var Checkbox = exports.Checkbox;
+
     (function (TextField) {
         TextField.TypeName = 'TextField';
 
