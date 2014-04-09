@@ -60,7 +60,7 @@ namespace DatenMeister.Transformations
 
         public void RemoveObject(IObject element)
         {
-            return this.source.RemoveObject(element);
+            this.source.RemoveObject(element);
         }
     }
 }

@@ -101,6 +101,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources_DatenMeister.resx</DependentUpon>
     </Compile>
+    <Compile Include="Transformations\FilterByTypeTransformation.cs" />
     <Compile Include="Transformations\ITransformation.cs" />
     <Compile Include="Transformations\Extensions.cs" />
     <Compile Include="Transformations\RecurseObjectTransformation.cs" />
