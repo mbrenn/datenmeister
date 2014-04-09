@@ -32,22 +32,28 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Stores the extent
         /// </summary>
-        private IURIExtent extent;
+        private Func<IURIExtent> extent;
 
         /// <summary>
         /// Defines the extent that shall be shown
         /// </summary>
         public IURIExtent Extent
         {
-            get { return this.extent; }
+            get { return this.extent(); }
             set
             {
-                this.extent = value;
+                this.extent = () => value;
                 if (this.extent != null)
                 {
                     this.RefreshItems();
                 }
             }
+        }
+
+        public Func<IURIExtent> ExtentFactory
+        {
+            get { return this.extent; }
+            set { this.extent = value; }
         }
 
         /// <summary>
@@ -139,11 +145,11 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Refreshes the list of items
         /// </summary>
-        private void RefreshItems()
+        public void RefreshItems()
         {
-            if (this.Extent != null)
+            if (this.ExtentFactory != null)
             {
-                var elements = this.Extent.Elements().Select(x => new ObjectDictionary(x)).ToList();
+                var elements = this.ExtentFactory().Elements().Select(x => new ObjectDictionary(x)).ToList();
                 this.gridContent.ItemsSource = elements;
             }
         }
