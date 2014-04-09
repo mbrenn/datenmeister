@@ -17,5 +17,10 @@ namespace DatenMeister.Transformations
             transformation.source = extent;
             return transformation;
         }
+
+        public static IURIExtent FilterByType(this IURIExtent extent, IObject type)
+        {
+            return new FilterByTypeTransformation(extent, type);
+        }
     }
 }

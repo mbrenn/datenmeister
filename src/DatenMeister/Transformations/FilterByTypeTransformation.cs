@@ -12,6 +12,18 @@ namespace DatenMeister.Transformations
     public class FilterByTypeTransformation : ITransformation
     {
         /// <summary>
+        /// Initializes a new instance of the FilterByTypeTransformation class
+        /// </summary>
+        public FilterByTypeTransformation()
+        {
+        }
+
+        public FilterByTypeTransformation(IURIExtent source, IObject typeToFilter)
+        {
+            this.typeToFilter = typeToFilter;
+            this.source = source;
+        }
+        /// <summary>
         /// Gets or sets the type which shall be used as filtercriteria. 
         /// If this value is null, only the objects will be returned, which have no type
         /// </summary>

@@ -185,5 +185,34 @@ namespace DatenMeister
             // Checks, if type of given object is in the list above
             return primitiveTypes.Contains(checkObject.GetType());
         }
+
+        /// <summary>
+        /// Returns the information whether the given object might be true or false
+        /// </summary>
+        /// <param name="value">Object to be tested</param>
+        public static bool ToBoolean(object value)
+        {
+            if ( value == null )
+            {
+                return false;
+            }
+
+            if (value is bool)
+            {
+                return (bool)value;
+            }
+
+            if (value is string)
+            {
+                return value.ToString() == "True" || value.ToString() == "true";
+            }
+
+            if (value is int)
+            {
+                return ((int)value) != 0;
+            }
+
+            return false;
+        }
     }
 }
