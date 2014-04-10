@@ -16,6 +16,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var checkbox = new DatenMeister.Entities.AsObject.FieldInfo.Checkbox(fieldInfo);
 
             var wpfCheckbox = new CheckBox();
+            wpfCheckbox.VerticalAlignment = VerticalAlignment.Center;
 
             if (state.EditMode == EditMode.Edit && detailObject != null)
             {
