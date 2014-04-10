@@ -34,6 +34,15 @@ namespace DatenMeister.Transformations
         }
 
         /// <summary>
+        /// Gets or sets the pool, where the object is stored
+        /// </summary>
+        public IPool Pool
+        {
+            get { return this.source.Pool; }
+            set { this.source.Pool = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the type being used as source for extent
         /// </summary>
         public IURIExtent source

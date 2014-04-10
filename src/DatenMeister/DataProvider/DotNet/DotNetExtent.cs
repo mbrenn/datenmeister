@@ -9,6 +9,15 @@ namespace DatenMeister.DataProvider.DotNet
     public class DotNetExtent : IURIExtent
     {
         /// <summary>
+        /// Gets or sets the pool, where the object is stored
+        /// </summary>
+        public IPool Pool
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the mapping between .Net Types and DatenMeister Types
         /// </summary>
         public DotNetTypeMapping Mapping

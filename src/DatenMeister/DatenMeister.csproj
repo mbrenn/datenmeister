@@ -79,6 +79,7 @@
     <Compile Include="IElement.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IObject.cs" />
+    <Compile Include="IPool.cs" />
     <Compile Include="IURIExtent.cs" />
     <Compile Include="Logic\ClientActions\ClientActionInformation.cs" />
     <Compile Include="Logic\ClientActions\IClientAction.cs" />

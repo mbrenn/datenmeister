@@ -29,5 +29,14 @@ namespace DatenMeister
         /// </summary>
         /// <param name="element">Element to be removed</param>
         void RemoveObject(IObject element);
+
+        /// <summary>
+        /// Gets or sets the pool, where the extent is being assigned
+        /// </summary>
+        IPool Pool
+        {
+            get;
+            set;
+        }
     }
 }

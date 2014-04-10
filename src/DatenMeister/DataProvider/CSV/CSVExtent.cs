@@ -8,6 +8,15 @@ namespace DatenMeister.DataProvider.CSV
 {
     public class CSVExtent : IURIExtent
     {
+        /// <summary>
+        /// Gets or sets the pool, where the object is stored
+        /// </summary>
+        public IPool Pool
+        {
+            get;
+            set;
+        }
+
         private string contextUri;
 
         private List<string> headerNames = new List<string>();

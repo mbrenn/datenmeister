@@ -11,6 +11,15 @@ namespace DatenMeister.DataProvider.Xml
     public class XmlExtent: IURIExtent
     {
         /// <summary>
+        /// Gets or sets the pool, where the object is stored
+        /// </summary>
+        public IPool Pool
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the xml document 
         /// </summary>
         public XDocument XmlDocument
