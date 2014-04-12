@@ -9,15 +9,12 @@ Each modification on datasource is done via a json interface.
 Installation
 ------------
 
-- Install prerequisites:
--- Mono
--- node.js
--- Typescript Compiler: 'npm install -g typescript'
+- Install prerequisites
+- - Visual Studio Express 2013 for Desktop Applications
+- Open DatenMeister.sln in src folder
+- Compile
+- 
 
-- Clone repository
+If you would like to have a webserver and interface, the installation of Visual Studio Express 2013 for Web is necessary. 
 
-- Compile via make. External dependencies are downloaded automatically. 
-
-- Execute server via 'make server-run'
-
-- Execute webclient via 'make client-run'
+The Autocode functions of DatenMeister within DatenMeister require a working Python-Installation. The .sln file in tools can be opened by Visual Studio 2013 Express with IronPython plugin (also free) 
