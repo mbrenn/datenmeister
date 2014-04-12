@@ -24,7 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <StartAction>Program</StartAction>
-    <StartProgram>C:\Users\Martin\Programme\NUnit\bin\net-2.0\nunit.exe</StartProgram>
+    <StartProgram>$(USERPROFILE)\Programme\NUnit\bin\nunit.exe</StartProgram>
     <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

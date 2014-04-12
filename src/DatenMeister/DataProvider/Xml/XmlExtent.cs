@@ -81,8 +81,11 @@ namespace DatenMeister.DataProvider.Xml
         {
             if (!this.Settings.SkipRootNode)
             {
-                var rootElement = new XmlObject(this, this.XmlDocument.Root);
-                yield return rootElement;
+                foreach (var subNode in this.XmlDocument.Root.Elements())
+                {
+                    var subObject = new XmlObject(this, subNode);
+                    yield return subObject;
+                }
             }
 
             // Goes through the mapping table to find additional objects

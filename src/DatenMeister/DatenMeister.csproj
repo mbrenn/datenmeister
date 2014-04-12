@@ -96,6 +96,7 @@
     <Compile Include="Logic\SourceFactory\TypeScriptBuilder.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptSourceFactory.cs" />
     <Compile Include="Logic\Views\ViewHelper.cs" />
+    <Compile Include="Pool\PoolResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources_DatenMeister.Designer.cs">
       <AutoGen>True</AutoGen>
