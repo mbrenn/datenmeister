@@ -12,8 +12,7 @@ Installation
 - Install prerequisites
 - - Visual Studio Express 2013 for Desktop Applications
 - Open DatenMeister.sln in src folder
-- Compile
-- 
+- Compile 
 
 If you would like to have a webserver and interface, the installation of Visual Studio Express 2013 for Web is necessary. 
 
