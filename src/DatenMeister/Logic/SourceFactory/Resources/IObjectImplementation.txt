@@ -77,4 +77,12 @@
             }
         }
 
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
+
         #endregion

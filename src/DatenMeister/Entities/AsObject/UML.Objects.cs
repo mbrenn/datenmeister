@@ -89,6 +89,14 @@ namespace DatenMeister.Entities.AsObject.Uml
             }
         }
 
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
+
         #endregion
 
         public System.String getName()
@@ -192,6 +200,14 @@ namespace DatenMeister.Entities.AsObject.Uml
                 return this.obj.Id;
             }
         }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
 
         #endregion
 
