@@ -103,5 +103,34 @@ namespace DatenMeister.Tests.PoolLogic
             Assert.That(resolved2, Is.TypeOf<XmlObject>());
             Assert.That((resolved2 as XmlObject).Id, Is.EqualTo("id_test"));
         }
+
+        [Test]
+        public void TestAddTwoExtentsWithSameUrl()
+        {
+            PrepareDirectory();
+
+            var pool = new DatenMeisterPool();
+
+            var xmlDataProvider = new XmlDataProvider();
+            var extent1 = xmlDataProvider.CreateEmpty(
+                "data/empty1.xml",
+                "http://test",
+                "MyName"
+            );
+
+            PrepareDirectory();
+            var extent2 = xmlDataProvider.CreateEmpty(
+                "data/empty2.xml",
+                "http://test",
+                "MyName"
+            );
+
+            pool.Add(extent1);
+            pool.Add(extent2);
+
+            var extents = pool.Extents;
+            Assert.That(extents.Count(), Is.EqualTo(1));
+            Assert.That(extents.First(), Is.EqualTo(extent2.Extent));
+        }
     }
 }

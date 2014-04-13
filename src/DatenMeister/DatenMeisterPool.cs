@@ -55,7 +55,7 @@ namespace DatenMeister
         {
             lock (this.syncObject)
             {
-                this.CheckIfAlreadyInPool(extent);
+                this.CheckIfExtentAlreadyInAnyPool(extent);
                 this.Add(extent, storagePath, null);
                 extent.Pool = this;
             }
@@ -65,7 +65,7 @@ namespace DatenMeister
         {
             lock (this.syncObject)
             {
-                this.CheckIfAlreadyInPool(extent);
+                this.CheckIfExtentAlreadyInAnyPool(extent);
                 extent.Pool = this;
                 this.extents.Add(
                     new ExtentInstance(extent, storagePath, name));
@@ -76,17 +76,32 @@ namespace DatenMeister
         {
             lock (this.syncObject)
             {
-                this.CheckIfAlreadyInPool(instance.Extent);
+                this.CheckIfExtentAlreadyInAnyPool(instance.Extent);
+
+                // Check, if an extent with the same url already exists
+                var number = 0;
+                foreach (var extent in this.extents)
+                {
+                    if (extent.Extent.ContextURI() == instance.Extent.ContextURI())
+                    {
+                        this.extents.RemoveAt(number);
+                        break;
+                    }
+
+                    number++;
+                }
+
+                // Adds the instance and assign it
                 this.extents.Add(instance);
                 instance.Extent.Pool = this;
             }
         }
 
-        private void CheckIfAlreadyInPool(IURIExtent extent)
+        private void CheckIfExtentAlreadyInAnyPool(IURIExtent extent)
         {
             if (extent.Pool != null)
             {
-                throw new InvalidOperationException("The extent is already assigned to a pool");
+                throw new InvalidOperationException("The extent is already assigned to a pool. An extent cannot be assigned to two pools at the same time");
             }
         }
 
