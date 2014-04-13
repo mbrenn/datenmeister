@@ -297,5 +297,10 @@ namespace DatenMeister.DataProvider.Xml
         {
             return this.Parent;
         }
+
+        IURIExtent IObject.Extent
+        {
+            get { return this.Extent; }
+        }
     }
 }

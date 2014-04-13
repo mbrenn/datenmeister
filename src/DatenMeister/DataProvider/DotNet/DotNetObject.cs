@@ -65,6 +65,14 @@ namespace DatenMeister.DataProvider.DotNet
         }
 
         /// <summary>
+        /// Gets the extent
+        /// </summary>
+        public IURIExtent Extent
+        {
+            get { return this.extent; }
+        }
+
+        /// <summary>
         /// Gets the property of a certain .Net Object
         /// </summary>
         /// <param name="propertyName">Name of the property</param>

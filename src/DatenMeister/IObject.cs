@@ -92,5 +92,10 @@ namespace DatenMeister
         {
             get;
         }
+
+        IURIExtent Extent
+        {
+            get;
+        }
     }
 }

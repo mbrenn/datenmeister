@@ -169,5 +169,10 @@ namespace DatenMeister.DataProvider.CSV
         {
             get { return this.line.ToString(); }
         }
+
+        public IURIExtent Extent
+        {
+            get { return this.extent; }
+        }
     }
 }

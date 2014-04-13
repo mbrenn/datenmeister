@@ -81,7 +81,7 @@
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				throw this.obj.Extent;
 			}
 		}
 

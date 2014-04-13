@@ -28,6 +28,11 @@ namespace DatenMeister.DataProvider
             this.id = id;
         }
 
+        public IURIExtent Extent
+        {
+            get { return this.Extent; }
+        }
+
         /// <summary>
         /// Stores the values
         /// </summary>
