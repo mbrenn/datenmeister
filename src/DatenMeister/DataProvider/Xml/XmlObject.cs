@@ -87,7 +87,7 @@ namespace DatenMeister.DataProvider.Xml
             var result = new List<object>();
             if (string.IsNullOrEmpty(propertyName))
             {
-                // If empty, reduce nothing
+                // If empty, return just the content of the Xml-Node
                 result.Add(this.Node.Value);
             }
             else
@@ -106,8 +106,8 @@ namespace DatenMeister.DataProvider.Xml
                 }
             }
 
-            // Checks, if we have an item, if not, throw exception
-            if (result == null || result.Count == 0)
+            // Checks, if we have an item, if not, return a not set element
+            if (result.Count == 0)
             {
                 return ObjectHelper.NotSet;
             }
