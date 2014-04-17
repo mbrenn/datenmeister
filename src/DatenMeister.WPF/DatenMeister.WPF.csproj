@@ -70,6 +70,7 @@
     <Compile Include="Windows\DatenMeisterWindow.xaml.cs">
       <DependentUpon>DatenMeisterWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\IDatenMeisterWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\DetailDialog.xaml">

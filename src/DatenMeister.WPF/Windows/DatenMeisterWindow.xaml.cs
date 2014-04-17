@@ -1,6 +1,7 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Transformations;
+using DatenMeister.WPF.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace DatenMeister.WPF.Windows
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class DatenMeisterWindow : Window
+    public partial class DatenMeisterWindow : Window, IDatenMeisterWindow
     {
         /// <summary>
         /// Stores the current path
@@ -45,43 +46,22 @@ namespace DatenMeister.WPF.Windows
             set;
         }
 
-        private void Window_Initialized(object sender, EventArgs e)
+        public void AddExtent(string name, AddExtentParameters parameters)
         {
-            /*
-            var umlTypes = DatenMeister.Entities.AsObject.Uml.Types.Init();
-            var fieldInfoTypes = DatenMeister.Entities.AsObject.FieldInfo.Types.Init();
+            var tab = new TabItem();
+            tab.Header = name;
 
-            // Initializes the database itself
-            this.database.Init();
+            var entityList = new EntityTableControl();
+            entityList.ExtentFactory = parameters.ExtentFactory;
+            entityList.TableViewInfo = parameters.TableViewInfo;
+            entityList.DetailViewInfo = parameters.DetailViewInfo;
+            entityList.ElementFactory = parameters.ElementFactory;
 
-            // Create some persons
-            var person = database.ProjectExtent.CreateObject(Database.Types.Person);
-            person.set("name", "Martin Brenn");
-            person.set("email", "brenn@depon.net");
-            person.set("phone", "0151/560");
-            person.set("title", "Project Lead");
+            var grid = new Grid();
+            grid.Children.Add(entityList);
+            tab.Content = grid;
 
-            person = database.ProjectExtent.CreateObject(Database.Types.Person);
-            person.set("name", "Martina Brenn");
-            person.set("email", "brenna@depon.net");
-            person.set("phone", "0151/650");
-            person.set("title", "Project Support");
-
-            person = database.ProjectExtent.CreateObject(Database.Types.Task);
-            person.set("name", "My First Task");
-            person.set("startdate", DateTime.Now);
-            person.set("enddate", DateTime.Now.AddYears(1));
-            person.set("finished", false);
-
-            // Initializes the views
-            this.tablePersons.ExtentFactory = () => this.database.ProjectExtent.FilterByType(Database.Types.Person);
-            this.tablePersons.TableViewInfo = Database.Views.PersonTable;
-            this.tablePersons.DetailViewInfo = Database.Views.PersonDetail;
-            this.tablePersons.ElementFactory = () => database.ProjectExtent.CreateObject(Database.Types.Person);
-            this.tableTasks.ExtentFactory = () => this.database.ProjectExtent.FilterByType(Database.Types.Task);
-            this.tableTasks.TableViewInfo = Database.Views.TaskTable;
-            this.tableTasks.DetailViewInfo = Database.Views.TaskDetail;
-            this.tableTasks.ElementFactory = () => database.ProjectExtent.CreateObject(Database.Types.Task);*/
+            this.tabMain.Items.Add(tab);
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
