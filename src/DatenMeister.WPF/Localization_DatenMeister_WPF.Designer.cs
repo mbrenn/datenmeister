@@ -79,6 +79,15 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Xml-Files (*.xml)|*.xml|All Files (*.*)|*.*.
+        /// </summary>
+        internal static string File_Filter {
+            get {
+                return ResourceManager.GetString("File_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No object has been selected. .
         /// </summary>
         internal static string NoObjectSelected {

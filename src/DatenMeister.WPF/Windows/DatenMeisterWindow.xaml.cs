@@ -103,6 +103,7 @@ namespace DatenMeister.WPF.Windows
         private void Load_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
             if (dialog.ShowDialog(this) == true)
             {
                 var loadedFile = XDocument.Load(dialog.FileName);
@@ -130,8 +131,8 @@ namespace DatenMeister.WPF.Windows
 
         private void SaveAs_Click(object sender, RoutedEventArgs e)
         {
-
             var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
             if (dialog.ShowDialog(this) == true)
             {
                 var xmlExtent = (this.ProjectExtent) as XmlExtent;
