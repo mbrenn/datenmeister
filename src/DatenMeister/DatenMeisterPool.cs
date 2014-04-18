@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DatenMeister.Logic;
+using DatenMeister.Pool;
 
 namespace DatenMeister
 {
@@ -113,7 +114,15 @@ namespace DatenMeister
         public object Resolve(object obj)
         {
             // at the moment, nothing to resolve
-            return obj;
+            var objAsString = obj as String;
+
+            if (objAsString != null)
+            {
+                var poolResolver = new PoolResolver(this);
+                return poolResolver.Resolve(objAsString);
+            }
+
+            throw new NotImplementedException("Type of resolve cannot be done...");
         }
     }
 }

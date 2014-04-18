@@ -1,7 +1,9 @@
-﻿using System;
+﻿using DatenMeister.Transformations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace DatenMeister.Pool
 {
@@ -37,17 +39,29 @@ namespace DatenMeister.Pool
             // First, retrieve the extent matching uri
             // 
             // Now try to find url
-            var extentUrl = uri.Scheme + "://" + uri.Authority + uri.AbsolutePath;
+            var extentUrl = new Uri(uri.Scheme + "://" + uri.Authority + uri.AbsolutePath);
             var extent = this.pool.Extents.Where(x =>
                 {
-                    return new Uri(x.ContextURI()) == new Uri(extentUrl);
+                    return new Uri(x.ContextURI()) == extentUrl;
                 }).FirstOrDefault();
             if (extent == null)
             {
+                // No uri had been found
                 return null;
             }
 
-            // 
+            // Checks, if we have a query identifier
+            if (!string.IsNullOrEmpty(uri.Query))
+            {
+                var dictQuery = HttpUtility.ParseQueryString(uri.Query);
+                var requestedType = dictQuery["type"];
+
+                if (!string.IsNullOrEmpty(requestedType))
+                {
+                    extent = extent.FilterByType(requestedType);
+                }
+            }
+
             // Gets the fragment to identify the object
             var fragment = uri.Fragment;
             if (string.IsNullOrEmpty(fragment))

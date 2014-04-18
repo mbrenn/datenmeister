@@ -22,5 +22,10 @@ namespace DatenMeister.Transformations
         {
             return new FilterByTypeTransformation(extent, type);
         }
+
+        public static IURIExtent FilterByType(this IURIExtent extent, string typeName)
+        {
+            return new FilterByTypeTransformation(extent, typeName);
+        }
     }
 }
