@@ -66,7 +66,7 @@ namespace DatenMeister.WPF.Windows
 
         public void AddExtent(string name, AddExtentParameters parameters)
         {
-            var tab = new TabItem();            
+            var tab = new TabItem();
             tab.Header = name;
 
             var entityList = new EntityTableControl();
@@ -149,15 +149,17 @@ namespace DatenMeister.WPF.Windows
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show(
-                this, 
-                Localization_DatenMeister_WPF.ChangesMayBeLost,
-                Localization_DatenMeister_WPF.CloseApplication, 
-                MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (this.ProjectExtent.IsDirty)
             {
-                e.Cancel = true;
+                if (MessageBox.Show(
+                    this,
+                    Localization_DatenMeister_WPF.ChangesMayBeLost,
+                    Localization_DatenMeister_WPF.CloseApplication,
+                    MessageBoxButton.YesNo) == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
             }
         }
-
     }
 }
