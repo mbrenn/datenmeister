@@ -54,6 +54,8 @@
     <Compile Include="DataProvider\CSVTests.cs" />
     <Compile Include="DataProvider\DotNetTests.cs" />
     <Compile Include="DataProvider\XmlTests.cs" />
+    <Compile Include="PoolLogic\FilterTests.cs" />
+    <Compile Include="PoolLogic\TestDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PoolLogic\PoolProviderTests.cs" />
   </ItemGroup>
@@ -96,7 +98,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="PoolLogic\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
