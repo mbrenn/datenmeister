@@ -1,4 +1,5 @@
 ﻿
+using DatenMeister.DataProvider.Xml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Gets or sets the function to be used to create the extent
         /// </summary>
-        public Func<IURIExtent> ExtentFactory
+        public Func<IURIExtent, IURIExtent> ExtentFactory
         {
             get;
             set;
@@ -46,8 +47,29 @@ namespace DatenMeister.WPF.Windows
         }
     }
 
+    /// <summary>
+    /// Defines all the methods that are implemented by the DatenMeister
+    /// </summary>
     public interface IDatenMeisterWindow
     {
+        /// <summary>
+        /// Gets the project extent
+        /// </summary>
+        IURIExtent ProjectExtent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Stores the settings for the extent
+        /// </summary>
+        XmlSettings ExtentSettings
+        {
+            get;
+            set;
+        }      
+
         /// <summary>
         /// Adds a tab for an extent to the window
         /// </summary>

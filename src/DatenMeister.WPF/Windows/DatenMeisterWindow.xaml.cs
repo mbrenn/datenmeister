@@ -26,14 +26,32 @@ namespace DatenMeister.WPF.Windows
     public partial class DatenMeisterWindow : Window, IDatenMeisterWindow
     {
         /// <summary>
+        /// Gets or sets the project extent
+        /// </summary>
+        public IURIExtent ProjectExtent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Stores the settings for the extent
+        /// </summary>
+        public XmlSettings ExtentSettings
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Stores the current path
         /// </summary>
         private string currentPath = null;
 
         /// <summary>
-        /// Stores the database to be used for the project
+        /// Stores the information
         /// </summary>
-        //private Database database = new Database();
+        private List<TabInformation> listTabs = new List<TabInformation>();
 
         public DatenMeisterWindow()
         {
@@ -48,10 +66,11 @@ namespace DatenMeister.WPF.Windows
 
         public void AddExtent(string name, AddExtentParameters parameters)
         {
-            var tab = new TabItem();
+            var tab = new TabItem();            
             tab.Header = name;
 
             var entityList = new EntityTableControl();
+            entityList.MainWindow = this;
             entityList.ExtentFactory = parameters.ExtentFactory;
             entityList.TableViewInfo = parameters.TableViewInfo;
             entityList.DetailViewInfo = parameters.DetailViewInfo;
@@ -62,19 +81,41 @@ namespace DatenMeister.WPF.Windows
             tab.Content = grid;
 
             this.tabMain.Items.Add(tab);
+
+            this.listTabs.Add(new TabInformation()
+                {
+                    Name = name,
+                    Parameters = parameters,
+                    TabItem = tab,
+                    TableControl = entityList
+                });
         }
+
+        private void RefreshAllViews()
+        {
+            foreach (var tab in this.listTabs)
+            {
+                tab.TableControl.RefreshItems();
+            }
+        }
+
 
         private void Load_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
             if (dialog.ShowDialog(this) == true)
             {
-                /*var loadedFile = XDocument.Load(dialog.FileName);
-                var extent = new XmlExtent(loadedFile, Database.uri);
-                this.database.ReplaceDatabase(extent);
+                var loadedFile = XDocument.Load(dialog.FileName);
 
-                this.tablePersons.RefreshItems();
-                this.tableTasks.RefreshItems();*/
+                // Loads the extent into the same uri
+                var extent = new XmlExtent(loadedFile, this.ProjectExtent.ContextURI());
+
+                // Sets the settings and stores it into the main window. The old one gets removed
+                extent.Settings = this.ExtentSettings;
+                this.ProjectExtent = extent;
+
+                // Refreshes all views
+                this.RefreshAllViews();
             }
         }
 
@@ -93,11 +134,11 @@ namespace DatenMeister.WPF.Windows
             var dialog = new Microsoft.Win32.SaveFileDialog();
             if (dialog.ShowDialog(this) == true)
             {
-                /*var xmlExtent = (this.database.ProjectExtent) as XmlExtent;
+                var xmlExtent = (this.ProjectExtent) as XmlExtent;
                 Ensure.That(xmlExtent != null);
 
                 // Stores the xml document
-                xmlExtent.XmlDocument.Save(dialog.FileName);*/
+                xmlExtent.XmlDocument.Save(dialog.FileName);
             }
         }
 

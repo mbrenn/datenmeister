@@ -71,6 +71,7 @@
       <DependentUpon>DatenMeisterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\IDatenMeisterWindow.cs" />
+    <Compile Include="Windows\TabInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\DetailDialog.xaml">
