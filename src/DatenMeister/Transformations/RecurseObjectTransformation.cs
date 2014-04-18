@@ -43,6 +43,16 @@ namespace DatenMeister.Transformations
             set { this.source.Pool = value; }
         }
 
+        /// <summary>
+        /// Gets or sets a flag whether the extent is currently dirty
+        /// That means, it has unsaved changes
+        /// </summary>
+        public bool IsDirty
+        {
+            get { return this.source.IsDirty; }
+            set { this.source.IsDirty = value; }
+        }
+
         public IEnumerable<IObject> Elements()
         {
             this.CheckSource();

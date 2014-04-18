@@ -105,6 +105,7 @@ namespace DatenMeister.DataProvider.CSV
                 if (index != -1)
                 {
                     this.values[index] = value.ToString();
+                    this.Extent.IsDirty = true;
                 }
                 else
                 {
@@ -121,6 +122,7 @@ namespace DatenMeister.DataProvider.CSV
                 if (index != -1)
                 {
                     this.values[index] = string.Empty;
+                    this.Extent.IsDirty = true;
                     return true;
                 }
 
@@ -160,6 +162,7 @@ namespace DatenMeister.DataProvider.CSV
         public void delete()
         {
             this.extent.RemoveObject(this);
+            this.Extent.IsDirty = true;
         }
 
         /// <summary>

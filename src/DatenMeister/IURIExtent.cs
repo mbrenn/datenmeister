@@ -38,5 +38,15 @@ namespace DatenMeister
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets a flag whether the extent is currently dirty
+        /// That means, it has unsaved changes
+        /// </summary>
+        bool IsDirty
+        {
+            get;
+            set;
+        }
     }
 }

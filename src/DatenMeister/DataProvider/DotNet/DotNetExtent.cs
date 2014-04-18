@@ -27,6 +27,16 @@ namespace DatenMeister.DataProvider.DotNet
         }
 
         /// <summary>
+        /// Gets or sets a flag whether the extent is currently dirty
+        /// That means, it has unsaved changes
+        /// </summary>
+        public bool IsDirty
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Stores the context uri
         /// </summary>
         private string extentUri;

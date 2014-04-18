@@ -45,6 +45,16 @@ namespace DatenMeister.DataProvider.Xml
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets a flag whether the extent is currently dirty
+        /// That means, it has unsaved changes
+        /// </summary>
+        public bool IsDirty
+        {
+            get;
+            set;
+        }
        
         /// <summary>
         /// Initializes a new instance of the XmlExtent
@@ -120,6 +130,8 @@ namespace DatenMeister.DataProvider.Xml
             var newObject = new XElement(nodeName);
             newObject.Add(new XAttribute("id", Guid.NewGuid().ToString()));
             parentElement.Add(newObject);
+
+            this.IsDirty = true;
 
             return new XmlObject(this, newObject);
         }
