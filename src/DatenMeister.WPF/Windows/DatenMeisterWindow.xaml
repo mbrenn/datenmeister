@@ -1,0 +1,26 @@
+﻿<Window xmlns:Controls="clr-namespace:DatenMeister.WPF.Controls" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="DatenMeister.WPF.Windows.DatenMeisterWindow"
+        Title="Projekt Meister" Height="350" Width="525" Closing="Window_Closing">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="358*"/>
+            <ColumnDefinition Width="159*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Menu HorizontalAlignment="Left">
+            <MenuItem Header="File">
+                <MenuItem Header="Load..." Click="Load_Click" />
+                <MenuItem Header="Save" Click="Save_Click" />
+                <MenuItem Header="Save As..." Click="SaveAs_Click" />
+                <MenuItem Header="Exit" Click="Exit_Click" />
+            </MenuItem>
+        </Menu>
+        <TabControl Grid.Row="1" Grid.ColumnSpan="2" x:Name="tabMain">
+        </TabControl>
+    </Grid>
+</Window>

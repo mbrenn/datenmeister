@@ -1,6 +1,7 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic;
+using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,17 +33,34 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Stores the extent
         /// </summary>
-        private Func<IURIExtent> extent;
+        private Func<IURIExtent, IURIExtent> extent;
+
+        public IDatenMeisterWindow MainWindow
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Defines the extent that shall be shown
         /// </summary>
         public IURIExtent Extent
         {
-            get { return this.extent(); }
+            get
+            {
+                if (this.MainWindow != null && this.MainWindow.ProjectExtent != null)
+                {
+                    return this.extent(this.MainWindow.ProjectExtent);
+                }
+
+                else
+                {
+                    return null;
+                }
+            }
             set
             {
-                this.extent = () => value;
+                this.extent = (x) => value;
                 if (this.extent != null)
                 {
                     this.RefreshItems();
@@ -50,10 +68,15 @@ namespace DatenMeister.WPF.Controls
             }
         }
 
-        public Func<IURIExtent> ExtentFactory
+        public Func<IURIExtent, IURIExtent> ExtentFactory
         {
             get { return this.extent; }
-            set { this.extent = value; }
+            set
+            {
+                this.extent = value;
+                // Refreshes the items when we get a new extent factory
+                this.RefreshItems();
+            }
         }
 
         /// <summary>
@@ -147,9 +170,12 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public void RefreshItems()
         {
-            if (this.ExtentFactory != null)
+            if (this.ExtentFactory != null && 
+                this.MainWindow != null &&
+                this.MainWindow.ProjectExtent != null)
             {
-                var elements = this.ExtentFactory().Elements().Select(x => new ObjectDictionary(x)).ToList();
+                var elements = this.ExtentFactory(this.MainWindow.ProjectExtent)
+                    .Elements().Select(x => new ObjectDictionary(x)).ToList();
                 this.gridContent.ItemsSource = elements;
             }
         }

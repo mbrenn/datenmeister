@@ -1,6 +1,7 @@
 ﻿using BurnSystems.Test;
 using DatenMeister;
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -24,16 +25,13 @@ namespace DatenMeister.Tests.DataProvider
 
             Assert.That(xmlRootElement, Is.Not.Null);
 
-            var xmlRootElementsAsList = xmlRootElement.ToList();
-            Assert.That(xmlRootElementsAsList.Count, Is.EqualTo(1));
-
-            var items = xmlRootElementsAsList.Single().get("item").AsEnumeration().ToList();
+            var items = xmlRootElement.ToList();
             Assert.That(items.Count, Is.EqualTo(6));
 
             var item0 = items[0].AsIObject();
             var value = item0.get("").AsSingle();
             Assert.That(value, Is.EqualTo("This is content"));
-            Assert.Throws<ArgumentException>(() => item0.get("Nix"));
+            Assert.That(item0.get("Nix"), Is.EqualTo(ObjectHelper.NotSet));
         }
 
         [Test]
@@ -43,7 +41,7 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml", new XmlSettings());
 
             // Gets the first object '/list/item[0]'
-            var firstElement = xmlExtent.Elements().AsIObject().get("item").AsIObject();
+            var firstElement = xmlExtent.Elements().AsIObject();
             Assert.That(firstElement != null);
             var allProperties = firstElement.getAll();
             Assert.That(allProperties.Any(x => x.PropertyName == string.Empty), Is.True);
@@ -59,7 +57,7 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml", new XmlSettings());
 
             // Gets the first object '/list/item[0]'
-            var firstElement = xmlExtent.Elements().AsIObject().get("item").AsEnumeration().First().AsIObject();
+            var firstElement = xmlExtent.Elements().AsIObject();
 
             Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").First().Value, Is.EqualTo("This is content"));
             firstElement.set(string.Empty, "Test");
@@ -75,7 +73,7 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(xmlExtent, Is.Not.Null);
 
             // Gets the first object '/list/item[0]'
-            var firstElement = xmlExtent.Elements().AsIObject().get("item").AsEnumeration().First().AsIObject();
+            var firstElement = xmlExtent.Elements().AsIObject();
             Assert.That(firstElement, Is.Not.Null);
 
             Assert.That(firstElement.get(string.Empty).AsSingle(), Is.EqualTo("One"));
@@ -88,7 +86,7 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(pairs.Any(x => x.PropertyName == "nix"), Is.False);
 
             // Gets second item '/list/item[1]'
-            var secondElement = xmlExtent.Elements().AsIObject().get("item").AsEnumeration().ElementAt(1).AsIObject();
+            var secondElement = xmlExtent.Elements().AsEnumeration().ElementAt(1).AsIObject();
             Assert.That(secondElement, Is.Not.Null);
 
             Assert.That(secondElement.get(string.Empty).AsSingle(), Is.EqualTo("Two"));

@@ -74,7 +74,7 @@ namespace DatenMeister
                 return asObject;
             }
 
-            throw new InvalidOperationException("Given object is not a valid object");
+            throw new InvalidOperationException("Given object is not of type DatenMeister.IObject");
         }
 
         /// Converts the extent to json object

@@ -87,7 +87,7 @@ namespace DatenMeister.DataProvider.Xml
             var result = new List<object>();
             if (string.IsNullOrEmpty(propertyName))
             {
-                // If empty, reduce nothing
+                // If empty, return just the content of the Xml-Node
                 result.Add(this.Node.Value);
             }
             else
@@ -106,8 +106,8 @@ namespace DatenMeister.DataProvider.Xml
                 }
             }
 
-            // Checks, if we have an item, if not, throw exception
-            if (result == null || result.Count == 0)
+            // Checks, if we have an item, if not, return a not set element
+            if (result.Count == 0)
             {
                 return ObjectHelper.NotSet;
             }
@@ -202,12 +202,14 @@ namespace DatenMeister.DataProvider.Xml
                     {
                         // Setting of empty content
                         this.Node.Value = string.Empty;
+                        this.Extent.IsDirty = true;
                         return;
                     }
                     else
                     {
                         // Setting of node content by value
                         this.Node.Value = value.ToString();
+                        this.Extent.IsDirty = true;
                         return;
                     }
                 }
@@ -223,6 +225,7 @@ namespace DatenMeister.DataProvider.Xml
             if (this.Node.Attribute(propertyName) != null)
             {
                 this.Node.Attribute(propertyName).Value = value.ToString();
+                this.Extent.IsDirty = true;
                 return;
             }
             else if (this.Node.Element(propertyName) != null)
@@ -230,6 +233,7 @@ namespace DatenMeister.DataProvider.Xml
                 if (Extensions.IsNative(value))
                 {
                     this.Node.Element(propertyName).Value = value.ToString();
+                    this.Extent.IsDirty = true;
                     return;
                 }
             }
@@ -240,6 +244,7 @@ namespace DatenMeister.DataProvider.Xml
                 if (Extensions.IsNative(value))
                 {
                     this.Node.Add(new XAttribute(propertyName, value));
+                    this.Extent.IsDirty = true;
                     return;
                 }
             }
@@ -260,8 +265,9 @@ namespace DatenMeister.DataProvider.Xml
         /// Deletes the node from the extent
         /// </summary>
         public void delete()
-        {            
+        {
             this.Node.Remove();
+            this.Extent.IsDirty = true;
         }
 
         /// <summary>
@@ -296,6 +302,11 @@ namespace DatenMeister.DataProvider.Xml
         public IObject container()
         {
             return this.Parent;
+        }
+
+        IURIExtent IObject.Extent
+        {
+            get { return this.Extent; }
         }
     }
 }

@@ -39,6 +39,16 @@ namespace DatenMeister.DataProvider.CSV
             get { return this.headerNames; }
         }
 
+        /// <summary>
+        /// Gets or sets a flag whether the extent is currently dirty
+        /// That means, it has unsaved changes
+        /// </summary>
+        public bool IsDirty
+        {
+            get;
+            set;
+        }
+
         public CSVExtent(string uri, CSVSettings settings)
         {
             this.Settings = settings;
@@ -63,6 +73,8 @@ namespace DatenMeister.DataProvider.CSV
                 var element = new CSVObject(nr, this, null);
 
                 this.objects.Add(element);
+                this.IsDirty = true;
+
                 return element;
             }
         }

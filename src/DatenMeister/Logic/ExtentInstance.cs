@@ -82,7 +82,8 @@ namespace DatenMeister.Logic
                 name = this.Name,
                 uri = this.Extent.ContextURI(),
                 type = this.Extent.GetType().Name,
-                filename = this.StoragePath
+                filename = this.StoragePath,
+                isDirty = this.Extent.IsDirty
             };
         }
     }

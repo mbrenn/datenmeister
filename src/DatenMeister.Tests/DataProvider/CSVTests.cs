@@ -260,5 +260,22 @@ namespace DatenMeister.Tests.DataProvider
             var extent2 = provider.Load("test_n_y.txt", newSettings);
             Assert.That(extent2.Elements().Count(), Is.EqualTo(extent.Elements().Count()));
         }
+
+        [Test]
+        public void TestSetExtentToObject()
+        {
+            var settings = new CSVSettings()
+            {
+                HasHeader = true,
+                Separator = ","
+            };
+
+            var provider = new CSVDataProvider();
+            var extent = provider.Load("data/csv/withheader.txt", settings);
+            var elements = extent.Elements().Select(x => x as IObject).ToList();
+
+            Assert.That(elements.Count, Is.GreaterThan(0));
+            Assert.That(elements[0].Extent, Is.EqualTo(extent));
+        }
     }
 }

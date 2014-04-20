@@ -25,6 +25,17 @@ namespace DatenMeister.Logic
         /// <summary>
         /// This value has to be returned, if a property has been requested from an IObject an is not available
         /// </summary>
-        public static object NotSet = new StringBuilder("NOT SET");
+        public static object NotSet = new NotSetObject();
+
+        /// <summary>
+        /// Just used for the NotSet object
+        /// </summary>
+        private class NotSetObject
+        {
+            public override string ToString()
+            {
+                return "Not Set";
+            }
+        }
     }
 }

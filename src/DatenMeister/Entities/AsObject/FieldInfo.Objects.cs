@@ -96,6 +96,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
         }
 
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
+
         #endregion
 
         public System.String getComment()
@@ -233,6 +241,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
         }
 
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
+
         #endregion
 
         public System.String getTitle()
@@ -366,6 +382,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
         }
 
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
+
         #endregion
 
         public System.String getTitle()
@@ -498,6 +522,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 return this.obj.Id;
             }
         }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
 
         #endregion
 
@@ -654,6 +686,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
         }
 
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
+
         #endregion
 
         public System.String getText()
@@ -768,6 +808,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 return this.obj.Id;
             }
         }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
 
         #endregion
 
@@ -890,6 +938,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 return this.obj.Id;
             }
         }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
 
         #endregion
 
@@ -1067,6 +1123,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 return this.obj.Id;
             }
         }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw new System.NotImplementedException();
+			}
+		}
 
         #endregion
 

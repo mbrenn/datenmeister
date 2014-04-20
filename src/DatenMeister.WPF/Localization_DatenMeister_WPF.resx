@@ -120,6 +120,12 @@
   <data name="ChangesMayBeLost" xml:space="preserve">
     <value>Changes of extent may be lost. Shall closing of application continue?</value>
   </data>
+  <data name="CloseApplication" xml:space="preserve">
+    <value>Close Application</value>
+  </data>
+  <data name="File_Filter" xml:space="preserve">
+    <value>Xml-Files (*.xml)|*.xml|All Files (*.*)|*.*</value>
+  </data>
   <data name="NoObjectSelected" xml:space="preserve">
     <value>No object has been selected. </value>
   </data>

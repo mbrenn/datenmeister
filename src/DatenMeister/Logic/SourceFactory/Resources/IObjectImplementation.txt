@@ -77,4 +77,12 @@
             }
         }
 
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				throw this.obj.Extent;
+			}
+		}
+
         #endregion
