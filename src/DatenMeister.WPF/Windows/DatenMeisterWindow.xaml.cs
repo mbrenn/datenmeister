@@ -56,6 +56,17 @@ namespace DatenMeister.WPF.Windows
         public DatenMeisterWindow()
         {
             this.InitializeComponent();
+
+            var width = this.Width;
+            var height = this.Height;
+
+            var newWidth = System.Windows.SystemParameters.PrimaryScreenWidth / 2;
+            var newHeight = System.Windows.SystemParameters.PrimaryScreenHeight / 2;
+
+            this.Left -= newWidth / 2;
+            this.Top -= newHeight/ 2;
+            this.Width = newWidth;
+            this.Height = newHeight;
         }
 
         public Action<DatenMeisterWindow> OnInitializeDatabase
