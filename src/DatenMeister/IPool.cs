@@ -7,11 +7,5 @@ namespace DatenMeister
 {
     public interface IPool
     {
-        /// <summary>
-        /// Resolves the given object
-        /// </summary>
-        /// <param name="obj">Object to be resolved</param>
-        /// <returns>Result of the object that shall be resolved</returns>
-        object Resolve(object obj);
     }
 }

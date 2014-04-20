@@ -105,24 +105,5 @@ namespace DatenMeister
                 throw new InvalidOperationException("The extent is already assigned to a pool. An extent cannot be assigned to two pools at the same time");
             }
         }
-
-        /// <summary>
-        /// Resolves the given object
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public object Resolve(object obj)
-        {
-            // at the moment, nothing to resolve
-            var objAsString = obj as String;
-
-            if (objAsString != null)
-            {
-                var poolResolver = new PoolResolver(this);
-                return poolResolver.Resolve(objAsString);
-            }
-
-            throw new NotImplementedException("Type of resolve cannot be done...");
-        }
     }
 }

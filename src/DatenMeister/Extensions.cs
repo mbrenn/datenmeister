@@ -1,4 +1,5 @@
-﻿using DatenMeister.Web;
+﻿using DatenMeister.Pool;
+using DatenMeister.Web;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,27 @@ namespace DatenMeister
 {
     public static class Extensions
     {
+
+        /// <summary>
+        /// Resolves the given object by using the PoolResolver
+        /// </summary>
+        /// <param name="pool">Pool being used to resolve</param>
+        /// <param name="obj">Object to be resolved</param>
+        /// <returns>Object being resolved</returns>
+        public static object Resolve(this DatenMeisterPool pool, object obj)
+        {
+            // at the moment, nothing to resolve
+            var objAsString = obj as String;
+
+            if (objAsString != null)
+            {
+                var poolResolver = new PoolResolver(pool);
+                return poolResolver.Resolve(objAsString);
+            }
+
+            throw new NotImplementedException("Type of resolve cannot be done...");
+        }
+
         public static JsonExtentInfo ToJson(this IURIExtent extent)
         {
             return new JsonExtentInfo()
