@@ -68,7 +68,13 @@ namespace DatenMeister.WPF.Windows
         {
             get;
             set;
-        }      
+        }
+
+        /// <summary>
+        /// Sets the title of the application
+        /// </summary>
+        /// <param name="title">Title of the application</param>
+        void SetTitle(string title);
 
         /// <summary>
         /// Adds a tab for an extent to the window

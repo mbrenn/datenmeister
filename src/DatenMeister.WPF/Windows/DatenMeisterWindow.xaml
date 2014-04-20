@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="DatenMeister.WPF.Windows.DatenMeisterWindow"
         WindowStartupLocation="CenterScreen"
-        Title="Projekt Meister" Height="350" Width="525" Closing="Window_Closing">
+        Title="Unnamed Application" Height="350" Width="525" Closing="Window_Closing">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="358*"/>
