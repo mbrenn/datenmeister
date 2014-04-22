@@ -60,16 +60,7 @@ namespace DatenMeister.DataProvider.Xml
             var idAttribute = this.Node.Attribute("id");
             if (idAttribute == null)
             {
-                // We got something with attribute null...
-                // At the moment, this is not handled
-                if (parent == null)
-                {
-                    this.Id = "xpath:///" + node.Name.ToString();
-                }
-                else
-                {
-                    throw new InvalidOperationException("Xml node does not have an id-attribute and is not null");
-                }
+                throw new InvalidOperationException("Xml node does not have an id-attribute and is not null");
             }
             else
             {

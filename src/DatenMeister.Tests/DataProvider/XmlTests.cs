@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DatenMeister.Tests.DataProvider
 {
@@ -98,6 +99,33 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(secondElement.get("letter").AsSingle(), Is.EqualTo("to be"));
             Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").ElementAt(1).Attribute("letter").Value,
                 Is.EqualTo("to be"));
+        }
+
+        /// <summary>
+        /// Tests the id concept according to issue #11
+        /// https://github.com/mbrenn/datenmeister/issues/11
+        /// </summary>
+        [Test]
+        public void TestIdConcept()
+        {
+            var document = XDocument.Parse ( 
+                "<root>" + 
+                    "<element id=\"e1\" />" + 
+                    "<element id=\"e2\" />" + 
+                    "<element />" + // No element, should throw an exception
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test");
+            Assert.That(xmlExtent.Elements().ElementAt(0).AsIObject().Id, Is.EqualTo("e1"));
+            Assert.That(xmlExtent.Elements().ElementAt(1).AsIObject().Id, Is.EqualTo("e2"));
+            Assert.Throws<InvalidOperationException>(() => { xmlExtent.Elements().ElementAt(2); return; });
+
+            var newElement = xmlExtent.CreateObject(null);
+            Assert.That(newElement.Id, Is.Not.Null.Or.Empty);
+
+            newElement.set("id", "e4");
+
+            Assert.That(newElement.Id, Is.EqualTo("e4"));
         }
     }
 }
