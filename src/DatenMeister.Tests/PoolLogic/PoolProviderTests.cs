@@ -104,6 +104,40 @@ namespace DatenMeister.Tests.PoolLogic
             Assert.That((resolved2 as XmlObject).Id, Is.EqualTo("id_test"));
         }
 
+        /// <summary>
+        /// Test for issue #5
+        /// </summary>
+        [Test]
+        public void CreateResolvePath()
+        {
+            PrepareDirectory();
+
+            var pool = new DatenMeisterPool();
+
+            var xmlDataProvider = new XmlDataProvider();
+            var extent1 = xmlDataProvider.CreateEmpty(
+                "data/empty1.xml",
+                "http://test",
+                "MyName"
+            );
+
+            var obj = extent1.Extent.CreateObject();
+            obj.set("id", "id_test");
+
+            pool.Add(extent1);
+
+            var poolResolver = new PoolResolver(pool);
+            var path1 = poolResolver.GetResolvePath(obj);
+            Assert.That(path1, Is.Not.Empty);
+            Assert.That(path1, Is.Not.Null);
+
+            var resolved2 = poolResolver.Resolve("http://test#id_test") as IObject;
+            Assert.That(resolved2, Is.Not.Null);
+            var path2 = poolResolver.GetResolvePath(resolved2);
+
+            Assert.That(path1, Is.EqualTo(path2));
+        }
+
         [Test]
         public void TestAddTwoExtentsWithSameUrl()
         {

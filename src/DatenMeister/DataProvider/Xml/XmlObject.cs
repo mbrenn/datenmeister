@@ -203,14 +203,12 @@ namespace DatenMeister.DataProvider.Xml
                         // Setting of empty content
                         this.Node.Value = string.Empty;
                         this.Extent.IsDirty = true;
-                        return;
                     }
                     else
                     {
                         // Setting of node content by value
                         this.Node.Value = value.ToString();
                         this.Extent.IsDirty = true;
-                        return;
                     }
                 }
                 else
@@ -218,38 +216,41 @@ namespace DatenMeister.DataProvider.Xml
                     throw new InvalidOperationException(
                         "Assigning elements to empty property is not supported");
                 }
-            }
-
-            // Checks, if we have multiple objects, if yes, throw exception. 
-            // Check, if we have an attribute with the given name, if yes, set the property
-            if (this.Node.Attribute(propertyName) != null)
+            }            
+            else if (this.Node.Attribute(propertyName) != null)
             {
+                // Checks, if we have multiple objects, if yes, throw exception. 
+                // Check, if we have an attribute with the given name, if yes, set the property
+            
                 this.Node.Attribute(propertyName).Value = value.ToString();
                 this.Extent.IsDirty = true;
-                return;
             }
             else if (this.Node.Element(propertyName) != null)
             {
+                // Element is an element
                 if (Extensions.IsNative(value))
                 {
                     this.Node.Element(propertyName).Value = value.ToString();
                     this.Extent.IsDirty = true;
-                    return;
                 }
             }
-            else
+            else if (Extensions.IsNative(value))
             {
                 // Ok, we have no attribute and no element with the name.
                 // If this is a simple type, we just assume that this is a property, otherwise no suppurt
-                if (Extensions.IsNative(value))
-                {
-                    this.Node.Add(new XAttribute(propertyName, value));
-                    this.Extent.IsDirty = true;
-                    return;
-                }
+                this.Node.Add(new XAttribute(propertyName, value));
+                this.Extent.IsDirty = true;
+            }
+            else
+            {
+                throw new NotImplementedException();
             }
 
-            throw new NotImplementedException();
+            // If property name is an id, we use this id for setting the id of the entity
+            if (propertyName == "id")
+            {
+                this.Id = value.ToString();
+            }
         }
 
         /// <summary>
