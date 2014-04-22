@@ -127,5 +127,32 @@ namespace DatenMeister.Tests.DataProvider
 
             Assert.That(newElement.Id, Is.EqualTo("e4"));
         }
+
+        /// <summary>
+        /// Tests the reference concet
+        /// </summary>
+        [Test]
+        public void TestReferenceWithFullPath ( )
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" reference-ref=\"test:///#e1\" />" + // No element, should throw an exception
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.Add(xmlExtent, null);
+
+            var value = pool.ResolveByPath("test:///#e4") as IObject;
+            Assert.That(value, Is.Not.Null);
+
+            var refValue = value.get("reference");
+            var refValueAsIObject = refValue.AsSingle().AsIObject();
+            Assert.That(refValueAsIObject, Is.Not.Null);
+
+            Assert.That(refValueAsIObject.Id, Is.EqualTo("e1"));
+        }
     }
 }

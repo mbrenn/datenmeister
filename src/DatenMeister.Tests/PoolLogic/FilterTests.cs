@@ -15,11 +15,11 @@ namespace DatenMeister.Tests.PoolLogic
             var database = new TestDatabase();
             var pool = database.Init();
          
-            var resolved = pool.Resolve(database.ProjectExtent.ContextURI()) as IURIExtent;
+            var resolved = pool.ResolveByPath(database.ProjectExtent.ContextURI()) as IURIExtent;
             Assert.That(resolved != null);
             Assert.That(resolved.Elements().Count(), Is.EqualTo(TestDatabase.TotalElements));
 
-            var resolvedFiltered = pool.Resolve(database.ProjectExtent.ContextURI() + "?type=Task") as IURIExtent;
+            var resolvedFiltered = pool.ResolveByPath(database.ProjectExtent.ContextURI() + "?type=Task") as IURIExtent;
             Assert.That(resolvedFiltered != null);
             Assert.That(resolvedFiltered.Elements().Count(), Is.EqualTo(TestDatabase.TotalTasks));
         }

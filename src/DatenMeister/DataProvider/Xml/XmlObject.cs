@@ -1,5 +1,7 @@
 ﻿using BurnSystems.Serialization;
 using BurnSystems.Test;
+using DatenMeister;
+using DatenMeister.DataProvider.Common;
 using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
@@ -69,6 +71,16 @@ namespace DatenMeister.DataProvider.Xml
         }
 
         /// <summary>
+        /// Resolves the object to be returned
+        /// </summary>
+        /// <param name="value">Value to be resolved</param>
+        /// <returns>Resolved object</returns>
+        private object Resolve(object value)
+        {
+            return this.Extent.Pool.Resolve(value);
+        }
+
+        /// <summary>
         /// Gets the property by name
         /// </summary>
         /// <param name="propertyName">Name of the property to be retrieved</param>
@@ -90,7 +102,17 @@ namespace DatenMeister.DataProvider.Xml
                     result.Add(xmlProperty.Value);
                 }
 
-                // Checks, if we have elements
+                // Checks, if we have a reference attribute with the given name
+                else
+                {
+                    var xmlRefProperty = this.Node.Attribute(propertyName + "-ref");
+                    if (xmlRefProperty != null)
+                    {
+                        result.Add(new ResolvableByPath(xmlRefProperty.Value));
+                    }
+                }
+
+                // Checks, if we have elements nodes with the given property name
                 foreach (var element in this.Node.Elements(propertyName))
                 {
                     result.Add(new XmlObject(this.Extent, element, this));
@@ -100,10 +122,10 @@ namespace DatenMeister.DataProvider.Xml
             // Checks, if we have an item, if not, return a not set element
             if (result.Count == 0)
             {
-                return ObjectHelper.NotSet;
+                return this.Resolve(ObjectHelper.NotSet);
             }
 
-            return result;
+            return this.Resolve(result);
         }
 
         /// <summary>
@@ -148,11 +170,11 @@ namespace DatenMeister.DataProvider.Xml
             {
                 if (valuePair.Value.Count == 1)
                 {
-                    yield return new ObjectPropertyPair(valuePair.Key, valuePair.Value.First());
+                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value.First()));
                 }
                 else
                 {
-                    yield return new ObjectPropertyPair(valuePair.Key, valuePair.Value);
+                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value));
                 }
             }
         }
@@ -164,6 +186,11 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>true, if this property exists</returns>
         public bool isSet(string propertyName)
         {
+            if (propertyName.EndsWith("-ref"))
+            {
+                throw new InvalidOperationException("Property name may not end with '-ref'");
+            }
+
             // Checks, if we have a value
             var result = this.get(propertyName) as IEnumerable<object>;
             if (result == null)
@@ -183,6 +210,11 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="value">Value to be set</param>
         public void set(string propertyName, object value)
         {
+            if (propertyName.EndsWith("-ref"))
+            {
+                throw new InvalidOperationException("Property name may not end with '-ref'");
+            }
+
             // Finds the container for the property
             if (string.IsNullOrEmpty(propertyName))
             {

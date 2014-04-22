@@ -1,4 +1,5 @@
-﻿using DatenMeister.Pool;
+﻿using DatenMeister.DataProvider;
+using DatenMeister.Pool;
 using DatenMeister.Web;
 using System;
 using System.Collections;
@@ -11,14 +12,47 @@ namespace DatenMeister
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Resolves the object if necessary. 
+        /// If there is no reason to resolve the object, the object itself is returned
+        /// </summary>
+        /// <param name="pool">Pool, which shall be used to resolve the object</param>
+        /// <param name="obj">Object that is used for resolvinb</param>
+        /// <returns>Returned object that can be used</returns>
+        public static object Resolve(this IPool pool, object obj)
+        {
+            var asEnumerable = obj as IEnumerable;
+            if (asEnumerable != null && !(obj is string))
+            {
+                var list = new List<object>();
+                foreach (var value in asEnumerable)
+                {
+                    // Not very beautiful. It would be better to make this more abstract and to resolve
+                    // the values within the list itself
+                    list.Add(Resolve(pool, value));
+                }
+
+                return list;
+            }
+
+            var asResolvable = obj as IResolvable;
+            if (asResolvable != null)
+            {
+                // Resolve object and see, if it can be further resolved
+                return Resolve(pool, asResolvable.Resolve(pool));
+            }
+
+            return obj;
+        }
 
         /// <summary>
-        /// Resolves the given object by using the PoolResolver
+        /// Resolves the given object by using the PoolResolver. 
+        /// It resolves object by path or other means
         /// </summary>
         /// <param name="pool">Pool being used to resolve</param>
         /// <param name="obj">Object to be resolved</param>
         /// <returns>Object being resolved</returns>
-        public static object Resolve(this DatenMeisterPool pool, object obj)
+        public static object ResolveByPath(this IPool pool, string obj)
         {
             // at the moment, nothing to resolve
             var objAsString = obj as String;
@@ -72,7 +106,7 @@ namespace DatenMeister
         /// <returns>Converted object</returns>
         public static object AsSingle(this object value)
         {
-            if ( value is string )
+            if (value is string)
             {
                 // If value is a string, return the complete string, not just the first letter
                 return value;

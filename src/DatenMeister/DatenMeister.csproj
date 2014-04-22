@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataProvider\Common\ResolvableByPath.cs" />
     <Compile Include="DataProvider\CSV\CSVDataProvider.cs" />
     <Compile Include="DataProvider\CSV\CSVExtent.cs" />
     <Compile Include="DataProvider\CSV\CSVObject.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
+    <Compile Include="DataProvider\IResolvable.cs" />
     <Compile Include="DataProvider\Views\FieldInfo.cs" />
     <Compile Include="DataProvider\Views\View.cs" />
     <Compile Include="DataProvider\Views\ViewsExtent.cs" />
