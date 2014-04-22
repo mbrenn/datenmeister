@@ -229,6 +229,74 @@ export module ActionButton {
 
 }
 
+export module ReferenceByValue {
+    export var TypeName='ReferenceByValue';
+
+    export function create(title?: any, name?: any, propertyValue?: any, referenceUrl?: any) {
+        var result = new __d__.JsonExtentObject();
+        result.set('type', 'ReferenceByValue');
+        if (title !== undefined) {
+            result.set('title', title);
+        }
+
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        if (propertyValue !== undefined) {
+            result.set('propertyValue', propertyValue);
+        }
+
+        if (referenceUrl !== undefined) {
+            result.set('referenceUrl', referenceUrl);
+        }
+
+        return result;
+    }
+
+
+    export function getPropertyValue(item: __d__.JsonExtentObject) {
+        return item.get('propertyValue');
+    }
+
+    export function setPropertyValue(item : __d__.JsonExtentObject, value: any) {
+        item.set('propertyValue', value);
+    }
+
+    export function getReferenceUrl(item: __d__.JsonExtentObject) {
+        return item.get('referenceUrl');
+    }
+
+    export function setReferenceUrl(item : __d__.JsonExtentObject, value: any) {
+        item.set('referenceUrl', value);
+    }
+
+    export function getTitle(item: __d__.JsonExtentObject) {
+        return item.get('title');
+    }
+
+    export function setTitle(item : __d__.JsonExtentObject, value: any) {
+        item.set('title', value);
+    }
+
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
+    export function isReadOnly(item: __d__.JsonExtentObject) {
+        return item.get('isReadOnly');
+    }
+
+    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
+        item.set('isReadOnly', value);
+    }
+
+}
+
 export module View {
     export var TypeName='View';
 

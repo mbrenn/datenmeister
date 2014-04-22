@@ -84,6 +84,12 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private FormView formView;
 
+        public IPool Pool
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Gets or sets the object 
         /// </summary>

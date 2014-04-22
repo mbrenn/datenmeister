@@ -72,6 +72,12 @@ namespace DatenMeister
         /// <returns>Converted object</returns>
         public static object AsSingle(this object value)
         {
+            if ( value is string )
+            {
+                // If value is a string, return the complete string, not just the first letter
+                return value;
+            }
+
             var valueAsEnumeration = value as IEnumerable;
             if (valueAsEnumeration != null)
             {

@@ -28,6 +28,16 @@ namespace DatenMeister.Pool
         }
 
         /// <summary>
+        /// Initializes a new instance of DatenMeisterPool class
+        /// </summary>
+        /// <param name="pool">Pool</param>
+        public PoolResolver(IPool pool)
+        {
+            this.pool = pool as DatenMeisterPool;
+            Ensure.That(this.pool != null);
+        }
+
+        /// <summary>
         /// Resolves an object or an extent by a url or a query
         /// </summary>
         /// <param name="url">Url to be used</param>
@@ -101,6 +111,27 @@ namespace DatenMeister.Pool
             Ensure.That(backCheck.Id == obj.Id, "GetResolvePath returned wrong object: " + result);
 #endif
             return result;
+        }
+
+        /// <summary>
+        ///  Resolves the uri by <c>Resolve</c> and returns the elements if the returned object is an Extent
+        /// </summary>
+        /// <param name="url">Url being used</param>
+        /// <returns>Enumeration of objects</returns>
+        public IEnumerable<IObject> ResolveAsObjects(string url)
+        {
+            var result = this.Resolve(url);
+            if (result is IURIExtent)
+            {
+                return (result as IURIExtent).Elements();
+            }
+
+            if (result is IEnumerable<IObject>)
+            {
+                return result as IEnumerable<IObject>;
+            }
+
+            return null;
         }
     }
 }

@@ -34,6 +34,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 return new WPFCheckbox();
             }
 
+            if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceByValue)
+            {
+                return new WpfDropDownByValue();
+            }
+
             throw new NotImplementedException(metaClass.get("name")  + " is not a known WPF Element");
         }
     }

@@ -20,6 +20,15 @@ namespace DatenMeister.WPF.Controls
     /// </summary>
     public partial class DetailDialog : Window
     {
+        /// <summary>
+        /// Gets or sets the pool
+        /// </summary>
+        public IPool Pool
+        {
+            get { return this.detailForm.Pool; }
+            set { this.detailForm.Pool = value; }
+        }
+
         public EntityFormControl DetailForm
         {
             get { return this.detailForm; }

@@ -93,7 +93,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return this.obj.Extent;
 			}
 		}
 
@@ -205,7 +205,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return this.obj.Extent;
 			}
 		}
 

@@ -183,6 +183,7 @@ namespace DatenMeister.WPF.Controls
         private void buttonNew_Click(object sender, RoutedEventArgs e)
         {
             var form = new DetailDialog();
+            form.Pool = this.Extent.Pool;
             form.DetailForm.EditMode = EditMode.New;
             form.DetailForm.FormViewInfo = this.DetailViewInfo;
             form.DetailForm.ElementFactory = this.ElementFactory;
@@ -227,6 +228,7 @@ namespace DatenMeister.WPF.Controls
                 Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
 
                 var form = new DetailDialog();
+                form.Pool = this.Extent.Pool;
                 form.DetailForm.EditMode = EditMode.Edit;
                 form.DetailForm.FormViewInfo = this.DetailViewInfo;
                 form.DetailForm.ElementFactory = this.ElementFactory;

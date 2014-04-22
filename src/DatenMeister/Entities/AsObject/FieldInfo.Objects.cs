@@ -100,7 +100,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return this.obj.Extent;
 			}
 		}
 
@@ -245,7 +245,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return this.obj.Extent;
 			}
 		}
 
@@ -386,7 +386,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return this.obj.Extent;
 			}
 		}
 
@@ -527,7 +527,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return this.obj.Extent;
 			}
 		}
 
@@ -690,7 +690,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return this.obj.Extent;
 			}
 		}
 
@@ -716,6 +716,171 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public void setClickUrl(System.String value)
         {
             this.set("clickUrl", value);
+        }
+
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class ReferenceByValue : DatenMeister.IObject
+    {
+        private DatenMeister.IObject obj;
+        public ReferenceByValue(DatenMeister.IObject obj)
+        {
+            this.obj = obj;
+        }
+
+        public ReferenceByValue(DatenMeister.IObject obj, object title, object name, object propertyValue, object referenceUrl)
+            : this(obj)
+        {
+            this.set("title", title);
+            this.set("name", name);
+            this.set("propertyValue", propertyValue);
+            this.set("referenceUrl", referenceUrl);
+        }
+
+        #region IObject Implementation
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public object get(string propertyName)
+        {
+            return this.obj.get(propertyName);
+        }
+
+        /// <summary>
+        /// Gets all properties as key value pairs
+        /// </summary>
+        /// <returns></returns>
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
+        {
+            return this.obj.getAll();
+        }
+
+        /// <summary>
+        /// Checks, if a certain property is set
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if set</returns>
+        public bool isSet(string propertyName)
+        {
+            return this.obj.isSet(propertyName);
+        }
+
+        /// <summary>
+        /// Sets the value of the property 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="value">Value to be set</param>
+        public void set(string propertyName, object value)
+        {
+            this.obj.set(propertyName, value);
+        }
+
+        /// <summary>
+        /// Unsets the property
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be removed</param>
+        public bool unset(string propertyName)
+        {
+            return this.obj.unset(propertyName);
+        }
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        public void delete()
+        {
+            this.obj.delete();
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                return this.obj.Id;
+            }
+        }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				return this.obj.Extent;
+			}
+		}
+
+        #endregion
+
+        public System.String getPropertyValue()
+        {
+            var result = this.get("propertyValue");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setPropertyValue(System.String value)
+        {
+            this.set("propertyValue", value);
+        }
+
+        public System.String getReferenceUrl()
+        {
+            var result = this.get("referenceUrl");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setReferenceUrl(System.String value)
+        {
+            this.set("referenceUrl", value);
+        }
+
+        public System.String getTitle()
+        {
+            var result = this.get("title");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setTitle(System.String value)
+        {
+            this.set("title", value);
+        }
+
+        public System.String getName()
+        {
+            var result = this.get("name");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setName(System.String value)
+        {
+            this.set("name", value);
+        }
+
+        public System.Boolean isReadOnly()
+        {
+            var result = this.get("isReadOnly");
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+        }
+
+        public void setReadOnly(System.Boolean value)
+        {
+            this.set("isReadOnly", value);
         }
 
     }
@@ -813,7 +978,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return this.obj.Extent;
 			}
 		}
 
@@ -943,7 +1108,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return this.obj.Extent;
 			}
 		}
 
@@ -1128,7 +1293,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return this.obj.Extent;
 			}
 		}
 

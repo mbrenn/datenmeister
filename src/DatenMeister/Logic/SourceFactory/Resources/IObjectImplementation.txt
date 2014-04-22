@@ -81,7 +81,7 @@
 		{
 			get
 			{
-				throw this.obj.Extent;
+				return this.obj.Extent;
 			}
 		}
 
