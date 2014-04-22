@@ -16,6 +16,7 @@ types = [
          DatenMeister.Entities.FieldInfos.TextField,
          DatenMeister.Entities.FieldInfos.ActionButton,
          DatenMeister.Entities.FieldInfos.ReferenceByValue,
+         DatenMeister.Entities.FieldInfos.ReferenceByRef,
          DatenMeister.Entities.FieldInfos.View,
          DatenMeister.Entities.FieldInfos.FormView,
          DatenMeister.Entities.FieldInfos.TableView]
