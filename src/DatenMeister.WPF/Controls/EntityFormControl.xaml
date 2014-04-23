@@ -19,7 +19,7 @@
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="btnCancel" Click="btnCancel_Click">Cancel</Button>
-            <Button x:Name="btnOK" Click="btnOK_Click">OK</Button>
+            <Button x:Name="btnOK" Click="btnOK_Click" IsCancel="True">OK</Button>
         </StackPanel>
     </Grid>
 </UserControl>
