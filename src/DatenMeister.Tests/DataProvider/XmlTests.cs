@@ -195,17 +195,27 @@ namespace DatenMeister.Tests.DataProvider
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             var valueE1 = pool.ResolveByPath("test:///#e1") as IObject;
+            var valueE2 = pool.ResolveByPath("test:///#e2") as IObject;
             Assert.That(valueE4, Is.Not.Null);
 
             valueE4.set("reference", valueE1);
 
-            var element = document.Elements("element")
+            var element = document.Root.Elements("element")
                 .Where(x => (x.Attribute("id") ?? new XAttribute("id", string.Empty)).Value == "e4")
                 .FirstOrDefault();
-
             Assert.That(element, Is.Not.Null);
             Assert.That(element.Attribute("reference-ref"), Is.Not.Null);
             Assert.That(element.Attribute("reference-ref").Value, Is.EqualTo("#e1"));
+
+            valueE4.set("reference", valueE2);
+
+            var element2 = document.Elements("element")
+                .Where(x => (x.Attribute("id") ?? new XAttribute("id", string.Empty)).Value == "e4")
+                .FirstOrDefault();
+
+            Assert.That(element2, Is.Not.Null);
+            Assert.That(element2.Attribute("reference-ref"), Is.Not.Null);
+            Assert.That(element2.Attribute("reference-ref").Value, Is.EqualTo("#e2"));
         }
     }
 }

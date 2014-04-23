@@ -3,6 +3,7 @@ using BurnSystems.Test;
 using DatenMeister;
 using DatenMeister.DataProvider.Common;
 using DatenMeister.Logic;
+using DatenMeister.Pool;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -243,8 +244,7 @@ namespace DatenMeister.DataProvider.Xml
             else if (this.Node.Attribute(propertyName) != null)
             {
                 // Checks, if we have multiple objects, if yes, throw exception. 
-                // Check, if we have an attribute with the given name, if yes, set the property
-            
+                // Check, if we have an attribute with the given name, if yes, set the property            
                 this.Node.Attribute(propertyName).Value = value.ToString();
                 this.Extent.IsDirty = true;
             }
@@ -264,9 +264,28 @@ namespace DatenMeister.DataProvider.Xml
                 this.Node.Add(new XAttribute(propertyName, value));
                 this.Extent.IsDirty = true;
             }
+            else if (value is IObject)
+            {
+                var valueAsIObject = value as IObject;
+                // Set as an attribute and reference
+                var poolResolver = new PoolResolver(this.Extent.Pool);
+                var path = poolResolver.GetResolvePath(valueAsIObject);
+
+                // Checks, if attribute is existing
+                var attribute = this.Node.Attribute(propertyName + "-ref");
+                if (attribute == null)
+                {
+                    attribute = new XAttribute(propertyName + "-ref", path);
+                    this.Node.Add(attribute);
+                }
+                else
+                {
+                    attribute.Value = path;
+                }
+            }
             else
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("We do not know how to set the value to the XmlObject");
             }
 
             // If property name is an id, we use this id for setting the id of the entity
