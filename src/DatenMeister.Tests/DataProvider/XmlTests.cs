@@ -209,13 +209,17 @@ namespace DatenMeister.Tests.DataProvider
 
             valueE4.set("reference", valueE2);
 
-            var element2 = document.Elements("element")
+            var element2 = document.Root.Elements("element")
                 .Where(x => (x.Attribute("id") ?? new XAttribute("id", string.Empty)).Value == "e4")
                 .FirstOrDefault();
 
             Assert.That(element2, Is.Not.Null);
             Assert.That(element2.Attribute("reference-ref"), Is.Not.Null);
             Assert.That(element2.Attribute("reference-ref").Value, Is.EqualTo("#e2"));
+
+            var retrievedValue = valueE4.get("reference").AsIObject();
+            Assert.That(retrievedValue, Is.Not.Null);
+            Assert.That(retrievedValue.Id, Is.EqualTo("e2"));
         }
     }
 }

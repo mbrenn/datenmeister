@@ -108,14 +108,20 @@ namespace DatenMeister.Pool
         /// </summary>
         /// <param name="obj">Object whose resolve path is required</param>
         /// <returns>The resolvepath of the object</returns>
-        public string GetResolvePath(IObject obj)
+        public string GetResolvePath(IObject obj, IObject context = null)
         {
             Ensure.That(obj.Extent != null, "GetResolvePath: Given object has no extent");
             Ensure.That(obj.Extent.Pool != null, "GetResolvePath: Given object is attached to an extent without connected pool");
 
             var result = string.Format("{0}#{1}", obj.Extent.ContextURI(), obj.Id);
+            if (context != null)
+            {
+                var contextPath = this.GetResolvePath(context);
+                Uri uri = new Uri(contextPath);
+                result = uri.MakeRelativeUri(new Uri(result)).ToString();
+            }
 #if DEBUG
-            var backCheck=Resolve(result) as IObject ;
+            var backCheck = Resolve(result, context) as IObject;
 
             Ensure.That(backCheck != null, "GetResolvePath returned an unresolvable object: " + result);
             Ensure.That(backCheck.Id == obj.Id, "GetResolvePath returned wrong object: " + result);
