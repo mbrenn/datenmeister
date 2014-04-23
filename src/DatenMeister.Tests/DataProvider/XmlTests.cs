@@ -108,10 +108,10 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestIdConcept()
         {
-            var document = XDocument.Parse ( 
-                "<root>" + 
-                    "<element id=\"e1\" />" + 
-                    "<element id=\"e2\" />" + 
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
                     "<element />" + // No element, should throw an exception
                 "</root>");
 
@@ -132,7 +132,7 @@ namespace DatenMeister.Tests.DataProvider
         /// Tests the reference concet
         /// </summary>
         [Test]
-        public void TestReferenceWithFullPath ( )
+        public void TestReferenceWithFullPath()
         {
             var document = XDocument.Parse(
                 "<root>" +
@@ -153,6 +153,59 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(refValueAsIObject, Is.Not.Null);
 
             Assert.That(refValueAsIObject.Id, Is.EqualTo("e1"));
+        }
+
+        [Test]
+        public void TestReferenceWithPartialPath()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" reference-ref=\"#e1\" />" + // No element, should throw an exception
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.Add(xmlExtent, null);
+
+            var value = pool.ResolveByPath("test:///#e4") as IObject;
+            Assert.That(value, Is.Not.Null);
+
+            var refValue = value.get("reference");
+            var refValueAsIObject = refValue.AsSingle().AsIObject();
+            Assert.That(refValueAsIObject, Is.Not.Null);
+
+            Assert.That(refValueAsIObject.Id, Is.EqualTo("e1"));
+        }
+
+        [Test]
+        public void TestSetReference()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" />" + // No element, should throw an exception
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.Add(xmlExtent, null);
+
+            var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
+            var valueE1 = pool.ResolveByPath("test:///#e1") as IObject;
+            Assert.That(valueE4, Is.Not.Null);
+
+            valueE4.set("reference", valueE1);
+
+            var element = document.Elements("element")
+                .Where(x => (x.Attribute("id") ?? new XAttribute("id", string.Empty)).Value == "e4")
+                .FirstOrDefault();
+
+            Assert.That(element, Is.Not.Null);
+            Assert.That(element.Attribute("reference-ref"), Is.Not.Null);
+            Assert.That(element.Attribute("reference-ref").Value, Is.EqualTo("#e1"));
         }
     }
 }
