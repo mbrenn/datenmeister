@@ -35,9 +35,9 @@ namespace DatenMeister.DataProvider.Common
         /// </summary>
         /// <param name="pool">Pool being used to resolve by path</param>
         /// <returns>Object to be resolved</returns>
-        public object Resolve(IPool pool)
+        public object Resolve(IPool pool, IObject context)
         {
-            return pool.ResolveByPath(this.Path);
+            return pool.ResolveByPath(this.Path, context);
         }
     }
 }

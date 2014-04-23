@@ -19,7 +19,7 @@ namespace DatenMeister
         /// <param name="pool">Pool, which shall be used to resolve the object</param>
         /// <param name="obj">Object that is used for resolvinb</param>
         /// <returns>Returned object that can be used</returns>
-        public static object Resolve(this IPool pool, object obj)
+        public static object Resolve(this IPool pool, IObject context, object obj)
         {
             var asEnumerable = obj as IEnumerable;
             if (asEnumerable != null && !(obj is string))
@@ -29,7 +29,7 @@ namespace DatenMeister
                 {
                     // Not very beautiful. It would be better to make this more abstract and to resolve
                     // the values within the list itself
-                    list.Add(Resolve(pool, value));
+                    list.Add(Resolve(pool, context, value));
                 }
 
                 return list;
@@ -39,7 +39,8 @@ namespace DatenMeister
             if (asResolvable != null)
             {
                 // Resolve object and see, if it can be further resolved
-                return Resolve(pool, asResolvable.Resolve(pool));
+                var resolved = asResolvable.Resolve(pool, context);
+                return Resolve(pool, context, resolved);
             }
 
             return obj;
@@ -52,7 +53,7 @@ namespace DatenMeister
         /// <param name="pool">Pool being used to resolve</param>
         /// <param name="obj">Object to be resolved</param>
         /// <returns>Object being resolved</returns>
-        public static object ResolveByPath(this IPool pool, string obj)
+        public static object ResolveByPath(this IPool pool, string obj, IObject context = null)
         {
             // at the moment, nothing to resolve
             var objAsString = obj as String;
@@ -60,7 +61,7 @@ namespace DatenMeister
             if (objAsString != null)
             {
                 var poolResolver = new PoolResolver(pool);
-                return poolResolver.Resolve(objAsString);
+                return poolResolver.Resolve(objAsString, context);
             }
 
             throw new NotImplementedException("Type of resolve cannot be done...");

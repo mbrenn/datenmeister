@@ -77,7 +77,7 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Resolved object</returns>
         private object Resolve(object value)
         {
-            return this.Extent.Pool.Resolve(value);
+            return this.Extent.Pool.Resolve(this, value);
         }
 
         /// <summary>

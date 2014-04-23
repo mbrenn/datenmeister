@@ -42,9 +42,19 @@ namespace DatenMeister.Pool
         /// </summary>
         /// <param name="url">Url to be used</param>
         /// <returns>Resolved extent or url</returns>
-        public object Resolve(string url)
+        public object Resolve(string url, IObject context = null)
         {
-            var uri = new Uri(url);
+            Uri uri;
+            string contextPath = null;
+            if (context != null)
+            {
+                contextPath = this.GetResolvePath(context);
+                uri = new Uri(new Uri(contextPath), url);
+            }
+            else
+            {
+                uri = new Uri(url);
+            }
 
             //
             // First, retrieve the extent matching uri
