@@ -31,7 +31,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var currentValue = detailObject == null ?
                 null : detailObject.get(fieldInfo.get("name").AsSingle().ToString()).AsSingle() as IObject;
             string currentId = string.Empty;
-            if ( currentValue != null )
+            if (currentValue != null)
             {
                 currentId = currentValue.Id;
             }
