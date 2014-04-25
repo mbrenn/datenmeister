@@ -29,7 +29,12 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var resolvedElements = resolver.ResolveAsObjects(url);
 
             var currentValue = detailObject == null ?
-                null : detailObject.get(fieldInfo.get("name").AsSingle().ToString()).AsSingle().ToString();
+                null : detailObject.get(fieldInfo.get("name").AsSingle().ToString()).AsSingle() as IObject;
+            string currentId = string.Empty;
+            if ( currentValue != null )
+            {
+                currentId = currentValue.Id;
+            }
 
             // Creates the dropdown box
             var dropDown = new ComboBox();
@@ -46,7 +51,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 var item = new Item<IObject>(stringValue, valueAsIObject);
                 values.Add(item);
 
-                if (currentValue == stringValue)
+                if (currentId == valueAsIObject.Id)
                 {
                     selectedValue = n;
                 }
