@@ -35,14 +35,17 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var dropDown = new ComboBox();
 
             // Retrieve the values and add them
-            var values = new List<string>();
+            var values = new List<Item<IObject>>();
             var n = 0;
             var selectedValue = -1;
             foreach (var value in resolvedElements)
             {
                 var valueAsIObject = value as IObject;
                 var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
-                values.Add(stringValue);
+
+                var item = new Item<IObject>(stringValue, valueAsIObject);
+                values.Add(item);
+
                 if (currentValue == stringValue)
                 {
                     selectedValue = n;
@@ -72,7 +75,38 @@ namespace DatenMeister.WPF.Controls.GuiElements
         public void SetData(IObject detailObject, ElementCacheEntry entry)
         {
             var combobox = entry.WPFElement as ComboBox;
-            detailObject.set(entry.FieldInfo.get("name").ToString(), combobox.SelectedValue);
+            var selectedObject = combobox.SelectedValue as Item<IObject>;
+
+            if (selectedObject != null)
+            {
+                detailObject.set(entry.FieldInfo.get("name").ToString(), selectedObject.Value);
+            }
+        }
+
+        public class Item<T>
+        {
+            public string Title
+            {
+                get;
+                set;
+            }
+
+            public T Value
+            {
+                get;
+                set;
+            }
+
+            public Item(string title, T value)
+            {
+                this.Title = title;
+                this.Value = value;
+            }
+
+            public override string ToString()
+            {
+                return this.Title;
+            }
         }
     }
 }
