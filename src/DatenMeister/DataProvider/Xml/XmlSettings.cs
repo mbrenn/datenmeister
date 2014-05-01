@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DatenMeister.DataProvider.Xml
 {
@@ -24,6 +25,15 @@ namespace DatenMeister.DataProvider.Xml
         /// Gets or sets the skips the root node by the enumeration of elements
         /// </summary>
         public bool SkipRootNode
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or set the function that is capable to initialize the database
+        /// </summary>
+        public Action<XDocument> InitDatabaseFunction
         {
             get;
             set;

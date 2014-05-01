@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
 using System;
@@ -191,16 +192,25 @@ namespace DatenMeister.WPF.Windows
             {
                 var xmlExtent = (this.ProjectExtent) as XmlExtent;
 
-                // Copy 
+                // Prepare extent, receiving the copy
                 var copiedExtent = new XmlExtent(
                     XDocument.Parse("<export />"),
                     xmlExtent.Uri,
                     xmlExtent.Settings);
+                var pool = new DatenMeisterPool();
+                pool.Add(copiedExtent, null);
 
-                throw new NotImplementedException("Copying does not exist at the moment");
+                // Initialize database
+                if (xmlExtent.Settings != null && xmlExtent.Settings.InitDatabaseFunction != null)
+                {
+                    xmlExtent.Settings.InitDatabaseFunction(copiedExtent.XmlDocument);
+                }
+
+                // Executes the copying
+                ExtentCopier.Copy(xmlExtent, copiedExtent);
 
                 // Stores the xml document
-                xmlExtent.XmlDocument.Save(dialog.FileName);
+                copiedExtent.XmlDocument.Save(dialog.FileName);
             }
 
         }
