@@ -261,6 +261,162 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     })(exports.ActionButton || (exports.ActionButton = {}));
     var ActionButton = exports.ActionButton;
 
+    (function (ReferenceByValue) {
+        ReferenceByValue.TypeName = 'ReferenceByValue';
+
+        function create(title, name, referenceUrl, propertyValue) {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'ReferenceByValue');
+            if (title !== undefined) {
+                result.set('title', title);
+            }
+
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (referenceUrl !== undefined) {
+                result.set('referenceUrl', referenceUrl);
+            }
+
+            if (propertyValue !== undefined) {
+                result.set('propertyValue', propertyValue);
+            }
+
+            return result;
+        }
+        ReferenceByValue.create = create;
+
+        function getPropertyValue(item) {
+            return item.get('propertyValue');
+        }
+        ReferenceByValue.getPropertyValue = getPropertyValue;
+
+        function setPropertyValue(item, value) {
+            item.set('propertyValue', value);
+        }
+        ReferenceByValue.setPropertyValue = setPropertyValue;
+
+        function getReferenceUrl(item) {
+            return item.get('referenceUrl');
+        }
+        ReferenceByValue.getReferenceUrl = getReferenceUrl;
+
+        function setReferenceUrl(item, value) {
+            item.set('referenceUrl', value);
+        }
+        ReferenceByValue.setReferenceUrl = setReferenceUrl;
+
+        function getTitle(item) {
+            return item.get('title');
+        }
+        ReferenceByValue.getTitle = getTitle;
+
+        function setTitle(item, value) {
+            item.set('title', value);
+        }
+        ReferenceByValue.setTitle = setTitle;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        ReferenceByValue.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        ReferenceByValue.setName = setName;
+
+        function isReadOnly(item) {
+            return item.get('isReadOnly');
+        }
+        ReferenceByValue.isReadOnly = isReadOnly;
+
+        function setReadOnly(item, value) {
+            item.set('isReadOnly', value);
+        }
+        ReferenceByValue.setReadOnly = setReadOnly;
+    })(exports.ReferenceByValue || (exports.ReferenceByValue = {}));
+    var ReferenceByValue = exports.ReferenceByValue;
+
+    (function (ReferenceByRef) {
+        ReferenceByRef.TypeName = 'ReferenceByRef';
+
+        function create(title, name, referenceUrl, propertyValue) {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'ReferenceByRef');
+            if (title !== undefined) {
+                result.set('title', title);
+            }
+
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (referenceUrl !== undefined) {
+                result.set('referenceUrl', referenceUrl);
+            }
+
+            if (propertyValue !== undefined) {
+                result.set('propertyValue', propertyValue);
+            }
+
+            return result;
+        }
+        ReferenceByRef.create = create;
+
+        function getPropertyValue(item) {
+            return item.get('propertyValue');
+        }
+        ReferenceByRef.getPropertyValue = getPropertyValue;
+
+        function setPropertyValue(item, value) {
+            item.set('propertyValue', value);
+        }
+        ReferenceByRef.setPropertyValue = setPropertyValue;
+
+        function getReferenceUrl(item) {
+            return item.get('referenceUrl');
+        }
+        ReferenceByRef.getReferenceUrl = getReferenceUrl;
+
+        function setReferenceUrl(item, value) {
+            item.set('referenceUrl', value);
+        }
+        ReferenceByRef.setReferenceUrl = setReferenceUrl;
+
+        function getTitle(item) {
+            return item.get('title');
+        }
+        ReferenceByRef.getTitle = getTitle;
+
+        function setTitle(item, value) {
+            item.set('title', value);
+        }
+        ReferenceByRef.setTitle = setTitle;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        ReferenceByRef.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        ReferenceByRef.setName = setName;
+
+        function isReadOnly(item) {
+            return item.get('isReadOnly');
+        }
+        ReferenceByRef.isReadOnly = isReadOnly;
+
+        function setReadOnly(item, value) {
+            item.set('isReadOnly', value);
+        }
+        ReferenceByRef.setReadOnly = setReadOnly;
+    })(exports.ReferenceByRef || (exports.ReferenceByRef = {}));
+    var ReferenceByRef = exports.ReferenceByRef;
+
     (function (View) {
         View.TypeName = 'View';
 
