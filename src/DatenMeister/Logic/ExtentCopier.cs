@@ -26,6 +26,11 @@ namespace DatenMeister.Logic
         }
 
         /// <summary>
+        /// Maps the objects from source to target
+        /// </summary>
+        private Dictionary<string, IObject> mapping = new Dictionary<string, IObject>();
+
+        /// <summary>
         /// Initializes a new instance of the ExtentCopier class
         /// </summary>
         /// <param name="source">Source to be copied</param>
@@ -45,23 +50,48 @@ namespace DatenMeister.Logic
         /// </summary>
         public void Copy()
         {
+            this.mapping.Clear();
+
             // Ok... How to do... First. Get all elements
             var elements = this.Source.Elements();
+            var deferredActions = new List<Action>();
+
             foreach (var element in elements)
             {
                 IObject type = null;
-                if ( element is IElement)
+                if (element is IElement)
                 {
                     type = (element as IElement).getMetaClass();
                 }
 
                 var createdObject = this.Target.CreateObject(type);
-                
+                this.mapping[element.Id] = createdObject;
+
                 var pairs = element.getAll();
                 foreach (var pair in pairs)
                 {
-                    createdObject.set(pair.PropertyName, pair.Value);
+                    if (Extensions.IsNative(pair.Value))
+                    {
+                        createdObject.set(pair.PropertyName, pair.Value);
+                    }
+                    else if (pair.Value is IObject)
+                    {
+                        var pairValue = pair.Value as IObject;
+
+                        var deferredAction = new Action(() =>
+                            {
+                                createdObject.set(pair.PropertyName, this.mapping[pairValue.Id]);
+                            });
+
+                        deferredActions.Add(deferredAction);
+                    }
                 }
+            }
+
+            // Now execute the deferred action
+            foreach (var action in deferredActions)
+            {
+                action();
             }
         }
 

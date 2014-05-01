@@ -41,6 +41,8 @@ namespace DatenMeister.Tests.PoolLogic
             
             var copyExtent = CreateCopiedExtent(document);
 
+            copyExtent.XmlDocument.Save("c:\\Users\\Martin\\test.xml");
+
             var value = PoolResolver.ResolveInExtent ("test://copy/#e4", copyExtent) as IObject;
             Assert.That(value, Is.Not.Null);
 
