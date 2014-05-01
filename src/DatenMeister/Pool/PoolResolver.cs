@@ -71,6 +71,29 @@ namespace DatenMeister.Pool
                 return null;
             }
 
+            return ResolveInExtent(uri, extent);
+        }
+
+        /// <summary>
+        /// Resolves a specific URI within an extent
+        /// </summary>
+        /// <param name="uri">URI to be used</param>
+        /// <param name="extent">Extent which shall be parsed</param>
+        /// <returns>Retrieved object or null, if not found</returns>
+        public static object ResolveInExtent(string uri, IURIExtent extent)
+        {
+            return ResolveInExtent ( new Uri ( uri ), extent);
+        }
+
+        /// <summary>
+        /// Resolves a specific URI within an extent
+        /// </summary>
+        /// <param name="uri">URI to be used</param>
+        /// <param name="extent">Extent which shall be parsed</param>
+        /// <returns>Retrieved object or null, if not found</returns>
+        public static object ResolveInExtent(Uri uri, IURIExtent extent)
+        {
+
             // Checks, if we have a query identifier
             if (!string.IsNullOrEmpty(uri.Query))
             {

@@ -157,13 +157,25 @@ namespace DatenMeister.DataProvider.Xml
 
             foreach (var attribute in this.Node.Attributes())
             {
-                if (!returns.TryGetValue(attribute.Name.ToString(), out found))
+                // Checks, if the attribute has a -ref as ending. If yes, then it is a reference
+                // to another object
+                var attributeName = attribute.Name.ToString();
+                object attributeValue = attribute.Value;
+
+                if (attributeName.EndsWith("-ref"))
                 {
-                    found = new List<object>();
-                    returns[attribute.Name.ToString()] = found;
+                    // Ok, we got a reference
+                    attributeName = attributeName.Substring(0, attributeName.Length - 4);
+                    attributeValue = new ResolvableByPath(attributeValue.ToString());
                 }
 
-                found.Add(attribute.Value);
+                if (!returns.TryGetValue(attributeName, out found))
+                {
+                    found = new List<object>();
+                    returns[attributeName] = found;
+                }
+
+                found.Add(attributeValue);
             }
 
             // Ok, got all the elements and attributes
