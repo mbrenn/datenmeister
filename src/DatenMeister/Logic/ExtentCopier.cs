@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BurnSystems.Test;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,10 @@ namespace DatenMeister.Logic
         {
             this.Source = source;
             this.Target = target;
+
+            Ensure.That(this.Source != null);
+            Ensure.That(this.Target != null);
+            Ensure.That(this.Source != this.Target);
         }
 
         /// <summary>
@@ -40,6 +45,24 @@ namespace DatenMeister.Logic
         /// </summary>
         public void Copy()
         {
+            // Ok... How to do... First. Get all elements
+            var elements = this.Source.Elements();
+            foreach (var element in elements)
+            {
+                IObject type = null;
+                if ( element is IElement)
+                {
+                    type = (element as IElement).getMetaClass();
+                }
+
+                var createdObject = this.Target.CreateObject(type);
+                
+                var pairs = element.getAll();
+                foreach (var pair in pairs)
+                {
+                    createdObject.set(pair.PropertyName, pair.Value);
+                }
+            }
         }
 
         public static void Copy(IURIExtent source, IURIExtent target)
