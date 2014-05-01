@@ -138,7 +138,7 @@ namespace DatenMeister.Tests.DataProvider
                 "<root>" +
                     "<element id=\"e1\" />" +
                     "<element id=\"e2\" />" +
-                    "<element id=\"e4\" reference-ref=\"test:///#e1\" />" + // No element, should throw an exception
+                    "<element id=\"e4\" reference-ref=\"test:///#e1\" />" +
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
@@ -162,7 +162,7 @@ namespace DatenMeister.Tests.DataProvider
                 "<root>" +
                     "<element id=\"e1\" />" +
                     "<element id=\"e2\" />" +
-                    "<element id=\"e4\" reference-ref=\"#e1\" />" + // No element, should throw an exception
+                    "<element id=\"e4\" reference-ref=\"#e1\" />" + 
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
