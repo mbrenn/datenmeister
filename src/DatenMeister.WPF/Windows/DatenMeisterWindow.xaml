@@ -18,6 +18,9 @@
                 <MenuItem Header="Load..." Click="Load_Click" />
                 <MenuItem Header="Save" Click="Save_Click" />
                 <MenuItem Header="Save As..." Click="SaveAs_Click" />
+                <Separator/>
+                <MenuItem Header="Export as Xml..." Click="ExportAsXml_Click" />
+                <Separator/>
                 <MenuItem Header="Exit" Click="Exit_Click" />
             </MenuItem>
         </Menu>

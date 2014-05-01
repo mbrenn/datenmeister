@@ -182,5 +182,27 @@ namespace DatenMeister.WPF.Windows
                 }
             }
         }
+
+        private void ExportAsXml_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
+            if (dialog.ShowDialog(this) == true)
+            {
+                var xmlExtent = (this.ProjectExtent) as XmlExtent;
+
+                // Copy 
+                var copiedExtent = new XmlExtent(
+                    XDocument.Parse("<export />"),
+                    xmlExtent.Uri,
+                    xmlExtent.Settings);
+
+                throw new NotImplementedException("Copying does not exist at the moment");
+
+                // Stores the xml document
+                xmlExtent.XmlDocument.Save(dialog.FileName);
+            }
+
+        }
     }
 }
