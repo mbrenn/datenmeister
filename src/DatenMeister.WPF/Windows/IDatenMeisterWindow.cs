@@ -72,6 +72,6 @@ namespace DatenMeister.WPF.Windows
         /// </summary>
         /// <param name="name">Name of the window</param>
         /// <param name="parameters">Parameters to be used</param>
-        void AddExtent(string name, AddExtentParameters parameters);
+        void AddExtentView(string name, AddExtentParameters parameters);
     }
 }

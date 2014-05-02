@@ -86,6 +86,18 @@ namespace DatenMeister.Logic
                 isDirty = this.Extent.IsDirty
             };
         }
+
+        public override string ToString()
+        {
+            if (this.Extent != null)
+            {
+                return this.Extent.ContextURI();
+            }
+            else
+            {
+                return "ExtentInstance without Extent";
+            }
+        }
     }
 }
 

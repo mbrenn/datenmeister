@@ -10,6 +10,15 @@ namespace DatenMeister
     public interface IDatenMeisterSettings
     {
         /// <summary>
+        /// Gets or sets the datameister pool
+        /// </summary>
+        DatenMeisterPool Pool
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the project extent
         /// </summary>
         IURIExtent ProjectExtent

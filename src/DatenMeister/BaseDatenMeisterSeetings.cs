@@ -9,6 +9,15 @@ namespace DatenMeister
 {
     public abstract class BaseDatenMeisterSeetings : IDatenMeisterSettings
     {
+        /// <summary>
+        /// Gets or sets the datameister pool
+        /// </summary>
+        public DatenMeisterPool Pool
+        {
+            get;
+            set;
+        }
+
         public IURIExtent ProjectExtent
         {
             get;

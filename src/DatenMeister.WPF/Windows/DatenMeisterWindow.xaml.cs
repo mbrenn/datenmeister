@@ -76,7 +76,7 @@ namespace DatenMeister.WPF.Windows
             this.Title = title;
         }
 
-        public void AddExtent(string name, AddExtentParameters parameters)
+        public void AddExtentView(string name, AddExtentParameters parameters)
         {
             var tab = new TabItem();
             tab.Header = name;
@@ -124,6 +124,7 @@ namespace DatenMeister.WPF.Windows
             var extent = new XmlExtent(newDocument, this.Settings.ProjectExtent.ContextURI());
             extent.Settings = this.Settings.ExtentSettings;
             this.Settings.ProjectExtent = extent;
+            this.Settings.Pool.Add(extent, null);
 
             // Refreshes the view
             this.RefreshAllViews();
@@ -143,6 +144,7 @@ namespace DatenMeister.WPF.Windows
                 // Sets the settings and stores it into the main window. The old one gets removed
                 extent.Settings = this.Settings.ExtentSettings;
                 this.Settings.ProjectExtent = extent;
+                this.Settings.Pool.Add(extent, dialog.FileName);
 
                 // Refreshes all views
                 this.RefreshAllViews();

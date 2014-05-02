@@ -58,7 +58,6 @@ namespace DatenMeister
             {
                 this.CheckIfExtentAlreadyInAnyPool(extent);
                 this.Add(extent, storagePath, null);
-                extent.Pool = this;
             }
         }
 
@@ -67,8 +66,7 @@ namespace DatenMeister
             lock (this.syncObject)
             {
                 this.CheckIfExtentAlreadyInAnyPool(extent);
-                extent.Pool = this;
-                this.extents.Add(
+                this.Add(
                     new ExtentInstance(extent, storagePath, name));
             }
         }

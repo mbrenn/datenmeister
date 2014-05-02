@@ -31,9 +31,9 @@ namespace DatenMeister.WPF.Controls
         private TableView tableViewInfo;
 
         /// <summary>
-        /// Stores the extent
+        /// Stores the extent factory to retrieve the extent
         /// </summary>
-        private Func<IURIExtent, IURIExtent> extent;
+        private Func<IURIExtent, IURIExtent> extentFactory;
 
         public IDatenMeisterWindow MainWindow
         {
@@ -50,7 +50,7 @@ namespace DatenMeister.WPF.Controls
             {
                 if (this.MainWindow != null && this.MainWindow.Settings.ProjectExtent != null)
                 {
-                    return this.extent(this.MainWindow.Settings.ProjectExtent);
+                    return this.extentFactory(this.MainWindow.Settings.ProjectExtent);
                 }
 
                 else
@@ -60,20 +60,23 @@ namespace DatenMeister.WPF.Controls
             }
             set
             {
-                this.extent = (x) => value;
-                if (this.extent != null)
+                this.extentFactory = (x) => value;
+                if (this.extentFactory != null)
                 {
                     this.RefreshItems();
                 }
             }
         }
 
+        /// <summary>
+        /// Gets or sets the factory being used to retrieve the extent
+        /// </summary>
         public Func<IURIExtent, IURIExtent> ExtentFactory
         {
-            get { return this.extent; }
+            get { return this.extentFactory; }
             set
             {
-                this.extent = value;
+                this.extentFactory = value;
                 // Refreshes the items when we get a new extent factory
                 this.RefreshItems();
             }
