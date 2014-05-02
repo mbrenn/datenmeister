@@ -152,7 +152,9 @@ namespace DatenMeister.WPF.Controls
                     }
 
                     var nameLabel = new Label();
-                    nameLabel.Content = name;
+                    nameLabel.Content = string.Format("{0}: ", name);
+                    nameLabel.Margin = new Thickness(10, 5, 10, 5);
+                    nameLabel.FontSize = 16;
                     Grid.SetRow(nameLabel, currentRow);
 
                     formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
@@ -162,6 +164,11 @@ namespace DatenMeister.WPF.Controls
                     var fieldInfoAsElement = fieldInfo as IElement;
                     var wpfElementCreator = WPFElementMapping.Map(fieldInfoAsElement);
                     var wpfElement = wpfElementCreator.GenerateElement(this.DetailObject, fieldInfo, this);
+                    if (wpfElement is FrameworkElement)
+                    {
+                        (wpfElement as FrameworkElement).Margin = new Thickness(10, 5, 10, 5);
+                    }
+
                     Grid.SetRow(wpfElement, currentRow);
                     Grid.SetColumn(wpfElement, 1);
                     formGrid.Children.Add(wpfElement);

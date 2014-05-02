@@ -14,6 +14,8 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var textFieldObject = new DatenMeister.Entities.AsObject.FieldInfo.TextField(fieldInfo);
 
             var textBox = new System.Windows.Controls.TextBox();
+            textBox.FontSize = 16;
+            textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
 
             if (state.EditMode == EditMode.Edit && detailObject != null)
             {

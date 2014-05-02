@@ -38,6 +38,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             // Creates the dropdown box
             var dropDown = new ComboBox();
+            dropDown.FontSize = 16;
 
             // Retrieve the values and add them
             var values = new List<Item<IObject>>();

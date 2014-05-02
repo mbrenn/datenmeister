@@ -13,13 +13,20 @@
         </Grid.RowDefinitions>
         <Grid x:Name="formGrid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnCancel" Click="btnCancel_Click">Cancel</Button>
-            <Button x:Name="btnOK" Click="btnOK_Click">OK</Button>
+            <StackPanel.Resources>
+                <Style x:Key="TouchButton">
+                    <Setter Property="Button.Padding" Value="10,5" />
+                    <Setter Property="Button.Margin" Value="10,5" />
+                    <Setter Property="Label.FontSize" Value="14" />
+                </Style>
+            </StackPanel.Resources>
+            <Button x:Name="btnCancel" Click="btnCancel_Click" Style="{StaticResource TouchButton}">Cancel</Button>
+            <Button x:Name="btnOK" Click="btnOK_Click" Style="{StaticResource TouchButton}">OK</Button>
         </StackPanel>
     </Grid>
 </UserControl>

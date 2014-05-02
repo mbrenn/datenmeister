@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
@@ -16,6 +17,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var checkbox = new DatenMeister.Entities.AsObject.FieldInfo.Checkbox(fieldInfo);
 
             var wpfCheckbox = new CheckBox();
+            wpfCheckbox.LayoutTransform = new ScaleTransform(1.6, 1.6);
             wpfCheckbox.VerticalAlignment = VerticalAlignment.Center;
 
             if (state.EditMode == EditMode.Edit && detailObject != null)
