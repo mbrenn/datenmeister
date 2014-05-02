@@ -25,7 +25,7 @@
                 <MenuItem Header="Exit" Click="Exit_Click" />
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1" Grid.ColumnSpan="2" x:Name="tabMain">
+        <TabControl Grid.Row="1" Grid.ColumnSpan="2" x:Name="tabMain" FontSize="16">
         </TabControl>
     </Grid>
 </Window>
