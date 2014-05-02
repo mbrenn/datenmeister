@@ -273,7 +273,7 @@ namespace DatenMeister.DataProvider.Xml
             {
                 // Ok, we have no attribute and no element with the name.
                 // If this is a simple type, we just assume that this is a property, otherwise no suppurt
-                this.Node.Add(new XAttribute(propertyName, value));
+                this.Node.Add(new XAttribute(propertyName, value.ToString()));
                 this.Extent.IsDirty = true;
             }
             else if (value is IObject)
