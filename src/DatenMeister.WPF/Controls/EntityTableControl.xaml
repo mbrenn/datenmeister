@@ -7,17 +7,32 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel x:Name="areaToolbar" Orientation="Horizontal">
+        <StackPanel x:Name="areaToolbar" Grid.Row="1" Orientation="Horizontal">
             <Button x:Name="buttonNew" Click="buttonNew_Click">New...</Button>
             <Button x:Name="buttonEdit" Click="buttonEdit_Click">Edit...</Button>
             <Button x:Name="buttonDelete" Click="buttonDelete_Click">Delete</Button>
             <Button x:Name="reloadDelete" Click="reloadDelete_Click">Reload</Button>
         </StackPanel>
-        <DataGrid x:Name="gridContent" Grid.Row="1" 
+        <DataGrid x:Name="gridContent" Grid.Row="0" 
                   IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False"
-                  MouseDoubleClick="gridContent_MouseDoubleClick"/>
+                  MouseDoubleClick="gridContent_MouseDoubleClick" FontSize="18" Margin="0">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Padding" Value="10,5,10,5"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.CellStyle>
+        </DataGrid>
     </Grid>
 </UserControl>
