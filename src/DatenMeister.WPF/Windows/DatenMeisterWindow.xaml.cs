@@ -119,7 +119,7 @@ namespace DatenMeister.WPF.Windows
             }
 
             // Get an empty document
-            var newDocument = new XDocument();
+            var newDocument = this.Settings.CreateEmpty();
             
             var extent = new XmlExtent(newDocument, this.Settings.ProjectExtent.ContextURI());
             extent.Settings = this.Settings.ExtentSettings;
