@@ -27,18 +27,9 @@ namespace DatenMeister.WPF.Windows
     public partial class DatenMeisterWindow : Window, IDatenMeisterWindow
     {
         /// <summary>
-        /// Gets or sets the project extent
+        /// Gets or sets the datenmeister settings
         /// </summary>
-        public IURIExtent ProjectExtent
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Stores the settings for the extent
-        /// </summary>
-        public XmlSettings ExtentSettings
+        public IDatenMeisterSettings DatenMeisterSettings
         {
             get;
             set;
@@ -122,7 +113,20 @@ namespace DatenMeister.WPF.Windows
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
+            if (!this.DoesUserAcceptsDataLoss())
+            {
+                return;
+            }
+
+            // Get an empty document
+            var newDocument = new XDocument();
             
+            var extent = new XmlExtent(newDocument, this.DatenMeisterSettings.ProjectExtent.ContextURI());
+            extent.Settings = this.DatenMeisterSettings.ExtentSettings;
+            this.DatenMeisterSettings.ProjectExtent = extent;
+
+            // Refreshes the view
+            this.RefreshAllViews();
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
@@ -134,11 +138,11 @@ namespace DatenMeister.WPF.Windows
                 var loadedFile = XDocument.Load(dialog.FileName);
 
                 // Loads the extent into the same uri
-                var extent = new XmlExtent(loadedFile, this.ProjectExtent.ContextURI());
+                var extent = new XmlExtent(loadedFile, this.DatenMeisterSettings.ProjectExtent.ContextURI());
 
                 // Sets the settings and stores it into the main window. The old one gets removed
-                extent.Settings = this.ExtentSettings;
-                this.ProjectExtent = extent;
+                extent.Settings = this.DatenMeisterSettings.ExtentSettings;
+                this.DatenMeisterSettings.ProjectExtent = extent;
 
                 // Refreshes all views
                 this.RefreshAllViews();
@@ -160,7 +164,7 @@ namespace DatenMeister.WPF.Windows
             dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
             if (dialog.ShowDialog(this) == true)
             {
-                var xmlExtent = (this.ProjectExtent) as XmlExtent;
+                var xmlExtent = (this.DatenMeisterSettings.ProjectExtent) as XmlExtent;
                 Ensure.That(xmlExtent != null);
 
                 // Stores the xml document
@@ -178,8 +182,8 @@ namespace DatenMeister.WPF.Windows
         /// </summary>
         /// <returns>true, if user accepts the data loss</returns>
         private bool DoesUserAcceptsDataLoss()
-        {   
-            if (!this.ProjectExtent.IsDirty)
+        {
+            if (!this.DatenMeisterSettings.ProjectExtent.IsDirty)
             {
                 // Content is not dirty, user will accept no loss
                 return true;
@@ -213,7 +217,7 @@ namespace DatenMeister.WPF.Windows
             dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
             if (dialog.ShowDialog(this) == true)
             {
-                var xmlExtent = (this.ProjectExtent) as XmlExtent;
+                var xmlExtent = (this.DatenMeisterSettings.ProjectExtent) as XmlExtent;
 
                 // Prepare extent, receiving the copy
                 var copiedExtent = new XmlExtent(
@@ -235,7 +239,6 @@ namespace DatenMeister.WPF.Windows
                 // Stores the xml document
                 copiedExtent.XmlDocument.Save(dialog.FileName);
             }
-
         }
     }
 }

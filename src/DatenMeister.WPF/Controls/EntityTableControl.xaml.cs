@@ -48,9 +48,9 @@ namespace DatenMeister.WPF.Controls
         {
             get
             {
-                if (this.MainWindow != null && this.MainWindow.ProjectExtent != null)
+                if (this.MainWindow != null && this.MainWindow.DatenMeisterSettings.ProjectExtent != null)
                 {
-                    return this.extent(this.MainWindow.ProjectExtent);
+                    return this.extent(this.MainWindow.DatenMeisterSettings.ProjectExtent);
                 }
 
                 else
@@ -172,9 +172,9 @@ namespace DatenMeister.WPF.Controls
         {
             if (this.ExtentFactory != null && 
                 this.MainWindow != null &&
-                this.MainWindow.ProjectExtent != null)
+                this.MainWindow.DatenMeisterSettings.ProjectExtent != null)
             {
-                var elements = this.ExtentFactory(this.MainWindow.ProjectExtent)
+                var elements = this.ExtentFactory(this.MainWindow.DatenMeisterSettings.ProjectExtent)
                     .Elements().Select(x => new ObjectDictionary(x)).ToList();
                 this.gridContent.ItemsSource = elements;
             }

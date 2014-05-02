@@ -53,18 +53,9 @@ namespace DatenMeister.WPF.Windows
     public interface IDatenMeisterWindow
     {
         /// <summary>
-        /// Gets the project extent
+        /// Gets or sets the datenmeister settings
         /// </summary>
-        IURIExtent ProjectExtent
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Stores the settings for the extent
-        /// </summary>
-        XmlSettings ExtentSettings
+        IDatenMeisterSettings DatenMeisterSettings
         {
             get;
             set;
