@@ -31,9 +31,17 @@ namespace DatenMeister.WPF.Controls
 
         public EntityFormControl DetailForm
         {
-            get { return this.detailForm; }
+            get
+            {
+                return this.detailForm;
+            }
         }
 
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            this.UpdateWindowTitle();
+        }
         public DetailDialog()
         {
             InitializeComponent();
@@ -47,6 +55,28 @@ namespace DatenMeister.WPF.Controls
         private void detailForm_Cancelled(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// Updates the title of the window
+        /// </summary>
+        public void UpdateWindowTitle()
+        {
+            if (this.detailForm == null)
+            {
+                this.Title = "Detail Item View";
+            }
+            else
+            {
+                if (this.detailForm.EditMode == EditMode.New)
+                {
+                    this.Title = "New Item";
+                }
+                else
+                {
+                    this.Title = "Edit Item";
+                }
+            }
         }
     }
 }
