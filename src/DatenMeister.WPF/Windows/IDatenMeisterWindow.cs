@@ -55,7 +55,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Gets or sets the datenmeister settings
         /// </summary>
-        IDatenMeisterSettings DatenMeisterSettings
+        IDatenMeisterSettings Settings
         {
             get;
             set;
