@@ -120,6 +120,10 @@ namespace DatenMeister.WPF.Windows
             }
         }
 
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
 
         private void Load_Click(object sender, RoutedEventArgs e)
         {
@@ -169,18 +173,37 @@ namespace DatenMeister.WPF.Windows
             this.Close();
         }
 
+        /// <summary>
+        /// Does the user accept the data loss? 
+        /// </summary>
+        /// <returns>true, if user accepts the data loss</returns>
+        private bool DoesUserAcceptsDataLoss()
+        {   
+            if (!this.ProjectExtent.IsDirty)
+            {
+                // Content is not dirty, user will accept no loss
+                return true;
+            }
+
+            if (MessageBox.Show(
+                   this,
+                   Localization_DatenMeister_WPF.ChangesMayBeLost,
+                   Localization_DatenMeister_WPF.CloseApplication,
+                   MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                // Content is dirty and user accepts it
+                return true;
+            }
+
+            // Content is dirty and user does not accept it
+            return false;
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (this.ProjectExtent.IsDirty)
+            if (!this.DoesUserAcceptsDataLoss())
             {
-                if (MessageBox.Show(
-                    this,
-                    Localization_DatenMeister_WPF.ChangesMayBeLost,
-                    Localization_DatenMeister_WPF.CloseApplication,
-                    MessageBoxButton.YesNo) == MessageBoxResult.No)
-                {
-                    e.Cancel = true;
-                }
+                e.Cancel = true;
             }
         }
 

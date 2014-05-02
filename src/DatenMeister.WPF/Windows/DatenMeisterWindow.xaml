@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
         <Menu HorizontalAlignment="Left">
             <MenuItem Header="File">
+                <MenuItem Header="New" Click="New_Click" />
                 <MenuItem Header="Load..." Click="Load_Click" />
                 <MenuItem Header="Save" Click="Save_Click" />
                 <MenuItem Header="Save As..." Click="SaveAs_Click" />
