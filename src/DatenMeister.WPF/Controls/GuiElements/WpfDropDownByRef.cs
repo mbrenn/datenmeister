@@ -12,7 +12,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
     /// Creates a drop down field which gives all possible information
     /// by value
     /// </summary>
-    public class WpfDropDownByRef : IWPFElementGenerator
+    public class WpfDropDownByRef : BaseWpfDropDown, IWPFElementGenerator
     {
         /// <summary>
         /// Initializes a new instance of the WpfDropDownByValue class
@@ -21,98 +21,46 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
         }
 
-        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
+        /// <summary>
+        /// Gets the current element
+        /// </summary>
+        /// <param name="detailObject">Detal</param>
+        /// <returns></returns>
+        protected override object GetCurrentValue()
         {
-            var resolver = new PoolResolver(state.Pool);
-            var url = fieldInfo.get("referenceUrl").AsSingle().ToString();
-            var propertyValue = fieldInfo.get("propertyValue").AsSingle().ToString();
-            var resolvedElements = resolver.ResolveAsObjects(url);
-
-            var currentValue = detailObject == null ?
-                null : detailObject.get(fieldInfo.get("name").AsSingle().ToString()).AsSingle() as IObject;
+            // Gets the current element
+            var currentValue = this.detailObject == null ?
+                null : this.detailObject.get(this.propertyName).AsSingle() as IObject;
             string currentId = string.Empty;
             if (currentValue != null)
             {
                 currentId = currentValue.Id;
             }
 
-            // Creates the dropdown box
-            var dropDown = new ComboBox();
-            dropDown.FontSize = 16;
+            return currentId;
+        }
 
-            // Retrieve the values and add them
-            var values = new List<Item<IObject>>();
-            var n = 0;
-            var selectedValue = -1;
-            foreach (var value in resolvedElements)
+        protected override bool AreValuesEqual(object currentValue, object otherElement)
+        {
+            var valueAsIObject = otherElement as IObject;
+            if (valueAsIObject == null)
             {
-                var valueAsIObject = value as IObject;
-                var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
-
-                var item = new Item<IObject>(stringValue, valueAsIObject);
-                values.Add(item);
-
-                if (currentId == valueAsIObject.Id)
-                {
-                    selectedValue = n;
-                }
-
-                n++;
+                return false;
             }
-
-            // Sets the item source
-            dropDown.ItemsSource = values;
-            dropDown.SelectedIndex = selectedValue;
-
-            // Make thing read-only, if appropriate
-            if (state.EditMode == EditMode.Read)
+            else
             {
-                dropDown.IsReadOnly = true;
+                return currentValue.ToString() == valueAsIObject.Id;
             }
-
-            return dropDown;
         }
 
         /// <summary>
-        /// Sets the database
+        /// Gets the value
         /// </summary>
-        /// <param name="detailObject">Detail object to be set</param>
-        /// <param name="entry">Entry containing used information and references, etc</param>
-        public void SetData(IObject detailObject, ElementCacheEntry entry)
+        /// <param name="detailObject">The detail object being used to retrieve the value</param>
+        /// <returns>The object being returned</returns>
+        protected override object GetValue(IObject detailObject)
         {
-            var combobox = entry.WPFElement as ComboBox;
-            var selectedObject = combobox.SelectedValue as Item<IObject>;
-
-            if (selectedObject != null)
-            {
-                detailObject.set(entry.FieldInfo.get("name").ToString(), selectedObject.Value);
-            }
-        }
-
-        public class Item<T>
-        {
-            public string Title
-            {
-                get;
-                set;
-            }
-
-            public T Value
-            {
-                get;
-                set;
-            }
-
-            public Item(string title, T value)
-            {
-                this.Title = title;
-                this.Value = value;
-            }
-
-            public override string ToString()
-            {
-                return this.Title;
-            }
+            return detailObject;
         }
     }
 }

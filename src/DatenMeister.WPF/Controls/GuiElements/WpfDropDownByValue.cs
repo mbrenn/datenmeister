@@ -12,7 +12,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
     /// Creates a drop down field which gives all possible information
     /// by value
     /// </summary>
-    public class WpfDropDownByValue : IWPFElementGenerator
+    public class WpfDropDownByValue : BaseWpfDropDown, IWPFElementGenerator
     {
         /// <summary>
         /// Initializes a new instance of the WpfDropDownByValue class
@@ -21,59 +21,28 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
         }
 
-        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
+        protected override bool AreValuesEqual(object currentValue, object otherElement)
         {
-            var resolver = new PoolResolver(state.Pool);
-            var url = fieldInfo.get("referenceUrl").AsSingle().ToString();
-            var propertyValue = fieldInfo.get("propertyValue").AsSingle().ToString();
-            var resolvedElements = resolver.ResolveAsObjects(url);
-
-            var currentValue = detailObject == null ?
-                null : detailObject.get(fieldInfo.get("name").AsSingle().ToString()).AsSingle().ToString();
-
-            // Creates the dropdown box
-            var dropDown = new ComboBox();
-            dropDown.FontSize = 16;
-
-            // Retrieve the values and add them
-            var values = new List<string>();
-            var n = 0;
-            var selectedValue = -1;
-            foreach (var value in resolvedElements)
+            var valueAsIObject = otherElement as IObject;
+            if (valueAsIObject != null)
             {
-                var valueAsIObject = value as IObject;
-                var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
-                values.Add(stringValue);
-                if (currentValue == stringValue)
-                {
-                    selectedValue = n;
-                }
-
-                n++;
+                return false;
             }
 
-            // Sets the item source
-            dropDown.ItemsSource = values;
-            dropDown.SelectedIndex = selectedValue;
-
-            // Make thing read-only, if appropriate
-            if (state.EditMode == EditMode.Read)
-            {
-                dropDown.IsReadOnly = true;
-            }
-
-            return dropDown;
+            var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
+            return currentValue.ToString() == stringValue;
         }
 
-        /// <summary>
-        /// Sets the database
-        /// </summary>
-        /// <param name="detailObject">Detail object to be set</param>
-        /// <param name="entry">Entry containing used information and references, etc</param>
-        public void SetData(IObject detailObject, ElementCacheEntry entry)
+        protected override object GetValue(IObject otherElement)
         {
-            var combobox = entry.WPFElement as ComboBox;
-            detailObject.set(entry.FieldInfo.get("name").ToString(), combobox.SelectedValue);
+            return otherElement.get(this.propertyValue).AsSingle().ToString();
+        }
+
+        protected override object GetCurrentValue()
+        {
+            var currentValue = this.detailObject == null ?
+                null : this.detailObject.get(this.propertyName).AsSingle().ToString();
+            return currentValue;
         }
     }
 }
