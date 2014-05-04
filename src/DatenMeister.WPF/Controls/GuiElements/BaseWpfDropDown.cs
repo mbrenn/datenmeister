@@ -57,6 +57,8 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <returns>Generated UI element</returns>
         public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
         {
+            var settings = new WpfDropDownSettings();
+
             // Fills the variable and creates the combobox
             var resolver = new PoolResolver(state.Pool);
             var referenceUrl = fieldInfo.get("referenceUrl").AsSingle().ToString();
@@ -64,6 +66,8 @@ namespace DatenMeister.WPF.Controls.GuiElements
             this.propertyName = fieldInfo.get("name").AsSingle().ToString(); // Stores the name of the property
             this.resolvedElements = resolver.ResolveAsObjects(referenceUrl);
             this.detailObject = detailObject;
+
+            this.Configure ( settings );
 
             // Creates the dropdown box
             var stackPanel = new Grid();
@@ -107,6 +111,40 @@ namespace DatenMeister.WPF.Controls.GuiElements
             }
 
             stackPanel.Children.Add(this.dropDown);
+
+            // Checks, if we have a detail button
+            if (settings.ShowDetailButton)
+            {
+                var button = new Button();
+                button.Content = "Detail";
+                button.Click += (x, y) =>
+                {
+                    var selectedItem = this.dropDown.SelectedItem as Item<object>;
+                    if (selectedItem == null)
+                    {
+                        MessageBox.Show("Nothing selected");
+                    }
+                    else
+                    {
+
+                        var detailDialog = new DetailDialog();
+                        detailDialog.Pool = selectedItem.OriginalObject.Extent.Pool;
+                        detailDialog.DetailForm.EditMode = EditMode.Edit;
+                        detailDialog.DetailForm.FormViewInfo = null; // TODO: Have default detailview infos! this.DetailViewInfo;
+                        detailDialog.DetailForm.DetailObject = selectedItem.OriginalObject;
+                        detailDialog.DetailForm.Accepted += (a, b) => { /* TODO: REFRESH ITEMS */ };
+
+                        detailDialog.Show();
+                    }
+                };
+
+                stackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+                button.Margin = new Thickness(10, 0, 0, 0);
+                button.Padding = new Thickness(10, 0, 10, 0);
+                button.FontSize = 16;
+                Grid.SetColumn(button, 1);
+                stackPanel.Children.Add(button);
+            }
 
             return stackPanel;
         }
@@ -176,6 +214,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             public Item(string title, IObject originalObject, T value)
             {
                 this.Title = title;
+                this.OriginalObject = originalObject;
                 this.Value = value;
             }
 

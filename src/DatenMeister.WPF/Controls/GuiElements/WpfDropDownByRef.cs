@@ -21,6 +21,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
         }
 
+        protected override void Configure(WpfDropDownSettings settings)
+        {
+            settings.ShowDetailButton = true;
+        }
+
         /// <summary>
         /// Gets the current element
         /// </summary>
