@@ -38,6 +38,17 @@ namespace DatenMeister.WPF.Controls.GuiElements
         protected ComboBox dropDown;
 
         /// <summary>
+        /// Configures the the drop down. May be overridden, if necessary.
+        /// The method will be called after all protected variables have been set 
+        /// and ComboBox and their instances has been created.
+        /// </summary>
+        /// <param name="settings">Settings for configuration</param>
+        protected virtual void Configure(WpfDropDownSettings settings)
+        {
+            // Nothing to do per default
+        }
+
+        /// <summary>
         /// Generates the element 
         /// </summary>
         /// <param name="detailObject">Detail object containing all the parameters</param>
@@ -55,8 +66,13 @@ namespace DatenMeister.WPF.Controls.GuiElements
             this.detailObject = detailObject;
 
             // Creates the dropdown box
+            var stackPanel = new Grid();
+            stackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+           
             this.dropDown = new ComboBox();
             this.dropDown.FontSize = 16;
+            this.dropDown.HorizontalAlignment = HorizontalAlignment.Stretch;
+            Grid.SetColumn(this.dropDown, 0);
 
             var currentElement = this.GetCurrentValue();
 
@@ -69,7 +85,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 var valueAsIObject = value as IObject;
                 var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
 
-                var item = new Item<object>(stringValue, this.GetValue(valueAsIObject));
+                var item = new Item<object>(stringValue, valueAsIObject, this.GetValue(valueAsIObject));
                 values.Add(item);
 
                 if (this.AreValuesEqual(currentElement, value))
@@ -90,7 +106,9 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 this.dropDown.IsReadOnly = true;
             }
 
-            return this.dropDown;
+            stackPanel.Children.Add(this.dropDown);
+
+            return stackPanel;
         }
 
         /// <summary>
@@ -125,7 +143,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <param name="entry">Entry containing used information and references, etc</param>
         public void SetData(IObject detailObject, ElementCacheEntry entry)
         {
-            var combobox = entry.WPFElement as ComboBox;
+            var combobox = this.dropDown;
             var selectedObject = combobox.SelectedValue as Item<object>;
 
             if (selectedObject != null)
@@ -142,13 +160,20 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 set;
             }
 
+            public IObject OriginalObject
+            {
+                get;
+                set;
+
+            }
+
             public T Value
             {
                 get;
                 set;
             }
 
-            public Item(string title, T value)
+            public Item(string title, IObject originalObject, T value)
             {
                 this.Title = title;
                 this.Value = value;
