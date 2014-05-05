@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BurnSystems.Logging;
+using BurnSystems.ObjectActivation;
+using DatenMeister.Logic.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +23,11 @@ namespace DatenMeister.WPF.Controls
     /// </summary>
     public partial class DetailDialog : Window
     {
+        /// <summary>
+        /// Stores the logger
+        /// </summary>
+        private static ILog logger = new ClassLogger(typeof(DetailDialog));
+
         /// <summary>
         /// Gets or sets the pool
         /// </summary>
@@ -77,6 +85,40 @@ namespace DatenMeister.WPF.Controls
                     this.Title = "Edit Item";
                 }
             }
+        }
+
+        /// <summary>
+        /// Has to be called, when the dialog for an entity shall be shown
+        /// </summary>
+        /// <param name="value"></param>
+        public static DetailDialog ShowDialogFor(IObject value, IObject viewData = null)
+        {
+            if (viewData == null)
+            {
+                var viewManager = Global.Application.Get<IViewManager>();
+
+                if (viewManager == null)
+                {
+                    logger.Message("No ViewManager for object, so no detail view");
+                    return null;
+                }
+
+                viewData = viewManager.GetDefaultView(value, ViewType.FormView);
+                if (viewData == null)
+                {
+                    logger.Message("No default view had been given.");
+                    return null;
+                }
+            }
+
+            var dialog = new DetailDialog();
+            dialog.Pool = value.Extent.Pool;
+            dialog.DetailForm.EditMode = EditMode.Edit;
+            dialog.DetailForm.FormViewInfo = viewData;
+            dialog.DetailForm.DetailObject = value;
+            dialog.Show();
+
+            return dialog;
         }
     }
 }

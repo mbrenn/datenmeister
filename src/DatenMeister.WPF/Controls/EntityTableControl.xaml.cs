@@ -228,17 +228,11 @@ namespace DatenMeister.WPF.Controls
             }
             else
             {
+                var dialog = DetailDialog.ShowDialogFor(selectedItem.Value, this.DetailViewInfo);
+                Ensure.That(dialog != null);
+                dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+
                 Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
-
-                var form = new DetailDialog();
-                form.Pool = this.Extent.Pool;
-                form.DetailForm.EditMode = EditMode.Edit;
-                form.DetailForm.FormViewInfo = this.DetailViewInfo;
-                form.DetailForm.ElementFactory = this.ElementFactory;
-                form.DetailForm.DetailObject = selectedItem.Value;
-
-                form.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
-                form.Show();
             }
         }
 

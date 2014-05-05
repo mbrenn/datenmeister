@@ -103,6 +103,8 @@
     <Compile Include="Logic\SourceFactory\SourceFactoryBase.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptBuilder.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptSourceFactory.cs" />
+    <Compile Include="Logic\Views\DefaultViewManager.cs" />
+    <Compile Include="Logic\Views\IViewManager.cs" />
     <Compile Include="Logic\Views\ViewHelper.cs" />
     <Compile Include="Pool\PoolResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
