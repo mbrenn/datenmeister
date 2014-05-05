@@ -47,6 +47,7 @@
     <Compile Include="Controls\DetailDialog.xaml.cs">
       <DependentUpon>DetailDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GuiElements\BaseWpfDropDown.cs" />
     <Compile Include="Controls\GuiElements\ElementCacheEntry.cs" />
     <Compile Include="Controls\EntityFormControl.xaml.cs">
       <DependentUpon>EntityFormControl.xaml</DependentUpon>
@@ -59,6 +60,7 @@
     <Compile Include="Controls\GuiElements\WPFComment.cs" />
     <Compile Include="Controls\GuiElements\WpfDropDownByRef.cs" />
     <Compile Include="Controls\GuiElements\WpfDropDownByValue.cs" />
+    <Compile Include="Controls\GuiElements\WpfDropDownSettings.cs" />
     <Compile Include="Controls\GuiElements\WPFElementMapping.cs" />
     <Compile Include="Controls\GuiElements\IWPFElementGenerator.cs" />
     <Compile Include="Controls\GuiElements\WPFTextField.cs" />
