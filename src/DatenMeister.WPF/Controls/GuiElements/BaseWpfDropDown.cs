@@ -126,15 +126,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                     }
                     else
                     {
-
-                        var detailDialog = new DetailDialog();
-                        detailDialog.Pool = selectedItem.OriginalObject.Extent.Pool;
-                        detailDialog.DetailForm.EditMode = EditMode.Edit;
-                        detailDialog.DetailForm.FormViewInfo = null; // TODO: Have default detailview infos! this.DetailViewInfo;
-                        detailDialog.DetailForm.DetailObject = selectedItem.OriginalObject;
-                        detailDialog.DetailForm.Accepted += (a, b) => { /* TODO: REFRESH ITEMS */ };
-
-                        detailDialog.Show();
+                        var dialog = DetailDialog.ShowDialogFor(selectedItem.OriginalObject);
                     }
                 };
 
