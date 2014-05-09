@@ -34,6 +34,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -110,6 +111,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Localization_DatenMeister_WPF.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icons.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icon16.ico" />
+    <Resource Include="resources\icon24.ico" />
+    <Resource Include="resources\icon32.ico" />
+    <Resource Include="resources\icon48.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
