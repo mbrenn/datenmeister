@@ -88,46 +88,6 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
-        /// </summary>
-        internal static System.Drawing.Icon icon16 {
-            get {
-                object obj = ResourceManager.GetObject("icon16", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
-        /// </summary>
-        internal static System.Drawing.Icon icon24 {
-            get {
-                object obj = ResourceManager.GetObject("icon24", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
-        /// </summary>
-        internal static System.Drawing.Icon icon32 {
-            get {
-                object obj = ResourceManager.GetObject("icon32", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
-        /// </summary>
-        internal static System.Drawing.Icon icon48 {
-            get {
-                object obj = ResourceManager.GetObject("icon48", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No object has been selected.  ähnelt.
         /// </summary>
         internal static string NoObjectSelected {
