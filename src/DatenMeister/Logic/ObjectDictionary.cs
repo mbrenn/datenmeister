@@ -58,7 +58,7 @@ namespace DatenMeister.Logic
         {
             if (this.value.isSet(key))
             {
-                value = this.value.get(key);
+                value = this.Get(key);
                 return true;
             }
 
@@ -68,14 +68,14 @@ namespace DatenMeister.Logic
 
         public ICollection<object> Values
         {
-            get { return this.value.getAll().Select(x => x.Value).ToList(); }
+            get { return this.value.getAll().Select(x => this.Get(x.PropertyName)).ToList(); }
         }
 
         public object this[string key]
         {
             get
             {
-                var result = this.value.get(key);
+                var result = this.Get(key);
                 return result.AsSingle();
             }
             set
@@ -143,7 +143,7 @@ namespace DatenMeister.Logic
         {
             foreach (var pair in this.value.getAll())
             {
-                yield return new KeyValuePair<string, object>(pair.PropertyName, pair.Value);
+                yield return new KeyValuePair<string, object>(pair.PropertyName, this.Get(pair.PropertyName));
             }
         }
 
@@ -151,8 +151,18 @@ namespace DatenMeister.Logic
         {
             foreach (var pair in this.value.getAll())
             {
-                yield return new KeyValuePair<string, object>(pair.PropertyName, pair.Value);
+                yield return new KeyValuePair<string, object>(pair.PropertyName, this.Get(pair.PropertyName));
             }
+        }
+
+        /// <summary>
+        /// Gets the the value of one property
+        /// </summary>
+        /// <param name="index">Index to be retrieved</param>
+        /// <returns>Retrieved object </returns>
+        public virtual object Get(string index)
+        {
+            return this.value.get(index);
         }
     }
 }
