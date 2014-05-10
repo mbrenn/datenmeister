@@ -16,5 +16,17 @@ namespace DatenMeister.Logic
             : base(value)
         {
         }
+
+        public override object Get(string index)
+        {
+            var result = base.Get(index).AsSingle();
+            var resultAsIObject = result as IObject;
+            if (resultAsIObject != null)
+            {
+                return resultAsIObject.get("name").AsSingle().ToString();
+            }
+
+            return result.ToString();
+        }
     }
 }

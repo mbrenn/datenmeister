@@ -178,7 +178,7 @@ namespace DatenMeister.WPF.Controls
                 this.MainWindow.Settings.ProjectExtent != null)
             {
                 var elements = this.ExtentFactory(this.MainWindow.Settings.ProjectExtent)
-                    .Elements().Select(x => new ObjectDictionary(x)).ToList();
+                    .Elements().Select(x => new ObjectDictionaryForView(x)).ToList();
                 this.gridContent.ItemsSource = elements;
             }
         }
