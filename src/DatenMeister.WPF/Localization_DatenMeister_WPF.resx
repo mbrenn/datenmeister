@@ -129,4 +129,10 @@
   <data name="NoObjectSelected" xml:space="preserve">
     <value>No object has been selected. </value>
   </data>
+  <data name="QuestionSaveChanges" xml:space="preserve">
+    <value>Changes will get lost. Shall changes be stored before continuing?</value>
+  </data>
+  <data name="QuestionSaveChangesTitle" xml:space="preserve">
+    <value>Changes will get lost</value>
+  </data>
 </root>

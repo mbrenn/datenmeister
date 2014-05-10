@@ -153,14 +153,37 @@ namespace DatenMeister.WPF.Windows
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if (this.currentPath == null)
-            {
-                this.SaveAs_Click(sender, e);
-                return;
-            }
+            this.SaveChanges();
         }
 
         private void SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            this.SaveChangesAs();
+        }
+
+        /// <summary>
+        /// Saves the changes
+        /// </summary>
+        private void SaveChanges()
+        {
+            if (this.currentPath == null)
+            {
+                this.SaveChangesAs();
+                return;
+            }
+            else
+            {
+                var xmlExtent = (this.Settings.ProjectExtent) as XmlExtent;
+                Ensure.That(xmlExtent != null);
+
+                // Stores the xml document
+                xmlExtent.XmlDocument.Save(this.currentPath);
+            }
+        }
+        /// <summary>
+        /// Saves the changes and user may find a new path
+        /// </summary>
+        private void SaveChangesAs()
         {
             var dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
@@ -183,6 +206,7 @@ namespace DatenMeister.WPF.Windows
         /// Does the user accept the data loss? 
         /// </summary>
         /// <returns>true, if user accepts the data loss</returns>
+        [Obsolete]
         private bool DoesUserAcceptsDataLoss()
         {
             if (!this.Settings.ProjectExtent.IsDirty)
@@ -202,6 +226,32 @@ namespace DatenMeister.WPF.Windows
             }
 
             // Content is dirty and user does not accept it
+            return false;
+        }
+
+        /// <summary>
+        /// Does the user wants to save the data
+        /// </summary>
+        /// <returns>true, if user wants to save the data</returns>
+        private bool DoesUserWantsToSaveData()
+        {
+            if (!this.Settings.ProjectExtent.IsDirty)
+            {
+                // Content is not dirty, user will accept that content is not stored
+                return false;
+            }
+
+            if (MessageBox.Show(
+                   this,
+                   Localization_DatenMeister_WPF.QuestionSaveChanges,
+                   Localization_DatenMeister_WPF.QuestionSaveChangesTitle,
+                   MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                // Content is dirty and user wants to save 
+                return true;
+            }
+
+            // Content is dirty and user does not want to save it
             return false;
         }
 

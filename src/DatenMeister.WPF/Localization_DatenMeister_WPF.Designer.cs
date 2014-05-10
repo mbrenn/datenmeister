@@ -95,5 +95,23 @@ namespace DatenMeister.WPF {
                 return ResourceManager.GetString("NoObjectSelected", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes will get lost. Shall changes be stored before continuing? ähnelt.
+        /// </summary>
+        internal static string QuestionSaveChanges {
+            get {
+                return ResourceManager.GetString("QuestionSaveChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes will get lost ähnelt.
+        /// </summary>
+        internal static string QuestionSaveChangesTitle {
+            get {
+                return ResourceManager.GetString("QuestionSaveChangesTitle", resourceCulture);
+            }
+        }
     }
 }
