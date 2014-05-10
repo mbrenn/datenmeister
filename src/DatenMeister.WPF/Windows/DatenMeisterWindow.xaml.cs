@@ -113,9 +113,9 @@ namespace DatenMeister.WPF.Windows
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            if (!this.DoesUserAcceptsDataLoss())
+            if (this.DoesUserWantsToSaveData())
             {
-                return;
+                this.SaveChanges();
             }
 
             // Get an empty document
@@ -178,6 +178,8 @@ namespace DatenMeister.WPF.Windows
 
                 // Stores the xml document
                 xmlExtent.XmlDocument.Save(this.currentPath);
+
+                MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
             }
         }
         /// <summary>
@@ -194,6 +196,7 @@ namespace DatenMeister.WPF.Windows
 
                 // Stores the xml document
                 xmlExtent.XmlDocument.Save(dialog.FileName);
+                this.currentPath = dialog.FileName;
             }
         }
 
@@ -257,9 +260,9 @@ namespace DatenMeister.WPF.Windows
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!this.DoesUserAcceptsDataLoss())
+            if (this.DoesUserWantsToSaveData())
             {
-                e.Cancel = true;
+                this.SaveChanges();
             }
         }
 

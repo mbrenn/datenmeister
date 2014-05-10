@@ -61,6 +61,15 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes have been saved ähnelt.
+        /// </summary>
+        internal static string ChangeHasBeenSaved {
+            get {
+                return ResourceManager.GetString("ChangeHasBeenSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Changes of extent may be lost. Shall closing of application continue? ähnelt.
         /// </summary>
         internal static string ChangesMayBeLost {
