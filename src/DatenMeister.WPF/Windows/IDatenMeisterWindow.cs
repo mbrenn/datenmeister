@@ -11,9 +11,10 @@ namespace DatenMeister.WPF.Windows
     public class AddExtentParameters
     {
         /// <summary>
-        /// Gets or sets the function to be used to create the extent
+        /// Gets or sets the main type, that is used to include the 'new' button. 
+        /// If user presses 'new' in the given form, he will create a new item of the type.
         /// </summary>
-        public Func<IURIExtent, IURIExtent> ExtentFactory
+        public IObject MainType
         {
             get;
             set;
@@ -38,8 +39,18 @@ namespace DatenMeister.WPF.Windows
         }
 
         /// <summary>
+        /// Gets or sets the function to be used to create the extent
+        /// </summary>
+        public Func<IURIExtent, IURIExtent> ExtentFactory
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the factory being used to create a new element out of the given extent
         /// </summary>
+        [Obsolete]
         public Func<IObject> ElementFactory
         {
             get;

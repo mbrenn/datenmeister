@@ -8,7 +8,7 @@ namespace DatenMeister.DataProvider
 {
     /// <summary>
     /// Just a generic object that is not aligned to any data provider or any other object. 
-    /// The method is multithreading safe
+    /// The method is multithreading safe. Can be seen as a completely decoupled thing. 
     /// </summary>
     public class GenericObject : IObject
     {
@@ -22,7 +22,7 @@ namespace DatenMeister.DataProvider
         /// </summary>
         private string id;
 
-        public GenericObject(IURIExtent extent, string id)
+        public GenericObject(IURIExtent extent = null, string id = null)
         {
             this.owner = extent;
             this.id = id;

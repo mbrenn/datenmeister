@@ -86,7 +86,7 @@ namespace DatenMeister.WPF.Windows
             entityList.ExtentFactory = parameters.ExtentFactory;
             entityList.TableViewInfo = parameters.TableViewInfo;
             entityList.DetailViewInfo = parameters.DetailViewInfo;
-            entityList.ElementFactory = parameters.ElementFactory;
+            entityList.MainType = parameters.MainType;
 
             var grid = new Grid();
             grid.Children.Add(entityList);

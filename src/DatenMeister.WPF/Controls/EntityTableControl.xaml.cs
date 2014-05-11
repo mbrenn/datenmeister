@@ -83,6 +83,15 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
+        /// Gets or sets the type that shall be created, when user clicks on 'new'.
+        /// </summary>
+        public IObject MainType
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the table view info
         /// </summary>
         public IObject TableViewInfo
@@ -185,14 +194,9 @@ namespace DatenMeister.WPF.Controls
 
         private void buttonNew_Click(object sender, RoutedEventArgs e)
         {
-            var form = new DetailDialog();
-            form.Pool = this.Extent.Pool;
-            form.DetailForm.EditMode = EditMode.New;
-            form.DetailForm.FormViewInfo = this.DetailViewInfo;
-            form.DetailForm.ElementFactory = this.ElementFactory;
-
-            form.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
-            form.Show();
+            var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.Extent, this.DetailViewInfo);
+            Ensure.That(dialog != null);
+            dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
@@ -228,11 +232,12 @@ namespace DatenMeister.WPF.Controls
             }
             else
             {
+                Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
+
                 var dialog = DetailDialog.ShowDialogFor(selectedItem.Value, this.DetailViewInfo);
                 Ensure.That(dialog != null);
                 dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
 
-                Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
             }
         }
 

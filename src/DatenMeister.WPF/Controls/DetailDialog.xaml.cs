@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Logging;
 using BurnSystems.ObjectActivation;
+using DatenMeister.DataProvider;
 using DatenMeister.Logic.Views;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace DatenMeister.WPF.Controls
             base.OnActivated(e);
             this.UpdateWindowTitle();
         }
+
         public DetailDialog()
         {
             InitializeComponent();
@@ -88,10 +90,58 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
+        /// Creates the dialog, when user shall define the properties of a new item. 
+        /// </summary>
+        /// <param name="type">Type of object to be created</param>
+        /// <param name="viewData">Available view</param>
+        /// <returns>The created type</returns>
+        public static DetailDialog ShowDialogToCreateTypeOf(IObject type, IURIExtent extent, IObject viewData = null)
+        {
+            var temp = new GenericElement(extent: extent, type: type);
+            viewData = GetView(temp, viewData);
+
+            if (viewData == null)
+            {
+                return null;
+            }
+
+            var dialog = new DetailDialog();
+            dialog.Pool = extent.Pool;
+            dialog.DetailForm.EditMode = EditMode.New;
+            dialog.DetailForm.FormViewInfo = viewData;
+            dialog.DetailForm.Extent = extent;
+            dialog.DetailForm.TypeToCreate = type;
+            dialog.Show();
+
+            return dialog;
+            
+        }
+
+        /// <summary>
         /// Has to be called, when the dialog for an entity shall be shown
         /// </summary>
         /// <param name="value"></param>
         public static DetailDialog ShowDialogFor(IObject value, IObject viewData = null)
+        {
+            viewData = GetView(value, viewData);
+
+            if (viewData == null)
+            {
+                return null;
+            }
+
+            var dialog = new DetailDialog();
+            dialog.Pool = value.Extent.Pool;
+            dialog.DetailForm.EditMode = EditMode.Edit;
+            dialog.DetailForm.FormViewInfo = viewData;
+            dialog.DetailForm.Extent = value.Extent;
+            dialog.DetailForm.DetailObject = value;
+            dialog.Show();
+
+            return dialog;
+        }
+
+        private static IObject GetView(IObject value, IObject viewData)
         {
             if (viewData == null)
             {
@@ -100,25 +150,17 @@ namespace DatenMeister.WPF.Controls
                 if (viewManager == null)
                 {
                     logger.Message("No ViewManager for object, so no detail view");
-                    return null;
                 }
-
-                viewData = viewManager.GetDefaultView(value, ViewType.FormView);
-                if (viewData == null)
+                else
                 {
-                    logger.Message("No default view had been given.");
-                    return null;
+                    viewData = viewManager.GetDefaultView(value, ViewType.FormView);
+                    if (viewData == null)
+                    {
+                        logger.Message("No default view had been given.");
+                    }
                 }
             }
-
-            var dialog = new DetailDialog();
-            dialog.Pool = value.Extent.Pool;
-            dialog.DetailForm.EditMode = EditMode.Edit;
-            dialog.DetailForm.FormViewInfo = viewData;
-            dialog.DetailForm.DetailObject = value;
-            dialog.Show();
-
-            return dialog;
+            return viewData;
         }
     }
 }

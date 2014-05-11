@@ -68,6 +68,7 @@ namespace DatenMeister.WPF.Controls
         /// Gets or sets the element factory being used to create the element, 
         /// if we are in EditMode = New
         /// </summary>
+        [Obsolete]
         public Func<IObject> ElementFactory
         {
             get;
@@ -91,9 +92,30 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
+        /// Gets or sets the extent, where this item is assigned to. 
+        /// Relevant, if DetailObject == null and dialog has been opened to create a new 
+        /// item. 
+        /// </summary>
+        public IURIExtent Extent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the object 
         /// </summary>
         public IObject DetailObject
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the type to be created, when user likes to create a new type. 
+        /// May also be null, if there is no specific type. Untyped instances are also supported. 
+        /// </summary>
+        public IObject TypeToCreate
         {
             get;
             set;
@@ -127,6 +149,8 @@ namespace DatenMeister.WPF.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Relayout();
+
+            Ensure.That(this.Extent != null, "Extent has not been set");
         }
 
         /// <summary>
@@ -185,8 +209,7 @@ namespace DatenMeister.WPF.Controls
             // Creates Detailobject if necessary
             if (this.EditMode == Controls.EditMode.New)
             {
-                Ensure.That(this.ElementFactory != null, "Element Factory is not given");
-                this.DetailObject = this.ElementFactory();
+                this.DetailObject = this.Extent.CreateObject(this.TypeToCreate);
                 Ensure.That(this.DetailObject != null, "Element Factory has not returned a value");
             }
 
