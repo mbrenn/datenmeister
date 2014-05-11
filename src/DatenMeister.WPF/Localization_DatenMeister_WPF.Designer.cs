@@ -61,6 +61,15 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes have been saved ähnelt.
+        /// </summary>
+        internal static string ChangeHasBeenSaved {
+            get {
+                return ResourceManager.GetString("ChangeHasBeenSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Changes of extent may be lost. Shall closing of application continue? ähnelt.
         /// </summary>
         internal static string ChangesMayBeLost {
@@ -93,6 +102,24 @@ namespace DatenMeister.WPF {
         internal static string NoObjectSelected {
             get {
                 return ResourceManager.GetString("NoObjectSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes will get lost. Shall changes be stored before continuing? ähnelt.
+        /// </summary>
+        internal static string QuestionSaveChanges {
+            get {
+                return ResourceManager.GetString("QuestionSaveChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes will get lost ähnelt.
+        /// </summary>
+        internal static string QuestionSaveChangesTitle {
+            get {
+                return ResourceManager.GetString("QuestionSaveChangesTitle", resourceCulture);
             }
         }
     }
