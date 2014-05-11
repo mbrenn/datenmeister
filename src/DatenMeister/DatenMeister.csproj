@@ -96,6 +96,7 @@
     <Compile Include="Logic\ExtentCopier.cs" />
     <Compile Include="Logic\Factory.cs" />
     <Compile Include="Logic\ObjectDictionary.cs" />
+    <Compile Include="Logic\ObjectDictionaryForView.cs" />
     <Compile Include="Logic\ObjectHelper.cs" />
     <Compile Include="Logic\SourceFactory\CSharpSourceFactory.cs" />
     <Compile Include="Logic\SourceFactory\CSharpTypeDefinitionFactory.cs" />
