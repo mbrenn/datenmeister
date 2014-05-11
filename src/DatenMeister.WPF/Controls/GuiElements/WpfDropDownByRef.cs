@@ -36,25 +36,20 @@ namespace DatenMeister.WPF.Controls.GuiElements
             // Gets the current element
             var currentValue = this.detailObject == null ?
                 null : this.detailObject.get(this.propertyName).AsSingle() as IObject;
-            string currentId = string.Empty;
-            if (currentValue != null)
-            {
-                currentId = currentValue.Id;
-            }
-
-            return currentId;
+            return currentValue;
         }
 
         protected override bool AreValuesEqual(object currentValue, object otherElement)
         {
             var valueAsIObject = otherElement as IObject;
-            if (valueAsIObject == null)
+            var currentValueAsIObject = currentValue as IObject;
+            if (valueAsIObject == null || currentValueAsIObject == null)
             {
                 return false;
             }
             else
             {
-                return currentValue.ToString() == valueAsIObject.Id;
+                return currentValueAsIObject.Id == valueAsIObject.Id;
             }
         }
 
