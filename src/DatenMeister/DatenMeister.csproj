@@ -89,6 +89,8 @@
     <Compile Include="IFactory.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IPool.cs" />
+    <Compile Include="IReflectiveCollection.cs" />
+    <Compile Include="IReflectiveSequence.cs" />
     <Compile Include="IUnspecified.cs" />
     <Compile Include="IURIExtent.cs" />
     <Compile Include="Logic\ClientActions\ClientActionInformation.cs" />
