@@ -87,7 +87,7 @@ namespace DatenMeister
             var valueAsEnumeration = value as IEnumerable;
             if (valueAsEnumeration != null)
             {
-                foreach ( var element in valueAsEnumeration)
+                foreach (var element in valueAsEnumeration)
                 {
                     yield return element;
                 }
@@ -113,6 +113,14 @@ namespace DatenMeister
                 return value;
             }
 
+            // Ok, we have an unspecified thing... don't like, but necessary
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null)
+            {
+                return valueAsUnspecified.AsSingle();
+            }
+
+            // Checks, if we have an enumeration, if yes, return first element
             var valueAsEnumeration = value as IEnumerable;
             if (valueAsEnumeration != null)
             {

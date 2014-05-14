@@ -32,7 +32,7 @@ namespace DatenMeister.Tests.DataProvider
             var item0 = items[0].AsIObject();
             var value = item0.get("").AsSingle();
             Assert.That(value, Is.EqualTo("This is content"));
-            Assert.That(item0.get("Nix"), Is.EqualTo(ObjectHelper.NotSet));
+            Assert.That(item0.get("Nix").AsSingle(), Is.EqualTo(ObjectHelper.NotSet));
         }
 
         [Test]

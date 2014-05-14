@@ -76,9 +76,15 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="value">Value to be resolved</param>
         /// <returns>Resolved object</returns>
-        private object Resolve(object value)
+        private object Resolve(object value, string propertyName)
         {
-            return this.Extent.Pool.Resolve(this, value);
+            var result = this.Extent.Pool.Resolve(this, value);
+            if (result != null)
+            {
+                result = new BaseUnspecified(this, propertyName, result);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -123,10 +129,10 @@ namespace DatenMeister.DataProvider.Xml
             // Checks, if we have an item, if not, return a not set element
             if (result.Count == 0)
             {
-                return this.Resolve(ObjectHelper.NotSet);
+                return this.Resolve(ObjectHelper.NotSet, propertyName);
             }
 
-            return this.Resolve(result);
+            return this.Resolve(result, propertyName);
         }
 
         /// <summary>
@@ -165,7 +171,7 @@ namespace DatenMeister.DataProvider.Xml
                 if (attributeName.EndsWith("-ref"))
                 {
                     // Ok, we got a reference
-                    attributeName = attributeName.Substring(0, attributeName.Length - 4);
+                    attributeName = attributeName.Substring(0, attributeName.Length - "-ref".Length);
                     attributeValue = new ResolvableByPath(attributeValue.ToString());
                 }
 
@@ -183,11 +189,11 @@ namespace DatenMeister.DataProvider.Xml
             {
                 if (valuePair.Value.Count == 1)
                 {
-                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value.First()));
+                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value.First(), valuePair.Key));
                 }
                 else
                 {
-                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value));
+                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value, valuePair.Key));
                 }
             }
         }

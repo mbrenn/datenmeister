@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDatenMeisterSeetings.cs" />
+    <Compile Include="BaseUnspecified.cs" />
     <Compile Include="DataProvider\Common\ResolvableByPath.cs" />
     <Compile Include="DataProvider\CSV\CSVDataProvider.cs" />
     <Compile Include="DataProvider\CSV\CSVExtent.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="IFactory.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IPool.cs" />
+    <Compile Include="IUnspecified.cs" />
     <Compile Include="IURIExtent.cs" />
     <Compile Include="Logic\ClientActions\ClientActionInformation.cs" />
     <Compile Include="Logic\ClientActions\IClientAction.cs" />

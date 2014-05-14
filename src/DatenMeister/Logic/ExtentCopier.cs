@@ -70,13 +70,15 @@ namespace DatenMeister.Logic
                 var pairs = element.getAll();
                 foreach (var pair in pairs)
                 {
-                    if (Extensions.IsNative(pair.Value))
+                    var currentValue = pair.Value.AsSingle();
+
+                    if (Extensions.IsNative(currentValue))
                     {
-                        createdObject.set(pair.PropertyName, pair.Value);
+                        createdObject.set(pair.PropertyName, currentValue);
                     }
-                    else if (pair.Value is IObject)
+                    else if (currentValue is IObject)
                     {
-                        var pairValue = pair.Value as IObject;
+                        var pairValue = currentValue as IObject;
 
                         var deferredAction = new Action(() =>
                             {
