@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,7 +43,12 @@ namespace DatenMeister.DataProvider
         {
             lock (this.values)
             {
-                return new BaseUnspecified(this, propertyName, this.values[propertyName]);
+                if (this.isSet(propertyName))
+                {
+                    return new BaseUnspecified(this, propertyName, this.values[propertyName]);
+                }
+
+                return ObjectHelper.NotSet;
             }
         }
 

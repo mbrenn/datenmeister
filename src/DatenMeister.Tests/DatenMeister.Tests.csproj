@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="DataProvider\CSVTests.cs" />
     <Compile Include="DataProvider\DotNetTests.cs" />
+    <Compile Include="DataProvider\GenericTests.cs" />
     <Compile Include="DataProvider\XmlTests.cs" />
     <Compile Include="PoolLogic\CopyExtentsTests.cs" />
     <Compile Include="PoolLogic\FilterTests.cs" />
