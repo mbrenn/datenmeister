@@ -57,6 +57,7 @@
     <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
     <Compile Include="DataProvider\GenericElement.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />
+    <Compile Include="DataProvider\GenericUnspecified.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataProvider\IResolvable.cs" />
     <Compile Include="DataProvider\Views\FieldInfo.cs" />

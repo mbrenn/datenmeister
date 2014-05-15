@@ -42,7 +42,7 @@ namespace DatenMeister.DataProvider
         {
             lock (this.values)
             {
-                return this.values[propertyName];
+                return new BaseUnspecified(this, propertyName, this.values[propertyName]);
             }
         }
 
@@ -50,7 +50,9 @@ namespace DatenMeister.DataProvider
         {
             lock (this.values)
             {
-                return this.values.Select(x => new ObjectPropertyPair(x.Key, x.Value));
+                return this.values.Select(x => 
+                    new ObjectPropertyPair(x.Key, 
+                    new BaseUnspecified(this, x.Key, x.Value)));
             }
         }
 
