@@ -34,5 +34,45 @@ namespace DatenMeister.Tests.DataProvider
 
             Assert.That(genericObject.get("name").AsSingle(), Is.EqualTo(ObjectHelper.NotSet));
         }
+
+        /// <summary>
+        /// Performs some tests on the GenericObject by using 'AsReflectiveSequence()'.
+        /// This test does not validate full sequence
+        /// </summary>
+        [Test]
+        public void TestAsReflectiveSequence()
+        {
+            var genericObject = new GenericObject();
+            genericObject.set("name", "Brenn");
+            genericObject.set("prename", "Martin");
+
+            var children = genericObject.get("children").AsReflectiveSequence();
+            children.add("Child 1");
+            children.add("Child 2");
+
+            var childrenTest = genericObject.get("children").AsReflectiveSequence();
+            foreach (var child in childrenTest)
+            {
+                Assert.That(child.ToString(), Is.EqualTo("Child 1").Or.EqualTo("Child 2"));
+            }
+
+            var childrenTest2 = genericObject.get("children").AsReflectiveCollection();
+            foreach (var child in childrenTest2)
+            {
+                Assert.That(child.ToString(), Is.EqualTo("Child 1").Or.EqualTo("Child 2"));
+            }
+
+            var childrenTest3 = genericObject.get("children").AsEnumeration();
+            foreach (var child in childrenTest3)
+            {
+                Assert.That(child.ToString(), Is.EqualTo("Child 1").Or.EqualTo("Child 2"));
+            }
+
+            children.remove("Child 2");
+            foreach (var child in (childrenTest))
+            {
+                Assert.That(child.ToString(), Is.EqualTo("Child 1"));
+            }
+        }
     }
 }

@@ -77,28 +77,6 @@ namespace DatenMeister
         }
 
         /// <summary>
-        /// Converts the object a list object. 
-        /// If this is already a list, the list will be returned, otherwise the object will be put into a list
-        /// </summary>
-        /// <param name="value">Value to be checked</param>
-        /// <returns>Enumeration of objects</returns>
-        public static IEnumerable<object> AsEnumeration(this object value)
-        {
-            var valueAsEnumeration = value as IEnumerable;
-            if (valueAsEnumeration != null)
-            {
-                foreach (var element in valueAsEnumeration)
-                {
-                    yield return element;
-                }
-            }
-            else
-            {
-                yield return value;
-            }
-        }
-
-        /// <summary>
         /// If the given object is an enumeration, it returns the first instance of the given object.
         /// Otherwise it returns the object itself. 
         /// If the object is null or enumeration is empty, null will be returned
@@ -130,6 +108,38 @@ namespace DatenMeister
             {
                 return value;
             }
+        }
+
+        /// <summary>
+        /// Converts the object a list object. 
+        /// If this is already a list, the list will be returned, otherwise the object will be put into a list
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <returns>Enumeration of objects</returns>
+        public static IEnumerable<object> AsEnumeration(this object value)
+        {
+            var valueAsEnumeration = value as IEnumerable;
+            if (valueAsEnumeration != null)
+            {
+                foreach (var element in valueAsEnumeration)
+                {
+                    yield return element;
+                }
+            }
+            else
+            {
+                yield return value;
+            }
+        }
+
+        public static IReflectiveCollection AsReflectiveCollection(this object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IReflectiveSequence AsReflectiveSequence(this object value)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -263,7 +273,7 @@ namespace DatenMeister
         /// <param name="value">Object to be tested</param>
         public static bool ToBoolean(object value)
         {
-            if ( value == null )
+            if (value == null)
             {
                 return false;
             }
