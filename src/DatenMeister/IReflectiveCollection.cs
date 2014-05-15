@@ -5,11 +5,11 @@ using System.Text;
 
 namespace DatenMeister
 {
-    public interface IReflectiveCollection : IEnumerator<object>
+    public interface IReflectiveCollection : ICollection<object>
     {
         bool add(object value);
 
-        bool addAll(object value);
+        bool addAll(IReflectiveSequence value);
 
         void clear();
 

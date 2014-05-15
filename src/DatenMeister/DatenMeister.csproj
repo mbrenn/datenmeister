@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="BaseDatenMeisterSeetings.cs" />
     <Compile Include="BaseUnspecified.cs" />
+    <Compile Include="DataProvider\BaseReflectiveCollection.cs" />
+    <Compile Include="DataProvider\BaseReflectiveSequence.cs" />
     <Compile Include="DataProvider\Common\ResolvableByPath.cs" />
     <Compile Include="DataProvider\CSV\CSVDataProvider.cs" />
     <Compile Include="DataProvider\CSV\CSVExtent.cs" />
