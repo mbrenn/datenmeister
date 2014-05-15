@@ -194,9 +194,7 @@ namespace DatenMeister.WPF.Controls
 
         private void buttonNew_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.Extent, this.DetailViewInfo);
-            Ensure.That(dialog != null);
-            dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+            this.ShowNewDialog();
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
@@ -219,6 +217,13 @@ namespace DatenMeister.WPF.Controls
             this.ShowDetailDialog();
         }
 
+        private void ShowNewDialog()
+        {
+            var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.Extent, this.DetailViewInfo);
+            Ensure.That(dialog != null);
+            dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+        }
+
         /// <summary>
         /// Shows the detail dialog, where the user can modify the content
         /// </summary>
@@ -228,7 +233,7 @@ namespace DatenMeister.WPF.Controls
 
             if (selectedItem == null)
             {
-                MessageBox.Show(Localization_DatenMeister_WPF.NoObjectSelected);
+                this.ShowNewDialog();
             }
             else
             {
