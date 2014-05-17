@@ -95,7 +95,7 @@ namespace DatenMeister.Tests.PoolLogic
 
             pool.Add(extent1);
 
-            var poolResolver = new PoolResolver(pool);
+            var poolResolver = PoolResolver.GetDefault(pool);
             var resolved = poolResolver.Resolve("http://test");
             Assert.That(resolved, Is.EqualTo(extent1.Extent));
 
@@ -126,7 +126,7 @@ namespace DatenMeister.Tests.PoolLogic
 
             pool.Add(extent1);
 
-            var poolResolver = new PoolResolver(pool);
+            var poolResolver = PoolResolver.GetDefault(pool);
             var path1 = poolResolver.GetResolvePath(obj);
             Assert.That(path1, Is.Not.Empty);
             Assert.That(path1, Is.Not.Null);

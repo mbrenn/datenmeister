@@ -60,7 +60,7 @@ namespace DatenMeister
 
             if (objAsString != null)
             {
-                var poolResolver = new PoolResolver(pool);
+                var poolResolver = PoolResolver.GetDefault(pool);
                 return poolResolver.Resolve(objAsString, context);
             }
 

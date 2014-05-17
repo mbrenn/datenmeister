@@ -1,4 +1,5 @@
-﻿using BurnSystems.Serialization;
+﻿using BurnSystems.ObjectActivation;
+using BurnSystems.Serialization;
 using BurnSystems.Test;
 using DatenMeister;
 using DatenMeister.DataProvider.Common;
@@ -286,7 +287,7 @@ namespace DatenMeister.DataProvider.Xml
             {
                 var valueAsIObject = value as IObject;
                 // Set as an attribute and reference
-                var poolResolver = new PoolResolver(this.Extent.Pool);
+                var poolResolver = PoolResolver.GetDefault(this.Extent.Pool);
                 var path = poolResolver.GetResolvePath(valueAsIObject, this);
 
                 // Checks, if attribute is existing
