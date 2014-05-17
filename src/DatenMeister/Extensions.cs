@@ -134,12 +134,27 @@ namespace DatenMeister
 
         public static IReflectiveCollection AsReflectiveCollection(this object value)
         {
-            throw new NotImplementedException();
+            // Ok, we have an unspecified thing... don't like, but necessary
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null)
+            {
+                return valueAsUnspecified.AsReflectiveCollection();
+            }
+
+            throw new NotImplementedException("Only instances implemented IUnspecified can be transformed to a reflective collection");
         }
 
         public static IReflectiveSequence AsReflectiveSequence(this object value)
         {
-            throw new NotImplementedException();
+
+            // Ok, we have an unspecified thing... don't like, but necessary
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null)
+            {
+                return valueAsUnspecified.AsReflectiveSequence();
+            }
+
+            throw new NotImplementedException("Only instances implemented IUnspecified can be transformed to a reflective sequence");
         }
 
         /// <summary>

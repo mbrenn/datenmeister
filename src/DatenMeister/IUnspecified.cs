@@ -16,5 +16,17 @@ namespace DatenMeister
         /// </summary>
         /// <returns>Object being returned</returns>
         object AsSingle();
+
+        /// <summary>
+        /// Returns the object as a reflective collection
+        /// </summary>
+        /// <returns>The returned collection</returns>
+        IReflectiveCollection AsReflectiveCollection();
+
+        /// <summary>
+        /// Returns the object as a reflective sequence
+        /// </summary>
+        /// <returns>The returned sequence</returns>
+        IReflectiveSequence AsReflectiveSequence();
     }
 }

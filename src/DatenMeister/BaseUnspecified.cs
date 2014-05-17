@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DatenMeister
 {
-    public class BaseUnspecified : IUnspecified
+    public abstract class BaseUnspecified : IUnspecified
     {
         /// <summary>
         /// Gets or sets the owner of the object
@@ -31,7 +31,7 @@ namespace DatenMeister
         public object Value
         {
             get;
-            private set;
+            set;
         }
 
         public BaseUnspecified(IObject owner, string propertyName, object value)
@@ -49,5 +49,17 @@ namespace DatenMeister
         {
             return this.Value.AsSingle();
         }
+
+        /// <summary>
+        /// Returns the object as a reflective collection
+        /// </summary>
+        /// <returns>The returned collection</returns>
+        public abstract IReflectiveCollection AsReflectiveCollection();
+
+        /// <summary>
+        /// Returns the object as a reflective sequence
+        /// </summary>
+        /// <returns>The returned sequence</returns>
+        public abstract IReflectiveSequence AsReflectiveSequence();
     }
 }

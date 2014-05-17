@@ -57,6 +57,7 @@
     <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
     <Compile Include="DataProvider\GenericElement.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />
+    <Compile Include="DataProvider\GenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\GenericUnspecified.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataProvider\IResolvable.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="DataProvider\Xml\XmlSettings.cs" />
     <Compile Include="DataProvider\Xml\XmlTypeInformation.cs" />
     <Compile Include="DataProvider\Xml\XmlTypeMapping.cs" />
+    <Compile Include="DataProvider\Xml\XmlUnspecified.cs" />
     <Compile Include="DatenMeisterPool.cs" />
     <Compile Include="Entities\AsObject\FieldInfo.Objects.cs" />
     <Compile Include="Entities\AsObject\FieldInfo.Types.cs" />

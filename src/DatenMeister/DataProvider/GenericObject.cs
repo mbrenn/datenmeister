@@ -45,10 +45,10 @@ namespace DatenMeister.DataProvider
             {
                 if (this.isSet(propertyName))
                 {
-                    return new BaseUnspecified(this, propertyName, this.values[propertyName]);
+                    return new GenericUnspecified(this, propertyName, this.values[propertyName]);
                 }
 
-                return ObjectHelper.NotSet;
+                return new GenericUnspecified(this, propertyName, ObjectHelper.NotSet);
             }
         }
 
@@ -57,8 +57,8 @@ namespace DatenMeister.DataProvider
             lock (this.values)
             {
                 return this.values.Select(x => 
-                    new ObjectPropertyPair(x.Key, 
-                    new BaseUnspecified(this, x.Key, x.Value)));
+                    new ObjectPropertyPair(x.Key,
+                    new GenericUnspecified(this, x.Key, x.Value)));
             }
         }
 

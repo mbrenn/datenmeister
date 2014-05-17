@@ -81,7 +81,7 @@ namespace DatenMeister.DataProvider.Xml
             var result = this.Extent.Pool.Resolve(this, value);
             if (result != null)
             {
-                result = new BaseUnspecified(this, propertyName, result);
+                result = new XmlUnspecified(this, propertyName, result);
             }
 
             return result;

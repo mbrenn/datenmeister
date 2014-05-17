@@ -65,7 +65,7 @@ namespace DatenMeister.Tests.DataProvider
             var childrenTest3 = genericObject.get("children").AsEnumeration();
             foreach (var child in childrenTest3)
             {
-                Assert.That(child.ToString(), Is.EqualTo("Child 1").Or.EqualTo("Child 2"));
+                Assert.That(child.AsSingle().ToString(), Is.EqualTo("Child 1").Or.EqualTo("Child 2"));
             }
 
             children.remove("Child 2");

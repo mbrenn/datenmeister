@@ -14,5 +14,15 @@ namespace DatenMeister.DataProvider
             : base(owner, propertyName, value)
         {
         }
+
+        public override IReflectiveCollection AsReflectiveCollection()
+        {
+            return this.AsReflectiveSequence();
+        }
+
+        public override IReflectiveSequence AsReflectiveSequence()
+        {
+            return new GenericReflectiveSequence(this);
+        }
     }
 }
