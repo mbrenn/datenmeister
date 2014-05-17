@@ -56,9 +56,10 @@ namespace DatenMeister.Pool
         }
 
         /// <summary>
-        /// Just an empty instance
+        /// Initializes a new instance of the PoolResolver class. 
+        /// The Pool needs to be set, otherwise it won't work
         /// </summary>
-        private PoolResolver()
+        public PoolResolver()
         {
         }
 
@@ -69,6 +70,8 @@ namespace DatenMeister.Pool
         /// <returns>Resolved extent or url</returns>
         public object Resolve(string url, IObject context = null)
         {
+            Ensure.That(this.Pool != null, "this.Pool is null");
+
             Uri uri;
             string contextPath = null;
             if (context != null)
@@ -157,6 +160,7 @@ namespace DatenMeister.Pool
         /// <returns>The resolvepath of the object</returns>
         public string GetResolvePath(IObject obj, IObject context = null)
         {
+            Ensure.That(this.Pool != null, "this.Pool is null");
             Ensure.That(obj.Extent != null, "GetResolvePath: Given object has no extent");
             Ensure.That(obj.Extent.Pool != null, "GetResolvePath: Given object is attached to an extent without connected pool");
 

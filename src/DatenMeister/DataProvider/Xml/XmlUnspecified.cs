@@ -14,12 +14,12 @@ namespace DatenMeister.DataProvider.Xml
 
         public override IReflectiveCollection AsReflectiveCollection()
         {
-            throw new NotImplementedException();
+            return this.AsReflectiveCollection();
         }
 
         public override IReflectiveSequence AsReflectiveSequence()
         {
-            throw new NotImplementedException();
+            return new XmlReflectiveSequence(this);
         }
     }
 }
