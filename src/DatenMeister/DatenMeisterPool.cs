@@ -38,6 +38,9 @@ namespace DatenMeister
             }
         }
 
+        /// <summary>
+        /// Gets a list of instances, this list is thread-safe
+        /// </summary>
         public IEnumerable<ExtentInstance> Instances
         {
             get
@@ -112,6 +115,9 @@ namespace DatenMeister
         {
             // Initializes the default resolver
             Global.Application.Bind<IPoolResolver>().To<PoolResolver>();
+
+            // Initializes the default pool
+            Global.Application.Bind<IPool>().ToConstant(this);
         }
     }
 }
