@@ -143,6 +143,7 @@ namespace DatenMeister.Tests.DataProvider
 
             var xmlExtent = new XmlExtent(document, "test:///");
             var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
             pool.Add(xmlExtent, null);
 
             var value = pool.ResolveByPath("test:///#e4") as IObject;
@@ -167,6 +168,7 @@ namespace DatenMeister.Tests.DataProvider
 
             var xmlExtent = new XmlExtent(document, "test:///");
             var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
             pool.Add(xmlExtent, null);
 
             var value = pool.ResolveByPath("test:///#e4") as IObject;
@@ -191,6 +193,7 @@ namespace DatenMeister.Tests.DataProvider
 
             var xmlExtent = new XmlExtent(document, "test:///");
             var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
             pool.Add(xmlExtent, null);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;

@@ -1,4 +1,5 @@
-﻿using DatenMeister.Pool;
+﻿using BurnSystems.ObjectActivation;
+using DatenMeister.Pool;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <summary>
         /// Stores the pool resolver
         /// </summary>
-        private PoolResolver resolver;
+        private IPoolResolver resolver;
 
         /// <summary>
         /// Stores the current object
@@ -70,7 +71,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var settings = new WpfDropDownSettings();
 
             // Fills the variable and creates the combobox
-            this.resolver = new PoolResolver(state.Pool);
+            this.resolver = PoolResolver.GetDefault(state.Pool);
             var referenceUrl = fieldInfo.get("referenceUrl").AsSingle().ToString();
             this.propertyValue = fieldInfo.get("propertyValue").AsSingle().ToString();
             this.propertyName = fieldInfo.get("name").AsSingle().ToString(); // Stores the name of the property

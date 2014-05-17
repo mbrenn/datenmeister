@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
+using BurnSystems.ObjectActivation;
 
 namespace DatenMeister
 {
@@ -102,6 +103,15 @@ namespace DatenMeister
             {
                 throw new InvalidOperationException("The extent is already assigned to a pool. An extent cannot be assigned to two pools at the same time");
             }
+        }
+
+        /// <summary>
+        /// Performs the default binding, attached to the current pool.
+        /// </summary>
+        public void DoDefaultBinding()
+        {
+            // Initializes the default resolver
+            Global.Application.Bind<IPoolResolver>().To<PoolResolver>();
         }
     }
 }

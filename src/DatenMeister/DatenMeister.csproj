@@ -108,6 +108,8 @@
     <Compile Include="Logic\Views\DefaultViewManager.cs" />
     <Compile Include="Logic\Views\IViewManager.cs" />
     <Compile Include="Logic\Views\ViewHelper.cs" />
+    <Compile Include="Pool\Extensions.cs" />
+    <Compile Include="Pool\IPoolResolver.cs" />
     <Compile Include="Pool\PoolResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources_DatenMeister.Designer.cs">

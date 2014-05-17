@@ -1,4 +1,6 @@
-﻿using BurnSystems.Test;
+﻿using BurnSystems.Logging;
+using BurnSystems.ObjectActivation;
+using BurnSystems.Test;
 using DatenMeister.Transformations;
 using System;
 using System.Collections.Generic;
@@ -11,12 +13,54 @@ namespace DatenMeister.Pool
     /// <summary>
     /// Resolves extents and extent objects by Uri
     /// </summary>
-    public class PoolResolver
+    public class PoolResolver : IPoolResolver
     {
+        /// <summary>
+        /// Stores the logging insance
+        /// </summary>
+        private static ILog logger = new ClassLogger(typeof(PoolResolver));
+
+        /// <summary>
+        /// Gets the default pool resolver for a certain pool
+        /// </summary>
+        /// <param name="pool">The pool, which shall be allocated to the pool</param>
+        /// <returns>The created instance</returns>
+        public static IPoolResolver GetDefault(IPool pool)
+        {
+            var resolver = Global.Application.Get<IPoolResolver>();
+            if (resolver == null)
+            {
+                resolver = new PoolResolver();
+            }
+
+            resolver.Pool = pool;
+            return resolver;
+        }
+
         /// <summary>
         /// Stores the pool
         /// </summary>
         private DatenMeisterPool pool;
+
+        public IPool Pool
+        {
+            get { return this.pool; }
+            set
+            {
+                this.pool = value as DatenMeisterPool;
+                if (this.pool == null)
+                {
+                    throw new ArgumentException("value is not of type DatenMeisterPool");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Just an empty instance
+        /// </summary>
+        public PoolResolver()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of DatenMeisterPool class
@@ -82,7 +126,7 @@ namespace DatenMeister.Pool
         /// <returns>Retrieved object or null, if not found</returns>
         public static object ResolveInExtent(string uri, IURIExtent extent)
         {
-            return ResolveInExtent ( new Uri ( uri ), extent);
+            return ResolveInExtent(new Uri(uri), extent);
         }
 
         /// <summary>
@@ -93,7 +137,6 @@ namespace DatenMeister.Pool
         /// <returns>Retrieved object or null, if not found</returns>
         public static object ResolveInExtent(Uri uri, IURIExtent extent)
         {
-
             // Checks, if we have a query identifier
             if (!string.IsNullOrEmpty(uri.Query))
             {
@@ -150,27 +193,6 @@ namespace DatenMeister.Pool
             Ensure.That(backCheck.Id == obj.Id, "GetResolvePath returned wrong object: " + result);
 #endif
             return result;
-        }
-
-        /// <summary>
-        ///  Resolves the uri by <c>Resolve</c> and returns the elements if the returned object is an Extent
-        /// </summary>
-        /// <param name="url">Url being used</param>
-        /// <returns>Enumeration of objects</returns>
-        public IEnumerable<IObject> ResolveAsObjects(string url)
-        {
-            var result = this.Resolve(url);
-            if (result is IURIExtent)
-            {
-                return (result as IURIExtent).Elements();
-            }
-
-            if (result is IEnumerable<IObject>)
-            {
-                return result as IEnumerable<IObject>;
-            }
-
-            return null;
         }
     }
 }
