@@ -58,27 +58,8 @@ namespace DatenMeister.Pool
         /// <summary>
         /// Just an empty instance
         /// </summary>
-        public PoolResolver()
+        private PoolResolver()
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of DatenMeisterPool class
-        /// </summary>
-        /// <param name="pool"></param>
-        public PoolResolver(DatenMeisterPool pool)
-        {
-            this.pool = pool;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of DatenMeisterPool class
-        /// </summary>
-        /// <param name="pool">Pool</param>
-        public PoolResolver(IPool pool)
-        {
-            this.pool = pool as DatenMeisterPool;
-            Ensure.That(this.pool != null);
         }
 
         /// <summary>
