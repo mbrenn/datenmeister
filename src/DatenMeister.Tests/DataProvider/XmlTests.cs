@@ -188,7 +188,7 @@ namespace DatenMeister.Tests.DataProvider
                 "<root>" +
                     "<element id=\"e1\" />" +
                     "<element id=\"e2\" />" +
-                    "<element id=\"e4\" />" + // No element, should throw an exception
+                    "<element id=\"e4\" />" + 
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
@@ -223,6 +223,75 @@ namespace DatenMeister.Tests.DataProvider
             var retrievedValue = valueE4.get("reference").AsIObject();
             Assert.That(retrievedValue, Is.Not.Null);
             Assert.That(retrievedValue.Id, Is.EqualTo("e2"));
+        }
+
+        [Test]
+        public void TestReflectiveSequence()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" />" +
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+
+            var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
+            var valueE1 = pool.ResolveByPath("test:///#e1") as IObject;
+            var valueE2 = pool.ResolveByPath("test:///#e2") as IObject;
+
+            // Ok, first thing: Add the stuff as references
+            var asSequence = valueE1.get("subelements").AsReflectiveSequence();
+            Assert.That(asSequence, Is.Not.Null);
+            Assert.That(asSequence.size(), Is.EqualTo(0));
+            asSequence.add(valueE2);
+
+            // Check, if we get it back
+            Assert.That(asSequence.size(), Is.EqualTo(1));
+            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
+            
+            // Do a clear
+            asSequence.clear();
+            Assert.That(asSequence.size(), Is.EqualTo(0));
+
+            // Add several instances
+            asSequence.add(valueE2);
+            asSequence.add(valueE4);
+            asSequence.add(valueE1);
+
+            Assert.That(asSequence.size(), Is.EqualTo(3));
+            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
+            Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e4"));
+            Assert.That(asSequence.get(2).AsSingle().AsIObject().Id, Is.EqualTo("e1"));
+
+            // Now remove second one
+            asSequence.remove(1);
+            Assert.That(asSequence.size(), Is.EqualTo(2));
+            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
+            Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e1"));
+            
+            // Re-add it
+            asSequence.add(1, valueE4);
+            Assert.That(asSequence.size(), Is.EqualTo(3));
+            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
+            Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e4"));
+            Assert.That(asSequence.get(2).AsSingle().AsIObject().Id, Is.EqualTo("e1"));
+
+            // Remove a specific one
+            asSequence.remove(valueE2);
+            Assert.That(asSequence.size(), Is.EqualTo(2));
+            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e4"));
+            Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e1"));
+
+            // Replace one
+            asSequence.set(1, valueE2);
+            Assert.That(asSequence.size(), Is.EqualTo(2));
+            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e4"));
+            Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
         }
     }
 }

@@ -47,7 +47,7 @@ namespace DatenMeister.DataProvider.Xml
         {
             var valueAsString = this.GetAttribute().Value;
 
-            return valueAsString.Split(new[] { ' ' }).ToList();
+            return valueAsString.Split(new[] { ' ' }).Where(x=>!string.IsNullOrEmpty(x)).ToList();
         }
 
         private void SetAttributeAsList(List<string> values)
@@ -62,6 +62,8 @@ namespace DatenMeister.DataProvider.Xml
                 }
 
                 builder.Append(value);
+
+                first = false;
             }
 
             this.GetAttribute().Value = builder.ToString();
@@ -76,7 +78,7 @@ namespace DatenMeister.DataProvider.Xml
                 if (valueAsIObject.Extent != null)
                 {
                     // Ok, we can add it. 
-                    var poolResolver = Global.Application.Get<IPoolResolver>();
+                    var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
                     var path = poolResolver.GetResolvePath(valueAsIObject, this.Unspecified.Owner);
 
                     // Ok, now we got it, now we need to inject our element
@@ -101,7 +103,7 @@ namespace DatenMeister.DataProvider.Xml
             var objectList = this.GetAttributeAsList();
 
             var path = objectList[index];
-            var poolResolver = Global.Application.Get<IPoolResolver>();
+            var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
             var resolvedObject = poolResolver.Resolve(path, this.Unspecified.Owner);
 
             return resolvedObject;
@@ -124,7 +126,7 @@ namespace DatenMeister.DataProvider.Xml
             {
                 if (valueAsIObject.Extent != null)
                 {
-                    var poolResolver = Global.Application.Get<IPoolResolver>();
+                    var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
                     var path = poolResolver.GetResolvePath(valueAsIObject, this.Unspecified.Owner);
 
                     // Ok, now we got it, now we need to inject our element
@@ -164,11 +166,13 @@ namespace DatenMeister.DataProvider.Xml
             {
                 if (valueAsIObject.Extent != null)
                 {
-                    var poolResolver = Global.Application.Get<IPoolResolver>();
+                    var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
                     var path = poolResolver.GetResolvePath(valueAsIObject, this.Unspecified.Owner);
 
                     var attributeList = this.GetAttributeAsList();
-                    return attributeList.Remove(path);
+                    var result = attributeList.Remove(path);
+                    this.SetAttributeAsList(attributeList);
+                    return result;
                 }
                 else
                 {
@@ -188,7 +192,7 @@ namespace DatenMeister.DataProvider.Xml
 
         public override IEnumerable<object> getAll()
         {
-            var poolResolver = Global.Application.Get<IPoolResolver>();
+            var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
             
             var attributeList = this.GetAttributeAsList();
             foreach (var path in attributeList)
