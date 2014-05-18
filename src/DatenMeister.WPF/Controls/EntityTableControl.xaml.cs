@@ -79,6 +79,7 @@ namespace DatenMeister.WPF.Controls
             set
             {
                 this.extentFactory = value;
+
                 // Refreshes the items when we get a new extent factory
                 this.RefreshItems();
             }

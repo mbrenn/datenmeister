@@ -28,6 +28,15 @@ namespace DatenMeister
         }
 
         /// <summary>
+        /// Gets or sets the extent that is used to find the main views
+        /// </summary>
+        IURIExtent ViewExtent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Stores the settings for the extent
         /// </summary>
         XmlSettings ExtentSettings

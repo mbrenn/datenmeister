@@ -8,56 +8,6 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.WPF.Windows
 {
-    public class AddExtentParameters
-    {
-        /// <summary>
-        /// Gets or sets the main type, that is used to include the 'new' button. 
-        /// If user presses 'new' in the given form, he will create a new item of the type.
-        /// </summary>
-        public IObject MainType
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the object being used to define the view properties for the list view
-        /// </summary>
-        public IObject TableViewInfo
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the object being used to define the view properties for the detail view
-        /// </summary>
-        public IObject DetailViewInfo
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the function to be used to create the extent
-        /// </summary>
-        public Func<IURIExtent, IURIExtent> ExtentFactory
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the factory being used to create a new element out of the given extent
-        /// </summary>
-        [Obsolete]
-        public Func<IObject> ElementFactory
-        {
-            get;
-            set;
-        }
-    }
-
     /// <summary>
     /// Defines all the methods that are implemented by the DatenMeister
     /// </summary>
@@ -77,13 +27,6 @@ namespace DatenMeister.WPF.Windows
         /// </summary>
         /// <param name="title">Title of the application</param>
         void SetTitle(string title);
-
-        /// <summary>
-        /// Adds a tab for an extent to the window
-        /// </summary>
-        /// <param name="name">Name of the window</param>
-        /// <param name="parameters">Parameters to be used</param>
-        void AddExtentView(string name, AddExtentParameters parameters);
 
         /// <summary>
         /// Adds an extent view by using the ViewInformation
