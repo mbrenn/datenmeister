@@ -293,6 +293,12 @@ namespace DatenMeister.WPF.Controls
                 this.DeleteCurrentlySelected();
                 e.Handled = true;
             }
+
+            if (e.Key == Key.Insert)
+            {
+                this.ShowNewDialog();
+                e.Handled = true;
+            }
         }
 
         /// <summary>
