@@ -97,7 +97,7 @@ namespace DatenMeister.WPF.Controls
         {
             if (this.detailForm != null)
             {
-                this.detailForm.SelectFieldWithName(name);
+                this.detailForm.FocusFieldWithName(name);
             }
         }
 

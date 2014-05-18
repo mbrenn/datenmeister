@@ -206,6 +206,12 @@ namespace DatenMeister.WPF.Controls
                     currentRow++;
                 }
             }
+
+            // Focuses first element
+            if (this.wpfElements.Count > 0)
+            {
+                FocusCacheEntry(this.wpfElements.First());
+            }
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -247,23 +253,32 @@ namespace DatenMeister.WPF.Controls
         /// Selects the field with the given name
         /// </summary>
         /// <param name="name">Name of the field, that should receive the focus</param>
-        internal void SelectFieldWithName(string name)
+        public void FocusFieldWithName(string name)
         {
             foreach (var element in this.wpfElements)
             {
                 var elementName = element.FieldInfo.get("name").AsSingle().ToString();
                 if (elementName == name)
                 {
-                    var asFocusable = element.WPFElementCreator as IFocusable;
-                    if (asFocusable != null)
-                    {
-                        asFocusable.Focus(element.WPFElement);
-                    }
-                    else
-                    {
-                        element.WPFElement.Focus();
-                    }
+                    FocusCacheEntry(element);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Focuses a the field information behind a certain cache entry
+        /// </summary>
+        /// <param name="element">Element to be focused</param>
+        private static void FocusCacheEntry(ElementCacheEntry element)
+        {
+            var asFocusable = element.WPFElementCreator as IFocusable;
+            if (asFocusable != null)
+            {
+                asFocusable.Focus(element.WPFElement);
+            }
+            else
+            {
+                element.WPFElement.Focus();
             }
         }
     }
