@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Logging;
 using BurnSystems.ObjectActivation;
+using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.Logic.Views;
 using System;
@@ -109,6 +110,8 @@ namespace DatenMeister.WPF.Controls
         /// <returns>The created type</returns>
         public static DetailDialog ShowDialogToCreateTypeOf(IObject type, IURIExtent extent, IObject viewData = null)
         {
+            Ensure.That(type != null, "No Type has ben set that can be used to create a new object");
+
             var temp = new GenericElement(extent: extent, type: type);
             viewData = GetView(temp, viewData);
 

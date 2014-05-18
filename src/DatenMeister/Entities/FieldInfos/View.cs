@@ -21,15 +21,6 @@ namespace DatenMeister.Entities.FieldInfos
         }
 
         /// <summary>
-        /// Gets or sets the uri that shall be shown
-        /// </summary>
-        public string extentUri
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets a list of fieldinfos
         /// </summary>
         public IList<object> fieldInfos

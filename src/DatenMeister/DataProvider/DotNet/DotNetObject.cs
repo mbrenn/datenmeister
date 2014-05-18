@@ -37,7 +37,7 @@ namespace DatenMeister.DataProvider.DotNet
             this.extent = extent;
             this.value = value;
 
-            if (!this.isSet("name"))
+            if (!this.isSet("name") || this.get("name") == null)
             {
                 this.id = Guid.NewGuid().ToString();
             }
@@ -210,8 +210,12 @@ namespace DatenMeister.DataProvider.DotNet
                     sequence.Add(new DotNetObject(this.extent, value, this.Id + "[" + n.ToString() + "]"));
                     n++;
                 }
-                
+
                 return sequence;
+            }
+            else if (checkObject is IObject)
+            {
+                return checkObject;
             }
             else
             {

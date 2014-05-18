@@ -68,7 +68,7 @@ namespace DatenMeister.Logic.Views
         public IObject GetDefaultView(IObject obj, ViewType type)
         {
             var result = this.entries.Where(x => x.Predicate(obj, type) && x.IsDefault).FirstOrDefault();
-            if ( result == null)
+            if (result == null)
             {
                 return null;
             }

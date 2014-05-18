@@ -30,11 +30,5 @@ namespace DatenMeister.WPF.Windows
             get;
             set;
         }
-
-        public AddExtentParameters Parameters
-        {
-            get;
-            set;
-        }
     }
 }

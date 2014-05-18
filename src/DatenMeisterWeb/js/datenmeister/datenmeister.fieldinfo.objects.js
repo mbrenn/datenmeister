@@ -427,6 +427,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         View.create = create;
 
+        function getName(item) {
+            return item.get('name');
+        }
+        View.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        View.setName = setName;
+
         function getFieldInfos(item) {
             return item.get('fieldInfos');
         }
@@ -523,6 +533,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         FormView.setAllowNewProperty = setAllowNewProperty;
 
+        function getName(item) {
+            return item.get('name');
+        }
+        FormView.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        FormView.setName = setName;
+
         function getFieldInfos(item) {
             return item.get('fieldInfos');
         }
@@ -569,6 +589,26 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         TableView.create = create;
 
+        function getExtentUri(item) {
+            return item.get('extentUri');
+        }
+        TableView.getExtentUri = getExtentUri;
+
+        function setExtentUri(item, value) {
+            item.set('extentUri', value);
+        }
+        TableView.setExtentUri = setExtentUri;
+
+        function getMainType(item) {
+            return item.get('mainType');
+        }
+        TableView.getMainType = getMainType;
+
+        function setMainType(item, value) {
+            item.set('mainType', value);
+        }
+        TableView.setMainType = setMainType;
+
         function getAllowEdit(item) {
             return item.get('allowEdit');
         }
@@ -598,6 +638,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('allowNew', value);
         }
         TableView.setAllowNew = setAllowNew;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        TableView.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        TableView.setName = setName;
 
         function getFieldInfos(item) {
             return item.get('fieldInfos');

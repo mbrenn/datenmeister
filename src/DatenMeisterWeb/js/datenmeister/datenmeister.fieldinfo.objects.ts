@@ -513,6 +513,22 @@ export module TableView {
     }
 
 
+    export function getExtentUri(item: __d__.JsonExtentObject) {
+        return item.get('extentUri');
+    }
+
+    export function setExtentUri(item : __d__.JsonExtentObject, value: any) {
+        item.set('extentUri', value);
+    }
+
+    export function getMainType(item: __d__.JsonExtentObject) {
+        return item.get('mainType');
+    }
+
+    export function setMainType(item : __d__.JsonExtentObject, value: any) {
+        item.set('mainType', value);
+    }
+
     export function getAllowEdit(item: __d__.JsonExtentObject) {
         return item.get('allowEdit');
     }

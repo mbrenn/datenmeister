@@ -18,6 +18,25 @@ namespace DatenMeister.Entities.FieldInfos
             this.allowDelete = true;
         }
 
+        /// <summary>
+        /// Gets or sets the uri that shall be shown
+        /// </summary>
+        public string extentUri
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the maintype that is used to open dialogs, where user can create
+        /// a new object out of the table view. 
+        /// </summary>
+        public IObject mainType
+        {
+            get;
+            set;
+        }
+
         [DefaultValue(true)]
         public bool allowEdit
         {

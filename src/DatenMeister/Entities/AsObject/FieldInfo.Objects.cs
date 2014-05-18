@@ -1486,6 +1486,28 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #endregion
 
+        public System.String getExtentUri()
+        {
+            var result = this.get("extentUri");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setExtentUri(System.String value)
+        {
+            this.set("extentUri", value);
+        }
+
+        public DatenMeister.IObject getMainType()
+        {
+            var result = this.get("mainType");
+            return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
+        }
+
+        public void setMainType(DatenMeister.IObject value)
+        {
+            this.set("mainType", value);
+        }
+
         public System.Boolean getAllowEdit()
         {
             var result = this.get("allowEdit");

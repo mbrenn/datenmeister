@@ -78,29 +78,54 @@ namespace DatenMeister.WPF.Windows
 
         public void AddExtentView(string name, AddExtentParameters parameters)
         {
-            var tab = new TabItem();
-            tab.Header = name;
+        }
 
-            var entityList = new EntityTableControl();
-            entityList.MainWindow = this;
-            entityList.ExtentFactory = parameters.ExtentFactory;
-            entityList.TableViewInfo = parameters.TableViewInfo;
-            entityList.DetailViewInfo = parameters.DetailViewInfo;
-            entityList.MainType = parameters.MainType;
+        /// <summary>
+        /// Recreates the complete window
+        /// </summary>
+        public void RefreshViews()
+        {
+            foreach (var tableInfo in this.tableInformationContainer)
+            {
+                var tableViewInfo = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableInfo);
+                var tab = new TabItem();
+                var extentUri = tableViewInfo.getExtentUri();
+                var name = tableViewInfo.getName();
+                tab.Header = name;
 
-            var grid = new Grid();
-            grid.Children.Add(entityList);
-            tab.Content = grid;
+                var entityList = new EntityTableControl();
+                entityList.MainWindow = this;
+                entityList.ExtentFactory = (x) =>
+                    {
+                        return this.Settings.Pool.ResolveByPath(extentUri) as IURIExtent;
+                    };
 
-            this.tabMain.Items.Add(tab);
+                entityList.TableViewInfo = tableViewInfo;
+                entityList.MainType = tableViewInfo.getMainType();
 
-            this.listTabs.Add(new TabInformation()
-                {
-                    Name = name,
-                    Parameters = parameters,
-                    TabItem = tab,
-                    TableControl = entityList
-                });
+                var grid = new Grid();
+                grid.Children.Add(entityList);
+                tab.Content = grid;
+
+                this.tabMain.Items.Add(tab);
+
+                this.listTabs.Add(new TabInformation()
+                    {
+                        Name = name,
+                        TabItem = tab,
+                        TableControl = entityList
+                    });
+            }
+        }
+
+        /// <summary>
+        /// Preliminary container for all views, will be replaced by an extent later
+        /// </summary>
+        private List<IObject> tableInformationContainer = new List<IObject>();
+        
+        public void AddExtentView(IObject tableInformation)
+        {
+            this.tableInformationContainer.Add(tableInformation);
         }
 
         private void RefreshAllViews()
@@ -203,33 +228,6 @@ namespace DatenMeister.WPF.Windows
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        /// <summary>
-        /// Does the user accept the data loss? 
-        /// </summary>
-        /// <returns>true, if user accepts the data loss</returns>
-        [Obsolete]
-        private bool DoesUserAcceptsDataLoss()
-        {
-            if (!this.Settings.ProjectExtent.IsDirty)
-            {
-                // Content is not dirty, user will accept no loss
-                return true;
-            }
-
-            if (MessageBox.Show(
-                   this,
-                   Localization_DatenMeister_WPF.ChangesMayBeLost,
-                   Localization_DatenMeister_WPF.CloseApplication,
-                   MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                // Content is dirty and user accepts it
-                return true;
-            }
-
-            // Content is dirty and user does not accept it
-            return false;
         }
 
         /// <summary>

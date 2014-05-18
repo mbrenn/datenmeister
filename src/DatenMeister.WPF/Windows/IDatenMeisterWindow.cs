@@ -84,5 +84,11 @@ namespace DatenMeister.WPF.Windows
         /// <param name="name">Name of the window</param>
         /// <param name="parameters">Parameters to be used</param>
         void AddExtentView(string name, AddExtentParameters parameters);
+
+        /// <summary>
+        /// Adds an extent view by using the ViewInformation
+        /// </summary>
+        /// <param name="fieldInfo">The information field</param>
+        void AddExtentView(IObject fieldInfo);
     }
 }
