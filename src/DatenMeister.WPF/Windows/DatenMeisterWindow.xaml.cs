@@ -27,11 +27,6 @@ namespace DatenMeister.WPF.Windows
     public partial class DatenMeisterWindow : Window, IDatenMeisterWindow
     {
         /// <summary>
-        /// Preliminary container for all views, will be replaced by an extent later
-        /// </summary>
-        private List<IObject> tableInformationContainer = new List<IObject>();
-
-        /// <summary>
         /// Gets or sets the datenmeister settings
         /// </summary>
         public IDatenMeisterSettings Settings
@@ -123,11 +118,6 @@ namespace DatenMeister.WPF.Windows
                         TableControl = entityList
                     });
             }
-        }
-        
-        public void AddExtentView(IObject tableInformation)
-        {
-            this.tableInformationContainer.Add(tableInformation);
         }
 
         private void RefreshAllViews()

@@ -27,11 +27,5 @@ namespace DatenMeister.WPF.Windows
         /// </summary>
         /// <param name="title">Title of the application</param>
         void SetTitle(string title);
-
-        /// <summary>
-        /// Adds an extent view by using the ViewInformation
-        /// </summary>
-        /// <param name="fieldInfo">The information field</param>
-        void AddExtentView(IObject fieldInfo);
     }
 }
