@@ -1149,6 +1149,17 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #endregion
 
+        public System.String getName()
+        {
+            var result = this.get("name");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setName(System.String value)
+        {
+            this.set("name", value);
+        }
+
         public System.Collections.Generic.IEnumerable<System.Object> getFieldInfos()
         {
             var result = this.get("fieldInfos");
@@ -1334,6 +1345,17 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("allowNewProperty", value);
         }
 
+        public System.String getName()
+        {
+            var result = this.get("name");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setName(System.String value)
+        {
+            this.set("name", value);
+        }
+
         public System.Collections.Generic.IEnumerable<System.Object> getFieldInfos()
         {
             var result = this.get("fieldInfos");
@@ -1495,6 +1517,17 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public void setAllowNew(System.Boolean value)
         {
             this.set("allowNew", value);
+        }
+
+        public System.String getName()
+        {
+            var result = this.get("name");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setName(System.String value)
+        {
+            this.set("name", value);
         }
 
         public System.Collections.Generic.IEnumerable<System.Object> getFieldInfos()

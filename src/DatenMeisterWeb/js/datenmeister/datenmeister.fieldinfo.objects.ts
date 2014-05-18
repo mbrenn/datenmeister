@@ -375,6 +375,14 @@ export module View {
     }
 
 
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
     export function getFieldInfos(item: __d__.JsonExtentObject) {
         return item.get('fieldInfos');
     }
@@ -456,6 +464,14 @@ export module FormView {
         item.set('allowNewProperty', value);
     }
 
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
     export function getFieldInfos(item: __d__.JsonExtentObject) {
         return item.get('fieldInfos');
     }
@@ -519,6 +535,14 @@ export module TableView {
 
     export function setAllowNew(item : __d__.JsonExtentObject, value: any) {
         item.set('allowNew', value);
+    }
+
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
     }
 
     export function getFieldInfos(item: __d__.JsonExtentObject) {
