@@ -166,9 +166,10 @@ namespace DatenMeister.WPF.Controls
             {
                 var title = fieldInfo.get("title").ToString();
                 var name = fieldInfo.get("name").ToString();
-                var column = new DataGridTextColumn();
+                var column = new TableDataGridTextColumn();
                 column.Header = title;
                 column.Binding = new Binding("["+name+"]");
+                column.AssociatedViewColumn = fieldInfo;
 
                 this.gridContent.Columns.Add(column);
             }
@@ -222,13 +223,14 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Shows the detail dialog, where the user can modify the content
         /// </summary>
-        private void ShowDetailDialog()
+        private DetailDialog ShowDetailDialog()
         {
             var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
 
             if (selectedItem == null)
             {
                 MessageBox.Show(Localization_DatenMeister_WPF.NoObjectSelected);
+                return null;
             }
             else
             {
@@ -237,7 +239,7 @@ namespace DatenMeister.WPF.Controls
                 var dialog = DetailDialog.ShowDialogFor(selectedItem.Value, this.DetailViewInfo);
                 Ensure.That(dialog != null);
                 dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
-
+                return dialog;
             }
         }
 
@@ -252,6 +254,33 @@ namespace DatenMeister.WPF.Controls
             {
                 selectedItem.Value.delete();
                 this.RefreshItems();
+            }
+        }
+
+        private void dataGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F2)
+            {
+                var dialog = this.ShowDetailDialog();
+                if (dialog != null)
+                {
+                    var selectedCell = this.gridContent.CurrentCell;
+                    if (selectedCell != null)
+                    {
+                        var column = selectedCell.Column as TableDataGridTextColumn;
+                        var name = column.AssociatedViewColumn.get("name").AsSingle().ToString();
+                        dialog.SelectFieldWithName(name);
+                    }
+                }
+            }
+        }
+
+        private class TableDataGridTextColumn : DataGridTextColumn
+        {
+            public IObject AssociatedViewColumn
+            {
+                get;
+                set;
             }
         }
     }

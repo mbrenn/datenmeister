@@ -90,6 +90,18 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
+        /// Selects the field with the given name
+        /// </summary>
+        /// <param name="name">Name of the field, that should receive the focus</param>
+        public void SelectFieldWithName(string name)
+        {
+            if (this.detailForm != null)
+            {
+                this.detailForm.SelectFieldWithName(name);
+            }
+        }
+
+        /// <summary>
         /// Creates the dialog, when user shall define the properties of a new item. 
         /// </summary>
         /// <param name="type">Type of object to be created</param>
@@ -114,7 +126,6 @@ namespace DatenMeister.WPF.Controls
             dialog.Show();
 
             return dialog;
-            
         }
 
         /// <summary>

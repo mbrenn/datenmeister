@@ -242,5 +242,21 @@ namespace DatenMeister.WPF.Controls
                 ev(this, EventArgs.Empty);
             }
         }
+
+        /// <summary>
+        /// Selects the field with the given name
+        /// </summary>
+        /// <param name="name">Name of the field, that should receive the focus</param>
+        internal void SelectFieldWithName(string name)
+        {
+            foreach (var element in this.wpfElements)
+            {
+                var elementName = element.FieldInfo.get("name").AsSingle().ToString();
+                if (elementName == name)
+                {
+                    element.WPFElement.Focus();
+                }
+            }
+        }
     }
 }

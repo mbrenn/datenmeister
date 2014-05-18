@@ -27,7 +27,7 @@
         </StackPanel>
         <DataGrid x:Name="gridContent" Grid.Row="0" 
                   IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False"
-                  MouseDoubleClick="gridContent_MouseDoubleClick" FontSize="18" Margin="0">
+                  MouseDoubleClick="gridContent_MouseDoubleClick" FontSize="18" Margin="0" KeyDown="dataGrid_KeyDown">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Padding" Value="10,5,10,5"/>
