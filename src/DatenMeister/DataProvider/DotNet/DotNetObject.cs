@@ -253,5 +253,16 @@ namespace DatenMeister.DataProvider.DotNet
         {
             return null;
         }
+
+        public override string ToString()
+        {
+            if (this.isSet("name") && !string.IsNullOrEmpty(this.get("name").AsSingle().ToString()))
+            {
+                return string.Format("\"{0}\" (DotNetObject)",
+                    this.get("name").AsSingle().ToString());
+            }
+
+            return base.ToString();
+        }
     }
 }
