@@ -4,7 +4,7 @@
         x:Class="DatenMeister.WPF.Windows.DatenMeisterWindow"
         WindowStartupLocation="CenterScreen"
         Title="Unnamed Application" Height="350"   Width="525" Closing="Window_Closing" 
-        Icon="../resources/icons.ico">
+        Icon="../resources/icons.ico" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="358*"/>

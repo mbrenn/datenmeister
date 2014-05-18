@@ -295,5 +295,27 @@ namespace DatenMeister.WPF.Windows
                 copiedExtent.XmlDocument.Save(dialog.FileName);
             }
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
+            {
+                e.Handled = this.FocusCurrentTab();
+            }
+        }
+
+        private bool FocusCurrentTab()
+        {
+            // Find selected thing
+            var tabInfo = this.listTabs.Where(x => x.TabItem == this.tabMain.SelectedItem).FirstOrDefault();
+            if (tabInfo != null)
+            {
+                tabInfo.TableControl.GiveFocusToGridContent();
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }

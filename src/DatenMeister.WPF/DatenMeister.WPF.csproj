@@ -67,6 +67,7 @@
     <Compile Include="Controls\GuiElements\IWPFElementGenerator.cs" />
     <Compile Include="Controls\GuiElements\WPFTextField.cs" />
     <Compile Include="Controls\IDataPresentationState.cs" />
+    <Compile Include="Helper\DataGridHelper.cs" />
     <Compile Include="Localization_DatenMeister_WPF.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

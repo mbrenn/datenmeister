@@ -1,6 +1,7 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic;
+using DatenMeister.WPF.Helper;
 using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -261,6 +263,7 @@ namespace DatenMeister.WPF.Controls
         {
             if (e.Key == Key.F2)
             {
+                // Edit currently selected property
                 var dialog = this.ShowDetailDialog();
                 if (dialog != null)
                 {
@@ -272,7 +275,27 @@ namespace DatenMeister.WPF.Controls
                         dialog.SelectFieldWithName(name);
                     }
                 }
+
+                e.Handled = true;
             }
+        }
+
+        private void dataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                // Deletes the currently selected item
+                this.DeleteCurrentlySelected();
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Gives the focus to the grid content by finding the first column of selected row.
+        /// </summary>
+        public void GiveFocusToGridContent()
+        {
+            DataGridHelper.GiveFocusToContent(this.gridContent);
         }
 
         private class TableDataGridTextColumn : DataGridTextColumn
@@ -281,6 +304,14 @@ namespace DatenMeister.WPF.Controls
             {
                 get;
                 set;
+            }
+        }
+
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
+            {
+                this.GiveFocusToGridContent();
             }
         }
     }
