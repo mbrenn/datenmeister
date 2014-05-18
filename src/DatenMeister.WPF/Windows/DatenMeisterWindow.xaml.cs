@@ -86,11 +86,17 @@ namespace DatenMeister.WPF.Windows
         /// </summary>
         public void RefreshViews()
         {
-            foreach (var tableInfo in this.tableInformationContainer)
+            Ensure.That(this.Settings.ViewExtent != null, "No view extent has been given");
+
+            var filteredViewExtent = 
+                this.Settings.ViewExtent.FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+
+            foreach (var tableInfo in filteredViewExtent.Elements())
             {
                 var tableViewInfo = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableInfo);
                 var tab = new TabItem();
                 var extentUri = tableViewInfo.getExtentUri();
+                Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
                 var name = tableViewInfo.getName();
                 tab.Header = name;
 

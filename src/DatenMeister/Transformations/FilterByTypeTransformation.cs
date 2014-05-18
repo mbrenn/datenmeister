@@ -105,6 +105,7 @@ namespace DatenMeister.Transformations
                 foreach (var obj in this.source.Elements())
                 {
                     var element = obj as IElement;
+                    var metaClass = element.getMetaClass();
 
                     if (element.getMetaClass() == this.typeToFilter)
                     {

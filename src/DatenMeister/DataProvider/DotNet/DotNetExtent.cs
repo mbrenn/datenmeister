@@ -88,7 +88,14 @@ namespace DatenMeister.DataProvider.DotNet
         /// <param name="element">Element to be added</param>
         public void Add(object element)
         {
-            this.elements.Add(new DotNetObject(this, element));
+            if (element is DotNetObject)
+            {
+                this.elements.Add(element as DotNetObject);
+            }
+            else
+            {
+                this.elements.Add(new DotNetObject(this, element));
+            }
         }
 
         public IObject CreateObject(IObject type)
