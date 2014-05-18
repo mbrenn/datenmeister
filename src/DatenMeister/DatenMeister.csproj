@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseDatenMeisterSeetings.cs" />
+    <Compile Include="BaseDatenMeisterSettings.cs" />
     <Compile Include="BaseUnspecified.cs" />
     <Compile Include="DataProvider\BaseReflectiveCollection.cs" />
     <Compile Include="DataProvider\BaseReflectiveSequence.cs" />

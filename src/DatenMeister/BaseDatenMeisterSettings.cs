@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace DatenMeister
 {
-    public abstract class BaseDatenMeisterSeetings : IDatenMeisterSettings
+    public abstract class BaseDatenMeisterSettings : IDatenMeisterSettings
     {
         /// <summary>
         /// Gets or sets the datameister pool
@@ -19,6 +19,12 @@ namespace DatenMeister
         }
 
         public IURIExtent ProjectExtent
+        {
+            get;
+            set;
+        }
+
+        public IURIExtent ViewExtent
         {
             get;
             set;
