@@ -254,7 +254,15 @@ namespace DatenMeister.WPF.Controls
                 var elementName = element.FieldInfo.get("name").AsSingle().ToString();
                 if (elementName == name)
                 {
-                    element.WPFElement.Focus();
+                    var asFocusable = element.WPFElementCreator as IFocusable;
+                    if (asFocusable != null)
+                    {
+                        asFocusable.Focus(element.WPFElement);
+                    }
+                    else
+                    {
+                        element.WPFElement.Focus();
+                    }
                 }
             }
         }

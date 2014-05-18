@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    public class WPFTextField : IWPFElementGenerator
+    public class WPFTextField : IWPFElementGenerator, IFocusable
     {
         public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
         {
@@ -39,6 +39,13 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
             var textBox = entry.WPFElement as TextBox;
             detailObject.set(entry.FieldInfo.get("name").ToString(), textBox.Text);
+        }
+
+        public void Focus(System.Windows.UIElement element)
+        {
+            var textBox = element as TextBox;
+            textBox.Focus();
+            textBox.SelectAll();
         }
     }
 }

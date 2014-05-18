@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    public abstract class BaseWpfDropDown
+    public abstract class BaseWpfDropDown : IFocusable
     {
         /// <summary>
         /// Stores the name of the property being used to retrieve the value 
@@ -234,6 +234,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
             {
                 return this.Title;
             }
+        }
+
+        public void Focus(UIElement element)
+        {
+            this.dropDown.Focus();
         }
     }
 }
