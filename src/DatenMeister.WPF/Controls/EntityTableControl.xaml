@@ -23,7 +23,7 @@
             <Button x:Name="buttonNew" Click="buttonNew_Click" Style="{StaticResource TouchButton}">New...</Button>
             <Button x:Name="buttonEdit" Click="buttonEdit_Click" Style="{StaticResource TouchButton}">Edit...</Button>
             <Button x:Name="buttonDelete" Click="buttonDelete_Click" Style="{StaticResource TouchButton}">Delete</Button>
-            <Button x:Name="reloadDelete" Click="reloadDelete_Click" Style="{StaticResource TouchButton}">Reload</Button>
+            <Button x:Name="reloadDelete" Click="reloadDelete_Click" Style="{StaticResource TouchButton}">Refresh</Button>
         </StackPanel>
         <DataGrid x:Name="gridContent" Grid.Row="0" 
                   IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False"

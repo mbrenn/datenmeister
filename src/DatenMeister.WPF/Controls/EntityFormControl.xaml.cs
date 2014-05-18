@@ -3,6 +3,7 @@ using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.WPF.Controls.GuiElements;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -150,7 +151,10 @@ namespace DatenMeister.WPF.Controls
         {
             this.Relayout();
 
-            Ensure.That(this.Extent != null, "Extent has not been set");
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                Ensure.That(this.Extent != null, "Extent has not been set");
+            }
         }
 
         /// <summary>
