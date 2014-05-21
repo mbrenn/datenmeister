@@ -22,7 +22,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             if (state.EditMode == EditMode.Edit && detailObject != null)
             {
-                var fieldName = fieldInfo.get("name").ToString();
+                var fieldName = checkbox.getBinding();
                 var propertyValue = detailObject.get(fieldName);
                 if (propertyValue != null)
                 {
@@ -36,8 +36,9 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
         public void SetData(IObject detailObject, ElementCacheEntry entry)
         {
+            var checkBoxInfo = new DatenMeister.Entities.AsObject.FieldInfo.Checkbox(entry.FieldInfo);
             var checkBox = entry.WPFElement as CheckBox;
-            detailObject.set(entry.FieldInfo.get("name").ToString(), checkBox.IsChecked);
+            detailObject.set(checkBoxInfo.getBinding(), checkBox.IsChecked);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
             // Gets the current element
             var currentValue = this.detailObject == null ?
-                null : this.detailObject.get(this.propertyName).AsSingle() as IObject;
+                null : this.detailObject.get(this.binding).AsSingle() as IObject;
             return currentValue;
         }
 

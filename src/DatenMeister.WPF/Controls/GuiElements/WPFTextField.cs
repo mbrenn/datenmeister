@@ -11,7 +11,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
     {
         public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
         {
-            var textFieldObject = new DatenMeister.Entities.AsObject.FieldInfo.TextField(fieldInfo);
+            var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(fieldInfo);
 
             var textBox = new System.Windows.Controls.TextBox();
             textBox.FontSize = 16;
@@ -19,7 +19,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             if (state.EditMode == EditMode.Edit && detailObject != null)
             {
-                var fieldName = fieldInfo.get("name").ToString();
+                var fieldName = textFieldObj.getBinding().ToString();
                 var propertyValue = detailObject.get(fieldName);
                 if (propertyValue != null)
                 {
@@ -37,8 +37,9 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <param name="entry">Cache entry, which has the connection between WPF element and fieldinfo</param>        
         public void SetData(IObject detailObject, ElementCacheEntry entry)
         {
+            var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(entry.FieldInfo);
             var textBox = entry.WPFElement as TextBox;
-            detailObject.set(entry.FieldInfo.get("name").ToString(), textBox.Text);
+            detailObject.set(textFieldObj.getBinding().ToString(), textBox.Text);
         }
 
         public void Focus(System.Windows.UIElement element)

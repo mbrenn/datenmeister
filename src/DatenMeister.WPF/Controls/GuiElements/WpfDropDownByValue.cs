@@ -41,7 +41,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         protected override object GetCurrentValue()
         {
             var currentValue = this.detailObject == null ?
-                null : this.detailObject.get(this.propertyName).AsSingle().ToString();
+                null : this.detailObject.get(this.binding).AsSingle().ToString();
             return currentValue;
         }
     }

@@ -172,8 +172,9 @@ namespace DatenMeister.WPF.Controls
                 // Goes through each element
                 foreach (var fieldInfo in fieldInfos.Cast<IObject>())
                 {
+                    var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
                     // Creates the key element for the form
-                    var name = (fieldInfo.get("title") ?? "").ToString();
+                    var name = (fieldInfoObj.getName() ?? string.Empty).ToString();
                     if (string.IsNullOrEmpty(name))
                     {
                         name = "Unknown";

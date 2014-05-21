@@ -1,4 +1,5 @@
 ﻿using BurnSystems.ObjectActivation;
+using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Pool;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <summary>
         /// Stores the name of the property, who will receive the selected property
         /// </summary>
-        protected string propertyName;
+        protected string binding;
 
         /// <summary>
         /// Stores an enumeration of all objects
@@ -71,11 +72,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var settings = new WpfDropDownSettings();
 
             // Fills the variable and creates the combobox
-            // var fieldInfoObj = new NullReferenceException();
+            var fieldInfoObj = new ReferenceBase(fieldInfo);
             this.resolver = PoolResolver.GetDefault(state.Pool);
-            var referenceUrl = fieldInfo.get("referenceUrl").AsSingle().ToString();
-            this.propertyValue = fieldInfo.get("propertyValue").AsSingle().ToString();
-            this.propertyName = fieldInfo.get("name").AsSingle().ToString(); // Stores the name of the property
+            var referenceUrl = fieldInfoObj.getReferenceUrl();
+            this.propertyValue = fieldInfoObj.getPropertyValue();
+            this.binding = fieldInfoObj.getBinding(); // Stores the name of the property
             this.resolvedElements = this.resolver.ResolveAsObjects(referenceUrl);
             this.detailObject = detailObject;
 
@@ -196,10 +197,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
             var combobox = this.dropDown;
             var selectedObject = combobox.SelectedValue as Item<object>;
+            var fieldInfoObj = new ReferenceBase(entry.FieldInfo);
 
             if (selectedObject != null)
             {
-                detailObject.set(entry.FieldInfo.get("name").ToString(), selectedObject.Value);
+                detailObject.set(fieldInfoObj.getBinding(), selectedObject.Value);
             }
         }
 

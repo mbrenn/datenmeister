@@ -165,13 +165,14 @@ namespace DatenMeister.WPF.Controls
             this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
-            foreach (var fieldInfo in this.tableViewInfo.getFieldInfos().Cast<IObject>())
+            foreach (var fieldInfo in this.tableViewInfo.getFieldInfos().Cast<IObject>()
+                .Select(x=> new DatenMeister.Entities.AsObject.FieldInfo.General(x)))
             {
-                var title = fieldInfo.get("title").ToString();
-                var name = fieldInfo.get("name").ToString();
+                var name = fieldInfo.getName();
+                var binding = fieldInfo.getBinding();
                 var column = new TableDataGridTextColumn();
-                column.Header = title;
-                column.Binding = new Binding("["+name+"]");
+                column.Header = name;
+                column.Binding = new Binding("["+binding+"]");
                 column.AssociatedViewColumn = fieldInfo;
 
                 this.gridContent.Columns.Add(column);

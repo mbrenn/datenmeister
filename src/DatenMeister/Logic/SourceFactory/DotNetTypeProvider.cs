@@ -75,8 +75,8 @@ namespace DatenMeister.Logic.SourceFactory
             var type = this.FindType(typeName);
 
             var constructors = type.GetConstructors(
-                System.Reflection.BindingFlags.DeclaredOnly | 
-                System.Reflection.BindingFlags.Instance | 
+                System.Reflection.BindingFlags.DeclaredOnly |
+                System.Reflection.BindingFlags.Instance |
                 System.Reflection.BindingFlags.Public);
 
             if (constructors.Length == 0)
@@ -84,7 +84,7 @@ namespace DatenMeister.Logic.SourceFactory
                 return new List<string>();
             }
 
-            if ( constructors.Length > 1 )
+            if (constructors.Length > 1)
             {
                 constructors = constructors.Where(x => x.GetParameters().Count() > 0).ToArray();
             }
