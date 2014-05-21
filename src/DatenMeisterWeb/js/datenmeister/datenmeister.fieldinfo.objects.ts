@@ -56,9 +56,17 @@ export module Comment {
 export module General {
     export var TypeName='General';
 
-    export function create() {
+    export function create(name?: any, binding?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'General');
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
+        }
+
         return result;
     }
 
@@ -225,6 +233,74 @@ export module ActionButton {
 
     export function setClickUrl(item : __d__.JsonExtentObject, value: any) {
         item.set('clickUrl', value);
+    }
+
+}
+
+export module ReferenceBase {
+    export var TypeName='ReferenceBase';
+
+    export function create(name?: any, binding?: any, referenceUrl?: any, propertyValue?: any) {
+        var result = new __d__.JsonExtentObject();
+        result.set('type', 'ReferenceBase');
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
+        }
+
+        if (referenceUrl !== undefined) {
+            result.set('referenceUrl', referenceUrl);
+        }
+
+        if (propertyValue !== undefined) {
+            result.set('propertyValue', propertyValue);
+        }
+
+        return result;
+    }
+
+
+    export function getPropertyValue(item: __d__.JsonExtentObject) {
+        return item.get('propertyValue');
+    }
+
+    export function setPropertyValue(item : __d__.JsonExtentObject, value: any) {
+        item.set('propertyValue', value);
+    }
+
+    export function getReferenceUrl(item: __d__.JsonExtentObject) {
+        return item.get('referenceUrl');
+    }
+
+    export function setReferenceUrl(item : __d__.JsonExtentObject, value: any) {
+        item.set('referenceUrl', value);
+    }
+
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
+    }
+
+    export function isReadOnly(item: __d__.JsonExtentObject) {
+        return item.get('isReadOnly');
+    }
+
+    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
+        item.set('isReadOnly', value);
     }
 
 }

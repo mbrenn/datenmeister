@@ -71,6 +71,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var settings = new WpfDropDownSettings();
 
             // Fills the variable and creates the combobox
+            // var fieldInfoObj = new NullReferenceException();
             this.resolver = PoolResolver.GetDefault(state.Pool);
             var referenceUrl = fieldInfo.get("referenceUrl").AsSingle().ToString();
             this.propertyValue = fieldInfo.get("propertyValue").AsSingle().ToString();

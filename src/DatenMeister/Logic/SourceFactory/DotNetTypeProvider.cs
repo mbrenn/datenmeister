@@ -84,6 +84,11 @@ namespace DatenMeister.Logic.SourceFactory
                 return new List<string>();
             }
 
+            if ( constructors.Length > 1 )
+            {
+                constructors = constructors.Where(x => x.GetParameters().Count() > 0).ToArray();
+            }
+
             Ensure.That(constructors.Length <= 1, typeName + " has more than one constructor");
             var constructor = constructors.First();
 

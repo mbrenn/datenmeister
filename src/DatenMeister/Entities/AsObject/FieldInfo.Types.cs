@@ -42,6 +42,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
             {
                 var type = new DatenMeister.Entities.UML.Type();
+                type.name = "ReferenceBase";
+                Types.ReferenceBase = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                extent.Add(Types.ReferenceBase);
+            }
+
+            {
+                var type = new DatenMeister.Entities.UML.Type();
                 type.name = "ReferenceByValue";
                 Types.ReferenceByValue = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Add(Types.ReferenceByValue);
@@ -88,6 +95,8 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject ActionButton;
 
+        public static DatenMeister.IObject ReferenceBase;
+
         public static DatenMeister.IObject ReferenceByValue;
 
         public static DatenMeister.IObject ReferenceByRef;
@@ -106,6 +115,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.Checkbox), Types.Checkbox);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TextField), Types.TextField);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ActionButton), Types.ActionButton);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceBase), Types.ReferenceBase);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByValue), Types.ReferenceByValue);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByRef), Types.ReferenceByRef);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.View), Types.View);

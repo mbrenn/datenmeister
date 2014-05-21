@@ -62,9 +62,17 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     (function (General) {
         General.TypeName = 'General';
 
-        function create() {
+        function create(name, binding) {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'General');
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
+            }
+
             return result;
         }
         General.create = create;
@@ -260,6 +268,84 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         ActionButton.setClickUrl = setClickUrl;
     })(exports.ActionButton || (exports.ActionButton = {}));
     var ActionButton = exports.ActionButton;
+
+    (function (ReferenceBase) {
+        ReferenceBase.TypeName = 'ReferenceBase';
+
+        function create(name, binding, referenceUrl, propertyValue) {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'ReferenceBase');
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
+            }
+
+            if (referenceUrl !== undefined) {
+                result.set('referenceUrl', referenceUrl);
+            }
+
+            if (propertyValue !== undefined) {
+                result.set('propertyValue', propertyValue);
+            }
+
+            return result;
+        }
+        ReferenceBase.create = create;
+
+        function getPropertyValue(item) {
+            return item.get('propertyValue');
+        }
+        ReferenceBase.getPropertyValue = getPropertyValue;
+
+        function setPropertyValue(item, value) {
+            item.set('propertyValue', value);
+        }
+        ReferenceBase.setPropertyValue = setPropertyValue;
+
+        function getReferenceUrl(item) {
+            return item.get('referenceUrl');
+        }
+        ReferenceBase.getReferenceUrl = getReferenceUrl;
+
+        function setReferenceUrl(item, value) {
+            item.set('referenceUrl', value);
+        }
+        ReferenceBase.setReferenceUrl = setReferenceUrl;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        ReferenceBase.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        ReferenceBase.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        ReferenceBase.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        ReferenceBase.setBinding = setBinding;
+
+        function isReadOnly(item) {
+            return item.get('isReadOnly');
+        }
+        ReferenceBase.isReadOnly = isReadOnly;
+
+        function setReadOnly(item, value) {
+            item.set('isReadOnly', value);
+        }
+        ReferenceBase.setReadOnly = setReadOnly;
+    })(exports.ReferenceBase || (exports.ReferenceBase = {}));
+    var ReferenceBase = exports.ReferenceBase;
 
     (function (ReferenceByValue) {
         ReferenceByValue.TypeName = 'ReferenceByValue';

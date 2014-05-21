@@ -5,13 +5,14 @@ using System.Text;
 
 namespace DatenMeister.Entities.FieldInfos
 {
-    public class ReferenceByRef : General
+    public class ReferenceBase : General
     {
-        public ReferenceByRef(string name, string binding, string referenceUrl, string propertyValue)
-            : base(name, binding)
+        public ReferenceBase(string name, string binding, string referenceUrl, string propertyValue)
         {
-            this.referenceUrl = referenceUrl;
+            this.binding = binding;
+            this.name = name;
             this.propertyValue = propertyValue;
+            this.referenceUrl = referenceUrl;
         }
 
         public string propertyValue

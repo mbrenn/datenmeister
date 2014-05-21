@@ -15,6 +15,7 @@ types = [
          DatenMeister.Entities.FieldInfos.Checkbox, 
          DatenMeister.Entities.FieldInfos.TextField,
          DatenMeister.Entities.FieldInfos.ActionButton,
+         DatenMeister.Entities.FieldInfos.ReferenceBase,
          DatenMeister.Entities.FieldInfos.ReferenceByValue,
          DatenMeister.Entities.FieldInfos.ReferenceByRef,
          DatenMeister.Entities.FieldInfos.View,
