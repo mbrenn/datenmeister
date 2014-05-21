@@ -26,7 +26,7 @@ namespace DatenMeister.DataProvider
         private List<object> GetList()
         {
             var value = this.unspecified.Value as List<object>;
-            if ( value == null)
+            if (value == null)
             {
                 // The list did not create, so create it. 
                 value = new List<object>();
@@ -56,8 +56,9 @@ namespace DatenMeister.DataProvider
 
         public override object set(int index, object value)
         {
+            var oldValue = this.GetList()[index];
             this.GetList()[index] = value;
-            return value;
+            return oldValue;
         }
 
         public override bool add(object value)
@@ -71,7 +72,7 @@ namespace DatenMeister.DataProvider
             this.GetList().Clear();
         }
 
-        public override object remove(object value)
+        public override bool remove(object value)
         {   
             return this.GetList().Remove(value);
         }

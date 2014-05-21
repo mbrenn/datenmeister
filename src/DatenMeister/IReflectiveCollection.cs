@@ -13,7 +13,13 @@ namespace DatenMeister
 
         void clear();
 
-        object remove(object value);
+        /// <summary>
+        /// Return type is bool. 
+        /// MOF specification states that it is object, but according to XMI file, this is bool
+        /// </summary>
+        /// <param name="value">Value to be removed</param>
+        /// <returns>true, if value has been removed</returns>
+        bool remove(object value);
 
         int size();
     }

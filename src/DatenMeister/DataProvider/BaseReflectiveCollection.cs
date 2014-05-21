@@ -27,7 +27,7 @@ namespace DatenMeister.DataProvider
 
         public abstract void clear();
 
-        public abstract object remove(object value);
+        public abstract bool remove(object value);
 
         public abstract int size();
 
@@ -68,7 +68,7 @@ namespace DatenMeister.DataProvider
 
         bool ICollection<object>.Remove(object item)
         {
-            return this.remove(item) != null;
+            return this.remove(item);
         }
 
         IEnumerator<object> IEnumerable<object>.GetEnumerator()

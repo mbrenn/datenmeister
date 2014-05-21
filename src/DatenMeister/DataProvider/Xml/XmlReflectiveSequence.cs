@@ -112,10 +112,11 @@ namespace DatenMeister.DataProvider.Xml
         public override object remove(int index)
         {
             var objectList = this.GetAttributeAsList();
+            var result = objectList[index];
             objectList.RemoveAt(index);
             this.SetAttributeAsList(objectList);
 
-            return true;
+            return result;
         }
 
         public override object set(int index, object value)
@@ -131,8 +132,10 @@ namespace DatenMeister.DataProvider.Xml
 
                     // Ok, now we got it, now we need to inject our element
                     var list = this.GetAttributeAsList();
+                    var oldResult = list[index];
                     list[index] = path;
                     this.SetAttributeAsList(list);
+                    return oldResult;
                 }
                 else
                 {
@@ -143,8 +146,6 @@ namespace DatenMeister.DataProvider.Xml
             {
                 throw new NotImplementedException("Only IObjects are supported to get added");
             }
-         
-            return value;
         }
 
         public override bool add(object value)
@@ -156,10 +157,11 @@ namespace DatenMeister.DataProvider.Xml
 
         public override void clear()
         {
+            // Direct setting, without using the intermediate list
             this.GetAttribute().Value = string.Empty;
         }
 
-        public override object remove(object value)
+        public override bool remove(object value)
         {
             var valueAsIObject = value as IObject;
             if (valueAsIObject != null)
