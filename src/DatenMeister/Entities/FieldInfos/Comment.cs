@@ -7,9 +7,9 @@ namespace DatenMeister.Entities.FieldInfos
 {
     public class Comment : General
     {
-        public Comment(string title, string comment)
+        public Comment(string name, string comment)
         {
-            this.title = title;
+            this.name = name;
             this.comment = comment;
         }
 

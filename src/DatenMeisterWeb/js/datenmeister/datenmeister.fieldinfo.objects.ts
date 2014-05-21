@@ -4,11 +4,11 @@ import __d__ = require('datenmeister.objects');
 export module Comment {
     export var TypeName='Comment';
 
-    export function create(title?: any, comment?: any) {
+    export function create(name?: any, comment?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'Comment');
-        if (title !== undefined) {
-            result.set('title', title);
+        if (name !== undefined) {
+            result.set('name', name);
         }
 
         if (comment !== undefined) {
@@ -27,20 +27,20 @@ export module Comment {
         item.set('comment', value);
     }
 
-    export function getTitle(item: __d__.JsonExtentObject) {
-        return item.get('title');
-    }
-
-    export function setTitle(item : __d__.JsonExtentObject, value: any) {
-        item.set('title', value);
-    }
-
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
     }
 
     export function setName(item : __d__.JsonExtentObject, value: any) {
         item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
     }
 
     export function isReadOnly(item: __d__.JsonExtentObject) {
@@ -63,20 +63,20 @@ export module General {
     }
 
 
-    export function getTitle(item: __d__.JsonExtentObject) {
-        return item.get('title');
-    }
-
-    export function setTitle(item : __d__.JsonExtentObject, value: any) {
-        item.set('title', value);
-    }
-
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
     }
 
     export function setName(item : __d__.JsonExtentObject, value: any) {
         item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
     }
 
     export function isReadOnly(item: __d__.JsonExtentObject) {
@@ -92,28 +92,20 @@ export module General {
 export module Checkbox {
     export var TypeName='Checkbox';
 
-    export function create(title?: any, name?: any) {
+    export function create(name?: any, binding?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'Checkbox');
-        if (title !== undefined) {
-            result.set('title', title);
-        }
-
         if (name !== undefined) {
             result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
         }
 
         return result;
     }
 
-
-    export function getTitle(item: __d__.JsonExtentObject) {
-        return item.get('title');
-    }
-
-    export function setTitle(item : __d__.JsonExtentObject, value: any) {
-        item.set('title', value);
-    }
 
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
@@ -121,6 +113,14 @@ export module Checkbox {
 
     export function setName(item : __d__.JsonExtentObject, value: any) {
         item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
     }
 
     export function isReadOnly(item: __d__.JsonExtentObject) {
@@ -136,15 +136,15 @@ export module Checkbox {
 export module TextField {
     export var TypeName='TextField';
 
-    export function create(title?: any, name?: any) {
+    export function create(name?: any, binding?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'TextField');
-        if (title !== undefined) {
-            result.set('title', title);
-        }
-
         if (name !== undefined) {
             result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
         }
 
         return result;
@@ -167,20 +167,20 @@ export module TextField {
         item.set('height', value);
     }
 
-    export function getTitle(item: __d__.JsonExtentObject) {
-        return item.get('title');
-    }
-
-    export function setTitle(item : __d__.JsonExtentObject, value: any) {
-        item.set('title', value);
-    }
-
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
     }
 
     export function setName(item : __d__.JsonExtentObject, value: any) {
         item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
     }
 
     export function isReadOnly(item: __d__.JsonExtentObject) {
@@ -232,15 +232,15 @@ export module ActionButton {
 export module ReferenceByValue {
     export var TypeName='ReferenceByValue';
 
-    export function create(title?: any, name?: any, referenceUrl?: any, propertyValue?: any) {
+    export function create(name?: any, binding?: any, referenceUrl?: any, propertyValue?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'ReferenceByValue');
-        if (title !== undefined) {
-            result.set('title', title);
-        }
-
         if (name !== undefined) {
             result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
         }
 
         if (referenceUrl !== undefined) {
@@ -271,20 +271,20 @@ export module ReferenceByValue {
         item.set('referenceUrl', value);
     }
 
-    export function getTitle(item: __d__.JsonExtentObject) {
-        return item.get('title');
-    }
-
-    export function setTitle(item : __d__.JsonExtentObject, value: any) {
-        item.set('title', value);
-    }
-
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
     }
 
     export function setName(item : __d__.JsonExtentObject, value: any) {
         item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
     }
 
     export function isReadOnly(item: __d__.JsonExtentObject) {
@@ -300,15 +300,15 @@ export module ReferenceByValue {
 export module ReferenceByRef {
     export var TypeName='ReferenceByRef';
 
-    export function create(title?: any, name?: any, referenceUrl?: any, propertyValue?: any) {
+    export function create(name?: any, binding?: any, referenceUrl?: any, propertyValue?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'ReferenceByRef');
-        if (title !== undefined) {
-            result.set('title', title);
-        }
-
         if (name !== undefined) {
             result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
         }
 
         if (referenceUrl !== undefined) {
@@ -339,20 +339,20 @@ export module ReferenceByRef {
         item.set('referenceUrl', value);
     }
 
-    export function getTitle(item: __d__.JsonExtentObject) {
-        return item.get('title');
-    }
-
-    export function setTitle(item : __d__.JsonExtentObject, value: any) {
-        item.set('title', value);
-    }
-
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
     }
 
     export function setName(item : __d__.JsonExtentObject, value: any) {
         item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
     }
 
     export function isReadOnly(item: __d__.JsonExtentObject) {

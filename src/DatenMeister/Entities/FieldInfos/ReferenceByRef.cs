@@ -7,9 +7,9 @@ namespace DatenMeister.Entities.FieldInfos
 {
     public class ReferenceByRef : General
     {
-        public ReferenceByRef(string title, string name, string referenceUrl, string propertyValue)
+        public ReferenceByRef(string name, string binding, string referenceUrl, string propertyValue)
         {
-            this.title = title;
+            this.binding = binding;
             this.name = name;
             this.propertyValue = propertyValue;
             this.referenceUrl = referenceUrl;

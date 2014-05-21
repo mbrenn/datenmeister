@@ -10,10 +10,10 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.obj = obj;
         }
 
-        public Comment(DatenMeister.IObject obj, object title, object comment)
+        public Comment(DatenMeister.IObject obj, object name, object comment)
             : this(obj)
         {
-            this.set("title", title);
+            this.set("name", name);
             this.set("comment", comment);
         }
 
@@ -117,17 +117,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("comment", value);
         }
 
-        public System.String getTitle()
-        {
-            var result = this.get("title");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setTitle(System.String value)
-        {
-            this.set("title", value);
-        }
-
         public System.String getName()
         {
             var result = this.get("name");
@@ -137,6 +126,17 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public void setName(System.String value)
         {
             this.set("name", value);
+        }
+
+        public System.String getBinding()
+        {
+            var result = this.get("binding");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setBinding(System.String value)
+        {
+            this.set("binding", value);
         }
 
         public System.Boolean isReadOnly()
@@ -251,17 +251,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #endregion
 
-        public System.String getTitle()
-        {
-            var result = this.get("title");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setTitle(System.String value)
-        {
-            this.set("title", value);
-        }
-
         public System.String getName()
         {
             var result = this.get("name");
@@ -271,6 +260,17 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public void setName(System.String value)
         {
             this.set("name", value);
+        }
+
+        public System.String getBinding()
+        {
+            var result = this.get("binding");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setBinding(System.String value)
+        {
+            this.set("binding", value);
         }
 
         public System.Boolean isReadOnly()
@@ -296,11 +296,11 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.obj = obj;
         }
 
-        public Checkbox(DatenMeister.IObject obj, object title, object name)
+        public Checkbox(DatenMeister.IObject obj, object name, object binding)
             : this(obj)
         {
-            this.set("title", title);
             this.set("name", name);
+            this.set("binding", binding);
         }
 
         #region IObject Implementation
@@ -392,17 +392,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #endregion
 
-        public System.String getTitle()
-        {
-            var result = this.get("title");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setTitle(System.String value)
-        {
-            this.set("title", value);
-        }
-
         public System.String getName()
         {
             var result = this.get("name");
@@ -412,6 +401,17 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public void setName(System.String value)
         {
             this.set("name", value);
+        }
+
+        public System.String getBinding()
+        {
+            var result = this.get("binding");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setBinding(System.String value)
+        {
+            this.set("binding", value);
         }
 
         public System.Boolean isReadOnly()
@@ -437,11 +437,11 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.obj = obj;
         }
 
-        public TextField(DatenMeister.IObject obj, object title, object name)
+        public TextField(DatenMeister.IObject obj, object name, object binding)
             : this(obj)
         {
-            this.set("title", title);
             this.set("name", name);
+            this.set("binding", binding);
         }
 
         #region IObject Implementation
@@ -555,17 +555,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("height", value);
         }
 
-        public System.String getTitle()
-        {
-            var result = this.get("title");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setTitle(System.String value)
-        {
-            this.set("title", value);
-        }
-
         public System.String getName()
         {
             var result = this.get("name");
@@ -575,6 +564,17 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public void setName(System.String value)
         {
             this.set("name", value);
+        }
+
+        public System.String getBinding()
+        {
+            var result = this.get("binding");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setBinding(System.String value)
+        {
+            this.set("binding", value);
         }
 
         public System.Boolean isReadOnly()
@@ -730,11 +730,11 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.obj = obj;
         }
 
-        public ReferenceByValue(DatenMeister.IObject obj, object title, object name, object referenceUrl, object propertyValue)
+        public ReferenceByValue(DatenMeister.IObject obj, object name, object binding, object referenceUrl, object propertyValue)
             : this(obj)
         {
-            this.set("title", title);
             this.set("name", name);
+            this.set("binding", binding);
             this.set("referenceUrl", referenceUrl);
             this.set("propertyValue", propertyValue);
         }
@@ -850,17 +850,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("referenceUrl", value);
         }
 
-        public System.String getTitle()
-        {
-            var result = this.get("title");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setTitle(System.String value)
-        {
-            this.set("title", value);
-        }
-
         public System.String getName()
         {
             var result = this.get("name");
@@ -870,6 +859,17 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public void setName(System.String value)
         {
             this.set("name", value);
+        }
+
+        public System.String getBinding()
+        {
+            var result = this.get("binding");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setBinding(System.String value)
+        {
+            this.set("binding", value);
         }
 
         public System.Boolean isReadOnly()
@@ -895,11 +895,11 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.obj = obj;
         }
 
-        public ReferenceByRef(DatenMeister.IObject obj, object title, object name, object referenceUrl, object propertyValue)
+        public ReferenceByRef(DatenMeister.IObject obj, object name, object binding, object referenceUrl, object propertyValue)
             : this(obj)
         {
-            this.set("title", title);
             this.set("name", name);
+            this.set("binding", binding);
             this.set("referenceUrl", referenceUrl);
             this.set("propertyValue", propertyValue);
         }
@@ -1015,17 +1015,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("referenceUrl", value);
         }
 
-        public System.String getTitle()
-        {
-            var result = this.get("title");
-            return (result is System.String) ? ((System.String) result) : default(System.String);
-        }
-
-        public void setTitle(System.String value)
-        {
-            this.set("title", value);
-        }
-
         public System.String getName()
         {
             var result = this.get("name");
@@ -1035,6 +1024,17 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public void setName(System.String value)
         {
             this.set("name", value);
+        }
+
+        public System.String getBinding()
+        {
+            var result = this.get("binding");
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public void setBinding(System.String value)
+        {
+            this.set("binding", value);
         }
 
         public System.Boolean isReadOnly()

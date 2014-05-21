@@ -10,13 +10,13 @@ namespace DatenMeister.Entities.FieldInfos
     /// </summary>
     public class General
     {
-        public string title
+        public string name
         {
             get;
             set;
         }
 
-        public string name
+        public string binding
         {
             get;
             set;

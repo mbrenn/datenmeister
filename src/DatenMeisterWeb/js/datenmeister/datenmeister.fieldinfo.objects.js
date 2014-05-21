@@ -2,11 +2,11 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     (function (Comment) {
         Comment.TypeName = 'Comment';
 
-        function create(title, comment) {
+        function create(name, comment) {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'Comment');
-            if (title !== undefined) {
-                result.set('title', title);
+            if (name !== undefined) {
+                result.set('name', name);
             }
 
             if (comment !== undefined) {
@@ -27,16 +27,6 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         Comment.setComment = setComment;
 
-        function getTitle(item) {
-            return item.get('title');
-        }
-        Comment.getTitle = getTitle;
-
-        function setTitle(item, value) {
-            item.set('title', value);
-        }
-        Comment.setTitle = setTitle;
-
         function getName(item) {
             return item.get('name');
         }
@@ -46,6 +36,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('name', value);
         }
         Comment.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        Comment.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        Comment.setBinding = setBinding;
 
         function isReadOnly(item) {
             return item.get('isReadOnly');
@@ -69,16 +69,6 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         General.create = create;
 
-        function getTitle(item) {
-            return item.get('title');
-        }
-        General.getTitle = getTitle;
-
-        function setTitle(item, value) {
-            item.set('title', value);
-        }
-        General.setTitle = setTitle;
-
         function getName(item) {
             return item.get('name');
         }
@@ -88,6 +78,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('name', value);
         }
         General.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        General.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        General.setBinding = setBinding;
 
         function isReadOnly(item) {
             return item.get('isReadOnly');
@@ -104,30 +104,20 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     (function (Checkbox) {
         Checkbox.TypeName = 'Checkbox';
 
-        function create(title, name) {
+        function create(name, binding) {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'Checkbox');
-            if (title !== undefined) {
-                result.set('title', title);
-            }
-
             if (name !== undefined) {
                 result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
             }
 
             return result;
         }
         Checkbox.create = create;
-
-        function getTitle(item) {
-            return item.get('title');
-        }
-        Checkbox.getTitle = getTitle;
-
-        function setTitle(item, value) {
-            item.set('title', value);
-        }
-        Checkbox.setTitle = setTitle;
 
         function getName(item) {
             return item.get('name');
@@ -138,6 +128,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('name', value);
         }
         Checkbox.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        Checkbox.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        Checkbox.setBinding = setBinding;
 
         function isReadOnly(item) {
             return item.get('isReadOnly');
@@ -154,15 +154,15 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     (function (TextField) {
         TextField.TypeName = 'TextField';
 
-        function create(title, name) {
+        function create(name, binding) {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'TextField');
-            if (title !== undefined) {
-                result.set('title', title);
-            }
-
             if (name !== undefined) {
                 result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
             }
 
             return result;
@@ -189,16 +189,6 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         TextField.setHeight = setHeight;
 
-        function getTitle(item) {
-            return item.get('title');
-        }
-        TextField.getTitle = getTitle;
-
-        function setTitle(item, value) {
-            item.set('title', value);
-        }
-        TextField.setTitle = setTitle;
-
         function getName(item) {
             return item.get('name');
         }
@@ -208,6 +198,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('name', value);
         }
         TextField.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        TextField.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        TextField.setBinding = setBinding;
 
         function isReadOnly(item) {
             return item.get('isReadOnly');
@@ -264,15 +264,15 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     (function (ReferenceByValue) {
         ReferenceByValue.TypeName = 'ReferenceByValue';
 
-        function create(title, name, referenceUrl, propertyValue) {
+        function create(name, binding, referenceUrl, propertyValue) {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'ReferenceByValue');
-            if (title !== undefined) {
-                result.set('title', title);
-            }
-
             if (name !== undefined) {
                 result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
             }
 
             if (referenceUrl !== undefined) {
@@ -307,16 +307,6 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         ReferenceByValue.setReferenceUrl = setReferenceUrl;
 
-        function getTitle(item) {
-            return item.get('title');
-        }
-        ReferenceByValue.getTitle = getTitle;
-
-        function setTitle(item, value) {
-            item.set('title', value);
-        }
-        ReferenceByValue.setTitle = setTitle;
-
         function getName(item) {
             return item.get('name');
         }
@@ -326,6 +316,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('name', value);
         }
         ReferenceByValue.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        ReferenceByValue.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        ReferenceByValue.setBinding = setBinding;
 
         function isReadOnly(item) {
             return item.get('isReadOnly');
@@ -342,15 +342,15 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     (function (ReferenceByRef) {
         ReferenceByRef.TypeName = 'ReferenceByRef';
 
-        function create(title, name, referenceUrl, propertyValue) {
+        function create(name, binding, referenceUrl, propertyValue) {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'ReferenceByRef');
-            if (title !== undefined) {
-                result.set('title', title);
-            }
-
             if (name !== undefined) {
                 result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
             }
 
             if (referenceUrl !== undefined) {
@@ -385,16 +385,6 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         ReferenceByRef.setReferenceUrl = setReferenceUrl;
 
-        function getTitle(item) {
-            return item.get('title');
-        }
-        ReferenceByRef.getTitle = getTitle;
-
-        function setTitle(item, value) {
-            item.set('title', value);
-        }
-        ReferenceByRef.setTitle = setTitle;
-
         function getName(item) {
             return item.get('name');
         }
@@ -404,6 +394,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('name', value);
         }
         ReferenceByRef.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        ReferenceByRef.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        ReferenceByRef.setBinding = setBinding;
 
         function isReadOnly(item) {
             return item.get('isReadOnly');

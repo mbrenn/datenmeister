@@ -7,9 +7,9 @@ namespace DatenMeister.Entities.FieldInfos
 {
     public class Checkbox : General
     {
-        public Checkbox(string title, string name)
+        public Checkbox(string name, string binding)
         {
-            this.title = title;
+            this.binding = binding;
             this.name = name;
         }
     }
