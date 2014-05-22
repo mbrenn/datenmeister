@@ -101,7 +101,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -213,7 +213,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 

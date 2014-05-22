@@ -146,7 +146,6 @@ namespace DatenMeister
 
         public static IReflectiveSequence AsReflectiveSequence(this object value)
         {
-
             // Ok, we have an unspecified thing... don't like, but necessary
             var valueAsUnspecified = value as IUnspecified;
             if (valueAsUnspecified != null)

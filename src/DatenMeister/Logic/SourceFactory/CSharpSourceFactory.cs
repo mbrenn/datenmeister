@@ -150,10 +150,21 @@ namespace DatenMeister.Logic.SourceFactory
                     this.GetGetMethodName(propertyName, propertyType),
                     propertyTypeName));
             writer.WriteLine(EightSpaces + "{");
-            writer.WriteLine(
-                string.Format(
-                    TwelveSpaces + "var result = this.get(\"{0}\");",
-                    propertyName));
+            if (this.HasPushMethod(propertyType))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "var result = DatenMeister.Extensions.AsEnumeration(this.get(\"{0}\"));",
+                        propertyName));
+            }
+            else
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "var result = DatenMeister.Extensions.AsSingle(this.get(\"{0}\"));",
+                        propertyName));
+            }
+
             writer.WriteLine(
                 string.Format(
                     TwelveSpaces + "return (result is {0}) ? (({0}) result) : default({0});",

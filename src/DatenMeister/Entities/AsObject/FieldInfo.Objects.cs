@@ -108,7 +108,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getComment()
         {
-            var result = this.get("comment");
+            var result = DatenMeister.Extensions.AsSingle(this.get("comment"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -119,7 +119,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -130,7 +130,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getBinding()
         {
-            var result = this.get("binding");
+            var result = DatenMeister.Extensions.AsSingle(this.get("binding"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -141,7 +141,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean isReadOnly()
         {
-            var result = this.get("isReadOnly");
+            var result = DatenMeister.Extensions.AsSingle(this.get("isReadOnly"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -260,7 +260,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -271,7 +271,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getBinding()
         {
-            var result = this.get("binding");
+            var result = DatenMeister.Extensions.AsSingle(this.get("binding"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -282,7 +282,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean isReadOnly()
         {
-            var result = this.get("isReadOnly");
+            var result = DatenMeister.Extensions.AsSingle(this.get("isReadOnly"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -401,7 +401,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -412,7 +412,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getBinding()
         {
-            var result = this.get("binding");
+            var result = DatenMeister.Extensions.AsSingle(this.get("binding"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -423,7 +423,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean isReadOnly()
         {
-            var result = this.get("isReadOnly");
+            var result = DatenMeister.Extensions.AsSingle(this.get("isReadOnly"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -542,7 +542,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Int32 getWidth()
         {
-            var result = this.get("width");
+            var result = DatenMeister.Extensions.AsSingle(this.get("width"));
             return (result is System.Int32) ? ((System.Int32) result) : default(System.Int32);
         }
 
@@ -553,7 +553,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Int32 getHeight()
         {
-            var result = this.get("height");
+            var result = DatenMeister.Extensions.AsSingle(this.get("height"));
             return (result is System.Int32) ? ((System.Int32) result) : default(System.Int32);
         }
 
@@ -564,7 +564,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -575,7 +575,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getBinding()
         {
-            var result = this.get("binding");
+            var result = DatenMeister.Extensions.AsSingle(this.get("binding"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -586,7 +586,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean isReadOnly()
         {
-            var result = this.get("isReadOnly");
+            var result = DatenMeister.Extensions.AsSingle(this.get("isReadOnly"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -705,7 +705,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getText()
         {
-            var result = this.get("text");
+            var result = DatenMeister.Extensions.AsSingle(this.get("text"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -716,7 +716,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getClickUrl()
         {
-            var result = this.get("clickUrl");
+            var result = DatenMeister.Extensions.AsSingle(this.get("clickUrl"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -837,7 +837,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getPropertyValue()
         {
-            var result = this.get("propertyValue");
+            var result = DatenMeister.Extensions.AsSingle(this.get("propertyValue"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -848,7 +848,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getReferenceUrl()
         {
-            var result = this.get("referenceUrl");
+            var result = DatenMeister.Extensions.AsSingle(this.get("referenceUrl"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -859,7 +859,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -870,7 +870,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getBinding()
         {
-            var result = this.get("binding");
+            var result = DatenMeister.Extensions.AsSingle(this.get("binding"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -881,7 +881,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean isReadOnly()
         {
-            var result = this.get("isReadOnly");
+            var result = DatenMeister.Extensions.AsSingle(this.get("isReadOnly"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1002,7 +1002,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getPropertyValue()
         {
-            var result = this.get("propertyValue");
+            var result = DatenMeister.Extensions.AsSingle(this.get("propertyValue"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1013,7 +1013,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getReferenceUrl()
         {
-            var result = this.get("referenceUrl");
+            var result = DatenMeister.Extensions.AsSingle(this.get("referenceUrl"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1024,7 +1024,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1035,7 +1035,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getBinding()
         {
-            var result = this.get("binding");
+            var result = DatenMeister.Extensions.AsSingle(this.get("binding"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1046,7 +1046,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean isReadOnly()
         {
-            var result = this.get("isReadOnly");
+            var result = DatenMeister.Extensions.AsSingle(this.get("isReadOnly"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1167,7 +1167,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getPropertyValue()
         {
-            var result = this.get("propertyValue");
+            var result = DatenMeister.Extensions.AsSingle(this.get("propertyValue"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1178,7 +1178,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getReferenceUrl()
         {
-            var result = this.get("referenceUrl");
+            var result = DatenMeister.Extensions.AsSingle(this.get("referenceUrl"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1189,7 +1189,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1200,7 +1200,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getBinding()
         {
-            var result = this.get("binding");
+            var result = DatenMeister.Extensions.AsSingle(this.get("binding"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1211,7 +1211,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean isReadOnly()
         {
-            var result = this.get("isReadOnly");
+            var result = DatenMeister.Extensions.AsSingle(this.get("isReadOnly"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1323,7 +1323,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1334,7 +1334,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Collections.Generic.IEnumerable<System.Object> getFieldInfos()
         {
-            var result = this.get("fieldInfos");
+            var result = DatenMeister.Extensions.AsEnumeration(this.get("fieldInfos"));
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -1352,7 +1352,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getStartInEditMode()
         {
-            var result = this.get("startInEditMode");
+            var result = DatenMeister.Extensions.AsSingle(this.get("startInEditMode"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1464,7 +1464,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getAllowEdit()
         {
-            var result = this.get("allowEdit");
+            var result = DatenMeister.Extensions.AsSingle(this.get("allowEdit"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1475,7 +1475,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getAllowDelete()
         {
-            var result = this.get("allowDelete");
+            var result = DatenMeister.Extensions.AsSingle(this.get("allowDelete"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1486,7 +1486,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getAllowNew()
         {
-            var result = this.get("allowNew");
+            var result = DatenMeister.Extensions.AsSingle(this.get("allowNew"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1497,7 +1497,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getShowColumnHeaders()
         {
-            var result = this.get("showColumnHeaders");
+            var result = DatenMeister.Extensions.AsSingle(this.get("showColumnHeaders"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1508,7 +1508,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getAllowNewProperty()
         {
-            var result = this.get("allowNewProperty");
+            var result = DatenMeister.Extensions.AsSingle(this.get("allowNewProperty"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1519,7 +1519,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1530,7 +1530,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Collections.Generic.IEnumerable<System.Object> getFieldInfos()
         {
-            var result = this.get("fieldInfos");
+            var result = DatenMeister.Extensions.AsEnumeration(this.get("fieldInfos"));
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -1548,7 +1548,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getStartInEditMode()
         {
-            var result = this.get("startInEditMode");
+            var result = DatenMeister.Extensions.AsSingle(this.get("startInEditMode"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1660,7 +1660,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getExtentUri()
         {
-            var result = this.get("extentUri");
+            var result = DatenMeister.Extensions.AsSingle(this.get("extentUri"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1671,7 +1671,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public DatenMeister.IObject getMainType()
         {
-            var result = this.get("mainType");
+            var result = DatenMeister.Extensions.AsSingle(this.get("mainType"));
             return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
         }
 
@@ -1682,7 +1682,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getAllowEdit()
         {
-            var result = this.get("allowEdit");
+            var result = DatenMeister.Extensions.AsSingle(this.get("allowEdit"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1693,7 +1693,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getAllowDelete()
         {
-            var result = this.get("allowDelete");
+            var result = DatenMeister.Extensions.AsSingle(this.get("allowDelete"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1704,7 +1704,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getAllowNew()
         {
-            var result = this.get("allowNew");
+            var result = DatenMeister.Extensions.AsSingle(this.get("allowNew"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
@@ -1715,7 +1715,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.String getName()
         {
-            var result = this.get("name");
+            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
@@ -1726,7 +1726,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Collections.Generic.IEnumerable<System.Object> getFieldInfos()
         {
-            var result = this.get("fieldInfos");
+            var result = DatenMeister.Extensions.AsEnumeration(this.get("fieldInfos"));
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -1744,7 +1744,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public System.Boolean getStartInEditMode()
         {
-            var result = this.get("startInEditMode");
+            var result = DatenMeister.Extensions.AsSingle(this.get("startInEditMode"));
             return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
         }
 
