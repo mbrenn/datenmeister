@@ -1,4 +1,5 @@
-﻿using DatenMeister.DataProvider.CSV;
+﻿using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.CSV;
 using DatenMeister.Logic;
 using NUnit.Framework;
 using System;

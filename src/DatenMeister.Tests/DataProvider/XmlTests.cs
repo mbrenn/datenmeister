@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using DatenMeister;
+using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using NUnit.Framework;
@@ -292,6 +293,59 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(asSequence.size(), Is.EqualTo(2));
             Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e4"));
             Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
+        }
+
+        [Test]
+        public void TestFactory()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<tasks />" +
+                    "<persons />" +
+                "</root>");
+
+            var typeTask = new GenericObject();
+            var typePerson = new GenericObject();
+            var xmlExtent = new XmlExtent(document, "test:///");
+            xmlExtent.Settings.Mapping.Add("task", typeTask, x => x.Elements("root").Elements("tasks").FirstOrDefault());
+            xmlExtent.Settings.Mapping.Add("person", typePerson, x => x.Elements("root").Elements("persons").FirstOrDefault());
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+
+            var provider = new FactoryProvider();
+            var factory = provider.CreateFor(xmlExtent);
+            var person1 = factory.create(typePerson);
+            var person2 = factory.create(typePerson);
+
+            var task1 = factory.create(typeTask);
+
+            person1.set("name", "Brenn");
+            person1.set("prename", "Martin");
+
+            person2.set("name", "Brenner");
+            person2.set("prename", "Martina");
+
+            task1.set("name", "Toller Task");
+
+            // Now do the checks
+            Assert.That(
+                document.Elements("root").Elements("tasks").Elements("task").Count(), 
+                Is.EqualTo(1));
+            Assert.That(
+                document.Elements("root").Elements("persons").Elements("person").Count(), 
+                Is.EqualTo(2));
+
+            Assert.That(
+                document.Elements("root").Elements("persons").Elements("person").First().Attribute("name").Value, 
+                Is.EqualTo("Brenn"));
+            Assert.That(
+                document.Elements("root").Elements("persons").Elements("person").ElementAt(1).Attribute("name").Value, 
+                Is.EqualTo("Brenner"));
+
+            Assert.That(
+                document.Elements("root").Elements("tasks").Elements("task").First().Attribute("name").Value,
+                Is.EqualTo("Toller Task"));
         }
     }
 }

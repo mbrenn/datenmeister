@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
 using BurnSystems.ObjectActivation;
+using DatenMeister.DataProvider;
 
 namespace DatenMeister
 {
@@ -118,6 +119,9 @@ namespace DatenMeister
 
             // Initializes the default pool
             Global.Application.Bind<IPool>().ToConstant(this);
+
+            // Initializes the default factory provider
+            Global.Application.Bind<IFactoryProvider>().To<FactoryProvider>();
         }
     }
 }
