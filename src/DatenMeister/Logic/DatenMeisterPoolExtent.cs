@@ -7,16 +7,23 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.Logic
 {
-    public class DatenMeisterPoolExtent : DotNetExtent
+    public class DatenMeisterPoolExtent : DotNetExtent, IURIExtent
     {
+        /// <summary>
+        /// Defines the path, where this extent is stored
+        /// </summary>
+        public const string DefaultUri = "datenmeister:///extents";
+
+        public const string DefaultName = "DatenMeister Extents";
+
         /// <summary>
         /// Stores the pool
         /// </summary>
         private DatenMeisterPool pool;
 
         public DatenMeisterPoolExtent(DatenMeisterPool pool)
-            : base("datenmeister:///pools")
-        {
+            : base(DefaultUri)
+        {            
             this.pool = pool;
         }
 

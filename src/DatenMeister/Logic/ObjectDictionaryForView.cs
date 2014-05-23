@@ -26,7 +26,13 @@ namespace DatenMeister.Logic
                 return resultAsIObject.get("name").AsSingle().ToString();
             }
 
-            return result.ToString();
+            if (result != null)
+            {
+                return result.ToString();
+            }
+
+            return "NULL";
         }
     }
 }
+
