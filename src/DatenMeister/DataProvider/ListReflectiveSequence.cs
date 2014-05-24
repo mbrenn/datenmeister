@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace DatenMeister.DataProvider
 {
-    public abstract class ListReflectiveSequence : BaseReflectiveSequence
+    public abstract class ListReflectiveSequence<T> : BaseReflectiveSequence
     {
 
         public ListReflectiveSequence()
@@ -17,11 +18,11 @@ namespace DatenMeister.DataProvider
         /// If the list is not already in, a new list will be created
         /// </summary>
         /// <returns>The associated list</returns>
-        protected abstract IList<object> GetList();
+        protected abstract IList<T> GetList();
 
         public override void add(int index, object value)
         {
-            this.GetList().Insert(index, value);
+            this.GetList().Insert(index, (T) value);
         }
 
         public override object get(int index)
@@ -39,13 +40,13 @@ namespace DatenMeister.DataProvider
         public override object set(int index, object value)
         {
             var oldValue = this.GetList()[index];
-            this.GetList()[index] = value;
+            this.GetList()[index] = (T) value;
             return oldValue;
         }
 
         public override bool add(object value)
         {
-            this.GetList().Add(value);
+            this.GetList().Add((T) value);
             return true;
         }
 
@@ -55,8 +56,11 @@ namespace DatenMeister.DataProvider
         }
 
         public override bool remove(object value)
-        {   
-            return this.GetList().Remove(value);
+        {
+            var list = this.GetList();
+            var result = list.Contains((T) value);
+            this.GetList().Remove((T) value);
+            return result;
         }
 
         public override int size()
@@ -66,7 +70,10 @@ namespace DatenMeister.DataProvider
 
         public override IEnumerable<object> getAll()
         {
-            return this.GetList();
+            foreach (var item in this.GetList())
+            {
+                yield return item;
+            }
         }
     }
 }

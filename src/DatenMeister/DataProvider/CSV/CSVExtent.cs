@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BurnSystems.Test;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace DatenMeister.DataProvider.CSV
 
         private List<string> headerNames = new List<string>();
 
-        private List<object> objects = new List<object>();
+        private List<IObject> objects = new List<IObject>();
 
         public CSVSettings Settings
         {
@@ -29,7 +30,7 @@ namespace DatenMeister.DataProvider.CSV
             set;
         }
 
-        public List<object> Objects
+        public List<IObject> Objects
         {
             get { return this.objects; }
         }
@@ -62,7 +63,7 @@ namespace DatenMeister.DataProvider.CSV
 
         public IReflectiveSequence Elements()
         {
-            return new ListWrapperReflectiveSequence(this.Objects);
+            return new CSVExtentReflectiveSequence(this);
         }
 
         public IObject CreateObject(IObject type)
@@ -72,7 +73,7 @@ namespace DatenMeister.DataProvider.CSV
                 var nr = this.objects.Count;
                 var element = new CSVObject(nr, this, null);
 
-                this.objects.Add(element);
+                this.Objects.Add(element);
                 this.IsDirty = true;
 
                 return element;
@@ -84,6 +85,25 @@ namespace DatenMeister.DataProvider.CSV
             lock (this.Objects)
             {
                 this.Objects.Remove(element);
+            }
+        }
+
+        /// <summary>
+        /// Defines the reflective sequence being used 
+        /// </summary>
+        public class CSVExtentReflectiveSequence : ListReflectiveSequence<IObject>
+        {
+            public CSVExtent extent;
+
+            public CSVExtentReflectiveSequence(CSVExtent extent)
+            {
+                Ensure.That(extent != null);
+                this.extent = extent;
+            }
+
+            protected override IList<IObject> GetList()
+            {
+                return this.extent.Objects;
             }
         }
     }

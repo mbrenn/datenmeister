@@ -79,8 +79,10 @@ namespace DatenMeister.DataProvider.DotNet
         /// <returns></returns>
         public IReflectiveSequence Elements()
         {
-            throw new NotImplementedException();
-            // return this.elements;
+            lock (this.elements)
+            {
+                return new ListWrapperReflectiveSequence<IObject>(this.elements);
+            }
         }
 
         /// <summary>
@@ -88,14 +90,14 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="element">Element to be added</param>
         public void Add(object element)
-        {
+        {            
             if (element is DotNetObject)
             {
-                this.elements.Add(element as DotNetObject);
+                this.Elements().Add(element as DotNetObject);
             }
             else
             {
-                this.elements.Add(new DotNetObject(this, element));
+                this.Elements().Add(new DotNetObject(this, element));
             }
         }
 
@@ -106,10 +108,7 @@ namespace DatenMeister.DataProvider.DotNet
 
         public void RemoveObject(IObject element)
         {
-            lock (this.elements)
-            {
-                this.elements.Remove(element);
-            }
+            this.Elements().remove(element);
         }
     }
 }
