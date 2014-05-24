@@ -1,6 +1,7 @@
 ﻿using BurnSystems.Test;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -139,7 +140,7 @@ namespace DatenMeister.DataProvider.Xml
                     var parentElement = this.extent.XmlDocument.Root;
 
                     // Checks, if we have a better element, where new node can be added
-                    var info = this.extent.Settings.Mapping.FindByType(valueAsXmlObject);
+                    var info = this.extent.Settings.Mapping.FindByType(valueAsXmlObject.getMetaClass());
                     if (info != null)
                     {
                         parentElement = info.RetrieveRootNode(this.extent.XmlDocument);
@@ -151,6 +152,12 @@ namespace DatenMeister.DataProvider.Xml
                     this.extent.IsDirty = true;
 
                     return true;
+                }
+
+                if (value == null)
+                {
+                    Debug.WriteLine("Null has been added");
+                    return false;                    
                 }
 
                 throw new InvalidOperationException("Only objects as IObject may be added");

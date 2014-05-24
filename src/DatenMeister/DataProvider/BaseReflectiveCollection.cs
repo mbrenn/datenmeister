@@ -50,9 +50,12 @@ namespace DatenMeister.DataProvider
 
         void ICollection<object>.CopyTo(object[] array, int arrayIndex)
         {
-            foreach (var item in array)
+            var elements = this.getAll();
+
+            foreach (var item in elements)
             {
-                this.add(item);
+                array[arrayIndex] = item;
+                arrayIndex++;
             }
         }
 

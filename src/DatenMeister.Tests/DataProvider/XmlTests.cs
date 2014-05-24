@@ -24,7 +24,7 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(xmlExtent, Is.Not.Null);
 
             var xmlRootElement = xmlExtent.Elements();
-
+            
             Assert.That(xmlRootElement, Is.Not.Null);
 
             var items = xmlRootElement.ToList();
@@ -313,12 +313,11 @@ namespace DatenMeister.Tests.DataProvider
             pool.DoDefaultBinding();
             pool.Add(xmlExtent, null);
 
-            var provider = new FactoryProvider();
-            var factory = provider.CreateFor(xmlExtent);
-            var person1 = factory.create(typePerson);
-            var person2 = factory.create(typePerson);
+            var factory = Factory.GetFor(xmlExtent);
+            var person1 = factory.CreateInExtent(xmlExtent, typePerson);
+            var person2 = factory.CreateInExtent(xmlExtent, typePerson);
 
-            var task1 = factory.create(typeTask);
+            var task1 = factory.CreateInExtent(xmlExtent, typeTask);
 
             person1.set("name", "Brenn");
             person1.set("prename", "Martin");
