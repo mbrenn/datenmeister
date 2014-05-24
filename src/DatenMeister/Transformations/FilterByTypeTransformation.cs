@@ -84,61 +84,73 @@ namespace DatenMeister.Transformations
 
         public IReflectiveSequence Elements()
         {
-            throw new NotImplementedException();
+            return new FilterByTypeReflectiveSequence(this);
+        }
 
-            /*
-            if (this.typeToFilter == null &&
-                string.IsNullOrEmpty(this.nameOfTypeToFilter))
+        private class FilterByTypeReflectiveSequence : ProxyReflectiveSequence
+        {
+            private FilterByTypeTransformation transformation;
+
+            public FilterByTypeReflectiveSequence(FilterByTypeTransformation transformation)
+                : base(transformation.source)
             {
-                // No filter criteria at all
-                foreach (var obj in this.source.Elements())
+                this.transformation = transformation;
+            }
+
+            public override IEnumerable<object> getAll()
+            {
+                if (this.transformation.typeToFilter == null &&
+                    string.IsNullOrEmpty(this.transformation.nameOfTypeToFilter))
                 {
-                    var element = obj as IElement;
-                    if (element == null && this.typeToFilter == null)
+                    // No filter criteria at all
+                    foreach (var obj in this.transformation.source.Elements())
                     {
-                        // No filter requested, only elements without types are returned
-                        yield return element;
+                        var element = obj as IElement;
+                        if (element == null && this.transformation.typeToFilter == null)
+                        {
+                            // No filter requested, only elements without types are returned
+                            yield return element;
+                        }
                     }
                 }
-            }
-            else if (this.typeToFilter != null &&
-                string.IsNullOrEmpty(this.nameOfTypeToFilter))
-            {
-                // Filter by instance
-                foreach (var obj in this.source.Elements())
+                else if (this.transformation.typeToFilter != null &&
+                    string.IsNullOrEmpty(this.transformation.nameOfTypeToFilter))
                 {
-                    var element = obj as IElement;
-                    var metaClass = element.getMetaClass();
-
-                    if (element.getMetaClass() == this.typeToFilter)
+                    // Filter by instance
+                    foreach (var obj in this.transformation.source.Elements())
                     {
-                        // Metaclass is equivalent
-                        yield return element;
+                        var element = obj as IElement;
+                        var metaClass = element.getMetaClass();
+
+                        if (element.getMetaClass() == this.transformation.typeToFilter)
+                        {
+                            // Metaclass is equivalent
+                            yield return element;
+                        }
                     }
                 }
-            }
-            else if (this.typeToFilter == null &&
-                !string.IsNullOrEmpty(this.nameOfTypeToFilter))
-            {
-                // Filter by name
-                foreach (var obj in this.source.Elements())
+                else if (this.transformation.typeToFilter == null &&
+                    !string.IsNullOrEmpty(this.transformation.nameOfTypeToFilter))
                 {
-                    var element = obj as IElement;
-                    var typeName = element.getMetaClass().get("name").AsSingle().ToString();
-
-                    if (typeName == this.nameOfTypeToFilter)
+                    // Filter by name
+                    foreach (var obj in this.transformation.source.Elements())
                     {
-                        // Metaclass is equivalent
-                        yield return element;
+                        var element = obj as IElement;
+                        var typeName = element.getMetaClass().get("name").AsSingle().ToString();
+
+                        if (typeName == this.transformation.nameOfTypeToFilter)
+                        {
+                            // Metaclass is equivalent
+                            yield return element;
+                        }
                     }
                 }
+                else
+                {
+                    // Not supported that both elements are set
+                    throw new NotImplementedException("TypeToFilter and NameOfTypeToFilter cannot be set at the same time.");
+                }
             }
-            else
-            {
-                // Not supported that both elements are set
-                throw new NotImplementedException("TypeToFilter and NameOfTypeToFilter cannot be set at the same time.");
-            }
-             * */
         }
     }
 }

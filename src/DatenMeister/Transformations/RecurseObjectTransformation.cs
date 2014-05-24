@@ -55,45 +55,54 @@ namespace DatenMeister.Transformations
 
         public IReflectiveSequence Elements()
         {
-            throw new NotImplementedException();
-
-            /*
-            this.CheckSource();
-
-            foreach (var element in this.source.Elements())
-            {
-                foreach (var yields in this.Recurse(element))
-                {
-                    yield return yields;
-                }
-            }*/
+            return new RecurseReflectiveSequence(this);
         }
 
-        private IEnumerable<IObject> Recurse(object value)
+        private class RecurseReflectiveSequence : ProxyReflectiveSequence
         {
-            // If IObject or IEnumeration, otherwise return nothing
-            if (value is IObject)
+            public RecurseReflectiveSequence(RecurseObjectTransformation transformation)
+                : base ( transformation.source)
             {
-                yield return value as IObject;
-                foreach (var pair in (value as IObject).getAll())
+
+            }
+            public override IEnumerable<object> getAll()
+            {
+                foreach (var element in this.baseExtent.Elements())
                 {
-                    foreach (var x in this.Recurse(pair.Value))
+                    foreach (var yields in this.Recurse(element))
                     {
-                        yield return x;
+                        yield return yields;
                     }
                 }
             }
 
-            if (value is IEnumerable)
+            private IEnumerable<IObject> Recurse(object value)
             {
-                foreach (var item in (value as IEnumerable))
+                // If IObject or IEnumeration, otherwise return nothing
+                if (value is IObject)
                 {
-                    foreach (var x in this.Recurse(item))
+                    yield return value as IObject;
+                    foreach (var pair in (value as IObject).getAll())
                     {
-                        yield return x;
+                        foreach (var x in this.Recurse(pair.Value))
+                        {
+                            yield return x;
+                        }
+                    }
+                }
+
+                if (value is IEnumerable)
+                {
+                    foreach (var item in (value as IEnumerable))
+                    {
+                        foreach (var x in this.Recurse(item))
+                        {
+                            yield return x;
+                        }
                     }
                 }
             }
         }
+
     }
 }

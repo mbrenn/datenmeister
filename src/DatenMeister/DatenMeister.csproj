@@ -138,6 +138,7 @@
     <Compile Include="Transformations\FilterByTypeTransformation.cs" />
     <Compile Include="Transformations\ITransformation.cs" />
     <Compile Include="Transformations\Extensions.cs" />
+    <Compile Include="Transformations\ProxyReflectiveSequence.cs" />
     <Compile Include="Transformations\RecurseObjectTransformation.cs" />
     <Compile Include="Web\Extensions.cs" />
     <Compile Include="Web\GetObjectsModel.cs" />
