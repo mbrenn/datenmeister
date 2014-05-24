@@ -8,5 +8,8 @@ namespace DatenMeister.AddOns.Export.Excel
 {
     public class ExcelExport
     {
+        public void ExportToFile(IURIExtent extent, ExcelExportSettings settings)
+        {
+        }
     }
 }

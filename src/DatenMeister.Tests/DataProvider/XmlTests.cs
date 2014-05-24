@@ -298,6 +298,36 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestFactory()
         {
+            var xmlExtent = CreateTestExtent();
+
+            var xmldocument = xmlExtent.XmlDocument;
+            // Now do the checks
+            Assert.That(
+                xmldocument.Elements("root").Elements("tasks").Elements("task").Count(), 
+                Is.EqualTo(1));
+            Assert.That(
+                xmldocument.Elements("root").Elements("persons").Elements("person").Count(), 
+                Is.EqualTo(2));
+
+            Assert.That(
+                xmldocument.Elements("root").Elements("persons").Elements("person").First().Attribute("name").Value, 
+                Is.EqualTo("Brenn"));
+            Assert.That(
+                xmldocument.Elements("root").Elements("persons").Elements("person").ElementAt(1).Attribute("name").Value, 
+                Is.EqualTo("Brenner"));
+
+            Assert.That(
+                xmldocument.Elements("root").Elements("tasks").Elements("task").First().Attribute("name").Value,
+                Is.EqualTo("Toller Task"));
+        }
+
+        /// <summary>
+        /// Creates a simple extent, containing some types and some elements
+        /// </summary>
+        /// <returns>XmlExtent being created</returns>
+        public static XmlExtent CreateTestExtent()
+        {
+
             var document = XDocument.Parse(
                 "<root>" +
                     "<tasks />" +
@@ -326,25 +356,7 @@ namespace DatenMeister.Tests.DataProvider
             person2.set("prename", "Martina");
 
             task1.set("name", "Toller Task");
-
-            // Now do the checks
-            Assert.That(
-                document.Elements("root").Elements("tasks").Elements("task").Count(), 
-                Is.EqualTo(1));
-            Assert.That(
-                document.Elements("root").Elements("persons").Elements("person").Count(), 
-                Is.EqualTo(2));
-
-            Assert.That(
-                document.Elements("root").Elements("persons").Elements("person").First().Attribute("name").Value, 
-                Is.EqualTo("Brenn"));
-            Assert.That(
-                document.Elements("root").Elements("persons").Elements("person").ElementAt(1).Attribute("name").Value, 
-                Is.EqualTo("Brenner"));
-
-            Assert.That(
-                document.Elements("root").Elements("tasks").Elements("task").First().Attribute("name").Value,
-                Is.EqualTo("Toller Task"));
+            return xmlExtent;
         }
 
         [Test]

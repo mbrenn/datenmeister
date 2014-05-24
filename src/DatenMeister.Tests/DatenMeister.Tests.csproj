@@ -59,6 +59,7 @@
     <Compile Include="DataProvider\DotNetTests.cs" />
     <Compile Include="DataProvider\GenericTests.cs" />
     <Compile Include="DataProvider\XmlTests.cs" />
+    <Compile Include="Export\ExcelExportTests.cs" />
     <Compile Include="PoolLogic\CopyExtentsTests.cs" />
     <Compile Include="PoolLogic\FilterTests.cs" />
     <Compile Include="PoolLogic\TestDatabase.cs" />
@@ -90,6 +91,10 @@
     <ProjectReference Include="..\..\..\burnsystems\src\BurnSystems.csproj">
       <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
       <Name>BurnSystems</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatenMeister.AddOns\DatenMeister.AddOns.csproj">
+      <Project>{c4672023-3e93-45eb-a797-7c144dff43fc}</Project>
+      <Name>DatenMeister.AddOns</Name>
     </ProjectReference>
     <ProjectReference Include="..\DatenMeister\DatenMeister.csproj">
       <Project>{D0C28956-4EEE-4AF0-A0ED-A500A558C5D8}</Project>
