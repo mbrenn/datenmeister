@@ -13,17 +13,16 @@ namespace DatenMeister.DataProvider
     /// </summary>
     public  abstract class Factory : IFactory
     {
-        private IURIExtent extent;
+        public Factory()
+        {
+        }
 
+        [Obsolete("Use Factory()")]
         public Factory(IURIExtent extent)
-        {
-            this.extent = extent;
+        {   
         }
 
-        public IObject create(IObject type)
-        {
-            throw new NotImplementedException("Factory has no implementation");
-        }
+        public abstract IObject create(IObject type);
 
         /// <summary>
         /// Creates am object by an object and its given datatype

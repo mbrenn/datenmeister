@@ -121,7 +121,7 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(xmlExtent.Elements().ElementAt(1).AsIObject().Id, Is.EqualTo("e2"));
             Assert.Throws<InvalidOperationException>(() => { xmlExtent.Elements().ElementAt(2); return; });
 
-            var newElement = xmlExtent.CreateObject(null);
+            var newElement = Factory.GetFor(xmlExtent).CreateInExtent(xmlExtent);
             Assert.That(newElement.Id, Is.Not.Null.Or.Empty);
 
             newElement.set("id", "e4");

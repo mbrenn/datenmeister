@@ -24,7 +24,7 @@ namespace DatenMeister.DataProvider
             Ensure.That(extent != null, "Extent == null");
             if (extent is Xml.XmlExtent)
             {
-                return new Xml.XmlFactory(extent);
+                return new Xml.XmlFactory(extent as Xml.XmlExtent);
             }
 
             if (extent is DotNet.DotNetExtent)

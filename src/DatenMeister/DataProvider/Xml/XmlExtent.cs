@@ -89,53 +89,7 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Enumeration of all elements</returns>
         public IReflectiveSequence Elements()
         {
-            throw new NotImplementedException();
-            /*
-            if (!this.Settings.SkipRootNode)
-            {
-                foreach (var subNode in this.XmlDocument.Root.Elements())
-                {
-                    var subObject = new XmlObject(this, subNode);
-                    yield return subObject;
-                }
-            }
-
-            // Goes through the mapping table to find additional objects
-            foreach (var mapInfo in this.Settings.Mapping.GetAll())
-            {
-                foreach (var xmlSubnode in mapInfo.RetrieveRootNode(this.XmlDocument).Elements())
-                {
-                    var result = new XmlObject(this, xmlSubnode, null);
-                    yield return result;
-                }
-            }*/
-        }
-
-        /// <summary>
-        /// Creates a new object, won't work completely, due to the required name of the xml node
-        /// </summary>
-        /// <returns>Exception will be returned</returns>
-        public IObject CreateObject(IObject type)
-        {
-            var parentElement = this.XmlDocument.Root;
-
-            // Checks, if we have a better element, where new node can be added
-            var info = this.Settings.Mapping.FindByType(type);
-            var nodeName = "element";
-            if (info != null)
-            {
-                parentElement = info.RetrieveRootNode(this.XmlDocument);
-                nodeName = info.NodeName;
-            }
-
-            // Adds a simple object 
-            var newObject = new XElement(nodeName);
-            newObject.Add(new XAttribute("id", Guid.NewGuid().ToString()));
-            parentElement.Add(newObject);
-
-            this.IsDirty = true;
-
-            return new XmlObject(this, newObject);
+            return new XmlExtentReflectiveSequence(this);
         }
 
         /// <summary>
@@ -145,6 +99,102 @@ namespace DatenMeister.DataProvider.Xml
         public void RemoveObject(IObject element)
         {
             throw new NotImplementedException();
+        }
+
+        private class XmlExtentReflectiveSequence : BaseReflectiveSequence
+        {
+            private XmlExtent extent;
+
+            public XmlExtentReflectiveSequence(XmlExtent extent)
+            {
+                Ensure.That(extent != null);
+                this.extent = extent;
+            }
+
+            public override void add(int index, object value)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override object get(int index)
+            {
+                return this.getAll().ElementAt(index);
+            }
+
+            public override object remove(int index)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override object set(int index, object value)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool add(object value)
+            {
+                if (value is XmlObject)
+                {
+                    var valueAsXmlObject = value as XmlObject;
+                    var parentElement = this.extent.XmlDocument.Root;
+
+                    // Checks, if we have a better element, where new node can be added
+                    var info = this.extent.Settings.Mapping.FindByType(valueAsXmlObject);
+                    if (info != null)
+                    {
+                        parentElement = info.RetrieveRootNode(this.extent.XmlDocument);
+                    }
+
+                    // Adds a simple object 
+                    parentElement.Add(valueAsXmlObject.Node);
+
+                    this.extent.IsDirty = true;
+
+                    return true;
+                }
+
+                throw new InvalidOperationException("Only objects as IObject may be added");
+            }
+
+            public override void clear()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool remove(object value)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override int size()
+            {
+                return this.getAll().Count();
+            }
+
+            public override IEnumerable<object> getAll()
+            {
+                lock (this.extent.XmlDocument)
+                {
+                    if (!this.extent.Settings.SkipRootNode)
+                    {
+                        foreach (var subNode in this.extent.XmlDocument.Root.Elements())
+                        {
+                            var subObject = new XmlObject(this.extent, subNode);
+                            yield return subObject;
+                        }
+                    }
+
+                    // Goes through the mapping table to find additional objects
+                    foreach (var mapInfo in this.extent.Settings.Mapping.GetAll())
+                    {
+                        foreach (var xmlSubnode in mapInfo.RetrieveRootNode(this.extent.XmlDocument).Elements())
+                        {
+                            var result = new XmlObject(this.extent, xmlSubnode, null);
+                            yield return result;
+                        }
+                    }
+                }
+            }
         }
     }
 }
