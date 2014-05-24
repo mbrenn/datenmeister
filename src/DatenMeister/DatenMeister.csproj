@@ -63,6 +63,7 @@
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataProvider\IFactoryProvider.cs" />
     <Compile Include="DataProvider\IResolvable.cs" />
+    <Compile Include="DataProvider\ListWrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\Views\FieldInfo.cs" />
     <Compile Include="DataProvider\Views\View.cs" />
     <Compile Include="DataProvider\Views\ViewsExtent.cs" />

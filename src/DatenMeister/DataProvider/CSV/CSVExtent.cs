@@ -21,7 +21,7 @@ namespace DatenMeister.DataProvider.CSV
 
         private List<string> headerNames = new List<string>();
 
-        private List<IObject> objects = new List<IObject>();
+        private List<object> objects = new List<object>();
 
         public CSVSettings Settings
         {
@@ -29,7 +29,7 @@ namespace DatenMeister.DataProvider.CSV
             set;
         }
 
-        public List<IObject> Objects
+        public List<object> Objects
         {
             get { return this.objects; }
         }
@@ -62,8 +62,7 @@ namespace DatenMeister.DataProvider.CSV
 
         public IReflectiveSequence Elements()
         {
-            throw new NotImplementedException();
-            // return this.Objects;
+            return new ListWrapperReflectiveSequence(this.Objects);
         }
 
         public IObject CreateObject(IObject type)

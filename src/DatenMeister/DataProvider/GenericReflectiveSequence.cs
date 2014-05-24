@@ -23,7 +23,7 @@ namespace DatenMeister.DataProvider
         /// If the list is not already in, a new list will be created
         /// </summary>
         /// <returns>The associated list</returns>
-        private List<object> GetList()
+        protected virtual IList<object> GetList()
         {
             var value = this.unspecified.Value as List<object>;
             if (value == null)
