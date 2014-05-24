@@ -31,7 +31,7 @@ namespace DatenMeister.DataProvider.Views
                     name = "name"
                 });
 
-            this.Add(view);
+            this.Elements().add(view);
         }
     }
 }

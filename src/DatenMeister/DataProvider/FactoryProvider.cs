@@ -29,7 +29,7 @@ namespace DatenMeister.DataProvider
 
             if (extent is DotNet.DotNetExtent)
             {
-                throw new NotImplementedException("DotNet Type not implemented");
+                return new DatenMeister.DataProvider.DotNet.DotNetFactory(extent as DotNet.DotNetExtent);
             }
 
             if (extent is CSV.CSVExtent)

@@ -52,6 +52,7 @@
     <Compile Include="DataProvider\CSV\CSVObject.cs" />
     <Compile Include="DataProvider\CSV\CSVSettings.cs" />
     <Compile Include="DataProvider\DotNet\DotNetExtent.cs" />
+    <Compile Include="DataProvider\DotNet\DotNetFactory.cs" />
     <Compile Include="DataProvider\DotNet\DotNetObject.cs" />
     <Compile Include="DataProvider\DotNet\DotNetSequence.cs" />
     <Compile Include="DataProvider\DotNet\DotNetTypeInformation.cs" />

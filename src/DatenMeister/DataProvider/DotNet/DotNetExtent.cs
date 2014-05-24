@@ -81,34 +81,35 @@ namespace DatenMeister.DataProvider.DotNet
         {
             lock (this.elements)
             {
-                return new ListWrapperReflectiveSequence<IObject>(this.elements);
+                return new DotNetExtentReflectiveSequence(this);
             }
         }
 
-        /// <summary>
-        /// Adds an object to the extent
-        /// </summary>
-        /// <param name="element">Element to be added</param>
-        public void Add(object element)
-        {            
-            if (element is DotNetObject)
-            {
-                this.Elements().Add(element as DotNetObject);
-            }
-            else
-            {
-                this.Elements().Add(new DotNetObject(this, element));
-            }
-        }
-
-        public IObject CreateObject(IObject type)
+        public void Add(IObject value)
         {
-            throw new InvalidOperationException("Dotnet objects cannot be created, no type information is available");
+            this.Elements().Add(value);
         }
 
-        public void RemoveObject(IObject element)
+        private class DotNetExtentReflectiveSequence : ListWrapperReflectiveSequence<IObject>
         {
-            this.Elements().remove(element);
+            private DotNetExtent extent;
+            public DotNetExtentReflectiveSequence(DotNetExtent extent)
+                : base(extent.elements)
+            {
+                this.extent = extent;
+            }
+
+            public override IObject ConvertInstanceTo(object value)
+            {
+                if (value is DotNetObject)
+                {
+                    return value as DotNetObject;
+                }
+                else
+                {
+                    return new DotNetObject(this.extent, value);
+                }
+            }
         }
     }
 }

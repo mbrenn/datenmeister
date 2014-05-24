@@ -8,7 +8,6 @@ namespace DatenMeister.DataProvider
 {
     public abstract class ListReflectiveSequence<T> : BaseReflectiveSequence
     {
-
         public ListReflectiveSequence()
         {
         }

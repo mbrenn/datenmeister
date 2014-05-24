@@ -30,5 +30,10 @@ namespace DatenMeister.DataProvider.DotNet
         {
             return this.mappings.Where(x => x.DotNetType == type).FirstOrDefault();
         }
+
+        public DotNetTypeInformation FindByIObjectType(IObject type)
+        {
+            return this.mappings.Where(x => x.Type == type).FirstOrDefault();
+        }
     }
 }

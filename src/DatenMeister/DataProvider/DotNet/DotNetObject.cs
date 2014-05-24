@@ -163,7 +163,7 @@ namespace DatenMeister.DataProvider.DotNet
         public void delete()
         {
             Ensure.That(extent != null, "No extent had been given");
-            this.extent.RemoveObject(this);
+            this.extent.Elements().remove(this);
         }
 
         /// <summary>
