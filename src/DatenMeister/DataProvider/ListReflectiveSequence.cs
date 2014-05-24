@@ -20,9 +20,19 @@ namespace DatenMeister.DataProvider
         /// <returns>The associated list</returns>
         protected abstract IList<T> GetList();
 
+        /// <summary>
+        /// This class will be called, when something has been changed in the extent. 
+        /// Might be used to set a dirty flag
+        /// </summary>
+        /// <returns></returns>
+        public virtual void OnChange()
+        {
+        }
+
         public override void add(int index, object value)
         {
             this.GetList().Insert(index, (T) value);
+            this.OnChange();
         }
 
         public override object get(int index)
@@ -34,6 +44,7 @@ namespace DatenMeister.DataProvider
         {
             var result = this.get(index);
             this.GetList().RemoveAt(index);
+            this.OnChange();
             return result;
         }
 
@@ -41,18 +52,21 @@ namespace DatenMeister.DataProvider
         {
             var oldValue = this.GetList()[index];
             this.GetList()[index] = (T) value;
+            this.OnChange();
             return oldValue;
         }
 
         public override bool add(object value)
         {
             this.GetList().Add((T) value);
+            this.OnChange();
             return true;
         }
 
         public override void clear()
         {
             this.GetList().Clear();
+            this.OnChange();
         }
 
         public override bool remove(object value)
@@ -60,6 +74,7 @@ namespace DatenMeister.DataProvider
             var list = this.GetList();
             var result = list.Contains((T) value);
             this.GetList().Remove((T) value);
+            this.OnChange();
             return result;
         }
 

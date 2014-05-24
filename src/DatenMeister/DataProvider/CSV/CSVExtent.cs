@@ -105,6 +105,12 @@ namespace DatenMeister.DataProvider.CSV
             {
                 return this.extent.Objects;
             }
+
+            public override void OnChange()
+            {
+                this.extent.IsDirty = true;
+                base.OnChange();
+            }
         }
     }
 }
