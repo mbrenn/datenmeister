@@ -31,10 +31,11 @@ namespace DatenMeister.Logic
         /// Gets the elements as DotNetObject
         /// </summary>
         /// <returns>Enumeration of objects within the extent as dotnet-objects</returns>
-        public new IEnumerable<IObject> Elements()
+        public new IReflectiveSequence Elements()
         {
-            return this.pool.Instances.Select(
-                x => new DotNetObject(this, x.ToJson(), x.Extent.ContextURI()));
+            throw new NotImplementedException();
+            // return this.pool.Instances.Select(
+                // x => new DotNetObject(this, x.ToJson(), x.Extent.ContextURI()));
         }
     }
 }

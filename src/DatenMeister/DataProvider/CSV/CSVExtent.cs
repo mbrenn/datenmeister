@@ -60,9 +60,10 @@ namespace DatenMeister.DataProvider.CSV
             return this.contextUri;
         }
 
-        public IEnumerable<IObject> Elements()
+        public IReflectiveSequence Elements()
         {
-            return this.Objects;
+            throw new NotImplementedException();
+            // return this.Objects;
         }
 
         public IObject CreateObject(IObject type)

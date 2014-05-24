@@ -79,7 +79,7 @@ namespace DatenMeister.Web
             var elements = extent.Elements();
 
             // Adds the elements
-            foreach (var element in elements)
+            foreach (var element in elements.Select(x => x.AsIObject()))
             {
                 data.objects.Add(element.ToJson(extent));
             }
@@ -235,7 +235,7 @@ namespace DatenMeister.Web
             }
 
             var allElements = extent.Recurse().Elements();
-            var element = allElements.Where(x => x.Id == objectId).FirstOrDefault();
+            var element = allElements.Select (x=> x.AsIObject()).Where(x => x.Id == objectId).FirstOrDefault();
             if (element == null)
             {
                 throw new MVCProcessException(

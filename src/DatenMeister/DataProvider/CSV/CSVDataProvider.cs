@@ -37,7 +37,7 @@ namespace DatenMeister.DataProvider.CSV
             else
             {
                 // Column headers given by number
-                var maxColumnCount = extent.Elements().Select(x => x.getAll().Count()).Max();
+                var maxColumnCount = extent.Elements().Select(x => x.AsIObject().getAll().Count()).Max();
                 for (var n = 0; n < maxColumnCount; n++)
                 {
                     columnHeaders.Add(string.Format("Column {0}", n));
@@ -54,7 +54,7 @@ namespace DatenMeister.DataProvider.CSV
                 }
 
                 // Writes the elements
-                foreach (var element in extent.Elements())
+                foreach (var element in extent.Elements().Select(x => x.AsIObject()))
                 {
                     this.WriteRow(
                         streamWriter,

@@ -87,8 +87,10 @@ namespace DatenMeister.DataProvider.Xml
         /// Gets all elements
         /// </summary>
         /// <returns>Enumeration of all elements</returns>
-        public IEnumerable<IObject> Elements()
+        public IReflectiveSequence Elements()
         {
+            throw new NotImplementedException();
+            /*
             if (!this.Settings.SkipRootNode)
             {
                 foreach (var subNode in this.XmlDocument.Root.Elements())
@@ -106,7 +108,7 @@ namespace DatenMeister.DataProvider.Xml
                     var result = new XmlObject(this, xmlSubnode, null);
                     yield return result;
                 }
-            }
+            }*/
         }
 
         /// <summary>

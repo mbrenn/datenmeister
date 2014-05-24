@@ -14,7 +14,7 @@ namespace DatenMeister
         /// Gets all elements of the extent
         /// </summary>
         /// <returns>Enumeration of extents</returns>
-        IEnumerable<IObject> Elements();
+        IReflectiveSequence Elements();
 
         /// <summary>
         /// Creates an empty object that already had been assigned to extent

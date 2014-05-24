@@ -132,6 +132,14 @@ namespace DatenMeister
             }
         }
 
+        public static IEnumerable<T> AsEnumeration<T> ( this object value)
+        {
+            foreach (var item in AsEnumeration(value))
+            {
+                yield return (T)item;
+            }
+        }
+
         public static IReflectiveCollection AsReflectiveCollection(this object value)
         {
             // Ok, we have an unspecified thing... don't like, but necessary

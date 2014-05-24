@@ -148,7 +148,9 @@ namespace DatenMeister.Pool
                 }
 
                 // We got a fragment, find the element with the id
-                return extent.Elements().Where(x => x.Id == fragment).FirstOrDefault();
+                return extent.Elements()
+                    .Select(x=> x.AsIObject())
+                    .Where(x => x.Id == fragment).FirstOrDefault();
             }
         }
 

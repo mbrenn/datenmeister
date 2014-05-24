@@ -53,8 +53,11 @@ namespace DatenMeister.Transformations
             set { this.source.IsDirty = value; }
         }
 
-        public IEnumerable<IObject> Elements()
+        public IReflectiveSequence Elements()
         {
+            throw new NotImplementedException();
+
+            /*
             this.CheckSource();
 
             foreach (var element in this.source.Elements())
@@ -63,7 +66,7 @@ namespace DatenMeister.Transformations
                 {
                     yield return yields;
                 }
-            }
+            }*/
         }
 
         private IEnumerable<IObject> Recurse(object value)

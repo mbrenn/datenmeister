@@ -56,7 +56,7 @@ namespace DatenMeister.Logic
             var elements = this.Source.Elements();
             var deferredActions = new List<Action>();
 
-            foreach (var element in elements)
+            foreach (var element in elements.Select(x=> x.AsIObject()))
             {
                 IObject type = null;
                 if (element is IElement)

@@ -82,8 +82,11 @@ namespace DatenMeister.Transformations
             return this.source.ContextURI();
         }
 
-        public IEnumerable<IObject> Elements()
+        public IReflectiveSequence Elements()
         {
+            throw new NotImplementedException();
+
+            /*
             if (this.typeToFilter == null &&
                 string.IsNullOrEmpty(this.nameOfTypeToFilter))
             {
@@ -135,6 +138,7 @@ namespace DatenMeister.Transformations
                 // Not supported that both elements are set
                 throw new NotImplementedException("TypeToFilter and NameOfTypeToFilter cannot be set at the same time.");
             }
+             * */
         }
 
         public IObject CreateObject(IObject type = null)

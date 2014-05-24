@@ -77,9 +77,10 @@ namespace DatenMeister.DataProvider.DotNet
         /// Gets the elements
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IObject> Elements()
+        public IReflectiveSequence Elements()
         {
-            return this.elements;
+            throw new NotImplementedException();
+            // return this.elements;
         }
 
         /// <summary>

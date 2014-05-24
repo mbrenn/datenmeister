@@ -88,7 +88,7 @@ namespace DatenMeister.WPF.Windows
 
             foreach (var tableInfo in filteredViewExtent.Elements())
             {
-                var tableViewInfo = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableInfo);
+                var tableViewInfo = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableInfo.AsIObject());
                 var tab = new TabItem();
                 var extentUri = tableViewInfo.getExtentUri();
                 Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
