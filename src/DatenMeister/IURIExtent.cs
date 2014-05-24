@@ -17,20 +17,6 @@ namespace DatenMeister
         IReflectiveSequence Elements();
 
         /// <summary>
-        /// Creates an empty object that already had been assigned to extent
-        /// </summary>
-        /// <param name="type">Type of the object, may be null, if not known</param>
-        /// <returns>Created object that is returned</returns>
-        IObject CreateObject(IObject type = null);
-
-        /// <summary>
-        /// Removes the object from extent. 
-        /// This is not part of MOF Standard
-        /// </summary>
-        /// <param name="element">Element to be removed</param>
-        void RemoveObject(IObject element);
-
-        /// <summary>
         /// Gets or sets the pool, where the extent is being assigned
         /// </summary>
         IPool Pool

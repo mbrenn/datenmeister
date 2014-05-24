@@ -95,27 +95,5 @@ namespace DatenMeister.Transformations
                 }
             }
         }
-
-        /// <summary>
-        /// Creates a new object
-        /// </summary>
-        /// <returns>Object that had been created</returns>
-        public IObject CreateObject(IObject type)
-        {
-            this.CheckSource();
-
-            return this.source.CreateObject(type);
-        }
-
-        /// <summary>
-        /// Removes a given object
-        /// </summary>
-        /// <param name="element">Element to be removed</param>
-        public void RemoveObject(IObject element)
-        {
-            this.CheckSource();
-
-            this.source.RemoveObject(element);
-        }
     }
 }

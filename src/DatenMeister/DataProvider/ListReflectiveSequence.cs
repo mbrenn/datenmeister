@@ -29,9 +29,21 @@ namespace DatenMeister.DataProvider
         {
         }
 
+        /// <summary>
+        /// This method is called, when a conversion to the store format 
+        /// is necessary. Per default, an explicit time conversion will be used. 
+        /// This might also contain more complex functn
+        /// </summary>
+        /// <param name="value">Value to be converted</param>
+        /// <returns>The converted value</returns>
+        public virtual T ConvertInstanceTo(object value)
+        {
+            return (T)value;
+        }
+
         public override void add(int index, object value)
         {
-            this.GetList().Insert(index, (T) value);
+            this.GetList().Insert(index, this.ConvertInstanceTo(value));
             this.OnChange();
         }
 
@@ -51,14 +63,14 @@ namespace DatenMeister.DataProvider
         public override object set(int index, object value)
         {
             var oldValue = this.GetList()[index];
-            this.GetList()[index] = (T) value;
+            this.GetList()[index] = this.ConvertInstanceTo(value);
             this.OnChange();
             return oldValue;
         }
 
         public override bool add(object value)
         {
-            this.GetList().Add((T) value);
+            this.GetList().Add(this.ConvertInstanceTo(value));
             this.OnChange();
             return true;
         }
@@ -71,9 +83,10 @@ namespace DatenMeister.DataProvider
 
         public override bool remove(object value)
         {
+            var converted = this.ConvertInstanceTo(value);
             var list = this.GetList();
-            var result = list.Contains((T) value);
-            this.GetList().Remove((T) value);
+            var result = list.Contains(converted);
+            this.GetList().Remove(converted);
             this.OnChange();
             return result;
         }

@@ -48,6 +48,7 @@
     <Compile Include="DataProvider\Common\ResolvableByPath.cs" />
     <Compile Include="DataProvider\CSV\CSVDataProvider.cs" />
     <Compile Include="DataProvider\CSV\CSVExtent.cs" />
+    <Compile Include="DataProvider\CSV\CSVFactory.cs" />
     <Compile Include="DataProvider\CSV\CSVObject.cs" />
     <Compile Include="DataProvider\CSV\CSVSettings.cs" />
     <Compile Include="DataProvider\DotNet\DotNetExtent.cs" />

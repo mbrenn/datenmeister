@@ -317,5 +317,12 @@ namespace DatenMeister
 
             return false;
         }
+
+        public static IObject CreateInExtent(this IFactory factory, IURIExtent extent, IObject type = null)
+        {
+            var result = factory.create(type);
+            extent.Elements().add(result);
+            return result;
+        }
     }
 }

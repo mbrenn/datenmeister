@@ -26,13 +26,12 @@ namespace DatenMeister.DataProvider.CSV
         private IList<string> values;
 
         /// <summary>
-        /// Stores the line number of the CSV object
+        /// Stores the id of the object
         /// </summary>
-        private long line;
+        private string id = Guid.NewGuid().ToString();
 
-        public CSVObject(long line, CSVExtent extent, IList<string> values)
+        public CSVObject(CSVExtent extent, IList<string> values)
         {
-            this.line = line;
             this.extent = extent;
 
             if (values != null)
@@ -161,7 +160,7 @@ namespace DatenMeister.DataProvider.CSV
 
         public void delete()
         {
-            this.extent.RemoveObject(this);
+            this.extent.Elements().remove(this);
             this.Extent.IsDirty = true;
         }
 
@@ -170,7 +169,7 @@ namespace DatenMeister.DataProvider.CSV
         /// </summary>
         public string Id
         {
-            get { return this.line.ToString(); }
+            get { return this.id; }
         }
 
         public IURIExtent Extent

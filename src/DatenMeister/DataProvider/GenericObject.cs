@@ -88,7 +88,7 @@ namespace DatenMeister.DataProvider
 
         public void delete()
         {
-            this.owner.RemoveObject(this);
+            this.owner.Elements().remove(this);
         }
 
         public string Id

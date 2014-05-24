@@ -114,11 +114,19 @@ namespace DatenMeister
         /// </summary>
         public void DoDefaultBinding()
         {
-            // Initializes the default resolver
-            Global.Application.Bind<IPoolResolver>().To<PoolResolver>();
+            DoDefaultStaticBinding();
 
             // Initializes the default pool
             Global.Application.Bind<IPool>().ToConstant(this);
+        }
+
+        /// <summary>
+        /// Performs the default binding, attached to the current pool.
+        /// </summary>
+        public static void DoDefaultStaticBinding()
+        {
+            // Initializes the default resolver
+            Global.Application.Bind<IPoolResolver>().To<PoolResolver>();
 
             // Initializes the default factory provider
             Global.Application.Bind<IFactoryProvider>().To<FactoryProvider>();

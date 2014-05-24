@@ -140,15 +140,5 @@ namespace DatenMeister.Transformations
             }
              * */
         }
-
-        public IObject CreateObject(IObject type = null)
-        {
-            return this.source.CreateObject(type);
-        }
-
-        public void RemoveObject(IObject element)
-        {
-            this.source.RemoveObject(element);
-        }
     }
 }

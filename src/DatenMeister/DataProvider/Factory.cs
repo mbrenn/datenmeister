@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BurnSystems.ObjectActivation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace DatenMeister.DataProvider
     /// Implements the IFactory class in a very simple way by just calling 
     /// IURIExtent.CreateObject
     /// </summary>
-    public class Factory : IFactory
+    public  abstract class Factory : IFactory
     {
         private IURIExtent extent;
 
@@ -21,7 +22,7 @@ namespace DatenMeister.DataProvider
 
         public IObject create(IObject type)
         {
-            return extent.CreateObject(type);
+            throw new NotImplementedException("Factory has no implementation");
         }
 
         /// <summary>
@@ -44,6 +45,11 @@ namespace DatenMeister.DataProvider
         public string convertToString(IObject dataType, IObject value)
         {
             throw new NotImplementedException();
+        }
+
+        public static IFactory GetFor(IURIExtent type)
+        {
+            return Global.Application.Get<IFactoryProvider>().CreateFor(type);
         }
     }
 }

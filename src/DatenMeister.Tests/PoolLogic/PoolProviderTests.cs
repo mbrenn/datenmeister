@@ -5,6 +5,7 @@ using DatenMeister.DataProvider.Xml;
 using System.IO;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
+using DatenMeister.DataProvider;
 
 namespace DatenMeister.Tests.PoolLogic
 {
@@ -90,7 +91,7 @@ namespace DatenMeister.Tests.PoolLogic
                 "MyName"
             );
 
-            var obj = extent1.Extent.CreateObject();
+            var obj = Factory.GetFor(extent1.Extent).CreateInExtent(extent1.Extent);
             obj.set("id", "id_test");
 
             pool.Add(extent1);
@@ -121,7 +122,7 @@ namespace DatenMeister.Tests.PoolLogic
                 "MyName"
             );
 
-            var obj = extent1.Extent.CreateObject();
+            var obj = Factory.GetFor(extent1.Extent).CreateInExtent(extent1.Extent);
             obj.set("id", "id_test");
 
             pool.Add(extent1);

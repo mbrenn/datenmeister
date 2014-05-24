@@ -115,11 +115,11 @@ namespace DatenMeister.Tests
             this.pool.Add(this.typeExtent, null, "ProjektMeister Types");
 
             // Creates the types
-            Types.Person = typeExtent.CreateObject();
+            Types.Person = Factory.GetFor(typeExtent).CreateInExtent(typeExtent);
             var person = new DatenMeister.Entities.AsObject.Uml.Type(Types.Person);
             person.setName("Person");
 
-            Types.Task = typeExtent.CreateObject();
+            Types.Task = Factory.GetFor(typeExtent).CreateInExtent(typeExtent);
             var task = new DatenMeister.Entities.AsObject.Uml.Type(Types.Task);
             task.setName("Task");
         }
@@ -185,19 +185,19 @@ namespace DatenMeister.Tests
         private void InitInstances()
         {           
             // Create some persons
-            var person = this.ProjectExtent.CreateObject(TestDatabase.Types.Person);
+            var person = Factory.GetFor(this.ProjectExtent).CreateInExtent(this.ProjectExtent, TestDatabase.Types.Person);
             person.set("name", "Martin Brenn");
             person.set("email", "brenn@depon.net");
             person.set("phone", "0151/560");
             person.set("title", "Project Lead");
 
-            person = this.ProjectExtent.CreateObject(TestDatabase.Types.Person);
+            person = Factory.GetFor(this.ProjectExtent).CreateInExtent(this.ProjectExtent, TestDatabase.Types.Person);
             person.set("name", "Martina Brenn");
             person.set("email", "brenna@depon.net");
             person.set("phone", "0151/650");
             person.set("title", "Project Support");
 
-            person = this.ProjectExtent.CreateObject(TestDatabase.Types.Task);
+            person = Factory.GetFor(this.ProjectExtent).CreateInExtent(this.ProjectExtent, TestDatabase.Types.Task);
             person.set("name", "My First Task");
             person.set("startdate", DateTime.Now);
             person.set("enddate", DateTime.Now.AddYears(1));

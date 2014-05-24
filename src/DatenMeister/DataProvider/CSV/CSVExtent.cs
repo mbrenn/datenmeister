@@ -66,28 +66,6 @@ namespace DatenMeister.DataProvider.CSV
             return new CSVExtentReflectiveSequence(this);
         }
 
-        public IObject CreateObject(IObject type)
-        {
-            lock (this.objects)
-            {
-                var nr = this.objects.Count;
-                var element = new CSVObject(nr, this, null);
-
-                this.Objects.Add(element);
-                this.IsDirty = true;
-
-                return element;
-            }
-        }
-
-        public void RemoveObject(IObject element)
-        {
-            lock (this.Objects)
-            {
-                this.Objects.Remove(element);
-            }
-        }
-
         /// <summary>
         /// Defines the reflective sequence being used 
         /// </summary>
@@ -110,6 +88,22 @@ namespace DatenMeister.DataProvider.CSV
             {
                 this.extent.IsDirty = true;
                 base.OnChange();
+            }
+
+            public override IObject ConvertInstanceTo(object value)
+            {
+                if (value is CSVObject)
+                {
+                    var valueAsCSV = value as CSVObject;
+                    return value as CSVObject;
+                }
+                else
+                {
+                    lock (this.extent.objects)
+                    {
+                        return new CSVObject(this.extent, null);
+                    }
+                }
             }
         }
     }

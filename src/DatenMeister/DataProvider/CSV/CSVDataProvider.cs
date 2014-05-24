@@ -77,15 +77,12 @@ namespace DatenMeister.DataProvider.CSV
 
                 // Reads the data itself
                 string line;
-                var lineNumber = 1L;
                 while ((line = stream.ReadLine()) != null)
                 {
                     var values = this.SplitLine(line, settings);
 
-                    var csvObject = new CSVObject(lineNumber, extent, values);
+                    var csvObject = new CSVObject(extent, values);
                     extent.Objects.Add(csvObject);
-
-                    lineNumber++;
                 }
             }
         }

@@ -108,7 +108,7 @@ namespace DatenMeister.Web
         public IActionResult AddObject(string uri, [PostModel] Dictionary<string, string> values)
         {
             var extent = this.GetExtentByUri(uri);
-            var factory = new Factory(extent);
+            var factory = Factory.GetFor(extent);
             var element = factory.create(null);
 
             foreach (var pair in values)

@@ -29,12 +29,12 @@ namespace DatenMeister.DataProvider
 
             if (extent is DotNet.DotNetExtent)
             {
-                return new Factory(extent);
+                throw new NotImplementedException("DotNet Type not implemented");
             }
 
             if (extent is CSV.CSVExtent)
             {
-                return new Factory(extent);
+                return new DatenMeister.DataProvider.CSV.CSVFactory(extent as CSV.CSVExtent);
             }
 
             throw new NotImplementedException("The type of the given IURIExtent is unknown: " + extent.GetType().ToString());

@@ -142,6 +142,8 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestAdd()
         {
+            DatenMeisterPool.DoDefaultStaticBinding();
+
             var settings = new CSVSettings()
             {
                 HasHeader = true,
@@ -158,13 +160,13 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(elements.Count, Is.EqualTo(4));
 
             // Creates one object
-            var factory = new Factory(extent);
-            var newElement = factory.create(null);
+            var factory = Factory.GetFor(extent);
+            var newElement = factory.CreateInExtent(extent);
             elements = extent.Elements().Select(x => x as IObject).ToList();
             Assert.That(elements.Count, Is.EqualTo(5));
 
             // Creates another object
-            newElement = factory.create(null);
+            newElement = factory.CreateInExtent(extent);
             newElement.set("Title1", "Fünf");
 
             elements = extent.Elements().Select(x => x as IObject).ToList();

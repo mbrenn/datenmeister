@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.DataProvider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +65,8 @@ namespace DatenMeister.Logic
                     type = (element as IElement).getMetaClass();
                 }
 
-                var createdObject = this.Target.CreateObject(type);
+                var factory = Factory.GetFor(this.Target); 
+                var createdObject = factory.create(type);
                 this.mapping[element.Id] = createdObject;
 
                 var pairs = element.getAll();
