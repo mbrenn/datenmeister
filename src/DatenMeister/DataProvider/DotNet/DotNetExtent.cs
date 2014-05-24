@@ -85,11 +85,6 @@ namespace DatenMeister.DataProvider.DotNet
             }
         }
 
-        public void Add(IObject value)
-        {
-            this.Elements().Add(value);
-        }
-
         private class DotNetExtentReflectiveSequence : ListWrapperReflectiveSequence<IObject>
         {
             private DotNetExtent extent;

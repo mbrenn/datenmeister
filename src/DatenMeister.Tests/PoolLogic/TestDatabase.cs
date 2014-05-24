@@ -133,7 +133,7 @@ namespace DatenMeister.Tests
             // List view for persons
             var personTableView = new DatenMeister.Entities.FieldInfos.TableView();
             Views.PersonTable = new DotNetObject(viewExtent, personTableView);
-            viewExtent.Add(Views.PersonTable);
+            viewExtent.Elements().add(Views.PersonTable);
 
             var personColumns = new DotNetSequence(
                 new TextField("Name", "name"),
@@ -145,7 +145,7 @@ namespace DatenMeister.Tests
             // Detail view for persons
             var personDetailView = new DatenMeister.Entities.FieldInfos.FormView();
             Views.PersonDetail = new DotNetObject(viewExtent, personDetailView);
-            viewExtent.Add(Views.PersonTable);
+            viewExtent.Elements().add(Views.PersonTable);
 
             var personDetailColumns = new DotNetSequence(
                 new TextField("Name", "name"),
@@ -158,7 +158,7 @@ namespace DatenMeister.Tests
             // List view for tasks
             var taskTableView = new DatenMeister.Entities.FieldInfos.TableView();
             Views.TaskTable = new DotNetObject(viewExtent, taskTableView);
-            viewExtent.Add(Views.TaskTable);
+            viewExtent.Elements().add(Views.TaskTable);
 
             var taskColumns = new DotNetSequence(
                 new TextField("Name", "name"),
@@ -170,7 +170,7 @@ namespace DatenMeister.Tests
             // Detail view for persons
             var taskDetailView = new DatenMeister.Entities.FieldInfos.TableView();
             Views.TaskDetail = new DotNetObject(viewExtent, taskDetailView);
-            viewExtent.Add(Views.TaskDetail);
+            viewExtent.Elements().add(Views.TaskDetail);
 
             var taskDetailColumns = new DotNetSequence(
                 new TextField("Name", "name"),

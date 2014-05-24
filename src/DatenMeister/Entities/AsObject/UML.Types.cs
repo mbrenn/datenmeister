@@ -9,14 +9,14 @@ namespace DatenMeister.Entities.AsObject.Uml
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "NamedElement";
                 Types.NamedElement = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
-                extent.Add(Types.NamedElement);
+                extent.Elements().add(Types.NamedElement);
             }
 
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "Type";
                 Types.Type = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
-                extent.Add(Types.Type);
+                extent.Elements().add(Types.Type);
             }
 
             return extent;
