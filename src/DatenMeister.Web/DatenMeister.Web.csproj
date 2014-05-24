@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{07032E56-402B-404A-AED3-CDB3305AB39A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DatenMeister.Web</RootNamespace>
+    <AssemblyName>DatenMeister.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CreateExtentModel.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="ExtentController.cs" />
+    <Compile Include="GetObjectsModel.cs" />
+    <Compile Include="ServerInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\burnsystems.flexbg\src\BurnSystems.FlexBG\BurnSystems.FlexBG.csproj">
+      <Project>{23cc80d3-2e80-4263-bf25-87e0da25b329}</Project>
+      <Name>BurnSystems.FlexBG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\burnsystems.parser\src\BurnSystems.Parser.csproj">
+      <Project>{24fc6cc7-afef-456d-8056-96712d1b7909}</Project>
+      <Name>BurnSystems.Parser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\burnsystems.webserver.umbra\src\BurnSystems.WebServer.Umbra\BurnSystems.WebServer.Umbra.csproj">
+      <Project>{0d3e61d8-1a3e-47c3-b90a-e89fde6f4e90}</Project>
+      <Name>BurnSystems.WebServer.Umbra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\burnsystems.webserver\src\BurnSystems.WebServer\BurnSystems.WebServer.csproj">
+      <Project>{b31df31a-f19e-4ff9-b50f-b70f4f5949f4}</Project>
+      <Name>BurnSystems.WebServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\burnsystems\src\BurnSystems.csproj">
+      <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
+      <Name>BurnSystems</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatenMeister\DatenMeister.csproj">
+      <Project>{d0c28956-4eee-4af0-a0ed-a500a558c5d8}</Project>
+      <Name>DatenMeister</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
