@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.DataProvider;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.WPF.Controls.GuiElements;
 using System;
@@ -220,7 +221,7 @@ namespace DatenMeister.WPF.Controls
             // Creates Detailobject if necessary
             if (this.EditMode == Controls.EditMode.New)
             {
-                this.DetailObject = this.Extent.CreateObject(this.TypeToCreate);
+                this.DetailObject = Factory.GetFor(this.Extent).CreateInExtent(this.Extent, this.TypeToCreate);
                 Ensure.That(this.DetailObject != null, "Element Factory has not returned a value");
             }
 

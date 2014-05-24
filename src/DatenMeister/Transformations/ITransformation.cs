@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.Transformations
 {
-    public interface ITransformation: IURIExtent
+    public interface ITransformation : IURIExtent
     {
         IURIExtent source
         {
