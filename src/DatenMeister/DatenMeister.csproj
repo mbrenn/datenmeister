@@ -57,6 +57,7 @@
     <Compile Include="DataProvider\DotNet\DotNetSequence.cs" />
     <Compile Include="DataProvider\DotNet\DotNetTypeInformation.cs" />
     <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
+    <Compile Include="DataProvider\EnumerationReflectiveSequence.cs" />
     <Compile Include="DataProvider\FactoryProvider.cs" />
     <Compile Include="DataProvider\GenericElement.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />

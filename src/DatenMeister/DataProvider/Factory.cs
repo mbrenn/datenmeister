@@ -46,9 +46,16 @@ namespace DatenMeister.DataProvider
             throw new NotImplementedException();
         }
 
-        public static IFactory GetFor(IURIExtent type)
+        /// <summary>
+        /// Gets the factory for a certain event by using the default binder
+        /// </summary>
+        /// <param name="extent">Extent, whose factory is requested</param>
+        /// <returns>Factory to be created</returns>
+        public static IFactory GetFor(IURIExtent extent)
         {
-            return Global.Application.Get<IFactoryProvider>().CreateFor(type);
+            var factoryProvider = Global.Application.Get<IFactoryProvider>();
+            return factoryProvider.CreateFor(extent);
         }
+    
     }
 }
