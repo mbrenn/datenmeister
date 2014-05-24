@@ -66,7 +66,7 @@ namespace DatenMeister.Logic
                 }
 
                 var factory = Factory.GetFor(this.Target); 
-                var createdObject = factory.create(type);
+                var createdObject = factory.CreateInExtent(this.Target, type);
                 this.mapping[element.Id] = createdObject;
 
                 var pairs = element.getAll();

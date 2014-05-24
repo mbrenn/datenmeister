@@ -16,6 +16,8 @@ namespace DatenMeister.Tests.PoolLogic
         [Test]
         public void TestCopyWithoutReference()
         {
+            DatenMeisterPool.DoDefaultStaticBinding();
+
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" text=\"xyz\"/>" +
@@ -32,6 +34,8 @@ namespace DatenMeister.Tests.PoolLogic
         [Test]
         public void TestCopyWithReference()
         {
+            DatenMeisterPool.DoDefaultStaticBinding();
+
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
