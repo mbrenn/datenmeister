@@ -6,3 +6,4 @@ obj/
 *.suo
 /src/DatenMeisterWeb/*.user
 *.map
+/src/packages/

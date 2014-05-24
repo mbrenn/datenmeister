@@ -1,9 +1,0 @@
-glob:bin
-glob:obj
-glob:src\bin
-glob:src\obj
-relre:(.*)\.suo
-relre:(.*)\.csproj\.user
-glob:StyleCop.Cache
-glob:tests/TestResult.xml
-glob:tests/BurnSystems.Parser.UnitTests.VisualState.xml
