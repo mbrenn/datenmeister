@@ -97,6 +97,15 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No dialog specification has been found. Dialog cannot be shown.  ähnelt.
+        /// </summary>
+        internal static string NoItemDialogFound {
+            get {
+                return ResourceManager.GetString("NoItemDialogFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No object has been selected.  ähnelt.
         /// </summary>
         internal static string NoObjectSelected {

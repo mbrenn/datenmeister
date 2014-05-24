@@ -246,6 +246,14 @@ namespace DatenMeister.WPF.Controls
                 Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
 
                 var dialog = DetailDialog.ShowDialogFor(selectedItem.Value, this.DetailViewInfo);
+
+                if ( dialog == null )
+                {
+                    MessageBox.Show(
+                        Localization_DatenMeister_WPF.NoItemDialogFound);
+
+                    return null;
+                }
                 Ensure.That(dialog != null);
                 dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
                 return dialog;

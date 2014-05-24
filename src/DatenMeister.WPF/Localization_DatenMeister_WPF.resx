@@ -129,6 +129,9 @@
   <data name="File_Filter" xml:space="preserve">
     <value>Xml-Files (*.xml)|*.xml|All Files (*.*)|*.*</value>
   </data>
+  <data name="NoItemDialogFound" xml:space="preserve">
+    <value>No dialog specification has been found. Dialog cannot be shown. </value>
+  </data>
   <data name="NoObjectSelected" xml:space="preserve">
     <value>No object has been selected. </value>
   </data>
