@@ -212,7 +212,7 @@ namespace DatenMeister.DataProvider.Xml
             }
 
             // Checks, if we have a value
-            var result = this.get(propertyName) as IEnumerable<object>;
+            var result = this.get(propertyName).AsEnumeration();
             if (result == null)
             {
                 return false;

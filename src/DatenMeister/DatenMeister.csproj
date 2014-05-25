@@ -123,6 +123,7 @@
     <Compile Include="Logic\ObjectDictionary.cs" />
     <Compile Include="Logic\ObjectDictionaryForView.cs" />
     <Compile Include="Logic\ObjectHelper.cs" />
+    <Compile Include="Logic\ReflectiveSequenceHelper.cs" />
     <Compile Include="Logic\SourceFactory\CSharpSourceFactory.cs" />
     <Compile Include="Logic\SourceFactory\CSharpTypeDefinitionFactory.cs" />
     <Compile Include="Logic\SourceFactory\DotNetTypeProvider.cs" />

@@ -36,7 +36,8 @@ namespace DatenMeister.DataProvider.CSV
             }
             else
             {
-                // Column headers given by number
+                // Column headers given by number by asking each object about the number of properties and
+                // then use the maximum value of the elements. This assumes that every element has the same type
                 var maxColumnCount = extent.Elements().Select(x => x.AsIObject().getAll().Count()).Max();
                 for (var n = 0; n < maxColumnCount; n++)
                 {

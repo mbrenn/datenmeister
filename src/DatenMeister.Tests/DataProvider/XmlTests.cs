@@ -125,6 +125,7 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(newElement.Id, Is.Not.Null.Or.Empty);
 
             newElement.set("id", "e4");
+            Assert.That(newElement.isSet("id"), Is.True);
 
             Assert.That(newElement.Id, Is.EqualTo("e4"));
         }
@@ -339,6 +340,7 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = new XmlExtent(document, "test:///");
             xmlExtent.Settings.Mapping.Add("task", typeTask, x => x.Elements("root").Elements("tasks").FirstOrDefault());
             xmlExtent.Settings.Mapping.Add("person", typePerson, x => x.Elements("root").Elements("persons").FirstOrDefault());
+            xmlExtent.Settings.SkipRootNode = true;
             var pool = new DatenMeisterPool();
             pool.DoDefaultBinding();
             pool.Add(xmlExtent, null);
