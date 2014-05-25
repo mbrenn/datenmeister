@@ -143,7 +143,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources_DatenMeister.resx</DependentUpon>
     </Compile>
+    <Compile Include="Transformations\BaseTransformation.cs" />
     <Compile Include="Transformations\FilterByTypeTransformation.cs" />
+    <Compile Include="Transformations\GroupBy\BaseGroupByTransformation.cs" />
+    <Compile Include="Transformations\GroupBy\GroupByDictionary.cs" />
+    <Compile Include="Transformations\GroupBy\GroupByObject.cs" />
+    <Compile Include="Transformations\GroupBy\GroupByReflectiveSequence.cs" />
+    <Compile Include="Transformations\GroupBy\GroupByTypeTransformation.cs" />
     <Compile Include="Transformations\ITransformation.cs" />
     <Compile Include="Transformations\Extensions.cs" />
     <Compile Include="Transformations\ProxyReflectiveSequence.cs" />

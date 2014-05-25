@@ -322,34 +322,48 @@ namespace DatenMeister.Tests.DataProvider
                 Is.EqualTo("Toller Task"));
         }
 
+        public static IObject TypePerson
+        {
+            get;
+            set;
+        }
+
+        public static IObject TypeTask
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Creates a simple extent, containing some types and some elements
         /// </summary>
         /// <returns>XmlExtent being created</returns>
         public static XmlExtent CreateTestExtent()
         {
-
             var document = XDocument.Parse(
                 "<root>" +
                     "<tasks />" +
                     "<persons />" +
                 "</root>");
 
-            var typeTask = new GenericObject();
-            var typePerson = new GenericObject();
+            TypeTask = new GenericObject();
+            TypeTask.set("name", "Task");
+            TypePerson = new GenericObject();
+            TypePerson.set("name", "Person");
+
             var xmlExtent = new XmlExtent(document, "test:///");
-            xmlExtent.Settings.Mapping.Add("task", typeTask, x => x.Elements("root").Elements("tasks").FirstOrDefault());
-            xmlExtent.Settings.Mapping.Add("person", typePerson, x => x.Elements("root").Elements("persons").FirstOrDefault());
+            xmlExtent.Settings.Mapping.Add("task", TypeTask, x => x.Elements("root").Elements("tasks").FirstOrDefault());
+            xmlExtent.Settings.Mapping.Add("person", TypePerson, x => x.Elements("root").Elements("persons").FirstOrDefault());
             xmlExtent.Settings.SkipRootNode = true;
             var pool = new DatenMeisterPool();
             pool.DoDefaultBinding();
             pool.Add(xmlExtent, null);
 
             var factory = Factory.GetFor(xmlExtent);
-            var person1 = factory.CreateInExtent(xmlExtent, typePerson);
-            var person2 = factory.CreateInExtent(xmlExtent, typePerson);
+            var person1 = factory.CreateInExtent(xmlExtent, TypePerson);
+            var person2 = factory.CreateInExtent(xmlExtent, TypePerson);
 
-            var task1 = factory.CreateInExtent(xmlExtent, typeTask);
+            var task1 = factory.CreateInExtent(xmlExtent, TypeTask);
 
             person1.set("name", "Brenn");
             person1.set("prename", "Martin");

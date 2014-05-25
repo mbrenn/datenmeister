@@ -16,6 +16,26 @@ namespace DatenMeister.Tests.Export
     [TestFixture]
     public class ExcelExportTests
     {
+        private static string testPath =
+                Path.Combine(
+                    Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop),
+                    "Depon.Net - Test Results");
+
+        /// <summary>
+        /// Gets the path for a certain fle
+        /// </summary>
+        /// <param name="filename">Name of the file</param>
+        /// <returns>Found file</returns>
+        private static string GetPathForFile(string filename)
+        {
+            if (!Directory.Exists(testPath))
+            {
+                Directory.CreateDirectory(testPath);
+            }
+
+            return Path.Combine(testPath, filename);
+        }
+
         /// <summary>
         /// Creates a file, but this file has to be opened by user, who tested it
         /// </summary>
@@ -25,12 +45,26 @@ namespace DatenMeister.Tests.Export
             var extent = XmlTests.CreateTestExtent();
 
             var settings = new ExcelExportSettings();
-            settings.Path = Path.Combine(
-                Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop),
-                "test.xlsx");
+            settings.Path = GetPathForFile("Test 1 - Simple Xml Export.xlsx");
 
             var excelExport = new ExcelExport();
-            excelExport.ExportToFile(extent, settings);            
+            excelExport.ExportToFile(extent, settings);
+        }
+
+        /// <summary>
+        /// Creates a file, but this file has to be opened by user, who tested it
+        /// </summary>
+        [Test]
+        public void TestByTypeExport()
+        {
+            var extent = XmlTests.CreateTestExtent();
+
+            var settings = new ExcelExportSettings();
+            settings.PerTypeOneSheet = true;
+            settings.Path = GetPathForFile("Test 2 - Xml Export By Type.xlsx");
+
+            var excelExport = new ExcelExport();
+            excelExport.ExportToFile(extent, settings);
         }
     }
 }

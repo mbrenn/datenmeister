@@ -6,6 +6,10 @@ using System.Text;
 
 namespace DatenMeister.DataProvider
 {
+    /// <summary>
+    /// Wraps a list in a reflective sequence
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ListWrapperReflectiveSequence<T> : ListReflectiveSequence<T>
     {
         /// <summary>

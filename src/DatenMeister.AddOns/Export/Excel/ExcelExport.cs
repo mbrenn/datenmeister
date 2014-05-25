@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.Logic;
+using DatenMeister.Transformations.GroupBy;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
@@ -33,16 +34,34 @@ namespace DatenMeister.AddOns.Export.Excel
 
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
+            ///////////////////////////////////////
+            // Prepare the start
             // Create the sheet
             this.workbook = new XSSFWorkbook();
-            var sheet = this.workbook.CreateSheet("Export");
 
             // Creates the header font
             this.headerfont = this.workbook.CreateFont();
             this.headerfont.Boldweight = (short)FontBoldWeight.Bold;
+            
+            ///////////////////////////////////////
+            // Performs the fill
+            if (settings.PerTypeOneSheet)
+            {
+                var inTypes = new GroupByTypeTransformation(extent);
+                foreach (var pairs in inTypes.ElementsAsGroupBy())
+                {
+                    var sheet = this.workbook.CreateSheet(pairs.key.AsIObject().get("name").AsSingle().ToString());
+                    this.FillSheet(sheet, pairs.values);
+                }
+            }
+            else
+            {
+                var sheet = this.workbook.CreateSheet("Export");
+                this.FillSheet(sheet, extent.Elements());
+            }
 
-            this.FillSheet(sheet, extent);
-
+            ///////////////////////////////////////
+            // Stores the changes
             using (var fileStream = new FileStream(settings.Path, FileMode.Create))
             {
                 this.workbook.Write(fileStream);
@@ -57,11 +76,11 @@ namespace DatenMeister.AddOns.Export.Excel
         /// Fills the sheet by the given extent. 
         /// </summary>
         /// <param name="sheet">Sheet to be used</param>
-        /// <param name="extent">Extent being executed</param>
-        private void FillSheet(NPOI.SS.UserModel.ISheet sheet, IURIExtent extent)
+        /// <param name="elements">Extent being executed</param>
+        private void FillSheet(NPOI.SS.UserModel.ISheet sheet, IReflectiveSequence elements)
         {
             // Ok, first step... get all properties as a list
-            var properties = extent.Elements().GetConsolidatedProperties();
+            var properties = elements.GetConsolidatedProperties();
 
             // Now set the header
             var row = sheet.CreateRow(0);
@@ -78,7 +97,7 @@ namespace DatenMeister.AddOns.Export.Excel
 
             // Now include the rows
             var r = 1;
-            foreach (var element in extent.Elements().Where(x => x is IObject).Select(x => x.AsIObject()))
+            foreach (var element in elements.Where(x => x is IObject).Select(x => x.AsIObject()))
             {
                 row = sheet.CreateRow(r);
                 c = 0;
