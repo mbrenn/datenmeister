@@ -37,6 +37,11 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private Func<IURIExtent, IURIExtent> extentFactory;
 
+        /// <summary>
+        /// Stores the element factory for the table control
+        /// </summary>
+        private Func<IURIExtent, IEnumerable<IObject>> elementsFactory;
+
         public IDatenMeisterWindow MainWindow
         {
             get;
@@ -85,6 +90,18 @@ namespace DatenMeister.WPF.Controls
             }
         }
 
+        public Func<IURIExtent, IEnumerable<IObject>> ElementsFactory
+        {
+            get { return this.elementsFactory; }
+            set
+            {
+                this.elementsFactory = value;
+
+                // Refreshes the items when we get a new extent factory
+                this.RefreshItems();
+            }
+        }
+
         /// <summary>
         /// Gets or sets the type that shall be created, when user clicks on 'new'.
         /// </summary>
@@ -123,12 +140,11 @@ namespace DatenMeister.WPF.Controls
             set;
         }
 
-
         /// <summary>
         /// Gets or sets the element factory being used to create the element, 
         /// if we are in EditMode = New
         /// </summary>
-        public Func<IObject> ElementFactory
+        public Func<IObject> NewElementFactory
         {
             get;
             set;
@@ -189,6 +205,21 @@ namespace DatenMeister.WPF.Controls
 
             // Gets the elements
             this.RefreshItems();
+        }
+
+        public IEnumerable<object> GetElements(IURIExtent extent)
+        {
+            if (this.ElementsFactory != null)
+            {
+                return this.ElementsFactory(extent);
+            }
+
+            if (this.ExtentFactory != null)
+            {
+                return this.ExtentFactory(extent).Elements();
+            }
+
+            throw new InvalidOperationException("ElementFactory and ExtentFactory are not set");
         }
 
         /// <summary>
