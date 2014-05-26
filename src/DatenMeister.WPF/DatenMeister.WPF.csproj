@@ -49,6 +49,7 @@
     <Compile Include="Controls\DetailDialog.xaml.cs">
       <DependentUpon>DetailDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DetailOpenEventArgs.cs" />
     <Compile Include="Controls\GuiElements\BaseWpfDropDown.cs" />
     <Compile Include="Controls\GuiElements\ElementCacheEntry.cs" />
     <Compile Include="Controls\EntityFormControl.xaml.cs">

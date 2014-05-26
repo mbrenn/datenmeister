@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Helper
@@ -27,8 +28,13 @@ namespace DatenMeister.WPF.Helper
             menuItem.Click += (x, y) =>
                 {
                     // Creates the view for the extents
-                    DatenMeisterPoolExtent.AddView(extentView);
+                    var newView = DatenMeisterPoolExtent.AddView(extentView);
                     window.RefreshViews();
+
+                    window.AssociateDetailOpenEvent(newView, (z) =>
+                    {
+                        MessageBox.Show("Something will happen");
+                    });
                 };
 
             window.AddMenuEntry(Localization_DatenMeister_WPF.Menu_View, menuItem);

@@ -134,6 +134,15 @@ namespace DatenMeister.WPF.Controls
             set;
         }
 
+        /// <summary>
+        /// This function will be used to open a view of the currently selected item 
+        /// </summary>
+        public Action<DetailOpenEventArgs> OpenSelectedViewFunc
+        {
+            get;
+            set;
+        }
+
         public EntityTableControl()
         {
             InitializeComponent();
@@ -236,7 +245,18 @@ namespace DatenMeister.WPF.Controls
         {
             var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
 
-            if (selectedItem == null)
+            if (this.OpenSelectedViewFunc != null)
+            {
+                this.OpenSelectedViewFunc(
+                    new DetailOpenEventArgs()
+                    {
+                        Extent = this.Extent,
+                        Value = selectedItem.Value
+                    });
+
+                return null;
+            }
+            else if (selectedItem == null)
             {
                 this.ShowNewDialog();
                 return null;
@@ -247,7 +267,7 @@ namespace DatenMeister.WPF.Controls
 
                 var dialog = DetailDialog.ShowDialogFor(selectedItem.Value, this.DetailViewInfo);
 
-                if ( dialog == null )
+                if (dialog == null)
                 {
                     MessageBox.Show(
                         Localization_DatenMeister_WPF.NoItemDialogFound);

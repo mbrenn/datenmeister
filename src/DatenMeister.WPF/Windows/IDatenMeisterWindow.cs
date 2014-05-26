@@ -1,5 +1,6 @@
 ﻿
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.WPF.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,5 +42,12 @@ namespace DatenMeister.WPF.Windows
         /// <param name="menuLine">Menu that shall be added</param>
         /// <param name="press"></param>
         void AddMenuEntry(string menuHeadline, MenuItem menuLine);
+
+        /// <summary>
+        /// Associates a user-defined event, when the user doubleclicks on a detail field
+        /// </summary>
+        /// <param name="view">View, to which the detailopen event shall be associated</param>
+        /// <param name="action">Action, which shall be executed instead of opening the detail dialog</param>
+        void AssociateDetailOpenEvent(IObject view, Action<DetailOpenEventArgs> action);
     }
 }

@@ -1,4 +1,5 @@
-﻿using BurnSystems.Test;
+﻿using BurnSystems.Logging;
+using BurnSystems.Test;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using DatenMeister.Transformations;
@@ -26,6 +27,11 @@ namespace DatenMeister.WPF.Windows
     /// </summary>
     public partial class DatenMeisterWindow : Window, IDatenMeisterWindow
     {
+        /// <summary>
+        /// Stores the logger
+        /// </summary>
+        private static ClassLogger logger = new ClassLogger(typeof(DatenMeisterWindow));
+
         /// <summary>
         /// Gets or sets the datenmeister settings
         /// </summary>
@@ -74,8 +80,7 @@ namespace DatenMeister.WPF.Windows
         /// Adds a menuentry to the application window
         /// </summary>
         /// <param name="menuHeadline">Headline of the menu</param>
-        /// <param name="menuLine">Menu that shall be added</param>
-        /// <param name="press"></param>
+        /// <param name="menuLine">Menu that shall be added. This tab is required to have the click event already associated</param>
         public void AddMenuEntry(string menuHeadline, MenuItem menuLine)
         {
             // Search for a menuitem with the same name
@@ -104,8 +109,22 @@ namespace DatenMeister.WPF.Windows
             found.Items.Add(menuLine);
         }
 
+        public void AssociateDetailOpenEvent(IObject view, Action<DetailOpenEventArgs> action)
+        {
+            var found = this.listTabs.Where(x => x.TableViewInfo == view).FirstOrDefault();
+            if (found == null)
+            {
+                logger.Message("Associate Detail Open Event failed because tab was not found");
+            }
+            else
+            {
+                found.TableControl.OpenSelectedViewFunc = action;
+            }
+        }
+
         /// <summary>
-        /// Recreates the complete window
+        /// Recreates the table views for all extents being the view extent. 
+        /// If one tab is already opened, the tab will not be recreated. 
         /// </summary>
         public void RefreshViews()
         {
@@ -173,6 +192,8 @@ namespace DatenMeister.WPF.Windows
                 tab.TableControl.RefreshItems();
             }
         }
+
+        #region Menu triggered File actions
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
@@ -268,6 +289,8 @@ namespace DatenMeister.WPF.Windows
         {
             this.Close();
         }
+
+        #endregion
 
         /// <summary>
         /// Does the user wants to save the data
