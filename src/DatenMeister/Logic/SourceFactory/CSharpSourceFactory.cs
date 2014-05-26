@@ -85,6 +85,8 @@ namespace DatenMeister.Logic.SourceFactory
             foreach (var propertyName in this.provider.GetProperties(typeName))
             {
                 this.EmitProperty(writer, typeName, propertyName);
+
+                this.EmitStaticProperty(writer, typeName, propertyName);
             }
 
             // End of class
@@ -93,10 +95,10 @@ namespace DatenMeister.Logic.SourceFactory
         }
 
         /// <summary>
-        /// Emits the function, which creates an instance by using a factory
+        /// Emits the function, which creates an instance by using a factory.
         /// </summary>
         /// <param name="writer"></param>
-        /// <param name="typeName"></param>
+        /// <param name="typeName">Type name, for whom the factory shall be created</param>
         private void EmitCreationByFactory(StreamWriter writer, string typeName)
         {
             writer.WriteLine(
@@ -165,9 +167,70 @@ namespace DatenMeister.Logic.SourceFactory
             var propertyTypeName = this.GetPropertyTypeName(propertyType);
 
             // Emits Get-Method
+            var getMethodName = this.GetGetMethodName(propertyName, propertyType);
             writer.WriteLine(
                 string.Format(
                     EightSpaces + "public {1} {0}()",
+                    getMethodName,
+                    propertyTypeName));
+            writer.WriteLine(EightSpaces + "{");
+            writer.WriteLine(
+                string.Format(
+                    TwelveSpaces + "return {0}(this);",
+                    getMethodName));
+            writer.WriteLine(EightSpaces + "}");
+            writer.WriteLine();
+
+            // Emits Set-Method
+            var setMethodName = this.GetSetMethodName(propertyName, propertyType);
+            writer.WriteLine(
+                string.Format(
+                    EightSpaces + "public void {0}({1} value)",
+                    setMethodName, 
+                    propertyTypeName));
+            writer.WriteLine(EightSpaces + "{");
+            writer.WriteLine(
+                string.Format(
+                    TwelveSpaces + "{0}(this, value);",
+                    setMethodName));
+            writer.WriteLine(EightSpaces + "}");
+            writer.WriteLine();
+
+            // Emits push method
+            if (this.HasPushMethod(propertyType))
+            {
+                var pushMethodName = this.GetPushMethodName(propertyName, propertyType);
+                writer.WriteLine(
+                    string.Format(
+                        EightSpaces + "public void {0}({1} value)",
+                        pushMethodName,
+                        propertyTypeName));
+                writer.WriteLine(EightSpaces + "{");
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "{0}(this, value);",
+                        pushMethodName));
+
+                writer.WriteLine(EightSpaces + "}");
+                writer.WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// Emits the property for the given type
+        /// </summary>
+        /// <param name="writer">Writer to be used</param>
+        /// <param name="typeName">Type to be used</param>
+        /// <param name="propertyName">Property to be emitted</param>
+        private void EmitStaticProperty(StreamWriter writer, string typeName, string propertyName)
+        {
+            var propertyType = this.provider.GetTypeOfProperty(typeName, propertyName);
+            var propertyTypeName = this.GetPropertyTypeName(propertyType);
+
+            // Emits Get-Method
+            writer.WriteLine(
+                string.Format(
+                    EightSpaces + "public static {1} {0}(DatenMeister.IObject obj)",
                     this.GetGetMethodName(propertyName, propertyType),
                     propertyTypeName));
             writer.WriteLine(EightSpaces + "{");
@@ -175,14 +238,14 @@ namespace DatenMeister.Logic.SourceFactory
             {
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var result = DatenMeister.Extensions.AsEnumeration(this.get(\"{0}\"));",
+                        TwelveSpaces + "var result = DatenMeister.Extensions.AsEnumeration(obj.get(\"{0}\"));",
                         propertyName));
             }
             else
             {
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var result = DatenMeister.Extensions.AsSingle(this.get(\"{0}\"));",
+                        TwelveSpaces + "var result = DatenMeister.Extensions.AsSingle(obj.get(\"{0}\"));",
                         propertyName));
             }
 
@@ -196,13 +259,13 @@ namespace DatenMeister.Logic.SourceFactory
             // Emits Set-Method
             writer.WriteLine(
                 string.Format(
-                    EightSpaces + "public void {0}({1} value)",
-                    this.GetSetMethodName(propertyName, propertyType), 
+                    EightSpaces + "public static void {0}(DatenMeister.IObject obj, {1} value)",
+                    this.GetSetMethodName(propertyName, propertyType),
                     propertyTypeName));
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(
                 string.Format(
-                    TwelveSpaces + "this.set(\"{0}\", value);",
+                    TwelveSpaces + "obj.set(\"{0}\", value);",
                     propertyName));
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
@@ -212,18 +275,18 @@ namespace DatenMeister.Logic.SourceFactory
             {
                 writer.WriteLine(
                     string.Format(
-                        EightSpaces + "public void {0}({1} value)",
+                        EightSpaces + "public static void {0}(DatenMeister.IObject obj, {1} value)",
                         this.GetPushMethodName(propertyName, propertyType),
                         propertyTypeName));
                 writer.WriteLine(EightSpaces + "{");
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var list = this.get(\"{0}\") as System.Collections.IList ?? new System.Collections.Generic.List<object>();",
+                        TwelveSpaces + "var list = obj.get(\"{0}\") as System.Collections.IList ?? new System.Collections.Generic.List<object>();",
                         propertyName));
                 writer.WriteLine(TwelveSpaces + "list.Add(value);");
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "this.set(\"{0}\", list);",
+                        TwelveSpaces + "obj.set(\"{0}\", list);",
                         propertyName));
 
                 writer.WriteLine(EightSpaces + "}");

@@ -106,13 +106,23 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public System.String getName()
         {
-            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return getName(this);
         }
 
         public void setName(System.String value)
         {
-            this.set("name", value);
+            setName(this, value);
+        }
+
+        public static System.String getName(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public static void setName(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("name", value);
         }
 
     }
@@ -223,13 +233,23 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public System.String getName()
         {
-            var result = DatenMeister.Extensions.AsSingle(this.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return getName(this);
         }
 
         public void setName(System.String value)
         {
-            this.set("name", value);
+            setName(this, value);
+        }
+
+        public static System.String getName(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public static void setName(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("name", value);
         }
 
     }
