@@ -46,17 +46,28 @@
     <Reference Include="NPOI.OpenXmlFormats">
       <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Export\Excel\ExcelExport.cs" />
     <Compile Include="Export\Excel\ExcelExportSettings.cs" />
+    <Compile Include="Export\Excel\ExcelExportGui.cs" />
+    <Compile Include="Localization_DM_Addons.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localization_DM_Addons.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,10 +78,20 @@
       <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
       <Name>BurnSystems</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DatenMeister.WPF\DatenMeister.WPF.csproj">
+      <Project>{89161f62-500b-41b3-937e-e9850cf689af}</Project>
+      <Name>DatenMeister.WPF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DatenMeister\DatenMeister.csproj">
       <Project>{d0c28956-4eee-4af0-a0ed-a500a558c5d8}</Project>
       <Name>DatenMeister</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization_DM_Addons.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localization_DM_Addons.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
