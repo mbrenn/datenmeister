@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -88,7 +89,7 @@ namespace DatenMeister.DataProvider.DotNet
             }
 
             var value = method.Invoke(this.value, null);
-            return this.ConvertIfNecessary(value, propertyName);
+            return this.ConvertIfNecessary(value, property);
         }
 
         public void set(string propertyName, object value)
@@ -124,7 +125,7 @@ namespace DatenMeister.DataProvider.DotNet
 
                 yield return new ObjectPropertyPair(
                     property.Name,
-                    this.ConvertIfNecessary(value, property.Name));
+                    this.ConvertIfNecessary(value, property));
             }
         }
 
@@ -195,8 +196,10 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="checkObject">Object to be converted</param>
         /// <returns>Converted object</returns>
-        private object ConvertIfNecessary(object checkObject, string propertyName)
+        private object ConvertIfNecessary(object checkObject, PropertyInfo propertyInfo)
         {
+            var propertyName = propertyInfo.Name;
+
             if (Extensions.IsNative(checkObject))
             {
                 return checkObject;
