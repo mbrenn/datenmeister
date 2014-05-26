@@ -61,12 +61,6 @@ namespace DatenMeister.WPF.Windows
             this.Height = newHeight;
         }
 
-        public Action<DatenMeisterWindow> OnInitializeDatabase
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// Sets the title of the application
         /// </summary>
@@ -169,6 +163,9 @@ namespace DatenMeister.WPF.Windows
             }
         }
 
+        /// <summary>
+        /// Refreshes all views
+        /// </summary>
         private void RefreshAllViews()
         {
             foreach (var tab in this.listTabs)
