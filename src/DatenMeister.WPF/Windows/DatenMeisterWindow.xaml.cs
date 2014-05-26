@@ -120,15 +120,28 @@ namespace DatenMeister.WPF.Windows
             var filteredViewExtent = 
                 this.Settings.ViewExtent.FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
 
+            // Goes through each tableinfo
             foreach (var tableInfo in filteredViewExtent.Elements())
             {
-                var tableViewInfo = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableInfo.AsIObject());
+                var tableInfoObj = tableInfo.AsIObject();
+
+                // Check, if there is already a tab, which hosts the tableInfo
+                if (this.listTabs.Any(x => x.TableViewInfo == tableInfo))
+                {
+                    // We do not need to recreate it
+                    continue;
+                }
+
+                var tableViewInfo = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableInfoObj);
+
+                // Creates the tab item
                 var tab = new TabItem();
                 var extentUri = tableViewInfo.getExtentUri();
                 Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
                 var name = tableViewInfo.getName();
                 tab.Header = name;
 
+                // Creates the list control
                 var entityList = new EntityTableControl();
                 entityList.MainWindow = this;
                 entityList.ExtentFactory = (x) =>
@@ -139,6 +152,7 @@ namespace DatenMeister.WPF.Windows
                 entityList.TableViewInfo = tableViewInfo;
                 entityList.MainType = tableViewInfo.getMainType();
 
+                // Creates the grid being used
                 var grid = new Grid();
                 grid.Children.Add(entityList);
                 tab.Content = grid;
@@ -149,7 +163,8 @@ namespace DatenMeister.WPF.Windows
                     {
                         Name = name,
                         TabItem = tab,
-                        TableControl = entityList
+                        TableControl = entityList,
+                        TableViewInfo = tableInfoObj
                     });
             }
         }

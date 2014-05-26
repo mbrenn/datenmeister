@@ -97,6 +97,24 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die View ähnelt.
+        /// </summary>
+        internal static string Menu_View {
+            get {
+                return ResourceManager.GetString("Menu_View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show Extents ähnelt.
+        /// </summary>
+        internal static string Menu_ViewExtents {
+            get {
+                return ResourceManager.GetString("Menu_ViewExtents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No dialog specification has been found. Dialog cannot be shown.  ähnelt.
         /// </summary>
         internal static string NoItemDialogFound {

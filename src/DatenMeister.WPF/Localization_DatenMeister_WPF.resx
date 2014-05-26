@@ -129,6 +129,12 @@
   <data name="File_Filter" xml:space="preserve">
     <value>Xml-Files (*.xml)|*.xml|All Files (*.*)|*.*</value>
   </data>
+  <data name="Menu_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Menu_ViewExtents" xml:space="preserve">
+    <value>Show Extents</value>
+  </data>
   <data name="NoItemDialogFound" xml:space="preserve">
     <value>No dialog specification has been found. Dialog cannot be shown. </value>
   </data>
