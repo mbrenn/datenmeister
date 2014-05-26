@@ -77,6 +77,40 @@ namespace DatenMeister.WPF.Windows
         }
 
         /// <summary>
+        /// Adds a menuentry to the application window
+        /// </summary>
+        /// <param name="menuHeadline">Headline of the menu</param>
+        /// <param name="menuLine">Menu that shall be added</param>
+        /// <param name="press"></param>
+        public void AddMenuEntry(string menuHeadline, MenuItem menuLine)
+        {
+            // Search for a menuitem with the same name
+            MenuItem found = null;
+            foreach (var item in this.menuMain.Items)
+            {
+                var menuItem = item as MenuItem;
+                if (menuItem.Header.ToString() == menuHeadline)
+                {
+                    found = menuItem;
+                }
+            }
+
+            // Not found, create a new item
+            if (found == null)
+            {
+                found = new MenuItem()
+                {
+                    Header = menuHeadline
+                };
+
+                this.menuMain.Items.Add(found);
+            }
+
+            // Now create the item
+            found.Items.Add(menuLine);
+        }
+
+        /// <summary>
         /// Recreates the complete window
         /// </summary>
         public void RefreshViews()
@@ -199,6 +233,7 @@ namespace DatenMeister.WPF.Windows
                 MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
             }
         }
+
         /// <summary>
         /// Saves the changes and user may find a new path
         /// </summary>

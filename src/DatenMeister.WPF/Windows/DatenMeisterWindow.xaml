@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Menu HorizontalAlignment="Left">
+        <Menu HorizontalAlignment="Left" x:Name="menuMain">
             <MenuItem Header="File">
                 <MenuItem Header="New" Click="New_Click" />
                 <MenuItem Header="Load..." Click="Load_Click" />
