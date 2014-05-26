@@ -29,8 +29,8 @@ namespace DatenMeister.Tests.DataProvider
                     value.set("XYZ", "T");
                 });
 
-            var textValue = value.get("TextValue");
-            var numberValue = value.get("NumberValue");
+            var textValue = value.get("TextValue").AsSingle();
+            var numberValue = value.get("NumberValue").AsSingle();
 
             Assert.That(textValue, Is.EqualTo("Dies ist ein Test"));
             Assert.That(numberValue, Is.EqualTo(123L));
@@ -39,8 +39,8 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(properties.Any(x => x.PropertyName == "TextValue"));
             Assert.That(properties.Any(x => x.PropertyName == "NumberValue"));
 
-            Assert.That(properties.Any(x => x.Value.ToString() == "Dies ist ein Test"));
-            Assert.That(properties.Any(x => x.Value.ToString() == "123"));
+            Assert.That(properties.Any(x => x.Value.AsSingle().ToString() == "Dies ist ein Test"));
+            Assert.That(properties.Any(x => x.Value.AsSingle().ToString() == "123"));
         }
 
         public class TestClass

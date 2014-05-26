@@ -212,14 +212,14 @@ namespace DatenMeister.DataProvider.Xml
             }
 
             // Checks, if we have a value
-            var result = this.get(propertyName).AsEnumeration();
+            var result = this.get(propertyName).AsSingle();
             if (result == null)
             {
                 return false;
             }
             else
             {
-                return result.Count() > 0;
+                return true;
             }
         }
 

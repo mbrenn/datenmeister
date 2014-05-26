@@ -194,9 +194,13 @@ namespace DatenMeister.DataProvider.Xml
 
         public override IEnumerable<object> getAll()
         {
-            var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
-            
             var attributeList = this.GetAttributeAsList();
+            if (attributeList.Count() == 0)
+            {
+                yield break;
+            }
+
+            var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
             foreach (var path in attributeList)
             {
                 yield return poolResolver.Resolve(path, this.Unspecified.Owner);

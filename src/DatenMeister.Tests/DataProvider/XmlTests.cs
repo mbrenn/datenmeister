@@ -109,6 +109,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestIdConcept()
         {
+            DatenMeisterPool.DoDefaultStaticBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +

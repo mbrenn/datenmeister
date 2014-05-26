@@ -14,7 +14,7 @@ namespace DatenMeister.DataProvider.Xml
 
         public override IReflectiveCollection AsReflectiveCollection()
         {
-            return this.AsReflectiveCollection();
+            return this.AsReflectiveSequence();
         }
 
         public override IReflectiveSequence AsReflectiveSequence()

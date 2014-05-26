@@ -136,7 +136,6 @@ namespace DatenMeister
             }
             else
             {
-
                 yield return value;
             }
         }
