@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.DotNet;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic;
 using DatenMeister.WPF.Windows;
@@ -33,7 +34,20 @@ namespace DatenMeister.WPF.Helper
 
                     window.AssociateDetailOpenEvent(newView, (z) =>
                     {
-                        MessageBox.Show("Something will happen");
+                        var factory = Factory.GetFor(extentView);
+                        // Creates the view for the extents
+                        var extentViewObj = factory.CreateInExtent(extentView, DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+                        var asObjectExtentview = new DatenMeister.Entities.AsObject.FieldInfo.TableView(extentViewObj);
+
+                        asObjectExtentview.setExtentUri(z.Value.AsSingle().AsIObject().get("uri").AsSingle().ToString());
+                        asObjectExtentview.setAllowDelete(false);
+                        asObjectExtentview.setAllowEdit(false);
+                        asObjectExtentview.setAllowNew(false);
+                        asObjectExtentview.setName(z.Value.AsSingle().AsIObject().get("name").AsSingle().ToString());
+                        asObjectExtentview.setFieldInfos(new DotNetSequence(
+                            new global::DatenMeister.Entities.FieldInfos.TextField("Name", "name")));
+
+                        window.RefreshViews();
                     });
                 };
 
