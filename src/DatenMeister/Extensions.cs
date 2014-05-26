@@ -327,6 +327,13 @@ namespace DatenMeister
             return false;
         }
 
+        /// <summary>
+        /// Creates an object and stores it into the extent
+        /// </summary>
+        /// <param name="factory">Factory being used to create the object</param>
+        /// <param name="extent">Extent, to which the object shall be added</param>
+        /// <param name="type">Type of the object which shall be created, may also be null, if the extent supports it</param>
+        /// <returns>Object that has been created</returns>
         public static IObject CreateInExtent(this IFactory factory, IURIExtent extent, IObject type = null)
         {
             var result = factory.create(type);
