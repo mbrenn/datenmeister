@@ -15,28 +15,11 @@ namespace DatenMeister.Logic
         /// Gets a list of all properties, that are at least available in one properties. 
         /// Can also be seen as Max properties
         /// </summary>
-        /// <param name="collection"></param>
-        /// <returns></returns>
-        public static IEnumerable<string> GetConsolidatedProperties(this IReflectiveCollection collection)
+        /// <param name="collection">Collection, whose properties shall get reflected</param>
+        /// <returns>Enumeration of property names being used</returns>
+        public static IEnumerable<string> GetConsolidatedPropertyNames(this IReflectiveCollection collection)
         {
-            var result = new List<string>();
-
-            foreach (var item in collection)
-            {
-                if (item is IObject)
-                {
-                    foreach (var pair in item.AsIObject().getAll())
-                    {
-                        var propertyName = pair.PropertyName;
-                        if (!result.Contains(propertyName))
-                        {
-                            result.Add(propertyName);
-                        }
-                    }
-                }
-            }
-
-            return result;
+            return ObjectHelper.GetColumnNames(collection.Where(x=> x is IObject).Select(x=> x as IObject));
         }
     }
 }

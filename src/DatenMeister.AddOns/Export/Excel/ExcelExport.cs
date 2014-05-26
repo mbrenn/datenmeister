@@ -80,7 +80,7 @@ namespace DatenMeister.AddOns.Export.Excel
         private void FillSheet(NPOI.SS.UserModel.ISheet sheet, IReflectiveSequence elements)
         {
             // Ok, first step... get all properties as a list
-            var properties = elements.GetConsolidatedProperties();
+            var properties = elements.GetConsolidatedPropertyNames();
 
             // Now set the header
             var row = sheet.CreateRow(0);

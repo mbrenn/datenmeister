@@ -1,4 +1,5 @@
-﻿using DatenMeister.Logic.SourceFactory;
+﻿using DatenMeister.DataProvider;
+using DatenMeister.Logic.SourceFactory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,29 @@ namespace DatenMeister.Logic.Views
         public static void AutoGenerateViewDefinition(IObject viewDefinition, ITypeInfoProvider provider)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Auto generates the view definitions for a complete extent. 
+        /// The information will be stored as a reflective collection in viewInfo. 
+        /// </summary>
+        /// <param name="extent">Extent, being used</param>
+        /// <param name="viewInfo">View Information, where the objects will be stored</param>
+        public static void AutoGenerateViewDefinitionsForExtent(IURIExtent extent, IObject viewInfo)
+        {
+            var factory = Factory.GetFor(viewInfo.Extent);
+            var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
+
+            var propertyNames = extent.Elements().GetConsolidatedPropertyNames();
+            foreach (var name in propertyNames)
+            {
+                var textField = factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.TextField);
+                var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(textField);
+                textFieldObj.setName(name);
+                textFieldObj.setBinding(name);
+
+                fieldInfos.add(textFieldObj);
+            }
         }
     }
 }
