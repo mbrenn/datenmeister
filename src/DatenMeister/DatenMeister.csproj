@@ -68,6 +68,7 @@
     <Compile Include="DataProvider\FactoryProvider.cs" />
     <Compile Include="DataProvider\GenericElement.cs" />
     <Compile Include="DataProvider\GenericExtent.cs" />
+    <Compile Include="DataProvider\GenericFactory.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />
     <Compile Include="DataProvider\GenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListNonGenericReflectiveSequence.cs" />
