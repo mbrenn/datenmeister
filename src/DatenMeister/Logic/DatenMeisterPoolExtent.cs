@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.Logic
 {
+    /// <summary>
+    /// This class abstracts the databasepool to an extent, so it can be used via default interfaces. 
+    /// </summary>
     public class DatenMeisterPoolExtent : DotNetExtent, IURIExtent
     {
         /// <summary>
@@ -17,13 +20,20 @@ namespace DatenMeister.Logic
         /// </summary>
         public const string DefaultUri = "datenmeister:///extents";
 
+        /// <summary>
+        /// Defines the default name of the Extent, containing all extents
+        /// </summary>
         public const string DefaultName = "DatenMeister Extents";
 
         /// <summary>
         /// Stores the pool
         /// </summary>
         private DatenMeisterPool pool;
-
+        
+        /// <summary>
+        /// Initializes a new view of the DatenMeisterPoolExtent class
+        /// </summary>
+        /// <param name="pool">Pool to be used for this extent</param>
         public DatenMeisterPoolExtent(DatenMeisterPool pool)
             : base(DefaultUri)
         {            
@@ -40,7 +50,11 @@ namespace DatenMeister.Logic
                  x => new DotNetObject(this, x.ToJson(), x.Extent.ContextURI())));
         }
 
-        public static void AddView(IURIExtent viewExtent)
+        /// <summary>
+        /// Adds the view for a list of all extents. 
+        /// </summary>
+        /// <param name="viewExtent">Extent, containing a list of the table views</param>
+        public static IObject AddView(IURIExtent viewExtent)
         {
             var factory = Factory.GetFor(viewExtent);
             // Creates the view for the extents
@@ -57,6 +71,8 @@ namespace DatenMeister.Logic
                 new TextField("URI", "uri"),
                 new TextField("Type", "type"),
                 new TextField("Filename", "filename")));
+
+            return extentViewObj;
         }
     }
 }
