@@ -56,6 +56,5 @@ namespace DatenMeister.DataProvider
             var factoryProvider = Global.Application.Get<IFactoryProvider>();
             return factoryProvider.CreateFor(extent);
         }
-    
     }
 }

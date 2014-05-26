@@ -1,6 +1,6 @@
 namespace DatenMeister.Entities.AsObject.Uml
 {
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class NamedElement : DatenMeister.IObject
     {
@@ -8,6 +8,11 @@ namespace DatenMeister.Entities.AsObject.Uml
         public NamedElement(DatenMeister.IObject obj)
         {
             this.obj = obj;
+        }
+
+        public static IObject create(DatenMeister.IFactory factory)
+        {
+            return factory.create(DatenMeister.Entities.AsObject.Uml.Types.NamedElement);
         }
 
         #region IObject Implementation
@@ -112,7 +117,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Type : DatenMeister.IObject
     {
@@ -120,6 +125,11 @@ namespace DatenMeister.Entities.AsObject.Uml
         public Type(DatenMeister.IObject obj)
         {
             this.obj = obj;
+        }
+
+        public static IObject create(DatenMeister.IFactory factory)
+        {
+            return factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
         }
 
         #region IObject Implementation

@@ -62,7 +62,7 @@ namespace DatenMeister.Logic.SourceFactory
 
         private void EmitType(StreamWriter writer, string typeName)
         {
-            writer.WriteLine(FourSpaces + "[global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"DatenMeister.Logic.SourceFactory.CSharpSourceFactory\", \"1.0.0.0\")]");
+            writer.WriteLine(FourSpaces + "[global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"DatenMeister.Logic.SourceFactory.CSharpSourceFactory\", \"1.0.5.0\")]");
             writer.WriteLine(FourSpaces + "[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]");
             writer.WriteLine(
                 string.Format(
@@ -76,6 +76,8 @@ namespace DatenMeister.Logic.SourceFactory
 
             this.EmitConstructor(writer, typeName);
 
+            this.EmitCreationByFactory(writer, typeName);
+
             // Implements the IObject interface
             writer.WriteLine(Resources_DatenMeister.IObjectImplementation);
 
@@ -87,6 +89,25 @@ namespace DatenMeister.Logic.SourceFactory
 
             // End of class
             writer.WriteLine(FourSpaces + "}");
+            writer.WriteLine();
+        }
+
+        /// <summary>
+        /// Emits the function, which creates an instance by using a factory
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="typeName"></param>
+        private void EmitCreationByFactory(StreamWriter writer, string typeName)
+        {
+            writer.WriteLine(
+                string.Format(
+                    EightSpaces + "public static IObject create(DatenMeister.IFactory factory)")
+                );
+
+            writer.WriteLine(EightSpaces + "{");
+            //writer.WriteLine(TwelveSpaces + "throw new System.InvalidOperationException();");
+            writer.WriteLine(TwelveSpaces + "return factory.create(" + this.nameSpace + ".Types." + typeName + ");");
+            writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
         }
 
