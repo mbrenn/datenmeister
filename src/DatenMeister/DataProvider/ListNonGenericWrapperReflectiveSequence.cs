@@ -11,14 +11,14 @@ namespace DatenMeister.DataProvider
     /// Wraps a list in a reflective sequence
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ListWrapperReflectiveSequence<T> : ListReflectiveSequence<T>
+    public class ListNonGenericWrapperReflectiveSequence : ListNonGenericReflectiveSequence
     {
         /// <summary>
         /// Stores the list
         /// </summary>
-        private IList<T> list;
+        private IList list;
 
-        public ListWrapperReflectiveSequence(IList<T> list)
+        public ListNonGenericWrapperReflectiveSequence(IList list)
         {
             Ensure.That(list != null, "Parameter list is null");
             this.list = list;
@@ -28,7 +28,7 @@ namespace DatenMeister.DataProvider
         /// Gets the list from the wrapper
         /// </summary>
         /// <returns></returns>
-        protected override IList<T> GetList()
+        protected override IList GetList()
         {
             return this.list;
         }

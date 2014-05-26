@@ -53,7 +53,7 @@ namespace DatenMeister.Logic.Views
                 textFieldObj.setName(name);
                 textFieldObj.setBinding(name);
 
-                fieldInfos.add(textFieldObj);
+                fieldInfos.add(textField);
             }
         }
     }

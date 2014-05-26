@@ -25,6 +25,14 @@ namespace DatenMeister.DataProvider.DotNet
         private object value;
 
         /// <summary>
+        /// Gets the raw value of the object
+        /// </summary>
+        public object Value
+        {
+            get { return this.value; }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the dot net object. 
         /// The id is retrieved from the property 'name'. If the property is not existing, an exception will be thrown. 
         /// </summary>
@@ -202,7 +210,7 @@ namespace DatenMeister.DataProvider.DotNet
 
             if (Extensions.IsNative(checkObject))
             {
-                return checkObject;
+                return new DotNetUnspecified(this, propertyInfo, checkObject);
             }
             else if (checkObject is IEnumerable)
             {
@@ -214,15 +222,15 @@ namespace DatenMeister.DataProvider.DotNet
                     n++;
                 }
 
-                return sequence;
+                return new DotNetUnspecified(this, propertyInfo, sequence);
             }
             else if (checkObject is IObject)
             {
-                return checkObject;
+                return new DotNetUnspecified(this, propertyInfo, checkObject);
             }
             else
             {
-                return new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName);
+                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName));
             }
         }
 

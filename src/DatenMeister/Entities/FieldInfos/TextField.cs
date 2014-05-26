@@ -7,6 +7,10 @@ namespace DatenMeister.Entities.FieldInfos
 {
     public class TextField : General
     {
+        public TextField()
+        {
+        }
+
         public TextField(string name, string binding)
         {
             this.binding = binding;

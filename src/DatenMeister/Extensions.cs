@@ -126,13 +126,22 @@ namespace DatenMeister
                     yield return element;
                 }
             }
+            else if (value is IUnspecified)
+            {
+                var valueAsUnspecified = value as IUnspecified;
+                foreach (var element in valueAsUnspecified.AsReflectiveCollection())
+                {
+                    yield return element;
+                }
+            }
             else
             {
+
                 yield return value;
             }
         }
 
-        public static IEnumerable<T> AsEnumeration<T> ( this object value)
+        public static IEnumerable<T> AsEnumeration<T>(this object value)
         {
             foreach (var item in AsEnumeration(value))
             {

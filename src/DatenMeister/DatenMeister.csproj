@@ -57,6 +57,8 @@
     <Compile Include="DataProvider\CSV\CSVSettings.cs" />
     <Compile Include="DataProvider\DotNet\DotNetExtent.cs" />
     <Compile Include="DataProvider\DotNet\DotNetFactory.cs" />
+    <Compile Include="DataProvider\DotNet\DotNetReflectiveSequence.cs" />
+    <Compile Include="DataProvider\DotNet\DotNetNonGenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\DotNet\DotNetObject.cs" />
     <Compile Include="DataProvider\DotNet\DotNetSequence.cs" />
     <Compile Include="DataProvider\DotNet\DotNetTypeInformation.cs" />
@@ -67,11 +69,13 @@
     <Compile Include="DataProvider\GenericElement.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />
     <Compile Include="DataProvider\GenericReflectiveSequence.cs" />
+    <Compile Include="DataProvider\ListNonGenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListReflectiveSequence.cs" />
     <Compile Include="DataProvider\GenericUnspecified.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataProvider\IFactoryProvider.cs" />
     <Compile Include="DataProvider\IResolvable.cs" />
+    <Compile Include="DataProvider\ListNonGenericWrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListWrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\Views\FieldInfo.cs" />
     <Compile Include="DataProvider\Views\View.cs" />
