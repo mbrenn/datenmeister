@@ -264,6 +264,12 @@ namespace DatenMeister.WPF.Controls
 
         private void ShowNewDialog()
         {
+            if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowNew(this.tableViewInfo))
+            {
+                // Nothing to do
+                return;
+            }
+
             var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.Extent, this.DetailViewInfo);
             Ensure.That(dialog != null);
             dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
@@ -274,6 +280,7 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private DetailDialog ShowDetailDialog()
         {
+
             var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
 
             if (this.OpenSelectedViewFunc != null)
@@ -294,6 +301,12 @@ namespace DatenMeister.WPF.Controls
             }
             else
             {
+                if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowEdit(this.tableViewInfo))
+                {
+                    // Nothing to do
+                    return null;
+                }
+
                 Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
 
                 var dialog = DetailDialog.ShowDialogFor(selectedItem.Value, this.DetailViewInfo);

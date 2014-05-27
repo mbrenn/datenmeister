@@ -46,7 +46,7 @@ namespace DatenMeister.Logic.Views
             var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
 
             var propertyNames = extent.Elements().GetConsolidatedPropertyNames();
-            if ( alphaNumeric == true)
+            if (alphaNumeric == true)
             {
                 propertyNames = propertyNames.OrderBy(x => x);
             }
