@@ -126,17 +126,21 @@ namespace DatenMeister.WPF.Windows
         /// Recreates the table views for all extents being the view extent. 
         /// If one tab is already opened, the tab will not be recreated. 
         /// </summary>
-        public void RefreshViews()
+        public void RefreshTab()
         {
             Ensure.That(this.Settings.ViewExtent != null, "No view extent has been given");
 
             var filteredViewExtent = 
                 this.Settings.ViewExtent.FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
 
+            var elements = new List<IObject>();
+            var first = true;
+
             // Goes through each tableinfo
             foreach (var tableInfo in filteredViewExtent.Elements())
             {
                 var tableInfoObj = tableInfo.AsIObject();
+                elements.Add(tableInfoObj);
 
                 // Check, if there is already a tab, which hosts the tableInfo
                 if (this.listTabs.Any(x => x.TableViewInfo == tableInfo))
@@ -147,12 +151,10 @@ namespace DatenMeister.WPF.Windows
 
                 var tableViewInfo = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableInfoObj);
 
-                // Creates the tab item
-                var tab = new TabItem();
                 var extentUri = tableViewInfo.getExtentUri();
                 Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
                 var name = tableViewInfo.getName();
-                tab.Header = name;
+                var tab = CreateTab(tableInfoObj, name);
 
                 // Creates the list control
                 var entityList = new EntityTableControl();
@@ -177,15 +179,62 @@ namespace DatenMeister.WPF.Windows
                         Name = name,
                         TabItem = tab,
                         TableControl = entityList,
-                        TableViewInfo = tableInfoObj
+                        TableViewInfo = tableInfo
                     });
+
+                // The first one, which is added, gets the focus
+                if (first)
+                {
+                    this.Dispatcher.InvokeAsync(() => this.tabMain.SelectedValue = tab);
+                    first = false;
+                }
             }
+
+            // Now go though the list and remove all views, which are not in listtabs
+            foreach (var listTab in this.listTabs.ToList())
+            {
+                if (!elements.Any(x => x == listTab.TableViewInfo))
+                {
+                    this.listTabs.Remove(listTab);
+                    this.tabMain.Items.Remove(listTab.TabItem);
+                }
+            }
+        }
+
+        private TabItem CreateTab(IObject tableInfoObj, string name)
+        {
+            // Creates the tab item
+            var tab = new TabItem();
+            var headerGrid = new Grid();
+            headerGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            headerGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            var textField = new TextBlock();
+            headerGrid.Children.Add(textField);
+            textField.Text = name;
+            var button = new Button();
+            button.Content = "X";
+            button.FontSize = 10;
+            button.FontWeight = FontWeights.Bold;
+            button.Width = 16;
+            button.Height = 16;
+            button.Margin = new Thickness(8, 0, 0, 0);
+            button.Click += (x, y) =>
+            {
+                tableInfoObj.delete();
+                this.RefreshTab();
+            };
+
+            headerGrid.Children.Add(button);
+            Grid.SetColumn(button, 2);
+
+            tab.Header = headerGrid;
+            return tab;
         }
 
         /// <summary>
         /// Refreshes all views
         /// </summary>
-        private void RefreshAllViews()
+        private void RefreshAllTabContent()
         {
             foreach (var tab in this.listTabs)
             {
@@ -211,7 +260,7 @@ namespace DatenMeister.WPF.Windows
             this.Settings.Pool.Add(extent, null);
 
             // Refreshes the view
-            this.RefreshAllViews();
+            this.RefreshAllTabContent();
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
@@ -231,7 +280,7 @@ namespace DatenMeister.WPF.Windows
                 this.Settings.Pool.Add(extent, dialog.FileName);
 
                 // Refreshes all views
-                this.RefreshAllViews();
+                this.RefreshAllTabContent();
             }
         }
 

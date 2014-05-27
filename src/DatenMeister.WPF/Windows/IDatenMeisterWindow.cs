@@ -27,7 +27,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Refreshes the views
         /// </summary>
-        void RefreshViews();
+        void RefreshTab();
 
         /// <summary>
         /// Sets the title of the application

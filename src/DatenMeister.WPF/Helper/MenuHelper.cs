@@ -39,7 +39,7 @@ namespace DatenMeister.WPF.Helper
                 {
                     // Creates the view for the extents
                     var newView = DatenMeisterPoolExtent.AddView(extentView);
-                    window.RefreshViews();
+                    window.RefreshTab();
 
                     window.AssociateDetailOpenEvent(newView, (z) =>
                     {
@@ -74,7 +74,7 @@ namespace DatenMeister.WPF.Helper
                         // Gets the referenced extent
                         ViewHelper.AutoGenerateViewDefinitionsForExtent(extent, asObjectExtentview);;
 
-                        window.RefreshViews();
+                        window.RefreshTab();
                     });
                 };
 

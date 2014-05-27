@@ -18,19 +18,22 @@ namespace DatenMeister.Logic
 
         public override object Get(string index)
         {
-            var result = base.Get(index).AsSingle();
-            var resultAsIObject = result as IObject;
-
-            if (resultAsIObject != null)
+            if (this.Value.isSet(index))
             {
-                // Here, we have the redirection for referenced objcts
-                return resultAsIObject.get("name").AsSingle().ToString();
-            }
+                var result = base.Get(index).AsSingle();
+                var resultAsIObject = result as IObject;
 
-            if (result != null)
-            {
-                // If the object is not an IObject, we just use ToString
-                return result.ToString();
+                if (resultAsIObject != null)
+                {
+                    // Here, we have the redirection for referenced objcts
+                    return resultAsIObject.get("name").AsSingle().ToString();
+                }
+
+                if (result != null)
+                {
+                    // If the object is not an IObject, we just use ToString
+                    return result.ToString();
+                }
             }
 
             return "NULL";
