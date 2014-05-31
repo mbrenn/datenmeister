@@ -109,7 +109,7 @@ namespace DatenMeister.DataProvider.DotNet
             var property = GetProperty(propertyName);
             if (property == null)
             {
-                throw new InvalidOperationException("Property " + propertyName + " cannot be set, because it does not exist");
+                throw new ArgumentException("Property " + propertyName + " cannot be set, because it does not exist");
             }
 
             var method = property.GetSetMethod();
