@@ -5,7 +5,7 @@
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }

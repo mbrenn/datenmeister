@@ -103,7 +103,7 @@ namespace DatenMeister.Logic.SourceFactory
         {
             writer.WriteLine(
                 string.Format(
-                    EightSpaces + "public static IObject create(DatenMeister.IFactory factory)")
+                    EightSpaces + "public static DatenMeister.IObject create(DatenMeister.IFactory factory)")
                 );
 
             writer.WriteLine(EightSpaces + "{");

@@ -17,7 +17,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("comment", comment);
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.Comment);
         }
@@ -29,7 +29,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -214,7 +214,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("binding", binding);
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.General);
         }
@@ -226,7 +226,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -390,7 +390,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("binding", binding);
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.Checkbox);
         }
@@ -402,7 +402,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -566,7 +566,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("binding", binding);
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.TextField);
         }
@@ -578,7 +578,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -784,7 +784,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("clickUrl", clickUrl);
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.ActionButton);
         }
@@ -796,7 +796,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -941,7 +941,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("propertyValue", propertyValue);
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceBase);
         }
@@ -953,7 +953,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -1161,7 +1161,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("propertyValue", propertyValue);
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceByValue);
         }
@@ -1173,7 +1173,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -1381,7 +1381,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.set("propertyValue", propertyValue);
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceByRef);
         }
@@ -1393,7 +1393,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -1592,7 +1592,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.obj = obj;
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.View);
         }
@@ -1604,7 +1604,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -1773,7 +1773,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.obj = obj;
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.FormView);
         }
@@ -1785,7 +1785,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -2059,7 +2059,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.obj = obj;
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
         }
@@ -2071,7 +2071,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }

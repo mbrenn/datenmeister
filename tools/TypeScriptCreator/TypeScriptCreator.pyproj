@@ -6,7 +6,7 @@
     <ProjectGuid>d0d6e716-07f9-417e-adac-77d6a7566881</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>TypeScriptCreator.py</StartupFile>
-    <SearchPath>..\..\src\DatenMeister\bin\Debug;..\TypeScriptCreator</SearchPath>
+    <SearchPath>..\..\src\DatenMeister\bin\Debug;..\TypeScriptCreator;..\..\..\projektmeister\src\ProjektMeister\bin\Debug</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <InterpreterId>{80659ab7-4d53-4e0c-8588-a766116cbd46}</InterpreterId>
     <LaunchProvider>IronPython (.NET) launcher</LaunchProvider>
@@ -46,6 +46,13 @@
     <Compile Include="BurnSystems\DatenMeister\CSharpFactory.py" />
     <Compile Include="BurnSystems\DatenMeister\__init__.py" />
     <Compile Include="BurnSystems\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\projektmeister\src\ProjektMeister\ProjektMeister.csproj">
+      <Name>ProjektMeister</Name>
+      <Project>{428163f4-fcc1-4b17-b393-33f785bd2ca0}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

@@ -24,6 +24,7 @@ types = [
 TypeScriptFactory.createFiles(tsFilename, types)
 
 print('Creating the UML-File')
+
 tsUMLFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.uml.objects.ts"
 umlTypes = [
          DatenMeister.Entities.UML.NamedElement,       
@@ -41,6 +42,17 @@ csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Objects.cs"
 CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml");
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Types.cs"
 CSharpFactory.createTypeFile(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml", "Types");
+
+clr.AddReferenceToFile("ProjektMeister")
+import ProjektMeister
+projektMeisterTypes = [
+         ProjektMeister.Data.Entities.Person,       
+         ProjektMeister.Data.Entities.Task ]
+
+csFilename = "..\\..\\..\\projektmeister\\src\\ProjektMeister\\Data\\Entities\\AsObject\\PM.Objects.cs"
+CSharpFactory.createFiles(csFilename, projektMeisterTypes, "ProjektMeister.Data.Entities.AsObject");
+csFilename = "..\\..\\..\\projektmeister\\src\\ProjektMeister\\Data\\Entities\\AsObject\\PM.Types.cs"
+CSharpFactory.createTypeFile(csFilename, projektMeisterTypes, "ProjektMeister.Data.Entities.AsObject", "Types");
 
 print('Compiling the TypeScript-File')
 TypeScriptFactory.compile(tsFilename)

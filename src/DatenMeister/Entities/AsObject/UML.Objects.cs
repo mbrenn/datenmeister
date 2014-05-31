@@ -10,7 +10,7 @@ namespace DatenMeister.Entities.AsObject.Uml
             this.obj = obj;
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.Uml.Types.NamedElement);
         }
@@ -22,7 +22,7 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
@@ -137,7 +137,7 @@ namespace DatenMeister.Entities.AsObject.Uml
             this.obj = obj;
         }
 
-        public static IObject create(DatenMeister.IFactory factory)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
         }
@@ -149,7 +149,7 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public IObject Value
+        public DatenMeister.IObject Value
         {
             get { return this.obj; }
         }
