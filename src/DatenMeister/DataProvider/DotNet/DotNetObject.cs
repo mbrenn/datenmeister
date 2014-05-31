@@ -89,6 +89,10 @@ namespace DatenMeister.DataProvider.DotNet
         public object get(string propertyName)
         {
             var property = GetProperty(propertyName);
+            if ( property == null )
+            {
+                return ObjectHelper.NotSet;
+            }
 
             var method = property.GetGetMethod();
             if (method == null)
@@ -103,6 +107,10 @@ namespace DatenMeister.DataProvider.DotNet
         public void set(string propertyName, object value)
         {
             var property = GetProperty(propertyName);
+            if (property == null)
+            {
+                throw new InvalidOperationException("Property " + propertyName + " cannot be set, because it does not exist");
+            }
 
             var method = property.GetSetMethod();
             if (method == null)
@@ -140,6 +148,7 @@ namespace DatenMeister.DataProvider.DotNet
         public bool isSet(string propertyName)
         {
             var property = GetProperty(propertyName, false);
+
             if (property == null)
             {
                 return false;
@@ -157,6 +166,10 @@ namespace DatenMeister.DataProvider.DotNet
         public bool unset(string propertyName)
         {
             var property = GetProperty(propertyName);
+            if (property == null)
+            {
+                throw new InvalidOperationException("Property " + propertyName + " cannot be set, because it does not exist");
+            }
 
             var method = property.GetSetMethod();
             if (method == null)
@@ -193,7 +206,7 @@ namespace DatenMeister.DataProvider.DotNet
             var property = this.value.GetType().GetProperty(propertyName);
             if (property == null && throwException)
             {
-                throw new ArgumentException(propertyName + " not found");
+                return null;
             }
 
             return property;

@@ -301,15 +301,16 @@ namespace DatenMeister.WPF.Controls
             }
             else
             {
+                var readOnly = false;
                 if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowEdit(this.tableViewInfo))
                 {
                     // Nothing to do
-                    return null;
+                    readOnly = true;
                 }
 
                 Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
 
-                var dialog = DetailDialog.ShowDialogFor(selectedItem.Value, this.DetailViewInfo);
+                var dialog = DetailDialog.ShowDialogFor(selectedItem.Value, this.DetailViewInfo, readOnly);
 
                 if (dialog == null)
                 {
@@ -318,7 +319,7 @@ namespace DatenMeister.WPF.Controls
 
                     return null;
                 }
-                Ensure.That(dialog != null);
+
                 dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
                 return dialog;
             }

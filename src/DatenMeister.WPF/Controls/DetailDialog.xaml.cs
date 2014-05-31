@@ -135,7 +135,7 @@ namespace DatenMeister.WPF.Controls
         /// Has to be called, when the dialog for an entity shall be shown
         /// </summary>
         /// <param name="value"></param>
-        public static DetailDialog ShowDialogFor(IObject value, IObject viewData = null)
+        public static DetailDialog ShowDialogFor(IObject value, IObject viewData = null, bool readOnly = false)
         {
             viewData = GetView(value, viewData);
 
@@ -146,7 +146,7 @@ namespace DatenMeister.WPF.Controls
 
             var dialog = new DetailDialog();
             dialog.Pool = value.Extent.Pool;
-            dialog.DetailForm.EditMode = EditMode.Edit;
+            dialog.DetailForm.EditMode = readOnly? EditMode.Edit : EditMode.New;
             dialog.DetailForm.FormViewInfo = viewData;
             dialog.DetailForm.Extent = value.Extent;
             dialog.DetailForm.DetailObject = value;
