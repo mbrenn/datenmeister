@@ -7,6 +7,7 @@ using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -311,6 +312,9 @@ namespace DatenMeister.WPF.Windows
                 this.Settings.ProjectExtent = extent;
                 this.Settings.Pool.Add(extent, dialog.FileName);
 
+                // Adds the file to the recent files
+                this.AddRecentFile(dialog.FileName);
+
                 // Refreshes all views
                 this.RefreshAllTabContent();
             }
@@ -344,6 +348,9 @@ namespace DatenMeister.WPF.Windows
                 // Stores the xml document
                 xmlExtent.XmlDocument.Save(this.currentPath);
 
+                // Adds the file to the recent files
+                this.AddRecentFile(this.currentPath);
+
                 MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
             }
         }
@@ -361,8 +368,12 @@ namespace DatenMeister.WPF.Windows
                 Ensure.That(xmlExtent != null);
 
                 // Stores the xml document
-                xmlExtent.XmlDocument.Save(dialog.FileName);
-                this.currentPath = dialog.FileName;
+                var filename = dialog.FileName;
+                xmlExtent.XmlDocument.Save(filename);
+                this.currentPath = filename;
+
+                // Adds the file to the recent files
+                this.AddRecentFile(filename);
             }
         }
 
@@ -371,7 +382,18 @@ namespace DatenMeister.WPF.Windows
             this.Close();
         }
 
-        #endregion
+        /// <summary>
+        /// Adds the filepath to the list of recent files
+        /// </summary>
+        /// <param name="filePath"></param>
+        public void AddRecentFile(string filePath)
+        {
+            this.Core.AddRecentFile(
+                filePath,
+                System.IO.Path.GetFileNameWithoutExtension(filePath));
+        }
+        
+#endregion
 
         /// <summary>
         /// Does the user wants to save the data

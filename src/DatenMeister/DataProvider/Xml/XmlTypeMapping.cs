@@ -43,7 +43,7 @@ namespace DatenMeister.DataProvider.Xml
 
                     if (pluralElement == null)
                     {
-                        pluralElement = new XElement(name);
+                        pluralElement = new XElement(pluralName);
                         xmlDocument.Root.Add(pluralElement);
                     }
 

@@ -62,11 +62,7 @@ namespace DatenMeister.DataProvider.Xml
             // Check, if we have an id attribute
             // TODO: Check with RFC about xml.
             var idAttribute = this.Node.Attribute("id");
-            if (idAttribute == null)
-            {
-                throw new InvalidOperationException("Xml node does not have an id-attribute and is not null");
-            }
-            else
+            if (idAttribute != null)
             {
                 this.Id = idAttribute.Value;
             }

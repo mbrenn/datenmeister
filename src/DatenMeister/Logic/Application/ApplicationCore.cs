@@ -156,7 +156,7 @@ namespace DatenMeister.Logic.Application
 
             // Ok, not found, now add it
             var factory = Factory.GetFor(this.applicationData);
-            var recentProject = RecentProject.create(factory);
+            var recentProject = factory.CreateInExtent(this.applicationData, Types.RecentProject);
             RecentProject.setFilePath(recentProject, filePath);
             RecentProject.setCreated(recentProject, DateTime.Now);
             RecentProject.setName(recentProject, name);
