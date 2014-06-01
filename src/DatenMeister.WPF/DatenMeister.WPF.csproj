@@ -83,6 +83,7 @@
     <Compile Include="Windows\DatenMeisterWindow.xaml.cs">
       <DependentUpon>DatenMeisterWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Extensions.cs" />
     <Compile Include="Windows\IDatenMeisterWindow.cs" />
     <Compile Include="Windows\TabInformation.cs" />
   </ItemGroup>
