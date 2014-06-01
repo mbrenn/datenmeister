@@ -29,9 +29,10 @@
                     <LineBreak />
                     Thanks to NUnit (http://www.nunit.org), which is used for Software Unit-Testing during development.<LineBreak />
                     <LineBreak />
-                    Thanks to Newtonsoft.Json, which is used for Json Import and Export.<LineBreak />
+                    Thanks to Newtonsoft.Json (http://james.newtonking.com/json), which is used for Json Import and Export.<LineBreak />
                 
                     <LineBreak />
+                     ====================================================================<LineBreak />
                 Apache Licence, Version 2.0: <LineBreak />
                      ====================================================================<LineBreak />
        Licensed to the Apache Software Foundation (ASF) Under one or more<LineBreak />
@@ -51,6 +52,7 @@
     ====================================================================<LineBreak />
 <LineBreak />
                 <LineBreak />                
+                     ====================================================================<LineBreak />
                 NUnit Software Licence: <LineBreak />
     ====================================================================<LineBreak />
 Copyright © 2002-2012 Charlie Poole<LineBreak />
