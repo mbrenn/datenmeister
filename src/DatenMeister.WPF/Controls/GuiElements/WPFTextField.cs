@@ -17,13 +17,19 @@ namespace DatenMeister.WPF.Controls.GuiElements
             textBox.FontSize = 16;
             textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
 
-            if (state.EditMode == EditMode.Edit && detailObject != null)
+            if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
             {
                 var fieldName = textFieldObj.getBinding().ToString();
                 var propertyValue = detailObject.get(fieldName);
                 if (propertyValue != null)
                 {
                     textBox.Text = propertyValue.AsSingle().ToString();
+                }
+
+                if (state.EditMode == EditMode.Read)
+                {
+                    textBox.IsReadOnly = true;
+                    textBox.IsReadOnlyCaretVisible = true;
                 }
             }
 
@@ -38,6 +44,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         public void SetData(IObject detailObject, ElementCacheEntry entry)
         {
             var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(entry.FieldInfo);
+
             var textBox = entry.WPFElement as TextBox;
             detailObject.set(textFieldObj.getBinding().ToString(), textBox.Text);
         }

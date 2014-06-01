@@ -67,16 +67,8 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
-        /// Gets or sets the element factory being used to create the element, 
-        /// if we are in EditMode = New
+        /// Initializes a new instance of the EntityFormControl class
         /// </summary>
-        [Obsolete]
-        public Func<IObject> ElementFactory
-        {
-            get;
-            set;
-        }
-        
         public EntityFormControl()
         {
             InitializeComponent();
