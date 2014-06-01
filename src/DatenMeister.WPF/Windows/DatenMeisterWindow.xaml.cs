@@ -102,7 +102,9 @@ namespace DatenMeister.WPF.Windows
                     Header = menuHeadline
                 };
 
-                this.menuMain.Items.Add(found);
+                // Inserts the new item into the main menu bar. 
+                // Last item is the "?"-Menu containing the about dialog. And it shall stay the last item
+                this.menuMain.Items.Insert(this.menuMain.Items.Count - 1, found);
             }
 
             // Now create the item
@@ -432,6 +434,12 @@ namespace DatenMeister.WPF.Windows
             }
 
             return false;
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new AboutDialog();
+            dlg.ShowDialog();
         }
     }
 }

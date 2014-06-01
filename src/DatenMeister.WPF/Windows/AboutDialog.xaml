@@ -1,0 +1,81 @@
+﻿<Window x:Class="DatenMeister.WPF.Windows.AboutDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+            Title="DatenMeister - About Dialog"
+             Width="630" Height="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style x:Key="TouchButton">
+                <Setter Property="Button.Padding" Value="10,5" />
+                <Setter Property="Button.Margin" Value="10,5" />
+                <Setter Property="Label.FontSize" Value="14" />
+            </Style>
+        </Grid.Resources>
+        <Border  BorderBrush="Black" BorderThickness="1" Margin="10">
+        <ScrollViewer>
+            <TextBlock HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="5">
+                    Der DatenMeister - Unendliche Weiten (http://www.depon.net/)<LineBreak />
+                    <LineBreak />
+                    Thanks to the OMG Community (http://www.omg.org) which is the base for the complete DatenMeister application. <LineBreak />
+                    <LineBreak />
+                    Thanks to NPOI (http://npoi.googlecode.com), which is used for Excel-Export and Import and is licensed under the Apache-License, Version 2.0 (see below). <LineBreak />
+                    <LineBreak />
+                    Thanks to NUnit (http://www.nunit.org), which is used for Software Unit-Testing during development.<LineBreak />
+                    <LineBreak />
+                    Thanks to Newtonsoft.Json, which is used for Json Import and Export.<LineBreak />
+                
+                    <LineBreak />
+                Apache Licence, Version 2.0: <LineBreak />
+                     ====================================================================<LineBreak />
+       Licensed to the Apache Software Foundation (ASF) Under one or more<LineBreak />
+       contributor license agreements.  See the NOTICE file distributed with<LineBreak />
+       this work for Additional information regarding copyright ownership.<LineBreak />
+       The ASF licenses this file to You Under the Apache License, Version 2.0<LineBreak />
+       (the "License"); you may not use this file except in compliance with<LineBreak />
+       the License.  You may obtain a copy of the License at<LineBreak />
+    <LineBreak />
+           http://www.apache.org/licenses/LICENSE-2.0<LineBreak />
+
+       Unless required by applicable law or agreed to in writing, software<LineBreak />
+       distributed Under the License is distributed on an "AS Is" BASIS,<LineBreak />
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<LineBreak />
+       See the License for the specific language governing permissions and<LineBreak />
+       limitations Under the License.<LineBreak />
+    ====================================================================<LineBreak />
+<LineBreak />
+                <LineBreak />                
+                NUnit Software Licence: <LineBreak />
+    ====================================================================<LineBreak />
+Copyright © 2002-2012 Charlie Poole<LineBreak />
+Copyright © 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov<LineBreak />
+Copyright © 2000-2002 Philip A. Craig<LineBreak />
+<LineBreak />
+This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.<LineBreak />
+<LineBreak />
+Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:<LineBreak />
+<LineBreak />
+1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment (see the following) in the product documentation is required.<LineBreak />
+<LineBreak />
+Portions Copyright © 2002-2012 Charlie Poole or Copyright © 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov or Copyright © 2000-2002 Philip A. Craig<LineBreak />
+<LineBreak />
+2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.<LineBreak />
+<LineBreak />
+3. This notice may not be removed or altered from any source distribution.<LineBreak />
+                <LineBreak />
+    ====================================================================<LineBreak />
+
+            </TextBlock>
+        </ScrollViewer>
+        </Border>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button  Content="Close" Style="{StaticResource TouchButton}" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>
