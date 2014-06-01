@@ -1,5 +1,6 @@
 ﻿
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic.Application;
 using DatenMeister.WPF.Controls;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,18 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Gets or sets the datenmeister settings
         /// </summary>
-        IDatenMeisterSettings Settings
+        ApplicationCore Core
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets or sets the settings
+        /// </summary>
+        IDatenMeisterSettings Settings
+        {
+            get;
         }
 
         /// <summary>

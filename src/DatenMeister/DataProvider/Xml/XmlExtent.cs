@@ -93,13 +93,11 @@ namespace DatenMeister.DataProvider.Xml
             return new XmlExtentReflectiveSequence(this);
         }
 
-        /// <summary>
-        /// Removes object from xml document
-        /// </summary>
-        /// <param name="element">Element to be removed</param>
-        public void RemoveObject(IObject element)
+        public static XmlExtent Create(XmlSettings settings, string rootNodeName, string uri = null)
         {
-            throw new NotImplementedException();
+            Ensure.That(!string.IsNullOrEmpty(rootNodeName));
+
+            return new XmlExtent(new XDocument(new XElement(rootNodeName)), uri, settings);
         }
 
         private class XmlExtentReflectiveSequence : BaseReflectiveSequence

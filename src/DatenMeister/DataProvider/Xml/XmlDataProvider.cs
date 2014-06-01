@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml;
 using DatenMeister.Logic;
+using BurnSystems.Test;
 
 namespace DatenMeister.DataProvider.Xml
 {
@@ -14,6 +15,13 @@ namespace DatenMeister.DataProvider.Xml
     /// </summary>
     public class XmlDataProvider : IDataProvider
     {
+        /// <summary>
+        /// Loads the extent from a file and does not set the corresponding uri
+        /// </summary>
+        /// <param name="path">Path, where extent will get loaded from</param>
+        /// <param name="uri">The URI which shall be associated</param>
+        /// <param name="setttings">Settings being used to load the data</param>
+        /// <returns></returns>
         public XmlExtent Load(string path, XmlSettings settings)
         {
             var loadedDocument = XDocument.Load(path);
@@ -45,6 +53,8 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="settings">Settings being used</param>
         public void Save(XmlExtent extent, string path, XmlSettings settings)
         {
+            Ensure.That(extent != null);
+
             // Stores the file into database
             extent.XmlDocument.Save(path);
         }

@@ -2,6 +2,7 @@
 using BurnSystems.Test;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
+using DatenMeister.Logic.Application;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
 using System;
@@ -33,12 +34,20 @@ namespace DatenMeister.WPF.Windows
         private static ClassLogger logger = new ClassLogger(typeof(DatenMeisterWindow));
 
         /// <summary>
-        /// Gets or sets the datenmeister settings
+        /// Gets or sets the application core
         /// </summary>
-        public IDatenMeisterSettings Settings
+        public ApplicationCore Core
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets the settings of the datenmeister
+        /// </summary>
+        public IDatenMeisterSettings Settings
+        {
+            get { return this.Core.Settings; }
         }
 
         /// <summary>
@@ -65,6 +74,20 @@ namespace DatenMeister.WPF.Windows
             this.Top -= newHeight/ 2;
             this.Width = newWidth;
             this.Height = newHeight;
+        }
+
+        public DatenMeisterWindow(ApplicationCore core)
+            : this ()
+        {
+            this.Core = core;
+
+            if (core != null)
+            {
+                if (!string.IsNullOrEmpty(core.Settings.WindowTitle))
+                {
+                    this.SetTitle(core.Settings.WindowTitle);
+                }
+            }
         }
 
         /// <summary>

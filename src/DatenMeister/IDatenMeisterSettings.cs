@@ -10,6 +10,24 @@ namespace DatenMeister
     public interface IDatenMeisterSettings
     {
         /// <summary>
+        /// Gets or sets the applicationname
+        /// </summary>
+        string ApplicationName
+        {
+            get;
+            set;
+        } 
+        
+        /// <summary>
+        /// Gets or sets te window title
+        /// </summary>
+        string WindowTitle
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the datameister pool
         /// </summary>
         DatenMeisterPool Pool
