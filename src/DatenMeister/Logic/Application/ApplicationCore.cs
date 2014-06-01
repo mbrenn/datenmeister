@@ -1,7 +1,9 @@
 ﻿using BurnSystems.Logging;
 using BurnSystems.Test;
+using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Entities.AsObject.DM;
+using DatenMeister.Transformations;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -135,6 +137,29 @@ namespace DatenMeister.Logic.Application
         {
             this.SaveApplicationData();
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Adds a file to the recent file list. 
+        /// If the file is already available, it won't be added
+        /// </summary>
+        /// <param name="filePath">Path of the file to be added</param>
+        public void AddRecentFile(string filePath, string name)
+        {
+            // Check, if the file is already available
+            if (this.applicationData
+                .FilterByType(Types.RecentProject).Elements()
+                .Any(x => RecentProject.getFilePath(x.AsIObject()) == filePath))
+            {
+                return;
+            }
+
+            // Ok, not found, now add it
+            var factory = Factory.GetFor(this.applicationData);
+            var recentProject = RecentProject.create(factory);
+            RecentProject.setFilePath(recentProject, filePath);
+            RecentProject.setCreated(recentProject, DateTime.Now);
+            RecentProject.setName(recentProject, name);
         }
     }
 }

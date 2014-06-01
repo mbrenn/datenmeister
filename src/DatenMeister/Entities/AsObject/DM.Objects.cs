@@ -104,25 +104,67 @@ namespace DatenMeister.Entities.AsObject.DM
 
         #endregion
 
-        public System.String getDataPath()
+        public System.String getFilePath()
         {
-            return getDataPath(this);
+            return getFilePath(this);
         }
 
-        public void setDataPath(System.String value)
+        public void setFilePath(System.String value)
         {
-            setDataPath(this, value);
+            setFilePath(this, value);
         }
 
-        public static System.String getDataPath(DatenMeister.IObject obj)
+        public static System.String getFilePath(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("dataPath"));
+            var result = DatenMeister.Extensions.AsSingle(obj.get("filePath"));
             return (result is System.String) ? ((System.String) result) : default(System.String);
         }
 
-        public static void setDataPath(DatenMeister.IObject obj, System.String value)
+        public static void setFilePath(DatenMeister.IObject obj, System.String value)
         {
-            obj.set("dataPath", value);
+            obj.set("filePath", value);
+        }
+
+        public System.DateTime getCreated()
+        {
+            return getCreated(this);
+        }
+
+        public void setCreated(System.DateTime value)
+        {
+            setCreated(this, value);
+        }
+
+        public static System.DateTime getCreated(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("created"));
+            return (result is System.DateTime) ? ((System.DateTime) result) : default(System.DateTime);
+        }
+
+        public static void setCreated(DatenMeister.IObject obj, System.DateTime value)
+        {
+            obj.set("created", value);
+        }
+
+        public System.String getName()
+        {
+            return getName(this);
+        }
+
+        public void setName(System.String value)
+        {
+            setName(this, value);
+        }
+
+        public static System.String getName(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
+            return (result is System.String) ? ((System.String) result) : default(System.String);
+        }
+
+        public static void setName(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("name", value);
         }
 
     }
