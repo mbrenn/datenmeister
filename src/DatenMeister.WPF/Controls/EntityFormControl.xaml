@@ -18,16 +18,26 @@
                 </Grid.ColumnDefinitions>
             </Grid>
         </ScrollViewer>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <StackPanel.Resources>
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
                 <Style x:Key="TouchButton">
                     <Setter Property="Button.Padding" Value="10,5" />
                     <Setter Property="Button.Margin" Value="10,5" />
                     <Setter Property="Label.FontSize" Value="14" />
                 </Style>
-            </StackPanel.Resources>
-            <Button x:Name="btnCancel" Click="btnCancel_Click" IsCancel="True" Style="{StaticResource TouchButton}">Cancel</Button>
-            <Button x:Name="btnOK" Click="btnOK_Click" IsDefault="True" Style="{StaticResource TouchButton}">OK</Button>
-        </StackPanel>
+            </Grid.Resources>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button x:Name="btnCopyToClipboard" Style="{StaticResource TouchButton}" Click="btnCopyToClipboard_Click"
+                        ToolTip="Copies the current content of the dialog to the clipboard, so it can be used in mails.">To Clipboard</Button>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btnCancel" Click="btnCancel_Click" IsCancel="True" Style="{StaticResource TouchButton}">Cancel</Button>
+                <Button x:Name="btnOK" Click="btnOK_Click" IsDefault="True" Style="{StaticResource TouchButton}">OK</Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

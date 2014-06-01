@@ -1,6 +1,7 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.Entities.AsObject.FieldInfo;
+using DatenMeister.Logic;
 using DatenMeister.WPF.Controls.GuiElements;
 using System;
 using System.Collections.Generic;
@@ -274,6 +275,30 @@ namespace DatenMeister.WPF.Controls
             {
                 element.WPFElement.Focus();
             }
+        }
+
+        private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            var tempObj = new GenericObject();
+
+            // Store values into object
+            foreach (var cacheEntry in this.wpfElements)
+            {
+                cacheEntry.WPFElementCreator.SetData(tempObj, cacheEntry);
+            }
+
+            // Now create a view obj
+            var viewObj = new ObjectDictionaryForView(tempObj);
+
+            var builder = new StringBuilder();
+            foreach (var pair in viewObj)
+            {
+                builder.AppendFormat("{0}: {1}\r\n", pair.Key, pair.Value);
+            }
+
+            Clipboard.SetText(builder.ToString());
+
+            MessageBox.Show("The content has been copied to the clipboard");
         }
     }
 }
