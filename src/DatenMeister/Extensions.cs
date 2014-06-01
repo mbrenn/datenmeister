@@ -104,6 +104,10 @@ namespace DatenMeister
             {
                 return valueAsEnumeration.OfType<object>().FirstOrDefault();
             }
+            else if (value == null)
+            {
+                return ObjectHelper.Null;
+            }
             else
             {
                 return value;

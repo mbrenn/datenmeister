@@ -157,6 +157,7 @@ namespace DatenMeister.WPF.Controls
 
         private static IObject GetView(IObject value, IObject viewData)
         {
+            // If viewdata is already given, then we do not need to find out the correct view data
             if (viewData == null)
             {
                 var viewManager = Global.Application.Get<IViewManager>();
@@ -167,6 +168,7 @@ namespace DatenMeister.WPF.Controls
                 }
                 else
                 {
+                    // Gets the default view for the object
                     viewData = viewManager.GetDefaultView(value, ViewType.FormView);
                     if (viewData == null)
                     {
@@ -174,6 +176,7 @@ namespace DatenMeister.WPF.Controls
                     }
                 }
             }
+
             return viewData;
         }
     }

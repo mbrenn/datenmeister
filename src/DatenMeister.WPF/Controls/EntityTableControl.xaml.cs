@@ -280,7 +280,6 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private DetailDialog ShowDetailDialog()
         {
-
             var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
 
             if (this.OpenSelectedViewFunc != null)
@@ -302,6 +301,8 @@ namespace DatenMeister.WPF.Controls
             else
             {
                 var readOnly = false;
+                
+                // Check, if the dialog to be opend shall be a read-only dialog
                 if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowEdit(this.tableViewInfo))
                 {
                     // Nothing to do
@@ -320,6 +321,7 @@ namespace DatenMeister.WPF.Controls
                     return null;
                 }
 
+                // When user accepts the changes, all items shall be refreshed. 
                 dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
                 return dialog;
             }

@@ -201,6 +201,13 @@ namespace DatenMeister.WPF.Windows
             }
         }
 
+        /// <summary>
+        /// Creates a tab for the given tableInfo
+        /// </summary>
+        /// <param name="tableInfoObj">Information object containing the information about the
+        /// current tab. </param>
+        /// <param name="name">Name of the tabl to be shown</param>
+        /// <returns>The created tab item</returns>
         private TabItem CreateTab(IObject tableInfoObj, string name)
         {
             // Creates the tab item

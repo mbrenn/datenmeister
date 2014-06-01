@@ -26,6 +26,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                     textBox.Text = propertyValue.AsSingle().ToString();
                 }
 
+                // Do we have a read-only flag
                 if (state.EditMode == EditMode.Read)
                 {
                     textBox.IsReadOnly = true;
@@ -49,6 +50,10 @@ namespace DatenMeister.WPF.Controls.GuiElements
             detailObject.set(textFieldObj.getBinding().ToString(), textBox.Text);
         }
 
+        /// <summary>
+        /// Sets a focus on the given element
+        /// </summary>
+        /// <param name="element">Element, where focus is put on </param>
         public void Focus(System.Windows.UIElement element)
         {
             var textBox = element as TextBox;

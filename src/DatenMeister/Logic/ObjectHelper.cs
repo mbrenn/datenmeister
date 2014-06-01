@@ -27,6 +27,8 @@ namespace DatenMeister.Logic
         /// </summary>
         public static object NotSet = new NotSetObject();
 
+        public static object Null = new NullObject();
+
         /// <summary>
         /// Just used for the NotSet object
         /// </summary>
@@ -35,6 +37,17 @@ namespace DatenMeister.Logic
             public override string ToString()
             {
                 return "Not Set";
+            }
+        }
+
+        /// <summary>
+        /// Just used for the Null object
+        /// </summary>
+        private class NullObject
+        {
+            public override string ToString()
+            {
+                return "NULL";
             }
         }
     }
