@@ -91,14 +91,16 @@ namespace DatenMeister.Logic.Application
             this.LoadApplicationData();
 
             var viewFactory = Factory.GetFor(settings.ViewExtent);
-            var tableView = viewFactory.CreateInExtent(
-                settings.ViewExtent, DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+            var tableView =  viewFactory.create(
+                DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
             tableView.set("name", "Recent Files");
             DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowEdit(tableView, false);
             DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowNew(tableView, false);
             DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(tableView, true);
             DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(tableView, uri);
             DatenMeister.Logic.Views.ViewHelper.AutoGenerateViewDefinitionsForExtent(this.applicationData, tableView);
+
+            settings.ViewExtent.Elements().Insert(0, tableView);
 
             var pool = Global.Application.Get<IPool>();
             pool.Add(this.applicationData, null, "Application data");
