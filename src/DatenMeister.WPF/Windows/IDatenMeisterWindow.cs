@@ -58,5 +58,11 @@ namespace DatenMeister.WPF.Windows
         /// <param name="view">View, to which the detailopen event shall be associated</param>
         /// <param name="action">Action, which shall be executed instead of opening the detail dialog</param>
         void AssociateDetailOpenEvent(IObject view, Action<DetailOpenEventArgs> action);
+
+        /// <summary>
+        /// Loads and opens a file and refreshes the window, so recently loaded extent is included
+        /// </summary>
+        /// <param name="path">Path of the object to be loaded</param>
+        void LoadAndOpenFile(string path);
     }
 }

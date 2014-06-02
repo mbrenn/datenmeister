@@ -302,22 +302,33 @@ namespace DatenMeister.WPF.Windows
             dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
             if (dialog.ShowDialog(this) == true)
             {
-                var loadedFile = XDocument.Load(dialog.FileName);
+                var filename = dialog.FileName;
 
-                // Loads the extent into the same uri
-                var extent = new XmlExtent(loadedFile, this.Settings.ProjectExtent.ContextURI());
-
-                // Sets the settings and stores it into the main window. The old one gets removed
-                extent.Settings = this.Settings.ExtentSettings;
-                this.Settings.ProjectExtent = extent;
-                this.Settings.Pool.Add(extent, dialog.FileName);
-
-                // Adds the file to the recent files
-                this.AddRecentFile(dialog.FileName);
-
-                // Refreshes all views
-                this.RefreshAllTabContent();
+                this.LoadAndOpenFile(filename);
             }
+        }
+
+        /// <summary>
+        /// Loads and opens a file and refreshes the window, so recently loaded extent is included
+        /// </summary>
+        /// <param name="path">Path of the object to be loaded</param>
+        public void LoadAndOpenFile(string filename)
+        {
+            var loadedFile = XDocument.Load(filename);
+
+            // Loads the extent into the same uri
+            var extent = new XmlExtent(loadedFile, this.Settings.ProjectExtent.ContextURI());
+
+            // Sets the settings and stores it into the main window. The old one gets removed
+            extent.Settings = this.Settings.ExtentSettings;
+            this.Settings.ProjectExtent = extent;
+            this.Settings.Pool.Add(extent, filename);
+
+            // Adds the file to the recent files
+            this.AddRecentFile(filename);
+
+            // Refreshes all views
+            this.RefreshAllTabContent();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
