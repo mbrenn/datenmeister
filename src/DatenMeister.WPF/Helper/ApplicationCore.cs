@@ -107,7 +107,17 @@ namespace DatenMeister.WPF.Helper
             DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowNew(this.ViewRecentObjects, false);
             DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(this.ViewRecentObjects, true);
             DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(this.ViewRecentObjects, uri);
-            DatenMeister.Logic.Views.ViewHelper.AutoGenerateViewDefinitionsForExtent(this.applicationData, this.ViewRecentObjects);
+
+            var fieldInfos = this.ViewRecentObjects.get("fieldInfos").AsReflectiveSequence();
+            var textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
+            DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "name");
+            DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Name");
+            fieldInfos.add(textField);
+
+            textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
+            DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "filePath");
+            DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Storage Path");
+            fieldInfos.add(textField);
 
             settings.ViewExtent.Elements().Insert(0, this.ViewRecentObjects);
 
