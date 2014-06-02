@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatenMeister.Logic.Application
+namespace DatenMeister.WPF.Helper
 {
     /// <summary>
     /// Stores the data that is used for the application specific data
@@ -78,6 +78,15 @@ namespace DatenMeister.Logic.Application
         }
 
         /// <summary>
+        /// Defines the object that is used to show 
+        /// </summary>
+        public IObject ViewRecentObjects
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the project
         /// </summary>
         /// <param name="projectName">Name of the project</param>
@@ -91,19 +100,20 @@ namespace DatenMeister.Logic.Application
             this.LoadApplicationData();
 
             var viewFactory = Factory.GetFor(settings.ViewExtent);
-            var tableView =  viewFactory.create(
+            this.ViewRecentObjects = viewFactory.create(
                 DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
-            tableView.set("name", "Recent Files");
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowEdit(tableView, false);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowNew(tableView, false);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(tableView, true);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(tableView, uri);
-            DatenMeister.Logic.Views.ViewHelper.AutoGenerateViewDefinitionsForExtent(this.applicationData, tableView);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setName(this.ViewRecentObjects, "Recent Files");
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowEdit(this.ViewRecentObjects, false);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowNew(this.ViewRecentObjects, false);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(this.ViewRecentObjects, true);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(this.ViewRecentObjects, uri);
+            DatenMeister.Logic.Views.ViewHelper.AutoGenerateViewDefinitionsForExtent(this.applicationData, this.ViewRecentObjects);
 
-            settings.ViewExtent.Elements().Insert(0, tableView);
+            settings.ViewExtent.Elements().Insert(0, this.ViewRecentObjects);
 
             var pool = Global.Application.Get<IPool>();
             pool.Add(this.applicationData, null, "Application data");
+
         }
 
         /// <summary>

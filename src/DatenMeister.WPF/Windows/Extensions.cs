@@ -1,9 +1,11 @@
-﻿using DatenMeister.Logic.Application;
+﻿using DatenMeister.WPF.Helper;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DatenMeister.WPF.Windows
 {
@@ -24,6 +26,19 @@ namespace DatenMeister.WPF.Windows
             // Just sets the title and shows the Window
             wnd.Show();
             wnd.RefreshTab();
+
+            wnd.AssociateDetailOpenEvent(core.ViewRecentObjects, (x) =>
+            {
+                var filePath = DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(x.Value);
+                if (File.Exists(filePath))
+                {
+                    wnd.LoadAndOpenFile(filePath);
+                }
+                else
+                {
+                    MessageBox.Show(Localization_DatenMeister_WPF.Open_FileDoesNotExist);
+                }
+            });
 
             return wnd;
         }

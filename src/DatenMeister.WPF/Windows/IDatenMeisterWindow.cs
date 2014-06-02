@@ -1,7 +1,7 @@
 ﻿
 using DatenMeister.DataProvider.Xml;
-using DatenMeister.Logic.Application;
 using DatenMeister.WPF.Controls;
+using DatenMeister.WPF.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
