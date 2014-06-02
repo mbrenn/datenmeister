@@ -126,4 +126,10 @@
   <data name="Menu_Extent" xml:space="preserve">
     <value>Extent</value>
   </data>
+  <data name="Menu_TypeManager" xml:space="preserve">
+    <value>Type Manager</value>
+  </data>
+  <data name="Menu_Views" xml:space="preserve">
+    <value>View</value>
+  </data>
 </root>

@@ -69,6 +69,7 @@
       <DependentUpon>Localization_DM_Addons.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\TypeManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
