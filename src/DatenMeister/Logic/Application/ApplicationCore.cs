@@ -1,8 +1,8 @@
 ﻿using BurnSystems.Logging;
+using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Xml;
-using DatenMeister.Entities.AsObject.DM;
 using DatenMeister.Transformations;
 using System;
 using System.Collections.Generic;
@@ -85,9 +85,23 @@ namespace DatenMeister.Logic.Application
         {
             this.Settings = settings;
             this.XmlSettings = new XmlSettings();
-            this.XmlSettings.Mapping.Add(Types.RecentProject);
+            this.XmlSettings.SkipRootNode = true;
+            this.XmlSettings.Mapping.Add(DatenMeister.Entities.AsObject.DM.Types.RecentProject);
 
             this.LoadApplicationData();
+
+            var viewFactory = Factory.GetFor(settings.ViewExtent);
+            var tableView = viewFactory.CreateInExtent(
+                settings.ViewExtent, DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+            tableView.set("name", "Recent Files");
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowEdit(tableView, false);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowNew(tableView, false);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(tableView, true);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(tableView, uri);
+            DatenMeister.Logic.Views.ViewHelper.AutoGenerateViewDefinitionsForExtent(this.applicationData, tableView);
+
+            var pool = Global.Application.Get<IPool>();
+            pool.Add(this.applicationData, null, "Application data");
         }
 
         /// <summary>
@@ -103,7 +117,7 @@ namespace DatenMeister.Logic.Application
                     // File exists, we can directly load it
                     var dataProvider = new XmlDataProvider();
 
-                    this.applicationData = dataProvider.Load(filePath, this.XmlSettings);
+                    this.applicationData = dataProvider.Load(filePath, uri, this.XmlSettings);
                 }
                 catch (Exception exc)
                 {
@@ -148,18 +162,18 @@ namespace DatenMeister.Logic.Application
         {
             // Check, if the file is already available
             if (this.applicationData
-                .FilterByType(Types.RecentProject).Elements()
-                .Any(x => RecentProject.getFilePath(x.AsIObject()) == filePath))
+                .FilterByType(DatenMeister.Entities.AsObject.DM.Types.RecentProject).Elements()
+                .Any(x => DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(x.AsIObject()) == filePath))
             {
                 return;
             }
 
             // Ok, not found, now add it
             var factory = Factory.GetFor(this.applicationData);
-            var recentProject = factory.CreateInExtent(this.applicationData, Types.RecentProject);
-            RecentProject.setFilePath(recentProject, filePath);
-            RecentProject.setCreated(recentProject, DateTime.Now);
-            RecentProject.setName(recentProject, name);
+            var recentProject = factory.CreateInExtent(this.applicationData, DatenMeister.Entities.AsObject.DM.Types.RecentProject);
+            DatenMeister.Entities.AsObject.DM.RecentProject.setFilePath(recentProject, filePath);
+            DatenMeister.Entities.AsObject.DM.RecentProject.setCreated(recentProject, DateTime.Now);
+            DatenMeister.Entities.AsObject.DM.RecentProject.setName(recentProject, name);
         }
     }
 }
