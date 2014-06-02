@@ -33,6 +33,8 @@ namespace DatenMeister.WPF.Windows
                 if (File.Exists(filePath))
                 {
                     wnd.LoadAndOpenFile(filePath);
+                    wnd.Settings.ViewExtent.Elements().remove(core.ViewRecentObjects);
+                    wnd.RefreshTab();
                 }
                 else
                 {
