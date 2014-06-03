@@ -120,7 +120,7 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = new XmlExtent(document, "test");
             Assert.That(xmlExtent.Elements().ElementAt(0).AsIObject().Id, Is.EqualTo("e1"));
             Assert.That(xmlExtent.Elements().ElementAt(1).AsIObject().Id, Is.EqualTo("e2"));
-            Assert.Throws<InvalidOperationException>(() => { xmlExtent.Elements().ElementAt(2); return; });
+            Assert.That(xmlExtent.Elements().ElementAt(2).AsIObject().Id, Is.Null.Or.Empty);
 
             var newElement = Factory.GetFor(xmlExtent).CreateInExtent(xmlExtent);
             Assert.That(newElement.Id, Is.Not.Null.Or.Empty);
@@ -295,6 +295,29 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(asSequence.size(), Is.EqualTo(2));
             Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e4"));
             Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
+        }
+
+        [Test]
+        public void TestReflectiveSequenceWithStrings()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" />" +
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+
+            var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
+            var sequence = valueE4.get("value").AsReflectiveSequence();
+            sequence.add("Value 1");
+            sequence.add("Value 2");
+            sequence.add("Value 3");
+            
         }
 
         [Test]
