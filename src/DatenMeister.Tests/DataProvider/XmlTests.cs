@@ -317,7 +317,17 @@ namespace DatenMeister.Tests.DataProvider
             sequence.add("Value 1");
             sequence.add("Value 2");
             sequence.add("Value 3");
-            
+
+            // Checks, if setting had been successful
+            sequence = valueE4.get("value").AsReflectiveSequence();
+            Assert.That(sequence.size(), Is.EqualTo(3));
+            var value1 = sequence.get(0);
+            var value2 = sequence.get(1);
+            var value3 = sequence.get(2);
+
+            Assert.That(value1, Is.EqualTo("Value 1"));
+            Assert.That(value2, Is.EqualTo("Value 2"));
+            Assert.That(value3, Is.EqualTo("Value 3"));
         }
 
         [Test]

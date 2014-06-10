@@ -9,26 +9,100 @@ using System.Xml.Linq;
 namespace DatenMeister.DataProvider.Xml
 {
     /// <summary>
+    /// Defines the type of the sequence type
+    /// and describes where the objects are stored. 
+    /// </summary>
+    public enum XmlReflectiveSequenceType
+    {
+        /// <summary>
+        /// It is currently not known, whether we add attribute or nodes
+        /// </summary>
+        Unknown, 
+
+        /// <summary>
+        /// The xml reflective sequence stores its values into the attributes
+        /// Used for references to other objects
+        /// </summary>
+        Attributes,
+
+        /// <summary>
+        /// The xml reflective sequence stores its values into the nodes. 
+        /// Used for contained objects and native objects
+        /// </summary>
+        Nodes
+    }
+
+    /// <summary>
     /// Implements the Reflective Sequence Collection for Xml-Types
     /// </summary>
-    public class XmlReflectiveSequence: BaseReflectiveSequence
+    public class XmlReflectiveSequence : BaseReflectiveSequence
     {
+        /// <summary>
+        /// Gets or sets the sequence type
+        /// </summary>
+        public XmlReflectiveSequenceType sequenceType
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the unspecified object
+        /// </summary>
         private XmlUnspecified Unspecified
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the XmlReflectiveSequence
+        /// </summary>
+        /// <param name="unspecified">Unspecified object</param>
         public XmlReflectiveSequence(XmlUnspecified unspecified)
         {
             this.Unspecified = unspecified;
+            this.EstimateSequenceType();
         }
+
+        #region Functions for estimation of sequence type
+
+        /// <summary>
+        /// Estimates the type of the sequence. Might be driven by
+        /// Xml-Attributes or might be driven by Xml-Nodes.
+        /// A reflective sequence can only be one of both
+        /// </summary>
+        public void EstimateSequenceType()
+        {
+            var owner = this.Unspecified.Owner as XmlObject;
+
+            // Check, if we have an attribute
+            if (owner.Node.Attribute(this.Unspecified.PropertyName + "-ref") != null)
+            {
+                this.sequenceType = XmlReflectiveSequenceType.Attributes;
+                return;
+            }
+
+            // Check, if we have at least one node
+            if (owner.Node.Element(this.Unspecified.PropertyName) != null)
+            {
+                this.sequenceType = XmlReflectiveSequenceType.Nodes;
+                return;
+            }
+
+            // Ok, we have a node
+            this.sequenceType = XmlReflectiveSequenceType.Unknown;
+        }
+
+        #endregion
+
+        #region Get or set content from Xml-Attributes
 
         /// <summary>
         /// Gets the attribute for the given property or creates 
         /// </summary>
         /// <returns></returns>
-        private XAttribute GetAttribute()
+        private XAttribute GetAttribute(bool create = true)
         {
             var owner = this.Unspecified.Owner as XmlObject;
             var propertyName = this.Unspecified.PropertyName + "-ref";
@@ -37,7 +111,12 @@ namespace DatenMeister.DataProvider.Xml
             if (attribute == null)
             {
                 attribute = new XAttribute(propertyName, string.Empty);
-                owner.Node.Add(attribute);
+
+                if (create)
+                {
+                    // Only if we do like to create the Attribute, add it to the node
+                    owner.Node.Add(attribute);
+                }
             }
 
             return attribute;
@@ -47,7 +126,7 @@ namespace DatenMeister.DataProvider.Xml
         {
             var valueAsString = this.GetAttribute().Value;
 
-            return valueAsString.Split(new[] { ' ' }).Where(x=>!string.IsNullOrEmpty(x)).ToList();
+            return valueAsString.Split(new[] { ' ' }).Where(x => !string.IsNullOrEmpty(x)).ToList();
         }
 
         private void SetAttributeAsList(List<string> values)
@@ -69,6 +148,8 @@ namespace DatenMeister.DataProvider.Xml
             this.GetAttribute().Value = builder.ToString();
         }
 
+        #endregion
+
         public override void add(int index, object value)
         {
             // Which type is the value 
@@ -84,16 +165,25 @@ namespace DatenMeister.DataProvider.Xml
                     // Ok, now we got it, now we need to inject our element
                     var list = this.GetAttributeAsList();
                     list.Insert(index, path);
-                    this.SetAttributeAsList(list);                    
+                    this.SetAttributeAsList(list);
                 }
                 else
                 {
                     throw new NotImplementedException("Given Object is not connected to an extent. ");
                 }
             }
+            else if (Extensions.IsNative(value))
+            {
+                // Add it as a new Xml Element, containing the property as a value
+                var element = new XElement(this.Unspecified.PropertyName);
+                element.Value = value.ToString();
+
+                var xmlObject = this.Unspecified.Owner as XmlObject;
+                xmlObject.Node.Add(element);
+            }
             else
             {
-                throw new NotImplementedException("Only IObjects are supported to get added");
+                throw new NotImplementedException("Only IObjects and native objects are supported to get added");
             }
         }
 
@@ -184,7 +274,7 @@ namespace DatenMeister.DataProvider.Xml
             else
             {
                 throw new NotImplementedException("Only IObjects are supported to get added");
-            }   
+            }
         }
 
         public override int size()
