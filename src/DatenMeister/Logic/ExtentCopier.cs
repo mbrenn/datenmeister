@@ -80,6 +80,8 @@ namespace DatenMeister.Logic
                     }
                     else if (currentValue is IObject)
                     {
+                        // If the given object is another object, we will do the tracing as a deferred action
+                        // after the complete file has been copied
                         var pairValue = currentValue as IObject;
 
                         var deferredAction = new Action(() =>

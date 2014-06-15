@@ -31,7 +31,7 @@ namespace DatenMeister.DataProvider
 
         public IURIExtent Extent
         {
-            get { return this.Extent; }
+            get { return this.owner; }
         }
 
         /// <summary>

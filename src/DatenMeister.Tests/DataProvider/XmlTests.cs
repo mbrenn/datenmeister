@@ -331,6 +331,74 @@ namespace DatenMeister.Tests.DataProvider
         }
 
         [Test]
+        public void TestEmbeddedElementsAsSingleWithSubElement()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" />" +
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+
+            var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
+
+            var newElement = new GenericElement();
+            newElement.set("name", "Brenn");
+            newElement.set("firstname", "Martin");
+
+            var newAddress = new GenericElement();
+            newAddress.set("street", "Meine Straße");
+            newAddress.set("zipcode", "12345");
+            newAddress.set("town", "My Town");
+            newElement.set("address", newAddress);
+
+            valueE4.set("user", newElement);
+
+            // Check, if we get all the information
+            var retrievedElement = valueE4.get("user").AsSingle().AsIObject();
+            Assert.That(retrievedElement.get("name").AsSingle().ToString(), Is.EqualTo("Brenn"));
+
+            var retrievedObject = valueE4.get("address").AsSingle().AsIObject();
+            Assert.That(retrievedObject.get("street").AsSingle().ToString(), Is.EqualTo("Meine Straße"));
+        }
+
+        [Test]
+        public void TestEmbeddedElementsAsSingle()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" />" +
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+
+            var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
+
+            var newElement = new GenericElement();
+            newElement.set("name", "Brenn");
+            newElement.set("firstname", "Martin");
+
+            valueE4.set("user", newElement);
+
+            // Check, if we get all the information
+            var retrievedElement = valueE4.get("user").AsSingle().AsIObject();
+            Assert.That(retrievedElement.get("name").AsSingle().ToString(), Is.EqualTo("Brenn"));
+
+            var retrievedObject = valueE4.get("address").AsSingle().AsIObject();
+            Assert.That(retrievedObject.get("street").AsSingle().ToString(), Is.EqualTo("Meine Straße"));
+        }
+
+        [Test]
         public void TestFactory()
         {
             var xmlExtent = CreateTestExtent();
