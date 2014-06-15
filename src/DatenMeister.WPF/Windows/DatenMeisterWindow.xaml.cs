@@ -72,13 +72,13 @@ namespace DatenMeister.WPF.Windows
             var newHeight = System.Windows.SystemParameters.PrimaryScreenHeight / 2;
 
             this.Left -= newWidth / 2;
-            this.Top -= newHeight/ 2;
+            this.Top -= newHeight / 2;
             this.Width = newWidth;
             this.Height = newHeight;
         }
 
         public DatenMeisterWindow(ApplicationCore core)
-            : this ()
+            : this()
         {
             this.Core = core;
 
@@ -156,7 +156,7 @@ namespace DatenMeister.WPF.Windows
         {
             Ensure.That(this.Settings.ViewExtent != null, "No view extent has been given");
 
-            var filteredViewExtent = 
+            var filteredViewExtent =
                 this.Settings.ViewExtent.FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
 
             var elements = new List<IObject>();
@@ -286,7 +286,7 @@ namespace DatenMeister.WPF.Windows
 
             // Get an empty document
             var newDocument = this.Settings.CreateEmpty();
-            
+
             var extent = new XmlExtent(newDocument, this.Settings.ProjectExtent.ContextURI());
             extent.Settings = this.Settings.ExtentSettings;
             this.Settings.ProjectExtent = extent;
@@ -403,8 +403,8 @@ namespace DatenMeister.WPF.Windows
                 filePath,
                 System.IO.Path.GetFileNameWithoutExtension(filePath));
         }
-        
-#endregion
+
+        #endregion
 
         /// <summary>
         /// Does the user wants to save the data

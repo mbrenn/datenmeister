@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace DatenMeister.DataProvider.Xml
 {
-    public class XmlExtent: IURIExtent
+    public class XmlExtent : IURIExtent
     {
         /// <summary>
         /// Gets or sets the pool, where the object is stored
@@ -56,7 +56,7 @@ namespace DatenMeister.DataProvider.Xml
             get;
             set;
         }
-       
+
         /// <summary>
         /// Initializes a new instance of the XmlExtent
         /// </summary>
@@ -155,7 +155,7 @@ namespace DatenMeister.DataProvider.Xml
                 if (value == null)
                 {
                     Debug.WriteLine("Null has been added");
-                    return false;                    
+                    return false;
                 }
 
                 throw new InvalidOperationException("Only objects as IObject may be added");

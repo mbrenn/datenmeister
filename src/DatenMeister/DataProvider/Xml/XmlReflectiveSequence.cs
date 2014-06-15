@@ -104,6 +104,11 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns></returns>
         private XAttribute GetAttribute(bool create = true)
         {
+            if (this.sequenceType == XmlReflectiveSequenceType.Nodes)
+            {
+                throw new NotImplementedException("Sequencetype is Nodes... Getting attributes does not make sense");
+            }
+
             var owner = this.Unspecified.Owner as XmlObject;
             var propertyName = this.Unspecified.PropertyName + "-ref";
             var attribute = owner.Node.Attribute(propertyName);
@@ -131,6 +136,11 @@ namespace DatenMeister.DataProvider.Xml
 
         private void SetAttributeAsList(List<string> values)
         {
+            if (this.sequenceType == XmlReflectiveSequenceType.Nodes)
+            {
+                throw new NotImplementedException("Sequencetype is Nodes... Getting attributes does not make sense");
+            }
+
             var builder = new StringBuilder();
             var first = true;
             foreach (var value in values)
@@ -146,6 +156,8 @@ namespace DatenMeister.DataProvider.Xml
             }
 
             this.GetAttribute().Value = builder.ToString();
+
+            this.sequenceType = XmlReflectiveSequenceType.Attributes;
         }
 
         #endregion
@@ -180,6 +192,8 @@ namespace DatenMeister.DataProvider.Xml
 
                 var xmlObject = this.Unspecified.Owner as XmlObject;
                 xmlObject.Node.Add(element);
+
+                this.sequenceType = XmlReflectiveSequenceType.Nodes;
             }
             else
             {
@@ -189,24 +203,59 @@ namespace DatenMeister.DataProvider.Xml
 
         public override object get(int index)
         {
-            // At the moment, we just support IObjects
-            var objectList = this.GetAttributeAsList();
+            if (this.sequenceType == XmlReflectiveSequenceType.Attributes)
+            {
+                // At the moment, we just support IObjects
+                var objectList = this.GetAttributeAsList();
 
-            var path = objectList[index];
-            var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
-            var resolvedObject = poolResolver.Resolve(path, this.Unspecified.Owner);
+                var path = objectList[index];
+                var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
+                var resolvedObject = poolResolver.Resolve(path, this.Unspecified.Owner);
 
-            return resolvedObject;
+                return resolvedObject;
+            }
+            else if (this.sequenceType == XmlReflectiveSequenceType.Nodes)
+            {
+                var xmlObject = this.Unspecified.Owner as XmlObject;
+                var elements = xmlObject.Node.Elements(this.Unspecified.PropertyName);
+                if (elements.Count() <= index)
+                {
+                    // The number of available subelements is too low
+                    return DatenMeister.Logic.ObjectHelper.NotSet;
+                }
+
+                var element = elements.ElementAt(index);
+                if (element.Value != null && !element.HasElements && !element.HasAttributes)
+                {
+                    // Is a string (or any other type)
+                    return element.Value;
+                }
+                else
+                {
+                    throw new NotImplementedException("No return of elements containing subelements or attributes implemented. ");
+                }
+            }
+            else
+            {
+                return DatenMeister.Logic.ObjectHelper.NotSet;
+            }
         }
 
         public override object remove(int index)
         {
-            var objectList = this.GetAttributeAsList();
-            var result = objectList[index];
-            objectList.RemoveAt(index);
-            this.SetAttributeAsList(objectList);
+            if (this.sequenceType == XmlReflectiveSequenceType.Attributes)
+            {
+                var objectList = this.GetAttributeAsList();
+                var result = objectList[index];
+                objectList.RemoveAt(index);
+                this.SetAttributeAsList(objectList);
 
-            return result;
+                return result;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public override object set(int index, object value)
@@ -279,7 +328,18 @@ namespace DatenMeister.DataProvider.Xml
 
         public override int size()
         {
-            return this.GetAttributeAsList().Count;
+            switch (this.sequenceType)
+            {
+                case XmlReflectiveSequenceType.Unknown:
+                    return 0;
+                case XmlReflectiveSequenceType.Attributes:
+                    return this.GetAttributeAsList().Count;
+                case XmlReflectiveSequenceType.Nodes:
+                    var xmlObject = this.Unspecified.Owner as XmlObject;
+                    return xmlObject.Node.Elements(this.Unspecified.PropertyName).Count();
+                default:
+                    throw new NotImplementedException("Sequence type is not known");
+            }
         }
 
         public override IEnumerable<object> getAll()
