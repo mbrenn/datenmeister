@@ -17,8 +17,8 @@ namespace DatenMeister.Transformations.GroupBy
         /// Initializs a new instance of the GroupByReflectiveSequence
         /// </summary>
         /// <param name="list"></param>
-        public GroupByReflectiveSequence(IList<GroupByObject> list)
-            : base(list)
+        public GroupByReflectiveSequence(IURIExtent extent, IList<GroupByObject> list)
+            : base(extent, list)
         {
         }
     }

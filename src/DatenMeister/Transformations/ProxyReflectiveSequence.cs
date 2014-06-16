@@ -15,6 +15,7 @@ namespace DatenMeister.Transformations
         protected IURIExtent baseExtent;
 
         public ProxyReflectiveSequence(IURIExtent extent)
+            : base(extent)
         {
             this.baseExtent = extent;
         }

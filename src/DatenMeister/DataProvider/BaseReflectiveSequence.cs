@@ -11,6 +11,11 @@ namespace DatenMeister.DataProvider
     /// </summary>
     public abstract class BaseReflectiveSequence : BaseReflectiveCollection, IReflectiveSequence
     {
+        public BaseReflectiveSequence(IURIExtent extent)
+            : base(extent)
+        {
+        }
+
         public abstract void add(int index, object value);
 
         public abstract object get(int index);

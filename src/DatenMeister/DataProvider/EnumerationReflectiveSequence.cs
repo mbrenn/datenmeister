@@ -9,7 +9,8 @@ namespace DatenMeister.DataProvider
     {
         private IEnumerable<T> enumerable;
 
-        public EnumerationReflectiveSequence(IEnumerable<T> enumerable)
+        public EnumerationReflectiveSequence(IURIExtent extent, IEnumerable<T> enumerable)
+            : base(extent)
         {
             this.enumerable = enumerable;
         }

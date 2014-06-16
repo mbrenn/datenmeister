@@ -31,10 +31,10 @@ namespace DatenMeister.Transformations.GroupBy
                 list.Add(new GroupByObject(
                     this.source,
                     pair.Key,
-                    new ListWrapperReflectiveSequence<object>(pair.Value)));
+                    new ListWrapperReflectiveSequence<object>(this, pair.Value)));
             }
 
-            return new GroupByReflectiveSequence(list);
+            return new GroupByReflectiveSequence(this.source, list);
         }
 
         public IEnumerable<GroupByObject> ElementsAsGroupBy()

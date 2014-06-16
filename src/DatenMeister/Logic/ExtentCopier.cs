@@ -14,13 +14,13 @@ namespace DatenMeister.Logic
     /// </summary>
     public class ExtentCopier
     {
-        private IURIExtent Source
+        private IReflectiveSequence source
         {
             get;
             set;
         }
 
-        private IURIExtent Target
+        private IReflectiveSequence target
         {
             get;
             set;
@@ -38,12 +38,16 @@ namespace DatenMeister.Logic
         /// <param name="target">Target, which shall receive the copy</param>
         public ExtentCopier(IURIExtent source, IURIExtent target)
         {
-            this.Source = source;
-            this.Target = target;
+            Ensure.That(source != null);
+            Ensure.That(target != null);
+            Ensure.That(source != target);
 
-            Ensure.That(this.Source != null);
-            Ensure.That(this.Target != null);
-            Ensure.That(this.Source != this.Target);
+            this.source = source.Elements();
+            this.target = target.Elements();
+
+            Ensure.That(this.source != null);
+            Ensure.That(this.target != null);
+            Ensure.That(this.source != this.target);
         }
 
         /// <summary>
@@ -54,7 +58,7 @@ namespace DatenMeister.Logic
             this.mapping.Clear();
 
             // Ok... How to do... First. Get all elements
-            var elements = this.Source.Elements();
+            var elements = this.source;
             var deferredActions = new List<Action>();
 
             foreach (var element in elements.Select(x=> x.AsIObject()))
@@ -65,8 +69,9 @@ namespace DatenMeister.Logic
                     type = (element as IElement).getMetaClass();
                 }
 
-                var factory = Factory.GetFor(this.Target); 
-                var createdObject = factory.CreateInExtent(this.Target, type);
+                var factory = Factory.GetFor(this.target.Extent); 
+                var createdObject = factory.create(type);
+                this.target.add(createdObject);
                 this.mapping[element.Id] = createdObject;
 
                 var pairs = element.getAll();
