@@ -282,20 +282,34 @@ namespace DatenMeister.DataProvider.Xml
             else if (value is IObject)
             {
                 var valueAsIObject = value as IObject;
-                // Set as an attribute and reference
-                var poolResolver = PoolResolver.GetDefault(this.Extent.Pool);
-                var path = poolResolver.GetResolvePath(valueAsIObject, this);
-
-                // Checks, if attribute is existing
-                var attribute = this.Node.Attribute(propertyName + "-ref");
-                if (attribute == null)
+                if (valueAsIObject.Extent == null)
                 {
-                    attribute = new XAttribute(propertyName + "-ref", path);
-                    this.Node.Add(attribute);
+                    var copier = new ObjectCopier(this.Extent);
+                    var xmlObject = copier.CopyElement(valueAsIObject) as XmlObject;
+                    Ensure.That(xmlObject != null);
+
+                    // Renames node to the propertyname
+                    xmlObject.Node.Name = propertyName;
+
+                    this.Node.Add(xmlObject.Node);
                 }
                 else
                 {
-                    attribute.Value = path;
+                    // Set as an attribute and reference
+                    var poolResolver = PoolResolver.GetDefault(this.Extent.Pool);
+                    var path = poolResolver.GetResolvePath(valueAsIObject, this);
+
+                    // Checks, if attribute is existing
+                    var attribute = this.Node.Attribute(propertyName + "-ref");
+                    if (attribute == null)
+                    {
+                        attribute = new XAttribute(propertyName + "-ref", path);
+                        this.Node.Add(attribute);
+                    }
+                    else
+                    {
+                        attribute.Value = path;
+                    }
                 }
             }
             else

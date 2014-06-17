@@ -393,9 +393,6 @@ namespace DatenMeister.Tests.DataProvider
             // Check, if we get all the information
             var retrievedElement = valueE4.get("user").AsSingle().AsIObject();
             Assert.That(retrievedElement.get("name").AsSingle().ToString(), Is.EqualTo("Brenn"));
-
-            var retrievedObject = valueE4.get("address").AsSingle().AsIObject();
-            Assert.That(retrievedObject.get("street").AsSingle().ToString(), Is.EqualTo("Meine Straße"));
         }
 
         [Test]
