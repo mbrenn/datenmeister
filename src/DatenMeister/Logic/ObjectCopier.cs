@@ -1,4 +1,5 @@
-﻿using BurnSystems.Test;
+﻿using BurnSystems.Logging;
+using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Common;
 using System;
@@ -15,6 +16,11 @@ namespace DatenMeister.Logic
     /// </summary>
     public class ObjectCopier
     {
+        /// <summary>
+        /// Defines the logger
+        /// </summary>
+        private static ILog logger = new ClassLogger(typeof(ObjectCopier));
+
         /// <summary>
         /// Stores the target extent
         /// </summary>
@@ -80,6 +86,17 @@ namespace DatenMeister.Logic
 
                         deferredActions.Add(deferredAction);
                     }
+                }
+                else if (currentValueAsSingle == null 
+                    || currentValueAsSingle == ObjectHelper.Null
+                    || currentValueAsSingle == ObjectHelper.NotSet)
+                {
+                    // We skip null objects
+                    continue;
+                }
+                else
+                {
+                    logger.Message("Object cannot be copied: " + currentValueAsSingle.GetType().ToString());
                 }
             }
             return targetElement;
