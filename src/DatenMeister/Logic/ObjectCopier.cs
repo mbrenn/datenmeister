@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,17 +59,17 @@ namespace DatenMeister.Logic
             var pairs = sourceElement.getAll();
             foreach (var pair in pairs)
             {
-                var currentValue = pair.Value.AsSingle();
+                var currentValueAsSingle = pair.Value.AsSingle(false);
 
-                if (Extensions.IsNative(currentValue))
+                if (Extensions.IsNative(currentValueAsSingle))
                 {
-                    targetElement.set(pair.PropertyName, currentValue);
+                    targetElement.set(pair.PropertyName, currentValueAsSingle);
                 }
-                else if (currentValue is IObject)
+                else if (currentValueAsSingle is ResolvableByPath)
                 {
                     // If the given object is another object, we will do the tracing as a deferred action
                     // after the complete file has been copied
-                    var pairValue = currentValue as IObject;
+                    var pairValue = currentValueAsSingle.AsIObject() as IObject;
 
                     if (deferredActions != null)
                     {

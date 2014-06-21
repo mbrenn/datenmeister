@@ -75,8 +75,9 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Resolved object</returns>
         private object Resolve(object value, string propertyName)
         {
-            var result = this.Extent.Pool.Resolve(this, value);
-            if (result != null)
+            var result = value;
+            // var result = this.Extent.Pool.Resolve(this, value);
+            if (result != null && !(result is IResolvable))
             {
                 result = new XmlUnspecified(this, propertyName, result);
             }
@@ -112,7 +113,7 @@ namespace DatenMeister.DataProvider.Xml
                     var xmlRefProperty = this.Node.Attribute(propertyName + "-ref");
                     if (xmlRefProperty != null)
                     {
-                        result.Add(new ResolvableByPath(xmlRefProperty.Value));
+                        result.Add(new ResolvableByPath(this.Extent.Pool, this, xmlRefProperty.Value));
                     }
                 }
 
@@ -169,7 +170,7 @@ namespace DatenMeister.DataProvider.Xml
                 {
                     // Ok, we got a reference
                     attributeName = attributeName.Substring(0, attributeName.Length - "-ref".Length);
-                    attributeValue = new ResolvableByPath(attributeValue.ToString());
+                    attributeValue = new ResolvableByPath(this.Extent.Pool, this, attributeValue.ToString());
                 }
 
                 if (!returns.TryGetValue(attributeName, out found))
