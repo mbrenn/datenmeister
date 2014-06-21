@@ -2,6 +2,7 @@
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Common;
+using DatenMeister.DataProvider.DotNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,7 +88,18 @@ namespace DatenMeister.Logic
                         deferredActions.Add(deferredAction);
                     }
                 }
-                else if (currentValueAsSingle == null 
+                else if (currentValueAsSingle is IObject)
+                {
+                    // We got a self-contained object
+                    // Perform a temporary copy to a DotNetExtent and store these elements into the object
+                    var tempDotNetExtent = new GenericExtent("TEMP");
+                    var tempCopier = new ObjectCopier(tempDotNetExtent);
+                    var createdCopy = tempCopier.CopyElement(currentValueAsSingle as IObject);
+                    
+                    // And now store the element back
+                    targetElement.set(pair.PropertyName, createdCopy);
+                }
+                else if (currentValueAsSingle == null
                     || currentValueAsSingle == ObjectHelper.Null
                     || currentValueAsSingle == ObjectHelper.NotSet)
                 {
