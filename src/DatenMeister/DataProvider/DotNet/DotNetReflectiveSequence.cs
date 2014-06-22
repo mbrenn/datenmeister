@@ -9,8 +9,8 @@ namespace DatenMeister.DataProvider.DotNet
 {
     public class DotNetReflectiveSequence<T> : ListWrapperReflectiveSequence<T>
     {
-        public DotNetReflectiveSequence(IList<T> list)
-            : base(list)
+        public DotNetReflectiveSequence(IURIExtent extent, IList<T> list)
+            : base(extent, list)
         {
         }
 

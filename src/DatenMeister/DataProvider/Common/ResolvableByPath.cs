@@ -1,4 +1,5 @@
 ﻿
+using BurnSystems.Test;
 using DatenMeister;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,33 @@ namespace DatenMeister.DataProvider.Common
         }
 
         /// <summary>
+        /// Gets or sets the pool, which shall be used for resolving
+        /// </summary>
+        public IPool Pool
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the context which shall be used for resolving
+        /// </summary>
+        public IObject Context
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the resolvable by path instance
         /// </summary>
         /// <param name="path">Path to be resolved</param>
-        public ResolvableByPath(string path)
+        public ResolvableByPath(IPool pool, IObject context, string path)
         {
+            Ensure.That(pool != null);
+
+            this.Pool = pool;
+            this.Context = context;
             this.Path = path;
         }
 
@@ -35,9 +58,9 @@ namespace DatenMeister.DataProvider.Common
         /// </summary>
         /// <param name="pool">Pool being used to resolve by path</param>
         /// <returns>Object to be resolved</returns>
-        public object Resolve(IPool pool, IObject context)
+        public object Resolve()
         {
-            return pool.ResolveByPath(this.Path, context);
+            return this.Pool.ResolveByPath(this.Path, this.Context);
         }
     }
 }

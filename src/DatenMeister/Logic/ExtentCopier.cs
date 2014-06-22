@@ -12,15 +12,15 @@ namespace DatenMeister.Logic
     /// All types are presevered and the copying is performed recursively. 
     /// The copying is performed in a way that no connection between old and new extent is existing. 
     /// </summary>
-    public class ExtentCopier
+    public class ExtentCopier : ObjectCopier
     {
-        private IURIExtent Source
+        private IReflectiveSequence source
         {
             get;
             set;
         }
 
-        private IURIExtent Target
+        private IReflectiveSequence target
         {
             get;
             set;
@@ -37,13 +37,38 @@ namespace DatenMeister.Logic
         /// <param name="source">Source to be copied</param>
         /// <param name="target">Target, which shall receive the copy</param>
         public ExtentCopier(IURIExtent source, IURIExtent target)
+            : base(target)
         {
-            this.Source = source;
-            this.Target = target;
+            Ensure.That(source != null);
+            Ensure.That(target != null);
+            Ensure.That(source != target);
 
-            Ensure.That(this.Source != null);
-            Ensure.That(this.Target != null);
-            Ensure.That(this.Source != this.Target);
+            this.source = source.Elements();
+            this.target = target.Elements();
+
+            Ensure.That(this.source != null);
+            Ensure.That(this.target != null);
+            Ensure.That(this.source != this.target);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ExtentCopier class
+        /// </summary>
+        /// <param name="source">Source to be copied</param>
+        /// <param name="target">Target, which shall receive the copy</param>
+        public ExtentCopier(IReflectiveSequence source, IReflectiveSequence target)
+            : base(target.Extent)
+        {
+            Ensure.That(source != null);
+            Ensure.That(target != null);
+            Ensure.That(source != target);
+
+            this.source = source;
+            this.target = target;
+
+            Ensure.That(this.source != null);
+            Ensure.That(this.target != null);
+            Ensure.That(this.source != this.target);
         }
 
         /// <summary>
@@ -54,42 +79,14 @@ namespace DatenMeister.Logic
             this.mapping.Clear();
 
             // Ok... How to do... First. Get all elements
-            var elements = this.Source.Elements();
+            var sourceElements = this.source;
             var deferredActions = new List<Action>();
 
-            foreach (var element in elements.Select(x=> x.AsIObject()))
+            foreach (var sourceElement in sourceElements.Select(x=> x.AsIObject()))
             {
-                IObject type = null;
-                if (element is IElement)
-                {
-                    type = (element as IElement).getMetaClass();
-                }
+                var targetElement = this.CopyElement(sourceElement, deferredActions);
 
-                var factory = Factory.GetFor(this.Target); 
-                var createdObject = factory.CreateInExtent(this.Target, type);
-                this.mapping[element.Id] = createdObject;
-
-                var pairs = element.getAll();
-                foreach (var pair in pairs)
-                {
-                    var currentValue = pair.Value.AsSingle();
-
-                    if (Extensions.IsNative(currentValue))
-                    {
-                        createdObject.set(pair.PropertyName, currentValue);
-                    }
-                    else if (currentValue is IObject)
-                    {
-                        var pairValue = currentValue as IObject;
-
-                        var deferredAction = new Action(() =>
-                            {
-                                createdObject.set(pair.PropertyName, this.mapping[pairValue.Id]);
-                            });
-
-                        deferredActions.Add(deferredAction);
-                    }
-                }
+                this.target.add(targetElement);
             }
 
             // Now execute the deferred action

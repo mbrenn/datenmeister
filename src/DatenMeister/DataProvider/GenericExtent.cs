@@ -42,7 +42,7 @@ namespace DatenMeister.DataProvider
         /// <returns>Elements of the current extent</returns>
         public IReflectiveSequence Elements()
         {
-            return new ListWrapperReflectiveSequence<object>(elements);
+            return new ListWrapperReflectiveSequence<object>(this, elements);
         }
 
         /// <summary>

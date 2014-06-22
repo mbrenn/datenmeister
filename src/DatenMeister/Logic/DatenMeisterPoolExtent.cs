@@ -46,8 +46,9 @@ namespace DatenMeister.Logic
         /// <returns>Enumeration of objects within the extent as dotnet-objects</returns>
         public new IReflectiveSequence Elements()
         {
-            return new EnumerationReflectiveSequence<IObject>(this.pool.Instances.Select(
-                 x => new DotNetObject(this, x.ToJson(), x.Extent.ContextURI())));
+            return new EnumerationReflectiveSequence<IObject>(this,
+                this.pool.Instances.Select(
+                    x => new DotNetObject(this, x.ToJson(), x.Extent.ContextURI())));
         }
 
         /// <summary>

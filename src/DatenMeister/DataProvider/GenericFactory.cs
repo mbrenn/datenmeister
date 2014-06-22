@@ -29,7 +29,7 @@ namespace DatenMeister.DataProvider
         /// <returns>Object being created</returns>
         public IObject create(IObject type)
         {
-            var obj = new GenericElement(this.Extent, type: type);
+            var obj = new GenericElement(extent: null, type: type);
             return obj;
         }
 

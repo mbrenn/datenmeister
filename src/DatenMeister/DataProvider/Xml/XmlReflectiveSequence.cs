@@ -1,4 +1,6 @@
 ﻿using BurnSystems.ObjectActivation;
+using BurnSystems.Test;
+using DatenMeister.Logic;
 using DatenMeister.Pool;
 using System;
 using System.Collections.Generic;
@@ -60,6 +62,7 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="unspecified">Unspecified object</param>
         public XmlReflectiveSequence(XmlUnspecified unspecified)
+            : base(unspecified.Owner.Extent)
         {
             this.Unspecified = unspecified;
             this.EstimateSequenceType();
@@ -164,6 +167,8 @@ namespace DatenMeister.DataProvider.Xml
 
         public override void add(int index, object value)
         {
+            var xmlObject = this.Unspecified.Owner as XmlObject;
+
             // Which type is the value 
             var valueAsIObject = value as IObject;
             if (valueAsIObject != null)
@@ -175,13 +180,26 @@ namespace DatenMeister.DataProvider.Xml
                     var path = poolResolver.GetResolvePath(valueAsIObject, this.Unspecified.Owner);
 
                     // Ok, now we got it, now we need to inject our element
-                    var list = this.GetAttributeAsList();
+                    var list = this.GetAttributeAsList(); // Check for valid sequence types is included here
                     list.Insert(index, path);
                     this.SetAttributeAsList(list);
                 }
-                else
+                else                
                 {
-                    throw new NotImplementedException("Given Object is not connected to an extent. ");
+                    // Check, that the current mode is not attribute
+                    if (this.sequenceType == XmlReflectiveSequenceType.Attributes)
+                    {
+                        throw new NotImplementedException("Cannot change mode to nodes, which is necessary to store IObjects");
+                    }
+
+                    var copier = new ObjectCopier(this.Extent);
+                    var copiedXmlObject = copier.CopyElement(valueAsIObject) as XmlObject;
+                    Ensure.That(copiedXmlObject != null);
+
+                    // Renames node to the propertyname
+                    copiedXmlObject.Node.Name = this.Unspecified.PropertyName;
+
+                    xmlObject.Node.Add(copiedXmlObject.Node);
                 }
             }
             else if (Extensions.IsNative(value))
@@ -190,7 +208,6 @@ namespace DatenMeister.DataProvider.Xml
                 var element = new XElement(this.Unspecified.PropertyName);
                 element.Value = value.ToString();
 
-                var xmlObject = this.Unspecified.Owner as XmlObject;
                 xmlObject.Node.Add(element);
 
                 this.sequenceType = XmlReflectiveSequenceType.Nodes;
@@ -232,7 +249,7 @@ namespace DatenMeister.DataProvider.Xml
                 }
                 else
                 {
-                    throw new NotImplementedException("No return of elements containing subelements or attributes implemented. ");
+                    return new XmlObject(this.Extent as XmlExtent, elements.ElementAt(index), xmlObject);
                 }
             }
             else
@@ -344,16 +361,33 @@ namespace DatenMeister.DataProvider.Xml
 
         public override IEnumerable<object> getAll()
         {
-            var attributeList = this.GetAttributeAsList();
-            if (attributeList.Count() == 0)
+            if ( this.sequenceType == XmlReflectiveSequenceType.Unknown)
             {
                 yield break;
             }
 
-            var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
-            foreach (var path in attributeList)
+            if (this.sequenceType == XmlReflectiveSequenceType.Attributes)
             {
-                yield return poolResolver.Resolve(path, this.Unspecified.Owner);
+                var attributeList = this.GetAttributeAsList();
+                if (attributeList.Count() == 0)
+                {
+                    yield break;
+                }
+
+                var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
+                foreach (var path in attributeList)
+                {
+                    yield return poolResolver.Resolve(path, this.Unspecified.Owner);
+                }
+            }
+
+            if (this.sequenceType == XmlReflectiveSequenceType.Nodes)
+            {
+                var xmlObject = this.Unspecified.Owner as XmlObject;
+                foreach (var node in xmlObject.Node.Elements(this.Unspecified.PropertyName))
+                {
+                    yield return new XmlObject(this.Extent as XmlExtent, node, xmlObject);
+                }
             }
         }
     }

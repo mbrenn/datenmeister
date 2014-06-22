@@ -105,6 +105,7 @@ namespace DatenMeister.DataProvider.Xml
             private XmlExtent extent;
 
             public XmlExtentReflectiveSequence(XmlExtent extent)
+                : base(extent)
             {
                 Ensure.That(extent != null);
                 this.extent = extent;

@@ -89,7 +89,7 @@ namespace DatenMeister.DataProvider.DotNet
         {
             private DotNetExtent extent;
             public DotNetExtentReflectiveSequence(DotNetExtent extent)
-                : base(extent.elements)
+                : base(extent, extent.elements)
             {
                 this.extent = extent;
             }
