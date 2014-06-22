@@ -183,8 +183,8 @@ namespace DatenMeister.WPF.Helper
         public void AddRecentFile(string filePath, string name)
         {
             // Check, if the file is already available
-            if (this.applicationData
-                .FilterByType(DatenMeister.Entities.AsObject.DM.Types.RecentProject).Elements()
+            if (this.applicationData.Elements()
+                .FilterByType(DatenMeister.Entities.AsObject.DM.Types.RecentProject)
                 .Any(x => DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(x.AsIObject()) == filePath))
             {
                 return;

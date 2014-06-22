@@ -19,9 +19,9 @@ namespace DatenMeister.Tests.PoolLogic
             Assert.That(resolved != null);
             Assert.That(resolved.Elements().Count(), Is.EqualTo(TestDatabase.TotalElements));
 
-            var resolvedFiltered = pool.ResolveByPath(database.ProjectExtent.ContextURI() + "?type=Task") as IURIExtent;
+            var resolvedFiltered = pool.ResolveByPath(database.ProjectExtent.ContextURI() + "?type=Task") as IReflectiveCollection;
             Assert.That(resolvedFiltered != null);
-            Assert.That(resolvedFiltered.Elements().Count(), Is.EqualTo(TestDatabase.TotalTasks));
+            Assert.That(resolvedFiltered.Count(), Is.EqualTo(TestDatabase.TotalTasks));
         }
     }
 }

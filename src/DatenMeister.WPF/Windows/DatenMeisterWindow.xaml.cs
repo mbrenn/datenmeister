@@ -157,13 +157,14 @@ namespace DatenMeister.WPF.Windows
             Ensure.That(this.Settings.ViewExtent != null, "No view extent has been given");
 
             var filteredViewExtent =
-                this.Settings.ViewExtent.FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+                this.Settings.ViewExtent.Elements()
+                    .FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
 
             var elements = new List<IObject>();
             var first = true;
 
             // Goes through each tableinfo
-            foreach (var tableInfo in filteredViewExtent.Elements())
+            foreach (var tableInfo in filteredViewExtent)
             {
                 var tableInfoObj = tableInfo.AsIObject();
                 elements.Add(tableInfoObj);

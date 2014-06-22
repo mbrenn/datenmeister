@@ -234,7 +234,7 @@ namespace DatenMeister.Web
                 );
             }
 
-            var allElements = extent.Recurse().Elements();
+            var allElements = extent.Elements().Recurse();
             var element = allElements.Select (x=> x.AsIObject()).Where(x => x.Id == objectId).FirstOrDefault();
             if (element == null)
             {
