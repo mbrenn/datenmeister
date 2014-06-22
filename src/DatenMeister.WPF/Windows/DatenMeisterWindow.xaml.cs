@@ -152,7 +152,7 @@ namespace DatenMeister.WPF.Windows
         /// Recreates the table views for all extents being the view extent. 
         /// If one tab is already opened, the tab will not be recreated. 
         /// </summary>
-        public void RefreshTab()
+        public void RefreshTabs()
         {
             Ensure.That(this.Settings.ViewExtent != null, "No view extent has been given");
 
@@ -255,7 +255,7 @@ namespace DatenMeister.WPF.Windows
             button.Click += (x, y) =>
             {
                 tableInfoObj.delete();
-                this.RefreshTab();
+                this.RefreshTabs();
             };
 
             headerGrid.Children.Add(button);

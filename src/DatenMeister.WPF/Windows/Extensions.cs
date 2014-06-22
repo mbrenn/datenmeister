@@ -25,7 +25,7 @@ namespace DatenMeister.WPF.Windows
 
             // Just sets the title and shows the Window
             wnd.Show();
-            wnd.RefreshTab();
+            wnd.RefreshTabs();
 
             wnd.AssociateDetailOpenEvent(core.ViewRecentObjects, (x) =>
             {
@@ -34,7 +34,7 @@ namespace DatenMeister.WPF.Windows
                 {
                     wnd.LoadAndOpenFile(filePath);
                     wnd.Settings.ViewExtent.Elements().remove(core.ViewRecentObjects);
-                    wnd.RefreshTab();
+                    wnd.RefreshTabs();
                 }
                 else
                 {

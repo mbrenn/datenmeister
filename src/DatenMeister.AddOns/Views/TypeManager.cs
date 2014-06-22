@@ -27,7 +27,6 @@ namespace DatenMeister.AddOns.Views
                 {
                     Ensure.That(window.Settings.TypeExtent != null, "No Type extent has been defined");
 
-                    MessageBox.Show("x");
                 };
 
             window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
