@@ -4,8 +4,10 @@ using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
+using DatenMeister.WPF.Helper;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,12 +35,20 @@ namespace DatenMeister.WPF.Windows
         private static ClassLogger logger = new ClassLogger(typeof(DatenMeisterWindow));
 
         /// <summary>
-        /// Gets or sets the datenmeister settings
+        /// Gets or sets the application core
         /// </summary>
-        public IDatenMeisterSettings Settings
+        public ApplicationCore Core
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets the settings of the datenmeister
+        /// </summary>
+        public IDatenMeisterSettings Settings
+        {
+            get { return this.Core.Settings; }
         }
 
         /// <summary>
@@ -62,9 +72,23 @@ namespace DatenMeister.WPF.Windows
             var newHeight = System.Windows.SystemParameters.PrimaryScreenHeight / 2;
 
             this.Left -= newWidth / 2;
-            this.Top -= newHeight/ 2;
+            this.Top -= newHeight / 2;
             this.Width = newWidth;
             this.Height = newHeight;
+        }
+
+        public DatenMeisterWindow(ApplicationCore core)
+            : this()
+        {
+            this.Core = core;
+
+            if (core != null)
+            {
+                if (!string.IsNullOrEmpty(core.Settings.WindowTitle))
+                {
+                    this.SetTitle(core.Settings.WindowTitle);
+                }
+            }
         }
 
         /// <summary>
@@ -102,7 +126,9 @@ namespace DatenMeister.WPF.Windows
                     Header = menuHeadline
                 };
 
-                this.menuMain.Items.Add(found);
+                // Inserts the new item into the main menu bar. 
+                // Last item is the "?"-Menu containing the about dialog. And it shall stay the last item
+                this.menuMain.Items.Insert(this.menuMain.Items.Count - 1, found);
             }
 
             // Now create the item
@@ -130,14 +156,15 @@ namespace DatenMeister.WPF.Windows
         {
             Ensure.That(this.Settings.ViewExtent != null, "No view extent has been given");
 
-            var filteredViewExtent = 
-                this.Settings.ViewExtent.FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+            var filteredViewExtent =
+                this.Settings.ViewExtent.Elements()
+                    .FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
 
             var elements = new List<IObject>();
             var first = true;
 
             // Goes through each tableinfo
-            foreach (var tableInfo in filteredViewExtent.Elements())
+            foreach (var tableInfo in filteredViewExtent)
             {
                 var tableInfoObj = tableInfo.AsIObject();
                 elements.Add(tableInfoObj);
@@ -159,9 +186,9 @@ namespace DatenMeister.WPF.Windows
                 // Creates the list control
                 var entityList = new EntityTableControl();
                 entityList.MainWindow = this;
-                entityList.ExtentFactory = (x) =>
+                entityList.ElementsFactory = (x) =>
                     {
-                        return this.Settings.Pool.ResolveByPath(extentUri) as IURIExtent;
+                        return this.Settings.Pool.ResolveByPath(extentUri).AsReflectiveCollection();
                     };
 
                 entityList.TableViewInfo = tableViewInfo;
@@ -260,7 +287,7 @@ namespace DatenMeister.WPF.Windows
 
             // Get an empty document
             var newDocument = this.Settings.CreateEmpty();
-            
+
             var extent = new XmlExtent(newDocument, this.Settings.ProjectExtent.ContextURI());
             extent.Settings = this.Settings.ExtentSettings;
             this.Settings.ProjectExtent = extent;
@@ -276,19 +303,33 @@ namespace DatenMeister.WPF.Windows
             dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
             if (dialog.ShowDialog(this) == true)
             {
-                var loadedFile = XDocument.Load(dialog.FileName);
+                var filename = dialog.FileName;
 
-                // Loads the extent into the same uri
-                var extent = new XmlExtent(loadedFile, this.Settings.ProjectExtent.ContextURI());
-
-                // Sets the settings and stores it into the main window. The old one gets removed
-                extent.Settings = this.Settings.ExtentSettings;
-                this.Settings.ProjectExtent = extent;
-                this.Settings.Pool.Add(extent, dialog.FileName);
-
-                // Refreshes all views
-                this.RefreshAllTabContent();
+                this.LoadAndOpenFile(filename);
             }
+        }
+
+        /// <summary>
+        /// Loads and opens a file and refreshes the window, so recently loaded extent is included
+        /// </summary>
+        /// <param name="path">Path of the object to be loaded</param>
+        public void LoadAndOpenFile(string filename)
+        {
+            var loadedFile = XDocument.Load(filename);
+
+            // Loads the extent into the same uri
+            var extent = new XmlExtent(loadedFile, this.Settings.ProjectExtent.ContextURI());
+
+            // Sets the settings and stores it into the main window. The old one gets removed
+            extent.Settings = this.Settings.ExtentSettings;
+            this.Settings.ProjectExtent = extent;
+            this.Settings.Pool.Add(extent, filename);
+
+            // Adds the file to the recent files
+            this.AddRecentFile(filename);
+
+            // Refreshes all views
+            this.RefreshAllTabContent();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -319,6 +360,9 @@ namespace DatenMeister.WPF.Windows
                 // Stores the xml document
                 xmlExtent.XmlDocument.Save(this.currentPath);
 
+                // Adds the file to the recent files
+                this.AddRecentFile(this.currentPath);
+
                 MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
             }
         }
@@ -336,14 +380,29 @@ namespace DatenMeister.WPF.Windows
                 Ensure.That(xmlExtent != null);
 
                 // Stores the xml document
-                xmlExtent.XmlDocument.Save(dialog.FileName);
-                this.currentPath = dialog.FileName;
+                var filename = dialog.FileName;
+                xmlExtent.XmlDocument.Save(filename);
+                this.currentPath = filename;
+
+                // Adds the file to the recent files
+                this.AddRecentFile(filename);
             }
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// Adds the filepath to the list of recent files
+        /// </summary>
+        /// <param name="filePath"></param>
+        public void AddRecentFile(string filePath)
+        {
+            this.Core.AddRecentFile(
+                filePath,
+                System.IO.Path.GetFileNameWithoutExtension(filePath));
         }
 
         #endregion
@@ -432,6 +491,12 @@ namespace DatenMeister.WPF.Windows
             }
 
             return false;
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new AboutDialog();
+            dlg.ShowDialog();
         }
     }
 }

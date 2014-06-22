@@ -15,6 +15,7 @@ namespace DatenMeister.DataProvider
         }
 
         public GenericReflectiveSequence(GenericUnspecified unspecified)
+            : base(unspecified.Owner.Extent)
         {
             this.unspecified = unspecified;
         }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.Transformations
 {
-    public interface ITransformation : IURIExtent
+    public interface ITransformation : IReflectiveCollection
     {
-        IURIExtent source
+        IReflectiveCollection source
         {
             get;
             set;

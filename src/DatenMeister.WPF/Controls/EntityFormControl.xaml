@@ -39,5 +39,6 @@
                 <Button x:Name="btnOK" Click="btnOK_Click" IsDefault="True" Style="{StaticResource TouchButton}">OK</Button>
             </StackPanel>
         </Grid>
+
     </Grid>
 </UserControl>

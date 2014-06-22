@@ -17,7 +17,8 @@ namespace DatenMeister.DataProvider
             set;
         }
 
-        public ListReflectiveSequence()
+        public ListReflectiveSequence(IURIExtent extent)
+            : base(extent)
         {
         }
 

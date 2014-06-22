@@ -39,7 +39,7 @@ namespace DatenMeister
             if (asResolvable != null)
             {
                 // Resolve object and see, if it can be further resolved
-                var resolved = asResolvable.Resolve(pool, context);
+                var resolved = asResolvable.Resolve();
                 return Resolve(pool, context, resolved);
             }
 
@@ -83,11 +83,24 @@ namespace DatenMeister
         /// </summary>
         /// <param name="value">Value to be converted</param>
         /// <returns>Converted object</returns>
-        public static object AsSingle(this object value)
+        public static object AsSingle(this object value, bool fullResolve = true)
         {
+            var valueAsResolvable = value as IResolvable;
+            if (valueAsResolvable != null && fullResolve)
+            {
+                var result = valueAsResolvable.Resolve();
+                if (fullResolve)
+                {
+                    return AsSingle(result, fullResolve);
+                }
+
+                return result;
+            }
+
             if (value is string)
             {
                 // If value is a string, return the complete string, not just the first letter
+                // Without the condition, the string would be considered as an enumeration
                 return value;
             }
 
@@ -95,14 +108,24 @@ namespace DatenMeister
             var valueAsUnspecified = value as IUnspecified;
             if (valueAsUnspecified != null)
             {
-                return valueAsUnspecified.AsSingle();
+                var asSingle = valueAsUnspecified.AsSingle();
+
+                // Check, if the returned object is of type resolvable , IUnspecified or even null
+                if (fullResolve)
+                {
+                    return Extensions.AsSingle(asSingle, fullResolve);
+                }
+                else
+                {
+                    return asSingle;
+                }
             }
 
             // Checks, if we have an enumeration, if yes, return first element
             var valueAsEnumeration = value as IEnumerable;
             if (valueAsEnumeration != null)
             {
-                return valueAsEnumeration.OfType<object>().FirstOrDefault();
+                return Extensions.AsSingle(valueAsEnumeration.OfType<object>().FirstOrDefault(), fullResolve);
             }
             else if (value == null)
             {
@@ -120,14 +143,33 @@ namespace DatenMeister
         /// </summary>
         /// <param name="value">Value to be checked</param>
         /// <returns>Enumeration of objects</returns>
-        public static IEnumerable<object> AsEnumeration(this object value)
+        public static IEnumerable<object> AsEnumeration(this object value, bool fullResolve = true)
         {
+            // Defines the resolve function
+            Func<object, object> resolveFunc;
+            if (fullResolve)
+            {
+                resolveFunc = (x) => Extensions.AsSingle(x, fullResolve);
+            }
+            else
+            {
+                resolveFunc = (x) => x;
+            }
+
+            // Checks, if value is resolvable
+            var valueAsResolvable = value as IResolvable;
+            if (valueAsResolvable != null)
+            {
+                value = resolveFunc(valueAsResolvable.Resolve());
+            }
+
+            // Enumerates the elements
             var valueAsEnumeration = value as IEnumerable;
             if (valueAsEnumeration != null)
             {
                 foreach (var element in valueAsEnumeration)
                 {
-                    yield return element;
+                    yield return resolveFunc(element);
                 }
             }
             else if (value is IUnspecified)
@@ -135,12 +177,12 @@ namespace DatenMeister
                 var valueAsUnspecified = value as IUnspecified;
                 foreach (var element in valueAsUnspecified.AsReflectiveCollection())
                 {
-                    yield return element;
+                    yield return resolveFunc(element);
                 }
             }
             else
             {
-                yield return value;
+                yield return resolveFunc(value);
             }
         }
 
@@ -154,6 +196,16 @@ namespace DatenMeister
 
         public static IReflectiveCollection AsReflectiveCollection(this object value)
         {
+            if (value is IReflectiveCollection)
+            {
+                return value as IReflectiveCollection;
+            }
+
+            if (value is IURIExtent)
+            {
+                return (value as IURIExtent).Elements();
+            }
+
             // Ok, we have an unspecified thing... don't like, but necessary
             var valueAsUnspecified = value as IUnspecified;
             if (valueAsUnspecified != null)
@@ -166,6 +218,16 @@ namespace DatenMeister
 
         public static IReflectiveSequence AsReflectiveSequence(this object value)
         {
+            if (value is IReflectiveSequence)
+            {
+                return value as IReflectiveSequence;
+            }
+
+            if (value is IURIExtent)
+            {
+                return (value as IURIExtent).Elements();
+            }
+
             // Ok, we have an unspecified thing... don't like, but necessary
             var valueAsUnspecified = value as IUnspecified;
             if (valueAsUnspecified != null)
@@ -183,13 +245,21 @@ namespace DatenMeister
         /// <returns>Returns given object, if it is an IObject</returns>
         public static IObject AsIObject(this object value)
         {
-            var asObject = (value.AsSingle()) as IObject;
+            var valueAsSingle = value.AsSingle();
+            var asObject = valueAsSingle as IObject;
             if (asObject != null)
             {
                 return asObject;
             }
 
-            throw new InvalidOperationException("Given object is not of type DatenMeister.IObject");
+            if (valueAsSingle == null)
+            {
+                throw new InvalidOperationException("Given Object returned null, when requested as an IObject");
+            }
+            else
+            {
+                throw new InvalidOperationException("Given object is of type" + valueAsSingle.GetType().ToString() + ", expected: DatenMeister.IObject");
+            }
         }
 
         /// Converts the extent to json object

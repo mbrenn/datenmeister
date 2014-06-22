@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace DatenMeister.DataProvider.Xml
 {
-    public class XmlExtent: IURIExtent
+    public class XmlExtent : IURIExtent
     {
         /// <summary>
         /// Gets or sets the pool, where the object is stored
@@ -56,7 +56,7 @@ namespace DatenMeister.DataProvider.Xml
             get;
             set;
         }
-       
+
         /// <summary>
         /// Initializes a new instance of the XmlExtent
         /// </summary>
@@ -93,13 +93,11 @@ namespace DatenMeister.DataProvider.Xml
             return new XmlExtentReflectiveSequence(this);
         }
 
-        /// <summary>
-        /// Removes object from xml document
-        /// </summary>
-        /// <param name="element">Element to be removed</param>
-        public void RemoveObject(IObject element)
+        public static XmlExtent Create(XmlSettings settings, string rootNodeName, string uri = null)
         {
-            throw new NotImplementedException();
+            Ensure.That(!string.IsNullOrEmpty(rootNodeName));
+
+            return new XmlExtent(new XDocument(new XElement(rootNodeName)), uri, settings);
         }
 
         private class XmlExtentReflectiveSequence : BaseReflectiveSequence
@@ -107,6 +105,7 @@ namespace DatenMeister.DataProvider.Xml
             private XmlExtent extent;
 
             public XmlExtentReflectiveSequence(XmlExtent extent)
+                : base(extent)
             {
                 Ensure.That(extent != null);
                 this.extent = extent;
@@ -157,7 +156,7 @@ namespace DatenMeister.DataProvider.Xml
                 if (value == null)
                 {
                     Debug.WriteLine("Null has been added");
-                    return false;                    
+                    return false;
                 }
 
                 throw new InvalidOperationException("Only objects as IObject may be added");

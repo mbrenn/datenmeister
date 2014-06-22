@@ -5,9 +5,22 @@ import DatenMeister
 from BurnSystems.DatenMeister import TypeScriptFactory
 from BurnSystems.DatenMeister import CSharpFactory
 
-# Creating the TypeScript-File
+#
+# Creates the information for the DatenMeister
+print('Creating the DatenMeister')
+tsUMLFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.dm.objects.ts"
+umlTypes = [
+         DatenMeister.Entities.DM.RecentProject ]
+TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 
-print('Creating the Fieldinfo-File')
+csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\DM.Objects.cs"
+CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject.DM");
+csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\DM.Types.cs"
+CSharpFactory.createTypeFile(csFilename, umlTypes, "DatenMeister.Entities.AsObject.DM", "Types");
+
+#
+# Creates the information for the fieldinfos, which is used by Datenmeister
+print('Creating the DatenMeister Fieldinfo-File')
 tsFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.fieldinfo.objects.ts"
 types = [
          DatenMeister.Entities.FieldInfos.Comment, 
@@ -23,26 +36,29 @@ types = [
          DatenMeister.Entities.FieldInfos.TableView]
 TypeScriptFactory.createFiles(tsFilename, types)
 
+csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Objects.cs"
+CSharpFactory.createFiles(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo");
+csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Types.cs"
+CSharpFactory.createTypeFile(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo", "Types");
+
 print('Creating the UML-File')
 
+#
+# Creates the information for the UML Objects
 tsUMLFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.uml.objects.ts"
 umlTypes = [
          DatenMeister.Entities.UML.NamedElement,       
          DatenMeister.Entities.UML.Type ]
 TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 
-print('Creating the C#-File')
-
-csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Objects.cs"
-CSharpFactory.createFiles(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo");
-csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Types.cs"
-CSharpFactory.createTypeFile(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo", "Types");
-
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Objects.cs"
 CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml");
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Types.cs"
 CSharpFactory.createTypeFile(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml", "Types");
 
+#
+# Creates the entities for the ProjektMeister
+print('Creating the ProjektMeister')
 clr.AddReferenceToFile("ProjektMeister")
 import ProjektMeister
 projektMeisterTypes = [

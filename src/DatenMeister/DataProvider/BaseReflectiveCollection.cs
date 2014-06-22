@@ -12,6 +12,17 @@ namespace DatenMeister.DataProvider
     /// </summary>
     public abstract class BaseReflectiveCollection : IReflectiveCollection
     {
+        public BaseReflectiveCollection(IURIExtent extent)
+        {
+            this.Extent = extent;
+        }
+
+        public IURIExtent Extent
+        {
+            get;
+            private set;
+        }
+
         public abstract bool add(object value);
 
         public virtual bool addAll(IReflectiveSequence elements)

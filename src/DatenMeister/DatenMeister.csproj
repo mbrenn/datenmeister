@@ -93,10 +93,13 @@
     <Compile Include="DataProvider\Xml\XmlTypeMapping.cs" />
     <Compile Include="DataProvider\Xml\XmlUnspecified.cs" />
     <Compile Include="DatenMeisterPool.cs" />
+    <Compile Include="Entities\AsObject\DM.Objects.cs" />
+    <Compile Include="Entities\AsObject\DM.Types.cs" />
     <Compile Include="Entities\AsObject\FieldInfo.Objects.cs" />
     <Compile Include="Entities\AsObject\FieldInfo.Types.cs" />
     <Compile Include="Entities\AsObject\UML.Objects.cs" />
     <Compile Include="Entities\AsObject\UML.Types.cs" />
+    <Compile Include="Entities\DM\RecentProject.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
     <Compile Include="Entities\FieldInfos\Checkbox.cs" />
     <Compile Include="Entities\FieldInfos\Comment.cs" />
@@ -124,6 +127,7 @@
     <Compile Include="Logic\ClientActions\IClientAction.cs" />
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
+    <Compile Include="Logic\ObjectCopier.cs" />
     <Compile Include="Logic\ExtentCopier.cs" />
     <Compile Include="DataProvider\Factory.cs" />
     <Compile Include="Logic\JsonExtentData.cs" />
@@ -160,7 +164,6 @@
     <Compile Include="Transformations\GroupBy\GroupByTypeTransformation.cs" />
     <Compile Include="Transformations\ITransformation.cs" />
     <Compile Include="Transformations\Extensions.cs" />
-    <Compile Include="Transformations\ProxyReflectiveSequence.cs" />
     <Compile Include="Transformations\RecurseObjectTransformation.cs" />
     <Compile Include="Logic\ExtentPoolLogic.cs" />
     <Compile Include="Logic\ExtentInstance.cs" />

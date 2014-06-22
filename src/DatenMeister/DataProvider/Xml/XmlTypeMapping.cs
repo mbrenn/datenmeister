@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Entities.AsObject.Uml;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,34 @@ namespace DatenMeister.DataProvider.Xml
         public List<XmlTypeInformation> GetAll()
         {
             return this.information;
+        }
+
+        /// <summary>
+        /// Adds a type to the extent
+        /// </summary>
+        /// <param name="type">Type to be added</param>
+        public void Add(IObject type)
+        {
+            var name = NamedElement.getName(type);
+            var pluralName = name + "s";
+
+            var retrieveNode = new System.Func<XDocument, XElement>(
+                xmlDocument =>
+                {
+                    var pluralElement = xmlDocument.Root
+                       .Element(pluralName);
+
+                    if (pluralElement == null)
+                    {
+                        pluralElement = new XElement(pluralName);
+                        xmlDocument.Root.Add(pluralElement);
+                    }
+
+                    return pluralElement;
+                });
+
+
+            this.Add(name, type, retrieveNode);
         }
 
         /// <summary>

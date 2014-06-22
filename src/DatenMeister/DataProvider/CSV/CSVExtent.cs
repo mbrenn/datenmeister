@@ -74,6 +74,7 @@ namespace DatenMeister.DataProvider.CSV
             public CSVExtent extent;
 
             public CSVExtentReflectiveSequence(CSVExtent extent)
+                : base(extent)
             {
                 Ensure.That(extent != null);
                 this.extent = extent;

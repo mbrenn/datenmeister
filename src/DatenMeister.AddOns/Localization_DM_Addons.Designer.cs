@@ -86,5 +86,23 @@ namespace DatenMeister.AddOns {
                 return ResourceManager.GetString("Menu_Extent", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Type Manager ähnelt.
+        /// </summary>
+        internal static string Menu_TypeManager {
+            get {
+                return ResourceManager.GetString("Menu_TypeManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die View ähnelt.
+        /// </summary>
+        internal static string Menu_Views {
+            get {
+                return ResourceManager.GetString("Menu_Views", resourceCulture);
+            }
+        }
     }
 }

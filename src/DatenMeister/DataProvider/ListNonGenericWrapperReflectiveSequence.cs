@@ -18,7 +18,8 @@ namespace DatenMeister.DataProvider
         /// </summary>
         private IList list;
 
-        public ListNonGenericWrapperReflectiveSequence(IList list)
+        public ListNonGenericWrapperReflectiveSequence(IURIExtent extent, IList list)
+            : base(extent)
         {
             Ensure.That(list != null, "Parameter list is null");
             this.list = list;

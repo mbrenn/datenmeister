@@ -7,6 +7,14 @@ namespace DatenMeister
 {
     public interface IReflectiveCollection : ICollection<object>
     {
+        /// <summary>
+        /// Gets the extent
+        /// </summary>
+        IURIExtent Extent
+        {
+            get;
+        }
+
         bool add(object value);
 
         bool addAll(IReflectiveSequence value);

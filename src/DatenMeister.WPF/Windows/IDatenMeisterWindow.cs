@@ -1,6 +1,7 @@
 ﻿
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.WPF.Controls;
+using DatenMeister.WPF.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,18 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Gets or sets the datenmeister settings
         /// </summary>
-        IDatenMeisterSettings Settings
+        ApplicationCore Core
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets or sets the settings
+        /// </summary>
+        IDatenMeisterSettings Settings
+        {
+            get;
         }
 
         /// <summary>
@@ -49,5 +58,11 @@ namespace DatenMeister.WPF.Windows
         /// <param name="view">View, to which the detailopen event shall be associated</param>
         /// <param name="action">Action, which shall be executed instead of opening the detail dialog</param>
         void AssociateDetailOpenEvent(IObject view, Action<DetailOpenEventArgs> action);
+
+        /// <summary>
+        /// Loads and opens a file and refreshes the window, so recently loaded extent is included
+        /// </summary>
+        /// <param name="path">Path of the object to be loaded</param>
+        void LoadAndOpenFile(string path);
     }
 }

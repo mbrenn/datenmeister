@@ -121,6 +121,7 @@ namespace DatenMeister.Pool
         /// <returns>Retrieved object or null, if not found</returns>
         public static object ResolveInExtent(Uri uri, IURIExtent extent)
         {
+            object result = extent;
             // Checks, if we have a query identifier
             if (!string.IsNullOrEmpty(uri.Query))
             {
@@ -129,7 +130,7 @@ namespace DatenMeister.Pool
 
                 if (!string.IsNullOrEmpty(requestedType))
                 {
-                    extent = extent.FilterByType(requestedType);
+                    result = extent.Elements().FilterByType(requestedType);
                 }
             }
 
@@ -138,7 +139,7 @@ namespace DatenMeister.Pool
             if (string.IsNullOrEmpty(fragment))
             {
                 // We don't have a fragment, so return the extent
-                return extent;
+                return result;
             }
             else
             {
@@ -148,7 +149,7 @@ namespace DatenMeister.Pool
                 }
 
                 // We got a fragment, find the element with the id
-                return extent.Elements()
+                return result.AsReflectiveCollection()
                     .Select(x=> x.AsIObject())
                     .Where(x => x.Id == fragment).FirstOrDefault();
             }

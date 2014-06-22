@@ -25,6 +25,9 @@
                 <Separator/>
                 <MenuItem Header="Exit" Click="Exit_Click" />
             </MenuItem>
+            <MenuItem Header="?">
+                <MenuItem Header="About (Licenses and Thanks to)..." Click="About_Click"/>
+            </MenuItem>
         </Menu>
         <TabControl Grid.Row="1" Grid.ColumnSpan="2" x:Name="tabMain" FontSize="16">
         </TabControl>

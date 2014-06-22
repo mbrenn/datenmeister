@@ -40,13 +40,13 @@ namespace DatenMeister.Logic.Views
         /// </summary>
         /// <param name="extent">Extent, being used</param>
         /// <param name="viewInfo">View Information, where the objects will be stored</param>
-        public static void AutoGenerateViewDefinitionsForExtent(IURIExtent extent, IObject viewInfo, bool alphaNumeric = false)
+        public static void AutoGenerateViewDefinitionsForExtent(IURIExtent extent, IObject viewInfo, bool orderByName = false)
         {
             var factory = Factory.GetFor(viewInfo.Extent);
             var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
 
             var propertyNames = extent.Elements().GetConsolidatedPropertyNames();
-            if (alphaNumeric == true)
+            if (orderByName == true)
             {
                 propertyNames = propertyNames.OrderBy(x => x);
             }

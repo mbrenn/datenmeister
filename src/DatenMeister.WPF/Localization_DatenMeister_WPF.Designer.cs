@@ -133,6 +133,15 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No file has been found on the given location.  ähnelt.
+        /// </summary>
+        internal static string Open_FileDoesNotExist {
+            get {
+                return ResourceManager.GetString("Open_FileDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Changes will get lost. Shall changes be stored before continuing? ähnelt.
         /// </summary>
         internal static string QuestionSaveChanges {

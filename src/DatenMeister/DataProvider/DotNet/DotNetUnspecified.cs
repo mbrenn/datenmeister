@@ -43,14 +43,14 @@ namespace DatenMeister.DataProvider.DotNet
             var valueAsIListObject = this.Value as IList<object>;
             if (valueAsIListObject != null)
             {
-                return new DotNetReflectiveSequence<object>(valueAsIListObject);
+                return new DotNetReflectiveSequence<object>(this.Owner.Extent, valueAsIListObject);
             }
 
             // Check, if value list, if yes, add it
             var valueAsIList = this.Value as IList;
             if (valueAsIList != null)
             {
-                return new DotNetNonGenericReflectiveSequence(valueAsIList);
+                return new DotNetNonGenericReflectiveSequence(this.Owner.Extent, valueAsIList);
             }
 
             // Check, if value is null, if yes, we have to create an instance, which is quite timeconsuming.
@@ -92,7 +92,7 @@ namespace DatenMeister.DataProvider.DotNet
                 this.Owner.set(propertyInfo.Name, newList);
 
                 // Return the list, captured in a wrapper sequence
-                return new DotNetNonGenericReflectiveSequence(newList);
+                return new DotNetNonGenericReflectiveSequence(this.Owner.Extent, newList);
             }
 
             if (this.propertyInfo.PropertyType.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>)))
