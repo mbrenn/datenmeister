@@ -391,7 +391,7 @@ namespace DatenMeister.Tests.DataProvider
             var retrievedUsers = valueE4.get("user").AsReflectiveCollection();
             Assert.That(retrievedUsers.Count, Is.EqualTo(4));
             Assert.That(retrievedUsers.ElementAt(0).AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("Brenn"));
-            Assert.That(retrievedUsers.ElementAt(1).AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("Brennus"));
+            Assert.That(retrievedUsers.ElementAt(1).AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("Brenner"));
             Assert.That(retrievedUsers.ElementAt(3).AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("Brennas"));
 
             var retrievedAddress = retrievedUsers.ElementAt(0).AsIObject().get("address").AsSingle().AsIObject();
