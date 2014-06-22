@@ -346,16 +346,7 @@ namespace DatenMeister.Tests.DataProvider
             pool.Add(xmlExtent, null);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
-
-            var newElement = new GenericElement();
-            newElement.set("name", "Brenn");
-            newElement.set("firstname", "Martin");
-
-            var newAddress = new GenericElement();
-            newAddress.set("street", "Meine Straße");
-            newAddress.set("zipcode", "12345");
-            newAddress.set("town", "My Town");
-            newElement.set("address", newAddress);
+            var newElement = CreateUser("Brenn", "Martin", "Teststraße 1");
 
             valueE4.set("user", newElement);
 
@@ -364,7 +355,50 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(retrievedUser.get("name").AsSingle().ToString(), Is.EqualTo("Brenn"));
 
             var retrievedAddress = retrievedUser.get("address").AsSingle().AsIObject();
-            Assert.That(retrievedAddress.get("street").AsSingle().ToString(), Is.EqualTo("Meine Straße"));
+            Assert.That(retrievedAddress.get("street").AsSingle().ToString(), Is.EqualTo("Teststraße 1"));
+        }
+
+        [Test]
+        public void TestEmbeddedElementsAsReflectiveCollectionWithSubElement()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" />" +
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+
+            var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
+            var newUser1 = CreateUser("Brenn", "Martin", "Teststraße 1");
+            var newUser2 = CreateUser("Brenner", "Martina", "Teststraße 2");
+            var newUser3 = CreateUser("Brennus", "Martinus", "Teststraße 3");
+            var newUser4 = CreateUser("Brennas", "Martinas", "Teststraße 4");
+
+            var users = valueE4.get("user").AsReflectiveCollection();
+            users.add(newUser1);
+            users.add(newUser2);
+            users.add(newUser3);
+
+            users = valueE4.get("user").AsReflectiveCollection();
+            users.add(newUser4);
+
+            // Check, if we get all the information
+            var retrievedUsers = valueE4.get("user").AsReflectiveCollection();
+            Assert.That(retrievedUsers.Count, Is.EqualTo(4));
+            Assert.That(retrievedUsers.ElementAt(0).AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("Brenn"));
+            Assert.That(retrievedUsers.ElementAt(1).AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("Brennus"));
+            Assert.That(retrievedUsers.ElementAt(3).AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("Brennas"));
+
+            var retrievedAddress = retrievedUsers.ElementAt(0).AsIObject().get("address").AsSingle().AsIObject();
+            Assert.That(retrievedAddress.get("street").AsSingle().ToString(), Is.EqualTo("Teststraße 1"));
+
+            retrievedAddress = retrievedUsers.ElementAt(3).AsIObject().get("address").AsSingle().AsIObject();
+            Assert.That(retrievedAddress.get("street").AsSingle().ToString(), Is.EqualTo("Teststraße 4"));
         }
 
         [Test]
@@ -508,6 +542,24 @@ namespace DatenMeister.Tests.DataProvider
 
             Assert.That(commentObj.getName(), Is.EqualTo("Description"));
             Assert.That(commentObj.getBinding(), Is.EqualTo("Binding"));
+        }
+
+        /// <summary>
+        /// Creates a user by given name and first name
+        /// </summary>
+        /// <returns></returns>
+        private static GenericElement CreateUser(string name, string firstName, string street)
+        {
+            var newElement = new GenericElement();
+            newElement.set("name", name);
+            newElement.set("firstname", firstName);
+
+            var newAddress = new GenericElement();
+            newAddress.set("street", street);
+            newAddress.set("zipcode", "12345");
+            newAddress.set("town", "My Town");
+            newElement.set("address", newAddress);
+            return newElement;
         }
     }
 }
