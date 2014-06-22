@@ -24,6 +24,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -221,6 +227,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -397,6 +409,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -572,6 +590,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -791,6 +815,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -947,6 +977,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -1168,6 +1204,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -1388,6 +1430,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -1599,6 +1647,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -1779,6 +1833,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -2065,6 +2125,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 

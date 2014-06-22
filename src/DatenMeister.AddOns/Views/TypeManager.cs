@@ -27,6 +27,10 @@ namespace DatenMeister.AddOns.Views
                 {
                     Ensure.That(window.Settings.TypeExtent != null, "No Type extent has been defined");
 
+                    var viewExtent = window.Settings.ViewExtent;
+                    //DatenMeister.Entities.AsObject.FieldInfo.TableView.create(viewExtent);
+
+                    window.RefreshTabs();
                 };
 
             window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
