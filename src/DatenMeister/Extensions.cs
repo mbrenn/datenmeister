@@ -196,6 +196,16 @@ namespace DatenMeister
 
         public static IReflectiveCollection AsReflectiveCollection(this object value)
         {
+            if (value is IReflectiveCollection)
+            {
+                return value as IReflectiveCollection;
+            }
+
+            if (value is IURIExtent)
+            {
+                return (value as IURIExtent).Elements();
+            }
+
             // Ok, we have an unspecified thing... don't like, but necessary
             var valueAsUnspecified = value as IUnspecified;
             if (valueAsUnspecified != null)
@@ -208,6 +218,16 @@ namespace DatenMeister
 
         public static IReflectiveSequence AsReflectiveSequence(this object value)
         {
+            if (value is IReflectiveSequence)
+            {
+                return value as IReflectiveSequence;
+            }
+
+            if (value is IURIExtent)
+            {
+                return (value as IURIExtent).Elements();
+            }
+
             // Ok, we have an unspecified thing... don't like, but necessary
             var valueAsUnspecified = value as IUnspecified;
             if (valueAsUnspecified != null)

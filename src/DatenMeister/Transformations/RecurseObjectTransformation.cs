@@ -10,17 +10,11 @@ namespace DatenMeister.Transformations
     /// <summary>
     /// Performs a recursion, where every element and its subelements are returned
     /// </summary>
-    public class RecurseObjectTransformation : IURIExtent
+    public class RecurseObjectTransformation : BaseTransformation
     {
-        public IURIExtent source
+        public RecurseObjectTransformation(IReflectiveCollection collection) :
+            base(collection)
         {
-            get;
-            set;
-        }
-
-        public string ContextURI()
-        {
-            return "Temp";
         }
 
         /// <summary>
@@ -34,75 +28,42 @@ namespace DatenMeister.Transformations
             }
         }
 
-        /// <summary>
-        /// Gets or sets the pool, where the object is stored
-        /// </summary>
-        public IPool Pool
+        public override IEnumerable<object> getAll()
         {
-            get { return this.source.Pool; }
-            set { this.source.Pool = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets a flag whether the extent is currently dirty
-        /// That means, it has unsaved changes
-        /// </summary>
-        public bool IsDirty
-        {
-            get { return this.source.IsDirty; }
-            set { this.source.IsDirty = value; }
-        }
-
-        public IReflectiveSequence Elements()
-        {
-            return new RecurseReflectiveSequence(this);
-        }
-
-        private class RecurseReflectiveSequence : ProxyReflectiveSequence
-        {
-            public RecurseReflectiveSequence(RecurseObjectTransformation transformation)
-                : base ( transformation.source)
+            foreach (var element in this.source)
             {
-
-            }
-            public override IEnumerable<object> getAll()
-            {
-                foreach (var element in this.baseExtent.Elements())
+                foreach (var yields in this.Recurse(element))
                 {
-                    foreach (var yields in this.Recurse(element))
-                    {
-                        yield return yields;
-                    }
-                }
-            }
-
-            private IEnumerable<IObject> Recurse(object value)
-            {
-                // If IObject or IEnumeration, otherwise return nothing
-                if (value is IObject)
-                {
-                    yield return value as IObject;
-                    foreach (var pair in (value as IObject).getAll())
-                    {
-                        foreach (var x in this.Recurse(pair.Value))
-                        {
-                            yield return x;
-                        }
-                    }
-                }
-
-                if (value is IEnumerable)
-                {
-                    foreach (var item in (value as IEnumerable))
-                    {
-                        foreach (var x in this.Recurse(item))
-                        {
-                            yield return x;
-                        }
-                    }
+                    yield return yields;
                 }
             }
         }
 
+        private IEnumerable<IObject> Recurse(object value)
+        {
+            // If IObject or IEnumeration, otherwise return nothing
+            if (value is IObject)
+            {
+                yield return value as IObject;
+                foreach (var pair in (value as IObject).getAll())
+                {
+                    foreach (var x in this.Recurse(pair.Value))
+                    {
+                        yield return x;
+                    }
+                }
+            }
+
+            if (value is IEnumerable)
+            {
+                foreach (var item in (value as IEnumerable))
+                {
+                    foreach (var x in this.Recurse(item))
+                    {
+                        yield return x;
+                    }
+                }
+            }
+        }
     }
 }

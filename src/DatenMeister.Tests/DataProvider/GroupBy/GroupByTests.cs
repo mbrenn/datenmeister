@@ -19,8 +19,8 @@ namespace DatenMeister.Tests.DataProvider.GroupBy
         {
             var testExtent = XmlTests.CreateTestExtent();
 
-            var groupBy = new GroupByTypeTransformation(testExtent);
-            var elements = groupBy.Elements();
+            var groupBy = new GroupByTypeTransformation(testExtent.AsReflectiveCollection());
+            var elements = groupBy.getAll();
 
             Assert.That(elements.Count(), Is.EqualTo(2));
             foreach (var element in elements)

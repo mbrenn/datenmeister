@@ -47,7 +47,7 @@ namespace DatenMeister.AddOns.Export.Excel
             // Performs the fill
             if (settings.PerTypeOneSheet)
             {
-                var inTypes = new GroupByTypeTransformation(extent);
+                var inTypes = new GroupByTypeTransformation(extent.AsReflectiveCollection());
                 foreach (var pairs in inTypes.ElementsAsGroupBy())
                 {
                     var sheet = this.workbook.CreateSheet(pairs.key.AsIObject().get("name").AsSingle().ToString());

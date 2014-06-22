@@ -14,23 +14,16 @@ namespace DatenMeister.Transformations.GroupBy
         /// <summary>
         /// Initializes a new instance of the GroupByTypeTransformation
         /// </summary>
-        public GroupByTypeTransformation()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the GroupByTypeTransformation
-        /// </summary>
         /// <param name="source">Source extent</param>
-        public GroupByTypeTransformation(IURIExtent source)
+        public GroupByTypeTransformation(IReflectiveCollection collection)
+            : base(collection)
         {
-            this.source = source;
         }
 
         public override void ExecuteMapping(GroupByDictionary storage)
         {
             // Nothing to do at the moment
-            foreach (var item in this.source.Elements())
+            foreach (var item in this.source)
             {
                 var itemAsElement = item as IElement;
                 var type = itemAsElement.getMetaClass();

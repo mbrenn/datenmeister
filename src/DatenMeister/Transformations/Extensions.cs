@@ -11,21 +11,19 @@ namespace DatenMeister.Transformations
     /// </summary>
     public static class Extensions
     {
-        public static IURIExtent Recurse(this IURIExtent extent)
+        public static IReflectiveCollection Recurse(this IReflectiveCollection collection)
         {
-            var transformation = new RecurseObjectTransformation();
-            transformation.source = extent;
-            return transformation;
+            return new RecurseObjectTransformation(collection);
         }
 
-        public static IURIExtent FilterByType(this IURIExtent extent, IObject type)
+        public static IReflectiveCollection FilterByType(this IReflectiveCollection collection, IObject type)
         {
-            return new FilterByTypeTransformation(extent, type);
+            return new FilterByTypeTransformation(collection, type);
         }
 
-        public static IURIExtent FilterByType(this IURIExtent extent, string typeName)
+        public static IReflectiveCollection FilterByType(this IReflectiveCollection collection, string typeName)
         {
-            return new FilterByTypeTransformation(extent, typeName);
+            return new FilterByTypeTransformation(collection, typeName);
         }
     }
 }

@@ -22,10 +22,7 @@ namespace DatenMeister.DataProvider
         public IFactory CreateFor(IURIExtent extent)
         {
             Ensure.That(extent != null, "Extent == null");
-            if (extent is DatenMeister.Transformations.ITransformation)
-            {
-                return CreateFor((extent as DatenMeister.Transformations.ITransformation).source);
-            }
+
             if (extent is GenericExtent)
             {
                 return new GenericFactory(extent as GenericExtent);

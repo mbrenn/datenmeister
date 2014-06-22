@@ -11,41 +11,108 @@ namespace DatenMeister.Transformations
         /// <summary>
         /// Gets or sets the source of the transformation
         /// </summary>
-        public IURIExtent source
+        public IReflectiveCollection source
         {
             get;
             set;
         }
 
-        public string ContextURI()
+        public BaseTransformation(IReflectiveCollection collection)
         {
-            return this.source.ContextURI();
+            this.source = collection;
         }
 
-        public abstract IReflectiveSequence Elements();
+        public abstract IEnumerable<object> getAll();
 
-        public IPool Pool
-        {
-            get
-            {
-                return this.source.Pool;
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        #region Standard Implementation of the Base Transformation
 
-        public bool IsDirty
+        public IURIExtent Extent
         {
             get
             {
-                return this.source.IsDirty;
-            }
-            set
-            {
-                this.source.IsDirty = value;
+                return this.source.Extent;
             }
         }
+
+        public bool add(object value)
+        {
+            return this.source.add(value);
+        }
+
+        public bool addAll(IReflectiveSequence value)
+        {
+            return this.source.addAll(value);
+        }
+
+        public void clear()
+        {
+            throw new NotImplementedException("Clear is not implemented at BaseTransformation");
+        }
+
+        public bool remove(object value)
+        {
+            return this.source.remove(value);
+        }
+
+        public int size()
+        {
+            return this.getAll().Count();
+        }
+
+        public void Add(object item)
+        {
+            this.source.Add(item);
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException("Clear is not implemented at BaseTransformation");
+        }
+
+        public bool Contains(object item)
+        {
+            return this.getAll().Contains(item);
+        }
+
+        public void CopyTo(object[] array, int arrayIndex)
+        {
+            throw new NotImplementedException("CopyTo is not implemented at BaseTransformation");
+        }
+
+        public int Count
+        {
+            get
+            {
+                return this.getAll().Count();
+            }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return this.source.IsReadOnly; }
+        }
+
+        public bool Remove(object item)
+        {
+            return this.source.Remove(item);
+        }
+
+        public IEnumerator<object> GetEnumerator()
+        {
+            foreach (var item in this.getAll())
+            {
+                yield return item;
+            }
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            foreach (var item in this.getAll())
+            {
+                yield return item;
+            }
+        }
+
+        #endregion
     }
 }

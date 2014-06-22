@@ -10,6 +10,15 @@ namespace DatenMeister.Transformations.GroupBy
     public abstract class BaseGroupByTransformation : BaseTransformation
     {
         /// <summary>
+        /// Initializes a new instance of the BaseGroupByTransformation
+        /// </summary>
+        /// <param name="collection"></param>
+        public BaseGroupByTransformation(IReflectiveCollection collection)
+            : base(collection)
+        {
+        }
+
+        /// <summary>
         /// Executes the mapping of keys to the values
         /// </summary>
         /// <param name="storage">Storage to be used</param>
@@ -19,7 +28,7 @@ namespace DatenMeister.Transformations.GroupBy
         /// Returns the elements of the reflective sequence. 
         /// </summary>
         /// <returns></returns>
-        public override IReflectiveSequence Elements()
+        public override IEnumerable<object> getAll()
         {
             var list = new List<GroupByObject>();
             var storage = new GroupByDictionary();
@@ -28,18 +37,16 @@ namespace DatenMeister.Transformations.GroupBy
 
             foreach (var pair in storage.Storage)
             {
-                list.Add(new GroupByObject(
-                    this.source,
+                yield return new GroupByObject(
+                    this.source.Extent,
                     pair.Key,
-                    new ListWrapperReflectiveSequence<object>(this, pair.Value)));
+                    new ListWrapperReflectiveSequence<object>(this.Extent, pair.Value));
             }
-
-            return new GroupByReflectiveSequence(this.source, list);
         }
 
         public IEnumerable<GroupByObject> ElementsAsGroupBy()
         {
-            foreach (var element in this.Elements())
+            foreach (var element in this)
             {
                 yield return element.AsSingle() as GroupByObject;
             }
