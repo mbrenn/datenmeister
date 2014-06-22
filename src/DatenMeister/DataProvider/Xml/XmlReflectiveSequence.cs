@@ -361,16 +361,33 @@ namespace DatenMeister.DataProvider.Xml
 
         public override IEnumerable<object> getAll()
         {
-            var attributeList = this.GetAttributeAsList();
-            if (attributeList.Count() == 0)
+            if ( this.sequenceType == XmlReflectiveSequenceType.Unknown)
             {
                 yield break;
             }
 
-            var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
-            foreach (var path in attributeList)
+            if (this.sequenceType == XmlReflectiveSequenceType.Attributes)
             {
-                yield return poolResolver.Resolve(path, this.Unspecified.Owner);
+                var attributeList = this.GetAttributeAsList();
+                if (attributeList.Count() == 0)
+                {
+                    yield break;
+                }
+
+                var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
+                foreach (var path in attributeList)
+                {
+                    yield return poolResolver.Resolve(path, this.Unspecified.Owner);
+                }
+            }
+
+            if (this.sequenceType == XmlReflectiveSequenceType.Nodes)
+            {
+                var xmlObject = this.Unspecified.Owner as XmlObject;
+                foreach (var node in xmlObject.Node.Elements(this.Unspecified.PropertyName))
+                {
+                    yield return new XmlObject(this.Extent as XmlExtent, node, xmlObject);
+                }
             }
         }
     }

@@ -399,6 +399,17 @@ namespace DatenMeister.Tests.DataProvider
 
             retrievedAddress = retrievedUsers.ElementAt(3).AsIObject().get("address").AsSingle().AsIObject();
             Assert.That(retrievedAddress.get("street").AsSingle().ToString(), Is.EqualTo("Teststraße 4"));
+
+            var n = 0;
+            foreach (var user in retrievedUsers)
+            {
+                n++;
+                var name = user.AsIObject().get("name").AsSingle().ToString();
+                Assert.That(name,
+                    Is.EqualTo("Brenn").Or.EqualTo("Brenner").Or.EqualTo("Brennus").Or.EqualTo("Brennas"));
+            }
+
+            Assert.That(n, Is.EqualTo(4));
         }
 
         [Test]
