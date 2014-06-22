@@ -25,7 +25,25 @@ namespace DatenMeister.Pool
                 return result as IEnumerable<IObject>;
             }
 
+            if (result is IReflectiveCollection)
+            {
+                return ResolveByReflectiveCollection(result as IReflectiveCollection);
+            }
+
             return null;
+        }
+
+        /// <summary>
+        /// Resolves by reflective collection and returns an enumeration of IObject
+        /// </summary>
+        /// <param name="reflectiveCollection">Reflective Collection being used</param>
+        /// <returns>Enumeration of IObject</returns>
+        private static IEnumerable<IObject> ResolveByReflectiveCollection(IReflectiveCollection reflectiveCollection)
+        {
+            foreach (var item in reflectiveCollection)
+            {
+                yield return item.AsIObject();
+            }
         }
     }
 }

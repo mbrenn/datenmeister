@@ -186,9 +186,9 @@ namespace DatenMeister.WPF.Windows
                 // Creates the list control
                 var entityList = new EntityTableControl();
                 entityList.MainWindow = this;
-                entityList.ExtentFactory = (x) =>
+                entityList.ElementsFactory = (x) =>
                     {
-                        return this.Settings.Pool.ResolveByPath(extentUri) as IURIExtent;
+                        return this.Settings.Pool.ResolveByPath(extentUri).AsReflectiveCollection();
                     };
 
                 entityList.TableViewInfo = tableViewInfo;

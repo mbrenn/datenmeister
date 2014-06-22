@@ -35,12 +35,7 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Stores the extent factory to retrieve the extent
         /// </summary>
-        private Func<IURIExtent, IURIExtent> extentFactory;
-
-        /// <summary>
-        /// Stores the element factory for the table control
-        /// </summary>
-        private Func<IURIExtent, IEnumerable<IObject>> elementsFactory;
+        private Func<IPool, IReflectiveCollection> elementsFactory;
 
         public IDatenMeisterWindow MainWindow
         {
@@ -53,44 +48,17 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public IURIExtent Extent
         {
-            get
-            {
-                if (this.MainWindow != null && this.MainWindow.Settings.ProjectExtent != null)
-                {
-                    return this.extentFactory(this.MainWindow.Settings.ProjectExtent);
-                }
-
-                else
-                {
-                    return null;
-                }
-            }
             set
             {
-                this.extentFactory = (x) => value;
-                if (this.extentFactory != null)
+                this.elementsFactory = (x) => value.Elements();
+                if (this.elementsFactory != null)
                 {
                     this.RefreshItems();
                 }
             }
         }
 
-        /// <summary>
-        /// Gets or sets the factory being used to retrieve the extent
-        /// </summary>
-        public Func<IURIExtent, IURIExtent> ExtentFactory
-        {
-            get { return this.extentFactory; }
-            set
-            {
-                this.extentFactory = value;
-
-                // Refreshes the items when we get a new extent factory
-                this.RefreshItems();
-            }
-        }
-
-        public Func<IURIExtent, IEnumerable<IObject>> ElementsFactory
+        public Func<IPool, IReflectiveCollection> ElementsFactory
         {
             get { return this.elementsFactory; }
             set
@@ -207,16 +175,11 @@ namespace DatenMeister.WPF.Controls
             this.RefreshItems();
         }
 
-        public IEnumerable<object> GetElements(IURIExtent extent)
+        public IReflectiveCollection GetElements()
         {
             if (this.ElementsFactory != null)
             {
-                return this.ElementsFactory(extent);
-            }
-
-            if (this.ExtentFactory != null)
-            {
-                return this.ExtentFactory(extent).Elements();
+                return this.ElementsFactory(this.MainWindow.Settings.Pool);
             }
 
             throw new InvalidOperationException("ElementFactory and ExtentFactory are not set");
@@ -227,12 +190,11 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public void RefreshItems()
         {
-            if (this.ExtentFactory != null && 
+            if (this.ElementsFactory != null && 
                 this.MainWindow != null &&
                 this.MainWindow.Settings.ProjectExtent != null)
             {
-                var elements = this.ExtentFactory(this.MainWindow.Settings.ProjectExtent)
-                    .Elements().Select(x => new ObjectDictionaryForView(x.AsIObject())).ToList();
+                var elements = this.GetElements().Select(x => new ObjectDictionaryForView(x.AsIObject())).ToList();
                 this.gridContent.ItemsSource = elements;
             }
         }
@@ -270,7 +232,7 @@ namespace DatenMeister.WPF.Controls
                 return;
             }
 
-            var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.Extent, this.DetailViewInfo);
+            var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.GetElements(), this.DetailViewInfo);
             Ensure.That(dialog != null);
             dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
         }
@@ -287,7 +249,7 @@ namespace DatenMeister.WPF.Controls
                 this.OpenSelectedViewFunc(
                     new DetailOpenEventArgs()
                     {
-                        Extent = this.Extent,
+                        Collection = this.GetElements(),
                         Value = selectedItem.Value
                     });
 

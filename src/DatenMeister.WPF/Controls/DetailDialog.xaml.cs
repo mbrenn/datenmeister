@@ -108,8 +108,12 @@ namespace DatenMeister.WPF.Controls
         /// <param name="type">Type of object to be created</param>
         /// <param name="viewData">Available view</param>
         /// <returns>The created type</returns>
-        public static DetailDialog ShowDialogToCreateTypeOf(IObject type, IURIExtent extent, IObject viewData = null)
+        public static DetailDialog ShowDialogToCreateTypeOf(IObject type, IReflectiveCollection collection, IObject viewData = null)
         {
+            Ensure.That(collection != null);
+
+            var extent = collection.Extent;
+            Ensure.That(collection.Extent != null);
             Ensure.That(type != null, "No Type has ben set that can be used to create a new object");
 
             var temp = new GenericElement(extent: extent, type: type);
@@ -181,3 +185,4 @@ namespace DatenMeister.WPF.Controls
         }
     }
 }
+

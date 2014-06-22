@@ -24,7 +24,7 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Gets or sets the associated object
         /// </summary>
-        public IURIExtent Extent
+        public IReflectiveCollection Collection
         {
             get;
             set;
