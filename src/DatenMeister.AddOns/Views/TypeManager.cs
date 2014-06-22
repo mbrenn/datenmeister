@@ -1,4 +1,5 @@
-﻿using DatenMeister.WPF.Windows;
+﻿using BurnSystems.Test;
+using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace DatenMeister.AddOns.Views
             menuItem.Header = Localization_DM_Addons.Menu_TypeManager;
             menuItem.Click += (x, y) =>
                 {
+                    Ensure.That(window.Settings.TypeExtent != null, "No Type extent has been defined");
+
                     MessageBox.Show("x");
                 };
 

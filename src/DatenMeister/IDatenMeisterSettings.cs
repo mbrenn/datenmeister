@@ -55,6 +55,15 @@ namespace DatenMeister
         }
 
         /// <summary>
+        /// Stores the meta extent being used to 
+        /// </summary>
+        IURIExtent TypeExtent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Stores the settings for the extent
         /// </summary>
         XmlSettings ExtentSettings
