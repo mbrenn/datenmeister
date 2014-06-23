@@ -69,6 +69,11 @@ namespace DatenMeister.Logic.Views
                 textFieldObj.setName(name);
                 textFieldObj.setBinding(name);
 
+                if (name == "id")
+                {
+                    textFieldObj.setReadOnly(true);
+                }
+
                 fieldInfos.add(textField);
             }
         }

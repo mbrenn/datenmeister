@@ -227,6 +227,17 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="value">Value to be set</param>
         public void set(string propertyName, object value)
         {
+            // If property name is an id, we use this id for setting the id of the entity
+            if (propertyName == "id")
+            {
+                if (string.IsNullOrEmpty(value.ToString()))
+                {
+                    throw new ArgumentException("Id cannot be set to null or empty");
+                }
+
+                this.Id = value.ToString();
+            }
+
             if (propertyName.EndsWith("-ref"))
             {
                 throw new InvalidOperationException("Property name may not end with '-ref'");
@@ -316,12 +327,6 @@ namespace DatenMeister.DataProvider.Xml
             else
             {
                 throw new NotImplementedException("We do not know how to set the value to the XmlObject");
-            }
-
-            // If property name is an id, we use this id for setting the id of the entity
-            if (propertyName == "id")
-            {
-                this.Id = value.ToString();
             }
         }
 
