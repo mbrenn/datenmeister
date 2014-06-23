@@ -40,12 +40,23 @@ namespace DatenMeister.Logic.Views
         /// </summary>
         /// <param name="extent">Extent, being used</param>
         /// <param name="viewInfo">View Information, where the objects will be stored</param>
-        public static void AutoGenerateViewDefinitionsForExtent(IURIExtent extent, IObject viewInfo, bool orderByName = false)
+        public static void AutoGenerateViewDefinition(IURIExtent extent, IObject viewInfo, bool orderByName = false)
+        {
+            AutoGenerateViewDefinition(extent.Elements(), viewInfo, orderByName);
+        }
+
+        /// <summary>
+        /// Auto generates the view definitions for a complete extent. 
+        /// The information will be stored as a reflective collection in viewInfo. 
+        /// </summary>
+        /// <param name="extent">Extent, being used</param>
+        /// <param name="viewInfo">View Information, where the objects will be stored</param>
+        public static void AutoGenerateViewDefinition(IReflectiveCollection collection, IObject viewInfo, bool orderByName = false)
         {
             var factory = Factory.GetFor(viewInfo.Extent);
             var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
 
-            var propertyNames = extent.Elements().GetConsolidatedPropertyNames();
+            var propertyNames = collection.GetConsolidatedPropertyNames();
             if (orderByName == true)
             {
                 propertyNames = propertyNames.OrderBy(x => x);

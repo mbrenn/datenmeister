@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.Logic.Views;
 using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,22 @@ namespace DatenMeister.AddOns.Views
             menuItem.Click += (x, y) =>
                 {
                     Ensure.That(window.Settings.TypeExtent != null, "No Type extent has been defined");
+                    Ensure.That(window.Settings.ViewExtent != null, "No Type extent has been defined");
 
+                    var typeExtent = window.Settings.TypeExtent;
                     var viewExtent = window.Settings.ViewExtent;
-                    //DatenMeister.Entities.AsObject.FieldInfo.TableView.create(viewExtent);
+                    var tableView = DatenMeister.Entities.AsObject.FieldInfo.TableView.create(viewExtent);
+                    var tableViewAsObj = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableView);
+                    tableViewAsObj.setName("Types");
+                    tableViewAsObj.setMainType(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                    tableViewAsObj.setAllowDelete(true);
+                    tableViewAsObj.setAllowEdit(true);
+                    tableViewAsObj.setAllowNew(true);
+                    tableViewAsObj.setExtentUri(window.Settings.TypeExtent.ContextURI());
+
+                    ViewHelper.AutoGenerateViewDefinition(typeExtent, tableViewAsObj, true);
+
+                    viewExtent.Elements().add(tableView);
 
                     window.RefreshTabs();
                 };

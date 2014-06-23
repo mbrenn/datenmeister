@@ -72,7 +72,7 @@ namespace DatenMeister.WPF.Helper
                         asObjectExtentview.setName(z.Value.AsSingle().AsIObject().get("name").AsSingle().ToString());
 
                         // Gets the referenced extent
-                        ViewHelper.AutoGenerateViewDefinitionsForExtent(extent, asObjectExtentview);;
+                        ViewHelper.AutoGenerateViewDefinition(extent, asObjectExtentview);;
 
                         window.RefreshTabs();
                     });
