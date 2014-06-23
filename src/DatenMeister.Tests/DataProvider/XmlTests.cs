@@ -185,6 +185,32 @@ namespace DatenMeister.Tests.DataProvider
         }
 
         [Test]
+        public void TestReferenceAndRemove()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" reference-ref=\"#e1\" />" +
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+            
+            var valueE1 = pool.ResolveByPath("test:///#e1") as IObject;
+            valueE1.delete();
+
+            var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
+            Assert.That(valueE4, Is.Not.Null);
+
+            var refValue = valueE4.get("reference");
+            var refValueAsIObject = refValue.AsSingle();
+            Assert.That(refValueAsIObject, Is.EqualTo(ObjectHelper.Null));
+        }
+
+        [Test]
         public void TestSetReference()
         {
             var document = XDocument.Parse(

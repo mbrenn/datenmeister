@@ -1,6 +1,7 @@
 ﻿using BurnSystems.Logging;
 using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
+using DatenMeister.Logic;
 using DatenMeister.Transformations;
 using System;
 using System.Collections.Generic;
@@ -96,7 +97,7 @@ namespace DatenMeister.Pool
             if (extent == null)
             {
                 // No uri had been found
-                return null;
+                return ObjectHelper.Null;
             }
 
             return ResolveInExtent(uri, extent);
@@ -149,9 +150,17 @@ namespace DatenMeister.Pool
                 }
 
                 // We got a fragment, find the element with the id
-                return result.AsReflectiveCollection()
-                    .Select(x=> x.AsIObject())
+                result = result.AsReflectiveCollection()
+                    .Select(x => x.AsIObject())
                     .Where(x => x.Id == fragment).FirstOrDefault();
+                if (result != null)
+                {
+                    return result;
+                }
+                else
+                {
+                    return ObjectHelper.Null;
+                }
             }
         }
 
