@@ -144,6 +144,33 @@ namespace DatenMeister.AddOns {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///  &lt;head&gt;
+        ///    &lt;title&gt;
+        ///      Export of DatenMeister
+        ///    &lt;/title&gt;
+        ///  &lt;/head&gt;
+        ///  &lt;body&gt;
+        ///    Created: {{ Created }}
+        ///    
+        ///    &lt;h1&gt;Listing all items&lt;/h1&gt;
+        ///    
+        ///    {% for table in tables %}
+        ///      &lt;h2&gt;{{table.Headline}}&lt;/h2&gt;
+        ///      {{table.TableContent}}
+        ///    {% endfor }
+        ///  &lt;/body&gt;
+        ///&lt;/html&gt;
+        ///.
+        /// </summary>
+        internal static string SimpleReport_Template {
+            get {
+                return ResourceManager.GetString("SimpleReport_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string String1 {

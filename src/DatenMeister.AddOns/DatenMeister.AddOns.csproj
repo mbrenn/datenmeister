@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotLiquid">
+      <HintPath>..\packages\DotLiquid.1.8.0\lib\NET45\DotLiquid.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\NPOI.2.0.6\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -96,6 +99,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Localization_DM_Addons.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Export\Report\Resources\SimpleReport_Template.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
