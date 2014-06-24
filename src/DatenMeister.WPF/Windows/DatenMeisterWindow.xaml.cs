@@ -374,6 +374,7 @@ namespace DatenMeister.WPF.Windows
         {
             var dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
+            dialog.RestoreDirectory = true;
             if (dialog.ShowDialog(this) == true)
             {
                 var xmlExtent = (this.Settings.ProjectExtent) as XmlExtent;
@@ -445,6 +446,7 @@ namespace DatenMeister.WPF.Windows
         {
             var dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
+            dialog.RestoreDirectory = true;
             if (dialog.ShowDialog(this) == true)
             {
                 var xmlExtent = (this.Settings.ProjectExtent) as XmlExtent;

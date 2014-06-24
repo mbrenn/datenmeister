@@ -22,6 +22,7 @@ namespace DatenMeister.AddOns.Export.Excel
                 {
                     var dlg = new Microsoft.Win32.SaveFileDialog();
                     dlg.Filter = Localization_DM_Addons.Filter_ExcelExport;
+                    dlg.RestoreDirectory = true;
                     if (dlg.ShowDialog() == true)
                     {
                         // User has selected to store the excel file, now do
