@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Export of DatenMeister
+    </title>
+  </head>
+  <body>
+    Created: {{ Created }}
+    
+    <h1>Listing all items</h1>
+    
+    {% for Table in Tables %}
+      <h2>{{Table.Headline}}</h2>
+      {{Table.TableContent}}
+    {% endfor %}
+  </body>
+</html>

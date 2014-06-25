@@ -1,4 +1,6 @@
-﻿using DatenMeister.Transformations.GroupBy;
+﻿using BurnSystems.Xml.Html;
+using DatenMeister.Logic;
+using DatenMeister.Transformations.GroupBy;
 using DotLiquid;
 using System;
 using System.Collections.Generic;
@@ -27,9 +29,33 @@ namespace DatenMeister.AddOns.Export.Report.Simple
             var inTypes = new GroupByTypeTransformation(collection);
             foreach (var pair in inTypes.ElementsAsGroupBy())
             {
-                var table = new { Headline = pair.key.AsSingle().AsIObject().get("name").AsSingle().ToString() };
+                var htmlTable = new HtmlTable();
+
+                var properties = pair.values.GetConsolidatedPropertyNames();
+
+                htmlTable.AddRow();
+                foreach (var property in properties)
+                {
+                    htmlTable.AddHeaderCellWithContent(property);
+                }
+
+                foreach (var row in pair.values)
+                {
+                    htmlTable.AddRow();
+                    foreach (var property in properties)
+                    {
+                        htmlTable.AddCellWithContent(row.AsIObject().get(property).AsSingle().ToString());
+                    }
+                }
+
+                var table = new
+                {
+                    Headline = pair.key.AsSingle().AsIObject().get("name").AsSingle().ToString(),
+                    TableContent = htmlTable.ToString()
+                };
                 tables.Add(table);
             }
+
             var templateContent = template.Render(
                 Hash.FromAnonymousObject(
                     new { 
