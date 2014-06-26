@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="DatenMeister.WPF.Windows.DatenMeisterWindow"
         WindowStartupLocation="CenterScreen"
-        Title="Unnamed Application" Height="350"   Width="525" Closing="Window_Closing" 
+        Title="Unnamed Application" Height="350" Width="525" Closing="Window_Closing" 
         Icon="../resources/icons.ico" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -21,8 +21,10 @@
                     <RibbonApplicationMenuItem Header="Save" Click="Save_Click" />
                     <RibbonApplicationMenuItem Header="Save As..." Click="SaveAs_Click" />
                     <RibbonApplicationMenuItem Header="Export as Xml..." Click="ExportAsXml_Click" />
-                    <RibbonApplicationMenuItem Header="Exit" Click="Exit_Click" />
+                    <RibbonSeparator />
                     <RibbonApplicationMenuItem Header="About (Licenses and Thanks to)..." Click="About_Click" />
+                    <RibbonSeparator />
+                    <RibbonApplicationMenuItem Header="Exit" Click="Exit_Click" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Header="Export">
@@ -31,21 +33,6 @@
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
-        <!--<Menu HorizontalAlignment="Left" x:Name="menuMain">
-            <MenuItem Header="File">
-                <MenuItem Header="New" Click="New_Click" />
-                <MenuItem Header="Load..." Click="Load_Click" />
-                <MenuItem Header="Save" Click="Save_Click" />
-                <MenuItem Header="Save As..." Click="SaveAs_Click" />
-                <Separator/>
-                <MenuItem Header="Export as Xml..." Click="ExportAsXml_Click" />
-                <Separator/>
-                <MenuItem Header="Exit" Click="Exit_Click" />
-            </MenuItem>
-            <MenuItem Header="?">
-                <MenuItem Header="About (Licenses and Thanks to)..." Click="About_Click"/>
-            </MenuItem>
-        </Menu>-->
         <TabControl Grid.Row="1" Grid.ColumnSpan="2" x:Name="tabMain" FontSize="16">
         </TabControl>
     </Grid>
