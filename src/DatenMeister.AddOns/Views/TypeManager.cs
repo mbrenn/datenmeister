@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 
 namespace DatenMeister.AddOns.Views
 {
@@ -22,8 +23,8 @@ namespace DatenMeister.AddOns.Views
         /// <param name="window">Window, where the Type Manager will be integrated</param>
         public static void Integrate(IDatenMeisterWindow window)
         {
-            var menuItem = new MenuItem();
-            menuItem.Header = Localization_DM_Addons.Menu_TypeManager;
+            var menuItem = new RibbonButton();
+            menuItem.Label = Localization_DM_Addons.Menu_TypeManager;
             menuItem.Click += (x, y) =>
                 {
                     Ensure.That(window.Settings.TypeExtent != null, "No Type extent has been defined");

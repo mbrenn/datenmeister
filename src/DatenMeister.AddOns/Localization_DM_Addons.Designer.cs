@@ -99,6 +99,15 @@ namespace DatenMeister.AddOns {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        internal static string Menu_Export {
+            get {
+                return ResourceManager.GetString("Menu_Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extent.
         /// </summary>
         internal static string Menu_Extent {
@@ -150,19 +159,30 @@ namespace DatenMeister.AddOns {
         ///    &lt;title&gt;
         ///      Export of DatenMeister
         ///    &lt;/title&gt;
-        ///  &lt;/head&gt;
-        ///  &lt;body&gt;
-        ///    Created: {{ Created }}
-        ///    
-        ///    &lt;h1&gt;Listing all items&lt;/h1&gt;
-        ///    
-        ///    {% for table in tables %}
-        ///      &lt;h2&gt;{{table.Headline}}&lt;/h2&gt;
-        ///      {{table.TableContent}}
-        ///    {% endfor }
-        ///  &lt;/body&gt;
-        ///&lt;/html&gt;
-        ///.
+        ///    &lt;style type=&quot;text/css&quot;&gt;
+        ///      body {
+        ///        font-family: Arial, Helvetica;
+        ///      }
+        ///      
+        ///      table {
+        ///        border-collapse: collapse;
+        ///      }
+        ///
+        ///      td {
+        ///        border: 1px solid black;
+        ///        padding: 4px 10px 4px 10px;
+        ///      }
+        ///
+        ///      th {
+        ///        border: 1px solid black;
+        ///        padding: 4px 10px 4px 10px;
+        ///      }
+        ///
+        ///      br {
+        ///        mso-data-placement:same-cell;
+        ///      }
+        ///      
+        ///   [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SimpleReport_Template {
             get {

@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -27,7 +28,7 @@ namespace DatenMeister.WPF.Windows
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class DatenMeisterWindow : Window, IDatenMeisterWindow
+    public partial class DatenMeisterWindow : RibbonWindow, IDatenMeisterWindow
     {
         /// <summary>
         /// Stores the logger
@@ -105,26 +106,29 @@ namespace DatenMeister.WPF.Windows
         /// </summary>
         /// <param name="menuHeadline">Headline of the menu</param>
         /// <param name="menuLine">Menu that shall be added. This tab is required to have the click event already associated</param>
-        public void AddMenuEntry(string menuHeadline, MenuItem menuLine)
+        public void AddMenuEntry(string menuHeadline, UIElement menuItem)
         {
             // Search for a menuitem with the same name
-            MenuItem found = null;
+            RibbonTab found = null;
             foreach (var item in this.menuMain.Items)
             {
-                var menuItem = item as MenuItem;
-                if (menuItem.Header.ToString() == menuHeadline)
+                var ribbonTab = item as RibbonTab;
+                if (ribbonTab.Header.ToString() == menuHeadline)
                 {
-                    found = menuItem;
+                    found = ribbonTab;
                 }
             }
 
             // Not found, create a new item
             if (found == null)
             {
-                found = new MenuItem()
+                found = new RibbonTab()
                 {
                     Header = menuHeadline
                 };
+
+                var ribbonGroup = new RibbonGroup();
+                found.Items.Add(ribbonGroup);
 
                 // Inserts the new item into the main menu bar. 
                 // Last item is the "?"-Menu containing the about dialog. And it shall stay the last item
@@ -132,7 +136,7 @@ namespace DatenMeister.WPF.Windows
             }
 
             // Now create the item
-            found.Items.Add(menuLine);
+            (found.Items[0] as RibbonGroup).Items.Add(menuItem);
         }
 
         public void AssociateDetailOpenEvent(IObject view, Action<DetailOpenEventArgs> action)

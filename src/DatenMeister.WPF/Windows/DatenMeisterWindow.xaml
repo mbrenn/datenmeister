@@ -1,4 +1,4 @@
-﻿<Window xmlns:Controls="clr-namespace:DatenMeister.WPF.Controls" 
+﻿<RibbonWindow xmlns:Controls="clr-namespace:DatenMeister.WPF.Controls" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="DatenMeister.WPF.Windows.DatenMeisterWindow"
@@ -7,14 +7,31 @@
         Icon="../resources/icons.ico" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="358*"/>
-            <ColumnDefinition Width="159*"/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Menu HorizontalAlignment="Left" x:Name="menuMain">
+        <Ribbon x:Name="menuMain" ShowQuickAccessToolBarOnTop="False" >
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu>
+                    <RibbonApplicationMenuItem Header="New" Click="New_Click"/>
+                    <RibbonApplicationMenuItem Header="Load..." Click="Load_Click" />
+                    <RibbonApplicationMenuItem Header="Save" Click="Save_Click" />
+                    <RibbonApplicationMenuItem Header="Save As..." Click="SaveAs_Click" />
+                    <RibbonApplicationMenuItem Header="Export as Xml..." Click="ExportAsXml_Click" />
+                    <RibbonApplicationMenuItem Header="Exit" Click="Exit_Click" />
+                    <RibbonApplicationMenuItem Header="About (Licenses and Thanks to)..." Click="About_Click" />
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+            <RibbonTab Header="Export">
+                <RibbonGroup>
+                    <RibbonButton Label="Export as Xml..." Click="ExportAsXml_Click" />
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+        <!--<Menu HorizontalAlignment="Left" x:Name="menuMain">
             <MenuItem Header="File">
                 <MenuItem Header="New" Click="New_Click" />
                 <MenuItem Header="Load..." Click="Load_Click" />
@@ -28,8 +45,8 @@
             <MenuItem Header="?">
                 <MenuItem Header="About (Licenses and Thanks to)..." Click="About_Click"/>
             </MenuItem>
-        </Menu>
+        </Menu>-->
         <TabControl Grid.Row="1" Grid.ColumnSpan="2" x:Name="tabMain" FontSize="16">
         </TabControl>
     </Grid>
-</Window>
+</RibbonWindow>

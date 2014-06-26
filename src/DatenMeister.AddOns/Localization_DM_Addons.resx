@@ -131,6 +131,9 @@
   <data name="Menu_ExcelExport" xml:space="preserve">
     <value>Export to Excel...</value>
   </data>
+  <data name="Menu_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
   <data name="Menu_Extent" xml:space="preserve">
     <value>Extent</value>
   </data>

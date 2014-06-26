@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Windows
@@ -50,7 +51,7 @@ namespace DatenMeister.WPF.Windows
         /// <param name="menuHeadline">Headline of the menu</param>
         /// <param name="menuLine">Menu that shall be added</param>
         /// <param name="press"></param>
-        void AddMenuEntry(string menuHeadline, MenuItem menuLine);
+        void AddMenuEntry(string menuHeadline, UIElement menuLine);
 
         /// <summary>
         /// Associates a user-defined event, when the user doubleclicks on a detail field

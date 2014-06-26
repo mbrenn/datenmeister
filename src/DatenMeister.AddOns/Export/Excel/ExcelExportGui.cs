@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 
 namespace DatenMeister.AddOns.Export.Excel
 {
@@ -16,8 +17,8 @@ namespace DatenMeister.AddOns.Export.Excel
             Ensure.That(extentFactory != null);
             Ensure.That(wnd != null);
 
-            var menuItem = new MenuItem();
-            menuItem.Header = Localization_DM_Addons.Menu_ExcelExport;
+            var menuItem = new RibbonButton();
+            menuItem.Label = Localization_DM_Addons.Menu_ExcelExport;
             menuItem.Click += (x, y) =>
                 {
                     var dlg = new Microsoft.Win32.SaveFileDialog();
@@ -34,7 +35,7 @@ namespace DatenMeister.AddOns.Export.Excel
                     }
                 };
 
-            wnd.AddMenuEntry(Localization_DM_Addons.Menu_Extent, menuItem);
+            wnd.AddMenuEntry(Localization_DM_Addons.Menu_Export, menuItem);
         }
     }
 }

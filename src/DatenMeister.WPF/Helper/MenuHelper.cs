@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 
 namespace DatenMeister.WPF.Helper
 {
@@ -33,8 +34,8 @@ namespace DatenMeister.WPF.Helper
         /// <param name="window">Window which sall be used</param>
         public static void AddExtentView(IDatenMeisterWindow window, IURIExtent extentView)
         {
-            var menuItem = new MenuItem();
-            menuItem.Header = Localization_DatenMeister_WPF.Menu_ViewExtents;
+            var menuItem = new RibbonButton();
+            menuItem.Label = Localization_DatenMeister_WPF.Menu_ViewExtents;
             menuItem.Click += (x, y) =>
                 {
                     // Creates the view for the extents
