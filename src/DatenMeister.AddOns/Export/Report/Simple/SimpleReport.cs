@@ -60,6 +60,7 @@ namespace DatenMeister.AddOns.Export.Report.Simple
                 Hash.FromAnonymousObject(
                     new { 
                         Created = DateTime.Now.ToString(),
+                        CreatedBy = Environment.UserName,
                         Tables = tables}));
 
             File.WriteAllText(path, templateContent);
