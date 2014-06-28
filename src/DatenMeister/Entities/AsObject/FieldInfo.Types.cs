@@ -63,6 +63,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
             {
                 var type = new DatenMeister.Entities.UML.Type();
+                type.name = "MultiReferenceField";
+                Types.MultiReferenceField = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                extent.Elements().add(Types.MultiReferenceField);
+            }
+
+            {
+                var type = new DatenMeister.Entities.UML.Type();
                 type.name = "View";
                 Types.View = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.View);
@@ -101,6 +108,8 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject ReferenceByRef;
 
+        public static DatenMeister.IObject MultiReferenceField;
+
         public static DatenMeister.IObject View;
 
         public static DatenMeister.IObject FormView;
@@ -118,6 +127,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceBase), Types.ReferenceBase);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByValue), Types.ReferenceByValue);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByRef), Types.ReferenceByRef);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.MultiReferenceField), Types.MultiReferenceField);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.View), Types.View);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.FormView), Types.FormView);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TableView), Types.TableView);

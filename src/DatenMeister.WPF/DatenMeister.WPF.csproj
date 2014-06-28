@@ -60,6 +60,9 @@
     <Compile Include="Controls\EntityTableControl.xaml.cs">
       <DependentUpon>EntityTableControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GuiElements\Elements\WpfMultiReferenceFieldElement.xaml.cs">
+      <DependentUpon>WpfMultiReferenceFieldElement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\GuiElements\IFocusable.cs" />
     <Compile Include="Controls\GuiElements\WPFCheckbox.cs" />
     <Compile Include="Controls\GuiElements\WPFComment.cs" />
@@ -68,6 +71,7 @@
     <Compile Include="Controls\GuiElements\WpfDropDownSettings.cs" />
     <Compile Include="Controls\GuiElements\WPFElementMapping.cs" />
     <Compile Include="Controls\GuiElements\IWPFElementGenerator.cs" />
+    <Compile Include="Controls\GuiElements\WpfMultiReferenceField.cs" />
     <Compile Include="Controls\GuiElements\WPFTextField.cs" />
     <Compile Include="Controls\IDataPresentationState.cs" />
     <Compile Include="Helper\ApplicationCore.cs" />
@@ -99,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\EntityTableControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\GuiElements\Elements\WpfMultiReferenceFieldElement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -44,6 +44,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 return new WpfDropDownByRef();
             }
 
+            if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.MultiReferenceField)
+            {
+                return new WpfMultiReferenceField();
+            }
+
             throw new NotImplementedException(metaClass.get("name")  + " is not a known WPF Element");
         }
     }

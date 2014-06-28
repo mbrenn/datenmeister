@@ -31,6 +31,7 @@ types = [
          DatenMeister.Entities.FieldInfos.ReferenceBase,
          DatenMeister.Entities.FieldInfos.ReferenceByValue,
          DatenMeister.Entities.FieldInfos.ReferenceByRef,
+         DatenMeister.Entities.FieldInfos.MultiReferenceField,
          DatenMeister.Entities.FieldInfos.View,
          DatenMeister.Entities.FieldInfos.FormView,
          DatenMeister.Entities.FieldInfos.TableView]

@@ -503,6 +503,76 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     })(exports.ReferenceByRef || (exports.ReferenceByRef = {}));
     var ReferenceByRef = exports.ReferenceByRef;
 
+    (function (MultiReferenceField) {
+        MultiReferenceField.TypeName = 'MultiReferenceField';
+
+        function create(name, binding) {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'MultiReferenceField');
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
+            }
+
+            return result;
+        }
+        MultiReferenceField.create = create;
+
+        function getPropertyValue(item) {
+            return item.get('propertyValue');
+        }
+        MultiReferenceField.getPropertyValue = getPropertyValue;
+
+        function setPropertyValue(item, value) {
+            item.set('propertyValue', value);
+        }
+        MultiReferenceField.setPropertyValue = setPropertyValue;
+
+        function getReferenceUrl(item) {
+            return item.get('referenceUrl');
+        }
+        MultiReferenceField.getReferenceUrl = getReferenceUrl;
+
+        function setReferenceUrl(item, value) {
+            item.set('referenceUrl', value);
+        }
+        MultiReferenceField.setReferenceUrl = setReferenceUrl;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        MultiReferenceField.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        MultiReferenceField.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        MultiReferenceField.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        MultiReferenceField.setBinding = setBinding;
+
+        function isReadOnly(item) {
+            return item.get('isReadOnly');
+        }
+        MultiReferenceField.isReadOnly = isReadOnly;
+
+        function setReadOnly(item, value) {
+            item.set('isReadOnly', value);
+        }
+        MultiReferenceField.setReadOnly = setReadOnly;
+    })(exports.MultiReferenceField || (exports.MultiReferenceField = {}));
+    var MultiReferenceField = exports.MultiReferenceField;
+
     (function (View) {
         View.TypeName = 'View';
 
