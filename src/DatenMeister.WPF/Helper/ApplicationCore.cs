@@ -123,7 +123,6 @@ namespace DatenMeister.WPF.Helper
 
             var pool = Global.Application.Get<IPool>();
             pool.Add(this.applicationData, null, "Application data");
-
         }
 
         /// <summary>
