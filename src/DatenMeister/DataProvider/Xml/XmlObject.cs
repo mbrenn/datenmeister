@@ -77,7 +77,7 @@ namespace DatenMeister.DataProvider.Xml
         {
             var result = value;
             // var result = this.Extent.Pool.Resolve(this, value);
-            if (result != null && !(result is IResolvable))
+            if (result != null)
             {
                 result = new XmlUnspecified(this, propertyName, result);
             }
