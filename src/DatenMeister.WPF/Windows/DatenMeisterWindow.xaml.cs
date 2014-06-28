@@ -284,8 +284,16 @@ namespace DatenMeister.WPF.Windows
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            if (this.DoesUserWantsToSaveData())
+            var userResult = this.DoesUserWantsToSaveData();
+            if ( userResult == null )
             {
+                // User had cancelled the action
+                return;
+            }
+
+            if (userResult == true)
+            {
+                // User wants to save
                 this.SaveChanges();
             }
 
@@ -415,8 +423,9 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Does the user wants to save the data
         /// </summary>
-        /// <returns>true, if user wants to save the data</returns>
-        private bool DoesUserWantsToSaveData()
+        /// <returns>true, if user wants to save the data. 
+        /// Null</returns>
+        private bool? DoesUserWantsToSaveData()
         {
             if (!this.Settings.ProjectExtent.IsDirty)
             {
@@ -424,25 +433,37 @@ namespace DatenMeister.WPF.Windows
                 return false;
             }
 
-            if (MessageBox.Show(
+            switch(MessageBox.Show(
                    this,
                    Localization_DatenMeister_WPF.QuestionSaveChanges,
                    Localization_DatenMeister_WPF.QuestionSaveChangesTitle,
-                   MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                   MessageBoxButton.YesNoCancel))
             {
-                // Content is dirty and user wants to save 
-                return true;
+                case  MessageBoxResult.Yes:
+                    // Content is dirty and user wants to save 
+                    return true;
+                case MessageBoxResult.No:
+                    return false;
+                case MessageBoxResult.Cancel:
+                    return null;
             }
 
             // Content is dirty and user does not want to save it
-            return false;
+            return null;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (this.DoesUserWantsToSaveData())
+            switch(this.DoesUserWantsToSaveData())
             {
-                this.SaveChanges();
+                case true:
+                    this.SaveChanges();
+                    break;
+                case false:
+                    break;
+                case null:
+                    e.Cancel = true;
+                    break;
             }
         }
 
