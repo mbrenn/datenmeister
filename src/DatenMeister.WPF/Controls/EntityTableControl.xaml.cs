@@ -161,6 +161,7 @@ namespace DatenMeister.WPF.Controls
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
             this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            this.buttonOk.Visibility = System.Windows.Visibility.Collapsed;
 
             foreach (var fieldInfo in this.tableViewInfo.getFieldInfos().AsEnumeration().Select (x=> x.AsSingle().AsIObject()))
             {
@@ -218,9 +219,13 @@ namespace DatenMeister.WPF.Controls
             this.DeleteCurrentlySelected();
         }
 
-        private void reloadDelete_Click(object sender, RoutedEventArgs e)
+        private void buttonReload_Click(object sender, RoutedEventArgs e)
         {
             this.RefreshItems();
+        }
+
+        private void ok_Click(object sender, RoutedEventArgs e)
+        {
         }
 
         private void gridContent_MouseDoubleClick(object sender, MouseButtonEventArgs e)
