@@ -37,7 +37,7 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private Func<IPool, IReflectiveCollection> elementsFactory;
 
-        public IDatenMeisterWindow MainWindow
+        public IDatenMeisterSettings Settings
         {
             get;
             set;
@@ -60,7 +60,11 @@ namespace DatenMeister.WPF.Controls
 
         public Func<IPool, IReflectiveCollection> ElementsFactory
         {
-            get { return this.elementsFactory; }
+            get
+            {
+                return this.elementsFactory;
+            }
+
             set
             {
                 this.elementsFactory = value;
@@ -142,7 +146,7 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Does the relayout
         /// </summary>
-        private void Relayout()
+        public void Relayout()
         {
             if (this.tableViewInfo == null)
             {
@@ -175,14 +179,16 @@ namespace DatenMeister.WPF.Controls
             this.RefreshItems();
         }
 
+        /// <summary>
+        /// Gets the elements as a reflective collection
+        /// </summary>
+        /// <returns>The reflective collection</returns>
         public IReflectiveCollection GetElements()
         {
-            if (this.ElementsFactory != null)
-            {
-                return this.ElementsFactory(this.MainWindow.Settings.Pool);
-            }
-
-            throw new InvalidOperationException("ElementFactory and ExtentFactory are not set");
+            Ensure.That(this.ElementsFactory != null, "No Elementsfactory is set");
+            Ensure.That(this.Settings != null, "Settings for DatenMeister are not set");
+         
+            return this.ElementsFactory(this.Settings.Pool);
         }
 
         /// <summary>
@@ -190,9 +196,7 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public void RefreshItems()
         {
-            if (this.ElementsFactory != null && 
-                this.MainWindow != null &&
-                this.MainWindow.Settings.ProjectExtent != null)
+            if (this.ElementsFactory != null)
             {
                 var elements = this.GetElements().Select(x => new ObjectDictionaryForView(x.AsIObject())).ToList();
                 this.gridContent.ItemsSource = elements;
@@ -232,7 +236,7 @@ namespace DatenMeister.WPF.Controls
                 return;
             }
 
-            var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.GetElements(), this.DetailViewInfo);
+            var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.GetElements(), this.Settings, this.DetailViewInfo);
             Ensure.That(dialog != null);
             dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
         }
@@ -273,7 +277,11 @@ namespace DatenMeister.WPF.Controls
 
                 Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
 
-                var dialog = DetailDialog.ShowDialogFor(selectedItem.Value, this.DetailViewInfo, readOnly);
+                var dialog = DetailDialog.ShowDialogFor(
+                    selectedItem.Value, 
+                    this.Settings, 
+                    this.DetailViewInfo, 
+                    readOnly);
 
                 if (dialog == null)
                 {

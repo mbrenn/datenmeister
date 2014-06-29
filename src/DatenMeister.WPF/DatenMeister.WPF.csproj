@@ -74,6 +74,9 @@
     <Compile Include="Controls\GuiElements\WpfMultiReferenceField.cs" />
     <Compile Include="Controls\GuiElements\WPFTextField.cs" />
     <Compile Include="Controls\IDataPresentationState.cs" />
+    <Compile Include="Controls\ListDialog.xaml.cs">
+      <DependentUpon>ListDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helper\ApplicationCore.cs" />
     <Compile Include="Helper\DataGridHelper.cs" />
     <Compile Include="Helper\MenuHelper.cs" />
@@ -107,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\GuiElements\Elements\WpfMultiReferenceFieldElement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ListDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

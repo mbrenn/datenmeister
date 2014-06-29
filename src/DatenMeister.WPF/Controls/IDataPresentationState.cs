@@ -32,5 +32,10 @@ namespace DatenMeister.WPF.Controls
         {
             get;
         }
+
+        IDatenMeisterSettings Settings
+        {
+            get;
+        }
     }
 }

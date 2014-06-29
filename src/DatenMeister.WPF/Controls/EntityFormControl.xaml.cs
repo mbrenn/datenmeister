@@ -80,6 +80,12 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private FormView formView;
 
+        public IDatenMeisterSettings Settings
+        {
+            get;
+            set;
+        }
+
         public IPool Pool
         {
             get;
@@ -145,6 +151,8 @@ namespace DatenMeister.WPF.Controls
         {
             this.Relayout();
 
+            Ensure.That(this.Settings != null);
+
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 Ensure.That(this.Extent != null, "Extent has not been set");
@@ -154,7 +162,7 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Does the relayout
         /// </summary>
-        private void Relayout()
+        public void Relayout()
         {
             this.wpfElements.Clear();
 

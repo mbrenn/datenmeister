@@ -66,16 +66,21 @@ namespace DatenMeister.WPF.Windows
         {
             this.InitializeComponent();
 
-            var width = this.Width;
-            var height = this.Height;
+            AutosetWindowSize(this);
+        }
 
-            var newWidth = System.Windows.SystemParameters.PrimaryScreenWidth / 2;
-            var newHeight = System.Windows.SystemParameters.PrimaryScreenHeight / 2;
+        public static void AutosetWindowSize(Window wnd, double ratio = 1.0)
+        {
+            var width = wnd.Width;
+            var height = wnd.Height;
 
-            this.Left -= newWidth / 2;
-            this.Top -= newHeight / 2;
-            this.Width = newWidth;
-            this.Height = newHeight;
+            var newWidth = System.Windows.SystemParameters.PrimaryScreenWidth / 2 * ratio;
+            var newHeight = System.Windows.SystemParameters.PrimaryScreenHeight / 2 * ratio;
+
+            wnd.Left -= newWidth / 2;
+            wnd.Top -= newHeight / 2;
+            wnd.Width = newWidth;
+            wnd.Height = newHeight;
         }
 
         public DatenMeisterWindow(ApplicationCore core)
@@ -189,10 +194,10 @@ namespace DatenMeister.WPF.Windows
 
                 // Creates the list control
                 var entityList = new EntityTableControl();
-                entityList.MainWindow = this;
+                entityList.Settings = this.Settings;
                 entityList.ElementsFactory = (x) =>
                     {
-                        return this.Settings.Pool.ResolveByPath(extentUri).AsReflectiveCollection();
+                        return x.ResolveByPath(extentUri).AsReflectiveCollection();
                     };
 
                 entityList.TableViewInfo = tableViewInfo;

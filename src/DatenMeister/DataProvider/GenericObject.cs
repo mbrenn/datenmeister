@@ -26,6 +26,11 @@ namespace DatenMeister.DataProvider
         public GenericObject(IURIExtent extent = null, string id = null)
         {
             this.owner = extent;
+            if (this.owner == null)
+            {
+                this.owner = GenericExtent.Global;
+            }
+
             this.id = id;
         }
 

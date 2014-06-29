@@ -8,6 +8,27 @@ namespace DatenMeister.DataProvider
 {
     public class GenericExtent: IURIExtent
     {
+        #region Static instance
+
+        /// <summary>
+        /// Gets or sets the global generic extent
+        /// </summary>
+        public static GenericExtent Global
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Initializes the class
+        /// </summary>
+        static GenericExtent()
+        {
+            Global = new GenericExtent("http:///datenmeister_genericextent");
+        }
+
+        #endregion
+
         /// <summary>
         /// Stores the uri
         /// </summary>

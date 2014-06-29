@@ -85,11 +85,11 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
         /// Gets all reference objects that the user can select
         /// </summary>
         /// <returns>Enumeration of the referenced object</returns>
-        public IEnumerable<IObject> GetReferenceObjects()
+        public IReflectiveCollection GetReferenceObjects()
         {
             var poolResolver = Global.Application.Get<IPoolResolver>();
             Ensure.That(poolResolver != null);
-            return poolResolver.Resolve(this.field.FieldInfo.getReferenceUrl(), this.field.DetailObject).AsEnumeration<IObject>();
+            return poolResolver.Resolve(this.field.FieldInfo.getReferenceUrl(), this.field.DetailObject).AsReflectiveCollection();
         }
 
         /// <summary>
@@ -146,6 +146,29 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
             {
                 return this.Text;
             }
+        }
+
+        private void btnAddElement_Click(object sender, RoutedEventArgs e)
+        {
+            var listForm = new ListDialog();
+            listForm.Show();
+            listForm.SetReflectiveCollection(this.GetReferenceObjects(), this.field.State.Settings);
+
+            if (listForm.DialogResult == true)
+            {
+                // Add the entities
+
+            }
+        }
+
+        private void btnDeleteElement_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

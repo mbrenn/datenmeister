@@ -22,9 +22,9 @@
                     <Setter Property="Label.FontSize" Value="14" />
                 </Style>
             </StackPanel.Resources>
-            <Button x:Name="btnAddElement" Style="{StaticResource TouchButton}">Add...</Button>
-            <Button x:Name="btnDeleteElement" Style="{StaticResource TouchButton}">Delete...</Button>
-            <Button x:Name="btnClear" Style="{StaticResource TouchButton}">Clear</Button>
+            <Button x:Name="btnAddElement" Style="{StaticResource TouchButton}" Click="btnAddElement_Click">Add...</Button>
+            <Button x:Name="btnDeleteElement" Style="{StaticResource TouchButton}" Click="btnDeleteElement_Click">Delete</Button>
+            <Button x:Name="btnClear" Style="{StaticResource TouchButton}" Click="btnClear_Click">Clear</Button>
         </StackPanel>
     </StackPanel>
 </UserControl>
