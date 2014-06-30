@@ -59,7 +59,7 @@ namespace DatenMeister.Logic.Views
             var propertyNames = collection.GetConsolidatedPropertyNames();
             if (orderByName == true)
             {
-                propertyNames = propertyNames.OrderBy(x => x);
+                propertyNames = propertyNames.OrderBy(x => x.ToLower() == "id" ? string.Empty : x);
             }
 
             foreach (var name in propertyNames)
