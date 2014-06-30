@@ -62,7 +62,8 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
                     collection.Select(x =>
                     {
                         var asObject = x.AsIObject();
-                        return asObject.get(this.field.FieldInfo.getPropertyValue()).AsSingle().ToString();
+                        var text = asObject.get(this.field.FieldInfo.getPropertyValue()).AsSingle().ToString();
+                        return new ElementInList(asObject, text);
                     });
             }
         }
@@ -168,12 +169,18 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
 
         private void btnDeleteElement_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var item in this.listElements.SelectedItems.Cast<ElementInList>().Select(x => x.Object))
+            {
+                this.GetObjectProperty().remove(item);
+            }
 
+            this.RefreshData();
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-
+            this.GetObjectProperty().clear();
+            this.RefreshData();
         }
     }
 }
