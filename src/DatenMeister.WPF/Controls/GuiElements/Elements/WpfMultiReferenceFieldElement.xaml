@@ -10,7 +10,7 @@
             <Label FontStyle="Italic" FontSize="16">No items in list</Label>
         </StackPanel>
         <StackPanel x:Name="panelHasElements">
-            <ListBox Height="100" x:Name="listElements">
+            <ListBox Height="75" x:Name="listElements">
             </ListBox>
         </StackPanel>
 
