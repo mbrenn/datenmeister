@@ -25,6 +25,7 @@ namespace DatenMeister.AddOns.Views
         {
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_TypeManager;
+            menuItem.LargeImageSource = AddOnHelper.LoadIcon("emblem-package.png");
             menuItem.Click += (x, y) =>
                 {
                     Ensure.That(window.Settings.TypeExtent != null, "No Type extent has been defined");

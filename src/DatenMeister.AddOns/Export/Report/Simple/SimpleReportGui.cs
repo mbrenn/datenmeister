@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 
 namespace DatenMeister.AddOns.Export.Report.Simple
 {
@@ -16,8 +17,9 @@ namespace DatenMeister.AddOns.Export.Report.Simple
     {
         public static void Integrate(IDatenMeisterWindow window)
         {
-            var menuItem = new MenuItem();
-            menuItem.Header = Localization_DM_Addons.Menu_SimpleReport;
+            var menuItem = new RibbonButton();
+            menuItem.Label = Localization_DM_Addons.Menu_SimpleReport;
+            menuItem.LargeImageSource = AddOnHelper.LoadIcon("x-office-document.png");
             menuItem.Click += (x, y) =>
                 {
                     var gui = new SimpleReportGui();

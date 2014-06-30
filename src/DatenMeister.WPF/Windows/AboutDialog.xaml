@@ -25,12 +25,15 @@
                     <LineBreak />
                     Thanks to the OMG Community (http://www.omg.org) which is the base for the complete DatenMeister application. <LineBreak />
                     <LineBreak />
-                    Thanks to NPOI (http://npoi.googlecode.com), which is used for Excel-Export and Import and is licensed under the Apache-License, Version 2.0 (see below). <LineBreak />
+                    Thanks to NPOI (http://npoi.googlecode.com), which is used for Excel-Export and Import and is licensed under the Apache License, Version 2.0 (see below). <LineBreak />
                     <LineBreak />
                     Thanks to NUnit (http://www.nunit.org), which is used for Software Unit-Testing during development.<LineBreak />
                     <LineBreak />
                     Thanks to Newtonsoft.Json (http://james.newtonking.com/json), which is used for Json Import and Export.<LineBreak />
-                
+                    <LineBreak />
+                    Thanks to DotLiquid (http://dotliquidmarkup.org/), which is used for Html export und is licensed under the Apache License, Version 2.0.<LineBreak />
+                    <LineBreak />
+                    Thanks to Gnome Icon Theme (http://ftp.gnome.org/pub/GNOME/sources/gnome-icon-theme/3.12/), which is used for the icons.
                     <LineBreak />
                      ====================================================================<LineBreak />
                 Apache Licence, Version 2.0: <LineBreak />

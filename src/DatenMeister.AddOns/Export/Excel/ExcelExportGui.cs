@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace DatenMeister.AddOns.Export.Excel
 {
@@ -19,6 +21,8 @@ namespace DatenMeister.AddOns.Export.Excel
 
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_ExcelExport;
+            menuItem.LargeImageSource = AddOnHelper.LoadIcon("x-office-spreadsheet.png");
+
             menuItem.Click += (x, y) =>
                 {
                     var dlg = new Microsoft.Win32.SaveFileDialog();
