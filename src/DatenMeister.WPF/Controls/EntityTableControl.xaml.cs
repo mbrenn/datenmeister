@@ -254,6 +254,15 @@ namespace DatenMeister.WPF.Controls
 
         private void ok_Click(object sender, RoutedEventArgs e)
         {
+            this.AcceptSelectedElements(e);
+        }
+
+        /// <summary>
+        /// Accepts the selected elements 
+        /// </summary>
+        /// <param name="e"></param>
+        private void AcceptSelectedElements(RoutedEventArgs e)
+        {
             var selectedItems = this.gridContent.SelectedItems;
 
             this.SelectedElements = selectedItems.Cast<ObjectDictionaryForView>().Select(x => x.Value).ToArray();
@@ -267,7 +276,14 @@ namespace DatenMeister.WPF.Controls
 
         private void gridContent_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            this.ShowDetailDialog();
+            if (this.UseAsSelectionControl)
+            {
+                this.AcceptSelectedElements(e);
+            }
+            else
+            {
+                this.ShowDetailDialog();
+            }
         }
 
         private void ShowNewDialog()
