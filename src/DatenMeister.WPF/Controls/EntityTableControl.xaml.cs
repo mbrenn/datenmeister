@@ -37,11 +37,28 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private Func<IPool, IReflectiveCollection> elementsFactory;
 
+        /// <summary>
+        /// Gets or sets the value whether the table control shall be used
+        /// as a selection control. 
+        /// If true, the buttons for modification will be removed, but the 
+        /// OK-button will be added
+        /// </summary>
+        public bool UseAsSelectionControl
+        {
+            get;
+            set;
+        }
+
         public IDatenMeisterSettings Settings
         {
             get;
             set;
         }
+
+        /// <summary>
+        /// This event handler is executed, when user clicked on the ok button
+        /// </summary>
+        public event EventHandler OkClicked;
 
         /// <summary>
         /// Defines the extent that shall be shown
@@ -131,6 +148,16 @@ namespace DatenMeister.WPF.Controls
             set;
         }
 
+        /// <summary>
+        /// Stores the selected elements, when the user clicked on 
+        /// the "OK" Button
+        /// </summary>
+        public IEnumerable<IObject> SelectedElements
+        {
+            get;
+            set;
+        }
+
         public EntityTableControl()
         {
             InitializeComponent();
@@ -155,13 +182,14 @@ namespace DatenMeister.WPF.Controls
             }
 
             // Checks status of buttons
-            this.buttonNew.Visibility = this.tableViewInfo.getAllowNew() ?
+            this.buttonNew.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonEdit.Visibility = this.tableViewInfo.getAllowEdit() ?
+            this.buttonEdit.Visibility = this.tableViewInfo.getAllowEdit() && !this.UseAsSelectionControl ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() ?
+            this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() && !this.UseAsSelectionControl ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonOk.Visibility = System.Windows.Visibility.Collapsed;
+            this.buttonOk.Visibility = this.UseAsSelectionControl ? 
+                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
             foreach (var fieldInfo in this.tableViewInfo.getFieldInfos().AsEnumeration().Select (x=> x.AsSingle().AsIObject()))
             {
@@ -226,6 +254,15 @@ namespace DatenMeister.WPF.Controls
 
         private void ok_Click(object sender, RoutedEventArgs e)
         {
+            var selectedItems = this.gridContent.SelectedItems;
+
+            this.SelectedElements = selectedItems.Cast<ObjectDictionaryForView>().Select(x => x.Value).ToArray();
+
+            var ev = this.OkClicked;
+            if (ev != null)
+            {
+                ev(this, e);
+            }
         }
 
         private void gridContent_MouseDoubleClick(object sender, MouseButtonEventArgs e)

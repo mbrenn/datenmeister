@@ -33,6 +33,15 @@ namespace DatenMeister.WPF.Controls
             private set;
         }
 
+        /// <summary>
+        /// Stores the selected elements, when the user clicked on 
+        /// the "OK" Button
+        /// </summary>
+        public IEnumerable<IObject> SelectedElements
+        {
+            get { return this.Table.SelectedElements; }
+        }
+
         public ListDialog()
         {
             this.InitializeComponent();
@@ -43,6 +52,7 @@ namespace DatenMeister.WPF.Controls
             this.ViewInformation.setAllowDelete(false);
             this.ViewInformation.setAllowEdit(false);
             this.ViewInformation.setAllowNew(false);
+            this.Table.UseAsSelectionControl = true;
 
             DatenMeisterWindow.AutosetWindowSize(this, 0.88);
         }
@@ -61,6 +71,11 @@ namespace DatenMeister.WPF.Controls
             this.Table.ElementsFactory = (x) => elements;
 
             this.Table.Relayout();
+        }
+
+        private void Table_OkClicked(object sender, EventArgs e)
+        {
+            this.DialogResult = true;
         }
     }
 }

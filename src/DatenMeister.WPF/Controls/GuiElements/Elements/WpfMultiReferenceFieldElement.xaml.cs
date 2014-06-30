@@ -151,13 +151,18 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
         private void btnAddElement_Click(object sender, RoutedEventArgs e)
         {
             var listForm = new ListDialog();
-            listForm.Show();
             listForm.SetReflectiveCollection(this.GetReferenceObjects(), this.field.State.Settings);
+            listForm.ShowDialog();
 
             if (listForm.DialogResult == true)
             {
                 // Add the entities
+                foreach (var item in listForm.SelectedElements)
+                {
+                    this.GetObjectProperty().add(item);
+                }
 
+                this.RefreshData();
             }
         }
 
