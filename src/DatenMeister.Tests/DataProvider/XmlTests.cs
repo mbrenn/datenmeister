@@ -255,6 +255,66 @@ namespace DatenMeister.Tests.DataProvider
         }
 
         [Test]
+        public void TestGetReflectiveCollectionWithReferences()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" reference-ref=\"#e1 #e2\" />" +
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+
+            var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
+            Assert.That(valueE4, Is.Not.Null);
+
+            var refValue = valueE4.get("reference").AsReflectiveCollection();
+            Assert.That(refValue, Is.Not.Null);
+            Assert.That(refValue.Count, Is.EqualTo(2));
+
+            Assert.That(refValue.Any(x => x.AsIObject().Id == "e1"), Is.True);
+            Assert.That(refValue.Any(x => x.AsIObject().Id == "e2"), Is.True);
+        }
+
+        [Test]
+        public void TestGetAndSetReflectiveCollectionWithReferences()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<element id=\"e1\" />" +
+                    "<element id=\"e2\" />" +
+                    "<element id=\"e4\" />" +
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+
+            var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
+            Assert.That(valueE4, Is.Not.Null);
+
+            var refValue = valueE4.get("reference").AsReflectiveCollection();
+            Assert.That(refValue, Is.Not.Null);
+            Assert.That(refValue.Count, Is.EqualTo(0));
+            refValue.add(pool.ResolveByPath("test:///#e1") as IObject);
+            Assert.That(refValue.Count, Is.EqualTo(1));
+            refValue.add(pool.ResolveByPath("test:///#e2") as IObject);
+            Assert.That(refValue.Count, Is.EqualTo(2));
+
+            Assert.That(refValue.Any(x => x.AsIObject().Id == "e1"), Is.True);
+            Assert.That(refValue.Any(x => x.AsIObject().Id == "e2"), Is.True);
+
+            var xmlAttribute = (valueE4 as XmlObject).Node.Attribute("reference-ref");
+            Assert.That(xmlAttribute, Is.Not.Null);
+            Assert.That(xmlAttribute.Value, Is.EqualTo("#e1 #e2"));
+        }
+
+        [Test]
         public void TestReflectiveSequence()
         {
             var document = XDocument.Parse(

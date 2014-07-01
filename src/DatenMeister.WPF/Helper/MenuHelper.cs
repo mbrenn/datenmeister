@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
+using System.Windows.Media.Imaging;
 
 namespace DatenMeister.WPF.Helper
 {
@@ -36,6 +37,8 @@ namespace DatenMeister.WPF.Helper
         {
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DatenMeister_WPF.Menu_ViewExtents;
+            menuItem.LargeImageSource = LoadIcon("emblem-documents.png");
+
             menuItem.Click += (x, y) =>
                 {
                     // Creates the view for the extents
@@ -80,6 +83,16 @@ namespace DatenMeister.WPF.Helper
                 };
 
             window.AddMenuEntry(Localization_DatenMeister_WPF.Menu_View, menuItem);
+        }
+
+        public static BitmapImage LoadIcon(string iconFilename)
+        {
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource =
+                        new Uri("pack://application:,,,/DatenMeister.WPF;component/resources/icons/" + iconFilename);
+            image.EndInit();
+            return image;
         }
     }
 }

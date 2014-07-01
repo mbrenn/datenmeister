@@ -99,27 +99,7 @@ namespace DatenMeister.WPF.Helper
 
             this.LoadApplicationData();
 
-            var viewFactory = Factory.GetFor(settings.ViewExtent);
-            this.ViewRecentObjects = viewFactory.create(
-                DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setName(this.ViewRecentObjects, "Recent Files");
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowEdit(this.ViewRecentObjects, false);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowNew(this.ViewRecentObjects, false);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(this.ViewRecentObjects, true);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(this.ViewRecentObjects, uri);
-
-            var fieldInfos = this.ViewRecentObjects.get("fieldInfos").AsReflectiveSequence();
-            var textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
-            DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "name");
-            DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Name");
-            fieldInfos.add(textField);
-
-            textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
-            DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "filePath");
-            DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Storage Path");
-            fieldInfos.add(textField);
-
-            settings.ViewExtent.Elements().Insert(0, this.ViewRecentObjects);
+            this.AddViewForRecentFiles(settings);
 
             var pool = Global.Application.Get<IPool>();
             pool.Add(this.applicationData, null, "Application data");
@@ -174,6 +154,8 @@ namespace DatenMeister.WPF.Helper
             GC.SuppressFinalize(this);
         }
 
+        #region Support for recent files
+
         /// <summary>
         /// Adds a file to the recent file list. 
         /// If the file is already available, it won't be added
@@ -196,5 +178,32 @@ namespace DatenMeister.WPF.Helper
             DatenMeister.Entities.AsObject.DM.RecentProject.setCreated(recentProject, DateTime.Now);
             DatenMeister.Entities.AsObject.DM.RecentProject.setName(recentProject, name);
         }
+
+        private void AddViewForRecentFiles(IDatenMeisterSettings settings)
+        {
+            var viewFactory = Factory.GetFor(settings.ViewExtent);
+            this.ViewRecentObjects = viewFactory.create(
+                DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setName(this.ViewRecentObjects, "Recent Files");
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowEdit(this.ViewRecentObjects, false);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowNew(this.ViewRecentObjects, false);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(this.ViewRecentObjects, true);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(this.ViewRecentObjects, uri);
+
+            var fieldInfos = this.ViewRecentObjects.get("fieldInfos").AsReflectiveSequence();
+            var textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
+            DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "name");
+            DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Name");
+            fieldInfos.add(textField);
+
+            textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
+            DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "filePath");
+            DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Storage Path");
+            fieldInfos.add(textField);
+
+            settings.ViewExtent.Elements().Insert(0, this.ViewRecentObjects);
+        }
+
+        #endregion
     }
 }

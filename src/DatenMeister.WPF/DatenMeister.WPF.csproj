@@ -145,6 +145,24 @@
   <ItemGroup>
     <Resource Include="resources\icons.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icons\application-exit.png" />
+    <Resource Include="resources\icons\dialog-question.png" />
+    <Resource Include="resources\icons\document-new.png" />
+    <Resource Include="resources\icons\document-open.png" />
+    <Resource Include="resources\icons\document-save-as.png" />
+    <Resource Include="resources\icons\document-save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icons\emblem-downloads.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icons\emblem-downloads.48.png" />
+    <Resource Include="resources\icons\x-office-spreadsheet.48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icons\emblem-documents.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

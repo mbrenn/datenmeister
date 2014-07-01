@@ -726,6 +726,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("height", value);
         }
 
+        public System.Boolean isMultiline()
+        {
+            return isMultiline(this);
+        }
+
+        public void setMultiline(System.Boolean value)
+        {
+            setMultiline(this, value);
+        }
+
+        public static System.Boolean isMultiline(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("isMultiline"));
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+        }
+
+        public static void setMultiline(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("isMultiline", value);
+        }
+
         public System.String getName()
         {
             return getName(this);

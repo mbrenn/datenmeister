@@ -28,5 +28,14 @@ namespace DatenMeister.Entities.FieldInfos
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the value whether the text box shall be shown as a multiline item. 
+        /// </summary>
+        public bool isMultiline
+        {
+            get;
+            set;
+        }
     }
 }
