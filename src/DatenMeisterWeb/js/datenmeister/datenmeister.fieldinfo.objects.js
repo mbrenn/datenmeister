@@ -197,6 +197,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         TextField.setHeight = setHeight;
 
+        function isMultiline(item) {
+            return item.get('isMultiline');
+        }
+        TextField.isMultiline = isMultiline;
+
+        function setMultiline(item, value) {
+            item.set('isMultiline', value);
+        }
+        TextField.setMultiline = setMultiline;
+
         function getName(item) {
             return item.get('name');
         }

@@ -175,6 +175,14 @@ export module TextField {
         item.set('height', value);
     }
 
+    export function isMultiline(item: __d__.JsonExtentObject) {
+        return item.get('isMultiline');
+    }
+
+    export function setMultiline(item : __d__.JsonExtentObject, value: any) {
+        item.set('isMultiline', value);
+    }
+
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
     }

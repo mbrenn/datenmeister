@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,18 @@ namespace DatenMeister.WPF.Controls.GuiElements
             textBox.FontSize = 16;
             textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
 
+            if ( textFieldObj.isMultiline() )
+            {
+                textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Top;
+                textBox.AcceptsReturn = true;
+                textBox.Height = 100;
+            }
+
             if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
             {
                 var fieldName = textFieldObj.getBinding().ToString();
                 var propertyValue = detailObject.get(fieldName);
-                if (propertyValue != null)
+                if (propertyValue != null && propertyValue != ObjectHelper.NotSet)
                 {
                     textBox.Text = propertyValue.AsSingle().ToString();
                 }
