@@ -235,6 +235,11 @@ namespace DatenMeister.DataProvider.Xml
                     throw new ArgumentException("Id cannot be set to null or empty");
                 }
 
+                if (value.ToString().Contains(" "))
+                {
+                    throw new ArgumentException("Id may not contain an empty space");
+                }
+
                 this.Id = value.ToString();
             }
 
@@ -258,7 +263,7 @@ namespace DatenMeister.DataProvider.Xml
                     else
                     {
                         // Setting of node content by value
-                        this.Node.Value = value.ToString();
+                        this.Node.Value = Extensions.ToString(value);
                         this.Extent.IsDirty = true;
                     }
                 }
@@ -272,7 +277,7 @@ namespace DatenMeister.DataProvider.Xml
             {
                 // Checks, if we have multiple objects, if yes, throw exception. 
                 // Check, if we have an attribute with the given name, if yes, set the property            
-                this.Node.Attribute(propertyName).Value = value.ToString();
+                this.Node.Attribute(propertyName).Value = Extensions.ToString(value);
                 this.Extent.IsDirty = true;
             }
             else if (this.Node.Element(propertyName) != null)
@@ -280,7 +285,7 @@ namespace DatenMeister.DataProvider.Xml
                 // Element is an element
                 if (Extensions.IsNative(value))
                 {
-                    this.Node.Element(propertyName).Value = value.ToString();
+                    this.Node.Element(propertyName).Value = Extensions.ToString(value);
                     this.Extent.IsDirty = true;
                 }
             }
@@ -288,7 +293,7 @@ namespace DatenMeister.DataProvider.Xml
             {
                 // Ok, we have no attribute and no element with the name.
                 // If this is a simple type, we just assume that this is a property, otherwise no suppurt
-                this.Node.Add(new XAttribute(propertyName, value.ToString()));
+                this.Node.Add(new XAttribute(propertyName, Extensions.ToString(value)));
                 this.Extent.IsDirty = true;
             }
             else if (value is IObject)

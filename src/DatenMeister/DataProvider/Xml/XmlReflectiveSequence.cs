@@ -184,7 +184,7 @@ namespace DatenMeister.DataProvider.Xml
                     list.Insert(index, path);
                     this.SetAttributeAsList(list);
                 }
-                else                
+                else
                 {
                     // Check, that the current mode is not attribute
                     if (this.sequenceType == XmlReflectiveSequenceType.Attributes)
@@ -206,7 +206,7 @@ namespace DatenMeister.DataProvider.Xml
             {
                 // Add it as a new Xml Element, containing the property as a value
                 var element = new XElement(this.Unspecified.PropertyName);
-                element.Value = value.ToString();
+                element.Value = Extensions.ToString(value);
 
                 xmlObject.Node.Add(element);
 

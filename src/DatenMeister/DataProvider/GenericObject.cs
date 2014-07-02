@@ -28,7 +28,7 @@ namespace DatenMeister.DataProvider
             this.owner = extent;
             if (this.owner == null)
             {
-                this.owner = GenericExtent.Global;
+                //this.owner = GenericExtent.Global;
             }
 
             this.id = id;

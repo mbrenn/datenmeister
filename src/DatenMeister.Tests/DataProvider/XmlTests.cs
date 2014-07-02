@@ -527,6 +527,30 @@ namespace DatenMeister.Tests.DataProvider
         }
 
         [Test]
+        public void TestGetAndSetOfDateTime()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                "<element id=\"e1\" />" +
+                "<element id=\"e2\" />" +
+                "<element id=\"e4\" />" +
+                "</root>");
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+
+            var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
+
+            valueE4.set("bday", new DateTime(1981, 11, 16, 11, 42, 00));
+            
+            // Check, if we get all the information
+            var retrievedBDay = Extensions.ToDateTime(valueE4.get("bday").AsSingle());
+            Assert.That(retrievedBDay, Is.EqualTo(new DateTime(1981, 11, 16, 11, 42, 00)));
+        }
+
+        [Test]
         public void TestFactory()
         {
             var xmlExtent = CreateTestExtent();

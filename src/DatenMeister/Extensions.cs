@@ -416,10 +416,10 @@ namespace DatenMeister
             if (value is string)
             {
                 DateTime result;
-                if ( DateTime.TryParse(
-                    value.ToString(), 
-                    CultureInfo.InvariantCulture, 
-                    DateTimeStyles.AssumeLocal, 
+                if (DateTime.TryParse(
+                    value.ToString(),
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeLocal,
                     out result))
                 {
                     return result;
@@ -430,6 +430,26 @@ namespace DatenMeister
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Converts the given object to a string
+        /// </summary>
+        /// <param name="value">Value to be converted</param>
+        /// <returns>Stringified object</returns>
+        public static string ToString(object value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            if (value is IFormattable)
+            {
+                return (value as IFormattable).ToString(null, CultureInfo.InvariantCulture);
+            }
+
+            return value.ToString();
         }
 
         /// <summary>
