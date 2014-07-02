@@ -2,6 +2,7 @@
 using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,8 @@ namespace DatenMeister.AddOns.Export.Excel
                         excelSettings.Path = dlg.FileName;
 
                         excelExporter.ExportToFile(extentFactory(), excelSettings);
+
+                        Process.Start(excelSettings.Path);
                     }
                 };
 
