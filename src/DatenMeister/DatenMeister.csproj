@@ -102,6 +102,7 @@
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
     <Compile Include="Entities\FieldInfos\Checkbox.cs" />
     <Compile Include="Entities\FieldInfos\Comment.cs" />
+    <Compile Include="Entities\FieldInfos\DatePicker.cs" />
     <Compile Include="Entities\FieldInfos\FormView.cs" />
     <Compile Include="Entities\FieldInfos\General.cs" />
     <Compile Include="Entities\FieldInfos\MultiReferenceField.cs" />

@@ -18,7 +18,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             textBox.FontSize = 16;
             textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
 
-            if ( textFieldObj.isMultiline() )
+            if (textFieldObj.isMultiline())
             {
                 textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Top;
                 textBox.AcceptsReturn = true;

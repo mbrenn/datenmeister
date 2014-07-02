@@ -12,9 +12,8 @@ namespace DatenMeister.Entities.FieldInfos
         }
 
         public TextField(string name, string binding)
+            : base(name, binding)
         {
-            this.binding = binding;
-            this.name = name;
         }
 
         public int width

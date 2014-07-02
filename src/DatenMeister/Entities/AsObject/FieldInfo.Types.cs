@@ -35,6 +35,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
             {
                 var type = new DatenMeister.Entities.UML.Type();
+                type.name = "DatePicker";
+                Types.DatePicker = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                extent.Elements().add(Types.DatePicker);
+            }
+
+            {
+                var type = new DatenMeister.Entities.UML.Type();
                 type.name = "ActionButton";
                 Types.ActionButton = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.ActionButton);
@@ -100,6 +107,8 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject TextField;
 
+        public static DatenMeister.IObject DatePicker;
+
         public static DatenMeister.IObject ActionButton;
 
         public static DatenMeister.IObject ReferenceBase;
@@ -123,6 +132,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.General), Types.General);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.Checkbox), Types.Checkbox);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TextField), Types.TextField);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.DatePicker), Types.DatePicker);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ActionButton), Types.ActionButton);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceBase), Types.ReferenceBase);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByValue), Types.ReferenceByValue);

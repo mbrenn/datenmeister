@@ -239,6 +239,56 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     })(exports.TextField || (exports.TextField = {}));
     var TextField = exports.TextField;
 
+    (function (DatePicker) {
+        DatePicker.TypeName = 'DatePicker';
+
+        function create(name, binding) {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'DatePicker');
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
+            }
+
+            return result;
+        }
+        DatePicker.create = create;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        DatePicker.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        DatePicker.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        DatePicker.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        DatePicker.setBinding = setBinding;
+
+        function isReadOnly(item) {
+            return item.get('isReadOnly');
+        }
+        DatePicker.isReadOnly = isReadOnly;
+
+        function setReadOnly(item, value) {
+            item.set('isReadOnly', value);
+        }
+        DatePicker.setReadOnly = setReadOnly;
+    })(exports.DatePicker || (exports.DatePicker = {}));
+    var DatePicker = exports.DatePicker;
+
     (function (ActionButton) {
         ActionButton.TypeName = 'ActionButton';
 
@@ -516,7 +566,7 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     (function (MultiReferenceField) {
         MultiReferenceField.TypeName = 'MultiReferenceField';
 
-        function create(name, binding) {
+        function create(name, binding, referenceUrl, propertyValue) {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'MultiReferenceField');
             if (name !== undefined) {
@@ -525,6 +575,14 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
 
             if (binding !== undefined) {
                 result.set('binding', binding);
+            }
+
+            if (referenceUrl !== undefined) {
+                result.set('referenceUrl', referenceUrl);
+            }
+
+            if (propertyValue !== undefined) {
+                result.set('propertyValue', propertyValue);
             }
 
             return result;

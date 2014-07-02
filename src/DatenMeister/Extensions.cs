@@ -4,6 +4,7 @@ using DatenMeister.Pool;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -398,6 +399,37 @@ namespace DatenMeister
             }
 
             return false;
+        }
+
+        public static DateTime? ToDateTime(object value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            if (value is DateTime)
+            {
+                return (DateTime)value;
+            }
+
+            if (value is string)
+            {
+                DateTime result;
+                if ( DateTime.TryParse(
+                    value.ToString(), 
+                    CultureInfo.InvariantCulture, 
+                    DateTimeStyles.AssumeLocal, 
+                    out result))
+                {
+                    return result;
+                }
+
+                // Parsing was not successful
+                return null;
+            }
+
+            return null;
         }
 
         /// <summary>

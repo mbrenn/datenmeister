@@ -209,6 +209,50 @@ export module TextField {
 
 }
 
+export module DatePicker {
+    export var TypeName='DatePicker';
+
+    export function create(name?: any, binding?: any) {
+        var result = new __d__.JsonExtentObject();
+        result.set('type', 'DatePicker');
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
+        }
+
+        return result;
+    }
+
+
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
+    }
+
+    export function isReadOnly(item: __d__.JsonExtentObject) {
+        return item.get('isReadOnly');
+    }
+
+    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
+        item.set('isReadOnly', value);
+    }
+
+}
+
 export module ActionButton {
     export var TypeName='ActionButton';
 
@@ -452,7 +496,7 @@ export module ReferenceByRef {
 export module MultiReferenceField {
     export var TypeName='MultiReferenceField';
 
-    export function create(name?: any, binding?: any) {
+    export function create(name?: any, binding?: any, referenceUrl?: any, propertyValue?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'MultiReferenceField');
         if (name !== undefined) {
@@ -461,6 +505,14 @@ export module MultiReferenceField {
 
         if (binding !== undefined) {
             result.set('binding', binding);
+        }
+
+        if (referenceUrl !== undefined) {
+            result.set('referenceUrl', referenceUrl);
+        }
+
+        if (propertyValue !== undefined) {
+            result.set('propertyValue', propertyValue);
         }
 
         return result;
