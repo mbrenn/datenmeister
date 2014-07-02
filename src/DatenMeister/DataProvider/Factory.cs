@@ -11,7 +11,7 @@ namespace DatenMeister.DataProvider
     /// Implements the IFactory class in a very simple way by just calling 
     /// IURIExtent.CreateObject
     /// </summary>
-    public  abstract class Factory : IFactory
+    public abstract class Factory : IFactory
     {
         public Factory()
         {
@@ -19,7 +19,7 @@ namespace DatenMeister.DataProvider
 
         [Obsolete("Use Factory()")]
         public Factory(IURIExtent extent)
-        {   
+        {
         }
 
         public abstract IObject create(IObject type);
@@ -55,6 +55,23 @@ namespace DatenMeister.DataProvider
         {
             var factoryProvider = Global.Application.Get<IFactoryProvider>();
             return factoryProvider.CreateFor(extent);
+        }
+
+        public static IFactory GetFor(IObject value)
+        {
+            if (value.Extent != null)
+            {
+                return GetFor(value.Extent);
+            }
+            else
+            {
+                if (value is GenericObject)
+                {
+                    return GetFor(GenericExtent.Global);
+                }
+
+                return GetFor((IURIExtent)null);
+            }
         }
     }
 }

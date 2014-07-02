@@ -53,7 +53,7 @@ namespace DatenMeister.Logic.Views
         /// <param name="viewInfo">View Information, where the objects will be stored</param>
         public static void AutoGenerateViewDefinition(IReflectiveCollection collection, IObject viewInfo, bool orderByName = false)
         {
-            var factory = Factory.GetFor(viewInfo.Extent);
+            var factory = Factory.GetFor(viewInfo);
             var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
 
             var propertyNames = collection.GetConsolidatedPropertyNames();
