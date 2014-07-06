@@ -19,7 +19,7 @@ namespace DatenMeister
         }
 
         /// <summary>
-        /// Gets or sets te window title
+        /// Gets or sets the window title
         /// </summary>
         public string WindowTitle
         {
@@ -63,6 +63,10 @@ namespace DatenMeister
             set;
         }
 
+        /// <summary>
+        /// Creates an empty document
+        /// </summary>
+        /// <returns>The created document, which is queried, when user creates a new file</returns>
         public abstract XDocument CreateEmpty();
     }
 }
