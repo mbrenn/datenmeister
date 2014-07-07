@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace DatenMeister.Logic
 {
@@ -29,8 +31,14 @@ namespace DatenMeister.Logic
                     return resultAsIObject.get("name").AsSingle().ToString();
                 }
 
+                result = result.AsSingle();
                 if (result != null)
                 {
+                    if (result is DateTime)
+                    {
+                        return ((DateTime)result).ToString(Thread.CurrentThread.CurrentCulture);
+                    }
+
                     // If the object is not an IObject, we just use ToString
                     return result.ToString();
                 }
