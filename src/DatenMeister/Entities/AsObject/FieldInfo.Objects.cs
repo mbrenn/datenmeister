@@ -747,6 +747,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("isMultiline", value);
         }
 
+        public System.Boolean isDateTime()
+        {
+            return isDateTime(this);
+        }
+
+        public void setDateTime(System.Boolean value)
+        {
+            setDateTime(this, value);
+        }
+
+        public static System.Boolean isDateTime(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("isDateTime"));
+            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+        }
+
+        public static void setDateTime(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("isDateTime", value);
+        }
+
         public System.String getName()
         {
             return getName(this);

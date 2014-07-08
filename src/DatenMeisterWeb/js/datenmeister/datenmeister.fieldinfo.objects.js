@@ -207,6 +207,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         TextField.setMultiline = setMultiline;
 
+        function isDateTime(item) {
+            return item.get('isDateTime');
+        }
+        TextField.isDateTime = isDateTime;
+
+        function setDateTime(item, value) {
+            item.set('isDateTime', value);
+        }
+        TextField.setDateTime = setDateTime;
+
         function getName(item) {
             return item.get('name');
         }

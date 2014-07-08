@@ -36,5 +36,15 @@ namespace DatenMeister.Entities.FieldInfos
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the information whether the content shall be seen as datetime
+        /// and will be parsed to local CultureInfo
+        /// </summary>
+        public bool isDateTime
+        {
+            get;
+            set;
+        }
     }
 }

@@ -183,6 +183,14 @@ export module TextField {
         item.set('isMultiline', value);
     }
 
+    export function isDateTime(item: __d__.JsonExtentObject) {
+        return item.get('isDateTime');
+    }
+
+    export function setDateTime(item : __d__.JsonExtentObject, value: any) {
+        item.set('isDateTime', value);
+    }
+
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
     }
