@@ -220,6 +220,19 @@ namespace DatenMeister.WPF.Controls
             return this.ElementsFactory(this.Settings.Pool);
         }
 
+        public IEnumerable<IObject> GetFieldInfos()
+        {
+            if (this.tableViewInfo != null)
+            {
+                return this.
+                    tableViewInfo.
+                    getFieldInfos().
+                    AsEnumeration<IObject>();
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Refreshes the list of items
         /// </summary>
@@ -227,7 +240,9 @@ namespace DatenMeister.WPF.Controls
         {
             if (this.ElementsFactory != null)
             {
-                var elements = this.GetElements().Select(x => new ObjectDictionaryForView(x.AsIObject())).ToList();
+                var elements = this.GetElements()
+                    .Select(x => 
+                        new ObjectDictionaryForView(x.AsIObject(), this.GetFieldInfos())).ToList();
                 this.gridContent.ItemsSource = elements;
             }
         }
