@@ -56,7 +56,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Stores the current path
         /// </summary>
-        private string currentPath = null;
+        private string pathOfDataExtent = null;
 
         /// <summary>
         /// Stores the information
@@ -348,6 +348,8 @@ namespace DatenMeister.WPF.Windows
 
             // Refreshes all views
             this.RefreshAllTabContent();
+
+            this.pathOfDataExtent = filename;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -365,7 +367,7 @@ namespace DatenMeister.WPF.Windows
         /// </summary>
         private void SaveChanges()
         {
-            if (this.currentPath == null)
+            if (this.pathOfDataExtent == null)
             {
                 this.SaveChangesAs();
                 return;
@@ -376,10 +378,10 @@ namespace DatenMeister.WPF.Windows
                 Ensure.That(xmlExtent != null);
 
                 // Stores the xml document
-                xmlExtent.XmlDocument.Save(this.currentPath);
+                xmlExtent.XmlDocument.Save(this.pathOfDataExtent);
 
                 // Adds the file to the recent files
-                this.AddRecentFile(this.currentPath);
+                this.AddRecentFile(this.pathOfDataExtent);
 
                 MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
             }
@@ -401,7 +403,7 @@ namespace DatenMeister.WPF.Windows
                 // Stores the xml document
                 var filename = dialog.FileName;
                 xmlExtent.XmlDocument.Save(filename);
-                this.currentPath = filename;
+                this.pathOfDataExtent = filename;
 
                 // Adds the file to the recent files
                 this.AddRecentFile(filename);
