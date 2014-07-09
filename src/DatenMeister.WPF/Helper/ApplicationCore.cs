@@ -4,12 +4,14 @@ using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Transformations;
+using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DatenMeister.WPF.Helper
 {
@@ -26,12 +28,17 @@ namespace DatenMeister.WPF.Helper
         /// <summary>
         /// Defines the uri for the application core
         /// </summary>
-        public const string uri = "datenmeister:///applications";
+        public const string ApplicationDataUri = "datenmeister:///applications";
 
         /// <summary>
         /// Stores the application data in an extent
         /// </summary>
         private IURIExtent applicationData;
+
+        public IURIExtent ApplicationData
+        {
+            get { return this.applicationData; }
+        }
 
         /// <summary>
         /// Gets the storage path for the application date
@@ -83,7 +90,7 @@ namespace DatenMeister.WPF.Helper
         public IObject ViewRecentObjects
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
@@ -98,11 +105,6 @@ namespace DatenMeister.WPF.Helper
             this.XmlSettings.Mapping.Add(DatenMeister.Entities.AsObject.DM.Types.RecentProject);
 
             this.LoadApplicationData();
-
-            this.AddViewForRecentFiles(settings);
-
-            var pool = Global.Application.Get<IPool>();
-            pool.Add(this.applicationData, null, "Application data");
         }
 
         /// <summary>
@@ -118,7 +120,7 @@ namespace DatenMeister.WPF.Helper
                     // File exists, we can directly load it
                     var dataProvider = new XmlDataProvider();
 
-                    this.applicationData = dataProvider.Load(filePath, uri, this.XmlSettings);
+                    this.applicationData = dataProvider.Load(filePath, ApplicationDataUri, this.XmlSettings);
                 }
                 catch (Exception exc)
                 {
@@ -129,8 +131,11 @@ namespace DatenMeister.WPF.Helper
             if (this.applicationData == null)
             {
                 // File does not exist, we have to load it from 
-                this.applicationData = XmlExtent.Create(this.XmlSettings, "applicationdata", uri);
+                this.applicationData = XmlExtent.Create(this.XmlSettings, "applicationdata", ApplicationDataUri);
             }
+
+            var pool = Global.Application.Get<IPool>();
+            pool.Add(this.applicationData, null, "Application data");
         }
 
         /// <summary>
@@ -153,57 +158,21 @@ namespace DatenMeister.WPF.Helper
             this.SaveApplicationData();
             GC.SuppressFinalize(this);
         }
-
-        #region Support for recent files
-
+        
         /// <summary>
-        /// Adds a file to the recent file list. 
-        /// If the file is already available, it won't be added
+        /// Creates the window for the DatenMeister. 
         /// </summary>
-        /// <param name="filePath">Path of the file to be added</param>
-        public void AddRecentFile(string filePath, string name)
+        /// <param name="core">Application of the window</param>
+        /// <returns>Returned window</returns>
+        public IDatenMeisterWindow CreateWindow()
         {
-            // Check, if the file is already available
-            if (this.applicationData.Elements()
-                .FilterByType(DatenMeister.Entities.AsObject.DM.Types.RecentProject)
-                .Any(x => DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(x.AsIObject()) == filePath))
-            {
-                return;
-            }
+            var wnd = new DatenMeisterWindow(this);
 
-            // Ok, not found, now add it
-            var factory = Factory.GetFor(this.applicationData);
-            var recentProject = factory.CreateInExtent(this.applicationData, DatenMeister.Entities.AsObject.DM.Types.RecentProject);
-            DatenMeister.Entities.AsObject.DM.RecentProject.setFilePath(recentProject, filePath);
-            DatenMeister.Entities.AsObject.DM.RecentProject.setCreated(recentProject, DateTime.Now);
-            DatenMeister.Entities.AsObject.DM.RecentProject.setName(recentProject, name);
+            // Just sets the title and shows the Window
+            wnd.Show();
+            wnd.RefreshTabs();
+
+            return wnd;
         }
-
-        private void AddViewForRecentFiles(IDatenMeisterSettings settings)
-        {
-            var viewFactory = Factory.GetFor(settings.ViewExtent);
-            this.ViewRecentObjects = viewFactory.create(
-                DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setName(this.ViewRecentObjects, "Recent Files");
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowEdit(this.ViewRecentObjects, false);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowNew(this.ViewRecentObjects, false);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(this.ViewRecentObjects, true);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(this.ViewRecentObjects, uri);
-
-            var fieldInfos = this.ViewRecentObjects.get("fieldInfos").AsReflectiveSequence();
-            var textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
-            DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "name");
-            DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Name");
-            fieldInfos.add(textField);
-
-            textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
-            DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "filePath");
-            DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Storage Path");
-            fieldInfos.add(textField);
-
-            settings.ViewExtent.Elements().Insert(0, this.ViewRecentObjects);
-        }
-
-        #endregion
     }
 }

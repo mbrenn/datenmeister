@@ -5,6 +5,7 @@ using DatenMeister.Logic;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Helper;
+using DatenMeister.WPF.Modules.RecentFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -149,7 +150,7 @@ namespace DatenMeister.WPF.Windows
             var found = this.listTabs.Where(x => x.TableViewInfo == view).FirstOrDefault();
             if (found == null)
             {
-                logger.Message("Associate Detail Open Event failed because tab was not found");
+                logger.Fail("Associate Detail Open Event failed because tab was not found");
             }
             else
             {
@@ -418,7 +419,8 @@ namespace DatenMeister.WPF.Windows
         /// <param name="filePath"></param>
         public void AddRecentFile(string filePath)
         {
-            this.Core.AddRecentFile(
+            RecentFileIntegration.AddRecentFile(
+                this.Core,
                 filePath,
                 System.IO.Path.GetFileNameWithoutExtension(filePath));
         }
