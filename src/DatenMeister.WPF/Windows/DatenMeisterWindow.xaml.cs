@@ -2,6 +2,7 @@
 using BurnSystems.Test;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
+using DatenMeister.Pool;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Helper;
@@ -341,7 +342,7 @@ namespace DatenMeister.WPF.Windows
             // Sets the settings and stores it into the main window. The old one gets removed
             extent.Settings = this.Settings.ExtentSettings;
             this.Settings.ProjectExtent = extent;
-            this.Settings.Pool.Add(extent, filename);
+            this.Settings.Pool.Add(extent, filename, ExtentNames.DataExtent);
 
             // Adds the file to the recent files
             this.AddRecentFile(filename);
