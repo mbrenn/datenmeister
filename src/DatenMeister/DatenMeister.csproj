@@ -79,6 +79,7 @@
     <Compile Include="DataProvider\IResolvable.cs" />
     <Compile Include="DataProvider\ListNonGenericWrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListWrapperReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Pool\AllItemsReflectiveCollection.cs" />
     <Compile Include="DataProvider\Views\FieldInfo.cs" />
     <Compile Include="DataProvider\Views\View.cs" />
     <Compile Include="DataProvider\Views\ViewsExtent.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Logic\ExtentPoolLogic.cs" />
     <Compile Include="Logic\ExtentInstance.cs" />
     <Compile Include="Logic\DatenMeisterPoolProvider.cs" />
+    <Compile Include="Transformations\UnionTransformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\burnsystems\src\BurnSystems.csproj">

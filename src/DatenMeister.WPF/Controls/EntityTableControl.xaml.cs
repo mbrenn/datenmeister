@@ -1,6 +1,8 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.DataProvider.Pool;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic;
+using DatenMeister.Transformations;
 using DatenMeister.WPF.Helper;
 using DatenMeister.WPF.Windows;
 using System;
@@ -184,6 +186,8 @@ namespace DatenMeister.WPF.Controls
             // Checks status of buttons
             this.buttonNew.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            this.buttonNewByType.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
+                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
             this.buttonEdit.Visibility = this.tableViewInfo.getAllowEdit() && !this.UseAsSelectionControl ?
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
             this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() && !this.UseAsSelectionControl ?
@@ -252,6 +256,11 @@ namespace DatenMeister.WPF.Controls
             this.ShowNewDialog();
         }
 
+        private void buttonNewByType_Click(object sender, RoutedEventArgs e)
+        {
+            this.ShowNewByDialog();
+        }
+
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
             this.ShowDetailDialog();
@@ -312,6 +321,25 @@ namespace DatenMeister.WPF.Controls
             var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.GetElements(), this.Settings, this.DetailViewInfo);
             Ensure.That(dialog != null);
             dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+        }
+
+        private void ShowNewByDialog()
+        {
+            if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowNew(this.tableViewInfo))
+            {
+                // Nothing to do
+                return;
+            }
+
+            var dialog = new ListDialog();
+            dialog.SetReflectiveCollection(
+                new AllItemsReflectiveCollection(this.Settings.Pool)
+                .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type),
+                this.Settings);
+            if (dialog.ShowDialog() == true)
+            {
+                this.RefreshItems();
+            }
         }
 
         /// <summary>
