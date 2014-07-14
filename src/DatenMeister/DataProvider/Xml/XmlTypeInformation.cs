@@ -37,5 +37,10 @@ namespace DatenMeister.DataProvider.Xml
             get;
             set;
         }
+
+        public override string ToString()
+        {
+            return "Nodename: " + this.NodeName;
+        }
     }
 }
