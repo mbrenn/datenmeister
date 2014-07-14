@@ -96,6 +96,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.TableView);
             }
 
+            extent.AddDefaultMappings();
             return extent;
         }
 

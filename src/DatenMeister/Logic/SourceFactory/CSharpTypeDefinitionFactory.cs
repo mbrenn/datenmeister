@@ -75,6 +75,7 @@ namespace DatenMeister.Logic.SourceFactory
                 assignFunction.AppendLine();
             }
 
+            writer.WriteLine(TwelveSpaces + "extent.AddDefaultMappings();");
             writer.WriteLine(TwelveSpaces + "return extent;");
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();

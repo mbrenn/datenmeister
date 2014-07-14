@@ -19,6 +19,7 @@ namespace DatenMeister.Entities.AsObject.Uml
                 extent.Elements().add(Types.Type);
             }
 
+            extent.AddDefaultMappings();
             return extent;
         }
 

@@ -12,6 +12,7 @@ namespace DatenMeister.Entities.AsObject.DM
                 extent.Elements().add(Types.RecentProject);
             }
 
+            extent.AddDefaultMappings();
             return extent;
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BurnSystems.Test;
 
 namespace DatenMeister.DataProvider.DotNet
 {
@@ -83,6 +84,15 @@ namespace DatenMeister.DataProvider.DotNet
             {
                 return new DotNetExtentReflectiveSequence(this);
             }
+        }
+
+        /// <summary>
+        /// Adds the default mapping
+        /// </summary>
+        public void AddDefaultMappings()
+        {
+            Ensure.That(DatenMeister.Entities.AsObject.Uml.Types.Type != null, "'DatenMeister.Entities.AsObject.Uml.Types.Type' Type is not set.");
+            this.Mapping.Add(typeof(DatenMeister.DataProvider.DotNet.DotNetObject), DatenMeister.Entities.AsObject.Uml.Types.Type);
         }
 
         private class DotNetExtentReflectiveSequence : ListWrapperReflectiveSequence<IObject>
