@@ -8,6 +8,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "Comment";
+                BurnSystems.Test.Ensure.That(Types.Comment == null);
                 Types.Comment = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.Comment);
             }
@@ -15,6 +16,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "General";
+                BurnSystems.Test.Ensure.That(Types.General == null);
                 Types.General = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.General);
             }
@@ -22,6 +24,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "Checkbox";
+                BurnSystems.Test.Ensure.That(Types.Checkbox == null);
                 Types.Checkbox = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.Checkbox);
             }
@@ -29,6 +32,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "TextField";
+                BurnSystems.Test.Ensure.That(Types.TextField == null);
                 Types.TextField = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.TextField);
             }
@@ -36,6 +40,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "DatePicker";
+                BurnSystems.Test.Ensure.That(Types.DatePicker == null);
                 Types.DatePicker = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.DatePicker);
             }
@@ -43,6 +48,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "ActionButton";
+                BurnSystems.Test.Ensure.That(Types.ActionButton == null);
                 Types.ActionButton = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.ActionButton);
             }
@@ -50,6 +56,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "ReferenceBase";
+                BurnSystems.Test.Ensure.That(Types.ReferenceBase == null);
                 Types.ReferenceBase = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.ReferenceBase);
             }
@@ -57,6 +64,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "ReferenceByValue";
+                BurnSystems.Test.Ensure.That(Types.ReferenceByValue == null);
                 Types.ReferenceByValue = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.ReferenceByValue);
             }
@@ -64,6 +72,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "ReferenceByRef";
+                BurnSystems.Test.Ensure.That(Types.ReferenceByRef == null);
                 Types.ReferenceByRef = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.ReferenceByRef);
             }
@@ -71,6 +80,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "MultiReferenceField";
+                BurnSystems.Test.Ensure.That(Types.MultiReferenceField == null);
                 Types.MultiReferenceField = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.MultiReferenceField);
             }
@@ -78,6 +88,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "View";
+                BurnSystems.Test.Ensure.That(Types.View == null);
                 Types.View = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.View);
             }
@@ -85,6 +96,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "FormView";
+                BurnSystems.Test.Ensure.That(Types.FormView == null);
                 Types.FormView = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.FormView);
             }
@@ -92,6 +104,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "TableView";
+                BurnSystems.Test.Ensure.That(Types.TableView == null);
                 Types.TableView = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.TableView);
             }

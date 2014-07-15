@@ -92,7 +92,7 @@ namespace DatenMeister.DataProvider.DotNet
         public void AddDefaultMappings()
         {
             Ensure.That(DatenMeister.Entities.AsObject.Uml.Types.Type != null, "'DatenMeister.Entities.AsObject.Uml.Types.Type' Type is not set.");
-            this.Mapping.Add(typeof(DatenMeister.DataProvider.DotNet.DotNetObject), DatenMeister.Entities.AsObject.Uml.Types.Type);
+            this.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), DatenMeister.Entities.AsObject.Uml.Types.Type);
         }
 
         private class DotNetExtentReflectiveSequence : ListWrapperReflectiveSequence<IObject>

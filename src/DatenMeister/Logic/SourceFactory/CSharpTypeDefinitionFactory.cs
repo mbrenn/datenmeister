@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BurnSystems.Test;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -61,6 +62,7 @@ namespace DatenMeister.Logic.SourceFactory
                 writer.WriteLine(TwelveSpaces + "{");
                 writer.WriteLine(SixteenSpaces + "var type = new DatenMeister.Entities.UML.Type();");
                 writer.WriteLine(string.Format(SixteenSpaces + "type.name = \"{0}\";", type));
+                writer.WriteLine(string.Format(SixteenSpaces + "BurnSystems.Test.Ensure.That({1}.{0} == null);", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "{1}.{0} = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "extent.Elements().add({1}.{0});", type, this.className));
                 writer.WriteLine(TwelveSpaces + "}");

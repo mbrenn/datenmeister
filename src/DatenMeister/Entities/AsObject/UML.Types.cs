@@ -8,6 +8,7 @@ namespace DatenMeister.Entities.AsObject.Uml
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "NamedElement";
+                BurnSystems.Test.Ensure.That(Types.NamedElement == null);
                 Types.NamedElement = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.NamedElement);
             }
@@ -15,6 +16,7 @@ namespace DatenMeister.Entities.AsObject.Uml
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "Type";
+                BurnSystems.Test.Ensure.That(Types.Type == null);
                 Types.Type = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.Type);
             }
