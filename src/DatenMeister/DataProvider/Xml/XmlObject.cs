@@ -6,6 +6,7 @@ using DatenMeister.DataProvider.Common;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -328,6 +329,21 @@ namespace DatenMeister.DataProvider.Xml
                         attribute.Value = path;
                     }
                 }
+            }
+            else if (value is IReflectiveCollection)
+            {
+                var asReflectiveCollection = value as IReflectiveCollection;
+                throw new NotImplementedException("IReflective Collections are not supported until now");
+            }
+            else if (value is IEnumerable)
+            {
+                var valueAsReflectiveCollection = this.get(propertyName).AsReflectiveCollection();
+                foreach (var item in (value as IEnumerable))
+                {
+                    valueAsReflectiveCollection.add(item);
+                }
+
+                throw new NotImplementedException("IEnumerable are not supported until now");
             }
             else
             {
