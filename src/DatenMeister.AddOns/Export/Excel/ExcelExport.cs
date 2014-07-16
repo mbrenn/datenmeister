@@ -84,10 +84,19 @@ namespace DatenMeister.AddOns.Export.Excel
 
             // Now set the header
             var row = sheet.CreateRow(0);
-            var c = 0;
+
+            // Creates the header for the type
+            var cell = row.CreateCell(0);
+            cell.SetCellValue("Type");
+            cell.CellStyle = this.workbook.CreateCellStyle();
+            cell.CellStyle.SetFont(this.headerfont);
+            cell.CellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+
+            // Creates the header for the values
+            var c = 1;
             foreach (var property in properties)
             {
-                var cell = row.CreateCell(c);
+                cell = row.CreateCell(c);
                 cell.SetCellValue(property);
                 cell.CellStyle = this.workbook.CreateCellStyle();
                 cell.CellStyle.SetFont(this.headerfont);
@@ -100,12 +109,22 @@ namespace DatenMeister.AddOns.Export.Excel
             foreach (var element in elements.Where(x => x is IObject).Select(x => x.AsIObject()))
             {
                 row = sheet.CreateRow(r);
-                c = 0;
+
+                // Sets the type of the element
+                var typedElement = element as IElement;
+                if (typedElement != null)
+                {
+                    cell = row.CreateCell(0);
+                    cell.SetCellValue(typedElement.getMetaClass().get("name").AsSingle().ToString());
+                }
+
+                // Sets the values for each element
+                c = 1;
                 foreach (var property in properties)
                 {
                     if (element.isSet(property))
                     {
-                        var cell = row.CreateCell(c);
+                        cell = row.CreateCell(c);
                         cell.SetCellValue(element.get(property).AsSingle().ToString());
                     }
 
