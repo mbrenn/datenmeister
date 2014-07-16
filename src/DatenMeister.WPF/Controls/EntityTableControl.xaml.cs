@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Pool;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic;
@@ -338,6 +339,15 @@ namespace DatenMeister.WPF.Controls
             dialog.SetReflectiveCollection(allTypes, this.Settings);
             if (dialog.ShowDialog() == true)
             {
+                // Finds the factory
+                var reflectiveCollection = this.ElementsFactory(this.Settings.Pool);
+                var factory = Factory.GetFor(reflectiveCollection.Extent);
+
+                // Adds the element to the reflective collection
+                var createdElement = factory.create(dialog.SelectedElements.AsSingle().AsIObject());
+                reflectiveCollection.add(createdElement);
+
+                // Now, add the item, it might be, that other extent views also need to be updated.
                 this.RefreshItems();
             }
         }
