@@ -17,11 +17,14 @@ namespace DatenMeister.Logic.SourceFactory
 
         private string className;
 
-        public CSharpTypeDefinitionFactory(ITypeInfoProvider provider, string nameSpace, string className)
+        private string typeExtentUri;
+
+        public CSharpTypeDefinitionFactory(ITypeInfoProvider provider, string nameSpace, string className, string typeExtentUri)
             : base(provider)
         {
             this.nameSpace = nameSpace;
             this.className = className;
+            this.typeExtentUri = typeExtentUri;
         }
 
         public void CreateFile(string path)
@@ -46,7 +49,7 @@ namespace DatenMeister.Logic.SourceFactory
             var assignFunction = new StringBuilder();
             writer.WriteLine(EightSpaces + "public static DatenMeister.IURIExtent Init()");
             writer.WriteLine(EightSpaces + "{");
-            writer.WriteLine(TwelveSpaces + "var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(\"datenmeister:///types\");");
+            writer.WriteLine(TwelveSpaces + "var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(\"{0}\");", this.typeExtentUri);
 
             assignFunction.AppendLine(EightSpaces + "public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)");
             assignFunction.AppendLine(EightSpaces + "{");

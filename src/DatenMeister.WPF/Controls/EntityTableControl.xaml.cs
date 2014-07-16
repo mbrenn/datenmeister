@@ -258,7 +258,7 @@ namespace DatenMeister.WPF.Controls
 
         private void buttonNewByType_Click(object sender, RoutedEventArgs e)
         {
-            this.ShowNewByDialog();
+            this.ShowNewOfGenericTypeDialog();
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
@@ -323,7 +323,7 @@ namespace DatenMeister.WPF.Controls
             dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
         }
 
-        private void ShowNewByDialog()
+        private void ShowNewOfGenericTypeDialog()
         {
             if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowNew(this.tableViewInfo))
             {
@@ -332,10 +332,10 @@ namespace DatenMeister.WPF.Controls
             }
 
             var dialog = new ListDialog();
-            dialog.SetReflectiveCollection(
+            var allTypes = 
                 new AllItemsReflectiveCollection(this.Settings.Pool)
-                .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type),
-                this.Settings);
+                .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
+            dialog.SetReflectiveCollection(allTypes, this.Settings);
             if (dialog.ShowDialog() == true)
             {
                 this.RefreshItems();

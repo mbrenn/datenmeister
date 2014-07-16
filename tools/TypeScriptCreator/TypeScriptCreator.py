@@ -16,7 +16,7 @@ TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\DM.Objects.cs"
 CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject.DM");
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\DM.Types.cs"
-CSharpFactory.createTypeFile(csFilename, umlTypes, "DatenMeister.Entities.AsObject.DM", "Types");
+CSharpFactory.createTypeFile(csFilename, umlTypes, "DatenMeister.Entities.AsObject.DM", "Types", "datenmeister:///types/datenmeister");
 
 #
 # Creates the information for the fieldinfos, which is used by Datenmeister
@@ -41,7 +41,7 @@ TypeScriptFactory.createFiles(tsFilename, types)
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Objects.cs"
 CSharpFactory.createFiles(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo");
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Types.cs"
-CSharpFactory.createTypeFile(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo", "Types");
+CSharpFactory.createTypeFile(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo", "Types", "datenmeister:///types/fieldinfo");
 
 print('Creating the UML-File')
 
@@ -56,7 +56,7 @@ TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Objects.cs"
 CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml");
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Types.cs"
-CSharpFactory.createTypeFile(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml", "Types");
+CSharpFactory.createTypeFile(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml", "Types", "datenmeister:///types/uml");
 
 #
 # Creates the entities for the ProjektMeister
@@ -70,7 +70,7 @@ projektMeisterTypes = [
 csFilename = "..\\..\\..\\projektmeister\\src\\ProjektMeister\\Data\\Entities\\AsObject\\PM.Objects.cs"
 CSharpFactory.createFiles(csFilename, projektMeisterTypes, "ProjektMeister.Data.Entities.AsObject");
 csFilename = "..\\..\\..\\projektmeister\\src\\ProjektMeister\\Data\\Entities\\AsObject\\PM.Types.cs"
-CSharpFactory.createTypeFile(csFilename, projektMeisterTypes, "ProjektMeister.Data.Entities.AsObject", "Types");
+CSharpFactory.createTypeFile(csFilename, projektMeisterTypes, "ProjektMeister.Data.Entities.AsObject", "Types", "datenmeister:///types/projektmeister");
 
 print('Compiling the TypeScript-File')
 TypeScriptFactory.compile(tsFilename)
