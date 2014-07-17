@@ -7,11 +7,39 @@ using System.Threading.Tasks;
 namespace DatenMeister.DataProvider.DotNet
 {
     /// <summary>
-    /// Defines a sequence of objects
+    /// Defines a sequence of objects.
+    /// TODO: Convert all the stuff
     /// </summary>
     public class DotNetSequence : IList<object>
     {
         private List<object> content = new List<object>();
+
+        public static IObject ConvertTo(object value)
+        {
+            if (value is DotNetObject)
+            {
+                return value as DotNetObject;
+            }
+
+            return new DotNetObject(null, value);
+        }
+
+        /// <summary>
+        /// Converts the given item back to a dotnet object.
+        /// If the element is a DotNet Object, the original value will be returned
+        /// </summary>
+        /// <param name="value">Value to be converted</param>
+        /// <returns>Returned object</returns>
+        public static object ConvertFrom(object value)
+        {
+            var valueAsDotNetObject = value as DotNetObject;
+            if (valueAsDotNetObject != null)
+            {
+                return valueAsDotNetObject.Value;
+            }
+
+            return value;
+        }
 
         /// <summary>
         /// Initializes a new instance of the DotNetSequence clas
@@ -26,17 +54,17 @@ namespace DatenMeister.DataProvider.DotNet
         /// <param name="content">Objects to be added</param>
         public DotNetSequence(params object[] content)
         {
-            this.content.AddRange(content);
+            this.content.AddRange(content.Select(x => ConvertTo(x)));
         }
 
         public int IndexOf(object item)
         {
-            return this.content.IndexOf(item);
+            return this.content.IndexOf(ConvertTo(item));
         }
 
         public void Insert(int index, object item)
         {
-            this.content.Insert(index, item);
+            this.content.Insert(index, ConvertTo(item));
         }
 
         public void RemoveAt(int index)
@@ -52,13 +80,13 @@ namespace DatenMeister.DataProvider.DotNet
             }
             set
             {
-                this.content[index] = value;
+                this.content[index] = ConvertTo(value);
             }
         }
 
         public void Add(object item)
         {
-            this.content.Add(item);
+            this.content.Add(ConvertTo(item));
         }
 
         public void Clear()
@@ -68,12 +96,12 @@ namespace DatenMeister.DataProvider.DotNet
 
         public bool Contains(object item)
         {
-            return this.content.Contains(item);
+            return this.content.Any(x => ConvertFrom(x).Equals(item));
         }
 
         public void CopyTo(object[] array, int arrayIndex)
         {
-            this.content.CopyTo(array, arrayIndex);
+            this.content.CopyTo(array.Select(x=> ConvertTo(x)).ToArray(), arrayIndex);
         }
 
         public int Count
@@ -88,7 +116,7 @@ namespace DatenMeister.DataProvider.DotNet
 
         public bool Remove(object item)
         {
-            return this.content.Remove(item);
+            return this.content.RemoveAll(x => ConvertFrom(x).Equals(item)) > 0;
         }
 
         public IEnumerator<object> GetEnumerator()

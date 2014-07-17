@@ -5,10 +5,10 @@ namespace DatenMeister.Entities.AsObject.DM
         public static DatenMeister.IURIExtent Init()
         {
             var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types/datenmeister");
+if(Types.RecentProject == null)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "RecentProject";
-                BurnSystems.Test.Ensure.That(Types.RecentProject == null);
                 Types.RecentProject = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.RecentProject);
             }

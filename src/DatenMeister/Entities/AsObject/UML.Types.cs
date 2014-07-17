@@ -5,18 +5,18 @@ namespace DatenMeister.Entities.AsObject.Uml
         public static DatenMeister.IURIExtent Init()
         {
             var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types/uml");
+if(Types.NamedElement == null)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "NamedElement";
-                BurnSystems.Test.Ensure.That(Types.NamedElement == null);
                 Types.NamedElement = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.NamedElement);
             }
 
+if(Types.Type == null)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "Type";
-                BurnSystems.Test.Ensure.That(Types.Type == null);
                 Types.Type = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
                 extent.Elements().add(Types.Type);
             }

@@ -62,10 +62,11 @@ namespace DatenMeister.Logic.SourceFactory
                 typeProperties.AppendLine();
 
                 // Creates the object instance for the type
+                writer.WriteLine("if({1}.{0} == null)", type, this.className);
                 writer.WriteLine(TwelveSpaces + "{");
                 writer.WriteLine(SixteenSpaces + "var type = new DatenMeister.Entities.UML.Type();");
                 writer.WriteLine(string.Format(SixteenSpaces + "type.name = \"{0}\";", type));
-                writer.WriteLine(string.Format(SixteenSpaces + "BurnSystems.Test.Ensure.That({1}.{0} == null);", type, this.className));
+                //writer.WriteLine(string.Format(SixteenSpaces + "BurnSystems.Test.Ensure.That({1}.{0} == null, \"The types of '{1}.{0}' already have been initialized\");", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "{1}.{0} = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "extent.Elements().add({1}.{0});", type, this.className));
                 writer.WriteLine(TwelveSpaces + "}");
