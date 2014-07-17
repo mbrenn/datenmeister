@@ -40,7 +40,6 @@ namespace DatenMeister.DataProvider.DotNet
         /// <param name="value"></param>
         public DotNetObject(DotNetExtent extent, object value)
         {
-            Ensure.That(extent != null);
             Ensure.That(value != null);
 
             this.extent = extent;
@@ -59,8 +58,6 @@ namespace DatenMeister.DataProvider.DotNet
         public DotNetObject(DotNetExtent extent, object value, string id)
             : this(value, id)
         {
-            Ensure.That(extent != null);
-
             this.extent = extent;
             this.id = id;
         }
@@ -254,7 +251,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// <returns>The metaclass of the object</returns>
         public IObject getMetaClass()
         {
-            if (this.value == null)
+            if (this.value == null || this.extent != null)
             {
                 return null;
             }

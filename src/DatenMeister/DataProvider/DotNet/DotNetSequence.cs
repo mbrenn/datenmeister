@@ -14,7 +14,7 @@ namespace DatenMeister.DataProvider.DotNet
     {
         private List<object> content = new List<object>();
 
-        public static IObject ConvertTo(object value)
+        public IObject ConvertTo(object value)
         {
             if (value is DotNetObject)
             {
@@ -22,23 +22,6 @@ namespace DatenMeister.DataProvider.DotNet
             }
 
             return new DotNetObject(null, value);
-        }
-
-        /// <summary>
-        /// Converts the given item back to a dotnet object.
-        /// If the element is a DotNet Object, the original value will be returned
-        /// </summary>
-        /// <param name="value">Value to be converted</param>
-        /// <returns>Returned object</returns>
-        public static object ConvertFrom(object value)
-        {
-            var valueAsDotNetObject = value as DotNetObject;
-            if (valueAsDotNetObject != null)
-            {
-                return valueAsDotNetObject.Value;
-            }
-
-            return value;
         }
 
         /// <summary>
@@ -127,6 +110,23 @@ namespace DatenMeister.DataProvider.DotNet
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.content.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Converts the given item back to a dotnet object.
+        /// If the element is a DotNet Object, the original value will be returned
+        /// </summary>
+        /// <param name="value">Value to be converted</param>
+        /// <returns>Returned object</returns>
+        public object ConvertFrom(object value)
+        {
+            var valueAsDotNetObject = value as DotNetObject;
+            if (valueAsDotNetObject != null)
+            {
+                return valueAsDotNetObject.Value;
+            }
+
+            return value;
         }
     }
 }
