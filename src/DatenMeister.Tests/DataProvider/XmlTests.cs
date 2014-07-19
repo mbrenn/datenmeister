@@ -641,7 +641,7 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = new XmlExtent(document, "test:///");
             xmlExtent.Settings.Mapping.Add("task", TypeTask, x => x.Elements("root").Elements("tasks").FirstOrDefault());
             xmlExtent.Settings.Mapping.Add("person", TypePerson, x => x.Elements("root").Elements("persons").FirstOrDefault());
-            xmlExtent.Settings.SkipRootNode = true;
+            xmlExtent.Settings.SkipRootNode = isEmpty ? false : true; // When an empty node has been requested, we assume untyped objects being stored at root node
             var pool = new DatenMeisterPool();
             pool.DoDefaultBinding();
             pool.Add(xmlExtent, null);

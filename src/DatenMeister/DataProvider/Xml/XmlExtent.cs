@@ -186,22 +186,33 @@ namespace DatenMeister.DataProvider.Xml
             {
                 lock (this.extent.XmlDocument)
                 {
-                    if (!this.extent.Settings.SkipRootNode)
-                    {
-                        foreach (var subNode in this.extent.XmlDocument.Root.Elements())
-                        {
-                            var subObject = new XmlObject(this.extent, subNode);
-                            yield return subObject;
-                        }
-                    }
+                    var foundItems = new List<XElement>();
 
                     // Goes through the mapping table to find additional objects
                     foreach (var mapInfo in this.extent.Settings.Mapping.GetAll())
                     {
-                        foreach (var xmlSubnode in mapInfo.RetrieveRootNode(this.extent.XmlDocument).Elements())
+                        var rootNode = mapInfo.RetrieveRootNode(this.extent.XmlDocument);
+                        if (rootNode != null)
                         {
-                            var result = new XmlObject(this.extent, xmlSubnode, null);
-                            yield return result;
+                            foundItems.Add(rootNode);
+                            foreach (var xmlSubnode in rootNode.Elements())
+                            {
+                                var result = new XmlObject(this.extent, xmlSubnode, null);
+                                yield return result;
+                            }
+                        }
+                    }
+
+                    if (!this.extent.Settings.SkipRootNode)
+                    {
+                        foreach (var subNode in this.extent.XmlDocument.Root.Elements())
+                        {
+                            // Only for the items, that do not have a direct mapping via settings, the elements will be returned
+                            if (!foundItems.Contains(subNode))
+                            {
+                                var subObject = new XmlObject(this.extent, subNode);
+                                yield return subObject;
+                            }
                         }
                     }
                 }

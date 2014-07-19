@@ -380,13 +380,35 @@ namespace DatenMeister.DataProvider.Xml
         public IObject getMetaClass()
         {
             var nodeName = this.Node.Name.ToString();
+
+            // Checks the type by mapping
             var info = this.Extent.Settings.Mapping.FindByNodeName(nodeName);
-            if (info == null)
+            if (info != null)
             {
-                return null;
+                return info.Type;
             }
 
-            return info.Type;
+            // Checks the type by xmi:type attribute
+            var xmiTypeAttribute = this.Node.Attribute(XmlExtent.XmiNamespace + "type");
+            if (xmiTypeAttribute != null)
+            {
+                var typeName = xmiTypeAttribute.Value;
+
+                // Gets the property
+                var pool = Global.Application.Get<IPool>();
+                var type = pool.Instances.SelectMany (x=>x.Extent.Elements()
+                    .Where ( y=> y is IObject)
+                    .Cast<IObject>()
+                    .Where (y=> NamedElement.getName(y) == typeName)).FirstOrDefault();
+
+                if ( type != null )
+                {
+                    return type;
+                }
+
+            }
+
+            return null;
         }
 
         /// <summary>

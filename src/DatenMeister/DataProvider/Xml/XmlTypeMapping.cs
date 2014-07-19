@@ -87,6 +87,11 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="type"></param>
         public XmlTypeInformation FindByType(IObject type)
         {
+            if ( type == null )
+            {
+                return null;
+            }
+
             return this.information.Where(x => x.Type == type).FirstOrDefault();
         }
     }
