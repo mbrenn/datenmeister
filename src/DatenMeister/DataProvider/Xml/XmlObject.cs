@@ -3,6 +3,7 @@ using BurnSystems.Serialization;
 using BurnSystems.Test;
 using DatenMeister;
 using DatenMeister.DataProvider.Common;
+using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
 using System;
@@ -300,21 +301,15 @@ namespace DatenMeister.DataProvider.Xml
             else if (value is IObject)
             {
                 var valueAsIObject = value as IObject;
+                var extent = this.Extent;
                 if (valueAsIObject.Extent == null)
                 {
-                    var copier = new ObjectCopier(this.Extent);
-                    var xmlObject = copier.CopyElement(valueAsIObject) as XmlObject;
-                    Ensure.That(xmlObject != null);
-
-                    // Renames node to the propertyname
-                    xmlObject.Node.Name = propertyName;
-
-                    this.Node.Add(xmlObject.Node);
+                    XmlObject.CopyObjectIntoXmlNode(this, valueAsIObject, propertyName, extent);
                 }
                 else
                 {
                     // Set as an attribute and reference
-                    var poolResolver = PoolResolver.GetDefault(this.Extent.Pool);
+                    var poolResolver = PoolResolver.GetDefault(extent.Pool);
                     var path = poolResolver.GetResolvePath(valueAsIObject, this);
 
                     // Checks, if attribute is existing
@@ -406,6 +401,26 @@ namespace DatenMeister.DataProvider.Xml
         IURIExtent IObject.Extent
         {
             get { return this.Extent; }
+        }
+
+        /// <summary>
+        /// Copies the object into the given Xml node. 
+        /// The Xml node already has to exist and a created node, according to propertyname, will be attached to this. 
+        /// </summary>
+        /// <param name="xmlObject">Xmlobject, where new node will be attached</param>
+        /// <param name="valueAsIObject">The object being copied to the xml node</param>
+        /// <param name="propertyName">Name of the property being </param>
+        /// <param name="extent"></param>
+        public static void CopyObjectIntoXmlNode(XmlObject xmlObject, IObject valueAsIObject, string propertyName, IURIExtent extent)
+        {
+            var copier = new ObjectCopier(extent);
+            var copiedXmlObject = copier.CopyElement(valueAsIObject) as XmlObject;
+            Ensure.That(copiedXmlObject != null);
+
+            // Renames node to the propertyname
+            copiedXmlObject.Node.Name = propertyName;
+
+            xmlObject.Node.Add(copiedXmlObject.Node);
         }
     }
 }

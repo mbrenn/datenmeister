@@ -171,20 +171,12 @@ namespace DatenMeister.DataProvider.Xml
 
             // Which type is the value 
             var valueAsIObject = value as IObject;
+            var propertyName = this.Unspecified.PropertyName;
+            var extent = this.Unspecified.Owner.Extent;
+
             if (valueAsIObject != null)
             {
-                if (valueAsIObject.Extent != null)
-                {
-                    // Ok, we can add it. 
-                    var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
-                    var path = poolResolver.GetResolvePath(valueAsIObject, this.Unspecified.Owner);
-
-                    // Ok, now we got it, now we need to inject our element
-                    var list = this.GetAttributeAsList(); // Check for valid sequence types is included here
-                    list.Insert(index, path);
-                    this.SetAttributeAsList(list);
-                }
-                else
+                if (valueAsIObject.Extent == null)
                 {
                     // Check, that the current mode is not attribute
                     if (this.sequenceType == XmlReflectiveSequenceType.Attributes)
@@ -192,14 +184,18 @@ namespace DatenMeister.DataProvider.Xml
                         throw new NotImplementedException("Cannot change mode to nodes, which is necessary to store IObjects");
                     }
 
-                    var copier = new ObjectCopier(this.Extent);
-                    var copiedXmlObject = copier.CopyElement(valueAsIObject) as XmlObject;
-                    Ensure.That(copiedXmlObject != null);
+                    XmlObject.CopyObjectIntoXmlNode(xmlObject, valueAsIObject, propertyName, extent);
+                }
+                else
+                {
+                    // Ok, we can add it. 
+                    var poolResolver = PoolResolver.GetDefault(extent.Pool);
+                    var path = poolResolver.GetResolvePath(valueAsIObject, this.Unspecified.Owner);
 
-                    // Renames node to the propertyname
-                    copiedXmlObject.Node.Name = this.Unspecified.PropertyName;
-
-                    xmlObject.Node.Add(copiedXmlObject.Node);
+                    // Ok, now we got it, now we need to inject our element
+                    var list = this.GetAttributeAsList(); // Check for valid sequence types is included here
+                    list.Insert(index, path);
+                    this.SetAttributeAsList(list);
                 }
             }
             else if (Extensions.IsNative(value))

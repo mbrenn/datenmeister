@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
@@ -32,10 +33,17 @@ namespace DatenMeister.DataProvider.Xml
             }
 
             // Adds a simple object 
-            var newObject = new XElement(nodeName);
-            newObject.Add(new XAttribute("id", Guid.NewGuid().ToString()));
+            var newNode = new XElement(nodeName);
+            newNode.Add(new XAttribute("id", Guid.NewGuid().ToString()));
 
-            return new XmlObject(this.extent, newObject);
+            // Check, if the given value is as an element, if yes, add the xmi:type
+            if (type != null)
+            {
+                var name = NamedElement.getName(type);
+                newNode.Add(new XAttribute(XmlExtent.XmiNamespace + "type", name));
+            }
+
+            return new XmlObject(this.extent, newNode);
         }
     }
 }

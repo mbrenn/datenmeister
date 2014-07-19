@@ -576,6 +576,39 @@ namespace DatenMeister.Tests.DataProvider
                 Is.EqualTo("Toller Task"));
         }
 
+        [Test]
+        public void TestTypedElementsAsSubElements()
+        {
+            var extent = CreateTestExtent(true);
+            var factory = Factory.GetFor ( extent );
+
+            var person1 = new GenericElement(null, null, TypePerson, null);
+            person1.set("name", "Brenn");
+            var task1 = new GenericElement(null, null, TypeTask, null);
+            task1.set("name", "nice task");
+
+            var container = factory.create(null);
+            extent.Elements().add(container);
+
+            container.set("person", person1);
+            container.set("task", task1);
+
+            // Now do the check
+
+            Assert.That(extent.Elements().Count, Is.EqualTo(1));
+            var container2 = extent.Elements().FirstOrDefault().AsSingle().AsIObject();
+
+            Assert.That(container2, Is.Not.Null);
+            var person2 = container2.get("person").AsSingle().AsIObject() as IElement;
+            var task2 = container2.get("task").AsSingle().AsIObject() as IElement;
+
+            Assert.That(person2, Is.Not.Null);
+            Assert.That(task2, Is.Not.Null);
+
+            Assert.That(person2.getMetaClass(), Is.EqualTo(TypePerson));
+            Assert.That(task2.getMetaClass(), Is.EqualTo(TypeTask));
+        }
+
         public static IObject TypePerson
         {
             get;
@@ -592,7 +625,7 @@ namespace DatenMeister.Tests.DataProvider
         /// Creates a simple extent, containing some types and some elements
         /// </summary>
         /// <returns>XmlExtent being created</returns>
-        public static XmlExtent CreateTestExtent()
+        public static XmlExtent CreateTestExtent(bool isEmpty = false)
         {
             var document = XDocument.Parse(
                 "<root>" +
@@ -613,19 +646,23 @@ namespace DatenMeister.Tests.DataProvider
             pool.DoDefaultBinding();
             pool.Add(xmlExtent, null);
 
-            var factory = Factory.GetFor(xmlExtent);
-            var person1 = factory.CreateInExtent(xmlExtent, TypePerson);
-            var person2 = factory.CreateInExtent(xmlExtent, TypePerson);
+            if (!isEmpty)
+            {
+                var factory = Factory.GetFor(xmlExtent);
+                var person1 = factory.CreateInExtent(xmlExtent, TypePerson);
+                var person2 = factory.CreateInExtent(xmlExtent, TypePerson);
 
-            var task1 = factory.CreateInExtent(xmlExtent, TypeTask);
+                var task1 = factory.CreateInExtent(xmlExtent, TypeTask);
 
-            person1.set("name", "Brenn");
-            person1.set("prename", "Martin");
+                person1.set("name", "Brenn");
+                person1.set("prename", "Martin");
 
-            person2.set("name", "Brenner");
-            person2.set("prename", "Martina");
+                person2.set("name", "Brenner");
+                person2.set("prename", "Martina");
 
-            task1.set("name", "Toller Task");
+                task1.set("name", "Toller Task");
+            }
+
             return xmlExtent;
         }
 
