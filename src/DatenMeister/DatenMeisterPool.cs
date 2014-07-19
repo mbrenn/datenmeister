@@ -7,6 +7,7 @@ using DatenMeister.Logic;
 using DatenMeister.Pool;
 using BurnSystems.ObjectActivation;
 using DatenMeister.DataProvider;
+using DatenMeister.Logic.TypeResolver;
 
 namespace DatenMeister
 {
@@ -128,6 +129,9 @@ namespace DatenMeister
 
             // Initializes the default resolver
             Global.Application.Bind<IPoolResolver>().To(x => new PoolResolver() { Pool = this });
+
+            // Initializes the default type resolver
+            Global.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
         }
 
         /// <summary>

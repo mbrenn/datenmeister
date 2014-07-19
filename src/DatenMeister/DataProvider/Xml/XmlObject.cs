@@ -5,6 +5,7 @@ using DatenMeister;
 using DatenMeister.DataProvider.Common;
 using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic;
+using DatenMeister.Logic.TypeResolver;
 using DatenMeister.Pool;
 using System;
 using System.Collections;
@@ -394,18 +395,12 @@ namespace DatenMeister.DataProvider.Xml
             {
                 var typeName = xmiTypeAttribute.Value;
 
-                // Gets the property
-                var pool = Global.Application.Get<IPool>();
-                var type = pool.Instances.SelectMany (x=>x.Extent.Elements()
-                    .Where ( y=> y is IObject)
-                    .Cast<IObject>()
-                    .Where (y=> NamedElement.getName(y) == typeName)).FirstOrDefault();
-
-                if ( type != null )
+                var typeResolver = Global.Application.Get<ITypeResolver>();
+                var type = typeResolver.GetType(typeName);
+                if (type != null)
                 {
                     return type;
                 }
-
             }
 
             return null;
