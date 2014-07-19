@@ -15,7 +15,7 @@ namespace DatenMeister.Logic.TypeResolver
     /// 
     /// In addition, the types will be cached to improve speed
     /// </summary>
-    public class TypeResolverImpl
+    public class TypeResolverImpl : ITypeResolver
     {
         public IObject GetType(string typeName)
         {

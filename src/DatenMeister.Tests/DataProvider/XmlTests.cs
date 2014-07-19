@@ -579,8 +579,8 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestTypedElementsAsSubElements()
         {
-            var extent = CreateTestExtent(true);
-            var factory = Factory.GetFor ( extent );
+            var extent = CreateRawTestExtent();
+            var factory = Factory.GetFor(extent);
 
             var person1 = new GenericElement(null, null, TypePerson, null);
             person1.set("name", "Brenn");
@@ -625,26 +625,59 @@ namespace DatenMeister.Tests.DataProvider
         /// Creates a simple extent, containing some types and some elements
         /// </summary>
         /// <returns>XmlExtent being created</returns>
+        public static XmlExtent CreateRawTestExtent()
+        {
+            BurnSystems.ObjectActivation.Global.Reset();
+            var document = XDocument.Parse(
+                "<root>" +
+                "</root>");
+
+            var typeExtent = new GenericExtent("test:///types");
+            TypeTask = new GenericObject();
+            TypeTask.set("name", "Task");
+            TypePerson = new GenericObject();
+            TypePerson.set("name", "Person");
+            typeExtent.Elements().add(TypeTask);
+            typeExtent.Elements().add(TypePerson);
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+            pool.Add(xmlExtent, null);
+            pool.Add(typeExtent, null);
+
+            return xmlExtent;
+        }
+
+        /// <summary>
+        /// Creates a simple extent, containing some types and some elements
+        /// </summary>
+        /// <returns>XmlExtent being created</returns>
         public static XmlExtent CreateTestExtent(bool isEmpty = false)
         {
+            BurnSystems.ObjectActivation.Global.Reset();
             var document = XDocument.Parse(
                 "<root>" +
                     "<tasks />" +
                     "<persons />" +
                 "</root>");
 
+            var typeExtent = new GenericExtent("test:///types");
             TypeTask = new GenericObject();
             TypeTask.set("name", "Task");
             TypePerson = new GenericObject();
             TypePerson.set("name", "Person");
+            typeExtent.Elements().add(TypeTask);
+            typeExtent.Elements().add(TypePerson);
 
             var xmlExtent = new XmlExtent(document, "test:///");
             xmlExtent.Settings.Mapping.Add("task", TypeTask, x => x.Elements("root").Elements("tasks").FirstOrDefault());
             xmlExtent.Settings.Mapping.Add("person", TypePerson, x => x.Elements("root").Elements("persons").FirstOrDefault());
-            xmlExtent.Settings.SkipRootNode = isEmpty ? false : true; // When an empty node has been requested, we assume untyped objects being stored at root node
+            xmlExtent.Settings.SkipRootNode = isEmpty; // When an empty node has been requested, we assume untyped objects being stored at root node
             var pool = new DatenMeisterPool();
             pool.DoDefaultBinding();
             pool.Add(xmlExtent, null);
+            pool.Add(typeExtent, null);
 
             if (!isEmpty)
             {
