@@ -62,7 +62,7 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="unspecified">Unspecified object</param>
         public XmlReflectiveSequence(XmlUnspecified unspecified)
-            : base(unspecified.Owner.Extent)
+            : base((unspecified.Owner as XmlObject).FactoryExtent)
         {
             this.Unspecified = unspecified;
             this.EstimateSequenceType();

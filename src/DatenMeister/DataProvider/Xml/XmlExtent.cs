@@ -1,4 +1,5 @@
-﻿using BurnSystems.Test;
+﻿using BurnSystems.Logging;
+using BurnSystems.Test;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +12,11 @@ namespace DatenMeister.DataProvider.Xml
 {
     public class XmlExtent : IURIExtent
     {
+        /// <summary>
+        /// Stores the logger
+        /// </summary>
+        private static ILog logger = new ClassLogger(typeof(XmlExtent));
+
         /// <summary>
         /// Stores the xmi namespace being used to define the types
         /// </summary>
@@ -118,7 +124,9 @@ namespace DatenMeister.DataProvider.Xml
 
             public override void add(int index, object value)
             {
-                throw new NotImplementedException();
+                logger.LogEntry(new LogEntry("add(int, object) is not fully supported. Will be added to last position", LogLevel.Message));
+
+                this.add(value);
             }
 
             public override object get(int index)
