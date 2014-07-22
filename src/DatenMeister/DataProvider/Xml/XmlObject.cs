@@ -23,9 +23,18 @@ namespace DatenMeister.DataProvider.Xml
     public class XmlObject : IElement
     {
         /// <summary>
-        /// Gets or sets the extent, where this element belongs to
+        /// Gets or sets the extent, whose extent was used to create the item
         /// </summary>
-        public XmlExtent Extent
+        public XmlExtent FactoryExtent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the extent, in which the element is contained to
+        /// </summary>
+        public XmlExtent ContainerExtent
         {
             get;
             set;
@@ -60,7 +69,7 @@ namespace DatenMeister.DataProvider.Xml
             Ensure.That(node != null);
             this.Node = node;
             this.Parent = parent;
-            this.Extent = xmlExtent;
+            this.FactoryExtent = xmlExtent;
 
             // Check, if we have an id attribute
             // TODO: Check with RFC about xml.
@@ -116,14 +125,17 @@ namespace DatenMeister.DataProvider.Xml
                     var xmlRefProperty = this.Node.Attribute(propertyName + "-ref");
                     if (xmlRefProperty != null)
                     {
-                        result.Add(new ResolvableByPath(this.Extent.Pool, this, xmlRefProperty.Value));
+                        result.Add(new ResolvableByPath(this.FactoryExtent.Pool, this, xmlRefProperty.Value));
                     }
                 }
 
                 // Checks, if we have elements nodes with the given property name
                 foreach (var element in this.Node.Elements(propertyName))
                 {
-                    result.Add(new XmlObject(this.Extent, element, this));
+                    result.Add(new XmlObject(this.FactoryExtent, element, this)
+                    {
+                        ContainerExtent = this.ContainerExtent
+                    });
                 }
             }
 
@@ -159,7 +171,10 @@ namespace DatenMeister.DataProvider.Xml
                     returns[element.Name.ToString()] = found;
                 }
 
-                found.Add(new XmlObject(this.Extent, element, this));
+                found.Add(new XmlObject(this.FactoryExtent, element, this)
+                    {
+                        ContainerExtent = this.ContainerExtent
+                    });
             }
 
             foreach (var attribute in this.Node.Attributes())
@@ -173,7 +188,7 @@ namespace DatenMeister.DataProvider.Xml
                 {
                     // Ok, we got a reference
                     attributeName = attributeName.Substring(0, attributeName.Length - "-ref".Length);
-                    attributeValue = new ResolvableByPath(this.Extent.Pool, this, attributeValue.ToString());
+                    attributeValue = new ResolvableByPath(this.FactoryExtent.Pool, this, attributeValue.ToString());
                 }
 
                 if (!returns.TryGetValue(attributeName, out found))
@@ -261,13 +276,13 @@ namespace DatenMeister.DataProvider.Xml
                     {
                         // Setting of empty content
                         this.Node.Value = string.Empty;
-                        this.Extent.IsDirty = true;
+                        this.FactoryExtent.IsDirty = true;
                     }
                     else
                     {
                         // Setting of node content by value
                         this.Node.Value = Extensions.ToString(value);
-                        this.Extent.IsDirty = true;
+                        this.FactoryExtent.IsDirty = true;
                     }
                 }
                 else
@@ -281,7 +296,7 @@ namespace DatenMeister.DataProvider.Xml
                 // Checks, if we have multiple objects, if yes, throw exception. 
                 // Check, if we have an attribute with the given name, if yes, set the property            
                 this.Node.Attribute(propertyName).Value = Extensions.ToString(value);
-                this.Extent.IsDirty = true;
+                this.FactoryExtent.IsDirty = true;
             }
             else if (this.Node.Element(propertyName) != null)
             {
@@ -289,7 +304,7 @@ namespace DatenMeister.DataProvider.Xml
                 if (Extensions.IsNative(value))
                 {
                     this.Node.Element(propertyName).Value = Extensions.ToString(value);
-                    this.Extent.IsDirty = true;
+                    this.FactoryExtent.IsDirty = true;
                 }
             }
             else if (Extensions.IsNative(value))
@@ -297,12 +312,12 @@ namespace DatenMeister.DataProvider.Xml
                 // Ok, we have no attribute and no element with the name.
                 // If this is a simple type, we just assume that this is a property, otherwise no suppurt
                 this.Node.Add(new XAttribute(propertyName, Extensions.ToString(value)));
-                this.Extent.IsDirty = true;
+                this.FactoryExtent.IsDirty = true;
             }
             else if (value is IObject)
             {
                 var valueAsIObject = value as IObject;
-                var extent = this.Extent;
+                var extent = this.FactoryExtent;
                 if (valueAsIObject.Extent == null)
                 {
                     XmlObject.CopyObjectIntoXmlNode(this, valueAsIObject, propertyName, extent);
@@ -360,7 +375,8 @@ namespace DatenMeister.DataProvider.Xml
         public void delete()
         {
             this.Node.Remove();
-            this.Extent.IsDirty = true;
+            this.ContainerExtent = null;
+            this.FactoryExtent.IsDirty = true;
         }
 
         /// <summary>
@@ -381,7 +397,7 @@ namespace DatenMeister.DataProvider.Xml
             var nodeName = this.Node.Name.ToString();
 
             // Checks the type by mapping
-            var info = this.Extent.Settings.Mapping.FindByNodeName(nodeName);
+            var info = this.FactoryExtent.Settings.Mapping.FindByNodeName(nodeName);
             if (info != null)
             {
                 return info.Type;
@@ -415,7 +431,7 @@ namespace DatenMeister.DataProvider.Xml
 
         IURIExtent IObject.Extent
         {
-            get { return this.Extent; }
+            get { return this.ContainerExtent; }
         }
 
         /// <summary>
@@ -430,6 +446,7 @@ namespace DatenMeister.DataProvider.Xml
         {
             var copier = new ObjectCopier(extent);
             var copiedXmlObject = copier.CopyElement(valueAsIObject) as XmlObject;
+            copiedXmlObject.ContainerExtent = xmlObject.ContainerExtent;
             Ensure.That(copiedXmlObject != null);
 
             // Renames node to the propertyname

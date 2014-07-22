@@ -42,6 +42,7 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             fieldInfos.add(textField);
 
             wnd.Settings.ViewExtent.Elements().Insert(0, wnd.Core.ViewRecentObjects);
+
             wnd.RefreshTabs();
 
             wnd.AssociateDetailOpenEvent(

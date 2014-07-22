@@ -169,25 +169,43 @@ namespace DatenMeister.Pool
         /// the object
         /// </summary>
         /// <param name="obj">Object whose resolve path is required</param>
+        /// <param name="context">The context being used to create relative paths</param>
+        /// <param name="noBackCheck">True, if no check about successful creation of link shall be done</param>
         /// <returns>The resolvepath of the object</returns>
-        public string GetResolvePath(IObject obj, IObject context = null)
+        string IPoolResolver.GetResolvePath(IObject obj, IObject context)
+        {
+            return this.GetResolvePath(obj, context, true);
+        }
+
+        /// <summary>
+        /// Gets the resolve path for a certain object that can be used to resolve
+        /// the object
+        /// </summary>
+        /// <param name="obj">Object whose resolve path is required</param>
+        /// <param name="context">The context being used to create relative paths</param>
+        /// <param name="noBackCheck">True, if no check about successful creation of link shall be done</param>
+        /// <returns>The resolvepath of the object</returns>
+        public string GetResolvePath(IObject obj, IObject context = null, bool doBackCheck = true)
         {
             Ensure.That(this.Pool != null, "this.Pool is null");
             Ensure.That(obj.Extent != null, "GetResolvePath: Given object has no extent");
             Ensure.That(obj.Extent.Pool != null, "GetResolvePath: Given object is attached to an extent without connected pool");
 
             var result = string.Format("{0}#{1}", obj.Extent.ContextURI(), obj.Id);
-            if (context != null)
+            if (context != null && context.Extent != null)
             {
-                var contextPath = this.GetResolvePath(context);
+                var contextPath = this.GetResolvePath(context, null, false);
                 Uri uri = new Uri(contextPath);
                 result = uri.MakeRelativeUri(new Uri(result)).ToString();
             }
 #if DEBUG
-            var backCheck = Resolve(result, context) as IObject;
+            if (doBackCheck)
+            {
+                var backCheck = Resolve(result, context) as IObject;
 
-            Ensure.That(backCheck != null, "GetResolvePath returned an unresolvable object: " + result);
-            Ensure.That(backCheck.Id == obj.Id, "GetResolvePath returned wrong object: " + result);
+                Ensure.That(backCheck != null, "GetResolvePath returned an unresolvable object: " + result);
+                Ensure.That(backCheck.Id == obj.Id, "GetResolvePath returned wrong object: " + result);
+            }
 #endif
             return result;
         }

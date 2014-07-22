@@ -141,6 +141,7 @@ namespace DatenMeister.DataProvider.Xml
                 if (value is XmlObject)
                 {
                     var valueAsXmlObject = value as XmlObject;
+                    valueAsXmlObject.ContainerExtent = this.extent;
                     var parentElement = this.extent.XmlDocument.Root;
 
                     // Checks, if we have a better element, where new node can be added
@@ -160,7 +161,7 @@ namespace DatenMeister.DataProvider.Xml
 
                 if (value == null)
                 {
-                    Debug.WriteLine("Null has been added");
+                    Debug.WriteLine("Nothing (null) has been added");
                     return false;
                 }
 
@@ -197,7 +198,11 @@ namespace DatenMeister.DataProvider.Xml
                             foundItems.Add(rootNode);
                             foreach (var xmlSubnode in rootNode.Elements())
                             {
-                                var result = new XmlObject(this.extent, xmlSubnode, null);
+                                var result = new XmlObject(this.extent, xmlSubnode, null)
+                                {
+                                    ContainerExtent = this.extent
+                                };
+
                                 yield return result;
                             }
                         }
@@ -210,7 +215,11 @@ namespace DatenMeister.DataProvider.Xml
                             // Only for the items, that do not have a direct mapping via settings, the elements will be returned
                             if (!foundItems.Contains(subNode))
                             {
-                                var subObject = new XmlObject(this.extent, subNode);
+                                var subObject = new XmlObject(this.extent, subNode)
+                                {
+                                    ContainerExtent = this.extent
+                                };
+
                                 yield return subObject;
                             }
                         }

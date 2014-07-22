@@ -159,8 +159,9 @@ namespace DatenMeister.DataProvider.Xml
             }
 
             this.GetAttribute().Value = builder.ToString();
-
             this.sequenceType = XmlReflectiveSequenceType.Attributes;
+
+            this.MakeExtentDirty();
         }
 
         #endregion
@@ -184,7 +185,7 @@ namespace DatenMeister.DataProvider.Xml
                         throw new NotImplementedException("Cannot change mode to nodes, which is necessary to store IObjects");
                     }
 
-                    XmlObject.CopyObjectIntoXmlNode(xmlObject, valueAsIObject, propertyName, extent);
+                    XmlObject.CopyObjectIntoXmlNode(xmlObject, valueAsIObject, propertyName, this.Extent as XmlExtent);
                 }
                 else
                 {
@@ -245,7 +246,10 @@ namespace DatenMeister.DataProvider.Xml
                 }
                 else
                 {
-                    return new XmlObject(this.Extent as XmlExtent, elements.ElementAt(index), xmlObject);
+                    return new XmlObject(this.Extent as XmlExtent, elements.ElementAt(index), xmlObject)
+                        {
+                            ContainerExtent = xmlObject.ContainerExtent
+                        };
                 }
             }
             else
@@ -384,6 +388,17 @@ namespace DatenMeister.DataProvider.Xml
                 {
                     yield return new XmlObject(this.Extent as XmlExtent, node, xmlObject);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Makes the extent dirty, if an extent has been associated
+        /// </summary>
+        private void MakeExtentDirty()
+        {
+            if (this.Extent != null)
+            {
+                this.Extent.IsDirty = true;
             }
         }
     }
