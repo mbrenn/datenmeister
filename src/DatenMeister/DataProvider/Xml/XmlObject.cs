@@ -338,8 +338,6 @@ namespace DatenMeister.DataProvider.Xml
                 {
                     valueAsReflectiveCollection.add(item);
                 }
-
-                throw new NotImplementedException("IEnumerable are not supported until now");
             }
             else
             {

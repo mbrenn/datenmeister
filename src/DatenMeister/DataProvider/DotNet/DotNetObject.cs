@@ -251,7 +251,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// <returns>The metaclass of the object</returns>
         public IObject getMetaClass()
         {
-            if (this.value == null || this.extent != null)
+            if (this.value == null || this.extent == null)
             {
                 return null;
             }
