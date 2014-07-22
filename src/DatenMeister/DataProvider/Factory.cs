@@ -59,6 +59,14 @@ namespace DatenMeister.DataProvider
 
         public static IFactory GetFor(IObject value)
         {
+            // Checks, if object has a special factory extent
+            var valueAsHasFactoryExtent = value as IHasFactoryExtent;
+            if (valueAsHasFactoryExtent != null)
+            {
+                return GetFor(valueAsHasFactoryExtent.FactoryExtent);
+            }
+
+            // If not, do default implementation
             if (value.Extent != null)
             {
                 return GetFor(value.Extent);

@@ -20,7 +20,7 @@ namespace DatenMeister.DataProvider.Xml
     /// <summary>
     /// Defines one xml object being used by Datenmeister
     /// </summary>
-    public class XmlObject : IElement
+    public class XmlObject : IElement, IHasFactoryExtent
     {
         /// <summary>
         /// Gets or sets the extent, whose extent was used to create the item
@@ -29,6 +29,11 @@ namespace DatenMeister.DataProvider.Xml
         {
             get;
             set;
+        }
+
+        IURIExtent IHasFactoryExtent.FactoryExtent
+        {
+            get { return this.FactoryExtent; }
         }
 
         /// <summary>
