@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.DotNet;
 using DatenMeister.Logic.SourceFactory;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,22 @@ namespace DatenMeister.Logic.Views
     /// </summary>
     public static class ViewHelper
     {
+        /// <summary>
+        /// This container stores the view types as an assignment table. 
+        /// It can be used for DotNetSequences or other implicit conversions
+        /// </summary>
+        public static DotNetExtent ViewTypes
+        {
+            get;
+            private set;
+        }
+
+        static ViewHelper()
+        {
+            ViewTypes = new DotNetExtent("not used");
+            DatenMeister.Entities.AsObject.FieldInfo.Types.AssignTypeMapping(ViewTypes);
+        }
+
         /// <summary>
         /// Performs the autogeneration of the view definition, in dependence of the
         /// only type in <c>provider</c>.

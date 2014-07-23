@@ -136,6 +136,7 @@ namespace DatenMeister.Tests
             viewExtent.Elements().add(Views.PersonTable);
 
             var personColumns = new DotNetSequence(
+                ViewHelper.ViewTypes,
                 new TextField("Name", "name"),
                 new TextField("E-Mail", "email"),
                 new TextField("Phone", "phone"),
@@ -148,6 +149,7 @@ namespace DatenMeister.Tests
             viewExtent.Elements().add(Views.PersonTable);
 
             var personDetailColumns = new DotNetSequence(
+                ViewHelper.ViewTypes,
                 new TextField("Name", "name"),
                 new TextField("E-Mail", "email"),
                 new TextField("Phone", "phone"),
@@ -161,6 +163,7 @@ namespace DatenMeister.Tests
             viewExtent.Elements().add(Views.TaskTable);
 
             var taskColumns = new DotNetSequence(
+                ViewHelper.ViewTypes,
                 new TextField("Name", "name"),
                 new TextField("Start", "startdate"),
                 new TextField("Ende", "enddate"),
@@ -173,6 +176,7 @@ namespace DatenMeister.Tests
             viewExtent.Elements().add(Views.TaskDetail);
 
             var taskDetailColumns = new DotNetSequence(
+                ViewHelper.ViewTypes,
                 new TextField("Name", "name"),
                 new TextField("Start", "startdate"),
                 new TextField("Ende", "enddate"),

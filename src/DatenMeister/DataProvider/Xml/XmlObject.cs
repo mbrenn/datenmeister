@@ -353,10 +353,10 @@ namespace DatenMeister.DataProvider.Xml
             }
             else if (value is IEnumerable)
             {
-                var valueAsReflectiveCollection = this.get(propertyName).AsReflectiveCollection();
+                var propertyAsReflectiveCollection = this.get(propertyName).AsReflectiveCollection();
                 foreach (var item in (value as IEnumerable))
                 {
-                    valueAsReflectiveCollection.add(item);
+                    propertyAsReflectiveCollection.add(item);
                 }
             }
             else

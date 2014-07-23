@@ -33,6 +33,15 @@ namespace DatenMeister.DataProvider.DotNet
         }
 
         /// <summary>
+        /// Stores the metaclass of the object
+        /// </summary>
+        private IObject metaClass
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the dot net object. 
         /// The id is retrieved from the property 'name'. If the property is not existing, an exception will be thrown. 
         /// </summary>
@@ -68,6 +77,25 @@ namespace DatenMeister.DataProvider.DotNet
             Ensure.That(value != null);
             this.value = value;
             this.id = id;
+        }
+
+        public void SetMetaClassByMapping(DotNetExtent extent)
+        {
+            if (this.value == null || extent == null)
+            {
+                this.metaClass = null;
+                return;
+            }
+
+            var result = extent.Mapping.FindByDotNetType(this.value.GetType());
+            if (result != null)
+            {
+                this.metaClass = result.Type;
+                return;
+            }
+
+            this.metaClass = null;
+            return;
         }
 
         /// <summary>
@@ -224,7 +252,7 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else if (checkObject is IEnumerable)
             {
-                var sequence = new DotNetSequence();
+                var sequence = new DotNetSequence(this.extent);
                 var n = 0L;
                 foreach (var value in (checkObject as IEnumerable))
                 {
@@ -251,18 +279,13 @@ namespace DatenMeister.DataProvider.DotNet
         /// <returns>The metaclass of the object</returns>
         public IObject getMetaClass()
         {
-            if (this.value == null || this.extent == null)
+            if (this.metaClass != null)
             {
-                return null;
+                return this.metaClass;
             }
 
-            var result = this.extent.Mapping.FindByDotNetType(this.value.GetType());
-            if (result != null)
-            {
-                return result.Type;
-            }
-
-            return null;
+            this.SetMetaClassByMapping(this.extent);
+            return this.metaClass;
         }
 
         /// <summary>

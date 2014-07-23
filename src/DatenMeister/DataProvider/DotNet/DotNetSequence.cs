@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 namespace DatenMeister.DataProvider.DotNet
 {
     /// <summary>
-    /// Defines a sequence of objects.
-    /// TODO: Convert all the stuff
+    /// Defines a sequence of objects. The extent is necessary to be able to perform all the necessary conversions
     /// </summary>
     public class DotNetSequence : IList<object>
     {
+        /// <summary>
+        /// Stores the dotnet extent for the type conversion
+        /// </summary>
+        private DotNetExtent dotNetExtent;
+
         private List<object> content = new List<object>();
 
         public IObject ConvertTo(object value)
@@ -21,21 +25,25 @@ namespace DatenMeister.DataProvider.DotNet
                 return value as DotNetObject;
             }
 
-            return new DotNetObject(null, value);
+            var dotNetObject = new DotNetObject(null, value);
+            dotNetObject.SetMetaClassByMapping(this.dotNetExtent);
+            return dotNetObject;
         }
 
         /// <summary>
         /// Initializes a new instance of the DotNetSequence clas
         /// </summary>
-        public DotNetSequence()
+        public DotNetSequence(DotNetExtent dotNetExtent)
         {
+            this.dotNetExtent = dotNetExtent;
         }
 
         /// <summary>
         /// Initializes a new instance of the DotNetSequence class and adds the array
         /// </summary>
         /// <param name="content">Objects to be added</param>
-        public DotNetSequence(params object[] content)
+        public DotNetSequence(DotNetExtent extent, params object[] content)
+            : this(extent)
         {
             this.content.AddRange(content.Select(x => ConvertTo(x)));
         }
