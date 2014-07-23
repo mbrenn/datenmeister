@@ -183,7 +183,13 @@ namespace DatenMeister.DataProvider.Xml
 
             public override bool remove(object value)
             {
-                throw new NotImplementedException();
+                Ensure.That(value != null);
+                var valueAsObject = value as XmlObject;
+                Ensure.That(valueAsObject != null, "Value is not XmlObject");
+                
+                valueAsObject.delete();
+
+                return true;
             }
 
             public override int size()

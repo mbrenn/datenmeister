@@ -148,7 +148,9 @@ namespace DatenMeister.WPF.Windows
 
         public void AssociateDetailOpenEvent(IObject view, Action<DetailOpenEventArgs> action)
         {
-            var found = this.listTabs.Where(x => x.TableViewInfo == view).FirstOrDefault();
+            Ensure.That(view != null);
+
+            var found = this.listTabs.Where(x => x.TableViewInfo.AsIObject().Id == view.Id).FirstOrDefault();
             if (found == null)
             {
                 logger.Fail("Associate Detail Open Event failed because tab was not found");
