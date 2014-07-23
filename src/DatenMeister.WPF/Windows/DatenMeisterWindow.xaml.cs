@@ -183,7 +183,7 @@ namespace DatenMeister.WPF.Windows
                 elements.Add(tableInfoObj);
 
                 // Check, if there is already a tab, which hosts the tableInfo
-                if (this.listTabs.Any(x => x.TableViewInfo == tableInfo))
+                if (this.listTabs.Any(x => x.TableViewInfo.AsIObject().Id == tableInfoObj.Id))
                 {
                     // We do not need to recreate it
                     continue;
@@ -193,6 +193,7 @@ namespace DatenMeister.WPF.Windows
 
                 var extentUri = tableViewInfo.getExtentUri();
                 Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
+
                 var name = tableViewInfo.getName();
                 var tab = CreateTab(tableInfoObj, name);
 
@@ -233,7 +234,7 @@ namespace DatenMeister.WPF.Windows
             // Now go though the list and remove all views, which are not in listtabs
             foreach (var listTab in this.listTabs.ToList())
             {
-                if (!elements.Any(x => x == listTab.TableViewInfo))
+                if (!elements.Any(x => x.Id == listTab.TableViewInfo.AsIObject().Id))
                 {
                     this.listTabs.Remove(listTab);
                     this.tabMain.Items.Remove(listTab.TabItem);

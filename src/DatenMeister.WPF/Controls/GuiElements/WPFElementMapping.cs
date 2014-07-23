@@ -54,12 +54,12 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 return new WpfMultiReferenceField();
             }
 
-            if ( metaClass == null)
+            if (metaClass == null)
             {
                 throw new NotImplementedException("metaClass is null and not known");
             }
 
-            throw new NotImplementedException(metaClass.get("name")  + " is not a known WPF Element");
+            throw new NotImplementedException(metaClass.get("name") + " is not a known WPF Element");
         }
     }
 }
