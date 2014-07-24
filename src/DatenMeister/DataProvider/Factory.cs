@@ -51,18 +51,35 @@ namespace DatenMeister.DataProvider
         /// </summary>
         /// <param name="extent">Extent, whose factory is requested</param>
         /// <returns>Factory to be created</returns>
-        public static IFactory GetFor(IURIExtent extent)
+        public static IFactory GetFor(Type type, IURIExtent extent)
         {
             var factoryProvider = Global.Application.Get<IFactoryProvider>();
             return factoryProvider.CreateFor(extent);
         }
 
+        /// <summary>
+        /// Gets the factory for a certain event by using the default binder
+        /// </summary>
+        /// <param name="extent">Extent, whose factory is requested</param>
+        /// <returns>Factory to be created</returns>
+        public static IFactory GetFor(IURIExtent extent)
+        {
+            return GetFor(extent.GetType(), extent);
+        }
+
         public static IFactory GetFor(IObject value)
         {
+            var valueAsKnown = value as IKnowsExtentType;
+            if (valueAsKnown != null)
+            {
+                return GetFor(valueAsKnown.ExtentType, value.Extent);
+            }
+
             // Checks, if object has a special factory extent
             var valueAsHasFactoryExtent = value as IHasFactoryExtent;
             if (valueAsHasFactoryExtent != null)
             {
+                var factoryExtent = valueAsHasFactoryExtent.FactoryExtent;
                 return GetFor(valueAsHasFactoryExtent.FactoryExtent);
             }
 

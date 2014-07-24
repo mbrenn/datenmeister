@@ -11,7 +11,7 @@ namespace DatenMeister.DataProvider
     /// Just a generic object that is not aligned to any data provider or any other object. 
     /// The method is multithreading safe. Can be seen as a completely decoupled thing. 
     /// </summary>
-    public class GenericObject : IObject
+    public class GenericObject : IObject, IKnowsExtentType
     {
         /// <summary>
         /// Stores the owner of the extent
@@ -102,6 +102,11 @@ namespace DatenMeister.DataProvider
             {
                 return this.id;
             }
+        }
+
+        Type IKnowsExtentType.ExtentType
+        {
+            get { return typeof(GenericExtent); }
         }
     }
 }

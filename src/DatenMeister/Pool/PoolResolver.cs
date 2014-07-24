@@ -75,7 +75,7 @@ namespace DatenMeister.Pool
 
             Uri uri;
             string contextPath = null;
-            if (context != null)
+            if (context != null && context.Extent != null)
             {
                 contextPath = this.GetResolvePath(context);
                 uri = new Uri(new Uri(contextPath), url);

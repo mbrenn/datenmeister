@@ -65,6 +65,7 @@
     <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
     <Compile Include="DataProvider\DotNet\DotNetUnspecified.cs" />
     <Compile Include="DataProvider\EnumerationReflectiveSequence.cs" />
+    <Compile Include="DataProvider\ExtensionMethods.cs" />
     <Compile Include="DataProvider\FactoryProvider.cs" />
     <Compile Include="DataProvider\GenericElement.cs" />
     <Compile Include="DataProvider\GenericExtent.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="DataProvider\GenericObject.cs" />
     <Compile Include="DataProvider\GenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\IHasFactoryExtent.cs" />
+    <Compile Include="DataProvider\IKnowsExtentType.cs" />
     <Compile Include="DataProvider\ListNonGenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListReflectiveSequence.cs" />
     <Compile Include="DataProvider\GenericUnspecified.cs" />

@@ -20,7 +20,7 @@ namespace DatenMeister.DataProvider.Xml
     /// <summary>
     /// Defines one xml object being used by Datenmeister
     /// </summary>
-    public class XmlObject : IElement, IHasFactoryExtent
+    public class XmlObject : IElement, IHasFactoryExtent, IKnowsExtentType
     {
         /// <summary>
         /// Gets or sets the extent, whose extent was used to create the item
@@ -458,6 +458,14 @@ namespace DatenMeister.DataProvider.Xml
             copiedXmlObject.Node.Name = propertyName;
 
             xmlObject.Node.Add(copiedXmlObject.Node);
+        }
+
+        /// <summary>
+        /// Returns the Extent Type
+        /// </summary>
+        System.Type IKnowsExtentType.ExtentType
+        {
+            get { return typeof(XmlExtent); }
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.DataProvider.DotNet
 {
-    public class DotNetObject : IElement
+    public class DotNetObject : IElement, IKnowsExtentType
     {
         /// <summary>
         /// Defines the extent being
@@ -60,7 +60,7 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else
             {
-                this.id = this.get("name").ToString();
+                this.id = this.get("name").AsSingle().ToString();
             }
         }
 
@@ -307,6 +307,11 @@ namespace DatenMeister.DataProvider.DotNet
             }
 
             return base.ToString();
+        }
+
+        Type IKnowsExtentType.ExtentType
+        {
+            get { return typeof(DotNetExtent); }
         }
     }
 }

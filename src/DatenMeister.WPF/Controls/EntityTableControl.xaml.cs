@@ -359,7 +359,7 @@ namespace DatenMeister.WPF.Controls
         {
             var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
 
-            if (this.OpenSelectedViewFunc != null)
+            if (this.OpenSelectedViewFunc != null && selectedItem != null)
             {
                 this.OpenSelectedViewFunc(
                     new DetailOpenEventArgs()
@@ -378,7 +378,7 @@ namespace DatenMeister.WPF.Controls
             else
             {
                 var readOnly = false;
-                
+
                 // Check, if the dialog to be opend shall be a read-only dialog
                 if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowEdit(this.tableViewInfo))
                 {
@@ -389,9 +389,9 @@ namespace DatenMeister.WPF.Controls
                 Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
 
                 var dialog = DetailDialog.ShowDialogFor(
-                    selectedItem.Value, 
-                    this.Settings, 
-                    this.DetailViewInfo, 
+                    selectedItem.Value,
+                    this.Settings,
+                    this.DetailViewInfo,
                     readOnly);
 
                 if (dialog == null)
