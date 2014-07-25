@@ -123,7 +123,7 @@ namespace DatenMeister.Entities.AsObject.DM
         public static System.String getFilePath(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("filePath"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setFilePath(DatenMeister.IObject obj, System.String value)
@@ -165,7 +165,7 @@ namespace DatenMeister.Entities.AsObject.DM
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)

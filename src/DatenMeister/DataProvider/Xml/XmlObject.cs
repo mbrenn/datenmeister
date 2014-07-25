@@ -366,7 +366,7 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="propertyName">Name of the property</param>
         public bool unset(string propertyName)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("unset is not defined until now");
         }
 
         /// <summary>

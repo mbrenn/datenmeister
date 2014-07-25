@@ -249,10 +249,27 @@ namespace DatenMeister.Logic.SourceFactory
                         propertyName));
             }
 
-            writer.WriteLine(
-                string.Format(
-                    TwelveSpaces + "return (result is {0}) ? (({0}) result) : default({0});",
-                    propertyTypeName));
+            // Checks, if the property type is a special type
+            if (propertyType == typeof(bool))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return DatenMeister.Extensions.ToBoolean(result);"));
+            }
+            else if (propertyType == typeof(string))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return DatenMeister.Extensions.ToString(result);"));
+            }
+            else
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return (result is {0}) ? (({0}) result) : default({0});",
+                        propertyTypeName));
+            }
+
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 

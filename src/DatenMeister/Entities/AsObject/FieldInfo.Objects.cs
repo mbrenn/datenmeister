@@ -130,7 +130,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getComment(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("comment"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setComment(DatenMeister.IObject obj, System.String value)
@@ -151,7 +151,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -172,7 +172,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -193,7 +193,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -333,7 +333,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -354,7 +354,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -375,7 +375,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -515,7 +515,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -536,7 +536,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -557,7 +557,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -739,7 +739,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isMultiline(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isMultiline"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setMultiline(DatenMeister.IObject obj, System.Boolean value)
@@ -760,7 +760,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isDateTime(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isDateTime"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setDateTime(DatenMeister.IObject obj, System.Boolean value)
@@ -781,7 +781,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -802,7 +802,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -823,7 +823,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -963,7 +963,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -984,7 +984,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -1005,7 +1005,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -1145,7 +1145,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getText(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("text"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setText(DatenMeister.IObject obj, System.String value)
@@ -1166,7 +1166,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getClickUrl(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("clickUrl"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setClickUrl(DatenMeister.IObject obj, System.String value)
@@ -1308,7 +1308,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setPropertyValue(DatenMeister.IObject obj, System.String value)
@@ -1329,7 +1329,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setReferenceUrl(DatenMeister.IObject obj, System.String value)
@@ -1350,7 +1350,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -1371,7 +1371,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -1392,7 +1392,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -1534,7 +1534,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setPropertyValue(DatenMeister.IObject obj, System.String value)
@@ -1555,7 +1555,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setReferenceUrl(DatenMeister.IObject obj, System.String value)
@@ -1576,7 +1576,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -1597,7 +1597,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -1618,7 +1618,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -1760,7 +1760,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setPropertyValue(DatenMeister.IObject obj, System.String value)
@@ -1781,7 +1781,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setReferenceUrl(DatenMeister.IObject obj, System.String value)
@@ -1802,7 +1802,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -1823,7 +1823,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -1844,7 +1844,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -1986,7 +1986,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setPropertyValue(DatenMeister.IObject obj, System.String value)
@@ -2007,7 +2007,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setReferenceUrl(DatenMeister.IObject obj, System.String value)
@@ -2028,7 +2028,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -2049,7 +2049,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -2070,7 +2070,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -2203,7 +2203,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -2257,7 +2257,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getStartInEditMode(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("startInEditMode"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setStartInEditMode(DatenMeister.IObject obj, System.Boolean value)
@@ -2390,7 +2390,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowEdit(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowEdit"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setAllowEdit(DatenMeister.IObject obj, System.Boolean value)
@@ -2411,7 +2411,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowDelete(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowDelete"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setAllowDelete(DatenMeister.IObject obj, System.Boolean value)
@@ -2432,7 +2432,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowNew(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowNew"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setAllowNew(DatenMeister.IObject obj, System.Boolean value)
@@ -2453,7 +2453,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getShowColumnHeaders(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("showColumnHeaders"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setShowColumnHeaders(DatenMeister.IObject obj, System.Boolean value)
@@ -2474,7 +2474,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowNewProperty(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowNewProperty"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setAllowNewProperty(DatenMeister.IObject obj, System.Boolean value)
@@ -2495,7 +2495,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -2549,7 +2549,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getStartInEditMode(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("startInEditMode"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setStartInEditMode(DatenMeister.IObject obj, System.Boolean value)
@@ -2682,7 +2682,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getExtentUri(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("extentUri"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setExtentUri(DatenMeister.IObject obj, System.String value)
@@ -2724,7 +2724,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowEdit(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowEdit"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setAllowEdit(DatenMeister.IObject obj, System.Boolean value)
@@ -2745,7 +2745,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowDelete(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowDelete"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setAllowDelete(DatenMeister.IObject obj, System.Boolean value)
@@ -2766,7 +2766,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowNew(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowNew"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setAllowNew(DatenMeister.IObject obj, System.Boolean value)
@@ -2787,7 +2787,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.Extensions.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -2841,7 +2841,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getStartInEditMode(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("startInEditMode"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.Extensions.ToBoolean(result);
         }
 
         public static void setStartInEditMode(DatenMeister.IObject obj, System.Boolean value)
