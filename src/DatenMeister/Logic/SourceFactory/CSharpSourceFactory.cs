@@ -66,7 +66,7 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(FourSpaces + "[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]");
             writer.WriteLine(
                 string.Format(
-                    FourSpaces + "public class {0} : DatenMeister.IObject",
+                    FourSpaces + "public class {0} : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject",
                     typeName));
 
             writer.WriteLine(FourSpaces + "{");

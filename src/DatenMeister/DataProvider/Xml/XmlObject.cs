@@ -70,7 +70,6 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="parent">The parent node, which is used for id derivation</param>
         public XmlObject(XmlExtent xmlExtent,  XElement node, XmlObject parent = null)
         {
-            Ensure.That(xmlExtent != null);
             Ensure.That(node != null);
             this.Node = node;
             this.Parent = parent;
@@ -93,7 +92,6 @@ namespace DatenMeister.DataProvider.Xml
         private object Resolve(object value, string propertyName)
         {
             var result = value;
-            // var result = this.Extent.Pool.Resolve(this, value);
             if (result != null)
             {
                 result = new XmlUnspecified(this, propertyName, result);
@@ -281,13 +279,11 @@ namespace DatenMeister.DataProvider.Xml
                     {
                         // Setting of empty content
                         this.Node.Value = string.Empty;
-                        this.FactoryExtent.IsDirty = true;
                     }
                     else
                     {
                         // Setting of node content by value
                         this.Node.Value = Extensions.ToString(value);
-                        this.FactoryExtent.IsDirty = true;
                     }
                 }
                 else
@@ -301,7 +297,6 @@ namespace DatenMeister.DataProvider.Xml
                 // Checks, if we have multiple objects, if yes, throw exception. 
                 // Check, if we have an attribute with the given name, if yes, set the property            
                 this.Node.Attribute(propertyName).Value = Extensions.ToString(value);
-                this.FactoryExtent.IsDirty = true;
             }
             else if (this.Node.Element(propertyName) != null)
             {
@@ -309,7 +304,6 @@ namespace DatenMeister.DataProvider.Xml
                 if (Extensions.IsNative(value))
                 {
                     this.Node.Element(propertyName).Value = Extensions.ToString(value);
-                    this.FactoryExtent.IsDirty = true;
                 }
             }
             else if (Extensions.IsNative(value))
@@ -317,7 +311,6 @@ namespace DatenMeister.DataProvider.Xml
                 // Ok, we have no attribute and no element with the name.
                 // If this is a simple type, we just assume that this is a property, otherwise no suppurt
                 this.Node.Add(new XAttribute(propertyName, Extensions.ToString(value)));
-                this.FactoryExtent.IsDirty = true;
             }
             else if (value is IObject)
             {
@@ -363,6 +356,8 @@ namespace DatenMeister.DataProvider.Xml
             {
                 throw new NotImplementedException("We do not know how to set the value to the XmlObject");
             }
+
+            this.MakeFactoryDirty();
         }
 
         /// <summary>
@@ -381,7 +376,7 @@ namespace DatenMeister.DataProvider.Xml
         {
             this.Node.Remove();
             this.ContainerExtent = null;
-            this.FactoryExtent.IsDirty = true;
+            this.MakeFactoryDirty();
         }
 
         /// <summary>
@@ -394,19 +389,23 @@ namespace DatenMeister.DataProvider.Xml
         }
 
         /// <summary>
+        /// Makes the factory dirty
+        /// </summary>
+        public void MakeFactoryDirty()
+        {
+            if (this.FactoryExtent != null)
+            {
+                this.FactoryExtent.IsDirty = true;
+            }
+        }
+
+        /// <summary>
         /// Returns the meta class, if known
         /// </summary>
         /// <returns>Found Metaclass or null, if not found</returns>
         public IObject getMetaClass()
         {
             var nodeName = this.Node.Name.ToString();
-
-            // Checks the type by mapping
-            var info = this.FactoryExtent.Settings.Mapping.FindByNodeName(nodeName);
-            if (info != null)
-            {
-                return info.Type;
-            }
 
             // Checks the type by xmi:type attribute
             var xmiTypeAttribute = this.Node.Attribute(XmlExtent.XmiNamespace + "type");
@@ -419,6 +418,16 @@ namespace DatenMeister.DataProvider.Xml
                 if (type != null)
                 {
                     return type;
+                }
+            }
+
+            // Checks the type by mapping
+            if (this.FactoryExtent != null)
+            {
+                var info = this.FactoryExtent.Settings.Mapping.FindByNodeName(nodeName);
+                if (info != null)
+                {
+                    return info.Type;
                 }
             }
 

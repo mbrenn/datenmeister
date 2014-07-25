@@ -54,7 +54,7 @@ namespace DatenMeister.DataProvider
         public static IFactory GetFor(Type type, IURIExtent extent)
         {
             var factoryProvider = Global.Application.Get<IFactoryProvider>();
-            return factoryProvider.CreateFor(extent);
+            return factoryProvider.CreateFor(type, extent);
         }
 
         /// <summary>
@@ -69,10 +69,22 @@ namespace DatenMeister.DataProvider
 
         public static IFactory GetFor(IObject value)
         {
+            // Checks whether the object is a proxy object
+            var valueAsProxy = value as IProxyObject;
+            if (valueAsProxy != null)
+            {
+                return GetFor(valueAsProxy.Value);
+            }
+
+            // Checks, if we know the type directly from extent information
             var valueAsKnown = value as IKnowsExtentType;
             if (valueAsKnown != null)
             {
-                return GetFor(valueAsKnown.ExtentType, value.Extent);
+                var result = GetFor(valueAsKnown.ExtentType, value.Extent);
+                if (result != null)
+                {
+                    return result;
+                }
             }
 
             // Checks, if object has a special factory extent

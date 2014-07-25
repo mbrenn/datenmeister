@@ -74,6 +74,7 @@
     <Compile Include="DataProvider\GenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\IHasFactoryExtent.cs" />
     <Compile Include="DataProvider\IKnowsExtentType.cs" />
+    <Compile Include="DataProvider\IProxyObject.cs" />
     <Compile Include="DataProvider\ListNonGenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListReflectiveSequence.cs" />
     <Compile Include="DataProvider\GenericUnspecified.cs" />
