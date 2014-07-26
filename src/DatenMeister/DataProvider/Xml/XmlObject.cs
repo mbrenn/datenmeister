@@ -295,15 +295,29 @@ namespace DatenMeister.DataProvider.Xml
             else if (this.Node.Attribute(propertyName) != null)
             {
                 // Checks, if we have multiple objects, if yes, throw exception. 
-                // Check, if we have an attribute with the given name, if yes, set the property            
-                this.Node.Attribute(propertyName).Value = Extensions.ToString(value);
+                // Check, if we have an attribute with the given name, if yes, set the property     
+                if (value == ObjectHelper.NotSet)
+                {
+                    this.Node.Attribute(propertyName).Remove();
+                }
+                else
+                {
+                    this.Node.Attribute(propertyName).Value = Extensions.ToString(value);
+                }
             }
             else if (this.Node.Element(propertyName) != null)
             {
                 // Element is an element
-                if (Extensions.IsNative(value))
+                if (value == ObjectHelper.NotSet)
                 {
-                    this.Node.Element(propertyName).Value = Extensions.ToString(value);
+                    this.Node.Element(propertyName).Remove();
+                }
+                else
+                {
+                    if (Extensions.IsNative(value))
+                    {
+                        this.Node.Element(propertyName).Value = Extensions.ToString(value);
+                    }
                 }
             }
             else if (Extensions.IsNative(value))
@@ -351,6 +365,10 @@ namespace DatenMeister.DataProvider.Xml
                 {
                     propertyAsReflectiveCollection.add(item);
                 }
+            }
+            else if ( value == ObjectHelper.NotSet )
+            {
+                // do Nothing.. Nothing necessary, will not create a new element or attribute
             }
             else
             {
@@ -475,6 +493,44 @@ namespace DatenMeister.DataProvider.Xml
         System.Type IKnowsExtentType.ExtentType
         {
             get { return typeof(XmlExtent); }
+        }
+
+        /// <summary>
+        /// Checks, if the nodes are equest
+        /// </summary>
+        /// <param name="obj">Object to be done</param>
+        /// <returns>true, if the same</returns>
+        public override bool Equals(object obj)
+        {
+            var xmlObj = obj as XmlObject;
+            if (xmlObj != null)
+            {
+                return xmlObj.Node == this.Node;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            if (this.Node == null)
+            {
+                return 0;
+            }
+
+            return this.Node.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            if (this.Id == null)
+            {
+                return base.ToString();
+            }
+            else
+            {
+                return "XmlObject: " + this.Id.ToString();
+            }
         }
     }
 }

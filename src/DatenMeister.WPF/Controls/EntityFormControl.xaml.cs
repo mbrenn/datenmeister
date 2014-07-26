@@ -194,16 +194,19 @@ namespace DatenMeister.WPF.Controls
                     var fieldInfoAsElement = fieldInfo as IElement;
                     var wpfElementCreator = WPFElementMapping.Map(fieldInfoAsElement);
                     var wpfElement = wpfElementCreator.GenerateElement(this.DetailObject, fieldInfo, this);
-                    if (wpfElement is FrameworkElement)
+                    if (wpfElement != null)
                     {
-                        (wpfElement as FrameworkElement).Margin = new Thickness(10, 5, 10, 5);
+                        if (wpfElement is FrameworkElement)
+                        {
+                            (wpfElement as FrameworkElement).Margin = new Thickness(10, 5, 10, 5);
+                        }
+
+                        Grid.SetRow(wpfElement, currentRow);
+                        Grid.SetColumn(wpfElement, 1);
+                        formGrid.Children.Add(wpfElement);
+
+                        this.wpfElements.Add(new ElementCacheEntry(wpfElementCreator, wpfElement, fieldInfo));
                     }
-
-                    Grid.SetRow(wpfElement, currentRow);
-                    Grid.SetColumn(wpfElement, 1);
-                    formGrid.Children.Add(wpfElement);
-
-                    this.wpfElements.Add(new ElementCacheEntry(wpfElementCreator, wpfElement, fieldInfo));
 
                     currentRow++;
                 }

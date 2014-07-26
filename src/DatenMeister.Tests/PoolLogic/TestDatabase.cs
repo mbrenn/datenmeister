@@ -1,4 +1,5 @@
-﻿using DatenMeister;
+﻿using BurnSystems.ObjectActivation;
+using DatenMeister;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.DataProvider.Views;
@@ -76,11 +77,13 @@ namespace DatenMeister.Tests
         /// </summary>
         public DatenMeisterPool Init()
         {
+            Global.Reset();
+
             this.pool = new DatenMeisterPool();
+            this.pool.DoDefaultBinding();
 
             this.InitTypes();
             this.InitDatabase();
-            this.InitViews();
             this.InitInstances();
 
             return this.pool;
@@ -92,8 +95,8 @@ namespace DatenMeister.Tests
             var xmlProjectExtent = new XmlExtent(dataDocument, uri);
             this.xmlSettings = new XmlSettings();
             this.xmlSettings.SkipRootNode = true;
-            this.xmlSettings.Mapping.Add("person", Types.Person, (x) => x.Elements("data").Elements("persons").First());
-            this.xmlSettings.Mapping.Add("task", Types.Task, (x) => x.Elements("data").Elements("tasks").First());
+            this.xmlSettings.Mapping.Add("person", TestDatabase.Types.Person, (x) => x.Elements("data").Elements("persons").First());
+            this.xmlSettings.Mapping.Add("task", TestDatabase.Types.Task, (x) => x.Elements("data").Elements("tasks").First());
 
             xmlProjectExtent.Settings = xmlSettings;
 
@@ -115,75 +118,13 @@ namespace DatenMeister.Tests
             this.pool.Add(this.typeExtent, null, "ProjektMeister Types");
 
             // Creates the types
-            Types.Person = Factory.GetFor(typeExtent).CreateInExtent(typeExtent);
-            var person = new DatenMeister.Entities.AsObject.Uml.Type(Types.Person);
+            Types.Person = Factory.GetFor(this.typeExtent).CreateInExtent(this.typeExtent);
+            var person = new DatenMeister.Entities.AsObject.Uml.Type(TestDatabase.Types.Person);
             person.setName("Person");
 
-            Types.Task = Factory.GetFor(typeExtent).CreateInExtent(typeExtent);
-            var task = new DatenMeister.Entities.AsObject.Uml.Type(Types.Task);
+            Types.Task = Factory.GetFor(this.typeExtent).CreateInExtent(this.typeExtent);
+            var task = new DatenMeister.Entities.AsObject.Uml.Type(TestDatabase.Types.Task);
             task.setName("Task");
-        }
-
-        private void InitViews()
-        {
-            var viewExtent = new DotNetExtent(viewUri);
-            DatenMeister.Entities.AsObject.FieldInfo.Types.AssignTypeMapping(viewExtent);
-
-            ////////////////////////////////////////////
-            // List view for persons
-            var personTableView = new DatenMeister.Entities.FieldInfos.TableView();
-            Views.PersonTable = new DotNetObject(viewExtent, personTableView);
-            viewExtent.Elements().add(Views.PersonTable);
-
-            var personColumns = new DotNetSequence(
-                ViewHelper.ViewTypes,
-                new TextField("Name", "name"),
-                new TextField("E-Mail", "email"),
-                new TextField("Phone", "phone"),
-                new TextField("Job", "title"));
-            Views.PersonTable.set("fieldInfos", personColumns);
-
-            // Detail view for persons
-            var personDetailView = new DatenMeister.Entities.FieldInfos.FormView();
-            Views.PersonDetail = new DotNetObject(viewExtent, personDetailView);
-            viewExtent.Elements().add(Views.PersonTable);
-
-            var personDetailColumns = new DotNetSequence(
-                ViewHelper.ViewTypes,
-                new TextField("Name", "name"),
-                new TextField("E-Mail", "email"),
-                new TextField("Phone", "phone"),
-                new TextField("Job", "title"));
-            Views.PersonDetail.set("fieldInfos", personDetailColumns);
-
-            ////////////////////////////////////////////
-            // List view for tasks
-            var taskTableView = new DatenMeister.Entities.FieldInfos.TableView();
-            Views.TaskTable = new DotNetObject(viewExtent, taskTableView);
-            viewExtent.Elements().add(Views.TaskTable);
-
-            var taskColumns = new DotNetSequence(
-                ViewHelper.ViewTypes,
-                new TextField("Name", "name"),
-                new TextField("Start", "startdate"),
-                new TextField("Ende", "enddate"),
-                new TextField("Finished", "finished"));
-            Views.TaskTable.set("fieldInfos", taskColumns);
-
-            // Detail view for persons
-            var taskDetailView = new DatenMeister.Entities.FieldInfos.TableView();
-            Views.TaskDetail = new DotNetObject(viewExtent, taskDetailView);
-            viewExtent.Elements().add(Views.TaskDetail);
-
-            var taskDetailColumns = new DotNetSequence(
-                ViewHelper.ViewTypes,
-                new TextField("Name", "name"),
-                new TextField("Start", "startdate"),
-                new TextField("Ende", "enddate"),
-                new Checkbox("Finished", "finished"));
-            Views.TaskDetail.set("fieldInfos", taskDetailColumns);
-
-            this.pool.Add(viewExtent, null, "ProjektMeister Views");
         }
 
         private void InitInstances()
@@ -201,11 +142,11 @@ namespace DatenMeister.Tests
             person.set("phone", "0151/650");
             person.set("title", "Project Support");
 
-            person = Factory.GetFor(this.ProjectExtent).CreateInExtent(this.ProjectExtent, TestDatabase.Types.Task);
-            person.set("name", "My First Task");
-            person.set("startdate", DateTime.Now);
-            person.set("enddate", DateTime.Now.AddYears(1));
-            person.set("finished", false);
+            var task = Factory.GetFor(this.ProjectExtent).CreateInExtent(this.ProjectExtent, TestDatabase.Types.Task);
+            task.set("name", "My First Task");
+            task.set("startdate", DateTime.Now);
+            task.set("enddate", DateTime.Now.AddYears(1));
+            task.set("finished", false);
         }
 
         /// <summary>
@@ -250,24 +191,6 @@ namespace DatenMeister.Tests
             {
                 get;
                 internal set;
-            }
-        }
-
-        /// <summary>
-        /// Replaces the data database
-        /// </summary>
-        /// <param name="extent">Xml Extent being stored</param>
-        internal void ReplaceDatabase(XmlExtent extent)
-        {
-            extent.Settings = this.xmlSettings;
-            this.projectExtent = extent;
-
-            foreach (var mapping in this.xmlSettings.Mapping.GetAll())
-            {
-                if (mapping.RetrieveRootNode(extent.XmlDocument) == null)
-                {
-                    throw new InvalidOperationException("Given extent is not compatible to ProjektMeister");
-                }
             }
         }
     }
