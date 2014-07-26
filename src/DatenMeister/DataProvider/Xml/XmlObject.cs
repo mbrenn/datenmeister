@@ -357,7 +357,7 @@ namespace DatenMeister.DataProvider.Xml
                 throw new NotImplementedException("We do not know how to set the value to the XmlObject");
             }
 
-            this.MakeFactoryDirty();
+            this.MakeExtentDirty();
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace DatenMeister.DataProvider.Xml
         {
             this.Node.Remove();
             this.ContainerExtent = null;
-            this.MakeFactoryDirty();
+            this.MakeExtentDirty();
         }
 
         /// <summary>
@@ -391,11 +391,11 @@ namespace DatenMeister.DataProvider.Xml
         /// <summary>
         /// Makes the factory dirty
         /// </summary>
-        public void MakeFactoryDirty()
+        public void MakeExtentDirty()
         {
-            if (this.FactoryExtent != null)
+            if (this.ContainerExtent != null)
             {
-                this.FactoryExtent.IsDirty = true;
+                this.ContainerExtent.IsDirty = true;
             }
         }
 
