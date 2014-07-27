@@ -40,12 +40,6 @@ namespace DatenMeister.WPF.Windows
         void RefreshTabs();
 
         /// <summary>
-        /// Sets the title of the application
-        /// </summary>
-        /// <param name="title">Title of the application</param>
-        void SetTitle(string title);
-
-        /// <summary>
         /// Adds a menuentry to the application window
         /// </summary>
         /// <param name="menuHeadline">Headline of the menu</param>

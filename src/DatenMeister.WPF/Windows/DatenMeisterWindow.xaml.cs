@@ -94,18 +94,28 @@ namespace DatenMeister.WPF.Windows
             {
                 if (!string.IsNullOrEmpty(core.Settings.WindowTitle))
                 {
-                    this.SetTitle(core.Settings.WindowTitle);
+                    this.UpdateWindowTitle();
                 }
             }
         }
 
         /// <summary>
-        /// Sets the title of the application
+        /// Updates the window title, when a change has happened
         /// </summary>
-        /// <param name="title">Title of the application</param>
-        public void SetTitle(string title)
+        private void UpdateWindowTitle()
         {
-            this.Title = title;
+            var applicationTitle = this.Settings.ApplicationName;
+            if (string.IsNullOrEmpty(this.pathOfDataExtent))
+            {
+                this.Title = string.Format("{0} - Depon.Net", applicationTitle);
+            }
+            else
+            {
+                this.Title = string.Format(
+                    "{0} - {1} - Depon.Net", 
+                    System.IO.Path.GetFileNameWithoutExtension(this.pathOfDataExtent),
+                    applicationTitle);
+            }
         }
 
         /// <summary>
@@ -354,6 +364,8 @@ namespace DatenMeister.WPF.Windows
             this.RefreshAllTabContent();
 
             this.pathOfDataExtent = filename;
+
+            this.UpdateWindowTitle();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -388,6 +400,8 @@ namespace DatenMeister.WPF.Windows
                 this.AddRecentFile(this.pathOfDataExtent);
 
                 MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
+
+                this.UpdateWindowTitle();
             }
         }
 
