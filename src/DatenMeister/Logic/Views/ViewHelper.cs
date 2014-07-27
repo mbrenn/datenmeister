@@ -72,27 +72,53 @@ namespace DatenMeister.Logic.Views
         {
             var factory = Factory.GetFor(viewInfo);
             var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
+            var info = collection.GetConsolidatedInformation();
 
-            var propertyNames = collection.GetConsolidatedPropertyNames();
+            // Gets the type, if necessary
+            if ( info.TypeCount > 1)
+            {
+                fieldInfos.add(AddTextField(factory, "Type", ObjectDictionaryForView.TypeBinding));
+            }
+
+            // Gets the propertynames            
+            var propertyNames = info.PropertyNames;
             if (orderByName == true)
             {
                 propertyNames = propertyNames.OrderBy(x => x.ToLower() == "id" ? string.Empty : x);
             }
 
+            // Performs the creation of fields by propertyname
             foreach (var name in propertyNames)
             {
-                var textField = factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.TextField);
-                var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(textField);
-                textFieldObj.setName(name);
-                textFieldObj.setBinding(name);
-
-                if (name == "id")
-                {
-                    textFieldObj.setReadOnly(true);
-                }
-
-                fieldInfos.add(textField);
+                fieldInfos.add(AddTextField(factory, name));
             }
+        }
+
+        /// <summary>
+        /// Adds the text field for a certain name and binding
+        /// </summary>
+        /// <param name="factory">Factory to be used to create the textfield</param>
+        /// <param name="name">Name of the property</param>
+        /// <param name="binding">Name for the binding</param>
+        /// <returns>Created object</returns>
+        private static IObject AddTextField(IFactory factory, string name, string binding = null)
+        {
+            if (string.IsNullOrEmpty(binding))
+            {
+                binding = name;
+            }
+
+            var textField = factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.TextField);
+            var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(textField);
+            textFieldObj.setName(name);
+            textFieldObj.setBinding(binding);
+
+            if (name == "id")
+            {
+                textFieldObj.setReadOnly(true);
+            }
+
+            return textField;
         }
     }
 }

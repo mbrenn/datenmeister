@@ -12,6 +12,11 @@ namespace DatenMeister.Logic
     public class ObjectDictionaryForView : ObjectDictionary
     {
         /// <summary>
+        /// Got the Binding name to find a type
+        /// </summary>
+        public const string TypeBinding = "4DCDDF6D-B734-467D-81D2-F3E3CE4DBA39";
+
+        /// <summary>
         /// Stores the field information
         /// </summary>
         private IEnumerable<IObject> fieldInfos;
@@ -28,24 +33,22 @@ namespace DatenMeister.Logic
 
         public override object Get(string index)
         {
-            if (this.Value.isSet(index))
-            {
-                var fieldInfo = this.FindFieldInfo(index);
+            var fieldInfo = this.FindFieldInfo(index);
 
-                var result = GetUnmanipulatedContent(index);
-                if (fieldInfo != null)
+            var result = this.GetUnmanipulatedContent(index);
+            
+            if (fieldInfo != null && result != null)
+            {
+                if (TextField.isDateTime(fieldInfo))
                 {
-                    if (TextField.isDateTime(fieldInfo))
+                    DateTime dt;
+                    if (DateTime.TryParse(
+                        result,
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.AssumeLocal,
+                        out dt))
                     {
-                        DateTime dt;
-                        if (DateTime.TryParse(
-                            result,
-                            CultureInfo.InvariantCulture,
-                            DateTimeStyles.AssumeLocal,
-                            out dt))
-                        {
-                            return dt.ToString(Thread.CurrentThread.CurrentCulture);
-                        }
+                        return dt.ToString(Thread.CurrentThread.CurrentCulture);
                     }
                 }
 
@@ -62,13 +65,17 @@ namespace DatenMeister.Logic
         /// <returns>Content to be shown. This content might be changed by field information</returns>
         private string GetUnmanipulatedContent(string index)
         {
-            var result = base.Get(index).AsSingle();
+            object result = "NULL";
+
+            // Gets the index and its result
+            result = GetContentByBinding(index);
             var resultAsIObject = result as IObject;
 
             if (resultAsIObject != null)
             {
-                // Here, we have the redirection for referenced objcts
-                return resultAsIObject.get("name").AsSingle().ToString();
+                // We have an IObject which has been referenced. 
+                // We return name of the object
+                result = resultAsIObject.get("name").AsSingle().ToString();
             }
 
             result = result.AsSingle();
@@ -76,16 +83,51 @@ namespace DatenMeister.Logic
             {
                 if (result is DateTime)
                 {
-                    return ((DateTime)result).ToString(Thread.CurrentThread.CurrentCulture);
+                    result = ((DateTime)result).ToString(Thread.CurrentThread.CurrentCulture);
                 }
+                else
+                {
+                    // If the object is not an IObject, we just use ToString
+                    result = result.ToString();
+                }
+            }
 
-                // If the object is not an IObject, we just use ToString
-                return result.ToString();
+            return result.ToString();
+        }
+
+        /// <summary>
+        /// Gets the property content 
+        /// </summary>
+        /// <param name="bindingName">Name of the binding to be used</param>
+        /// <returns>Returned object</returns>
+        private object GetContentByBinding(string bindingName)
+        {
+            object result;
+            if (bindingName == TypeBinding)
+            {
+                var element = base.Value as IElement;
+                if (element != null)
+                {
+                    result = element.getMetaClass();
+                }
+                else
+                {
+                    result = ObjectHelper.NotSet;
+                }
             }
             else
             {
-                return "NULL";
+                if (this.Value.isSet(bindingName))
+                {
+                    result = base.Get(bindingName).AsSingle();
+                }
+                else
+                {
+                    result = ObjectHelper.NotSet;
+                }
             }
+
+            return result;
         }
 
         /// <summary>
