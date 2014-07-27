@@ -30,6 +30,15 @@ namespace DatenMeister.Logic
                 .Distinct()                                     // Grouped
                 .Count();                                       // As Count
         }
+
+        private static int GetExtentCount(IReflectiveCollection collection)
+        {
+            return collection.Where(x => x is IObject)          // Need IObjects
+                .Select(x => (x as IObject).Extent)             // given me their extent
+                .Where(x => x != null)                          // which are not null
+                .Distinct()                                     // Grouped
+                .Count();                                       // As Count
+        }
         
         /// <summary>
         /// Gets the consolidated information about the complete ReflectiveCollection
@@ -41,7 +50,8 @@ namespace DatenMeister.Logic
             var result = new TypeInformation()
             {
                 PropertyNames = GetConsolidatedPropertyNames(collection),
-                TypeCount = GetTypeCount(collection)
+                TypeCount = GetTypeCount(collection),
+                ExtentCount = GetExtentCount(collection)
             };
 
             return result;
@@ -62,6 +72,12 @@ namespace DatenMeister.Logic
             /// Gets or sets the number of existing types in the collection under scope
             /// </summary>
             public int TypeCount
+            {
+                get;
+                set;
+            }
+
+            public int ExtentCount
             {
                 get;
                 set;

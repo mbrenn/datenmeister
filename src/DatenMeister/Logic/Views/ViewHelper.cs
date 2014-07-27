@@ -75,7 +75,7 @@ namespace DatenMeister.Logic.Views
             var info = collection.GetConsolidatedInformation();
 
             // Gets the type, if necessary
-            if ( info.TypeCount > 1)
+            if (info.TypeCount > 1)
             {
                 fieldInfos.add(AddTextField(factory, "Type", ObjectDictionaryForView.TypeBinding));
             }
@@ -91,6 +91,12 @@ namespace DatenMeister.Logic.Views
             foreach (var name in propertyNames)
             {
                 fieldInfos.add(AddTextField(factory, name));
+            }
+
+            // Gets the extentUri, if necessary
+            if (info.ExtentCount > 1)
+            {
+                fieldInfos.add(AddTextField(factory, "ExtentUri", ObjectDictionaryForView.ExtentUriBinding));
             }
         }
 

@@ -17,6 +17,11 @@ namespace DatenMeister.Logic
         public const string TypeBinding = "4DCDDF6D-B734-467D-81D2-F3E3CE4DBA39";
 
         /// <summary>
+        /// Got the Binding name to find the extent url
+        /// </summary>
+        public const string ExtentUriBinding = "45FAC4BA-EF5A-4182-A4A2-FED3BF430B7D";
+
+        /// <summary>
         /// Stores the field information
         /// </summary>
         private IEnumerable<IObject> fieldInfos;
@@ -109,6 +114,18 @@ namespace DatenMeister.Logic
                 if (element != null)
                 {
                     result = element.getMetaClass();
+                }
+                else
+                {
+                    result = ObjectHelper.NotSet;
+                }
+            }
+            else if (bindingName == ExtentUriBinding)
+            {
+                var extent = base.Value.Extent;
+                if (extent != null)
+                {
+                    result = extent.ContextURI();
                 }
                 else
                 {
