@@ -4,7 +4,6 @@ using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Transformations;
-using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace DatenMeister.WPF.Helper
+namespace DatenMeister.Logic
 {
     /// <summary>
     /// Stores the data that is used for the application specific data
@@ -41,29 +40,30 @@ namespace DatenMeister.WPF.Helper
         }
 
         /// <summary>
-        /// Gets the storage path for the application date
+        /// Gets the storage path for a certain type of data
         /// </summary>
-        public string StoragePath
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public string GetStoragePathFor(string type)
         {
-            get
+            Ensure.That(this.Settings != null, "this.Settings = null");
+            Ensure.That(!string.IsNullOrEmpty(this.Settings.ApplicationName), "No application name is given");
+
+            // Gets and creates the directory
+            var directoryPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                string.Format(
+                    "Depon.Net/{0}",
+                    this.Settings.ApplicationName));
+            if (!Directory.Exists(directoryPath))
             {
-                Ensure.That(this.Settings != null, "this.Settings = null");
-                Ensure.That(!string.IsNullOrEmpty(this.Settings.ApplicationName), "No application name is given");
-
-                // Gets and creates the directory
-                var directoryPath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "Depon.Net/DatenMeister/AppData");
-                if (!Directory.Exists(directoryPath))
-                {
-                    Directory.CreateDirectory(directoryPath);
-                }
-
-                // Gets the filename
-                var filename = this.Settings.ApplicationName + ".xml";
-                var filePath = Path.Combine(directoryPath, filename);
-                return filePath;
+                Directory.CreateDirectory(directoryPath);
             }
+
+            // Gets the filename
+            var filename = type + ".xml";
+            var filePath = Path.Combine(directoryPath, filename);
+            return filePath;
         }
 
         /// <summary>
@@ -108,11 +108,20 @@ namespace DatenMeister.WPF.Helper
         }
 
         /// <summary>
-        /// Saves the application data
+        /// Tries to load an extent from the given file. 
+        /// The path of the file will be retrieved by GetStoragePathFor, which is within
+        /// the LocalAppData of the user
         /// </summary>
-        public void LoadApplicationData()
+        /// <param name="name">Name of the new extent</param>
+        /// <param name="fileName">Used filename to load the extent</param>
+        /// <param name="extentUri">Uri of the extent to be used</param>
+        /// <param name="defaultAction">Action being called, when file is not existing.
+        /// The action can be used to precreate the necessary nodes or to perform the mapping</param>
+        /// <returns>Created or loaded Extent</returns>
+        public IURIExtent LoadOrCreateByFault(string name, string fileName, string extentUri, Action<XmlExtent> defaultAction)
         {
-            var filePath = this.StoragePath;
+            var filePath = this.GetStoragePathFor(name);
+            IURIExtent createdPool = null;
             if (File.Exists(filePath))
             {
                 try
@@ -120,22 +129,40 @@ namespace DatenMeister.WPF.Helper
                     // File exists, we can directly load it
                     var dataProvider = new XmlDataProvider();
 
-                    this.applicationData = dataProvider.Load(filePath, ApplicationDataUri, this.XmlSettings);
+                    createdPool = dataProvider.Load(filePath, extentUri, this.XmlSettings);
                 }
                 catch (Exception exc)
                 {
-                    logger.Fail("Failure during loading of ApplicatonSettings" + exc.Message);
+                    logger.Fail("Failure during loading of " + name + ": " + exc.Message);
                 }
             }
 
-            if (this.applicationData == null)
+            if (createdPool == null)
             {
                 // File does not exist, we have to load it from 
-                this.applicationData = XmlExtent.Create(this.XmlSettings, "applicationdata", ApplicationDataUri);
+                createdPool = XmlExtent.Create(this.XmlSettings, name, extentUri);
+                if (defaultAction != null)
+                {
+                    defaultAction(createdPool as XmlExtent);
+                }
             }
 
             var pool = Global.Application.Get<IPool>();
-            pool.Add(this.applicationData, filePath, "Application data");
+            pool.Add(createdPool, filePath, name);
+
+            return createdPool;
+        }
+
+        /// <summary>
+        /// Saves the application data
+        /// </summary>
+        public void LoadApplicationData()
+        {
+            this.applicationData = this.LoadOrCreateByFault(
+                "AppData",
+                "Application Data",
+                ApplicationDataUri,
+                null);
         }
 
         /// <summary>
@@ -143,11 +170,13 @@ namespace DatenMeister.WPF.Helper
         /// </summary>
         public void SaveApplicationData()
         {
+            // Get pool entry            
+            var pool = Global.Application.Get<IPool>();
+            var instance = pool.GetInstance(ApplicationDataUri);
+
             // Save the data
             var dataProvider = new XmlDataProvider();
-
-            var filePath = this.StoragePath;
-            dataProvider.Save(this.applicationData as XmlExtent, filePath, this.XmlSettings);
+            dataProvider.Save(this.applicationData as XmlExtent, instance.StoragePath, this.XmlSettings);
         }
 
         /// <summary>
@@ -157,22 +186,6 @@ namespace DatenMeister.WPF.Helper
         {
             this.SaveApplicationData();
             GC.SuppressFinalize(this);
-        }
-        
-        /// <summary>
-        /// Creates the window for the DatenMeister. 
-        /// </summary>
-        /// <param name="core">Application of the window</param>
-        /// <returns>Returned window</returns>
-        public IDatenMeisterWindow CreateWindow()
-        {
-            var wnd = new DatenMeisterWindow(this);
-
-            // Just sets the title and shows the Window
-            wnd.Show();
-            wnd.RefreshTabs();
-
-            return wnd;
         }
     }
 }

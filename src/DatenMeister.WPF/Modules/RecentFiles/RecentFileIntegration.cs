@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider;
+using DatenMeister.Logic;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Helper;
 using DatenMeister.WPF.Windows;
@@ -19,7 +20,7 @@ namespace DatenMeister.WPF.Modules.RecentFiles
         /// </summary>
         /// <param name="settings"></param>
         /// <param name="wnd"></param>
-        public static void AddSupport( IDatenMeisterWindow wnd)
+        public static void AddSupport(IDatenMeisterWindow wnd)
         {
             var viewFactory = Factory.GetFor(wnd.Settings.ViewExtent);
             wnd.Core.ViewRecentObjects = viewFactory.create(

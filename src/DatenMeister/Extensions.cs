@@ -465,5 +465,16 @@ namespace DatenMeister
             extent.Elements().add(result);
             return result;
         }
+
+        /// <summary>
+        /// Gets the instance within the pool by the extent Uri
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentUri">Uri of the extent</param>
+        /// <returns>Found extent id</returns>
+        public static ExtentInstance GetInstance(this IPool pool, string extentUri)
+        {
+            return pool.Instances.Where(x => x.Extent.ContextURI() == extentUri).FirstOrDefault();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Helper;
 using System;

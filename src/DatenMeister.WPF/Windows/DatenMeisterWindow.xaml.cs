@@ -112,7 +112,7 @@ namespace DatenMeister.WPF.Windows
             else
             {
                 this.Title = string.Format(
-                    "{0} - {1} - Depon.Net", 
+                    "{0} - {1} - Depon.Net",
                     System.IO.Path.GetFileNameWithoutExtension(this.pathOfDataExtent),
                     applicationTitle);
             }
@@ -305,7 +305,7 @@ namespace DatenMeister.WPF.Windows
         private void New_Click(object sender, RoutedEventArgs e)
         {
             var userResult = this.DoesUserWantsToSaveData();
-            if ( userResult == null )
+            if (userResult == null)
             {
                 // User had cancelled the action
                 return;
@@ -460,13 +460,13 @@ namespace DatenMeister.WPF.Windows
                 return false;
             }
 
-            switch(MessageBox.Show(
+            switch (MessageBox.Show(
                    this,
                    Localization_DatenMeister_WPF.QuestionSaveChanges,
                    Localization_DatenMeister_WPF.QuestionSaveChangesTitle,
                    MessageBoxButton.YesNoCancel))
             {
-                case  MessageBoxResult.Yes:
+                case MessageBoxResult.Yes:
                     // Content is dirty and user wants to save 
                     return true;
                 case MessageBoxResult.No:
@@ -481,7 +481,7 @@ namespace DatenMeister.WPF.Windows
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            switch(this.DoesUserWantsToSaveData())
+            switch (this.DoesUserWantsToSaveData())
             {
                 case true:
                     this.SaveChanges();

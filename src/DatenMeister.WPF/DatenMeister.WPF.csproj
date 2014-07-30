@@ -78,7 +78,6 @@
     <Compile Include="Controls\ListDialog.xaml.cs">
       <DependentUpon>ListDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper\ApplicationCore.cs" />
     <Compile Include="Helper\DataGridHelper.cs" />
     <Compile Include="Helper\MenuHelper.cs" />
     <Compile Include="Localization_DatenMeister_WPF.Designer.cs">
@@ -97,6 +96,7 @@
     <Compile Include="Windows\Extensions.cs" />
     <Compile Include="Windows\IDatenMeisterWindow.cs" />
     <Compile Include="Windows\TabInformation.cs" />
+    <Compile Include="Windows\WindowFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\DetailDialog.xaml">
