@@ -323,7 +323,7 @@ namespace DatenMeister.WPF.Windows
             var extent = new XmlExtent(newDocument, this.Settings.ProjectExtent.ContextURI());
             extent.Settings = this.Settings.ExtentSettings;
             this.Settings.ProjectExtent = extent;
-            this.Settings.Pool.Add(extent, null);
+            this.Settings.Pool.Add(extent, null, "DatenMeister Data");
 
             // Refreshes the view
             this.RefreshAllTabContent();

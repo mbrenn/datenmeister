@@ -139,9 +139,25 @@ namespace DatenMeister
         /// </summary>
         public static void DoDefaultStaticBinding()
         {
-
             // Initializes the default factory provider
             Global.Application.Bind<IFactoryProvider>().To<FactoryProvider>();
+        }
+
+        /// <summary>
+        /// Creates a default empty pool, where the DatenMeisterPoolExtent is already associated.
+        /// The Pool will also be bound to the Global Application Binding
+        /// </summary>
+        /// <returns>The created pool</returns>
+        public static IPool Create()
+        {
+            var pool = new DatenMeisterPool();
+            pool.DoDefaultBinding();
+
+            // Adds the extent for the extents
+            var poolExtent = new DatenMeisterPoolExtent(pool);
+            pool.Add(poolExtent, null, DatenMeisterPoolExtent.DefaultName);
+
+            return pool;
         }
     }
 }

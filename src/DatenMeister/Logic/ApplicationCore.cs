@@ -44,7 +44,7 @@ namespace DatenMeister.Logic
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public string GetStoragePathFor(string type)
+        public string GetApplicationStoragePathFor(string type)
         {
             Ensure.That(this.Settings != null, "this.Settings = null");
             Ensure.That(!string.IsNullOrEmpty(this.Settings.ApplicationName), "No application name is given");
@@ -120,7 +120,7 @@ namespace DatenMeister.Logic
         /// <returns>Created or loaded Extent</returns>
         public IURIExtent LoadOrCreateByFault(string name, string fileName, string extentUri, Action<XmlExtent> defaultAction)
         {
-            var filePath = this.GetStoragePathFor(name);
+            var filePath = this.GetApplicationStoragePathFor(name);
             IURIExtent createdPool = null;
             if (File.Exists(filePath))
             {
@@ -170,13 +170,25 @@ namespace DatenMeister.Logic
         /// </summary>
         public void SaveApplicationData()
         {
+            this.SaveExtentByUri(ApplicationDataUri);
+        }
+
+        /// <summary>
+        /// Saves the extent as an xml file
+        /// </summary>
+        /// <param name="extentUri">Uri of the extent to be saved</param>
+        public void SaveExtentByUri(string extentUri)
+        {
             // Get pool entry            
             var pool = Global.Application.Get<IPool>();
-            var instance = pool.GetInstance(ApplicationDataUri);
+            var instance = pool.GetInstance(extentUri);
+            Ensure.That(instance != null, "The extent with Uri has not been found: " + extentUri);
 
             // Save the data
             var dataProvider = new XmlDataProvider();
-            dataProvider.Save(this.applicationData as XmlExtent, instance.StoragePath, this.XmlSettings);
+            Ensure.That(instance.Extent is XmlExtent, "The given extent is not an XmlExtent");
+
+            dataProvider.Save(instance.Extent as XmlExtent, instance.StoragePath, this.XmlSettings);
         }
 
         /// <summary>

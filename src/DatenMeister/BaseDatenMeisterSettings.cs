@@ -30,7 +30,7 @@ namespace DatenMeister
         /// <summary>
         /// Gets or sets the datameister pool
         /// </summary>
-        public DatenMeisterPool Pool
+        public IPool Pool
         {
             get;
             set;
