@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace DatenMeister.Logic
 {
@@ -159,7 +160,7 @@ namespace DatenMeister.Logic
         public void LoadApplicationData()
         {
             this.applicationData = this.LoadOrCreateByFault(
-                "AppData",
+                "applicationdata",
                 "Application Data",
                 ApplicationDataUri,
                 null);
@@ -186,9 +187,18 @@ namespace DatenMeister.Logic
 
             // Save the data
             var dataProvider = new XmlDataProvider();
-            Ensure.That(instance.Extent is XmlExtent, "The given extent is not an XmlExtent");
+            var extent = instance.Extent;
+            if (!(extent is XmlExtent))
+            {
+                // Extent is not an XmlExtent... we need to copy all the stuff
+                var xmlExtent = new XmlExtent(new XDocument(new XElement("root")), extentUri);
+                ExtentCopier.Copy(extent, xmlExtent);
 
-            dataProvider.Save(instance.Extent as XmlExtent, instance.StoragePath, this.XmlSettings);
+                extent = xmlExtent;               
+            }
+
+            Ensure.That(extent is XmlExtent, "The given extent is not an XmlExtent");
+            dataProvider.Save(extent as XmlExtent, instance.StoragePath, this.XmlSettings);
         }
 
         /// <summary>
