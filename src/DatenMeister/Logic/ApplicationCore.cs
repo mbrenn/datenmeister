@@ -155,26 +155,6 @@ namespace DatenMeister.Logic
         }
 
         /// <summary>
-        /// Saves the application data
-        /// </summary>
-        public void LoadApplicationData()
-        {
-            this.applicationData = this.LoadOrCreateByFault(
-                "applicationdata",
-                "Application Data",
-                ApplicationDataUri,
-                null);
-        }
-
-        /// <summary>
-        /// Saves the application data
-        /// </summary>
-        public void SaveApplicationData()
-        {
-            this.SaveExtentByUri(ApplicationDataUri);
-        }
-
-        /// <summary>
         /// Saves the extent as an xml file
         /// </summary>
         /// <param name="extentUri">Uri of the extent to be saved</param>
@@ -194,12 +174,36 @@ namespace DatenMeister.Logic
                 var xmlExtent = new XmlExtent(new XDocument(new XElement("root")), extentUri);
                 ExtentCopier.Copy(extent, xmlExtent);
 
-                extent = xmlExtent;               
+                extent = xmlExtent;
             }
 
             Ensure.That(extent is XmlExtent, "The given extent is not an XmlExtent");
             dataProvider.Save(extent as XmlExtent, instance.StoragePath, this.XmlSettings);
         }
+
+        #region Storing and loading of application data
+
+        /// <summary>
+        /// Saves the application data
+        /// </summary>
+        public void LoadApplicationData()
+        {
+            this.applicationData = this.LoadOrCreateByFault(
+                "applicationdata",
+                "Application Data",
+                ApplicationDataUri,
+                null);
+        }
+
+        /// <summary>
+        /// Saves the application data
+        /// </summary>
+        public void SaveApplicationData()
+        {
+            this.SaveExtentByUri(ApplicationDataUri);
+        }
+
+        #endregion
 
         /// <summary>
         /// Stores the application data into the file

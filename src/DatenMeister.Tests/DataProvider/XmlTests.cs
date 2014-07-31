@@ -609,6 +609,20 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(task2.getMetaClass(), Is.EqualTo(TypeTask));
         }
 
+        [Test]
+        public void TestSetAndGetAllOfTypedElement()
+        {
+            var extent = CreateRawTestExtent();
+            var factory = new XmlFactory(extent);
+
+            var createdObject = factory.create(TypePerson);
+            createdObject.set("name", "yes");
+
+            var all = createdObject.getAll();
+            Assert.That(all.Count(), Is.EqualTo(2));
+        }
+
+
         public static IObject TypePerson
         {
             get;

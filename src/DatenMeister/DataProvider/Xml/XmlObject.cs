@@ -185,6 +185,11 @@ namespace DatenMeister.DataProvider.Xml
                 // Checks, if the attribute has a -ref as ending. If yes, then it is a reference
                 // to another object
                 var attributeName = attribute.Name.ToString();
+                if (attribute.Name.Namespace == XmlExtent.XmiNamespace)
+                {
+                    continue;
+                }
+
                 object attributeValue = attribute.Value;
 
                 if (attributeName.EndsWith("-ref"))
@@ -366,7 +371,7 @@ namespace DatenMeister.DataProvider.Xml
                     propertyAsReflectiveCollection.add(item);
                 }
             }
-            else if ( value == ObjectHelper.NotSet )
+            else if (value == ObjectHelper.NotSet)
             {
                 // do Nothing.. Nothing necessary, will not create a new element or attribute
             }
