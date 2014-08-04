@@ -165,7 +165,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources_DatenMeister.resx</DependentUpon>
     </Compile>
+    <Compile Include="Transformations\BaseFilterTransformation.cs" />
     <Compile Include="Transformations\BaseTransformation.cs" />
+    <Compile Include="Transformations\FilterByPropertyTransformation.cs" />
     <Compile Include="Transformations\FilterByTypeTransformation.cs" />
     <Compile Include="Transformations\GroupBy\BaseGroupByTransformation.cs" />
     <Compile Include="Transformations\GroupBy\GroupByDictionary.cs" />

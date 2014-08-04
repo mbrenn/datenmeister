@@ -30,6 +30,38 @@ namespace DatenMeister.Logic
         public static object Null = new NullObject();
 
         /// <summary>
+        /// Checks, if the given objects are equal
+        /// </summary>
+        /// <param name="v1">Object to be checked as primary, which defines the target type</param>
+        /// <param name="v2">Object to be checked as secondary</param>
+        /// <returns>true, if the given objects are equal</returns>
+        public static bool AreEqual(object v1, object v2)
+        {
+            if (v1 is bool)
+            {
+                var b1 = (bool)v1;
+                var b2 = DatenMeister.Extensions.ToBoolean(v2);
+                return b1 == b2;
+            }
+
+            if (v1 is DateTime)
+            {
+                var d1 = (DateTime)v1;
+                var d2 = DatenMeister.Extensions.ToDateTime(v2);
+                return d1 == d2;
+            }
+
+            if (v1 is string)
+            {
+                var s1 = (string)v1;
+                var s2 = DatenMeister.Extensions.ToString(v2);
+                return s1 == s2;
+            }
+
+            return v1.Equals(v2);
+        }
+
+        /// <summary>
         /// Just used for the NotSet object
         /// </summary>
         private class NotSetObject

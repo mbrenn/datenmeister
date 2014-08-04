@@ -135,12 +135,14 @@ namespace DatenMeister.Tests
             person.set("email", "brenn@depon.net");
             person.set("phone", "0151/560");
             person.set("title", "Project Lead");
+            person.set("isFemale", false);
 
             person = Factory.GetFor(this.ProjectExtent).CreateInExtent(this.ProjectExtent, TestDatabase.Types.Person);
             person.set("name", "Martina Brenn");
             person.set("email", "brenna@depon.net");
             person.set("phone", "0151/650");
             person.set("title", "Project Support");
+            person.set("isFemale", true);
 
             var task = Factory.GetFor(this.ProjectExtent).CreateInExtent(this.ProjectExtent, TestDatabase.Types.Task);
             task.set("name", "My First Task");
