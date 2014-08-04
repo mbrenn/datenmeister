@@ -212,7 +212,13 @@ namespace DatenMeister.WPF.Windows
                 entityList.Settings = this.Settings;
                 entityList.ElementsFactory = (x) =>
                     {
-                        return x.ResolveByPath(extentUri).AsReflectiveCollection();
+                        var e = x.ResolveByPath(extentUri);
+                        if (e == null || e == ObjectHelper.Null)
+                        {
+                            throw new InvalidOperationException(extentUri + " did returned null");
+                        }
+                        
+                        return e.AsReflectiveCollection();
                     };
 
                 entityList.TableViewInfo = tableViewInfo;

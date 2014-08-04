@@ -49,6 +49,7 @@
     <Compile Include="BaseUnspecified.cs" />
     <Compile Include="DataProvider\BaseReflectiveCollection.cs" />
     <Compile Include="DataProvider\BaseReflectiveSequence.cs" />
+    <Compile Include="DataProvider\CollectionToSequenceWrapper.cs" />
     <Compile Include="DataProvider\Common\ResolvableByPath.cs" />
     <Compile Include="DataProvider\CSV\CSVDataProvider.cs" />
     <Compile Include="DataProvider\CSV\CSVExtent.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="DataProvider\ListNonGenericWrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListWrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\Pool\AllItemsReflectiveCollection.cs" />
+    <Compile Include="DataProvider\ReflectiveExtent.cs" />
     <Compile Include="DataProvider\Views\FieldInfo.cs" />
     <Compile Include="DataProvider\Views\View.cs" />
     <Compile Include="DataProvider\Views\ViewsExtent.cs" />
