@@ -43,6 +43,11 @@ namespace DatenMeister.Transformations
             if (vAsObject != null)
             {
                 var myValue = vAsObject.get(property).AsSingle();
+                if (myValue == null)
+                {
+                    return false;
+                }
+
                 return ObjectHelper.AreEqual(this.value, myValue);
             }
 

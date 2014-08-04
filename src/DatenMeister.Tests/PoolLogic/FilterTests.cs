@@ -32,13 +32,15 @@ namespace DatenMeister.Tests.PoolLogic
             Global.Reset();
             var db = new TestDatabase();
             var pool = db.Init();
-            var filtered = new FilterByPropertyTransformation(
-                db.ProjectExtent.Elements(),
-                "isFemale",
-                true);
+            var filtered =
+                db.ProjectExtent.Elements().FilterByProperty("isFemale", true);
 
-            Assert.That(filtered.getAll().Count(), Is.EqualTo(1));
+            Assert.That(filtered.Count(), Is.EqualTo(1));
             Assert.That(db.ProjectExtent.Elements().Count(), Is.EqualTo(3));
+
+            var filtered2 =
+                db.ProjectExtent.Elements().FilterByProperty("isFemale", false);
+            Assert.That(filtered2.Count(), Is.EqualTo(1));
         }
     }
 }

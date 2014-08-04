@@ -37,6 +37,11 @@ namespace DatenMeister.Logic
         /// <returns>true, if the given objects are equal</returns>
         public static bool AreEqual(object v1, object v2)
         {
+            if (v2 == null || v2 == ObjectHelper.NotSet || v2 == ObjectHelper.Null)
+            {
+                return v1 == null || v1 == ObjectHelper.NotSet || v1 == ObjectHelper.Null;
+            }
+
             if (v1 is bool)
             {
                 var b1 = (bool)v1;

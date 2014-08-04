@@ -25,5 +25,10 @@ namespace DatenMeister.Transformations
         {
             return new FilterByTypeTransformation(collection, typeName);
         }
+
+        public static IReflectiveCollection FilterByProperty(this IReflectiveCollection collection, string propertyName, object value)
+        {
+            return new FilterByPropertyTransformation(collection, propertyName, value);
+        }
     }
 }
