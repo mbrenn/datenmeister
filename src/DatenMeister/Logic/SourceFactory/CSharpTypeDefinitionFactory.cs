@@ -41,7 +41,7 @@ namespace DatenMeister.Logic.SourceFactory
                 "namespace {0}", this.nameSpace));
             writer.WriteLine("{");
             writer.WriteLine(string.Format(
-                FourSpaces + "public static class {0}",
+                FourSpaces + "public static partial class {0}",
                 this.className));
             writer.WriteLine(FourSpaces + "{");
 

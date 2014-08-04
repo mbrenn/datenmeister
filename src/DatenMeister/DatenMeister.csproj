@@ -105,6 +105,7 @@
     <Compile Include="Entities\AsObject\FieldInfo.Types.cs" />
     <Compile Include="Entities\AsObject\UML.Objects.cs" />
     <Compile Include="Entities\AsObject\UML.Types.cs" />
+    <Compile Include="Entities\AsObject\UML.Types.User.cs" />
     <Compile Include="Entities\DM\RecentProject.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
     <Compile Include="Entities\FieldInfos\Checkbox.cs" />

@@ -18,11 +18,6 @@ namespace DatenMeister.DataProvider.Xml
         private static ILog logger = new ClassLogger(typeof(XmlExtent));
 
         /// <summary>
-        /// Stores the xmi namespace being used to define the types
-        /// </summary>
-        public static readonly XNamespace XmiNamespace = "http://www.omg.org/spec/XMI/2.4.1";
-
-        /// <summary>
         /// Gets or sets the pool, where the object is stored
         /// </summary>
         public IPool Pool

@@ -1,6 +1,6 @@
 namespace DatenMeister.Entities.AsObject.Uml
 {
-    public static class Types
+    public static partial class Types
     {
         public static DatenMeister.IURIExtent Init()
         {

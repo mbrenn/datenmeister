@@ -43,7 +43,7 @@ namespace DatenMeister.DataProvider.Xml
             if (type != null)
             {
                 var name = NamedElement.getName(type);
-                newNode.Add(new XAttribute(XmlExtent.XmiNamespace + "type", name));
+                newNode.Add(new XAttribute(DatenMeister.Entities.AsObject.Uml.Types.XmiNamespace + "type", name));
             }
 
             return new XmlObject(this.extent, newNode);

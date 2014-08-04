@@ -152,6 +152,24 @@ namespace DatenMeister.DataProvider.Xml
         }
 
         /// <summary>
+        /// Checks, whether the given name is internal and shall not 
+        /// be exported to the outside world. 
+        /// These are XMI-Namespaces and XmlNs
+        /// </summary>
+        /// <param name="name">Name to be checked</param>
+        /// <returns>true,if this is external</returns>
+        private static bool IsInternalNamespace(XName name)
+        {
+            if (name.Namespace == DatenMeister.Entities.AsObject.Uml.Types.XmiNamespace
+                || name.Namespace == DatenMeister.Entities.AsObject.Uml.Types.XmlNamespace)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Gets all properties by name and pair
         /// </summary>
         /// <returns>Enumeration of property pairs</returns>
@@ -185,7 +203,7 @@ namespace DatenMeister.DataProvider.Xml
                 // Checks, if the attribute has a -ref as ending. If yes, then it is a reference
                 // to another object
                 var attributeName = attribute.Name.ToString();
-                if (attribute.Name.Namespace == XmlExtent.XmiNamespace)
+                if (IsInternalNamespace(attribute.Name))
                 {
                     continue;
                 }
@@ -431,7 +449,7 @@ namespace DatenMeister.DataProvider.Xml
             var nodeName = this.Node.Name.ToString();
 
             // Checks the type by xmi:type attribute
-            var xmiTypeAttribute = this.Node.Attribute(XmlExtent.XmiNamespace + "type");
+            var xmiTypeAttribute = this.Node.Attribute(DatenMeister.Entities.AsObject.Uml.Types.XmiNamespace + "type");
             if (xmiTypeAttribute != null)
             {
                 var typeName = xmiTypeAttribute.Value;
