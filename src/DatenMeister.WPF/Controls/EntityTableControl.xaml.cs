@@ -307,6 +307,23 @@ namespace DatenMeister.WPF.Controls
             }
             else
             {
+                // Checks, what the user has selected, only click within the form 
+                // is considered as valid
+                var dep = (DependencyObject)e.OriginalSource;
+
+                // Iteratively traverse the visual tree an check, if the user clicked on the DataGridColumnHeader
+                while ((dep != null) &&
+                        !(dep is DataGridCell) &&
+                        !(dep is DataGridColumnHeader))
+                {
+                    dep = VisualTreeHelper.GetParent(dep);
+
+                    if (dep is DataGridColumnHeader)
+                    {
+                        return;
+                    }
+                }
+
                 this.ShowDetailDialog();
             }
         }
@@ -359,6 +376,8 @@ namespace DatenMeister.WPF.Controls
         {
             var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
 
+            // Checks, if there is an function handler associated to the
+            // given table. View. If there is a function, call the associated function handler
             if (this.OpenSelectedViewFunc != null && selectedItem != null)
             {
                 this.OpenSelectedViewFunc(
@@ -372,6 +391,7 @@ namespace DatenMeister.WPF.Controls
             }
             else if (selectedItem == null)
             {
+                // No element has been selected, so try to create a new on
                 this.ShowNewDialog();
                 return null;
             }
@@ -379,7 +399,7 @@ namespace DatenMeister.WPF.Controls
             {
                 var readOnly = false;
 
-                // Check, if the dialog to be opend shall be a read-only dialog
+                // Check, if the dialog to be opened shall be as a read-only dialog
                 if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowEdit(this.tableViewInfo))
                 {
                     // Nothing to do
@@ -402,7 +422,7 @@ namespace DatenMeister.WPF.Controls
                     return null;
                 }
 
-                // When user accepts the changes, all items shall be refreshed. 
+                // When user accepts the changes, all items in current view shall be refreshed. 
                 dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
                 return dialog;
             }
