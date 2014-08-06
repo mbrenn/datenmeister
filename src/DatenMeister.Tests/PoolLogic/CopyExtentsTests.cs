@@ -68,12 +68,12 @@ namespace DatenMeister.Tests.PoolLogic
             var xmlExtent = new XmlExtent(document, "test:///");
             var pool = new DatenMeisterPool();
             var secondDataPool = new DatenMeisterPool();
-            pool.Add(xmlExtent, null);
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var copyExtent = new XmlExtent(
                 XDocument.Parse("<root></root>"),
                 "test://copy/");
-            secondDataPool.Add(copyExtent, null);
+            secondDataPool.Add(copyExtent, null, ExtentType.Data);
 
             ExtentCopier.Copy(xmlExtent, copyExtent);
             return copyExtent;

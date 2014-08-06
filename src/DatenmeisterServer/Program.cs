@@ -47,15 +47,15 @@ namespace DatenmeisterServer
 
             // Adds pool
             var poolExtent = new DatenMeisterPoolExtent(pool);
-            pool.Add(poolExtent, null);
+            pool.Add(poolExtent, null, ExtentType.Extents);
 
             // Add view pool
             var viewExtent = new ViewsExtent("datenmeister:///defaultviews/");
             viewExtent.Fill();
-            pool.Add(viewExtent, null);
+            pool.Add(viewExtent, null, ExtentType.Views);
 
             var poolProvider = new DatenMeisterPoolProvider();
-            poolProvider.Load(pool, "data/pools.xml");
+            poolProvider.Load(pool, "data/pools.xml", ExtentType.Extents);
 
             // Adds the csv-extent
             /*

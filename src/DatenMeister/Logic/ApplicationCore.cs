@@ -119,7 +119,7 @@ namespace DatenMeister.Logic
         /// <param name="defaultAction">Action being called, when file is not existing.
         /// The action can be used to precreate the necessary nodes or to perform the mapping</param>
         /// <returns>Created or loaded Extent</returns>
-        public IURIExtent LoadOrCreateByFault(string name, string fileName, string extentUri, Action<XmlExtent> defaultAction)
+        public IURIExtent LoadOrCreateByDefault(string name, string fileName, string extentUri, ExtentType extentType, Action<XmlExtent> defaultAction)
         {
             var filePath = this.GetApplicationStoragePathFor(name);
             IURIExtent createdPool = null;
@@ -149,7 +149,7 @@ namespace DatenMeister.Logic
             }
 
             var pool = Global.Application.Get<IPool>();
-            pool.Add(createdPool, filePath, name);
+            pool.Add(createdPool, filePath, name, extentType);
 
             return createdPool;
         }
@@ -188,10 +188,11 @@ namespace DatenMeister.Logic
         /// </summary>
         public void LoadApplicationData()
         {
-            this.applicationData = this.LoadOrCreateByFault(
+            this.applicationData = this.LoadOrCreateByDefault(
                 "applicationdata",
                 "Application Data",
                 ApplicationDataUri,
+                ExtentType.ApplicationData,
                 null);
         }
 

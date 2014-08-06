@@ -2,6 +2,48 @@ using System;
 namespace DatenMeister.Logic
 {
     /// <summary>
+    /// Defines the possible extent types
+    /// </summary>
+    public enum ExtentType
+    {
+        /// <summary>
+        /// Defines that the given extent contains all extents
+        /// </summary>
+        Extents, 
+
+        /// <summary>
+        /// Defines the types necessary to execute the application itself
+        /// </summary>
+        MetaTypes,
+        
+        /// <summary>
+        /// Types of the application itself
+        /// </summary>
+        Types,
+
+        /// <summary>
+        /// Views of the application
+        /// </summary>
+        Views, 
+
+        /// <summary>
+        /// Data of the current project
+        /// </summary>
+        Data,
+        
+        /// <summary>
+        /// Data for the application being used to 
+        /// </summary>
+        ApplicationData,
+
+        /// <summary>
+        /// Queries which contain a filtered, sorted or any other type of extent being dependent on one
+        /// of the extents above
+        /// </summary>
+        Queries
+    }
+
+    /// <summary>
     /// Stores the datapool and some additional information
     /// </summary>
     public class ExtentInstance
@@ -45,14 +87,24 @@ namespace DatenMeister.Logic
         }
 
         /// <summary>
+        /// Gets or sets the type of the extent
+        /// </summary>
+        public ExtentType ExtentType
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the ExtentInstance class. 
         /// </summary>
         /// <param name="extent">Extent to be stored</param>
         /// <param name="path">Path, where data will be stored</param>
-        public ExtentInstance(IURIExtent extent, string path)
+        public ExtentInstance(IURIExtent extent, string path, ExtentType extentType)
         {
             this.Extent = extent;
             this.StoragePath = path;
+            this.ExtentType = extentType;
         }
 
         /// <summary>
@@ -64,11 +116,12 @@ namespace DatenMeister.Logic
         /// <param name='storagePath'>
         /// Path.
         /// </param>
-        public ExtentInstance(IURIExtent extent, string storagePath, string name)
+        public ExtentInstance(IURIExtent extent, string storagePath, string name, ExtentType extentType)
         {
             this.Extent = extent;
             this.StoragePath = storagePath;
             this.Name = name;
+            this.ExtentType = extentType;
         }
 
         /// <summary>
@@ -83,7 +136,8 @@ namespace DatenMeister.Logic
                 uri = this.Extent.ContextURI(),
                 type = this.Extent.GetType().Name,
                 filename = this.StoragePath,
-                isDirty = this.Extent.IsDirty
+                isDirty = this.Extent.IsDirty, 
+                extentType = this.ExtentType.ToString()
             };
         }
 
@@ -91,11 +145,11 @@ namespace DatenMeister.Logic
         {
             if (this.Extent != null)
             {
-                return this.Extent.ContextURI();
+                return this.Extent.ContextURI() + " (" + this.ExtentType.ToString() + ")";
             }
             else
             {
-                return "ExtentInstance without Extent";
+                return "ExtentInstance without Extent  (" + this.ExtentType.ToString() + ")";
             }
         }
     }

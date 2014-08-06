@@ -56,7 +56,7 @@ namespace DatenMeister.Logic
         /// <param name='filename'>
         /// Name of the file, which shall be stored into the database
         /// </param>
-        public ExtentInstance CreateEmpty(string name, string url, string filename)
+        public ExtentInstance CreateEmpty(string name, string url, string filename, ExtentType extentType)
         {
             Ensure.That(this.Pool != null);
 
@@ -76,7 +76,7 @@ namespace DatenMeister.Logic
 
             // Ok, we got it
             var path = Path.Combine("data", filename);
-            var extent = this.XmlDataProvider.CreateEmpty(path, url, name);
+            var extent = this.XmlDataProvider.CreateEmpty(path, url, name, extentType);
 
             return extent;
         }

@@ -100,7 +100,7 @@ namespace DatenMeister.Tests
 
             xmlProjectExtent.Settings = xmlSettings;
 
-            this.pool.Add(xmlProjectExtent, null, "ProjektMeister");
+            this.pool.Add(xmlProjectExtent, null, "ProjektMeister", Logic.ExtentType.Data);
 
             var xmlPersons = new XElement("persons");
             var xmlTasks = new XElement("tasks");
@@ -115,7 +115,7 @@ namespace DatenMeister.Tests
         {
             var typeDocument = new XDocument(new XElement("types"));
             this.typeExtent = new XmlExtent(typeDocument, typeUri);
-            this.pool.Add(this.typeExtent, null, "ProjektMeister Types");
+            this.pool.Add(this.typeExtent, null, "ProjektMeister Types", Logic.ExtentType.Types);
 
             // Creates the types
             Types.Person = Factory.GetFor(this.typeExtent).CreateInExtent(this.typeExtent);

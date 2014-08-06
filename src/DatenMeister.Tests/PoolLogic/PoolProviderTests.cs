@@ -38,12 +38,14 @@ namespace DatenMeister.Tests.PoolLogic
             var extent1 = xmlDataProvider.CreateEmpty(
                 "data/empty1.xml",
                 "http://test",
-                "MyName"
+                "MyName",
+                 ExtentType.Data
             );
             var extent2 = xmlDataProvider.CreateEmpty(
                 "data/empty2.xml",
                 "http://test2",
-                "MyName2"
+                "MyName2",
+                 ExtentType.Data
             );
 
             pool.Add(extent1);
@@ -57,7 +59,7 @@ namespace DatenMeister.Tests.PoolLogic
             // Try to read
             var poolProviderLoad = new DatenMeisterPoolProvider();
             var loadPool = new DatenMeisterPool();
-            poolProviderLoad.Load(loadPool, "data/pools.xml");
+            poolProviderLoad.Load(loadPool, "data/pools.xml", ExtentType.Extents);
 
             var first = loadPool.Instances.Where(x => x.Name == "MyName").FirstOrDefault();
             var second = loadPool.Instances.Where(x => x.Name == "MyName2").FirstOrDefault();
@@ -88,7 +90,8 @@ namespace DatenMeister.Tests.PoolLogic
             var extent1 = xmlDataProvider.CreateEmpty(
                 "data/empty1.xml",
                 "http://test",
-                "MyName"
+                "MyName",
+                 ExtentType.Data
             );
 
             var obj = Factory.GetFor(extent1.Extent).CreateInExtent(extent1.Extent);
@@ -119,7 +122,8 @@ namespace DatenMeister.Tests.PoolLogic
             var extent1 = xmlDataProvider.CreateEmpty(
                 "data/empty1.xml",
                 "http://test",
-                "MyName"
+                "MyName",
+                 ExtentType.Data
             );
 
             var obj = Factory.GetFor(extent1.Extent).CreateInExtent(extent1.Extent);
@@ -150,26 +154,30 @@ namespace DatenMeister.Tests.PoolLogic
             var extent1 = xmlDataProvider.CreateEmpty(
                 "data/empty1.xml",
                 "http://test",
-                "MyName"
+                "MyName",
+                 ExtentType.Data
             );
 
             var extent2 = xmlDataProvider.CreateEmpty(
                 "data/empty2.xml",
                 "http://test",
-                "MyName"
+                "MyName",
+                 ExtentType.Data
             );
 
             var extent3 = xmlDataProvider.CreateEmpty(
                 "data/empty3.xml",
                 "http://test",
-                "MyName"
+                "MyName",
+                ExtentType.Data
             );
 
 
             var extent4 = xmlDataProvider.CreateEmpty(
                 "data/empty4.xml",
                 "http://test",
-                "MyName"
+                "MyName",
+                 ExtentType.Data
             );
 
             pool.Add(extent1);
@@ -180,14 +188,14 @@ namespace DatenMeister.Tests.PoolLogic
             Assert.That(extents.Count(), Is.EqualTo(1));
             Assert.That(extents.First(), Is.EqualTo(extent2.Extent));
 
-            pool.Add(extent3.Extent, null);
+            pool.Add(extent3.Extent, null, ExtentType.Data);
 
             // API Method 2
             extents = pool.Extents;
             Assert.That(extents.Count(), Is.EqualTo(1));
             Assert.That(extents.First(), Is.EqualTo(extent3.Extent));
 
-            pool.Add(extent4.Extent, null, "Name");
+            pool.Add(extent4.Extent, null, "Name", ExtentType.Data);
 
             // API Method 3
             extents = pool.Extents;

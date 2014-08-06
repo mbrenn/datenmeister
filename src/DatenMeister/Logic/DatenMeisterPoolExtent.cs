@@ -73,6 +73,7 @@ namespace DatenMeister.Logic
                 new TextField("Name", "name"),
                 new TextField("URI", "uri"),
                 new TextField("Type", "type"),
+                new TextField("ExtentType", "extentType"),
                 new TextField("Filename", "filename")));
 
             return extentViewObj;
