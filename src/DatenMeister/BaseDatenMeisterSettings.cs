@@ -68,5 +68,18 @@ namespace DatenMeister
         /// </summary>
         /// <returns>The created document, which is queried, when user creates a new file</returns>
         public abstract XDocument CreateEmpty();
+        
+        /// <summary>
+        /// This function will be called, when a new viewset needs to be created. 
+        /// It is independent to the fact whether the containing extents and viewinformation
+        /// is loaded or is created from Scratch.
+        /// </summary>
+        public abstract void InitializeViewSet(IPool pool);
+
+        /// <summary>
+        /// The function will be called, when the user wants to have an extent/viewset from
+        /// scratch. This means, that he has clicked "File->New"
+        /// </summary>
+        public abstract void CreateFromScratch(IPool pool);
     }
 }

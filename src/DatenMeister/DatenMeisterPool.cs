@@ -55,6 +55,14 @@ namespace DatenMeister
         }
 
         /// <summary>
+        /// Initializes a new instance of the DatenMeisterPool.
+        /// Use Create to create a new instance
+        /// </summary>
+        private DatenMeisterPool()
+        {
+        }
+
+        /// <summary>
         /// Adds the uri extent to datenmeister pool
         /// </summary>
         /// <param name="extent">Extent to be added</param>
@@ -118,29 +126,31 @@ namespace DatenMeister
         }
 
         /// <summary>
-        /// Performs the default binding, attached to the current pool.
+        /// Gets or sets the pool being used for the application
         /// </summary>
-        public void DoDefaultBinding()
+        private static DatenMeisterPool ApplicationPool
         {
-            DoDefaultStaticBinding();
-
-            // Initializes the default pool
-            Global.Application.Bind<IPool>().ToConstant(this);
-
-            // Initializes the default resolver
-            Global.Application.Bind<IPoolResolver>().To(x => new PoolResolver() { Pool = this });
-
-            // Initializes the default type resolver
-            Global.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
+            get;
+            set;
         }
 
         /// <summary>
         /// Performs the default binding, attached to the current pool.
         /// </summary>
-        public static void DoDefaultStaticBinding()
+        private static void DoDefaultBinding()
         {
             // Initializes the default factory provider
             Global.Application.Bind<IFactoryProvider>().To<FactoryProvider>();
+
+            // Initializes the default pool
+            Global.Application.Bind<IPool>().ToConstant(ApplicationPool);
+            Global.Application.Bind<DatenMeisterPool>().ToConstant(ApplicationPool);
+
+            // Initializes the default resolver
+            Global.Application.Bind<IPoolResolver>().To(x => new PoolResolver() { Pool = ApplicationPool });
+
+            // Initializes the default type resolver
+            Global.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
         }
 
         /// <summary>
@@ -148,16 +158,16 @@ namespace DatenMeister
         /// The Pool will also be bound to the Global Application Binding
         /// </summary>
         /// <returns>The created pool</returns>
-        public static IPool Create()
+        public static DatenMeisterPool Create()
         {
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            ApplicationPool = new DatenMeisterPool();
+            DoDefaultBinding();
 
             // Adds the extent for the extents
-            var poolExtent = new DatenMeisterPoolExtent(pool);
-            pool.Add(poolExtent, null, DatenMeisterPoolExtent.DefaultName, ExtentType.Extents);
+            var poolExtent = new DatenMeisterPoolExtent(ApplicationPool);
+            ApplicationPool.Add(poolExtent, null, DatenMeisterPoolExtent.DefaultName, ExtentType.Extents);
 
-            return pool;
+            return ApplicationPool;
         }
     }
 }

@@ -79,8 +79,7 @@ namespace DatenMeister.Tests
         {
             Global.Reset();
 
-            this.pool = new DatenMeisterPool();
-            this.pool.DoDefaultBinding();
+            this.pool = DatenMeisterPool.Create();
 
             this.InitTypes();
             this.InitDatabase();

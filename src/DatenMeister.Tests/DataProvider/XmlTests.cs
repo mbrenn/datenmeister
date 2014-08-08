@@ -109,7 +109,8 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestIdConcept()
         {
-            DatenMeisterPool.DoDefaultStaticBinding();
+            var pool = DatenMeisterPool.Create();
+
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -145,8 +146,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var value = pool.ResolveByPath("test:///#e4") as IObject;
@@ -170,8 +170,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var value = pool.ResolveByPath("test:///#e4") as IObject;
@@ -195,8 +194,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
             
             var valueE1 = pool.ResolveByPath("test:///#e1") as IObject;
@@ -221,8 +219,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
@@ -265,8 +262,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
@@ -291,8 +287,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
@@ -325,8 +320,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
@@ -394,8 +388,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
@@ -427,8 +420,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
@@ -455,8 +447,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
@@ -509,8 +500,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
@@ -537,8 +527,7 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
@@ -655,8 +644,7 @@ namespace DatenMeister.Tests.DataProvider
             typeExtent.Elements().add(TypePerson);
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
             pool.Add(typeExtent, null, ExtentType.Types);
 
@@ -688,8 +676,7 @@ namespace DatenMeister.Tests.DataProvider
             xmlExtent.Settings.Mapping.Add("task", TypeTask, x => x.Elements("root").Elements("tasks").FirstOrDefault());
             xmlExtent.Settings.Mapping.Add("person", TypePerson, x => x.Elements("root").Elements("persons").FirstOrDefault());
             xmlExtent.Settings.SkipRootNode = isEmpty; // When an empty node has been requested, we assume untyped objects being stored at root node
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
             pool.Add(typeExtent, null, ExtentType.Types);
 
@@ -736,8 +723,7 @@ namespace DatenMeister.Tests.DataProvider
                 "textfield", 
                 DatenMeister.Entities.AsObject.FieldInfo.Types.TextField, 
                 x => x.Elements("root").Elements("textfields").FirstOrDefault());
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
+            var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
             var factory = new FactoryProvider().CreateFor(xmlExtent);
 

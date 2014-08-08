@@ -16,7 +16,7 @@ namespace DatenMeister.Tests.PoolLogic
         [Test]
         public void TestCopyWithoutReference()
         {
-            DatenMeisterPool.DoDefaultStaticBinding();
+            var pool = DatenMeisterPool.Create();
 
             var document = XDocument.Parse(
                 "<root>" +
@@ -34,7 +34,7 @@ namespace DatenMeister.Tests.PoolLogic
         [Test]
         public void TestCopyWithReference()
         {
-            DatenMeisterPool.DoDefaultStaticBinding();
+            var pool = DatenMeisterPool.Create();
 
             var document = XDocument.Parse(
                 "<root>" +
@@ -66,8 +66,8 @@ namespace DatenMeister.Tests.PoolLogic
         private static XmlExtent CreateCopiedExtent(XDocument document)
         {
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            var secondDataPool = new DatenMeisterPool();
+            var pool = DatenMeisterPool.Create();
+            var secondDataPool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var copyExtent = new XmlExtent(

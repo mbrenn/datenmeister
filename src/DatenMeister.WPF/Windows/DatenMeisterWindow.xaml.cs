@@ -514,7 +514,7 @@ namespace DatenMeister.WPF.Windows
                     XDocument.Parse("<export />"),
                     xmlExtent.Uri,
                     xmlExtent.Settings);
-                var pool = new DatenMeisterPool();
+                var pool = DatenMeisterPool.Create();
                 pool.Add(copiedExtent, null, ExtentType.Data);
 
                 // Initialize database
