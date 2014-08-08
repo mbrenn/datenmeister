@@ -28,15 +28,6 @@ namespace DatenMeister
         }
 
         /// <summary>
-        /// Gets or sets the datameister pool
-        /// </summary>
-        IPool Pool
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets the project extent
         /// </summary>
         IURIExtent ProjectExtent
@@ -83,12 +74,18 @@ namespace DatenMeister
         /// It is independent to the fact whether the containing extents and viewinformation
         /// is loaded or is created from Scratch.
         /// </summary>
-        void InitializeViewSet(IPool pool);
+        void InitializeViewSet();
 
         /// <summary>
         /// The function will be called, when the user wants to have an extent/viewset from
         /// scratch. This means, that he has clicked "File->New"
         /// </summary>
-        void CreateFromScratch(IPool pool);
+        void CreateFromScratch();
+
+        /// <summary>
+        /// The function will be called, when application has been started. 
+        /// It can be used to include some example data
+        /// </summary>
+        void CreateForApplicationStart();
     }
 }

@@ -1,4 +1,5 @@
-﻿using DatenMeister.DataProvider;
+﻿using BurnSystems.ObjectActivation;
+using DatenMeister.DataProvider;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic.Views;
 using DatenMeister.WPF.Windows;
@@ -59,7 +60,8 @@ namespace DatenMeister.WPF.Controls
 
         public void SetReflectiveCollection(Func<IPool, IReflectiveCollection> elementsFactory, IDatenMeisterSettings settings)
         {
-            ViewHelper.AutoGenerateViewDefinition(elementsFactory(settings.Pool), this.Table.TableViewInfo, true);
+            var pool = Global.Application.Get<IPool>();
+            ViewHelper.AutoGenerateViewDefinition(elementsFactory(pool), this.Table.TableViewInfo, true);
             this.Table.Settings = settings;
             this.Table.ElementsFactory = elementsFactory;
         }

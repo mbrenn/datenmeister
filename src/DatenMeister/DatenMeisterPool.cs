@@ -139,6 +139,9 @@ namespace DatenMeister
         /// </summary>
         private static void DoDefaultBinding()
         {
+            // At the moment, reset the complete Binding
+            Global.Reset();
+
             // Initializes the default factory provider
             Global.Application.Bind<IFactoryProvider>().To<FactoryProvider>();
 

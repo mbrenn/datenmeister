@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Logging;
+using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
@@ -310,6 +311,8 @@ namespace DatenMeister.WPF.Windows
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
+            var pool = Global.Application.Get<IPool>();
+
             var userResult = this.DoesUserWantsToSaveData();
             if (userResult == null)
             {
@@ -329,7 +332,7 @@ namespace DatenMeister.WPF.Windows
             var extent = new XmlExtent(newDocument, this.Settings.ProjectExtent.ContextURI());
             extent.Settings = this.Settings.ExtentSettings;
             this.Settings.ProjectExtent = extent;
-            this.Settings.Pool.Add(extent, null, "DatenMeister Data", ExtentType.Data);
+            pool.Add(extent, null, "DatenMeister Data", ExtentType.Data);
 
             // Refreshes the view
             this.RefreshAllTabContent();
@@ -353,6 +356,8 @@ namespace DatenMeister.WPF.Windows
         /// <param name="path">Path of the object to be loaded</param>
         public void LoadAndOpenFile(string filename)
         {
+            var pool = Global.Application.Get<IPool>();
+
             var loadedFile = XDocument.Load(filename);
 
             // Loads the extent into the same uri
@@ -361,7 +366,7 @@ namespace DatenMeister.WPF.Windows
             // Sets the settings and stores it into the main window. The old one gets removed
             extent.Settings = this.Settings.ExtentSettings;
             this.Settings.ProjectExtent = extent;
-            this.Settings.Pool.Add(extent, filename, ExtentNames.DataExtent, ExtentType.Data);
+            pool.Add(extent, filename, ExtentNames.DataExtent, ExtentType.Data);
 
             // Adds the file to the recent files
             this.AddRecentFile(filename);

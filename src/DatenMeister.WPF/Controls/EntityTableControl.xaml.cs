@@ -1,4 +1,5 @@
-﻿using BurnSystems.Test;
+﻿using BurnSystems.ObjectActivation;
+using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Pool;
 using DatenMeister.Entities.AsObject.FieldInfo;
@@ -219,10 +220,11 @@ namespace DatenMeister.WPF.Controls
         /// <returns>The reflective collection</returns>
         public IReflectiveCollection GetElements()
         {
+            var pool = Global.Application.Get<IPool>();
             Ensure.That(this.ElementsFactory != null, "No Elementsfactory is set");
             Ensure.That(this.Settings != null, "Settings for DatenMeister are not set");
          
-            return this.ElementsFactory(this.Settings.Pool);
+            return this.ElementsFactory(pool);
         }
 
         public IEnumerable<IObject> GetFieldInfos()
@@ -343,6 +345,8 @@ namespace DatenMeister.WPF.Controls
 
         private void ShowNewOfGenericTypeDialog()
         {
+            var pool = Global.Application.Get<IPool>();
+
             if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowNew(this.tableViewInfo))
             {
                 // Nothing to do
@@ -351,13 +355,13 @@ namespace DatenMeister.WPF.Controls
 
             var dialog = new ListDialog();
             var allTypes = 
-                new AllItemsReflectiveCollection(this.Settings.Pool)
+                new AllItemsReflectiveCollection(pool)
                 .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
             dialog.SetReflectiveCollection(allTypes, this.Settings);
             if (dialog.ShowDialog() == true)
             {
                 // Finds the factory
-                var reflectiveCollection = this.ElementsFactory(this.Settings.Pool);
+                var reflectiveCollection = this.ElementsFactory(pool);
                 var factory = Factory.GetFor(reflectiveCollection.Extent);
 
                 // Adds the element to the reflective collection
