@@ -50,6 +50,13 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(EightSpaces + "public static DatenMeister.IURIExtent Init()");
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(TwelveSpaces + "var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(\"{0}\");", this.typeExtentUri);
+            writer.WriteLine(TwelveSpaces + "Init(extent);");
+            writer.WriteLine(TwelveSpaces + "return extent;");
+            writer.WriteLine(EightSpaces + "}");
+            writer.WriteLine();
+
+            writer.WriteLine(EightSpaces + "public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)");
+            writer.WriteLine(EightSpaces + "{");
 
             assignFunction.AppendLine(EightSpaces + "public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)");
             assignFunction.AppendLine(EightSpaces + "{");
@@ -81,7 +88,6 @@ namespace DatenMeister.Logic.SourceFactory
             }
 
             writer.WriteLine(TwelveSpaces + "extent.AddDefaultMappings();");
-            writer.WriteLine(TwelveSpaces + "return extent;");
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 

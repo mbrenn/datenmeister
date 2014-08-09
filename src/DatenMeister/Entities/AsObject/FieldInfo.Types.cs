@@ -5,6 +5,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static DatenMeister.IURIExtent Init()
         {
             var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types/fieldinfo");
+            Init(extent);
+            return extent;
+        }
+
+        public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
+        {
             if(Types.Comment == null)
             {
                 var type = new DatenMeister.Entities.UML.Type();
@@ -110,7 +116,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
 
             extent.AddDefaultMappings();
-            return extent;
         }
 
         public static DatenMeister.IObject Comment;

@@ -5,6 +5,12 @@ namespace DatenMeister.Entities.AsObject.Uml
         public static DatenMeister.IURIExtent Init()
         {
             var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types/uml");
+            Init(extent);
+            return extent;
+        }
+
+        public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
+        {
             if(Types.NamedElement == null)
             {
                 var type = new DatenMeister.Entities.UML.Type();
@@ -22,7 +28,6 @@ namespace DatenMeister.Entities.AsObject.Uml
             }
 
             extent.AddDefaultMappings();
-            return extent;
         }
 
         public static DatenMeister.IObject NamedElement;
