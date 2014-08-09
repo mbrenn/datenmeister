@@ -199,25 +199,28 @@ namespace DatenMeister.DataProvider.Xml
                     var foundItems = new List<XElement>();
 
                     // Goes through the mapping table to find additional objects
-                    foreach (var mapInfo in this.extent.Settings.Mapping.GetAll())
+                    if (this.extent.Settings != null)
                     {
-                        var rootNode = mapInfo.RetrieveRootNode(this.extent.XmlDocument);
-                        if (rootNode != null)
+                        foreach (var mapInfo in this.extent.Settings.Mapping.GetAll())
                         {
-                            foundItems.Add(rootNode);
-                            foreach (var xmlSubnode in rootNode.Elements())
+                            var rootNode = mapInfo.RetrieveRootNode(this.extent.XmlDocument);
+                            if (rootNode != null)
                             {
-                                var result = new XmlObject(this.extent, xmlSubnode, null)
+                                foundItems.Add(rootNode);
+                                foreach (var xmlSubnode in rootNode.Elements())
                                 {
-                                    ContainerExtent = this.extent
-                                };
+                                    var result = new XmlObject(this.extent, xmlSubnode, null)
+                                    {
+                                        ContainerExtent = this.extent
+                                    };
 
-                                yield return result;
+                                    yield return result;
+                                }
                             }
                         }
                     }
 
-                    if (!this.extent.Settings.SkipRootNode)
+                    if (this.extent.Settings == null || !this.extent.Settings.SkipRootNode)
                     {
                         foreach (var subNode in this.extent.XmlDocument.Root.Elements())
                         {

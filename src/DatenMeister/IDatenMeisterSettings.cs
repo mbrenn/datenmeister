@@ -67,6 +67,12 @@ namespace DatenMeister
         XDocument CreateEmpty();
 
         /// <summary>
+        /// Performs the full initialization at application start. 
+        /// This method is just called once
+        /// </summary>
+        void InitializeForAppStart();
+
+        /// <summary>
         /// This function will be called, when a new viewset needs to be created. 
         /// It is independent to the fact whether the containing extents and viewinformation
         /// is loaded or is created from Scratch.

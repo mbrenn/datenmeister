@@ -12,18 +12,18 @@ namespace DatenMeister.DataProvider
     public class ReflectiveExtent : IURIExtent
     {
         string uri;
-        IReflectiveSequence sequence;
+        Func<IReflectiveSequence> sequence;
 
-        public ReflectiveExtent(IReflectiveSequence sequence, string uri)
+        public ReflectiveExtent(Func<IReflectiveSequence> sequence, string uri)
         {
             this.uri = uri;
             this.sequence = sequence;
         }
 
-        public ReflectiveExtent(IReflectiveCollection collection, string uri)
+        public ReflectiveExtent(Func<IReflectiveCollection> collection, string uri)
         {
             this.uri = uri;
-            this.sequence = new CollectionToSequenceWrapper(collection);
+            this.sequence = () => new CollectionToSequenceWrapper(collection());
         }
 
         public string ContextURI()
@@ -33,7 +33,7 @@ namespace DatenMeister.DataProvider
 
         public IReflectiveSequence Elements()
         {
-            return this.sequence;
+            return this.sequence(); ;
         }
 
         public IPool Pool

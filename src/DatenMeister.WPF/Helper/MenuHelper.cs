@@ -33,8 +33,10 @@ namespace DatenMeister.WPF.Helper
         /// Adds the view, that the user can be 
         /// </summary>
         /// <param name="window">Window which sall be used</param>
-        public static void AddExtentView(IDatenMeisterWindow window, IURIExtent extentView)
+        public static void AddExtentView(IDatenMeisterWindow window)
         {
+            var extentView = PoolResolver.GetDefaultPool().GetExtent(ExtentType.View).First();
+
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DatenMeister_WPF.Menu_ViewExtents;
             menuItem.LargeImageSource = LoadIcon("emblem-documents.png");

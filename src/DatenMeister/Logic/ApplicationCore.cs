@@ -3,6 +3,7 @@ using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Pool;
 using DatenMeister.Transformations;
 using System;
 using System.Collections.Generic;
@@ -116,10 +117,15 @@ namespace DatenMeister.Logic
         /// <param name="name">Name of the new extent</param>
         /// <param name="fileName">Used filename to load the extent</param>
         /// <param name="extentUri">Uri of the extent to be used</param>
-        /// <param name="defaultAction">Action being called, when file is not existing.
+        /// <param name="defaultActionForCreation">Action being called, when file is not existing.
         /// The action can be used to precreate the necessary nodes or to perform the mapping</param>
         /// <returns>Created or loaded Extent</returns>
-        public IURIExtent LoadOrCreateByDefault(string name, string fileName, string extentUri, ExtentType extentType, Action<XmlExtent> defaultAction)
+        public IURIExtent LoadOrCreateByDefault(
+            string name, 
+            string fileName, 
+            string extentUri, 
+            ExtentType extentType, 
+            Action<XmlExtent> defaultActionForCreation)
         {
             var filePath = this.GetApplicationStoragePathFor(name);
             IURIExtent createdPool = null;
@@ -142,13 +148,13 @@ namespace DatenMeister.Logic
             {
                 // File does not exist, we have to load it from 
                 createdPool = XmlExtent.Create(this.XmlSettings, name, extentUri);
-                if (defaultAction != null)
+                if (defaultActionForCreation != null)
                 {
-                    defaultAction(createdPool as XmlExtent);
+                    defaultActionForCreation(createdPool as XmlExtent);
                 }
             }
 
-            var pool = Global.Application.Get<IPool>();
+            var pool = PoolResolver.GetDefaultPool();
             pool.Add(createdPool, filePath, name, extentType);
 
             return createdPool;
