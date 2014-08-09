@@ -14,17 +14,17 @@ namespace DatenMeister.Logic
         /// <summary>
         /// Defines the types necessary to execute the application itself
         /// </summary>
-        MetaTypes,
+        MetaType,
         
         /// <summary>
         /// Types of the application itself
         /// </summary>
-        Types,
+        Type,
 
         /// <summary>
         /// Views of the application
         /// </summary>
-        Views, 
+        View, 
 
         /// <summary>
         /// Data of the current project
@@ -40,7 +40,7 @@ namespace DatenMeister.Logic
         /// Queries which contain a filtered, sorted or any other type of extent being dependent on one
         /// of the extents above
         /// </summary>
-        Queries
+        Query
     }
 
     /// <summary>

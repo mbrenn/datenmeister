@@ -51,7 +51,7 @@ namespace DatenmeisterServer
             // Add view pool
             var viewExtent = new ViewsExtent("datenmeister:///defaultviews/");
             viewExtent.Fill();
-            pool.Add(viewExtent, null, ExtentType.Views);
+            pool.Add(viewExtent, null, ExtentType.View);
 
             var poolProvider = new DatenMeisterPoolProvider();
             poolProvider.Load(pool, "data/pools.xml", ExtentType.Extents);

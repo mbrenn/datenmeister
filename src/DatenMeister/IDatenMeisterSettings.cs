@@ -33,7 +33,6 @@ namespace DatenMeister
         IURIExtent ProjectExtent
         {
             get;
-            set;
         }
 
         /// <summary>
@@ -42,7 +41,6 @@ namespace DatenMeister
         IURIExtent ViewExtent
         {
             get;
-            set;
         }
 
         /// <summary>
@@ -51,7 +49,6 @@ namespace DatenMeister
         IURIExtent TypeExtent
         {
             get;
-            set;
         }
 
         /// <summary>

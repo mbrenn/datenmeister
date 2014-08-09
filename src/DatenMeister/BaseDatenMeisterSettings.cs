@@ -1,4 +1,7 @@
 ﻿using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic;
+using DatenMeister.Pool;
+using DatenMeister.Transformations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +32,18 @@ namespace DatenMeister
 
         public IURIExtent ProjectExtent
         {
-            get;
-            set;
+            get
+            {
+                return PoolResolver.GetDefaultPool().GetExtent(ExtentType.Data).FirstOrDefault();
+            }
         }
 
         public IURIExtent ViewExtent
         {
-            get;
-            set;
+            get
+            {
+                return PoolResolver.GetDefaultPool().GetExtent(ExtentType.View).FirstOrDefault();
+            }
         }
 
         /// <summary>
@@ -44,8 +51,10 @@ namespace DatenMeister
         /// </summary>
         public IURIExtent TypeExtent
         {
-            get;
-            set;
+            get
+            {
+                return PoolResolver.GetDefaultPool().GetExtent(ExtentType.Type).LastOrDefault();
+            }
         }
 
         public XmlSettings ExtentSettings

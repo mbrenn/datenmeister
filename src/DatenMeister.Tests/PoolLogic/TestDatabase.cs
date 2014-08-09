@@ -114,7 +114,7 @@ namespace DatenMeister.Tests
         {
             var typeDocument = new XDocument(new XElement("types"));
             this.typeExtent = new XmlExtent(typeDocument, typeUri);
-            this.pool.Add(this.typeExtent, null, "ProjektMeister Types", Logic.ExtentType.Types);
+            this.pool.Add(this.typeExtent, null, "ProjektMeister Types", Logic.ExtentType.Type);
 
             // Creates the types
             Types.Person = Factory.GetFor(this.typeExtent).CreateInExtent(this.typeExtent);

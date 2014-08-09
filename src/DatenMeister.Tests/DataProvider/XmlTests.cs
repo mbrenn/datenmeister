@@ -646,7 +646,7 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = new XmlExtent(document, "test:///");
             var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
-            pool.Add(typeExtent, null, ExtentType.Types);
+            pool.Add(typeExtent, null, ExtentType.Type);
 
             return xmlExtent;
         }
@@ -678,7 +678,7 @@ namespace DatenMeister.Tests.DataProvider
             xmlExtent.Settings.SkipRootNode = isEmpty; // When an empty node has been requested, we assume untyped objects being stored at root node
             var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
-            pool.Add(typeExtent, null, ExtentType.Types);
+            pool.Add(typeExtent, null, ExtentType.Type);
 
             if (!isEmpty)
             {

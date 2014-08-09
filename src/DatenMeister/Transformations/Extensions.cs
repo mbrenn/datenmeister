@@ -30,5 +30,15 @@ namespace DatenMeister.Transformations
         {
             return new FilterByPropertyTransformation(collection, propertyName, value);
         }
+
+        public static IReflectiveCollection Union(this IEnumerable<IReflectiveCollection> collections)
+        {
+            return new UnionTransformation(collections);
+        }
+
+        public static IReflectiveCollection Union(this IEnumerable<IURIExtent> extents)
+        {
+            return new UnionTransformation(extents.Select(x=>x.Elements()));
+        }
     }
 }

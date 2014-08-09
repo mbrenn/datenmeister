@@ -21,6 +21,11 @@ namespace DatenMeister.Pool
         /// </summary>
         private static ILog logger = new ClassLogger(typeof(PoolResolver));
 
+        public static IPool GetDefaultPool()
+        {
+            return Global.Application.Get<IPool>();
+        }
+
         /// <summary>
         /// Gets the default pool resolver for a certain pool
         /// </summary>

@@ -68,6 +68,28 @@ namespace DatenMeister
             throw new NotImplementedException("Type of resolve cannot be done...");
         }
 
+        /// <summary>
+        /// Gets the enumeration of extent types
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentType">The extent type to be queried</param>
+        /// <returns>Enumeration, matching to the given extentType</returns>
+        public static IEnumerable<ExtentInstance> Get(this IPool pool, ExtentType extentType)
+        {
+            return pool.Instances.Where(x => x.ExtentType == extentType);
+        }
+
+        /// <summary>
+        /// Gets the enumeration of extent types
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentType">The extent type to be queried</param>
+        /// <returns>Enumeration, matching to the given extentType</returns>
+        public static IEnumerable<IURIExtent> GetExtent(this IPool pool, ExtentType extentType)
+        {
+            return pool.Instances.Where(x => x.ExtentType == extentType).Select(x => x.Extent);
+        }
+
         public static JsonExtentInfo ToJson(this IURIExtent extent)
         {
             return new JsonExtentInfo()

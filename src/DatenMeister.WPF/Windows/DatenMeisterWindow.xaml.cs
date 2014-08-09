@@ -331,7 +331,6 @@ namespace DatenMeister.WPF.Windows
 
             var extent = new XmlExtent(newDocument, this.Settings.ProjectExtent.ContextURI());
             extent.Settings = this.Settings.ExtentSettings;
-            this.Settings.ProjectExtent = extent;
             pool.Add(extent, null, "DatenMeister Data", ExtentType.Data);
 
             // Refreshes the view
@@ -365,7 +364,6 @@ namespace DatenMeister.WPF.Windows
 
             // Sets the settings and stores it into the main window. The old one gets removed
             extent.Settings = this.Settings.ExtentSettings;
-            this.Settings.ProjectExtent = extent;
             pool.Add(extent, filename, ExtentNames.DataExtent, ExtentType.Data);
 
             // Adds the file to the recent files
