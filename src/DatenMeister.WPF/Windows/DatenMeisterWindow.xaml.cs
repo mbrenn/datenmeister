@@ -50,7 +50,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Gets the settings of the datenmeister
         /// </summary>
-        public IDatenMeisterSettings Settings
+        public IPublicDatenMeisterSettings Settings
         {
             get { return this.Core.Settings; }
         }
@@ -164,10 +164,12 @@ namespace DatenMeister.WPF.Windows
         /// </summary>
         public void RefreshTabs()
         {
-            Ensure.That(this.Settings.ViewExtent != null, "No view extent has been given");
+            var pool = PoolResolver.GetDefaultPool();
+            var viewExtent = pool.GetExtent(ExtentType.View).First();
+            Ensure.That(viewExtent != null, "No view extent has been given");
 
             var filteredViewExtent =
-                this.Settings.ViewExtent.Elements()
+                viewExtent.Elements()
                     .FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
 
             var elements = new List<IObject>();
@@ -312,8 +314,8 @@ namespace DatenMeister.WPF.Windows
                 this.SaveChanges();
             }
 
-            this.Settings.InitializeViewSet(this.Core);
-            this.Settings.InitializeFromScratch(this.Core);
+            this.Core.PerformInitializationOfViewSet();
+            this.Core.PerformInitializeFromScratch();
 
             // Refreshes the view
             this.RefreshAllTabContent();
@@ -337,14 +339,15 @@ namespace DatenMeister.WPF.Windows
         /// <param name="path">Path of the object to be loaded</param>
         public void LoadAndOpenFile(string filename)
         {
-            var pool = Global.Application.Get<IPool>();
+            this.Core.PerformInitializationOfViewSet();
 
-            this.Settings.InitializeViewSet(this.Core);
+            var pool = Global.Application.Get<IPool>();
+            var projectExtent = pool.GetExtent(ExtentType.Data).First();
 
             var loadedFile = XDocument.Load(filename);
 
             // Loads the extent into the same uri
-            var extent = new XmlExtent(loadedFile, this.Settings.ProjectExtent.ContextURI());
+            var extent = new XmlExtent(loadedFile, projectExtent.ContextURI());
 
             // Sets the settings and stores it into the main window. The old one gets removed
             extent.Settings = this.Settings.ExtentSettings;
@@ -385,7 +388,8 @@ namespace DatenMeister.WPF.Windows
             }
             else
             {
-                var xmlExtent = (this.Settings.ProjectExtent) as XmlExtent;
+                var pool = PoolResolver.GetDefaultPool();
+                var xmlExtent = pool.GetExtent(Logic.ExtentType.Data).First() as XmlExtent;
                 Ensure.That(xmlExtent != null);
 
                 // Stores the xml document
@@ -443,7 +447,11 @@ namespace DatenMeister.WPF.Windows
         /// Null</returns>
         private bool? DoesUserWantsToSaveData()
         {
-            if (!this.Settings.ProjectExtent.IsDirty)
+            
+            var pool = PoolResolver.GetDefaultPool();
+            var dataExtent = pool.GetExtent(ExtentType.Data).First();
+
+            if (!dataExtent.IsDirty)
             {
                 // Content is not dirty, user will accept that content is not stored
                 return false;
@@ -485,19 +493,19 @@ namespace DatenMeister.WPF.Windows
 
         private void ExportAsXml_Click(object sender, RoutedEventArgs e)
         {
+            var pool = PoolResolver.GetDefaultPool();
+
             var dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
             dialog.RestoreDirectory = true;
             if (dialog.ShowDialog(this) == true)
             {
-                var xmlExtent = (this.Settings.ProjectExtent) as XmlExtent;
+                var xmlExtent = pool.GetExtent(Logic.ExtentType.Data).First() as XmlExtent;
 
                 // Prepare extent, receiving the copy
                 var copiedExtent = new XmlExtent(
                     XDocument.Parse("<export />"),
                     xmlExtent.Uri);
-                var pool = DatenMeisterPool.Create();
-                pool.Add(copiedExtent, null, ExtentType.Data);
 
                 // Executes the copying
                 ExtentCopier.Copy(xmlExtent, copiedExtent);
@@ -550,8 +558,8 @@ namespace DatenMeister.WPF.Windows
         /// </summary>
         public void LoadExampleData()
         {
-            this.Settings.InitializeFromScratch(this.Core);
-            this.Settings.InitializeForExampleData(this.Core);
+            this.Core.PerformInitializeFromScratch();
+            this.Core.PerformInitializeExampleData();
         }
     }
 }

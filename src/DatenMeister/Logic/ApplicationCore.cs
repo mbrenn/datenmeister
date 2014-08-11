@@ -42,6 +42,49 @@ namespace DatenMeister.Logic
         }
 
         /// <summary>
+        /// Stores the settings in private scope
+        /// </summary>
+        private IDatenMeisterSettings privateSettings;
+
+        /// <summary>
+        /// Gets or sets the name of the project
+        /// </summary>
+        public IPublicDatenMeisterSettings Settings
+        {
+            get { return this.privateSettings; }
+        }
+
+        /// <summary>
+        /// Gets or serts the xml settings
+        /// </summary>
+        private XmlSettings XmlSettings
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Defines the object that is used to show 
+        /// </summary>
+        public IObject ViewRecentObjects
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the project
+        /// </summary>
+        /// <param name="projectName">Name of the project</param>
+        public ApplicationCore()
+        {
+            this.XmlSettings = new XmlSettings()
+            {
+                SkipRootNode = true
+            };
+        }
+
+        /// <summary>
         /// Gets the storage path for a certain type of data
         /// </summary>
         /// <param name="type"></param>
@@ -69,45 +112,6 @@ namespace DatenMeister.Logic
         }
 
         /// <summary>
-        /// Gets or sets the name of the project
-        /// </summary>
-        public IDatenMeisterSettings Settings
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or serts the xml settings
-        /// </summary>
-        public XmlSettings XmlSettings
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Defines the object that is used to show 
-        /// </summary>
-        public IObject ViewRecentObjects
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the project
-        /// </summary>
-        /// <param name="projectName">Name of the project</param>
-        public ApplicationCore()
-        {
-            this.XmlSettings = new XmlSettings()
-            {
-                SkipRootNode = true
-            };
-        }
-
-        /// <summary>
         /// Starts the application. The created settings are afterwards available
         /// at this.Settings
         /// </summary>
@@ -115,11 +119,35 @@ namespace DatenMeister.Logic
         public void Start<T>() where T : IDatenMeisterSettings, new()
         {
             // Initialization of all meta types
-            this.Settings = new T();
-            this.Settings.InitializeForBootUp(this);
-            this.Settings.InitializeViewSet(this);
+            this.privateSettings = new T();
+            this.privateSettings.InitializeForBootUp(this);
+            this.PerformInitializationOfViewSet();
+        }
 
+        public void PerformInitializationOfViewSet()
+        {
+            DatenMeisterPool.Create();
+
+            this.privateSettings.InitializeViewSet(this);
             this.LoadApplicationData();
+        }
+
+        public void PerformInitializeFromScratch()
+        {
+            this.privateSettings.InitializeFromScratch(this);
+        }
+
+        public void PerformInitializeExampleData()
+        {
+            this.privateSettings.InitializeForExampleData(this);
+        }
+
+        /// <summary>
+        /// Calls the StoreViewSet method in the settings
+        /// </summary>
+        public void StoreViewSet()
+        {
+            this.privateSettings.StoreViewSet(this);
         }
 
         /// <summary>

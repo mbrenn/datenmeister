@@ -1,5 +1,7 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
+using DatenMeister.Pool;
 using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
@@ -22,17 +24,19 @@ namespace DatenMeister.AddOns.Views
         /// </summary>
         /// <param name="window">Window, where the Type Manager will be integrated</param>
         public static void Integrate(IDatenMeisterWindow window)
-        {
+        {            
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_TypeManager;
             menuItem.LargeImageSource = AddOnHelper.LoadIcon("emblem-package.png");
             menuItem.Click += (x, y) =>
                 {
-                    Ensure.That(window.Settings.TypeExtent != null, "No Type extent has been defined");
-                    Ensure.That(window.Settings.ViewExtent != null, "No Type extent has been defined");
+                    var pool = PoolResolver.GetDefaultPool();
+                    var typeExtent = pool.GetExtent(ExtentType.Type).First();
+                    var viewExtent = pool.GetExtent(ExtentType.View).First();
 
-                    var typeExtent = window.Settings.TypeExtent;
-                    var viewExtent = window.Settings.ViewExtent;
+                    Ensure.That(typeExtent != null, "No Type extent has been defined");
+                    Ensure.That(viewExtent != null, "No View extent has been defined");
+
                     var tableView = DatenMeister.Entities.AsObject.FieldInfo.TableView.create(viewExtent);
                     var tableViewAsObj = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableView);
                     tableViewAsObj.setName("Types");
@@ -40,7 +44,7 @@ namespace DatenMeister.AddOns.Views
                     tableViewAsObj.setAllowDelete(true);
                     tableViewAsObj.setAllowEdit(true);
                     tableViewAsObj.setAllowNew(true);
-                    tableViewAsObj.setExtentUri(window.Settings.TypeExtent.ContextURI());
+                    tableViewAsObj.setExtentUri(typeExtent.ContextURI());
 
                     ViewHelper.AutoGenerateViewDefinition(typeExtent, tableViewAsObj, true);
 

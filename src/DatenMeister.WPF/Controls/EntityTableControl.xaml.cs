@@ -53,7 +53,7 @@ namespace DatenMeister.WPF.Controls
             set;
         }
 
-        public IDatenMeisterSettings Settings
+        public IPublicDatenMeisterSettings Settings
         {
             get;
             set;

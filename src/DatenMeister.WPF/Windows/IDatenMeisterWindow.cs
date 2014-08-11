@@ -30,7 +30,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Gets or sets the settings
         /// </summary>
-        IDatenMeisterSettings Settings
+        IPublicDatenMeisterSettings Settings
         {
             get;
         }

@@ -80,7 +80,7 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private FormView formView;
 
-        public IDatenMeisterSettings Settings
+        public IPublicDatenMeisterSettings Settings
         {
             get;
             set;

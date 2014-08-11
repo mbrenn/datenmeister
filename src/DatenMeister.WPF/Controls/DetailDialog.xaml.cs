@@ -111,7 +111,7 @@ namespace DatenMeister.WPF.Controls
         public static DetailDialog ShowDialogToCreateTypeOf(
             IObject type, 
             IReflectiveCollection collection, 
-            IDatenMeisterSettings settings,
+            IPublicDatenMeisterSettings settings,
             IObject viewData = null)
         {
             Ensure.That(collection != null);
@@ -147,7 +147,7 @@ namespace DatenMeister.WPF.Controls
         /// <param name="value"></param>
         public static DetailDialog ShowDialogFor(
             IObject value,
-            IDatenMeisterSettings settings,
+            IPublicDatenMeisterSettings settings,
             IObject viewData = null, 
             bool readOnly = false)
         {

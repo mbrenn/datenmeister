@@ -8,59 +8,12 @@ using System.Xml.Linq;
 
 namespace DatenMeister
 {
-    public interface IDatenMeisterSettings
+    /// <summary>
+    /// Defines the additional settings, that shall only be accessed via
+    /// the ApplicationCore helper methods
+    /// </summary>
+    public interface IDatenMeisterSettings : IPublicDatenMeisterSettings
     {
-        /// <summary>
-        /// Gets or sets the applicationname
-        /// </summary>
-        string ApplicationName
-        {
-            get;
-            set;
-        } 
-        
-        /// <summary>
-        /// Gets or sets te window title
-        /// </summary>
-        string WindowTitle
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the project extent
-        /// </summary>
-        IURIExtent ProjectExtent
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Gets or sets the extent that is used to find the main views
-        /// </summary>
-        IURIExtent ViewExtent
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Stores the meta extent being used to 
-        /// </summary>
-        IURIExtent TypeExtent
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Stores the settings for the extent
-        /// </summary>
-        XmlSettings ExtentSettings
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// Performs the full initialization at application start. 
         /// This method is just called once

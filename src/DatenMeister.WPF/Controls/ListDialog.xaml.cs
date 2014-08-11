@@ -58,7 +58,7 @@ namespace DatenMeister.WPF.Controls
             WindowFactory.AutosetWindowSize(this, 0.88);
         }
 
-        public void SetReflectiveCollection(Func<IPool, IReflectiveCollection> elementsFactory, IDatenMeisterSettings settings)
+        public void SetReflectiveCollection(Func<IPool, IReflectiveCollection> elementsFactory, IPublicDatenMeisterSettings settings)
         {
             var pool = Global.Application.Get<IPool>();
             ViewHelper.AutoGenerateViewDefinition(elementsFactory(pool), this.Table.TableViewInfo, true);
@@ -66,7 +66,7 @@ namespace DatenMeister.WPF.Controls
             this.Table.ElementsFactory = elementsFactory;
         }
 
-        public void SetReflectiveCollection(IReflectiveCollection elements, IDatenMeisterSettings settings)
+        public void SetReflectiveCollection(IReflectiveCollection elements, IPublicDatenMeisterSettings settings)
         {
             ViewHelper.AutoGenerateViewDefinition(elements, this.Table.TableViewInfo, true);
             this.Table.Settings = settings;
