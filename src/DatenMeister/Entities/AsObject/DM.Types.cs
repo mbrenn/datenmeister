@@ -11,7 +11,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
-            if(Types.RecentProject == null)
+            if(Types.RecentProject == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "RecentProject";

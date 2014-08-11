@@ -81,12 +81,16 @@ namespace DatenMeister.Transformations
                 foreach (var obj in this.source)
                 {
                     var element = obj as IElement;
-                    var typeName = element.getMetaClass().get("name").AsSingle().ToString();
-
-                    if (typeName == this.nameOfTypeToFilter)
+                    var metaClass = element.getMetaClass();
+                    if (metaClass != null)
                     {
-                        // Metaclass is equivalent
-                        yield return element;
+                        var typeName = element.getMetaClass().get("name").AsSingle().ToString();
+
+                        if (typeName == this.nameOfTypeToFilter)
+                        {
+                            // Metaclass is equivalent
+                            yield return element;
+                        }
                     }
                 }
             }

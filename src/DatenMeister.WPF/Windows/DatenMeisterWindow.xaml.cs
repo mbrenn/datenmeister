@@ -69,21 +69,7 @@ namespace DatenMeister.WPF.Windows
         {
             this.InitializeComponent();
 
-            AutosetWindowSize(this);
-        }
-
-        public static void AutosetWindowSize(Window wnd, double ratio = 1.0)
-        {
-            var width = wnd.Width;
-            var height = wnd.Height;
-
-            var newWidth = System.Windows.SystemParameters.PrimaryScreenWidth / 2 * ratio;
-            var newHeight = System.Windows.SystemParameters.PrimaryScreenHeight / 2 * ratio;
-
-            wnd.Left -= newWidth / 2;
-            wnd.Top -= newHeight / 2;
-            wnd.Width = newWidth;
-            wnd.Height = newHeight;
+            WindowFactory.AutosetWindowSize(this);
         }
 
         public DatenMeisterWindow(ApplicationCore core)
@@ -216,7 +202,7 @@ namespace DatenMeister.WPF.Windows
                         var e = x.ResolveByPath(extentUri);
                         if (e == null || e == ObjectHelper.Null)
                         {
-                            throw new InvalidOperationException(extentUri + " did returned null");
+                            throw new InvalidOperationException(extentUri + " did return null");
                         }
                         
                         return e.AsReflectiveCollection();
@@ -326,12 +312,8 @@ namespace DatenMeister.WPF.Windows
                 this.SaveChanges();
             }
 
-            // Get an empty document
-            var newDocument = this.Settings.CreateEmpty();
-
-            var extent = new XmlExtent(newDocument, this.Settings.ProjectExtent.ContextURI());
-            extent.Settings = this.Settings.ExtentSettings;
-            pool.Add(extent, null, "DatenMeister Data", ExtentType.Data);
+            this.Settings.InitializeViewSet(this.Core);
+            this.Settings.InitializeFromScratch(this.Core);
 
             // Refreshes the view
             this.RefreshAllTabContent();
@@ -356,6 +338,8 @@ namespace DatenMeister.WPF.Windows
         public void LoadAndOpenFile(string filename)
         {
             var pool = Global.Application.Get<IPool>();
+
+            this.Settings.InitializeViewSet(this.Core);
 
             var loadedFile = XDocument.Load(filename);
 
@@ -390,12 +374,14 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Saves the changes
         /// </summary>
-        private void SaveChanges()
+        private void SaveChanges(bool askForPathIfNecessary = true)
         {
             if (this.pathOfDataExtent == null)
             {
-                this.SaveChangesAs();
-                return;
+                if (askForPathIfNecessary)
+                {
+                    this.SaveChangesAs();
+                }
             }
             else
             {
@@ -424,16 +410,10 @@ namespace DatenMeister.WPF.Windows
             dialog.RestoreDirectory = true;
             if (dialog.ShowDialog(this) == true)
             {
-                var xmlExtent = (this.Settings.ProjectExtent) as XmlExtent;
-                Ensure.That(xmlExtent != null);
-
-                // Stores the xml document
                 var filename = dialog.FileName;
-                xmlExtent.XmlDocument.Save(filename);
                 this.pathOfDataExtent = filename;
 
-                // Adds the file to the recent files
-                this.AddRecentFile(filename);
+                this.SaveChanges();
             }
         }
 
@@ -445,7 +425,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Adds the filepath to the list of recent files
         /// </summary>
-        /// <param name="filePath"></param>
+        /// <param name="filePath">Path of the file to be added</param>
         public void AddRecentFile(string filePath)
         {
             RecentFileIntegration.AddRecentFile(
@@ -515,16 +495,9 @@ namespace DatenMeister.WPF.Windows
                 // Prepare extent, receiving the copy
                 var copiedExtent = new XmlExtent(
                     XDocument.Parse("<export />"),
-                    xmlExtent.Uri,
-                    xmlExtent.Settings);
+                    xmlExtent.Uri);
                 var pool = DatenMeisterPool.Create();
                 pool.Add(copiedExtent, null, ExtentType.Data);
-
-                // Initialize database
-                if (xmlExtent.Settings != null && xmlExtent.Settings.InitDatabaseFunction != null)
-                {
-                    xmlExtent.Settings.InitDatabaseFunction(copiedExtent.XmlDocument);
-                }
 
                 // Executes the copying
                 ExtentCopier.Copy(xmlExtent, copiedExtent);
@@ -542,6 +515,11 @@ namespace DatenMeister.WPF.Windows
             }
         }
 
+        /// <summary>
+        /// Focuses one of the grid cells of the current tab. 
+        /// The grid cell, that is selected, but not in focus (that's the way how GridView works)
+        /// </summary>
+        /// <returns>true, if the focus was successful</returns>
         private bool FocusCurrentTab()
         {
             // Find selected thing
@@ -556,10 +534,24 @@ namespace DatenMeister.WPF.Windows
             return false;
         }
 
+        /// <summary>
+        /// Opens the about dialog
+        /// </summary>
+        /// <param name="sender">Sender of the element</param>
+        /// <param name="e">Events of the elements</param>
         private void About_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new AboutDialog();
             dlg.ShowDialog();
+        }
+
+        /// <summary>
+        /// Loads the example data that will be used for the start of application
+        /// </summary>
+        public void LoadExampleData()
+        {
+            this.Settings.InitializeFromScratch(this.Core);
+            this.Settings.InitializeForExampleData(this.Core);
         }
     }
 }

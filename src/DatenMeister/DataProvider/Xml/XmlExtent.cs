@@ -18,6 +18,11 @@ namespace DatenMeister.DataProvider.Xml
         private static ILog logger = new ClassLogger(typeof(XmlExtent));
 
         /// <summary>
+        /// Stores the xml-Extent-Settings
+        /// </summary>
+        private XmlSettings xmlSettings;
+
+        /// <summary>
         /// Gets or sets the pool, where the object is stored
         /// </summary>
         public IPool Pool
@@ -49,8 +54,12 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         public XmlSettings Settings
         {
-            get;
-            set;
+            get { return this.xmlSettings; }
+            set
+            {
+                Ensure.That(value != null, "Value cannot be null");
+                this.xmlSettings = value;
+            }
         }
 
         /// <summary>
@@ -72,12 +81,15 @@ namespace DatenMeister.DataProvider.Xml
             Ensure.That(!string.IsNullOrEmpty(uri));
 
             this.XmlDocument = document;
-            this.Uri = uri;
-            this.Settings = settings;
+            this.Uri = uri;            
 
             if (this.Settings == null)
             {
                 this.Settings = new XmlSettings();
+            }
+            else
+            {
+                this.Settings = settings;
             }
         }
 

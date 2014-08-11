@@ -302,6 +302,15 @@ namespace DatenMeister
         }
 
         /// <summary>
+        /// Releases the given extent from pool, so it can be added to a new pool
+        /// </summary>
+        /// <param name="extent">Extent to be released</param>
+        public static void ReleaseFromPool(this IURIExtent extent)
+        {
+            extent.Pool = null;
+        }
+
+        /// <summary>
         /// Transforms the given object to a pure Json-Object that can be used for web interaction
         /// </summary>
         /// <param name="value">Value to be converted</param>

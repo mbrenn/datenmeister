@@ -46,6 +46,7 @@ namespace DatenMeister.WPF.Modules.RecentFiles
 
             wnd.RefreshTabs();
 
+            wnd.Core.XmlSettings.Mapping.Add(DatenMeister.Entities.AsObject.DM.Types.RecentProject);
             wnd.AssociateDetailOpenEvent(
                 wnd.Core.ViewRecentObjects, (x) =>
             {

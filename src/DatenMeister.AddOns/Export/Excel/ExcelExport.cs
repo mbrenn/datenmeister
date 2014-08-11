@@ -115,7 +115,15 @@ namespace DatenMeister.AddOns.Export.Excel
                 if (typedElement != null)
                 {
                     cell = row.CreateCell(0);
-                    cell.SetCellValue(typedElement.getMetaClass().get("name").AsSingle().ToString());
+                    var metaClass = typedElement.getMetaClass();
+                    if (metaClass == null)
+                    {
+                        cell.SetCellValue(ObjectHelper.Null.ToString());
+                    }
+                    else
+                    {
+                        cell.SetCellValue(metaClass.get("name").AsSingle().ToString());
+                    }
                 }
 
                 // Sets the values for each element

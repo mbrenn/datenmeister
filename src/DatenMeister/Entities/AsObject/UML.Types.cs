@@ -11,7 +11,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
-            if(Types.NamedElement == null)
+            if(Types.NamedElement == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "NamedElement";
@@ -19,7 +19,7 @@ namespace DatenMeister.Entities.AsObject.Uml
                 extent.Elements().add(Types.NamedElement);
             }
 
-            if(Types.Type == null)
+            if(Types.Type == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "Type";

@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.Pool;
 using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,8 @@ namespace DatenMeister.AddOns.Export.Excel
 {
     public static class ExcelExportGui
     {
-        public static void AddMenu(IDatenMeisterWindow wnd, Func<IURIExtent> extentFactory)
+        public static void AddMenu(IDatenMeisterWindow wnd)
         {
-            Ensure.That(extentFactory != null);
             Ensure.That(wnd != null);
 
             var menuItem = new RibbonButton();
@@ -29,6 +29,8 @@ namespace DatenMeister.AddOns.Export.Excel
                 {
                     try
                     {
+                        var dataExtent = PoolResolver.GetDefaultPool().GetExtent(Logic.ExtentType.Data).First();
+
                         var dlg = new Microsoft.Win32.SaveFileDialog();
                         dlg.Filter = Localization_DM_Addons.Filter_ExcelExport;
                         dlg.RestoreDirectory = true;
@@ -39,7 +41,7 @@ namespace DatenMeister.AddOns.Export.Excel
                             var excelSettings = new ExcelExportSettings();
                             excelSettings.Path = dlg.FileName;
 
-                            excelExporter.ExportToFile(extentFactory(), excelSettings);
+                            excelExporter.ExportToFile(dataExtent, excelSettings);
 
                             Process.Start(excelSettings.Path);
                         }

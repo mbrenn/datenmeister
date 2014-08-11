@@ -11,7 +11,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
-            if(Types.Comment == null)
+            if(Types.Comment == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "Comment";
@@ -19,7 +19,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.Comment);
             }
 
-            if(Types.General == null)
+            if(Types.General == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "General";
@@ -27,7 +27,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.General);
             }
 
-            if(Types.Checkbox == null)
+            if(Types.Checkbox == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "Checkbox";
@@ -35,7 +35,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.Checkbox);
             }
 
-            if(Types.TextField == null)
+            if(Types.TextField == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "TextField";
@@ -43,7 +43,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.TextField);
             }
 
-            if(Types.DatePicker == null)
+            if(Types.DatePicker == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "DatePicker";
@@ -51,7 +51,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.DatePicker);
             }
 
-            if(Types.ActionButton == null)
+            if(Types.ActionButton == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "ActionButton";
@@ -59,7 +59,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.ActionButton);
             }
 
-            if(Types.ReferenceBase == null)
+            if(Types.ReferenceBase == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "ReferenceBase";
@@ -67,7 +67,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.ReferenceBase);
             }
 
-            if(Types.ReferenceByValue == null)
+            if(Types.ReferenceByValue == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "ReferenceByValue";
@@ -75,7 +75,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.ReferenceByValue);
             }
 
-            if(Types.ReferenceByRef == null)
+            if(Types.ReferenceByRef == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "ReferenceByRef";
@@ -83,7 +83,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.ReferenceByRef);
             }
 
-            if(Types.MultiReferenceField == null)
+            if(Types.MultiReferenceField == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "MultiReferenceField";
@@ -91,7 +91,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.MultiReferenceField);
             }
 
-            if(Types.View == null)
+            if(Types.View == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "View";
@@ -99,7 +99,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.View);
             }
 
-            if(Types.FormView == null)
+            if(Types.FormView == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "FormView";
@@ -107,7 +107,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.FormView);
             }
 
-            if(Types.TableView == null)
+            if(Types.TableView == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "TableView";

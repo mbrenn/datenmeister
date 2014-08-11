@@ -22,6 +22,17 @@ namespace DatenMeister
         private object syncObject = new object();
 
         /// <summary>
+        /// Stores the last id given to pool
+        /// </summary>
+        private static int lastId;
+
+        /// <summary>
+        /// Store the id of the pool.
+        /// Used for debugging
+        /// </summary>
+        private int id;
+
+        /// <summary>
         /// Stores the extents itself
         /// </summary>
         private List<ExtentInstance> extents = new List<ExtentInstance>();
@@ -60,6 +71,8 @@ namespace DatenMeister
         /// </summary>
         private DatenMeisterPool()
         {
+            lastId++;
+            this.id = lastId;
         }
 
         /// <summary>
@@ -171,6 +184,11 @@ namespace DatenMeister
             ApplicationPool.Add(poolExtent, null, DatenMeisterPoolExtent.DefaultName, ExtentType.Extents);
 
             return ApplicationPool;
+        }
+
+        public override string ToString()
+        {
+            return "DatenMeisterPool (#" + this.id.ToString() + ")";
         }
     }
 }

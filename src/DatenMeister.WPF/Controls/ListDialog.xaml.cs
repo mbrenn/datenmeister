@@ -55,7 +55,7 @@ namespace DatenMeister.WPF.Controls
             this.ViewInformation.setAllowNew(false);
             this.Table.UseAsSelectionControl = true;
 
-            DatenMeisterWindow.AutosetWindowSize(this, 0.88);
+            WindowFactory.AutosetWindowSize(this, 0.88);
         }
 
         public void SetReflectiveCollection(Func<IPool, IReflectiveCollection> elementsFactory, IDatenMeisterSettings settings)

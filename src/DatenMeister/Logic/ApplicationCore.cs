@@ -99,12 +99,25 @@ namespace DatenMeister.Logic
         /// Initializes a new instance of the project
         /// </summary>
         /// <param name="projectName">Name of the project</param>
-        public ApplicationCore(IDatenMeisterSettings settings)
+        public ApplicationCore()
         {
-            this.Settings = settings;
-            this.XmlSettings = new XmlSettings();
-            this.XmlSettings.SkipRootNode = true;
-            this.XmlSettings.Mapping.Add(DatenMeister.Entities.AsObject.DM.Types.RecentProject);
+            this.XmlSettings = new XmlSettings()
+            {
+                SkipRootNode = true
+            };
+        }
+
+        /// <summary>
+        /// Starts the application. The created settings are afterwards available
+        /// at this.Settings
+        /// </summary>
+        /// <typeparam name="T">Type of the window</typeparam>
+        public void Start<T>() where T : IDatenMeisterSettings, new()
+        {
+            // Initialization of all meta types
+            this.Settings = new T();
+            this.Settings.InitializeForBootUp(this);
+            this.Settings.InitializeViewSet(this);
 
             this.LoadApplicationData();
         }
