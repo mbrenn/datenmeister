@@ -28,6 +28,7 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             var pool = PoolResolver.GetDefaultPool();
             var viewExtent = pool.GetExtent(ExtentType.View).First();
 
+            // Includes the View
             var viewFactory = Factory.GetFor(viewExtent);
             wnd.Core.ViewRecentObjects = viewFactory.create(
                 DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
@@ -50,11 +51,13 @@ namespace DatenMeister.WPF.Modules.RecentFiles
 
             viewExtent.Elements().Insert(0, wnd.Core.ViewRecentObjects);
 
-            wnd.RefreshTabs();
-
+            // Adds the mapping for the recent projects
             var applicationExtent = pool.GetExtent(ExtentType.ApplicationData).First() as XmlExtent;
             Ensure.That(applicationExtent != null, "Application Extent is not XmlExtent");
             applicationExtent.Settings.Mapping.Add(DatenMeister.Entities.AsObject.DM.Types.RecentProject);
+
+            // Updates the view to show the content
+            wnd.RefreshTabs();
 
             wnd.AssociateDetailOpenEvent(
                 wnd.Core.ViewRecentObjects, (x) =>

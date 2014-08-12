@@ -128,13 +128,18 @@ namespace DatenMeister.Logic
         {
             DatenMeisterPool.Create();
 
-            this.privateSettings.InitializeViewSet(this);
             this.LoadApplicationData();
+            this.privateSettings.InitializeViewSet(this);
         }
 
         public void PerformInitializeFromScratch()
         {
             this.privateSettings.InitializeFromScratch(this);
+        }
+
+        public void PerformInitializeAfterLoading()
+        {
+            this.privateSettings.InitializeAfterLoading(this);
         }
 
         public void PerformInitializeExampleData()

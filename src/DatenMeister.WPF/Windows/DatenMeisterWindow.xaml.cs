@@ -352,15 +352,14 @@ namespace DatenMeister.WPF.Windows
             // Sets the settings and stores it into the main window. The old one gets removed
             extent.Settings = this.Settings.ExtentSettings;
             pool.Add(extent, filename, ExtentNames.DataExtent, ExtentType.Data);
+            this.Core.PerformInitializeAfterLoading();
 
             // Adds the file to the recent files
             this.AddRecentFile(filename);
 
             // Refreshes all views
             this.RefreshAllTabContent();
-
             this.pathOfDataExtent = filename;
-
             this.UpdateWindowTitle();
         }
 

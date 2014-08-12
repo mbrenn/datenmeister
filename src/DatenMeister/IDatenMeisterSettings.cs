@@ -34,6 +34,11 @@ namespace DatenMeister
         void InitializeFromScratch(ApplicationCore core);
 
         /// <summary>
+        /// The function will be called, when the user has loaded a ViewSet. 
+        /// </summary>
+        void InitializeAfterLoading(ApplicationCore core);
+
+        /// <summary>
         /// The function will be called, when application has been started. 
         /// It can be used to include some example data
         /// </summary>
