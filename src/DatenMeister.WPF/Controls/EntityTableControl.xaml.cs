@@ -207,6 +207,12 @@ namespace DatenMeister.WPF.Controls
                 column.Binding = new Binding("["+binding+"]");
                 column.AssociatedViewColumn = fieldInfo;
 
+                var width = fieldInfoObj.getColumnWidth();
+                if (width != 0)
+                {
+                    column.Width = new DataGridLength(width);
+                }
+
                 this.gridContent.Columns.Add(column);
             }
 

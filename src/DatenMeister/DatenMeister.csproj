@@ -159,6 +159,7 @@
     <Compile Include="Logic\Views\DefaultViewManager.cs" />
     <Compile Include="Logic\Views\IViewManager.cs" />
     <Compile Include="Logic\Views\ViewHelper.cs" />
+    <Compile Include="ObjectConversion.cs" />
     <Compile Include="Pool\Extensions.cs" />
     <Compile Include="Pool\ExtentNames.cs" />
     <Compile Include="Pool\IPoolResolver.cs" />

@@ -254,13 +254,19 @@ namespace DatenMeister.Logic.SourceFactory
             {
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "return DatenMeister.Extensions.ToBoolean(result);"));
+                        TwelveSpaces + "return DatenMeister.ObjectConversion.ToBoolean(result);"));
             }
             else if (propertyType == typeof(string))
             {
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "return DatenMeister.Extensions.ToString(result);"));
+                        TwelveSpaces + "return DatenMeister.ObjectConversion.ToString(result);"));
+            }
+            else if (propertyType == typeof(int))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return DatenMeister.ObjectConversion.ToInt32(result);"));
             }
             else
             {

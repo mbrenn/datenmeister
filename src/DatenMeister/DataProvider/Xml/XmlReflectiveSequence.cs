@@ -203,7 +203,7 @@ namespace DatenMeister.DataProvider.Xml
             {
                 // Add it as a new Xml Element, containing the property as a value
                 var element = new XElement(this.Unspecified.PropertyName);
-                element.Value = Extensions.ToString(value);
+                element.Value = ObjectConversion.ToString(value);
 
                 xmlObject.Node.Add(element);
 

@@ -56,6 +56,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         Comment.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        Comment.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        Comment.setColumnWidth = setColumnWidth;
     })(exports.Comment || (exports.Comment = {}));
     var Comment = exports.Comment;
 
@@ -106,6 +116,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         General.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        General.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        General.setColumnWidth = setColumnWidth;
     })(exports.General || (exports.General = {}));
     var General = exports.General;
 
@@ -156,6 +176,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         Checkbox.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        Checkbox.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        Checkbox.setColumnWidth = setColumnWidth;
     })(exports.Checkbox || (exports.Checkbox = {}));
     var Checkbox = exports.Checkbox;
 
@@ -246,6 +276,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         TextField.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        TextField.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        TextField.setColumnWidth = setColumnWidth;
     })(exports.TextField || (exports.TextField = {}));
     var TextField = exports.TextField;
 
@@ -296,6 +336,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         DatePicker.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        DatePicker.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        DatePicker.setColumnWidth = setColumnWidth;
     })(exports.DatePicker || (exports.DatePicker = {}));
     var DatePicker = exports.DatePicker;
 
@@ -414,6 +464,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         ReferenceBase.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        ReferenceBase.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        ReferenceBase.setColumnWidth = setColumnWidth;
     })(exports.ReferenceBase || (exports.ReferenceBase = {}));
     var ReferenceBase = exports.ReferenceBase;
 
@@ -492,6 +552,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         ReferenceByValue.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        ReferenceByValue.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        ReferenceByValue.setColumnWidth = setColumnWidth;
     })(exports.ReferenceByValue || (exports.ReferenceByValue = {}));
     var ReferenceByValue = exports.ReferenceByValue;
 
@@ -570,6 +640,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         ReferenceByRef.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        ReferenceByRef.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        ReferenceByRef.setColumnWidth = setColumnWidth;
     })(exports.ReferenceByRef || (exports.ReferenceByRef = {}));
     var ReferenceByRef = exports.ReferenceByRef;
 
@@ -648,6 +728,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         MultiReferenceField.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        MultiReferenceField.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        MultiReferenceField.setColumnWidth = setColumnWidth;
     })(exports.MultiReferenceField || (exports.MultiReferenceField = {}));
     var MultiReferenceField = exports.MultiReferenceField;
 

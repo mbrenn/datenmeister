@@ -45,21 +45,21 @@ namespace DatenMeister.Logic
             if (v1 is bool)
             {
                 var b1 = (bool)v1;
-                var b2 = DatenMeister.Extensions.ToBoolean(v2);
+                var b2 = DatenMeister.ObjectConversion.ToBoolean(v2);
                 return b1 == b2;
             }
 
             if (v1 is DateTime)
             {
                 var d1 = (DateTime)v1;
-                var d2 = DatenMeister.Extensions.ToDateTime(v2);
+                var d2 = DatenMeister.ObjectConversion.ToDateTime(v2);
                 return d1 == d2;
             }
 
             if (v1 is string)
             {
                 var s1 = (string)v1;
-                var s2 = DatenMeister.Extensions.ToString(v2);
+                var s2 = DatenMeister.ObjectConversion.ToString(v2);
                 return s1 == s2;
             }
 

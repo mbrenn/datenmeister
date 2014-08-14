@@ -37,6 +37,16 @@ namespace DatenMeister.Entities.FieldInfos
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the column width being used for 
+        /// the list views
+        /// </summary>
+        public int columnWidth
+        {
+            get;
+            set;
+        }
     }
 
 }

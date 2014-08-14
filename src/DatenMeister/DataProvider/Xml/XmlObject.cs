@@ -306,7 +306,7 @@ namespace DatenMeister.DataProvider.Xml
                     else
                     {
                         // Setting of node content by value
-                        this.Node.Value = Extensions.ToString(value);
+                        this.Node.Value = ObjectConversion.ToString(value);
                     }
                 }
                 else
@@ -325,7 +325,7 @@ namespace DatenMeister.DataProvider.Xml
                 }
                 else
                 {
-                    this.Node.Attribute(propertyName).Value = Extensions.ToString(value);
+                    this.Node.Attribute(propertyName).Value = ObjectConversion.ToString(value);
                 }
             }
             else if (this.Node.Element(propertyName) != null)
@@ -339,7 +339,7 @@ namespace DatenMeister.DataProvider.Xml
                 {
                     if (Extensions.IsNative(value))
                     {
-                        this.Node.Element(propertyName).Value = Extensions.ToString(value);
+                        this.Node.Element(propertyName).Value = ObjectConversion.ToString(value);
                     }
                 }
             }
@@ -347,7 +347,7 @@ namespace DatenMeister.DataProvider.Xml
             {
                 // Ok, we have no attribute and no element with the name.
                 // If this is a simple type, we just assume that this is a property, otherwise no suppurt
-                this.Node.Add(new XAttribute(propertyName, Extensions.ToString(value)));
+                this.Node.Add(new XAttribute(propertyName, ObjectConversion.ToString(value)));
             }
             else if (value is IObject)
             {

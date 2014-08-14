@@ -31,7 +31,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 var propertyValue = detailObject.get(fieldName);
                 if (propertyValue != null && propertyValue != ObjectHelper.NotSet)
                 {
-                    var date = Extensions.ToDateTime(
+                    var date = ObjectConversion.ToDateTime(
                         propertyValue.AsSingle());
 
                     if (date == null)
