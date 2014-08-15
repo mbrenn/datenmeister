@@ -106,8 +106,10 @@ namespace DatenMeister.AddOns.Export.Excel
 
             // Now include the rows
             var r = 1;
-            foreach (var element in elements.Where(x => x is IObject).Select(x => x.AsIObject()))
+            foreach (var element in elements.Where(x => x is IObject).Select(x => x.AsIObject()))            
             {
+                var elementAsViewObject = new ObjectDictionaryForView(element);
+
                 row = sheet.CreateRow(r);
 
                 // Sets the type of the element
@@ -133,7 +135,7 @@ namespace DatenMeister.AddOns.Export.Excel
                     if (element.isSet(property))
                     {
                         cell = row.CreateCell(c);
-                        cell.SetCellValue(element.get(property).AsSingle().ToString());
+                        cell.SetCellValue(elementAsViewObject[property].AsSingle().ToString());
                     }
 
                     c++;

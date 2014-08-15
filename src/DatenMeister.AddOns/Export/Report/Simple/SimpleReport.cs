@@ -41,10 +41,11 @@ namespace DatenMeister.AddOns.Export.Report.Simple
 
                 foreach (var row in pair.values)
                 {
+                    var elementAsViewObject = new ObjectDictionaryForView(row as IObject);
                     htmlTable.AddRow();
                     foreach (var property in properties)
                     {
-                        htmlTable.AddCellWithContent(row.AsIObject().get(property).AsSingle().ToString());
+                        htmlTable.AddCellWithContent(elementAsViewObject[property].AsSingle().ToString());
                     }
                 }
 
