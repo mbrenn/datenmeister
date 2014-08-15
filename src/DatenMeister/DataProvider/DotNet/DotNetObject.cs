@@ -248,7 +248,7 @@ namespace DatenMeister.DataProvider.DotNet
 
             if (Extensions.IsNative(checkObject))
             {
-                return new DotNetUnspecified(this, propertyInfo, checkObject);
+                return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }
             else if (checkObject is IEnumerable)
             {
@@ -260,15 +260,15 @@ namespace DatenMeister.DataProvider.DotNet
                     n++;
                 }
 
-                return new DotNetUnspecified(this, propertyInfo, sequence);
+                return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
             }
             else if (checkObject is IObject)
             {
-                return new DotNetUnspecified(this, propertyInfo, checkObject);
+                return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }
             else
             {
-                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName));
+                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
             }
         }
 

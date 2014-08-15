@@ -7,8 +7,8 @@ namespace DatenMeister.DataProvider.Xml
 {
     public class XmlUnspecified : BaseUnspecified
     {
-        public XmlUnspecified(IObject owner, string propertyName, object value)
-            : base(owner, propertyName, value)
+        public XmlUnspecified(IObject owner, string propertyName, object value, PropertyValueType propertyValueType)
+            : base(owner, propertyName, value, propertyValueType)
         {
         }
 

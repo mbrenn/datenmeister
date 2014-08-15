@@ -50,10 +50,10 @@ namespace DatenMeister.DataProvider
             {
                 if (this.isSet(propertyName))
                 {
-                    return new GenericUnspecified(this, propertyName, this.values[propertyName]);
+                    return new GenericUnspecified(this, propertyName, this.values[propertyName], PropertyValueType.Single);
                 }
 
-                return new GenericUnspecified(this, propertyName, ObjectHelper.NotSet);
+                return new GenericUnspecified(this, propertyName, ObjectHelper.NotSet, PropertyValueType.Single);
             }
         }
 
@@ -63,7 +63,7 @@ namespace DatenMeister.DataProvider
             {
                 return this.values.Select(x => 
                     new ObjectPropertyPair(x.Key,
-                    new GenericUnspecified(this, x.Key, x.Value)));
+                    new GenericUnspecified(this, x.Key, x.Value, PropertyValueType.Single)));
             }
         }
 

@@ -89,12 +89,12 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="value">Value to be resolved</param>
         /// <returns>Resolved object</returns>
-        private object Resolve(object value, string propertyName)
+        private object Resolve(object value, string propertyName, PropertyValueType propertyValueType)
         {
             var result = value;
             if (result != null)
             {
-                result = new XmlUnspecified(this, propertyName, result);
+                result = new XmlUnspecified(this, propertyName, result, propertyValueType);
             }
 
             return result;
@@ -145,10 +145,13 @@ namespace DatenMeister.DataProvider.Xml
             // Checks, if we have an item, if not, return a not set element
             if (result.Count == 0)
             {
-                return this.Resolve(ObjectHelper.NotSet, propertyName);
+                return this.Resolve(ObjectHelper.NotSet, propertyName, PropertyValueType.Single);
             }
 
-            return this.Resolve(result, propertyName);
+            return this.Resolve(
+                result,
+                propertyName,
+                result.Count == 1 ? PropertyValueType.Single : PropertyValueType.Enumeration);
         }
 
         /// <summary>
@@ -231,11 +234,11 @@ namespace DatenMeister.DataProvider.Xml
             {
                 if (valuePair.Value.Count == 1)
                 {
-                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value.First(), valuePair.Key));
+                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value.First(), valuePair.Key, PropertyValueType.Single));
                 }
                 else
                 {
-                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value, valuePair.Key));
+                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value, valuePair.Key, PropertyValueType.Enumeration));
                 }
             }
         }

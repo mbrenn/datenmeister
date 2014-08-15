@@ -1,6 +1,8 @@
-﻿using DatenMeister.Entities.AsObject.FieldInfo;
+﻿using BurnSystems;
+using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Entities.AsObject.Uml;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -46,6 +48,8 @@ namespace DatenMeister.Logic
             {
                 if (fieldInfo != null)
                 {
+                    // If the field shall be used as DateTime
+                    // If yes, read it as invariant culture and convert it to local culture
                     if (TextField.isDateTime(fieldInfo))
                     {
                         DateTime dt;
@@ -90,21 +94,51 @@ namespace DatenMeister.Logic
                 result = resultAsIObject.get("name").AsSingle().ToString();
             }
 
-            result = result.AsSingle();
-            if (result != null)
+            // Checks, if this is an enumeration, if yes, do enumerate and collect 
+            if (result is IEnumerable && !(result is string))
             {
-                if (result is DateTime)
+                var builder = new StringBuilder();
+                var notFirst = false;
+
+                foreach (var item in result as IEnumerable)
                 {
-                    result = ((DateTime)result).ToString(Thread.CurrentThread.CurrentCulture);
+                    if (notFirst)
+                    {
+                        builder.Append(", ");
+                    }
+
+                    builder.Append(ConvertToStringForView(result));
+                    notFirst = true;
                 }
-                else
+
+                result = builder.ToString();
+            }
+            else
+            {
+                // Assume that this is a single
+                result = result.AsSingle();
+                if (result != null)
                 {
-                    // If the object is not an IObject, we just use ToString
-                    result = result.ToString();
+                    result = ConvertToStringForView(result);
                 }
             }
 
             return result.ToString();
+        }
+
+        private static object ConvertToStringForView(object result)
+        {
+            if (result is DateTime)
+            {
+                result = ((DateTime)result).ToString(Thread.CurrentThread.CurrentCulture);
+            }
+            else
+            {
+                // If the object is not an IObject, we just use ToString
+                result = result.ToString();
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -143,7 +177,7 @@ namespace DatenMeister.Logic
             {
                 if (this.Value.isSet(bindingName))
                 {
-                    result = base.Get(bindingName).AsSingle();
+                    result = base.Get(bindingName);
                 }
                 else
                 {
