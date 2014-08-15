@@ -41,26 +41,33 @@ namespace DatenMeister.Logic
             var fieldInfo = this.FindFieldInfo(index);
 
             var result = this.GetUnmanipulatedContent(index);
-            
-            if (fieldInfo != null && result != null)
-            {
-                if (TextField.isDateTime(fieldInfo))
-                {
-                    DateTime dt;
-                    if (DateTime.TryParse(
-                        result,
-                        CultureInfo.InvariantCulture,
-                        DateTimeStyles.AssumeLocal,
-                        out dt))
-                    {
-                        return dt.ToString(Thread.CurrentThread.CurrentCulture);
-                    }
-                }
 
-                return result;
+            if (result != null)
+            {
+                if (fieldInfo != null)
+                {
+                    if (TextField.isDateTime(fieldInfo))
+                    {
+                        DateTime dt;
+                        if (DateTime.TryParse(
+                            result,
+                            CultureInfo.InvariantCulture,
+                            DateTimeStyles.AssumeLocal,
+                            out dt))
+                        {
+                            return dt.ToString(Thread.CurrentThread.CurrentCulture);
+                        }
+                    }
+
+                    return result;
+                }
+                else
+                {
+                    return result;
+                }
             }
 
-            return "NULL";
+            return ObjectHelper.Null;
         }
 
         /// <summary>
