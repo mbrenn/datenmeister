@@ -42,7 +42,7 @@ namespace DatenMeister.Logic
         {
             var fieldInfo = this.FindFieldInfo(index);
 
-            var result = this.GetUnmanipulatedContent(index);
+            var result = this.GetInvariantStringRepresentation(index);
 
             if (result != null)
             {
@@ -79,12 +79,38 @@ namespace DatenMeister.Logic
         /// </summary>
         /// <param name="index">Index to be queried</param>
         /// <returns>Content to be shown. This content might be changed by field information</returns>
-        private string GetUnmanipulatedContent(string index)
+        private string GetInvariantStringRepresentation(string index)
         {
             object result = "NULL";
 
             // Gets the index and its result
             result = GetContentByBinding(index);
+            return this.GetInvariantStringRepresentation(index, result);
+        }
+
+        /// <summary>
+        /// Gets the unmanipulated context
+        /// </summary>
+        /// <param name="index">Name of the property which contained the string</param>
+        /// <param name="result">Value of the result to be converted</param>
+        /// <returns>Result als string</returns>
+        private string GetInvariantStringRepresentation(string index, object result)
+        {
+            // Check for IUnspecific... 
+            var resultAsUnspecified = result as IUnspecified;
+            if (resultAsUnspecified != null)
+            {
+                if (resultAsUnspecified.PropertyValueType == PropertyValueType.Enumeration)
+                {
+                    result = resultAsUnspecified.AsEnumeration();
+                }
+
+                if (resultAsUnspecified.PropertyValueType == PropertyValueType.Single)
+                {
+                    result = resultAsUnspecified.AsSingle();
+                }
+            }
+
             var resultAsIObject = result as IObject;
 
             if (resultAsIObject != null)
@@ -104,10 +130,10 @@ namespace DatenMeister.Logic
                 {
                     if (notFirst)
                     {
-                        builder.Append(", ");
+                        builder.Append("\r\n");
                     }
 
-                    builder.Append(ConvertToStringForView(result));
+                    builder.Append(this.GetInvariantStringRepresentation(index, item));
                     notFirst = true;
                 }
 

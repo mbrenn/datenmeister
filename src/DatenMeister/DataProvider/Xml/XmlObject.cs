@@ -128,7 +128,10 @@ namespace DatenMeister.DataProvider.Xml
                     var xmlRefProperty = this.Node.Attribute(propertyName + "-ref");
                     if (xmlRefProperty != null)
                     {
-                        result.Add(new ResolvableByPath(this.FactoryExtent.Pool, this, xmlRefProperty.Value));
+                        foreach (var partProperty in xmlRefProperty.Value.Split(new char[] { ' ' }))
+                        {
+                            result.Add(new ResolvableByPath(this.FactoryExtent.Pool, this, partProperty));
+                        }
                     }
                 }
 
