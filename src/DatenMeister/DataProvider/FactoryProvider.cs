@@ -19,26 +19,26 @@ namespace DatenMeister.DataProvider
         /// </summary>
         /// <param name="extent">Extent which is used to create the factory</param>
         /// <returns>The created factory</returns>
-        public IFactory CreateFor(IURIExtent extent)
+        public IFactory CreateFor(Type type, IURIExtent extent)
         {
-            Ensure.That(extent != null, "Extent == null");
+            Ensure.That(type != null, "Type == null");
 
-            if (extent is GenericExtent)
+            if (type == typeof(GenericExtent))
             {
                 return new GenericFactory(extent as GenericExtent);
             }
 
-            if (extent is Xml.XmlExtent)
+            if (type == typeof(Xml.XmlExtent))
             {
                 return new Xml.XmlFactory(extent as Xml.XmlExtent);
             }
 
-            if (extent is DotNet.DotNetExtent)
+            if (type == typeof( DotNet.DotNetExtent))
             {
                 return new DatenMeister.DataProvider.DotNet.DotNetFactory(extent as DotNet.DotNetExtent);
             }
 
-            if (extent is CSV.CSVExtent)
+            if (type ==typeof( CSV.CSVExtent))
             {
                 return new DatenMeister.DataProvider.CSV.CSVFactory(extent as CSV.CSVExtent);
             }

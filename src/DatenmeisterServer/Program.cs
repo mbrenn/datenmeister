@@ -41,21 +41,20 @@ namespace DatenmeisterServer
             var activationContainer = new ActivationContainer("Website");
 
             // Initialize DatenMeisterPool
-            var pool = new DatenMeisterPool();
-            activationContainer.Bind<DatenMeisterPool>().ToConstant(pool);
+            var pool = DatenMeisterPool.Create();
             activationContainer.Bind<ExtentPoolLogic>().To<ExtentPoolLogic>();
 
             // Adds pool
             var poolExtent = new DatenMeisterPoolExtent(pool);
-            pool.Add(poolExtent, null);
+            pool.Add(poolExtent, null, ExtentType.Extents);
 
             // Add view pool
             var viewExtent = new ViewsExtent("datenmeister:///defaultviews/");
             viewExtent.Fill();
-            pool.Add(viewExtent, null);
+            pool.Add(viewExtent, null, ExtentType.View);
 
             var poolProvider = new DatenMeisterPoolProvider();
-            poolProvider.Load(pool, "data/pools.xml");
+            poolProvider.Load(pool, "data/pools.xml", ExtentType.Extents);
 
             // Adds the csv-extent
             /*

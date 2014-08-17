@@ -1,10 +1,13 @@
 ﻿using BurnSystems.Logging;
+using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
+using DatenMeister.Pool;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Helper;
+using DatenMeister.WPF.Modules.RecentFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -27,7 +31,7 @@ namespace DatenMeister.WPF.Windows
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class DatenMeisterWindow : Window, IDatenMeisterWindow
+    public partial class DatenMeisterWindow : RibbonWindow, IDatenMeisterWindow
     {
         /// <summary>
         /// Stores the logger
@@ -46,7 +50,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Gets the settings of the datenmeister
         /// </summary>
-        public IDatenMeisterSettings Settings
+        public IPublicDatenMeisterSettings Settings
         {
             get { return this.Core.Settings; }
         }
@@ -54,7 +58,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Stores the current path
         /// </summary>
-        private string currentPath = null;
+        private string pathOfDataExtent = null;
 
         /// <summary>
         /// Stores the information
@@ -65,16 +69,7 @@ namespace DatenMeister.WPF.Windows
         {
             this.InitializeComponent();
 
-            var width = this.Width;
-            var height = this.Height;
-
-            var newWidth = System.Windows.SystemParameters.PrimaryScreenWidth / 2;
-            var newHeight = System.Windows.SystemParameters.PrimaryScreenHeight / 2;
-
-            this.Left -= newWidth / 2;
-            this.Top -= newHeight / 2;
-            this.Width = newWidth;
-            this.Height = newHeight;
+            WindowFactory.AutosetWindowSize(this);
         }
 
         public DatenMeisterWindow(ApplicationCore core)
@@ -86,18 +81,28 @@ namespace DatenMeister.WPF.Windows
             {
                 if (!string.IsNullOrEmpty(core.Settings.WindowTitle))
                 {
-                    this.SetTitle(core.Settings.WindowTitle);
+                    this.UpdateWindowTitle();
                 }
             }
         }
 
         /// <summary>
-        /// Sets the title of the application
+        /// Updates the window title, when a change has happened
         /// </summary>
-        /// <param name="title">Title of the application</param>
-        public void SetTitle(string title)
+        private void UpdateWindowTitle()
         {
-            this.Title = title;
+            var applicationTitle = this.Settings.ApplicationName;
+            if (string.IsNullOrEmpty(this.pathOfDataExtent))
+            {
+                this.Title = string.Format("{0} - Depon.Net", applicationTitle);
+            }
+            else
+            {
+                this.Title = string.Format(
+                    "{0} - {1} - Depon.Net",
+                    System.IO.Path.GetFileNameWithoutExtension(this.pathOfDataExtent),
+                    applicationTitle);
+            }
         }
 
         /// <summary>
@@ -105,26 +110,29 @@ namespace DatenMeister.WPF.Windows
         /// </summary>
         /// <param name="menuHeadline">Headline of the menu</param>
         /// <param name="menuLine">Menu that shall be added. This tab is required to have the click event already associated</param>
-        public void AddMenuEntry(string menuHeadline, MenuItem menuLine)
+        public void AddMenuEntry(string menuHeadline, UIElement menuItem)
         {
             // Search for a menuitem with the same name
-            MenuItem found = null;
+            RibbonTab found = null;
             foreach (var item in this.menuMain.Items)
             {
-                var menuItem = item as MenuItem;
-                if (menuItem.Header.ToString() == menuHeadline)
+                var ribbonTab = item as RibbonTab;
+                if (ribbonTab.Header.ToString() == menuHeadline)
                 {
-                    found = menuItem;
+                    found = ribbonTab;
                 }
             }
 
             // Not found, create a new item
             if (found == null)
             {
-                found = new MenuItem()
+                found = new RibbonTab()
                 {
                     Header = menuHeadline
                 };
+
+                var ribbonGroup = new RibbonGroup();
+                found.Items.Add(ribbonGroup);
 
                 // Inserts the new item into the main menu bar. 
                 // Last item is the "?"-Menu containing the about dialog. And it shall stay the last item
@@ -132,15 +140,17 @@ namespace DatenMeister.WPF.Windows
             }
 
             // Now create the item
-            found.Items.Add(menuLine);
+            (found.Items[0] as RibbonGroup).Items.Add(menuItem);
         }
 
         public void AssociateDetailOpenEvent(IObject view, Action<DetailOpenEventArgs> action)
         {
-            var found = this.listTabs.Where(x => x.TableViewInfo == view).FirstOrDefault();
+            Ensure.That(view != null);
+
+            var found = this.listTabs.Where(x => x.TableViewInfo.AsIObject().Id == view.Id).FirstOrDefault();
             if (found == null)
             {
-                logger.Message("Associate Detail Open Event failed because tab was not found");
+                logger.Fail("Associate Detail Open Event failed because tab was not found");
             }
             else
             {
@@ -152,12 +162,14 @@ namespace DatenMeister.WPF.Windows
         /// Recreates the table views for all extents being the view extent. 
         /// If one tab is already opened, the tab will not be recreated. 
         /// </summary>
-        public void RefreshTab()
+        public void RefreshTabs()
         {
-            Ensure.That(this.Settings.ViewExtent != null, "No view extent has been given");
+            var pool = PoolResolver.GetDefaultPool();
+            var viewExtent = pool.GetExtent(ExtentType.View).First();
+            Ensure.That(viewExtent != null, "No view extent has been given");
 
             var filteredViewExtent =
-                this.Settings.ViewExtent.Elements()
+                viewExtent.Elements()
                     .FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
 
             var elements = new List<IObject>();
@@ -170,7 +182,7 @@ namespace DatenMeister.WPF.Windows
                 elements.Add(tableInfoObj);
 
                 // Check, if there is already a tab, which hosts the tableInfo
-                if (this.listTabs.Any(x => x.TableViewInfo == tableInfo))
+                if (this.listTabs.Any(x => x.TableViewInfo.AsIObject().Id == tableInfoObj.Id))
                 {
                     // We do not need to recreate it
                     continue;
@@ -180,15 +192,22 @@ namespace DatenMeister.WPF.Windows
 
                 var extentUri = tableViewInfo.getExtentUri();
                 Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
+
                 var name = tableViewInfo.getName();
                 var tab = CreateTab(tableInfoObj, name);
 
                 // Creates the list control
                 var entityList = new EntityTableControl();
-                entityList.MainWindow = this;
+                entityList.Settings = this.Settings;
                 entityList.ElementsFactory = (x) =>
                     {
-                        return this.Settings.Pool.ResolveByPath(extentUri).AsReflectiveCollection();
+                        var e = x.ResolveByPath(extentUri);
+                        if (e == null || e == ObjectHelper.Null)
+                        {
+                            throw new InvalidOperationException(extentUri + " did return null");
+                        }
+                        
+                        return e.AsReflectiveCollection();
                     };
 
                 entityList.TableViewInfo = tableViewInfo;
@@ -220,7 +239,7 @@ namespace DatenMeister.WPF.Windows
             // Now go though the list and remove all views, which are not in listtabs
             foreach (var listTab in this.listTabs.ToList())
             {
-                if (!elements.Any(x => x == listTab.TableViewInfo))
+                if (!elements.Any(x => x.Id == listTab.TableViewInfo.AsIObject().Id))
                 {
                     this.listTabs.Remove(listTab);
                     this.tabMain.Items.Remove(listTab.TabItem);
@@ -255,7 +274,7 @@ namespace DatenMeister.WPF.Windows
             button.Click += (x, y) =>
             {
                 tableInfoObj.delete();
-                this.RefreshTab();
+                this.RefreshTabs();
             };
 
             headerGrid.Children.Add(button);
@@ -280,18 +299,23 @@ namespace DatenMeister.WPF.Windows
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            if (this.DoesUserWantsToSaveData())
+            var pool = Global.Application.Get<IPool>();
+
+            var userResult = this.DoesUserWantsToSaveData();
+            if (userResult == null)
             {
+                // User had cancelled the action
+                return;
+            }
+
+            if (userResult == true)
+            {
+                // User wants to save
                 this.SaveChanges();
             }
 
-            // Get an empty document
-            var newDocument = this.Settings.CreateEmpty();
-
-            var extent = new XmlExtent(newDocument, this.Settings.ProjectExtent.ContextURI());
-            extent.Settings = this.Settings.ExtentSettings;
-            this.Settings.ProjectExtent = extent;
-            this.Settings.Pool.Add(extent, null);
+            this.Core.PerformInitializationOfViewSet();
+            this.Core.PerformInitializeFromScratch();
 
             // Refreshes the view
             this.RefreshAllTabContent();
@@ -315,21 +339,28 @@ namespace DatenMeister.WPF.Windows
         /// <param name="path">Path of the object to be loaded</param>
         public void LoadAndOpenFile(string filename)
         {
+            this.Core.PerformInitializationOfViewSet();
+
+            var pool = Global.Application.Get<IPool>();
+            var projectExtent = pool.GetExtent(ExtentType.Data).First();
+
             var loadedFile = XDocument.Load(filename);
 
             // Loads the extent into the same uri
-            var extent = new XmlExtent(loadedFile, this.Settings.ProjectExtent.ContextURI());
+            var extent = new XmlExtent(loadedFile, projectExtent.ContextURI());
 
             // Sets the settings and stores it into the main window. The old one gets removed
             extent.Settings = this.Settings.ExtentSettings;
-            this.Settings.ProjectExtent = extent;
-            this.Settings.Pool.Add(extent, filename);
+            pool.Add(extent, filename, ExtentNames.DataExtent, ExtentType.Data);
+            this.Core.PerformInitializeAfterLoading();
 
             // Adds the file to the recent files
             this.AddRecentFile(filename);
 
             // Refreshes all views
             this.RefreshAllTabContent();
+            this.pathOfDataExtent = filename;
+            this.UpdateWindowTitle();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -345,25 +376,30 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Saves the changes
         /// </summary>
-        private void SaveChanges()
+        private void SaveChanges(bool askForPathIfNecessary = true)
         {
-            if (this.currentPath == null)
+            if (this.pathOfDataExtent == null)
             {
-                this.SaveChangesAs();
-                return;
+                if (askForPathIfNecessary)
+                {
+                    this.SaveChangesAs();
+                }
             }
             else
             {
-                var xmlExtent = (this.Settings.ProjectExtent) as XmlExtent;
+                var pool = PoolResolver.GetDefaultPool();
+                var xmlExtent = pool.GetExtent(Logic.ExtentType.Data).First() as XmlExtent;
                 Ensure.That(xmlExtent != null);
 
                 // Stores the xml document
-                xmlExtent.XmlDocument.Save(this.currentPath);
+                xmlExtent.XmlDocument.Save(this.pathOfDataExtent);
 
                 // Adds the file to the recent files
-                this.AddRecentFile(this.currentPath);
+                this.AddRecentFile(this.pathOfDataExtent);
 
                 MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
+
+                this.UpdateWindowTitle();
             }
         }
 
@@ -374,18 +410,13 @@ namespace DatenMeister.WPF.Windows
         {
             var dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
+            dialog.RestoreDirectory = true;
             if (dialog.ShowDialog(this) == true)
             {
-                var xmlExtent = (this.Settings.ProjectExtent) as XmlExtent;
-                Ensure.That(xmlExtent != null);
-
-                // Stores the xml document
                 var filename = dialog.FileName;
-                xmlExtent.XmlDocument.Save(filename);
-                this.currentPath = filename;
+                this.pathOfDataExtent = filename;
 
-                // Adds the file to the recent files
-                this.AddRecentFile(filename);
+                this.SaveChanges();
             }
         }
 
@@ -397,10 +428,11 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Adds the filepath to the list of recent files
         /// </summary>
-        /// <param name="filePath"></param>
+        /// <param name="filePath">Path of the file to be added</param>
         public void AddRecentFile(string filePath)
         {
-            this.Core.AddRecentFile(
+            RecentFileIntegration.AddRecentFile(
+                this.Core,
                 filePath,
                 System.IO.Path.GetFileNameWithoutExtension(filePath));
         }
@@ -410,58 +442,69 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Does the user wants to save the data
         /// </summary>
-        /// <returns>true, if user wants to save the data</returns>
-        private bool DoesUserWantsToSaveData()
+        /// <returns>true, if user wants to save the data. 
+        /// Null</returns>
+        private bool? DoesUserWantsToSaveData()
         {
-            if (!this.Settings.ProjectExtent.IsDirty)
+            
+            var pool = PoolResolver.GetDefaultPool();
+            var dataExtent = pool.GetExtent(ExtentType.Data).First();
+
+            if (!dataExtent.IsDirty)
             {
                 // Content is not dirty, user will accept that content is not stored
                 return false;
             }
 
-            if (MessageBox.Show(
+            switch (MessageBox.Show(
                    this,
                    Localization_DatenMeister_WPF.QuestionSaveChanges,
                    Localization_DatenMeister_WPF.QuestionSaveChangesTitle,
-                   MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                   MessageBoxButton.YesNoCancel))
             {
-                // Content is dirty and user wants to save 
-                return true;
+                case MessageBoxResult.Yes:
+                    // Content is dirty and user wants to save 
+                    return true;
+                case MessageBoxResult.No:
+                    return false;
+                case MessageBoxResult.Cancel:
+                    return null;
             }
 
             // Content is dirty and user does not want to save it
-            return false;
+            return null;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (this.DoesUserWantsToSaveData())
+            switch (this.DoesUserWantsToSaveData())
             {
-                this.SaveChanges();
+                case true:
+                    this.SaveChanges();
+                    break;
+                case false:
+                    break;
+                case null:
+                    e.Cancel = true;
+                    break;
             }
         }
 
         private void ExportAsXml_Click(object sender, RoutedEventArgs e)
         {
+            var pool = PoolResolver.GetDefaultPool();
+
             var dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.Filter = Localization_DatenMeister_WPF.File_Filter;
+            dialog.RestoreDirectory = true;
             if (dialog.ShowDialog(this) == true)
             {
-                var xmlExtent = (this.Settings.ProjectExtent) as XmlExtent;
+                var xmlExtent = pool.GetExtent(Logic.ExtentType.Data).First() as XmlExtent;
 
                 // Prepare extent, receiving the copy
                 var copiedExtent = new XmlExtent(
                     XDocument.Parse("<export />"),
-                    xmlExtent.Uri,
-                    xmlExtent.Settings);
-                var pool = new DatenMeisterPool();
-                pool.Add(copiedExtent, null);
-
-                // Initialize database
-                if (xmlExtent.Settings != null && xmlExtent.Settings.InitDatabaseFunction != null)
-                {
-                    xmlExtent.Settings.InitDatabaseFunction(copiedExtent.XmlDocument);
-                }
+                    xmlExtent.Uri);
 
                 // Executes the copying
                 ExtentCopier.Copy(xmlExtent, copiedExtent);
@@ -479,6 +522,11 @@ namespace DatenMeister.WPF.Windows
             }
         }
 
+        /// <summary>
+        /// Focuses one of the grid cells of the current tab. 
+        /// The grid cell, that is selected, but not in focus (that's the way how GridView works)
+        /// </summary>
+        /// <returns>true, if the focus was successful</returns>
         private bool FocusCurrentTab()
         {
             // Find selected thing
@@ -493,10 +541,24 @@ namespace DatenMeister.WPF.Windows
             return false;
         }
 
+        /// <summary>
+        /// Opens the about dialog
+        /// </summary>
+        /// <param name="sender">Sender of the element</param>
+        /// <param name="e">Events of the elements</param>
         private void About_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new AboutDialog();
             dlg.ShowDialog();
+        }
+
+        /// <summary>
+        /// Loads the example data that will be used for the start of application
+        /// </summary>
+        public void LoadExampleData()
+        {
+            this.Core.PerformInitializeFromScratch();
+            this.Core.PerformInitializeExampleData();
         }
     }
 }

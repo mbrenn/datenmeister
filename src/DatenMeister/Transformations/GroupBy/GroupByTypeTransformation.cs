@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,12 @@ namespace DatenMeister.Transformations.GroupBy
             foreach (var item in this.source)
             {
                 var itemAsElement = item as IElement;
-                var type = itemAsElement.getMetaClass();
+                var type = itemAsElement.getMetaClass() as object;
+                if (type == null)
+                {
+                    type = ObjectHelper.Null;
+                }
+
                 storage.AddToGroup(type, item);
             }
         }

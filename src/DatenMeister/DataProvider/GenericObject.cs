@@ -11,7 +11,7 @@ namespace DatenMeister.DataProvider
     /// Just a generic object that is not aligned to any data provider or any other object. 
     /// The method is multithreading safe. Can be seen as a completely decoupled thing. 
     /// </summary>
-    public class GenericObject : IObject
+    public class GenericObject : IObject, IKnowsExtentType
     {
         /// <summary>
         /// Stores the owner of the extent
@@ -26,6 +26,11 @@ namespace DatenMeister.DataProvider
         public GenericObject(IURIExtent extent = null, string id = null)
         {
             this.owner = extent;
+            if (this.owner == null)
+            {
+                //this.owner = GenericExtent.Global;
+            }
+
             this.id = id;
         }
 
@@ -45,10 +50,10 @@ namespace DatenMeister.DataProvider
             {
                 if (this.isSet(propertyName))
                 {
-                    return new GenericUnspecified(this, propertyName, this.values[propertyName]);
+                    return new GenericUnspecified(this, propertyName, this.values[propertyName], PropertyValueType.Single);
                 }
 
-                return new GenericUnspecified(this, propertyName, ObjectHelper.NotSet);
+                return new GenericUnspecified(this, propertyName, ObjectHelper.NotSet, PropertyValueType.Single);
             }
         }
 
@@ -58,7 +63,7 @@ namespace DatenMeister.DataProvider
             {
                 return this.values.Select(x => 
                     new ObjectPropertyPair(x.Key,
-                    new GenericUnspecified(this, x.Key, x.Value)));
+                    new GenericUnspecified(this, x.Key, x.Value, PropertyValueType.Single)));
             }
         }
 
@@ -97,6 +102,11 @@ namespace DatenMeister.DataProvider
             {
                 return this.id;
             }
+        }
+
+        Type IKnowsExtentType.ExtentType
+        {
+            get { return typeof(GenericExtent); }
         }
     }
 }

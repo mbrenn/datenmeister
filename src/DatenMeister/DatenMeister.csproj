@@ -50,6 +50,7 @@
     <Compile Include="ComplianceSuite\Suite.cs" />
     <Compile Include="DataProvider\BaseReflectiveCollection.cs" />
     <Compile Include="DataProvider\BaseReflectiveSequence.cs" />
+    <Compile Include="DataProvider\CollectionToSequenceWrapper.cs" />
     <Compile Include="DataProvider\Common\ResolvableByPath.cs" />
     <Compile Include="DataProvider\CSV\CSVDataProvider.cs" />
     <Compile Include="DataProvider\CSV\CSVExtent.cs" />
@@ -66,12 +67,16 @@
     <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
     <Compile Include="DataProvider\DotNet\DotNetUnspecified.cs" />
     <Compile Include="DataProvider\EnumerationReflectiveSequence.cs" />
+    <Compile Include="DataProvider\ExtensionMethods.cs" />
     <Compile Include="DataProvider\FactoryProvider.cs" />
     <Compile Include="DataProvider\GenericElement.cs" />
     <Compile Include="DataProvider\GenericExtent.cs" />
     <Compile Include="DataProvider\GenericFactory.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />
     <Compile Include="DataProvider\GenericReflectiveSequence.cs" />
+    <Compile Include="DataProvider\IHasFactoryExtent.cs" />
+    <Compile Include="DataProvider\IKnowsExtentType.cs" />
+    <Compile Include="DataProvider\IProxyObject.cs" />
     <Compile Include="DataProvider\ListNonGenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListReflectiveSequence.cs" />
     <Compile Include="DataProvider\GenericUnspecified.cs" />
@@ -80,6 +85,8 @@
     <Compile Include="DataProvider\IResolvable.cs" />
     <Compile Include="DataProvider\ListNonGenericWrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListWrapperReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Pool\AllItemsReflectiveCollection.cs" />
+    <Compile Include="DataProvider\ReflectiveExtent.cs" />
     <Compile Include="DataProvider\Views\FieldInfo.cs" />
     <Compile Include="DataProvider\Views\View.cs" />
     <Compile Include="DataProvider\Views\ViewsExtent.cs" />
@@ -99,12 +106,15 @@
     <Compile Include="Entities\AsObject\FieldInfo.Types.cs" />
     <Compile Include="Entities\AsObject\UML.Objects.cs" />
     <Compile Include="Entities\AsObject\UML.Types.cs" />
+    <Compile Include="Entities\AsObject\UML.Types.User.cs" />
     <Compile Include="Entities\DM\RecentProject.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
     <Compile Include="Entities\FieldInfos\Checkbox.cs" />
     <Compile Include="Entities\FieldInfos\Comment.cs" />
+    <Compile Include="Entities\FieldInfos\DatePicker.cs" />
     <Compile Include="Entities\FieldInfos\FormView.cs" />
     <Compile Include="Entities\FieldInfos\General.cs" />
+    <Compile Include="Entities\FieldInfos\MultiReferenceField.cs" />
     <Compile Include="Entities\FieldInfos\ReferenceBase.cs" />
     <Compile Include="Entities\FieldInfos\ReferenceByRef.cs" />
     <Compile Include="Entities\FieldInfos\ReferenceByValue.cs" />
@@ -119,10 +129,12 @@
     <Compile Include="IFactory.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IPool.cs" />
+    <Compile Include="IPublicDatenMeisterSettings.cs" />
     <Compile Include="IReflectiveCollection.cs" />
     <Compile Include="IReflectiveSequence.cs" />
     <Compile Include="IUnspecified.cs" />
     <Compile Include="IURIExtent.cs" />
+    <Compile Include="Logic\ApplicationCore.cs" />
     <Compile Include="Logic\ClientActions\ClientActionInformation.cs" />
     <Compile Include="Logic\ClientActions\IClientAction.cs" />
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
@@ -143,10 +155,14 @@
     <Compile Include="Logic\SourceFactory\SourceFactoryBase.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptBuilder.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptSourceFactory.cs" />
+    <Compile Include="Logic\TypeResolver\ITypeResolver.cs" />
+    <Compile Include="Logic\TypeResolver\TypeResolverImpl.cs" />
     <Compile Include="Logic\Views\DefaultViewManager.cs" />
     <Compile Include="Logic\Views\IViewManager.cs" />
     <Compile Include="Logic\Views\ViewHelper.cs" />
+    <Compile Include="ObjectConversion.cs" />
     <Compile Include="Pool\Extensions.cs" />
+    <Compile Include="Pool\ExtentNames.cs" />
     <Compile Include="Pool\IPoolResolver.cs" />
     <Compile Include="Pool\PoolResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -155,7 +171,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources_DatenMeister.resx</DependentUpon>
     </Compile>
+    <Compile Include="Transformations\BaseFilterTransformation.cs" />
     <Compile Include="Transformations\BaseTransformation.cs" />
+    <Compile Include="Transformations\FilterByPropertyTransformation.cs" />
     <Compile Include="Transformations\FilterByTypeTransformation.cs" />
     <Compile Include="Transformations\GroupBy\BaseGroupByTransformation.cs" />
     <Compile Include="Transformations\GroupBy\GroupByDictionary.cs" />
@@ -168,6 +186,7 @@
     <Compile Include="Logic\ExtentPoolLogic.cs" />
     <Compile Include="Logic\ExtentInstance.cs" />
     <Compile Include="Logic\DatenMeisterPoolProvider.cs" />
+    <Compile Include="Transformations\UnionTransformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\burnsystems\src\BurnSystems.csproj">

@@ -129,7 +129,7 @@ namespace DatenMeister.Logic.Views
             viewObj.setAllowEdit(false);
             viewObj.setAllowNew(false);
 
-            ViewHelper.AutoGenerateViewDefinitionsForExtent(obj.Extent, viewObj, true);
+            ViewHelper.AutoGenerateViewDefinition(obj.Extent, view, true);
             return view;
         }
 

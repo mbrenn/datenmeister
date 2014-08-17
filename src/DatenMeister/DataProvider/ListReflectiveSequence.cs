@@ -33,9 +33,12 @@ namespace DatenMeister.DataProvider
         /// This class will be called, when something has been changed in the extent. 
         /// Might be used to set a dirty flag
         /// </summary>
-        /// <returns></returns>
         public virtual void OnChange()
         {
+            if (this.Extent != null)
+            {
+                this.Extent.IsDirty = true;
+            }
         }
 
         /// <summary>

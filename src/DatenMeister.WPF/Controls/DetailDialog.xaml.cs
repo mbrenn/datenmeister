@@ -108,9 +108,14 @@ namespace DatenMeister.WPF.Controls
         /// <param name="type">Type of object to be created</param>
         /// <param name="viewData">Available view</param>
         /// <returns>The created type</returns>
-        public static DetailDialog ShowDialogToCreateTypeOf(IObject type, IReflectiveCollection collection, IObject viewData = null)
+        public static DetailDialog ShowDialogToCreateTypeOf(
+            IObject type, 
+            IReflectiveCollection collection, 
+            IPublicDatenMeisterSettings settings,
+            IObject viewData = null)
         {
             Ensure.That(collection != null);
+            Ensure.That(settings != null);
 
             var extent = collection.Extent;
             Ensure.That(collection.Extent != null);
@@ -130,6 +135,7 @@ namespace DatenMeister.WPF.Controls
             dialog.DetailForm.FormViewInfo = viewData;
             dialog.DetailForm.Extent = extent;
             dialog.DetailForm.TypeToCreate = type;
+            dialog.DetailForm.Settings = settings;
             dialog.Show();
 
             return dialog;
@@ -139,8 +145,14 @@ namespace DatenMeister.WPF.Controls
         /// Has to be called, when the dialog for an entity shall be shown
         /// </summary>
         /// <param name="value"></param>
-        public static DetailDialog ShowDialogFor(IObject value, IObject viewData = null, bool readOnly = false)
+        public static DetailDialog ShowDialogFor(
+            IObject value,
+            IPublicDatenMeisterSettings settings,
+            IObject viewData = null, 
+            bool readOnly = false)
         {
+            Ensure.That(settings != null);
+
             viewData = GetView(value, viewData);
 
             if (viewData == null)
@@ -154,6 +166,7 @@ namespace DatenMeister.WPF.Controls
             dialog.DetailForm.FormViewInfo = viewData;
             dialog.DetailForm.Extent = value.Extent;
             dialog.DetailForm.DetailObject = value;
+            dialog.DetailForm.Settings = settings;
             dialog.Show();
 
             return dialog;

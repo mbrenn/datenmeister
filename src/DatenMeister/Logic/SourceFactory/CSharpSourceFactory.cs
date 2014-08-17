@@ -66,7 +66,7 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(FourSpaces + "[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]");
             writer.WriteLine(
                 string.Format(
-                    FourSpaces + "public class {0} : DatenMeister.IObject",
+                    FourSpaces + "public class {0} : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject",
                     typeName));
 
             writer.WriteLine(FourSpaces + "{");
@@ -249,10 +249,33 @@ namespace DatenMeister.Logic.SourceFactory
                         propertyName));
             }
 
-            writer.WriteLine(
-                string.Format(
-                    TwelveSpaces + "return (result is {0}) ? (({0}) result) : default({0});",
-                    propertyTypeName));
+            // Checks, if the property type is a special type
+            if (propertyType == typeof(bool))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return DatenMeister.ObjectConversion.ToBoolean(result);"));
+            }
+            else if (propertyType == typeof(string))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return DatenMeister.ObjectConversion.ToString(result);"));
+            }
+            else if (propertyType == typeof(int))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return DatenMeister.ObjectConversion.ToInt32(result);"));
+            }
+            else
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return (result is {0}) ? (({0}) result) : default({0});",
+                        propertyTypeName));
+            }
+
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 

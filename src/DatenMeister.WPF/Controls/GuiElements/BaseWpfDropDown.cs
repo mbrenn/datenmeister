@@ -117,7 +117,9 @@ namespace DatenMeister.WPF.Controls.GuiElements
                     else
                     {
                         this.currentElement = selectedItem.OriginalObject;
-                        var dialog = DetailDialog.ShowDialogFor(selectedItem.OriginalObject);
+                        var dialog = DetailDialog.ShowDialogFor(
+                            selectedItem.OriginalObject, 
+                            state.Settings);
                         dialog.DetailForm.Accepted += (a, b) =>
                             {
                                 this.RefreshDropDownElements();

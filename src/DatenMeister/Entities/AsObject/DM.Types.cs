@@ -1,10 +1,17 @@
 namespace DatenMeister.Entities.AsObject.DM
 {
-    public static class Types
+    public static partial class Types
     {
         public static DatenMeister.IURIExtent Init()
         {
-            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types");
+            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types/datenmeister");
+            Init(extent);
+            return extent;
+        }
+
+        public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
+        {
+            if(Types.RecentProject == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "RecentProject";
@@ -12,7 +19,7 @@ namespace DatenMeister.Entities.AsObject.DM
                 extent.Elements().add(Types.RecentProject);
             }
 
-            return extent;
+            extent.AddDefaultMappings();
         }
 
         public static DatenMeister.IObject RecentProject;

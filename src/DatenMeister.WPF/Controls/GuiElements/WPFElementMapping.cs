@@ -24,6 +24,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 return new WPFTextField();
             }
 
+            if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.DatePicker)
+            {
+                return new WpfDatePicker();
+            }
+
             if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.Comment)
             {
                 return new WPFComment();
@@ -44,7 +49,17 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 return new WpfDropDownByRef();
             }
 
-            throw new NotImplementedException(metaClass.get("name")  + " is not a known WPF Element");
+            if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.MultiReferenceField)
+            {
+                return new WpfMultiReferenceField();
+            }
+
+            if (metaClass == null)
+            {
+                throw new NotImplementedException("metaClass is null and not known");
+            }
+
+            throw new NotImplementedException(metaClass.get("name") + " is not a known WPF Element");
         }
     }
 }

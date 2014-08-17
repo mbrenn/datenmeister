@@ -80,6 +80,12 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private FormView formView;
 
+        public IPublicDatenMeisterSettings Settings
+        {
+            get;
+            set;
+        }
+
         public IPool Pool
         {
             get;
@@ -147,6 +153,7 @@ namespace DatenMeister.WPF.Controls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
+                Ensure.That(this.Settings != null);
                 Ensure.That(this.Extent != null, "Extent has not been set");
             }
         }
@@ -154,7 +161,7 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Does the relayout
         /// </summary>
-        private void Relayout()
+        public void Relayout()
         {
             this.wpfElements.Clear();
 
@@ -187,16 +194,19 @@ namespace DatenMeister.WPF.Controls
                     var fieldInfoAsElement = fieldInfo as IElement;
                     var wpfElementCreator = WPFElementMapping.Map(fieldInfoAsElement);
                     var wpfElement = wpfElementCreator.GenerateElement(this.DetailObject, fieldInfo, this);
-                    if (wpfElement is FrameworkElement)
+                    if (wpfElement != null)
                     {
-                        (wpfElement as FrameworkElement).Margin = new Thickness(10, 5, 10, 5);
+                        if (wpfElement is FrameworkElement)
+                        {
+                            (wpfElement as FrameworkElement).Margin = new Thickness(10, 5, 10, 5);
+                        }
+
+                        Grid.SetRow(wpfElement, currentRow);
+                        Grid.SetColumn(wpfElement, 1);
+                        formGrid.Children.Add(wpfElement);
+
+                        this.wpfElements.Add(new ElementCacheEntry(wpfElementCreator, wpfElement, fieldInfo));
                     }
-
-                    Grid.SetRow(wpfElement, currentRow);
-                    Grid.SetColumn(wpfElement, 1);
-                    formGrid.Children.Add(wpfElement);
-
-                    this.wpfElements.Add(new ElementCacheEntry(wpfElementCreator, wpfElement, fieldInfo));
 
                     currentRow++;
                 }

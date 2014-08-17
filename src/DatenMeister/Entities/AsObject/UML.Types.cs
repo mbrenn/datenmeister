@@ -1,10 +1,17 @@
 namespace DatenMeister.Entities.AsObject.Uml
 {
-    public static class Types
+    public static partial class Types
     {
         public static DatenMeister.IURIExtent Init()
         {
-            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types");
+            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types/uml");
+            Init(extent);
+            return extent;
+        }
+
+        public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
+        {
+            if(Types.NamedElement == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "NamedElement";
@@ -12,6 +19,7 @@ namespace DatenMeister.Entities.AsObject.Uml
                 extent.Elements().add(Types.NamedElement);
             }
 
+            if(Types.Type == null || true)
             {
                 var type = new DatenMeister.Entities.UML.Type();
                 type.name = "Type";
@@ -19,7 +27,7 @@ namespace DatenMeister.Entities.AsObject.Uml
                 extent.Elements().add(Types.Type);
             }
 
-            return extent;
+            extent.AddDefaultMappings();
         }
 
         public static DatenMeister.IObject NamedElement;

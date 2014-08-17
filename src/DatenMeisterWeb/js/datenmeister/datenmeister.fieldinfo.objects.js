@@ -56,6 +56,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         Comment.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        Comment.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        Comment.setColumnWidth = setColumnWidth;
     })(exports.Comment || (exports.Comment = {}));
     var Comment = exports.Comment;
 
@@ -106,6 +116,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         General.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        General.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        General.setColumnWidth = setColumnWidth;
     })(exports.General || (exports.General = {}));
     var General = exports.General;
 
@@ -156,6 +176,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         Checkbox.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        Checkbox.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        Checkbox.setColumnWidth = setColumnWidth;
     })(exports.Checkbox || (exports.Checkbox = {}));
     var Checkbox = exports.Checkbox;
 
@@ -197,6 +227,26 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         TextField.setHeight = setHeight;
 
+        function isMultiline(item) {
+            return item.get('isMultiline');
+        }
+        TextField.isMultiline = isMultiline;
+
+        function setMultiline(item, value) {
+            item.set('isMultiline', value);
+        }
+        TextField.setMultiline = setMultiline;
+
+        function isDateTime(item) {
+            return item.get('isDateTime');
+        }
+        TextField.isDateTime = isDateTime;
+
+        function setDateTime(item, value) {
+            item.set('isDateTime', value);
+        }
+        TextField.setDateTime = setDateTime;
+
         function getName(item) {
             return item.get('name');
         }
@@ -226,8 +276,78 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         TextField.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        TextField.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        TextField.setColumnWidth = setColumnWidth;
     })(exports.TextField || (exports.TextField = {}));
     var TextField = exports.TextField;
+
+    (function (DatePicker) {
+        DatePicker.TypeName = 'DatePicker';
+
+        function create(name, binding) {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'DatePicker');
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
+            }
+
+            return result;
+        }
+        DatePicker.create = create;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        DatePicker.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        DatePicker.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        DatePicker.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        DatePicker.setBinding = setBinding;
+
+        function isReadOnly(item) {
+            return item.get('isReadOnly');
+        }
+        DatePicker.isReadOnly = isReadOnly;
+
+        function setReadOnly(item, value) {
+            item.set('isReadOnly', value);
+        }
+        DatePicker.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        DatePicker.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        DatePicker.setColumnWidth = setColumnWidth;
+    })(exports.DatePicker || (exports.DatePicker = {}));
+    var DatePicker = exports.DatePicker;
 
     (function (ActionButton) {
         ActionButton.TypeName = 'ActionButton';
@@ -344,6 +464,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         ReferenceBase.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        ReferenceBase.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        ReferenceBase.setColumnWidth = setColumnWidth;
     })(exports.ReferenceBase || (exports.ReferenceBase = {}));
     var ReferenceBase = exports.ReferenceBase;
 
@@ -422,6 +552,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         ReferenceByValue.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        ReferenceByValue.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        ReferenceByValue.setColumnWidth = setColumnWidth;
     })(exports.ReferenceByValue || (exports.ReferenceByValue = {}));
     var ReferenceByValue = exports.ReferenceByValue;
 
@@ -500,8 +640,106 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('isReadOnly', value);
         }
         ReferenceByRef.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        ReferenceByRef.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        ReferenceByRef.setColumnWidth = setColumnWidth;
     })(exports.ReferenceByRef || (exports.ReferenceByRef = {}));
     var ReferenceByRef = exports.ReferenceByRef;
+
+    (function (MultiReferenceField) {
+        MultiReferenceField.TypeName = 'MultiReferenceField';
+
+        function create(name, binding, referenceUrl, propertyValue) {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'MultiReferenceField');
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
+            }
+
+            if (referenceUrl !== undefined) {
+                result.set('referenceUrl', referenceUrl);
+            }
+
+            if (propertyValue !== undefined) {
+                result.set('propertyValue', propertyValue);
+            }
+
+            return result;
+        }
+        MultiReferenceField.create = create;
+
+        function getPropertyValue(item) {
+            return item.get('propertyValue');
+        }
+        MultiReferenceField.getPropertyValue = getPropertyValue;
+
+        function setPropertyValue(item, value) {
+            item.set('propertyValue', value);
+        }
+        MultiReferenceField.setPropertyValue = setPropertyValue;
+
+        function getReferenceUrl(item) {
+            return item.get('referenceUrl');
+        }
+        MultiReferenceField.getReferenceUrl = getReferenceUrl;
+
+        function setReferenceUrl(item, value) {
+            item.set('referenceUrl', value);
+        }
+        MultiReferenceField.setReferenceUrl = setReferenceUrl;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        MultiReferenceField.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        MultiReferenceField.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        MultiReferenceField.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        MultiReferenceField.setBinding = setBinding;
+
+        function isReadOnly(item) {
+            return item.get('isReadOnly');
+        }
+        MultiReferenceField.isReadOnly = isReadOnly;
+
+        function setReadOnly(item, value) {
+            item.set('isReadOnly', value);
+        }
+        MultiReferenceField.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        MultiReferenceField.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        MultiReferenceField.setColumnWidth = setColumnWidth;
+    })(exports.MultiReferenceField || (exports.MultiReferenceField = {}));
+    var MultiReferenceField = exports.MultiReferenceField;
 
     (function (View) {
         View.TypeName = 'View';

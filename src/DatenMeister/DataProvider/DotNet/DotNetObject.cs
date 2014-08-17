@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.DataProvider.DotNet
 {
-    public class DotNetObject : IElement
+    public class DotNetObject : IElement, IKnowsExtentType
     {
         /// <summary>
         /// Defines the extent being
@@ -33,6 +33,15 @@ namespace DatenMeister.DataProvider.DotNet
         }
 
         /// <summary>
+        /// Stores the metaclass of the object
+        /// </summary>
+        private IObject metaClass
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the dot net object. 
         /// The id is retrieved from the property 'name'. If the property is not existing, an exception will be thrown. 
         /// </summary>
@@ -40,7 +49,6 @@ namespace DatenMeister.DataProvider.DotNet
         /// <param name="value"></param>
         public DotNetObject(DotNetExtent extent, object value)
         {
-            Ensure.That(extent != null);
             Ensure.That(value != null);
 
             this.extent = extent;
@@ -52,15 +60,13 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else
             {
-                this.id = this.get("name").ToString();
+                this.id = this.get("name").AsSingle().ToString();
             }
         }
 
         public DotNetObject(DotNetExtent extent, object value, string id)
             : this(value, id)
         {
-            Ensure.That(extent != null);
-
             this.extent = extent;
             this.id = id;
         }
@@ -71,6 +77,25 @@ namespace DatenMeister.DataProvider.DotNet
             Ensure.That(value != null);
             this.value = value;
             this.id = id;
+        }
+
+        public void SetMetaClassByMapping(DotNetExtent extent)
+        {
+            if (this.value == null || extent == null)
+            {
+                this.metaClass = null;
+                return;
+            }
+
+            var result = extent.Mapping.FindByDotNetType(this.value.GetType());
+            if (result != null)
+            {
+                this.metaClass = result.Type;
+                return;
+            }
+
+            this.metaClass = null;
+            return;
         }
 
         /// <summary>
@@ -223,11 +248,11 @@ namespace DatenMeister.DataProvider.DotNet
 
             if (Extensions.IsNative(checkObject))
             {
-                return new DotNetUnspecified(this, propertyInfo, checkObject);
+                return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }
             else if (checkObject is IEnumerable)
             {
-                var sequence = new DotNetSequence();
+                var sequence = new DotNetSequence(this.extent);
                 var n = 0L;
                 foreach (var value in (checkObject as IEnumerable))
                 {
@@ -235,15 +260,15 @@ namespace DatenMeister.DataProvider.DotNet
                     n++;
                 }
 
-                return new DotNetUnspecified(this, propertyInfo, sequence);
+                return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
             }
             else if (checkObject is IObject)
             {
-                return new DotNetUnspecified(this, propertyInfo, checkObject);
+                return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }
             else
             {
-                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName));
+                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
             }
         }
 
@@ -254,18 +279,13 @@ namespace DatenMeister.DataProvider.DotNet
         /// <returns>The metaclass of the object</returns>
         public IObject getMetaClass()
         {
-            if (this.value == null)
+            if (this.metaClass != null)
             {
-                return null;
+                return this.metaClass;
             }
 
-            var result = this.extent.Mapping.FindByDotNetType(this.value.GetType());
-            if (result != null)
-            {
-                return result.Type;
-            }
-
-            return null;
+            this.SetMetaClassByMapping(this.extent);
+            return this.metaClass;
         }
 
         /// <summary>
@@ -287,6 +307,11 @@ namespace DatenMeister.DataProvider.DotNet
             }
 
             return base.ToString();
+        }
+
+        Type IKnowsExtentType.ExtentType
+        {
+            get { return typeof(DotNetExtent); }
         }
     }
 }

@@ -2,7 +2,7 @@ namespace DatenMeister.Entities.AsObject.DM
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class RecentProject : DatenMeister.IObject
+    public class RecentProject : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public RecentProject(DatenMeister.IObject obj)
@@ -16,6 +16,12 @@ namespace DatenMeister.Entities.AsObject.DM
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -117,7 +123,7 @@ namespace DatenMeister.Entities.AsObject.DM
         public static System.String getFilePath(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("filePath"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setFilePath(DatenMeister.IObject obj, System.String value)
@@ -159,7 +165,7 @@ namespace DatenMeister.Entities.AsObject.DM
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)

@@ -3,9 +3,12 @@ using BurnSystems.Serialization;
 using BurnSystems.Test;
 using DatenMeister;
 using DatenMeister.DataProvider.Common;
+using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic;
+using DatenMeister.Logic.TypeResolver;
 using DatenMeister.Pool;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,12 +20,26 @@ namespace DatenMeister.DataProvider.Xml
     /// <summary>
     /// Defines one xml object being used by Datenmeister
     /// </summary>
-    public class XmlObject : IElement
+    public class XmlObject : IElement, IHasFactoryExtent, IKnowsExtentType
     {
         /// <summary>
-        /// Gets or sets the extent, where this element belongs to
+        /// Gets or sets the extent, whose extent was used to create the item
         /// </summary>
-        public XmlExtent Extent
+        public XmlExtent FactoryExtent
+        {
+            get;
+            set;
+        }
+
+        IURIExtent IHasFactoryExtent.FactoryExtent
+        {
+            get { return this.FactoryExtent; }
+        }
+
+        /// <summary>
+        /// Gets or sets the extent, in which the element is contained to
+        /// </summary>
+        public XmlExtent ContainerExtent
         {
             get;
             set;
@@ -53,11 +70,10 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="parent">The parent node, which is used for id derivation</param>
         public XmlObject(XmlExtent xmlExtent,  XElement node, XmlObject parent = null)
         {
-            Ensure.That(xmlExtent != null);
             Ensure.That(node != null);
             this.Node = node;
             this.Parent = parent;
-            this.Extent = xmlExtent;
+            this.FactoryExtent = xmlExtent;
 
             // Check, if we have an id attribute
             // TODO: Check with RFC about xml.
@@ -73,13 +89,12 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="value">Value to be resolved</param>
         /// <returns>Resolved object</returns>
-        private object Resolve(object value, string propertyName)
+        private object Resolve(object value, string propertyName, PropertyValueType propertyValueType)
         {
             var result = value;
-            // var result = this.Extent.Pool.Resolve(this, value);
-            if (result != null && !(result is IResolvable))
+            if (result != null)
             {
-                result = new XmlUnspecified(this, propertyName, result);
+                result = new XmlUnspecified(this, propertyName, result, propertyValueType);
             }
 
             return result;
@@ -113,24 +128,51 @@ namespace DatenMeister.DataProvider.Xml
                     var xmlRefProperty = this.Node.Attribute(propertyName + "-ref");
                     if (xmlRefProperty != null)
                     {
-                        result.Add(new ResolvableByPath(this.Extent.Pool, this, xmlRefProperty.Value));
+                        foreach (var partProperty in xmlRefProperty.Value.Split(new char[] { ' ' }))
+                        {
+                            result.Add(new ResolvableByPath(this.FactoryExtent.Pool, this, partProperty));
+                        }
                     }
                 }
 
                 // Checks, if we have elements nodes with the given property name
                 foreach (var element in this.Node.Elements(propertyName))
                 {
-                    result.Add(new XmlObject(this.Extent, element, this));
+                    result.Add(new XmlObject(this.FactoryExtent, element, this)
+                    {
+                        ContainerExtent = this.ContainerExtent
+                    });
                 }
             }
 
             // Checks, if we have an item, if not, return a not set element
             if (result.Count == 0)
             {
-                return this.Resolve(ObjectHelper.NotSet, propertyName);
+                return this.Resolve(ObjectHelper.NotSet, propertyName, PropertyValueType.Single);
             }
 
-            return this.Resolve(result, propertyName);
+            return this.Resolve(
+                result,
+                propertyName,
+                result.Count == 1 ? PropertyValueType.Single : PropertyValueType.Enumeration);
+        }
+
+        /// <summary>
+        /// Checks, whether the given name is internal and shall not 
+        /// be exported to the outside world. 
+        /// These are XMI-Namespaces and XmlNs
+        /// </summary>
+        /// <param name="name">Name to be checked</param>
+        /// <returns>true,if this is external</returns>
+        private static bool IsInternalNamespace(XName name)
+        {
+            if (name.Namespace == DatenMeister.Entities.AsObject.Uml.Types.XmiNamespace
+                || name.Namespace == DatenMeister.Entities.AsObject.Uml.Types.XmlNamespace)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -156,7 +198,10 @@ namespace DatenMeister.DataProvider.Xml
                     returns[element.Name.ToString()] = found;
                 }
 
-                found.Add(new XmlObject(this.Extent, element, this));
+                found.Add(new XmlObject(this.FactoryExtent, element, this)
+                    {
+                        ContainerExtent = this.ContainerExtent
+                    });
             }
 
             foreach (var attribute in this.Node.Attributes())
@@ -164,13 +209,18 @@ namespace DatenMeister.DataProvider.Xml
                 // Checks, if the attribute has a -ref as ending. If yes, then it is a reference
                 // to another object
                 var attributeName = attribute.Name.ToString();
+                if (IsInternalNamespace(attribute.Name))
+                {
+                    continue;
+                }
+
                 object attributeValue = attribute.Value;
 
                 if (attributeName.EndsWith("-ref"))
                 {
                     // Ok, we got a reference
                     attributeName = attributeName.Substring(0, attributeName.Length - "-ref".Length);
-                    attributeValue = new ResolvableByPath(this.Extent.Pool, this, attributeValue.ToString());
+                    attributeValue = new ResolvableByPath(this.FactoryExtent.Pool, this, attributeValue.ToString());
                 }
 
                 if (!returns.TryGetValue(attributeName, out found))
@@ -187,11 +237,11 @@ namespace DatenMeister.DataProvider.Xml
             {
                 if (valuePair.Value.Count == 1)
                 {
-                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value.First(), valuePair.Key));
+                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value.First(), valuePair.Key, PropertyValueType.Single));
                 }
                 else
                 {
-                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value, valuePair.Key));
+                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value, valuePair.Key, PropertyValueType.Enumeration));
                 }
             }
         }
@@ -227,6 +277,22 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="value">Value to be set</param>
         public void set(string propertyName, object value)
         {
+            // If property name is an id, we use this id for setting the id of the entity
+            if (propertyName == "id")
+            {
+                if (string.IsNullOrEmpty(value.ToString()))
+                {
+                    throw new ArgumentException("Id cannot be set to null or empty");
+                }
+
+                if (value.ToString().Contains(" "))
+                {
+                    throw new ArgumentException("Id may not contain an empty space");
+                }
+
+                this.Id = value.ToString();
+            }
+
             if (propertyName.EndsWith("-ref"))
             {
                 throw new InvalidOperationException("Property name may not end with '-ref'");
@@ -242,13 +308,11 @@ namespace DatenMeister.DataProvider.Xml
                     {
                         // Setting of empty content
                         this.Node.Value = string.Empty;
-                        this.Extent.IsDirty = true;
                     }
                     else
                     {
                         // Setting of node content by value
-                        this.Node.Value = value.ToString();
-                        this.Extent.IsDirty = true;
+                        this.Node.Value = ObjectConversion.ToString(value);
                     }
                 }
                 else
@@ -260,44 +324,49 @@ namespace DatenMeister.DataProvider.Xml
             else if (this.Node.Attribute(propertyName) != null)
             {
                 // Checks, if we have multiple objects, if yes, throw exception. 
-                // Check, if we have an attribute with the given name, if yes, set the property            
-                this.Node.Attribute(propertyName).Value = value.ToString();
-                this.Extent.IsDirty = true;
+                // Check, if we have an attribute with the given name, if yes, set the property     
+                if (value == ObjectHelper.NotSet)
+                {
+                    this.Node.Attribute(propertyName).Remove();
+                }
+                else
+                {
+                    this.Node.Attribute(propertyName).Value = ObjectConversion.ToString(value);
+                }
             }
             else if (this.Node.Element(propertyName) != null)
             {
                 // Element is an element
-                if (Extensions.IsNative(value))
+                if (value == ObjectHelper.NotSet)
                 {
-                    this.Node.Element(propertyName).Value = value.ToString();
-                    this.Extent.IsDirty = true;
+                    this.Node.Element(propertyName).Remove();
+                }
+                else
+                {
+                    if (Extensions.IsNative(value))
+                    {
+                        this.Node.Element(propertyName).Value = ObjectConversion.ToString(value);
+                    }
                 }
             }
             else if (Extensions.IsNative(value))
             {
                 // Ok, we have no attribute and no element with the name.
                 // If this is a simple type, we just assume that this is a property, otherwise no suppurt
-                this.Node.Add(new XAttribute(propertyName, value.ToString()));
-                this.Extent.IsDirty = true;
+                this.Node.Add(new XAttribute(propertyName, ObjectConversion.ToString(value)));
             }
             else if (value is IObject)
             {
                 var valueAsIObject = value as IObject;
+                var extent = this.FactoryExtent;
                 if (valueAsIObject.Extent == null)
                 {
-                    var copier = new ObjectCopier(this.Extent);
-                    var xmlObject = copier.CopyElement(valueAsIObject) as XmlObject;
-                    Ensure.That(xmlObject != null);
-
-                    // Renames node to the propertyname
-                    xmlObject.Node.Name = propertyName;
-
-                    this.Node.Add(xmlObject.Node);
+                    XmlObject.CopyObjectIntoXmlNode(this, valueAsIObject, propertyName, extent);
                 }
                 else
                 {
                     // Set as an attribute and reference
-                    var poolResolver = PoolResolver.GetDefault(this.Extent.Pool);
+                    var poolResolver = PoolResolver.GetDefault(extent.Pool);
                     var path = poolResolver.GetResolvePath(valueAsIObject, this);
 
                     // Checks, if attribute is existing
@@ -313,16 +382,29 @@ namespace DatenMeister.DataProvider.Xml
                     }
                 }
             }
+            else if (value is IReflectiveCollection)
+            {
+                var asReflectiveCollection = value as IReflectiveCollection;
+                throw new NotImplementedException("IReflective Collections are not supported until now");
+            }
+            else if (value is IEnumerable)
+            {
+                var propertyAsReflectiveCollection = this.get(propertyName).AsReflectiveCollection();
+                foreach (var item in (value as IEnumerable))
+                {
+                    propertyAsReflectiveCollection.add(item);
+                }
+            }
+            else if (value == ObjectHelper.NotSet)
+            {
+                // do Nothing.. Nothing necessary, will not create a new element or attribute
+            }
             else
             {
                 throw new NotImplementedException("We do not know how to set the value to the XmlObject");
             }
 
-            // If property name is an id, we use this id for setting the id of the entity
-            if (propertyName == "id")
-            {
-                this.Id = value.ToString();
-            }
+            this.MakeExtentDirty();
         }
 
         /// <summary>
@@ -331,7 +413,7 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="propertyName">Name of the property</param>
         public bool unset(string propertyName)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("unset is not defined until now");
         }
 
         /// <summary>
@@ -340,7 +422,8 @@ namespace DatenMeister.DataProvider.Xml
         public void delete()
         {
             this.Node.Remove();
-            this.Extent.IsDirty = true;
+            this.ContainerExtent = null;
+            this.MakeExtentDirty();
         }
 
         /// <summary>
@@ -353,19 +436,49 @@ namespace DatenMeister.DataProvider.Xml
         }
 
         /// <summary>
+        /// Makes the factory dirty
+        /// </summary>
+        public void MakeExtentDirty()
+        {
+            if (this.ContainerExtent != null)
+            {
+                this.ContainerExtent.IsDirty = true;
+            }
+        }
+
+        /// <summary>
         /// Returns the meta class, if known
         /// </summary>
         /// <returns>Found Metaclass or null, if not found</returns>
         public IObject getMetaClass()
         {
             var nodeName = this.Node.Name.ToString();
-            var info = this.Extent.Settings.Mapping.FindByNodeName(nodeName);
-            if (info == null)
+
+            // Checks the type by xmi:type attribute
+            var xmiTypeAttribute = this.Node.Attribute(DatenMeister.Entities.AsObject.Uml.Types.XmiNamespace + "type");
+            if (xmiTypeAttribute != null)
             {
-                return null;
+                var typeName = xmiTypeAttribute.Value;
+
+                var typeResolver = Global.Application.Get<ITypeResolver>();
+                var type = typeResolver.GetType(typeName);
+                if (type != null)
+                {
+                    return type;
+                }
             }
 
-            return info.Type;
+            // Checks the type by mapping
+            if (this.FactoryExtent != null)
+            {
+                var info = this.FactoryExtent.Settings.Mapping.FindByNodeName(nodeName);
+                if (info != null)
+                {
+                    return info.Type;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -379,7 +492,74 @@ namespace DatenMeister.DataProvider.Xml
 
         IURIExtent IObject.Extent
         {
-            get { return this.Extent; }
+            get { return this.ContainerExtent; }
+        }
+
+        /// <summary>
+        /// Copies the object into the given Xml node. 
+        /// The Xml node already has to exist and a created node, according to propertyname, will be attached to this. 
+        /// </summary>
+        /// <param name="xmlObject">Xmlobject, where new node will be attached</param>
+        /// <param name="valueAsIObject">The object being copied to the xml node</param>
+        /// <param name="propertyName">Name of the property being </param>
+        /// <param name="extent"></param>
+        public static void CopyObjectIntoXmlNode(XmlObject xmlObject, IObject valueAsIObject, string propertyName, IURIExtent extent)
+        {
+            var copier = new ObjectCopier(extent);
+            var copiedXmlObject = copier.CopyElement(valueAsIObject) as XmlObject;
+            copiedXmlObject.ContainerExtent = xmlObject.ContainerExtent;
+            Ensure.That(copiedXmlObject != null);
+
+            // Renames node to the propertyname
+            copiedXmlObject.Node.Name = propertyName;
+
+            xmlObject.Node.Add(copiedXmlObject.Node);
+        }
+
+        /// <summary>
+        /// Returns the Extent Type
+        /// </summary>
+        System.Type IKnowsExtentType.ExtentType
+        {
+            get { return typeof(XmlExtent); }
+        }
+
+        /// <summary>
+        /// Checks, if the nodes are equest
+        /// </summary>
+        /// <param name="obj">Object to be done</param>
+        /// <returns>true, if the same</returns>
+        public override bool Equals(object obj)
+        {
+            var xmlObj = obj as XmlObject;
+            if (xmlObj != null)
+            {
+                return xmlObj.Node == this.Node;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            if (this.Node == null)
+            {
+                return 0;
+            }
+
+            return this.Node.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            if (this.Id == null)
+            {
+                return base.ToString();
+            }
+            else
+            {
+                return "XmlObject: " + this.Id.ToString();
+            }
         }
     }
 }

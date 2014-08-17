@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,22 +13,29 @@ namespace DatenMeister.WPF.Controls.GuiElements
         public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
         {
             var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(fieldInfo);
-
+            
             var textBox = new System.Windows.Controls.TextBox();
             textBox.FontSize = 16;
             textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
+
+            if (textFieldObj.isMultiline())
+            {
+                textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Top;
+                textBox.AcceptsReturn = true;
+                textBox.Height = 100;
+            }
 
             if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
             {
                 var fieldName = textFieldObj.getBinding().ToString();
                 var propertyValue = detailObject.get(fieldName);
-                if (propertyValue != null)
+                if (propertyValue != null && propertyValue != ObjectHelper.NotSet)
                 {
                     textBox.Text = propertyValue.AsSingle().ToString();
                 }
 
                 // Do we have a read-only flag
-                if (state.EditMode == EditMode.Read)
+                if (state.EditMode == EditMode.Read || textFieldObj.isReadOnly())
                 {
                     textBox.IsReadOnly = true;
                     textBox.IsReadOnlyCaretVisible = true;
@@ -41,13 +49,16 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// Sets the data by the element cache information
         /// </summary>
         /// <param name="detailObject">Object, which shall receive the information</param>
-        /// <param name="entry">Cache entry, which has the connection between WPF element and fieldinfo</param>        
+        /// <param name="entry">Cache entry, which has the connection between WPF element and fieldinfo</param>
         public void SetData(IObject detailObject, ElementCacheEntry entry)
         {
             var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(entry.FieldInfo);
 
-            var textBox = entry.WPFElement as TextBox;
-            detailObject.set(textFieldObj.getBinding().ToString(), textBox.Text);
+            if (!textFieldObj.isReadOnly())
+            {
+                var textBox = entry.WPFElement as TextBox;
+                detailObject.set(textFieldObj.getBinding().ToString(), textBox.Text);
+            }
         }
 
         /// <summary>

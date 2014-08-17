@@ -12,9 +12,8 @@ namespace DatenMeister.Entities.FieldInfos
         }
 
         public TextField(string name, string binding)
+            : base(name, binding)
         {
-            this.binding = binding;
-            this.name = name;
         }
 
         public int width
@@ -24,6 +23,25 @@ namespace DatenMeister.Entities.FieldInfos
         }
 
         public int height
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the value whether the text box shall be shown as a multiline item. 
+        /// </summary>
+        public bool isMultiline
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the information whether the content shall be seen as datetime
+        /// and will be parsed to local CultureInfo
+        /// </summary>
+        public bool isDateTime
         {
             get;
             set;

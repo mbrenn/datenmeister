@@ -2,7 +2,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class NamedElement : DatenMeister.IObject
+    public class NamedElement : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public NamedElement(DatenMeister.IObject obj)
@@ -17,6 +17,12 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -117,7 +123,7 @@ namespace DatenMeister.Entities.AsObject.Uml
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -129,7 +135,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Type : DatenMeister.IObject
+    public class Type : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public Type(DatenMeister.IObject obj)
@@ -144,6 +150,12 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -244,7 +256,7 @@ namespace DatenMeister.Entities.AsObject.Uml
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)

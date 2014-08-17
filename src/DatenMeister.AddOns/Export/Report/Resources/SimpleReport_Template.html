@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Export of DatenMeister
+    </title>
+    <style type="text/css">
+      body {
+        font-family: Arial, Helvetica;
+      }
+      
+      table {
+        border-collapse: collapse;
+      }
+
+      td {
+        border: 1px solid black;
+        padding: 4px 10px 4px 10px;
+      }
+
+      th {
+        border: 1px solid black;
+        padding: 4px 10px 4px 10px;
+      }
+
+      br {
+        mso-data-placement:same-cell;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <h1>Export of all entities</h1>
+    
+    <p>Created: {{ Created }}</p>
+    <p>Created by: {{ CreatedBy }}</p>
+    
+    
+    <h2>Listing all items</h2>
+    
+    {% for Table in Tables %}
+      <h3>{{Table.Headline}}</h3>
+      {{Table.TableContent}}
+    {% endfor %}
+  </body>
+</html>

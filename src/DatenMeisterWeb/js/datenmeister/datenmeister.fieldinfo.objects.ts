@@ -51,6 +51,14 @@ export module Comment {
         item.set('isReadOnly', value);
     }
 
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
 }
 
 export module General {
@@ -93,6 +101,14 @@ export module General {
 
     export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
         item.set('isReadOnly', value);
+    }
+
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
     }
 
 }
@@ -139,6 +155,14 @@ export module Checkbox {
         item.set('isReadOnly', value);
     }
 
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
 }
 
 export module TextField {
@@ -175,6 +199,22 @@ export module TextField {
         item.set('height', value);
     }
 
+    export function isMultiline(item: __d__.JsonExtentObject) {
+        return item.get('isMultiline');
+    }
+
+    export function setMultiline(item : __d__.JsonExtentObject, value: any) {
+        item.set('isMultiline', value);
+    }
+
+    export function isDateTime(item: __d__.JsonExtentObject) {
+        return item.get('isDateTime');
+    }
+
+    export function setDateTime(item : __d__.JsonExtentObject, value: any) {
+        item.set('isDateTime', value);
+    }
+
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
     }
@@ -197,6 +237,66 @@ export module TextField {
 
     export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
         item.set('isReadOnly', value);
+    }
+
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
+}
+
+export module DatePicker {
+    export var TypeName='DatePicker';
+
+    export function create(name?: any, binding?: any) {
+        var result = new __d__.JsonExtentObject();
+        result.set('type', 'DatePicker');
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
+        }
+
+        return result;
+    }
+
+
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
+    }
+
+    export function isReadOnly(item: __d__.JsonExtentObject) {
+        return item.get('isReadOnly');
+    }
+
+    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
+        item.set('isReadOnly', value);
+    }
+
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
     }
 
 }
@@ -303,6 +403,14 @@ export module ReferenceBase {
         item.set('isReadOnly', value);
     }
 
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
 }
 
 export module ReferenceByValue {
@@ -371,6 +479,14 @@ export module ReferenceByValue {
         item.set('isReadOnly', value);
     }
 
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
 }
 
 export module ReferenceByRef {
@@ -437,6 +553,90 @@ export module ReferenceByRef {
 
     export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
         item.set('isReadOnly', value);
+    }
+
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
+}
+
+export module MultiReferenceField {
+    export var TypeName='MultiReferenceField';
+
+    export function create(name?: any, binding?: any, referenceUrl?: any, propertyValue?: any) {
+        var result = new __d__.JsonExtentObject();
+        result.set('type', 'MultiReferenceField');
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
+        }
+
+        if (referenceUrl !== undefined) {
+            result.set('referenceUrl', referenceUrl);
+        }
+
+        if (propertyValue !== undefined) {
+            result.set('propertyValue', propertyValue);
+        }
+
+        return result;
+    }
+
+
+    export function getPropertyValue(item: __d__.JsonExtentObject) {
+        return item.get('propertyValue');
+    }
+
+    export function setPropertyValue(item : __d__.JsonExtentObject, value: any) {
+        item.set('propertyValue', value);
+    }
+
+    export function getReferenceUrl(item: __d__.JsonExtentObject) {
+        return item.get('referenceUrl');
+    }
+
+    export function setReferenceUrl(item : __d__.JsonExtentObject, value: any) {
+        item.set('referenceUrl', value);
+    }
+
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
+    }
+
+    export function isReadOnly(item: __d__.JsonExtentObject) {
+        return item.get('isReadOnly');
+    }
+
+    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
+        item.set('isReadOnly', value);
+    }
+
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
     }
 
 }

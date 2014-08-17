@@ -10,8 +10,8 @@ namespace DatenMeister.DataProvider
     /// </summary>
     public class GenericUnspecified : BaseUnspecified
     {
-        public GenericUnspecified(IObject owner, string propertyName, object value)
-            : base(owner, propertyName, value)
+        public GenericUnspecified(IObject owner, string propertyName, object value, PropertyValueType propertyValueType)
+            : base(owner, propertyName, value, propertyValueType)
         {
         }
 

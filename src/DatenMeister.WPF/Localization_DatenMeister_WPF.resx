@@ -135,6 +135,9 @@
   <data name="Menu_ViewExtents" xml:space="preserve">
     <value>Show Extents</value>
   </data>
+  <data name="MultiReference_NoEditPossible" xml:space="preserve">
+    <value>No edit is possible, until the object is stored. </value>
+  </data>
   <data name="NoItemDialogFound" xml:space="preserve">
     <value>No dialog specification has been found. Dialog cannot be shown. </value>
   </data>

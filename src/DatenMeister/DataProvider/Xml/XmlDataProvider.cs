@@ -72,7 +72,7 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name='name'>
         /// The name of the extent. This name will be used for the name of the root node
         /// </paramm
-        public ExtentInstance CreateEmpty(string path, string url, string name)
+        public ExtentInstance CreateEmpty(string path, string url, string name, ExtentType extentType)
         {
             // Create the node
             var document = new XDocument();
@@ -84,7 +84,7 @@ namespace DatenMeister.DataProvider.Xml
             // Add the extent			
             var extent = new XmlExtent(document, url);
 
-            return new ExtentInstance(extent, path, name);
+            return new ExtentInstance(extent, path, name, extentType);
         }
     }
 }

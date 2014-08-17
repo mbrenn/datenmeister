@@ -199,7 +199,7 @@ namespace DatenMeister.Web
         public IActionResult Create([PostModel] CreateExtentModel model)
         {
             // At the moment, just xml files are supported
-            var newPool = this.PoolLogic.CreateEmpty(model.name, model.url, model.filename);
+            var newPool = this.PoolLogic.CreateEmpty(model.name, model.url, model.filename, ExtentType.Data);
             this.Pool.Add(newPool);
 
             return this.ReturnClientAction(

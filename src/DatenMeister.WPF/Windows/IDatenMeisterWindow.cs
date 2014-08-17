@@ -1,5 +1,6 @@
 ﻿
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Helper;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Windows
@@ -28,7 +30,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Gets or sets the settings
         /// </summary>
-        IDatenMeisterSettings Settings
+        IPublicDatenMeisterSettings Settings
         {
             get;
         }
@@ -36,13 +38,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Refreshes the views
         /// </summary>
-        void RefreshTab();
-
-        /// <summary>
-        /// Sets the title of the application
-        /// </summary>
-        /// <param name="title">Title of the application</param>
-        void SetTitle(string title);
+        void RefreshTabs();
 
         /// <summary>
         /// Adds a menuentry to the application window
@@ -50,7 +46,7 @@ namespace DatenMeister.WPF.Windows
         /// <param name="menuHeadline">Headline of the menu</param>
         /// <param name="menuLine">Menu that shall be added</param>
         /// <param name="press"></param>
-        void AddMenuEntry(string menuHeadline, MenuItem menuLine);
+        void AddMenuEntry(string menuHeadline, UIElement menuLine);
 
         /// <summary>
         /// Associates a user-defined event, when the user doubleclicks on a detail field

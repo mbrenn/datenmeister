@@ -2,6 +2,7 @@
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.Entities.FieldInfos;
+using DatenMeister.Logic.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,9 +69,11 @@ namespace DatenMeister.Logic
             asObjectExtentview.setAllowNew(false);
             asObjectExtentview.setName("Extents");
             asObjectExtentview.setFieldInfos(new DotNetSequence(
+                ViewHelper.ViewTypes,
                 new TextField("Name", "name"),
                 new TextField("URI", "uri"),
                 new TextField("Type", "type"),
+                new TextField("ExtentType", "extentType"),
                 new TextField("Filename", "filename")));
 
             return extentViewObj;

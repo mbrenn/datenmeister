@@ -4,6 +4,7 @@ using DatenMeister.Pool;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,28 @@ namespace DatenMeister
             }
 
             throw new NotImplementedException("Type of resolve cannot be done...");
+        }
+
+        /// <summary>
+        /// Gets the enumeration of extent types
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentType">The extent type to be queried</param>
+        /// <returns>Enumeration, matching to the given extentType</returns>
+        public static IEnumerable<ExtentInstance> Get(this IPool pool, ExtentType extentType)
+        {
+            return pool.Instances.Where(x => x.ExtentType == extentType);
+        }
+
+        /// <summary>
+        /// Gets the enumeration of extent types
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentType">The extent type to be queried</param>
+        /// <returns>Enumeration, matching to the given extentType</returns>
+        public static IEnumerable<IURIExtent> GetExtent(this IPool pool, ExtentType extentType)
+        {
+            return pool.Instances.Where(x => x.ExtentType == extentType).Select(x => x.Extent);
         }
 
         public static JsonExtentInfo ToJson(this IURIExtent extent)
@@ -279,6 +302,15 @@ namespace DatenMeister
         }
 
         /// <summary>
+        /// Releases the given extent from pool, so it can be added to a new pool
+        /// </summary>
+        /// <param name="extent">Extent to be released</param>
+        public static void ReleaseFromPool(this IURIExtent extent)
+        {
+            extent.Pool = null;
+        }
+
+        /// <summary>
         /// Transforms the given object to a pure Json-Object that can be used for web interaction
         /// </summary>
         /// <param name="value">Value to be converted</param>
@@ -372,35 +404,6 @@ namespace DatenMeister
         }
 
         /// <summary>
-        /// Returns the information whether the given object might be true or false
-        /// </summary>
-        /// <param name="value">Object to be tested</param>
-        public static bool ToBoolean(object value)
-        {
-            if (value == null)
-            {
-                return false;
-            }
-
-            if (value is bool)
-            {
-                return (bool)value;
-            }
-
-            if (value is string)
-            {
-                return value.ToString() == "True" || value.ToString() == "true";
-            }
-
-            if (value is int)
-            {
-                return ((int)value) != 0;
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Creates an object and stores it into the extent
         /// </summary>
         /// <param name="factory">Factory being used to create the object</param>
@@ -412,6 +415,17 @@ namespace DatenMeister
             var result = factory.create(type);
             extent.Elements().add(result);
             return result;
+        }
+
+        /// <summary>
+        /// Gets the instance within the pool by the extent Uri
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentUri">Uri of the extent</param>
+        /// <returns>Found extent id</returns>
+        public static ExtentInstance GetInstance(this IPool pool, string extentUri)
+        {
+            return pool.Instances.Where(x => x.Extent.ContextURI() == extentUri).FirstOrDefault();
         }
     }
 }

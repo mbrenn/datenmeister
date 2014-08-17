@@ -7,6 +7,12 @@ namespace DatenMeister
 {
     public abstract class BaseUnspecified : IUnspecified
     {
+        public PropertyValueType PropertyValueType
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Gets or sets the owner of the object
         /// </summary>
@@ -34,11 +40,12 @@ namespace DatenMeister
             set;
         }
 
-        public BaseUnspecified(IObject owner, string propertyName, object value)
+        public BaseUnspecified(IObject owner, string propertyName, object value, PropertyValueType propertyValueType)
         {
             this.Owner = owner;
             this.PropertyName = propertyName;
             this.Value = value;
+            this.PropertyValueType = propertyValueType;
         }
 
         /// <summary>

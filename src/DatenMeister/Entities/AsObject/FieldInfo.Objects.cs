@@ -2,7 +2,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Comment : DatenMeister.IObject
+    public class Comment : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public Comment(DatenMeister.IObject obj)
@@ -23,6 +23,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -124,7 +130,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getComment(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("comment"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setComment(DatenMeister.IObject obj, System.String value)
@@ -145,7 +151,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -166,7 +172,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -187,7 +193,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -195,11 +201,32 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("isReadOnly", value);
         }
 
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class General : DatenMeister.IObject
+    public class General : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public General(DatenMeister.IObject obj)
@@ -221,6 +248,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -321,7 +354,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -342,7 +375,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -363,7 +396,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -371,11 +404,32 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("isReadOnly", value);
         }
 
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Checkbox : DatenMeister.IObject
+    public class Checkbox : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public Checkbox(DatenMeister.IObject obj)
@@ -397,6 +451,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -497,7 +557,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -518,7 +578,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -539,7 +599,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -547,11 +607,32 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("isReadOnly", value);
         }
 
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class TextField : DatenMeister.IObject
+    public class TextField : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public TextField(DatenMeister.IObject obj)
@@ -572,6 +653,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -673,7 +760,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Int32 getWidth(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("width"));
-            return (result is System.Int32) ? ((System.Int32) result) : default(System.Int32);
+            return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
         public static void setWidth(DatenMeister.IObject obj, System.Int32 value)
@@ -694,12 +781,54 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
-            return (result is System.Int32) ? ((System.Int32) result) : default(System.Int32);
+            return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
         public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
         {
             obj.set("height", value);
+        }
+
+        public System.Boolean isMultiline()
+        {
+            return isMultiline(this);
+        }
+
+        public void setMultiline(System.Boolean value)
+        {
+            setMultiline(this, value);
+        }
+
+        public static System.Boolean isMultiline(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("isMultiline"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setMultiline(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("isMultiline", value);
+        }
+
+        public System.Boolean isDateTime()
+        {
+            return isDateTime(this);
+        }
+
+        public void setDateTime(System.Boolean value)
+        {
+            setDateTime(this, value);
+        }
+
+        public static System.Boolean isDateTime(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("isDateTime"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setDateTime(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("isDateTime", value);
         }
 
         public System.String getName()
@@ -715,7 +844,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -736,7 +865,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -757,7 +886,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -765,11 +894,235 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("isReadOnly", value);
         }
 
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ActionButton : DatenMeister.IObject
+    public class DatePicker : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
+    {
+        private DatenMeister.IObject obj;
+        public DatePicker(DatenMeister.IObject obj)
+        {
+            this.obj = obj;
+        }
+
+        public DatePicker(DatenMeister.IObject obj, object name, object binding)
+            : this(obj)
+        {
+            this.set("name", name);
+            this.set("binding", binding);
+        }
+
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
+        {
+            return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.DatePicker);
+        }
+
+        #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public DatenMeister.IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public object get(string propertyName)
+        {
+            return this.obj.get(propertyName);
+        }
+
+        /// <summary>
+        /// Gets all properties as key value pairs
+        /// </summary>
+        /// <returns></returns>
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
+        {
+            return this.obj.getAll();
+        }
+
+        /// <summary>
+        /// Checks, if a certain property is set
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if set</returns>
+        public bool isSet(string propertyName)
+        {
+            return this.obj.isSet(propertyName);
+        }
+
+        /// <summary>
+        /// Sets the value of the property 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="value">Value to be set</param>
+        public void set(string propertyName, object value)
+        {
+            this.obj.set(propertyName, value);
+        }
+
+        /// <summary>
+        /// Unsets the property
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be removed</param>
+        public bool unset(string propertyName)
+        {
+            return this.obj.unset(propertyName);
+        }
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        public void delete()
+        {
+            this.obj.delete();
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                return this.obj.Id;
+            }
+        }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				return this.obj.Extent;
+			}
+		}
+
+        #endregion
+
+        public System.String getName()
+        {
+            return getName(this);
+        }
+
+        public void setName(System.String value)
+        {
+            setName(this, value);
+        }
+
+        public static System.String getName(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setName(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("name", value);
+        }
+
+        public System.String getBinding()
+        {
+            return getBinding(this);
+        }
+
+        public void setBinding(System.String value)
+        {
+            setBinding(this, value);
+        }
+
+        public static System.String getBinding(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setBinding(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("binding", value);
+        }
+
+        public System.Boolean isReadOnly()
+        {
+            return isReadOnly(this);
+        }
+
+        public void setReadOnly(System.Boolean value)
+        {
+            setReadOnly(this, value);
+        }
+
+        public static System.Boolean isReadOnly(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("isReadOnly", value);
+        }
+
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class ActionButton : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public ActionButton(DatenMeister.IObject obj)
@@ -790,6 +1143,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -891,7 +1250,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getText(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("text"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setText(DatenMeister.IObject obj, System.String value)
@@ -912,7 +1271,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getClickUrl(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("clickUrl"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setClickUrl(DatenMeister.IObject obj, System.String value)
@@ -924,7 +1283,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ReferenceBase : DatenMeister.IObject
+    public class ReferenceBase : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public ReferenceBase(DatenMeister.IObject obj)
@@ -948,6 +1307,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -1048,7 +1413,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setPropertyValue(DatenMeister.IObject obj, System.String value)
@@ -1069,7 +1434,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setReferenceUrl(DatenMeister.IObject obj, System.String value)
@@ -1090,7 +1455,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -1111,7 +1476,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -1132,7 +1497,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -1140,11 +1505,32 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("isReadOnly", value);
         }
 
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ReferenceByValue : DatenMeister.IObject
+    public class ReferenceByValue : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public ReferenceByValue(DatenMeister.IObject obj)
@@ -1168,6 +1554,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -1268,7 +1660,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setPropertyValue(DatenMeister.IObject obj, System.String value)
@@ -1289,7 +1681,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setReferenceUrl(DatenMeister.IObject obj, System.String value)
@@ -1310,7 +1702,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -1331,7 +1723,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -1352,7 +1744,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -1360,11 +1752,32 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("isReadOnly", value);
         }
 
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ReferenceByRef : DatenMeister.IObject
+    public class ReferenceByRef : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public ReferenceByRef(DatenMeister.IObject obj)
@@ -1388,6 +1801,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         #region IObject Implementation
 
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
         /// <summary>
         /// Gets the property by propertyname. 
         /// </summary>
@@ -1488,7 +1907,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setPropertyValue(DatenMeister.IObject obj, System.String value)
@@ -1509,7 +1928,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setReferenceUrl(DatenMeister.IObject obj, System.String value)
@@ -1530,7 +1949,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -1551,7 +1970,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getBinding(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setBinding(DatenMeister.IObject obj, System.String value)
@@ -1572,7 +1991,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
@@ -1580,11 +1999,279 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("isReadOnly", value);
         }
 
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class View : DatenMeister.IObject
+    public class MultiReferenceField : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
+    {
+        private DatenMeister.IObject obj;
+        public MultiReferenceField(DatenMeister.IObject obj)
+        {
+            this.obj = obj;
+        }
+
+        public MultiReferenceField(DatenMeister.IObject obj, object name, object binding, object referenceUrl, object propertyValue)
+            : this(obj)
+        {
+            this.set("name", name);
+            this.set("binding", binding);
+            this.set("referenceUrl", referenceUrl);
+            this.set("propertyValue", propertyValue);
+        }
+
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
+        {
+            return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.MultiReferenceField);
+        }
+
+        #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public DatenMeister.IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public object get(string propertyName)
+        {
+            return this.obj.get(propertyName);
+        }
+
+        /// <summary>
+        /// Gets all properties as key value pairs
+        /// </summary>
+        /// <returns></returns>
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
+        {
+            return this.obj.getAll();
+        }
+
+        /// <summary>
+        /// Checks, if a certain property is set
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if set</returns>
+        public bool isSet(string propertyName)
+        {
+            return this.obj.isSet(propertyName);
+        }
+
+        /// <summary>
+        /// Sets the value of the property 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="value">Value to be set</param>
+        public void set(string propertyName, object value)
+        {
+            this.obj.set(propertyName, value);
+        }
+
+        /// <summary>
+        /// Unsets the property
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be removed</param>
+        public bool unset(string propertyName)
+        {
+            return this.obj.unset(propertyName);
+        }
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        public void delete()
+        {
+            this.obj.delete();
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                return this.obj.Id;
+            }
+        }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				return this.obj.Extent;
+			}
+		}
+
+        #endregion
+
+        public System.String getPropertyValue()
+        {
+            return getPropertyValue(this);
+        }
+
+        public void setPropertyValue(System.String value)
+        {
+            setPropertyValue(this, value);
+        }
+
+        public static System.String getPropertyValue(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setPropertyValue(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("propertyValue", value);
+        }
+
+        public System.String getReferenceUrl()
+        {
+            return getReferenceUrl(this);
+        }
+
+        public void setReferenceUrl(System.String value)
+        {
+            setReferenceUrl(this, value);
+        }
+
+        public static System.String getReferenceUrl(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setReferenceUrl(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("referenceUrl", value);
+        }
+
+        public System.String getName()
+        {
+            return getName(this);
+        }
+
+        public void setName(System.String value)
+        {
+            setName(this, value);
+        }
+
+        public static System.String getName(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setName(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("name", value);
+        }
+
+        public System.String getBinding()
+        {
+            return getBinding(this);
+        }
+
+        public void setBinding(System.String value)
+        {
+            setBinding(this, value);
+        }
+
+        public static System.String getBinding(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setBinding(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("binding", value);
+        }
+
+        public System.Boolean isReadOnly()
+        {
+            return isReadOnly(this);
+        }
+
+        public void setReadOnly(System.Boolean value)
+        {
+            setReadOnly(this, value);
+        }
+
+        public static System.Boolean isReadOnly(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("isReadOnly", value);
+        }
+
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class View : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public View(DatenMeister.IObject obj)
@@ -1598,6 +2285,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -1699,7 +2392,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -1753,7 +2446,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getStartInEditMode(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("startInEditMode"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setStartInEditMode(DatenMeister.IObject obj, System.Boolean value)
@@ -1765,7 +2458,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class FormView : DatenMeister.IObject
+    public class FormView : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public FormView(DatenMeister.IObject obj)
@@ -1779,6 +2472,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -1880,7 +2579,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowEdit(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowEdit"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setAllowEdit(DatenMeister.IObject obj, System.Boolean value)
@@ -1901,7 +2600,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowDelete(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowDelete"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setAllowDelete(DatenMeister.IObject obj, System.Boolean value)
@@ -1922,7 +2621,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowNew(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowNew"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setAllowNew(DatenMeister.IObject obj, System.Boolean value)
@@ -1943,7 +2642,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getShowColumnHeaders(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("showColumnHeaders"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setShowColumnHeaders(DatenMeister.IObject obj, System.Boolean value)
@@ -1964,7 +2663,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowNewProperty(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowNewProperty"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setAllowNewProperty(DatenMeister.IObject obj, System.Boolean value)
@@ -1985,7 +2684,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -2039,7 +2738,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getStartInEditMode(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("startInEditMode"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setStartInEditMode(DatenMeister.IObject obj, System.Boolean value)
@@ -2051,7 +2750,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class TableView : DatenMeister.IObject
+    public class TableView : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
         public TableView(DatenMeister.IObject obj)
@@ -2065,6 +2764,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         }
 
         #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
 
         /// <summary>
         /// Gets the property by propertyname. 
@@ -2166,7 +2871,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getExtentUri(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("extentUri"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setExtentUri(DatenMeister.IObject obj, System.String value)
@@ -2208,7 +2913,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowEdit(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowEdit"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setAllowEdit(DatenMeister.IObject obj, System.Boolean value)
@@ -2229,7 +2934,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowDelete(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowDelete"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setAllowDelete(DatenMeister.IObject obj, System.Boolean value)
@@ -2250,7 +2955,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getAllowNew(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("allowNew"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setAllowNew(DatenMeister.IObject obj, System.Boolean value)
@@ -2271,7 +2976,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.String getName(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
-            return (result is System.String) ? ((System.String) result) : default(System.String);
+            return DatenMeister.ObjectConversion.ToString(result);
         }
 
         public static void setName(DatenMeister.IObject obj, System.String value)
@@ -2325,7 +3030,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static System.Boolean getStartInEditMode(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("startInEditMode"));
-            return (result is System.Boolean) ? ((System.Boolean) result) : default(System.Boolean);
+            return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
         public static void setStartInEditMode(DatenMeister.IObject obj, System.Boolean value)
