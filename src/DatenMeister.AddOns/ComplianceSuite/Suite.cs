@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatenMeister.ComplianceSuite
+namespace DatenMeister.AddOns.ComplianceSuite
 {
     /// <summary>
     /// Runs the compliance suite for a given extent and type extent 
@@ -15,15 +15,26 @@ namespace DatenMeister.ComplianceSuite
         /// <summary>
         /// Stores the extent factory
         /// </summary>
-        private Func<IURIExtent> extentFactory;
+        private Func<IURIExtent> extentFactory
+        {
+            get;
+            set;
+        }
+
+        private Func<IObject> objectFactory
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Initializes the suite for a given extent, where the data shall be stored.
         /// </summary>
         /// <param name="extent">Factory for an empty extent, which shall be checked for compliance</param>
-        public Suite(Func<IURIExtent> extentFactory)
+        public Suite(Func<IURIExtent> extentFactory, Func<IObject> objectFactory)
         {
             this.extentFactory = extentFactory;
+            this.objectFactory = objectFactory;
         }
 
         /// <summary>
@@ -33,6 +44,9 @@ namespace DatenMeister.ComplianceSuite
         public IObject Run()
         {
             var result = new GenericObject();
+
+            var mofObjectCompliance = new MofObjectCompliance(this.objectFactory, result);
+            mofObjectCompliance.Run();
 
             return result;
         }

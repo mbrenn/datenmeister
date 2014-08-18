@@ -128,6 +128,9 @@
   <data name="Filter_HtmlExport" xml:space="preserve">
     <value>Html files (*.html)|*.html|All files|*.*</value>
   </data>
+  <data name="Menu_ComplianceSuite" xml:space="preserve">
+    <value>Compliance Suite</value>
+  </data>
   <data name="Menu_ExcelExport" xml:space="preserve">
     <value>Export to Excel...</value>
   </data>

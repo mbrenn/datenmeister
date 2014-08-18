@@ -153,8 +153,7 @@ namespace DatenMeister.WPF.Controls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                Ensure.That(this.Settings != null);
-                Ensure.That(this.Extent != null, "Extent has not been set");
+                Ensure.That(this.Settings != null, "Settings have not been set");
             }
         }
 

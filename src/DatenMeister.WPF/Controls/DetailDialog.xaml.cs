@@ -160,8 +160,13 @@ namespace DatenMeister.WPF.Controls
                 return null;
             }
 
+            // Creates the dialog
             var dialog = new DetailDialog();
-            dialog.Pool = value.Extent.Pool;
+            if (value.Extent != null)
+            {
+                dialog.Pool = value.Extent.Pool;
+            }
+
             dialog.DetailForm.EditMode = readOnly ? EditMode.Read : EditMode.Edit;
             dialog.DetailForm.FormViewInfo = viewData;
             dialog.DetailForm.Extent = value.Extent;

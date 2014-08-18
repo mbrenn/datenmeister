@@ -65,6 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddOnHelper.cs" />
+    <Compile Include="ComplianceSuite\MofObjectCompliance.cs" />
+    <Compile Include="ComplianceSuite\Suite.cs" />
+    <Compile Include="ComplianceSuite\WPF\Plugin.cs" />
     <Compile Include="Export\Excel\ExcelExport.cs" />
     <Compile Include="Export\Excel\ExcelExportSettings.cs" />
     <Compile Include="Export\Excel\ExcelExportGui.cs" />
