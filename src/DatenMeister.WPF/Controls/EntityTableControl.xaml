@@ -37,7 +37,7 @@
         </Grid>
         <DataGrid x:Name="gridContent" Grid.Row="0" 
                   IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                  MouseDoubleClick="gridContent_MouseDoubleClick" FontSize="18" Margin="0" KeyDown="dataGrid_KeyDown"
+                  MouseDoubleClick="gridContent_MouseDoubleClick" FontSize="14" Margin="0" KeyDown="dataGrid_KeyDown"
                   PreviewKeyDown="dataGrid_PreviewKeyDown">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
