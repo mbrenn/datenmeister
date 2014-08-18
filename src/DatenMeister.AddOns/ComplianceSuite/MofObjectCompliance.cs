@@ -20,16 +20,16 @@ namespace DatenMeister.AddOns.ComplianceSuite
         /// Empty test object, where getting and setting will be 
         /// executed and tested.
         /// </summary>
-        private Func<IObject> testObjectFactory;
+        private Suite suite;
 
         /// <summary>
         /// Initialiezs a new instance of the MOF Tests
         /// </summary>
         /// <param name="testObjectFactory"></param>
         /// <param name="resultStorage"></param>
-        public MofObjectCompliance(Func<IObject> testObjectFactory, IObject resultStorage)
+        public MofObjectCompliance(Suite suite, IObject resultStorage)
         {
-            this.testObjectFactory = testObjectFactory;
+            this.suite = suite;
             this.resultStorage = resultStorage;
         }
 
@@ -47,8 +47,9 @@ namespace DatenMeister.AddOns.ComplianceSuite
             var correct = true;
             try
             {
-                var instance1 = this.testObjectFactory();
-                var instance2 = this.testObjectFactory();
+                var extent = this.suite.ExtentFactory();
+                var instance1 = this.suite.ObjectFactory(extent);
+                var instance2 = this.suite.ObjectFactory(extent);
 
                 if (!instance1.Equals(instance1))
                 {

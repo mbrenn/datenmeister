@@ -68,6 +68,9 @@
     <Compile Include="ComplianceSuite\MofObjectCompliance.cs" />
     <Compile Include="ComplianceSuite\Suite.cs" />
     <Compile Include="ComplianceSuite\WPF\Plugin.cs" />
+    <Compile Include="ComplianceSuite\WPF\SelectSuite.xaml.cs">
+      <DependentUpon>SelectSuite.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Export\Excel\ExcelExport.cs" />
     <Compile Include="Export\Excel\ExcelExportSettings.cs" />
     <Compile Include="Export\Excel\ExcelExportGui.cs" />
@@ -110,6 +113,12 @@
     <Resource Include="resources\icons\emblem-package.png" />
     <Resource Include="resources\icons\x-office-document.png" />
     <Resource Include="resources\icons\x-office-spreadsheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ComplianceSuite\WPF\SelectSuite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

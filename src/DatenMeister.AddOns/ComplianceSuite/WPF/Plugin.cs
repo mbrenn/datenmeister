@@ -22,17 +22,23 @@ namespace DatenMeister.AddOns.ComplianceSuite.WPF
             menuItem.LargeImageSource = AddOnHelper.LoadIcon("x-office-document.png");
             menuItem.Click += (x, y) =>
                 {
-                    // Test for Generic Extent
-                    Func<IURIExtent> factoryGeneric = () => new GenericExtent("datenmeister:///temp");
-                    Func<IObject> factoryObject = () => new GenericObject();
-                    var suite = new ComplianceSuite.Suite(factoryGeneric, factoryObject);
-                    var result = suite.Run();
+                    var dialog = new SelectSuite();
+                    if (dialog.ShowDialog() == true)
+                    {
+                        var suite = dialog.GetSuite();
+                        if (suite == null)
+                        {
+                            return;
+                        }
 
-                    DetailDialog.ShowDialogFor(
-                        result,
-                        window.Settings,
-                        null,
-                        true);
+                        var result = suite.Run();
+
+                        DetailDialog.ShowDialogFor(
+                            result,
+                            window.Settings,
+                            null,
+                            true);
+                    }
                 };
 
             window.AddMenuEntry(
