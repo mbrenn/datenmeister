@@ -187,7 +187,7 @@ namespace DatenMeister.WPF.Controls
                     nameLabel.FontSize = 16;
                     Grid.SetRow(nameLabel, currentRow);
 
-                    formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+                    formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
                     formGrid.Children.Add(nameLabel);
 
                     // Creates the value element for the form
@@ -210,6 +210,9 @@ namespace DatenMeister.WPF.Controls
 
                     currentRow++;
                 }
+
+                // Add last row to make the scrolling ok
+                formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
             }
 
             // Focuses first element
