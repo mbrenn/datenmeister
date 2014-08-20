@@ -5,6 +5,7 @@ using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Pool;
 using DatenMeister.Transformations;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.IO;

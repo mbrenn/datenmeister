@@ -8,6 +8,7 @@ using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Helper;
 using DatenMeister.WPF.Modules.RecentFiles;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.IO;

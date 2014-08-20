@@ -163,7 +163,7 @@ namespace DatenMeister
             Injection.Application.Bind<DatenMeisterPool>().ToConstant(ApplicationPool);
 
             // Initializes the default resolver
-            Injection.Application.Bind<IPoolResolver>().To(x => new PoolResolver() { Pool = ApplicationPool });
+            Injection.Application.Bind<IPoolResolver>().ToMethod(x => new PoolResolver() { Pool = ApplicationPool });
 
             // Initializes the default type resolver
             Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();

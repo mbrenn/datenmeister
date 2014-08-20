@@ -1,6 +1,7 @@
 ﻿using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.Pool;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;

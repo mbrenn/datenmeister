@@ -1,4 +1,5 @@
 ﻿using BurnSystems.ObjectActivation;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,13 @@ namespace DatenMeister
         /// <summary>
         /// Stores the activation container on application scope
         /// </summary>
-        private static ActivationContainer application;
+        private static IKernel application;
 
         /// <summary>
         /// Returns the activation container on application scope. 
         /// The variable has to be initialized via InitForApplication()
         /// </summary>
-        public static ActivationContainer Application
+        public static IKernel Application
         {
             get
             {
@@ -41,7 +42,7 @@ namespace DatenMeister
         {
             if (application == null)
             {
-                application = new ActivationContainer("Global.Application");
+                application = new StandardKernel();
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using BurnSystems.ObjectActivation;
 using BurnSystems.Serialization;
 using BurnSystems.Test;
+using Ninject;
 using DatenMeister;
 using DatenMeister.DataProvider.Common;
 using DatenMeister.Entities.AsObject.Uml;

@@ -3,6 +3,7 @@ using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.Logic.Views;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;

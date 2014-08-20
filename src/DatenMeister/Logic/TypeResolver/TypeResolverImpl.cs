@@ -1,5 +1,6 @@
 ﻿using BurnSystems.ObjectActivation;
 using DatenMeister.Entities.AsObject.Uml;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
