@@ -23,7 +23,7 @@ namespace DatenMeister.Pool
 
         public static IPool GetDefaultPool()
         {
-            return Global.Application.Get<IPool>();
+            return Injection.Application.Get<IPool>();
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace DatenMeister.Pool
         /// <returns>The created instance</returns>
         public static IPoolResolver GetDefault(IPool pool)
         {
-            var resolver = Global.Application.Get<IPoolResolver>();
+            var resolver = Injection.Application.Get<IPoolResolver>();
             if (resolver == null)
             {
                 resolver = new PoolResolver();

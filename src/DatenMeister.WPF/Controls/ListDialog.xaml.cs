@@ -60,7 +60,7 @@ namespace DatenMeister.WPF.Controls
 
         public void SetReflectiveCollection(Func<IPool, IReflectiveCollection> elementsFactory, IPublicDatenMeisterSettings settings)
         {
-            var pool = Global.Application.Get<IPool>();
+            var pool = Injection.Application.Get<IPool>();
             ViewHelper.AutoGenerateViewDefinition(elementsFactory(pool), this.Table.TableViewInfo, true);
             this.Table.Settings = settings;
             this.Table.ElementsFactory = elementsFactory;

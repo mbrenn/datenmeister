@@ -129,6 +129,7 @@
     <Compile Include="IDatenMeisterSettings.cs" />
     <Compile Include="IElement.cs" />
     <Compile Include="IFactory.cs" />
+    <Compile Include="Injection.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IPool.cs" />
     <Compile Include="IPublicDatenMeisterSettings.cs" />

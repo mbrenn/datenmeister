@@ -88,7 +88,7 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
         /// <returns>Enumeration of the referenced object</returns>
         public IReflectiveCollection GetReferenceObjects()
         {
-            var poolResolver = Global.Application.Get<IPoolResolver>();
+            var poolResolver = Injection.Application.Get<IPoolResolver>();
             Ensure.That(poolResolver != null);
             return poolResolver.Resolve(this.field.FieldInfo.getReferenceUrl(), this.field.DetailObject).AsReflectiveCollection();
         }

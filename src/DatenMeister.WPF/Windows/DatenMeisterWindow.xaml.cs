@@ -299,7 +299,7 @@ namespace DatenMeister.WPF.Windows
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            var pool = Global.Application.Get<IPool>();
+            var pool = Injection.Application.Get<IPool>();
 
             var userResult = this.DoesUserWantsToSaveData();
             if (userResult == null)
@@ -341,7 +341,7 @@ namespace DatenMeister.WPF.Windows
         {
             this.Core.PerformInitializationOfViewSet();
 
-            var pool = Global.Application.Get<IPool>();
+            var pool = Injection.Application.Get<IPool>();
             var projectExtent = pool.GetExtent(ExtentType.Data).First();
 
             var loadedFile = XDocument.Load(filename);

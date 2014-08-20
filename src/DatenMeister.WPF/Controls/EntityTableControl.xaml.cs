@@ -226,7 +226,7 @@ namespace DatenMeister.WPF.Controls
         /// <returns>The reflective collection</returns>
         public IReflectiveCollection GetElements()
         {
-            var pool = Global.Application.Get<IPool>();
+            var pool = Injection.Application.Get<IPool>();
             Ensure.That(this.ElementsFactory != null, "No Elementsfactory is set");
             Ensure.That(this.Settings != null, "Settings for DatenMeister are not set");
          
@@ -351,7 +351,7 @@ namespace DatenMeister.WPF.Controls
 
         private void ShowNewOfGenericTypeDialog()
         {
-            var pool = Global.Application.Get<IPool>();
+            var pool = Injection.Application.Get<IPool>();
 
             if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowNew(this.tableViewInfo))
             {

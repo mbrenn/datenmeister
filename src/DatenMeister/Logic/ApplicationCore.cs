@@ -213,7 +213,7 @@ namespace DatenMeister.Logic
         public void SaveExtentByUri(string extentUri)
         {
             // Get pool entry            
-            var pool = Global.Application.Get<IPool>();
+            var pool = Injection.Application.Get<IPool>();
             var instance = pool.GetInstance(extentUri);
             Ensure.That(instance != null, "The extent with Uri has not been found: " + extentUri);
 

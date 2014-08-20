@@ -177,7 +177,7 @@ namespace DatenMeister.WPF.Controls
             // If viewdata is already given, then we do not need to find out the correct view data
             if (viewData == null)
             {
-                var viewManager = Global.Application.Get<IViewManager>();
+                var viewManager = Injection.Application.Get<IViewManager>();
 
                 if (viewManager == null)
                 {

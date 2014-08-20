@@ -153,20 +153,20 @@ namespace DatenMeister
         private static void DoDefaultBinding()
         {
             // At the moment, reset the complete Binding
-            Global.Reset();
+            Injection.Reset();
 
             // Initializes the default factory provider
-            Global.Application.Bind<IFactoryProvider>().To<FactoryProvider>();
+            Injection.Application.Bind<IFactoryProvider>().To<FactoryProvider>();
 
             // Initializes the default pool
-            Global.Application.Bind<IPool>().ToConstant(ApplicationPool);
-            Global.Application.Bind<DatenMeisterPool>().ToConstant(ApplicationPool);
+            Injection.Application.Bind<IPool>().ToConstant(ApplicationPool);
+            Injection.Application.Bind<DatenMeisterPool>().ToConstant(ApplicationPool);
 
             // Initializes the default resolver
-            Global.Application.Bind<IPoolResolver>().To(x => new PoolResolver() { Pool = ApplicationPool });
+            Injection.Application.Bind<IPoolResolver>().To(x => new PoolResolver() { Pool = ApplicationPool });
 
             // Initializes the default type resolver
-            Global.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
+            Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
         }
 
         /// <summary>

@@ -460,7 +460,7 @@ namespace DatenMeister.DataProvider.Xml
             {
                 var typeName = xmiTypeAttribute.Value;
 
-                var typeResolver = Global.Application.Get<ITypeResolver>();
+                var typeResolver = Injection.Application.Get<ITypeResolver>();
                 var type = typeResolver.GetType(typeName);
                 if (type != null)
                 {
