@@ -12,9 +12,12 @@ The DatenMeister library is provided with a demo application, called ProjektMeis
 Installation
 ------------
 
-- Install prerequisites
-- - Visual Studio Express 2013 for Desktop Applications
+- git clone https://github.com/mbrenn/datenmeister.git
+- Visual Studio Express 2013 for Windows Desktop: http://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx
+- Execute "fetch_dependencies.bat"
 - Open DatenMeister.sln in src folder
 - Compile 
+- Set ProjektMeister as default project
+- Execute
 
 The ProjektMeister project creates an executable of the example application. 
