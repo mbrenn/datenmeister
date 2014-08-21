@@ -394,6 +394,7 @@ namespace DatenMeister.WPF.Windows
 
                 // Stores the xml document
                 xmlExtent.XmlDocument.Save(this.pathOfDataExtent);
+                xmlExtent.IsDirty = false;
 
                 // Adds the file to the recent files
                 this.AddRecentFile(this.pathOfDataExtent);
