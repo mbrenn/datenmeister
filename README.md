@@ -9,6 +9,11 @@ Access to these databases will be performed via database-providers which give ac
 
 The DatenMeister library is provided with a demo application, called ProjektMeister. ProjektMeister can be used to manage simple projects, its persons, due dates and tasks.
 
+Documentation 
+-------------
+
+Via OneDrive Word-Document: http://1drv.ms/1q1A7MW
+
 Installation
 ------------
 
