@@ -236,6 +236,39 @@ namespace DatenMeister.Logic
 
             return null;
         }
+
+        /// <summary>
+        /// Gets all values as a key value pair
+        /// </summary>
+        /// <returns>Enumeration of key value pairs</returns>
+        public IEnumerable<KeyValuePair<string, object>> GetAllVisible()
+        {
+            foreach (var fieldInfo in this.fieldInfos)
+            {
+                var name = General.getBinding(fieldInfo).AsSingle().ToString();
+                yield return new KeyValuePair<string, object>(name, this.Get(name));
+            }
+        }
+
+        /// <summary>
+        /// Checks by the
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="enumerable"></param>
+        /// <returns></returns>
+        public static bool FilterByText(ObjectDictionaryForView value, string filterByText)
+        {
+            filterByText = filterByText.ToLower();
+
+            if (value.GetAllVisible().Any(x => x.ToString().ToLower().Contains(filterByText)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
 

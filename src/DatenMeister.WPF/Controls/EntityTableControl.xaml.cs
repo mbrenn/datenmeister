@@ -61,6 +61,15 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
+        /// Gets or sets the text that shall be used for filtering the events
+        /// </summary>
+        public string FilterByText
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// This event handler is executed, when user clicked on the ok button
         /// </summary>
         public event EventHandler OkClicked;
@@ -256,8 +265,15 @@ namespace DatenMeister.WPF.Controls
             {
                 var elements = this.GetElements()
                     .Select(x => 
-                        new ObjectDictionaryForView(x.AsIObject(), this.GetFieldInfos())).ToList();
-                this.gridContent.ItemsSource = elements;
+                        new ObjectDictionaryForView(x.AsIObject(), this.GetFieldInfos()));
+
+                if (!string.IsNullOrEmpty(this.FilterByText))
+                {
+                    elements = elements.Where(x =>
+                        ObjectDictionaryForView.FilterByText(x, this.FilterByText));
+                }
+
+                this.gridContent.ItemsSource = elements.ToList();
             }
         }
 
@@ -513,6 +529,12 @@ namespace DatenMeister.WPF.Controls
             {
                 this.GiveFocusToGridContent();
             }
+        }
+
+        private void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.FilterByText = this.txtFilter.Text;
+            this.RefreshItems();
         }
     }
 }
