@@ -183,7 +183,7 @@ namespace DatenMeister.WPF.Windows
                 elements.Add(tableInfoObj);
 
                 // Check, if there is already a tab, which hosts the tableInfo
-                if (this.listTabs.Any(x => x.TableViewInfo.AsIObject().Id == tableInfoObj.Id))
+                if (this.listTabs.Any(x => x.TableViewInfo.Equals(tableInfoObj)))
                 {
                     // We do not need to recreate it
                     continue;
@@ -319,6 +319,7 @@ namespace DatenMeister.WPF.Windows
             this.Core.PerformInitializeFromScratch();
 
             // Refreshes the view
+            this.RefreshTabs();
             this.RefreshAllTabContent();
         }
 

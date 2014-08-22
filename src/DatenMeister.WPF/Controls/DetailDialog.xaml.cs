@@ -120,7 +120,7 @@ namespace DatenMeister.WPF.Controls
 
             var extent = collection.Extent;
             Ensure.That(collection.Extent != null);
-            Ensure.That(type != null, "No Type has ben set that can be used to create a new object");
+            Ensure.That(type != null, "No Type has been set that can be used to create a new object");
 
             var temp = new GenericElement(extent: extent, type: type);
             viewData = GetView(temp, viewData);
