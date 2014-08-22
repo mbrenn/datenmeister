@@ -2,9 +2,11 @@ namespace DatenMeister.Entities.AsObject.Uml
 {
     public static partial class Types
     {
+        public const string DefaultExtentUri="datenmeister:///types/uml";
+
         public static DatenMeister.IURIExtent Init()
         {
-            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types/uml");
+            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(DefaultExtentUri);
             Init(extent);
             return extent;
         }

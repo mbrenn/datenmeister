@@ -20,7 +20,7 @@ namespace DatenMeister.Logic
     /// <summary>
     /// Stores the data that is used for the application specific data
     /// </summary>
-    public class ApplicationCore : IDisposable
+    public class ApplicationCore
     {
         /// <summary>
         /// Stores the logger 
@@ -169,11 +169,11 @@ namespace DatenMeister.Logic
         /// <returns>Created or loaded Extent</returns>
         public IURIExtent LoadOrCreateByDefault(
             string name, 
-            string fileName, 
             string extentUri, 
             ExtentType extentType, 
             Action<XmlExtent> defaultActionForCreation)
         {
+            logger.Message("Loading" + name);
             var filePath = this.GetApplicationStoragePathFor(name);
             IURIExtent createdPool = null;
             if (File.Exists(filePath))
@@ -213,6 +213,8 @@ namespace DatenMeister.Logic
         /// <param name="extentUri">Uri of the extent to be saved</param>
         public void SaveExtentByUri(string extentUri)
         {
+            logger.Message("Saving" + extentUri);
+
             // Get pool entry            
             var pool = Injection.Application.Get<IPool>();
             var instance = pool.GetInstance(extentUri);
@@ -243,7 +245,6 @@ namespace DatenMeister.Logic
         {
             this.applicationData = this.LoadOrCreateByDefault(
                 "applicationdata",
-                "Application Data",
                 ApplicationDataUri,
                 ExtentType.ApplicationData,
                 null);
@@ -258,14 +259,5 @@ namespace DatenMeister.Logic
         }
 
         #endregion
-
-        /// <summary>
-        /// Stores the application data into the file
-        /// </summary>
-        public void Dispose()
-        {
-            this.SaveApplicationData();
-            GC.SuppressFinalize(this);
-        }
     }
 }

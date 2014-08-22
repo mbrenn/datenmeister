@@ -2,9 +2,11 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 {
     public static partial class Types
     {
+        public const string DefaultExtentUri="datenmeister:///types/fieldinfo";
+
         public static DatenMeister.IURIExtent Init()
         {
-            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types/fieldinfo");
+            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(DefaultExtentUri);
             Init(extent);
             return extent;
         }
