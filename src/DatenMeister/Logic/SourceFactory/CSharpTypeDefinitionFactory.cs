@@ -59,6 +59,7 @@ namespace DatenMeister.Logic.SourceFactory
 
             writer.WriteLine(EightSpaces + "public static void Init(DatenMeister.IURIExtent extent)");
             writer.WriteLine(EightSpaces + "{");
+            writer.WriteLine(TwelveSpaces + "var factory = DatenMeister.DataProvider.Factory.GetFor(extent);");
 
             assignFunction.AppendLine(EightSpaces + "public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)");
             assignFunction.AppendLine(EightSpaces + "{");
@@ -73,9 +74,8 @@ namespace DatenMeister.Logic.SourceFactory
                 // Creates the object instance for the type
                 writer.WriteLine(TwelveSpaces + "if({1}.{0} == null || true)", type, this.className);
                 writer.WriteLine(TwelveSpaces + "{");
-                writer.WriteLine(SixteenSpaces + "var type = new DatenMeister.Entities.UML.Type();");
-                writer.WriteLine(string.Format(SixteenSpaces + "type.name = \"{0}\";", type));
-                writer.WriteLine(string.Format(SixteenSpaces + "{1}.{0} = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);", type, this.className));
+                writer.WriteLine(string.Format(SixteenSpaces + "{1}.{0} = factory.create(null);", type, this.className));
+                writer.WriteLine(string.Format(SixteenSpaces + "DatenMeister.Entities.AsObject.Uml.Type.setName({1}.{0}, \"{0}\");", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "extent.Elements().add({1}.{0});", type, this.className));
                 writer.WriteLine(TwelveSpaces + "}");
                 writer.WriteLine();
@@ -91,7 +91,7 @@ namespace DatenMeister.Logic.SourceFactory
 
             writer.WriteLine(TwelveSpaces + "if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)");
             writer.WriteLine(TwelveSpaces + "{");
-            writer.WriteLine(SixteenSpaces + "extent.AddDefaultMappings();");
+            writer.WriteLine(SixteenSpaces + "(extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();");
             writer.WriteLine(TwelveSpaces + "}");
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();

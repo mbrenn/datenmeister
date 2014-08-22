@@ -11,25 +11,27 @@ namespace DatenMeister.Entities.AsObject.Uml
             return extent;
         }
 
-        public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
+        public static void Init(DatenMeister.IURIExtent extent)
         {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
             if(Types.NamedElement == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "NamedElement";
-                Types.NamedElement = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.NamedElement = factory.create(null);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.NamedElement, "NamedElement");
                 extent.Elements().add(Types.NamedElement);
             }
 
             if(Types.Type == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "Type";
-                Types.Type = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.Type = factory.create(null);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Type, "Type");
                 extent.Elements().add(Types.Type);
             }
 
-            extent.AddDefaultMappings();
+            if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)
+            {
+                (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
+            }
         }
 
         public static DatenMeister.IObject NamedElement;

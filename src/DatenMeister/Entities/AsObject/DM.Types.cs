@@ -11,17 +11,20 @@ namespace DatenMeister.Entities.AsObject.DM
             return extent;
         }
 
-        public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
+        public static void Init(DatenMeister.IURIExtent extent)
         {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
             if(Types.RecentProject == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "RecentProject";
-                Types.RecentProject = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.RecentProject = factory.create(null);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.RecentProject, "RecentProject");
                 extent.Elements().add(Types.RecentProject);
             }
 
-            extent.AddDefaultMappings();
+            if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)
+            {
+                (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
+            }
         }
 
         public static DatenMeister.IObject RecentProject;
