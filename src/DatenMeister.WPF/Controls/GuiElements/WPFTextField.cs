@@ -27,8 +27,10 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
             {
+                var detailObjectForView = new ObjectDictionaryForView(detailObject);
                 var fieldName = textFieldObj.getBinding().ToString();
-                var propertyValue = detailObject.get(fieldName);
+
+                var propertyValue = detailObjectForView[fieldName];
                 if (propertyValue != null && propertyValue != ObjectHelper.NotSet)
                 {
                     textBox.Text = propertyValue.AsSingle().ToString();
