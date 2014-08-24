@@ -25,6 +25,8 @@ namespace DatenMeister.Entities.AsObject.DM
             {
                 (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
             }
+
+            OnInitCompleted();
         }
 
         public static DatenMeister.IObject RecentProject;
@@ -35,5 +37,6 @@ namespace DatenMeister.Entities.AsObject.DM
             extent.Mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
         }
 
+static partial void OnInitCompleted();
     }
 }

@@ -109,6 +109,8 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             {
                 (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
             }
+
+            OnInitCompleted();
         }
 
         public static DatenMeister.IObject Comment;
@@ -155,5 +157,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TableView), Types.TableView);
         }
 
+static partial void OnInitCompleted();
     }
 }

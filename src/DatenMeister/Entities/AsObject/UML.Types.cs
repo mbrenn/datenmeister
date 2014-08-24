@@ -32,6 +32,8 @@ namespace DatenMeister.Entities.AsObject.Uml
             {
                 (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
             }
+
+            OnInitCompleted();
         }
 
         public static DatenMeister.IObject NamedElement;
@@ -45,5 +47,6 @@ namespace DatenMeister.Entities.AsObject.Uml
             extent.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), Types.Type);
         }
 
+static partial void OnInitCompleted();
     }
 }

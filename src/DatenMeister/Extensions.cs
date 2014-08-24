@@ -1,6 +1,7 @@
 ﻿using DatenMeister.DataProvider;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
+using Ninject;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace DatenMeister
 
             if (objAsString != null)
             {
-                var poolResolver = PoolResolver.GetDefault(pool);
+                var poolResolver = Injection.Application.Get<IPoolResolver>();
                 return poolResolver.Resolve(objAsString, context);
             }
 

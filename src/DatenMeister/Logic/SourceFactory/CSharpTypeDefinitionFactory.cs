@@ -93,6 +93,8 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(TwelveSpaces + "{");
             writer.WriteLine(SixteenSpaces + "(extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();");
             writer.WriteLine(TwelveSpaces + "}");
+            writer.WriteLine();
+            writer.WriteLine(TwelveSpaces + "OnInitCompleted();");
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 
@@ -100,6 +102,7 @@ namespace DatenMeister.Logic.SourceFactory
 
             writer.WriteLine(typeProperties.ToString());
             writer.WriteLine(assignFunction.ToString());
+            writer.WriteLine("static partial void OnInitCompleted();");
 
             writer.WriteLine(FourSpaces + "}");
             writer.WriteLine("}");

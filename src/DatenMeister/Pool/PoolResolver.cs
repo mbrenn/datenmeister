@@ -37,7 +37,7 @@ namespace DatenMeister.Pool
             var resolver = Injection.Application.Get<IPoolResolver>();
             if (resolver == null)
             {
-                resolver = new PoolResolver();
+                resolver = new PoolResolver(pool as DatenMeisterPool);
             }
 
             resolver.Pool = pool;
@@ -66,8 +66,9 @@ namespace DatenMeister.Pool
         /// Initializes a new instance of the PoolResolver class. 
         /// The Pool needs to be set, otherwise it won't work
         /// </summary>
-        public PoolResolver()
+        public PoolResolver(DatenMeisterPool pool)
         {
+            this.pool = pool;
         }
 
         /// <summary>

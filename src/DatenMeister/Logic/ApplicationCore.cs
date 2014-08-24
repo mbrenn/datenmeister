@@ -2,7 +2,9 @@
 using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.DotNet;
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic.TypeResolver;
 using DatenMeister.Pool;
 using DatenMeister.Transformations;
 using Ninject;
@@ -74,6 +76,15 @@ namespace DatenMeister.Logic
         }
 
         /// <summary>
+        /// Gets or sets the extent containing all the meta types
+        /// </summary>
+        public DotNetExtent MetaTypeExtent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the project
         /// </summary>
         /// <param name="projectName">Name of the project</param>
@@ -119,15 +130,37 @@ namespace DatenMeister.Logic
         /// <typeparam name="T">Type of the window</typeparam>
         public void Start<T>() where T : IDatenMeisterSettings, new()
         {
+            // At the moment, reset the complete Binding
+            Injection.Reset();
+
+            // Initializes the default factory provider
+            Injection.Application.Bind<IFactoryProvider>().To<FactoryProvider>();        
+
+            // Initializes the default resolver
+            Injection.Application.Bind<IPoolResolver>().To<PoolResolver>();
+
+            // Initializes the default type resolver
+            Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
+
             // Initialization of all meta types
             this.privateSettings = new T();
+            this.MetaTypeExtent = new DotNetExtent("datenmeister:///datenmeister/metatypes/");
+            this.MetaTypeExtent.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), null);
+            DatenMeister.Entities.AsObject.Uml.Types.Init(this.MetaTypeExtent);
+            this.MetaTypeExtent.Mapping.RemoveFor(typeof(DatenMeister.Entities.AsObject.Uml.Type));
+
             this.privateSettings.InitializeForBootUp(this);
             this.PerformInitializationOfViewSet();
         }
 
         public void PerformInitializationOfViewSet()
         {
-            DatenMeisterPool.Create();
+            var pool = DatenMeisterPool.Create();
+
+            // Initializes the database itself
+            this.MetaTypeExtent.ReleaseFromPool();
+
+            pool.Add(this.MetaTypeExtent, null, "MetaTypes", ExtentType.MetaType);
 
             this.LoadApplicationData();
             this.privateSettings.InitializeViewSet(this);
@@ -166,24 +199,33 @@ namespace DatenMeister.Logic
         /// <param name="extentUri">Uri of the extent to be used</param>
         /// <param name="defaultActionForCreation">Action being called, when file is not existing.
         /// The action can be used to precreate the necessary nodes or to perform the mapping</param>
+        /// <param name="defaultActionForLoading">The action that will be performed
+        /// after the </param>
         /// <returns>Created or loaded Extent</returns>
         public IURIExtent LoadOrCreateByDefault(
             string name, 
             string extentUri, 
             ExtentType extentType, 
-            Action<XmlExtent> defaultActionForCreation)
+            Action<XmlExtent> defaultActionForCreation,
+            Action<XmlExtent> defaultActionForLoading = null)
         {
             logger.Message("Loading" + name);
             var filePath = this.GetApplicationStoragePathFor(name);
             IURIExtent createdPool = null;
+            var xmlSettings = this.GetXmlSettings(extentType);
+
             if (File.Exists(filePath))
             {
                 try
                 {
                     // File exists, we can directly load it
                     var dataProvider = new XmlDataProvider();
+                    createdPool = dataProvider.Load(filePath, extentUri, xmlSettings);
 
-                    createdPool = dataProvider.Load(filePath, extentUri, this.XmlSettings);
+                    if (defaultActionForLoading != null)
+                    {
+                        defaultActionForLoading(createdPool as XmlExtent);
+                    }
                 }
                 catch (Exception exc)
                 {
@@ -194,7 +236,7 @@ namespace DatenMeister.Logic
             if (createdPool == null)
             {
                 // File does not exist, we have to load it from 
-                createdPool = XmlExtent.Create(this.XmlSettings, name, extentUri);
+                createdPool = XmlExtent.Create(xmlSettings, name, extentUri);
                 if (defaultActionForCreation != null)
                 {
                     defaultActionForCreation(createdPool as XmlExtent);
@@ -233,7 +275,20 @@ namespace DatenMeister.Logic
             }
 
             Ensure.That(extent is XmlExtent, "The given extent is not an XmlExtent");
-            dataProvider.Save(extent as XmlExtent, instance.StoragePath, this.XmlSettings);
+            dataProvider.Save(
+                extent as XmlExtent,
+                instance.StoragePath,
+                this.GetXmlSettings(instance.ExtentType));
+        }
+
+        public XmlSettings GetXmlSettings(ExtentType type)
+        {
+            if (type == ExtentType.Data)
+            {
+                return this.XmlSettings;
+            }
+
+            return XmlSettings.Empty;
         }
 
         #region Storing and loading of application data
