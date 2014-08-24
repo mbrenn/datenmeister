@@ -7,6 +7,7 @@ namespace DatenMeister.Entities.AsObject.DM
         public static DatenMeister.IURIExtent Init()
         {
             var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(DefaultExtentUri);
+            DatenMeister.Entities.AsObject.Uml.Types.AssignTypeMapping(extent);
             Init(extent);
             return extent;
         }
@@ -16,7 +17,7 @@ namespace DatenMeister.Entities.AsObject.DM
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
             if(Types.RecentProject == null || true)
             {
-                Types.RecentProject = factory.create(null);
+                Types.RecentProject = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.RecentProject, "RecentProject");
                 extent.Elements().add(Types.RecentProject);
             }
@@ -37,6 +38,6 @@ namespace DatenMeister.Entities.AsObject.DM
             extent.Mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
         }
 
-static partial void OnInitCompleted();
+        static partial void OnInitCompleted();
     }
 }

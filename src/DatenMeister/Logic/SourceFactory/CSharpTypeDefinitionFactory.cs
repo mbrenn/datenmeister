@@ -52,6 +52,7 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(EightSpaces + "public static DatenMeister.IURIExtent Init()");
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(TwelveSpaces + "var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(DefaultExtentUri);");
+            writer.WriteLine(TwelveSpaces + "DatenMeister.Entities.AsObject.Uml.Types.AssignTypeMapping(extent);");
             writer.WriteLine(TwelveSpaces + "Init(extent);");
             writer.WriteLine(TwelveSpaces + "return extent;");
             writer.WriteLine(EightSpaces + "}");
@@ -74,7 +75,7 @@ namespace DatenMeister.Logic.SourceFactory
                 // Creates the object instance for the type
                 writer.WriteLine(TwelveSpaces + "if({1}.{0} == null || true)", type, this.className);
                 writer.WriteLine(TwelveSpaces + "{");
-                writer.WriteLine(string.Format(SixteenSpaces + "{1}.{0} = factory.create(null);", type, this.className));
+                writer.WriteLine(string.Format(SixteenSpaces + "{1}.{0} = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "DatenMeister.Entities.AsObject.Uml.Type.setName({1}.{0}, \"{0}\");", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "extent.Elements().add({1}.{0});", type, this.className));
                 writer.WriteLine(TwelveSpaces + "}");
@@ -102,7 +103,7 @@ namespace DatenMeister.Logic.SourceFactory
 
             writer.WriteLine(typeProperties.ToString());
             writer.WriteLine(assignFunction.ToString());
-            writer.WriteLine("static partial void OnInitCompleted();");
+            writer.WriteLine(EightSpaces + "static partial void OnInitCompleted();");
 
             writer.WriteLine(FourSpaces + "}");
             writer.WriteLine("}");

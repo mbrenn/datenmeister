@@ -75,7 +75,7 @@ namespace DatenMeister.Logic.Views
                         return false;
                     }
 
-                    return asElement.getMetaClass() == type && viewType == ViewType.FormView;
+                    return asElement.getMetaClass().Equals(type) && viewType == ViewType.FormView;
                 },
                 view,
                 isDefault);
