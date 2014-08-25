@@ -30,6 +30,7 @@ namespace DatenMeister.Tests.PoolLogic
         [Test]
         public void DoStoreAndLoad()
         {
+            ApplicationCore.PerformBinding();
             PrepareDirectory();
 
             var pool = DatenMeisterPool.Create();
@@ -82,6 +83,7 @@ namespace DatenMeister.Tests.PoolLogic
         [Test]
         public void RetrieveById()
         {
+            ApplicationCore.PerformBinding();
             PrepareDirectory();
 
             var pool = DatenMeisterPool.Create();
@@ -114,6 +116,7 @@ namespace DatenMeister.Tests.PoolLogic
         [Test]
         public void CreateResolvePath()
         {
+            ApplicationCore.PerformBinding();
             PrepareDirectory();
 
             var pool = DatenMeisterPool.Create();
@@ -146,6 +149,7 @@ namespace DatenMeister.Tests.PoolLogic
         [Test]
         public void TestAddTwoExtentsWithSameUrl()
         {
+            ApplicationCore.PerformBinding();
             PrepareDirectory();
 
             var pool = DatenMeisterPool.Create();

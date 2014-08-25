@@ -5,6 +5,7 @@ using DatenMeister.DataProvider.DotNet;
 using DatenMeister.DataProvider.Views;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Entities.FieldInfos;
+using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using System;
 using System.Collections.Generic;
@@ -79,6 +80,7 @@ namespace DatenMeister.Tests
         {
             Global.Reset();
 
+            ApplicationCore.PerformBinding();
             this.pool = DatenMeisterPool.Create();
 
             this.InitTypes();

@@ -1,4 +1,5 @@
 ﻿using BurnSystems.ObjectActivation;
+using DatenMeister.Logic;
 using DatenMeister.Transformations;
 using NUnit.Framework;
 using System;
@@ -41,6 +42,19 @@ namespace DatenMeister.Tests.PoolLogic
             var filtered2 =
                 db.ProjectExtent.Elements().FilterByProperty("isFemale", false);
             Assert.That(filtered2.Count(), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void FilterByExtentTypeTest()
+        {
+            var database = new TestDatabase();
+            var pool = database.Init();
+
+            var filtered = database.ProjectExtent.Elements().FilterByExtentType(ExtentType.Query);
+            Assert.That(filtered.Count(), Is.EqualTo(0));
+
+            filtered = database.ProjectExtent.Elements().FilterByExtentType(ExtentType.Data);
+            Assert.That(filtered.Count(), Is.EqualTo(TestDatabase.TotalElements));
         }
     }
 }

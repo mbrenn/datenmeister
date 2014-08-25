@@ -130,17 +130,7 @@ namespace DatenMeister.Logic
         /// <typeparam name="T">Type of the window</typeparam>
         public void Start<T>() where T : IDatenMeisterSettings, new()
         {
-            // At the moment, reset the complete Binding
-            Injection.Reset();
-
-            // Initializes the default factory provider
-            Injection.Application.Bind<IFactoryProvider>().To<FactoryProvider>();        
-
-            // Initializes the default resolver
-            Injection.Application.Bind<IPoolResolver>().To<PoolResolver>();
-
-            // Initializes the default type resolver
-            Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
+            PerformBinding();
 
             // Initialization of all meta types
             this.privateSettings = new T();
@@ -153,8 +143,27 @@ namespace DatenMeister.Logic
             this.PerformInitializationOfViewSet();
         }
 
+        /// <summary>
+        /// Resets and performs the necessary binding
+        /// </summary>
+        public static void PerformBinding()
+        {
+            // At the moment, reset the complete Binding
+            Injection.Reset();
+
+            // Initializes the default factory provider
+            Injection.Application.Bind<IFactoryProvider>().To<FactoryProvider>();
+
+            // Initializes the default resolver
+            Injection.Application.Bind<IPoolResolver>().To<PoolResolver>();
+
+            // Initializes the default type resolver
+            Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
+        }
+
         public void PerformInitializationOfViewSet()
         {
+            ApplicationCore.PerformBinding();
             var pool = DatenMeisterPool.Create();
 
             // Initializes the database itself

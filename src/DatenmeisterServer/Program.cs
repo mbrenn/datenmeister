@@ -41,6 +41,7 @@ namespace DatenmeisterServer
             var activationContainer = new ActivationContainer("Website");
 
             // Initialize DatenMeisterPool
+            ApplicationCore.PerformBinding();
             var pool = DatenMeisterPool.Create();
             activationContainer.Bind<ExtentPoolLogic>().To<ExtentPoolLogic>();
 
