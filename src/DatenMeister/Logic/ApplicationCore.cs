@@ -78,7 +78,7 @@ namespace DatenMeister.Logic
         /// <summary>
         /// Gets or sets the extent containing all the meta types
         /// </summary>
-        public DotNetExtent MetaTypeExtent
+        public GenericExtent MetaTypeExtent
         {
             get;
             set;
@@ -134,10 +134,10 @@ namespace DatenMeister.Logic
 
             // Initialization of all meta types
             this.privateSettings = new T();
-            this.MetaTypeExtent = new DotNetExtent("datenmeister:///datenmeister/metatypes/");
-            this.MetaTypeExtent.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), null);
+            this.MetaTypeExtent = new GenericExtent("datenmeister:///datenmeister/metatypes/");
+            //this.MetaTypeExtent.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), null);
             DatenMeister.Entities.AsObject.Uml.Types.Init(this.MetaTypeExtent);
-            this.MetaTypeExtent.Mapping.RemoveFor(typeof(DatenMeister.Entities.AsObject.Uml.Type));
+            //this.MetaTypeExtent.Mapping.RemoveFor(typeof(DatenMeister.Entities.AsObject.Uml.Type));
 
             this.privateSettings.InitializeForBootUp(this);
             this.PerformInitializationOfViewSet();

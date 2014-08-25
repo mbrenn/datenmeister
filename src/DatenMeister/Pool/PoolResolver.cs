@@ -198,6 +198,11 @@ namespace DatenMeister.Pool
             Ensure.That(obj.Extent != null, "GetResolvePath: Given object has no extent");
             Ensure.That(obj.Extent.Pool != null, "GetResolvePath: Given object is attached to an extent without connected pool");
 
+            if (obj.Id == null)
+            {
+                throw new InvalidOperationException("Object ID is null or not set");
+            }
+
             var result = string.Format("{0}#{1}", obj.Extent.ContextURI(), obj.Id);
             if (context != null && context.Extent != null)
             {
