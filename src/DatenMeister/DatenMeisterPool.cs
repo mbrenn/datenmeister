@@ -173,6 +173,32 @@ namespace DatenMeister
             return ApplicationPool;
         }
 
+        /// <summary>
+        /// Gets the meta extent type for a certain extenttype 
+        /// </summary>
+        /// <param name="extentType">Extenttype whose meta type is requested</param>
+        public static ExtentType GetMetaExtentType ( ExtentType extentType)
+        {
+            switch (extentType)
+            {
+                case ExtentType.Extents:
+                    return ExtentType.MetaType;
+                case ExtentType.MetaType:
+                    return ExtentType.MetaType;
+                case ExtentType.Type:
+                    return ExtentType.MetaType;
+                case ExtentType.View:
+                    return ExtentType.MetaType;
+                case ExtentType.Data:
+                    return ExtentType.Type;
+                case ExtentType.ApplicationData:
+                    return ExtentType.MetaType;
+                case ExtentType.Query:
+                    return ExtentType.Type;
+                default:
+                    throw new NotImplementedException("Unknown Extenttype: " + extentType.ToString());
+            }
+        }
         public override string ToString()
         {
             return "DatenMeisterPool (#" + this.id.ToString() + ")";

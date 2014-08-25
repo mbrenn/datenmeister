@@ -124,6 +124,15 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No elements were selected. .
+        /// </summary>
+        internal static string NoElementsSelected {
+            get {
+                return ResourceManager.GetString("NoElementsSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No dialog specification has been found. Dialog cannot be shown. .
         /// </summary>
         internal static string NoItemDialogFound {

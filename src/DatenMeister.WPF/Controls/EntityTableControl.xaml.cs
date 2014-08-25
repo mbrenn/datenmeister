@@ -75,6 +75,15 @@ namespace DatenMeister.WPF.Controls
         public event EventHandler OkClicked;
 
         /// <summary>
+        /// Gets or sets the meta extent type being queried, when user clicks on 'New by Type'
+        /// </summary>
+        public ExtentType MetaExtentType
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Defines the extent that shall be shown
         /// </summary>
         public IURIExtent Extent
@@ -174,7 +183,8 @@ namespace DatenMeister.WPF.Controls
 
         public EntityTableControl()
         {
-            InitializeComponent();
+            this.MetaExtentType = ExtentType.Type; 
+            InitializeComponent();            
         }
 
         public EntityTableControl(IObject tableView)
@@ -377,22 +387,30 @@ namespace DatenMeister.WPF.Controls
             }
 
             var dialog = new ListDialog();
-            var allTypes = 
+            var allTypes =
                 new AllItemsReflectiveCollection(pool)
+                .FilterByExtentType(this.MetaExtentType)
                 .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
             dialog.SetReflectiveCollection(allTypes, this.Settings);
             if (dialog.ShowDialog() == true)
             {
-                // Finds the factory
-                var reflectiveCollection = this.ElementsFactory(pool);
-                var factory = Factory.GetFor(reflectiveCollection.Extent);
+                if (dialog.SelectedElements.Count() > 0)
+                {
+                    // Finds the factory
+                    var reflectiveCollection = this.ElementsFactory(pool);
+                    var factory = Factory.GetFor(reflectiveCollection.Extent);
 
-                // Adds the element to the reflective collection
-                var createdElement = factory.create(dialog.SelectedElements.AsSingle().AsIObject());
-                reflectiveCollection.add(createdElement);
+                    // Adds the element to the reflective collection
+                    var createdElement = factory.create(dialog.SelectedElements.AsSingle().AsIObject());
+                    reflectiveCollection.add(createdElement);
 
-                // Now, add the item, it might be, that other extent views also need to be updated.
-                this.RefreshItems();
+                    // Now, add the item, it might be, that other extent views also need to be updated.
+                    this.RefreshItems();
+                }
+                else
+                {
+                    MessageBox.Show(Localization_DatenMeister_WPF.NoElementsSelected);
+                }
             }
         }
 
