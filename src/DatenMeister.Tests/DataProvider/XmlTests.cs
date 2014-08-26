@@ -769,5 +769,32 @@ namespace DatenMeister.Tests.DataProvider
             newElement.set("address", newAddress);
             return newElement;
         }
+
+        [Test]
+        public void TestSkipRootElements()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<comments />" +
+                    "<textfields />" +
+                    "<other p3:type=\"Task\" xmlns:p3=\"http://www.omg.org/spec/XMI/2.4.1\" />" +
+                "</root>");
+
+            var xmlSettings = new XmlSettings()
+            {
+                SkipRootNode = false
+            };
+
+            var extent = new XmlExtent(document, "no", xmlSettings);
+            Assert.That(extent.Elements().Count, Is.EqualTo(3));
+
+            xmlSettings = new XmlSettings()
+            {
+                SkipRootNode = true
+            };
+
+            extent = new XmlExtent(document, "no", xmlSettings);
+            Assert.That(extent.Elements().Count, Is.EqualTo(1));
+        }
     }
 }
