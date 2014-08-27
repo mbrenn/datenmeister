@@ -92,6 +92,7 @@
     <Compile Include="DataProvider\Views\FieldInfo.cs" />
     <Compile Include="DataProvider\Views\View.cs" />
     <Compile Include="DataProvider\Views\ViewsExtent.cs" />
+    <Compile Include="DataProvider\Wrapper\WrapperExtent.cs" />
     <Compile Include="DataProvider\Xml\XmlDataProvider.cs" />
     <Compile Include="DataProvider\Xml\XmlExtent.cs" />
     <Compile Include="DataProvider\Xml\XmlFactory.cs" />
