@@ -60,6 +60,7 @@
     <Compile Include="DataProvider\FactoryTests.cs" />
     <Compile Include="DataProvider\GenericTests.cs" />
     <Compile Include="DataProvider\GroupBy\GroupByTests.cs" />
+    <Compile Include="DataProvider\WrapperTests.cs" />
     <Compile Include="DataProvider\XmlTests.cs" />
     <Compile Include="Export\ExcelExportTests.cs" />
     <Compile Include="ExtensionTests.cs" />

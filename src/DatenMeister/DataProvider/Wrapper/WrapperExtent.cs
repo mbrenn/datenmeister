@@ -32,10 +32,6 @@ namespace DatenMeister.DataProvider.Wrapper
             set { this.inner = value; }
         }
 
-        protected WrapperExtent()
-        {
-        }
-
         /// <summary>
         /// Initializes a new instance of the WrapperExtent class
         /// </summary>
