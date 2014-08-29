@@ -102,5 +102,20 @@ namespace DatenMeister.DataProvider.Wrapper
         {
             get { return this.WrapperExtent; }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is WrapperElement)
+            {
+                return Equals((obj as WrapperElement).Unwrap());
+            }
+
+            return this.Inner.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Inner.GetHashCode();
+        }
     }
 }

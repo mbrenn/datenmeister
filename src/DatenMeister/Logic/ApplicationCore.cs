@@ -3,6 +3,7 @@ using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
+using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic.TypeResolver;
 using DatenMeister.Pool;
@@ -173,6 +174,15 @@ namespace DatenMeister.Logic
 
             this.LoadApplicationData();
             this.privateSettings.InitializeViewSet(this);
+
+            // After the viewset is initialized, replace the view extents by wrapped
+            // EventOnChange Extent. 
+            // So, view can be updated, when the content of the extent changed
+            foreach (var instance in pool.Instances.Where(x => x.ExtentType == ExtentType.View))
+            {
+                // Just replace the extent
+                instance.Extent = new EventOnChangeExtent(instance.Extent);
+            }
         }
 
         public void PerformInitializeFromScratch()

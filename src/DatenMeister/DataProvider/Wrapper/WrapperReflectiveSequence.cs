@@ -175,5 +175,20 @@ namespace DatenMeister.DataProvider.Wrapper
                 this.inner[index] = value;
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is WrapperReflectiveSequence)
+            {
+                return Equals((obj as WrapperReflectiveSequence).Unwrap());
+            }
+
+            return this.Inner.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Inner.GetHashCode();
+        }
     }
 }

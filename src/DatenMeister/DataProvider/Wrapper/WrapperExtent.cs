@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,6 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.DataProvider.Wrapper
 {
-    public interface IWrapperExtent : IURIExtent
-    {
-        object Convert(object value);
-    }
 
     /// <summary>
     /// 
@@ -142,6 +139,11 @@ namespace DatenMeister.DataProvider.Wrapper
                 return value;
             }
 
+            if (value == ObjectHelper.NotSet || value == ObjectHelper.Null)
+            {
+                return value;
+            }
+
             if (value is IElement)
             {
                 return this.CreateElement(value as IElement);
@@ -158,6 +160,21 @@ namespace DatenMeister.DataProvider.Wrapper
             }
 
             throw new NotImplementedException("Cannot conver type: " + value.ToString());
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is IWrapperExtent)
+            {
+                return Equals((obj as IWrapperExtent).Unwrap());
+            }
+
+            return this.Inner.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Inner.GetHashCode();
         }
     }
 }

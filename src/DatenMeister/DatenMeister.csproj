@@ -96,6 +96,7 @@
     <Compile Include="DataProvider\Wrapper\EventOnChange\EventOnChangeExtent.cs" />
     <Compile Include="DataProvider\Wrapper\EventOnChange\EventOnChangeReflectiveSequence.cs" />
     <Compile Include="DataProvider\Wrapper\EventOnChange\EventOnChangeUnspecified.cs" />
+    <Compile Include="DataProvider\Wrapper\IWrapperExtent.cs" />
     <Compile Include="DataProvider\Wrapper\WrapperElement.cs" />
     <Compile Include="DataProvider\Wrapper\WrapperExtent.cs" />
     <Compile Include="DataProvider\Wrapper\WrapperReflectiveSequence.cs" />

@@ -81,5 +81,20 @@ namespace DatenMeister.DataProvider.Wrapper
             Ensure.That(result != null, "Wrapper Extent did not return a reflective sequence");
             return result;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is WrapperUnspecified)
+            {
+                return Equals((obj as WrapperUnspecified).Unwrap());
+            }
+
+            return this.Inner.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Inner.GetHashCode();
+        }
     }
 }

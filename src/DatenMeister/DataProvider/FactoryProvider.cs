@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.DataProvider.DotNet;
+using DatenMeister.DataProvider.Wrapper;
 using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
@@ -79,6 +80,12 @@ namespace DatenMeister.DataProvider
             if (type == typeof(CSV.CSVExtent))
             {
                 return new DatenMeister.DataProvider.CSV.CSVFactory(extent as CSV.CSVExtent);
+            }
+
+            if (type.GetInterfaces().Any(x => x == typeof(IWrapperExtent)))
+            {
+                var unwrapped = (extent as IWrapperExtent).Unwrap();
+                return GetDefaultFactory(unwrapped.GetType(), unwrapped);
             }
 
             throw new NotImplementedException("The type of the given IURIExtent is unknown: " + extent.GetType().ToString());
