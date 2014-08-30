@@ -185,6 +185,11 @@ namespace DatenMeister.WPF.Controls
                     nameLabel.Content = string.Format("{0}: ", name);
                     nameLabel.Margin = new Thickness(10, 5, 10, 5);
                     nameLabel.FontSize = 16;
+                    if (ObjectDictionaryForView.IsSpecialBinding(General.getBinding(fieldInfo)))
+                    {
+                        nameLabel.FontStyle = FontStyles.Italic;
+                    }
+
                     Grid.SetRow(nameLabel, currentRow);
 
                     formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });

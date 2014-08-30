@@ -177,27 +177,11 @@ namespace DatenMeister.Logic
             object result;
             if (bindingName == TypeBinding)
             {
-                var element = base.Value as IElement;
-                if (element != null)
-                {
-                    result = element.getMetaClass();
-                }
-                else
-                {
-                    result = ObjectHelper.NotSet;
-                }
+                result = this.GetTypeBindingContent();
             }
             else if (bindingName == ExtentUriBinding)
             {
-                var extent = base.Value.Extent;
-                if (extent != null)
-                {
-                    result = extent.ContextURI();
-                }
-                else
-                {
-                    result = ObjectHelper.NotSet;
-                }
+                result = this.GetExtentURIContent();
             }
             else
             {
@@ -211,6 +195,40 @@ namespace DatenMeister.Logic
                 }
             }
 
+            return result;
+        }
+
+        private object GetTypeBindingContent()
+        {
+            object result;
+            var element = base.Value as IElement;
+            if (element != null)
+            {
+                result = element.getMetaClass();
+            }
+            else
+            {
+                result = ObjectHelper.NotSet;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the content of the extent URI being associated to the object
+        /// </summary>
+        /// <returns></returns>
+        private object GetExtentURIContent()
+        {
+            object result;
+            var extent = base.Value.Extent;
+            if (extent != null)
+            {
+                result = extent.ContextURI();
+            }
+            else
+            {
+                result = ObjectHelper.NotSet;
+            }
             return result;
         }
 
@@ -268,6 +286,17 @@ namespace DatenMeister.Logic
             {
                 return false;
             }
+        }
+
+        public static bool IsSpecialBinding(string bindingInfo)
+        {
+            if (bindingInfo == ObjectDictionaryForView.ExtentUriBinding
+                || bindingInfo == ObjectDictionaryForView.TypeBinding)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
