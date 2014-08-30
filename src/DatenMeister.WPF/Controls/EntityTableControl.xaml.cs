@@ -478,12 +478,32 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private void DeleteCurrentlySelected()
         {
-            var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
-
-            if (selectedItem.Value != null)
+            // Go through all the selected items and remove them
+            var any = false;
+            foreach (var selectedItem in this.gridContent.SelectedItems)
             {
-                selectedItem.Value.delete();
+                var sAsObjectDictionary = selectedItem as ObjectDictionary;
+                if (sAsObjectDictionary == null)
+                {
+                    continue;
+                }
+
+                any = true;
+                if (sAsObjectDictionary.Value != null)
+                {
+                    sAsObjectDictionary.Value.delete();
+                }
+            }
+
+            // If, something has been removed, perform the update
+            if (any)
+            {
                 this.RefreshItems();
+            }
+            else
+            {
+                MessageBox.Show(Localization_DatenMeister_WPF.NoElementsSelected);
+                return;
             }
         }
 
