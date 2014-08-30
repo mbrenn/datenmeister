@@ -22,6 +22,7 @@ namespace DatenMeister.WPF.Windows
             // Just sets the title and shows the Window
             wnd.LoadExampleData();
             wnd.Show();
+            wnd.RegisterToChangeEvent();
             wnd.RefreshTabs();
 
             return wnd;

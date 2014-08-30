@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Logic;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -104,7 +105,7 @@ namespace DatenMeister
         /// <returns>Stringified object</returns>
         public static string ToString(object value)
         {
-            if (value == null)
+            if (value == null || value == ObjectHelper.Null || value == ObjectHelper.NotSet)
             {
                 return null;
             }

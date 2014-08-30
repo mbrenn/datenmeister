@@ -1,6 +1,8 @@
 ﻿using BurnSystems.Logging;
 using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
+using DatenMeister.DataProvider.Wrapper;
+using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
@@ -163,10 +165,14 @@ namespace DatenMeister.WPF.Windows
         /// Recreates the table views for all extents being the view extent. 
         /// If one tab is already opened, the tab will not be recreated. 
         /// </summary>
+        /// <param name="assignEvent">This variable defines whether the 
+        /// windows shall assign itself on the change event. 
+        /// If yes, it will get updated, each time, the window extent changes</param>
         public void RefreshTabs()
         {
             var pool = PoolResolver.GetDefaultPool();
             var viewExtent = pool.GetExtent(ExtentType.View).First();
+
             Ensure.That(viewExtent != null, "No view extent has been given");
 
             var filteredViewExtent =
@@ -246,6 +252,36 @@ namespace DatenMeister.WPF.Windows
                     this.tabMain.Items.Remove(listTab.TabItem);
                 }
             }
+        }
+
+        /// <summary>
+        /// Adds the refreshing event to the view extent, if the given
+        /// instance is a event throwing instance
+        /// </summary>
+        public void RegisterToChangeEvent()
+        {
+            var pool = PoolResolver.GetDefaultPool();
+            var viewExtent = pool.GetExtent(ExtentType.View).First();
+
+            var onChangeEventExtent = WrapperHelper.FindWrappedExtent<EventOnChangeExtent>(viewExtent);
+            if (onChangeEventExtent == null)
+            {
+                logger.Fail("The ViewExtent is not wrapped by EventOnChangeExtent");
+            }
+            else
+            {
+                onChangeEventExtent.ChangeInExtent += (x, y) =>
+                    {
+                        logger.Verbose("View Extent has been changed");
+
+                        this.Dispatcher.BeginInvoke(
+                            new Action(() => this.RefreshTabs()),
+                            System.Windows.Threading.DispatcherPriority.Background);
+
+                    };
+
+                logger.Verbose("Event connection to View Extent is established");
+            }            
         }
 
         /// <summary>

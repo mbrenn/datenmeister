@@ -99,6 +99,7 @@
     <Compile Include="DataProvider\Wrapper\IWrapperExtent.cs" />
     <Compile Include="DataProvider\Wrapper\WrapperElement.cs" />
     <Compile Include="DataProvider\Wrapper\WrapperExtent.cs" />
+    <Compile Include="DataProvider\Wrapper\WrapperHelper.cs" />
     <Compile Include="DataProvider\Wrapper\WrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\Wrapper\WrapperUnspecified.cs" />
     <Compile Include="DataProvider\Xml\XmlDataProvider.cs" />
