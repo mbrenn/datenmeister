@@ -28,6 +28,14 @@ namespace DatenMeister.DataProvider.Wrapper
             set;
         }
 
+        /// <summary>
+        /// Gets the full unwrapped element
+        /// </summary>
+        private IElement FullUnwrapped
+        {
+            get { return WrapperHelper.GetFullUnwrapped(this); }
+        }
+
         public WrapperElement()
         {
         }

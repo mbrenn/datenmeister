@@ -102,6 +102,18 @@ namespace DatenMeister
             return pool.Instances.Where(x => x.Extent == extent).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Gets the extent instance of a certain extent. 
+        /// The pool will be retrieved from the DoI container
+        /// </summary>
+        /// <param name="extent">Extent whose instance is queried</param>
+        /// <returns>Found extent instance</returns>
+        public static ExtentInstance GetInstance(this IURIExtent extent)
+        {
+            var pool = Injection.Application.Get<IPool>();
+            return pool.GetInstance(extent);
+        }
+
         public static JsonExtentInfo ToJson(this IURIExtent extent)
         {
             return new JsonExtentInfo()

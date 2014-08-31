@@ -23,10 +23,31 @@ namespace DatenMeister.DataProvider.Wrapper
         /// </summary>
         private IURIExtent inner;
 
+        /// <summary>
+        /// Stores the fully unwrapped extents
+        /// </summary>
+        private IURIExtent fullUnwrappedExtent;
+
         protected IURIExtent Inner
         {
             get { return this.inner; }
             set { this.inner = value; }
+        }
+
+        /// <summary>
+        /// Gets the full unwrapped extent as a cached element
+        /// </summary>
+        private IURIExtent FullUnwrappedExtent
+        {
+            get
+            {
+                if (this.fullUnwrappedExtent == null)
+                {
+                    this.fullUnwrappedExtent = WrapperHelper.GetFullUnwrapped(this.inner);
+                }
+
+                return this.fullUnwrappedExtent;
+            }
         }
 
         /// <summary>
@@ -67,6 +88,9 @@ namespace DatenMeister.DataProvider.Wrapper
             return this.CreateReflectiveSequence(this.inner.Elements());
         }
 
+        /// <summary>
+        /// Gets or sets the pool
+        /// </summary>
         public virtual IPool Pool
         {
             get
@@ -79,6 +103,9 @@ namespace DatenMeister.DataProvider.Wrapper
             }
         }
 
+        /// <summary>
+        /// Gets or sets the flag indicating whether the extent is dirty
+        /// </summary>
         public virtual bool IsDirty
         {
             get
@@ -146,17 +173,38 @@ namespace DatenMeister.DataProvider.Wrapper
 
             if (value is IElement)
             {
-                return this.CreateElement(value as IElement);
+                var valueAsElement = value as IElement;
+                var fullUnwrappedExtent = WrapperHelper.GetFullUnwrapped(valueAsElement.Extent);
+
+                if (this.FullUnwrappedExtent == fullUnwrappedExtent)
+                {
+                    return this.CreateElement(valueAsElement);
+                }
+                else
+                {
+                    return valueAsElement;
+                }
             }
 
             if (value is IReflectiveSequence)
             {
-                return this.CreateReflectiveSequence(value as IReflectiveSequence);
+                var valueAsReflectiveSequence = value as IReflectiveSequence;
+
+                var fullUnwrappedExtent = WrapperHelper.GetFullUnwrapped(valueAsReflectiveSequence.Extent);
+                if (this.FullUnwrappedExtent == fullUnwrappedExtent)
+                {
+                    return this.CreateReflectiveSequence(valueAsReflectiveSequence);
+                }
+                else
+                {
+                    return valueAsReflectiveSequence;
+                }
             }
 
             if (value is IUnspecified)
             {
-                return this.CreateUnspecified(value as IUnspecified);
+                var valueAsUnspecified = value as IUnspecified;
+                return this.CreateUnspecified(valueAsUnspecified);
             }
 
             throw new NotImplementedException("Cannot conver type: " + value.ToString());

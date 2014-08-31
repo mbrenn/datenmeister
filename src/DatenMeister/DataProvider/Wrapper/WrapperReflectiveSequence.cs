@@ -28,6 +28,14 @@ namespace DatenMeister.DataProvider.Wrapper
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets the full unwrapped element
+        /// </summary>
+        private IReflectiveSequence FullUnwrapped
+        {
+            get { return WrapperHelper.GetFullUnwrapped(this); }
+        }
         
         public WrapperReflectiveSequence()
         {

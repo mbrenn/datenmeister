@@ -77,10 +77,23 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Gets or sets the meta extent type being queried, when user clicks on 'New by Type'
         /// </summary>
-        public ExtentType MetaExtentType
+        public ExtentType GetMetaExtentType()
         {
-            get;
-            set;
+            var pool = Injection.Application.Get<IPool>();
+
+            var mainType = TableView.getMainType(this.TableViewInfo);
+            if (mainType == null)
+            {
+                return ExtentType.View;
+            }
+
+            var instance = pool.GetInstance(mainType.Extent);
+            if (instance == null)
+            {
+                return ExtentType.View;
+            }
+
+            return DatenMeisterPool.GetMetaExtentType(instance.ExtentType);
         }
 
         /// <summary>
@@ -183,7 +196,6 @@ namespace DatenMeister.WPF.Controls
 
         public EntityTableControl()
         {
-            this.MetaExtentType = ExtentType.Type; 
             InitializeComponent();            
         }
 
@@ -386,10 +398,18 @@ namespace DatenMeister.WPF.Controls
                 return;
             }
 
+            var extentType = ExtentType.Type;
+            var mainType = TableView.getMainType(this.TableViewInfo);
+            var instance = pool.GetInstance(mainType.Extent);
+            if (instance != null)
+            {
+                extentType = instance.ExtentType;
+            }
+
             var dialog = new ListDialog();
             var allTypes =
                 new AllItemsReflectiveCollection(pool)
-                .FilterByExtentType(this.MetaExtentType)
+                .FilterByExtentType(extentType)
                 .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
             dialog.SetReflectiveCollection(allTypes, this.Settings);
             if (dialog.ShowDialog() == true)

@@ -177,7 +177,7 @@ namespace DatenMeister
         /// Gets the meta extent type for a certain extenttype 
         /// </summary>
         /// <param name="extentType">Extenttype whose meta type is requested</param>
-        public static ExtentType GetMetaExtentType ( ExtentType extentType)
+        public static ExtentType GetMetaExtentType(ExtentType extentType)
         {
             switch (extentType)
             {

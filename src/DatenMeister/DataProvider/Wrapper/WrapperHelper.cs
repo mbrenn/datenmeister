@@ -42,5 +42,65 @@ namespace DatenMeister.DataProvider.Wrapper
 
             return null;
         }
+
+        /// <summary>
+        /// Performs a total unwrap of the given extent
+        /// </summary>
+        /// <param name="extent">Extent to be unwrapped</param>
+        /// <returns>The unwrapped extent</returns>
+        public static IURIExtent GetFullUnwrapped(IURIExtent extent)
+        {
+            while (extent is IWrapperExtent)
+            {
+                extent = (extent as IWrapperExtent).Unwrap();
+            }
+
+            return extent;
+        }
+
+        /// <summary>
+        /// Performs a total unwrap of the given extent
+        /// </summary>
+        /// <param name="element">Extent to be unwrapped</param>
+        /// <returns>The unwrapped extent</returns>
+        public static IElement GetFullUnwrapped(IElement element)
+        {
+            while (element is WrapperElement)
+            {
+                element = (element as WrapperElement).Unwrap();
+            }
+
+            return element;
+        }
+
+        /// <summary>
+        /// Performs a total unwrap of the given extent
+        /// </summary>
+        /// <param name="sequence">Extent to be unwrapped</param>
+        /// <returns>The unwrapped extent</returns>
+        public static IReflectiveSequence GetFullUnwrapped(IReflectiveSequence sequence)
+        {
+            while (sequence is WrapperReflectiveSequence)
+            {
+                sequence = (sequence as WrapperReflectiveSequence).Unwrap();
+            }
+
+            return sequence;
+        }
+
+        /// <summary>
+        /// Performs a total unwrap of the given extent
+        /// </summary>
+        /// <param name="unspecified">Extent to be unwrapped</param>
+        /// <returns>The unwrapped extent</returns>
+        public static IUnspecified GetFullUnwrapped(IUnspecified unspecified)
+        {
+            while (unspecified is WrapperUnspecified)
+            {
+                unspecified = (unspecified as WrapperUnspecified).Unwrap();
+            }
+
+            return unspecified;
+        }
     }
 }
