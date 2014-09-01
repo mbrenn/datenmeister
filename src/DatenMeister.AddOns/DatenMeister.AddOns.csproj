@@ -81,7 +81,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\TypeManager.cs" />
-    <Compile Include="Views\ViewManager.cs" />
+    <Compile Include="Views\ViewSetManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -4,6 +4,7 @@ using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Pool;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic;
+using DatenMeister.Logic.Views;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Helper;
 using DatenMeister.WPF.Windows;
@@ -211,6 +212,8 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public void Relayout()
         {
+            var pool = Injection.Application.Get<IPool>();
+
             if (this.tableViewInfo == null)
             {
                 // Nothing to do, should not happen
@@ -229,6 +232,14 @@ namespace DatenMeister.WPF.Controls
             this.buttonOk.Visibility = this.UseAsSelectionControl ? 
                 System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
+            //  Checks, if auto generation is necessary
+            var fieldInfos = this.tableViewInfo.getFieldInfos().AsEnumeration();
+            if (this.tableViewInfo.getDoAutoGenerateByProperties() && fieldInfos.Count() == 0)
+            {
+                ViewHelper.AutoGenerateViewDefinition(this.elementsFactory(pool), this.tableViewInfo, true);
+            }
+
+            // Now, create the fields
             foreach (var fieldInfo in this.tableViewInfo.getFieldInfos().AsEnumeration().Select (x=> x.AsSingle().AsIObject()))
             {
                 var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);

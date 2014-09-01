@@ -1,8 +1,11 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.DataProvider.DotNet;
+using DatenMeister.Entities.FieldInfos;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
 using DatenMeister.WPF.Windows;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +18,7 @@ namespace DatenMeister.AddOns.Views
     /// <summary>
     /// Integrates the view manager into the DatenMeister
     /// </summary>
-    public static class ViewManager
+    public static class ViewSetManager
     {
         /// <summary>
         /// Integrates the type manager into DatenMeister
@@ -41,13 +44,41 @@ namespace DatenMeister.AddOns.Views
                 tableViewAsObj.setAllowEdit(true);
                 tableViewAsObj.setAllowNew(true);
                 tableViewAsObj.setExtentUri(viewExtent.ContextURI());
-
+                
                 ViewHelper.AutoGenerateViewDefinition(viewExtent, tableViewAsObj, true);
 
                 viewExtent.Elements().add(tableView);
 
                 window.RefreshTabs();
             };
+            
+            // Assigns the viewset,
+            // First, get the necessary object
+            var myPool = PoolResolver.GetDefaultPool();
+            var myViewExtent = myPool.GetExtent(ExtentType.View).First();
+            var viewManager = Injection.Application.Get<IViewManager>() as DefaultViewManager;
+
+            // Second, create the form
+            var tableViewForm = DatenMeister.Entities.AsObject.FieldInfo.FormView.create(myViewExtent);
+            var tableViewFormAsObj = new DatenMeister.Entities.AsObject.FieldInfo.FormView(tableViewForm );
+            tableViewFormAsObj.setAllowDelete(true);
+            tableViewFormAsObj.setName("FormView DetailForm");
+            var myColumns = new DotNetSequence(
+                ViewHelper.ViewTypes,
+                new TextField("Name", "name"),
+                new TextField("Extent URI", "extentUri"),
+                new Checkbox("Allows Editing", "allowEdit"),
+                new Checkbox("Allows Deleting", "allowDelete"),
+                new Checkbox("Allows Creating", "allowNew"),
+                new Checkbox("Autogenerate Fields", "doAutoGenerateByProperties"));
+
+            tableViewFormAsObj.setFieldInfos(myColumns);
+
+            // Third, adds the information to the view manager
+            viewManager.Add(
+                DatenMeister.Entities.AsObject.FieldInfo.Types.TableView,
+                tableViewForm,
+                true);
 
             window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
         }

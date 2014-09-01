@@ -2454,6 +2454,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("startInEditMode", value);
         }
 
+        public System.Boolean getDoAutoGenerateByProperties()
+        {
+            return getDoAutoGenerateByProperties(this);
+        }
+
+        public void setDoAutoGenerateByProperties(System.Boolean value)
+        {
+            setDoAutoGenerateByProperties(this, value);
+        }
+
+        public static System.Boolean getDoAutoGenerateByProperties(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("doAutoGenerateByProperties"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setDoAutoGenerateByProperties(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("doAutoGenerateByProperties", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
@@ -2746,6 +2767,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("startInEditMode", value);
         }
 
+        public System.Boolean getDoAutoGenerateByProperties()
+        {
+            return getDoAutoGenerateByProperties(this);
+        }
+
+        public void setDoAutoGenerateByProperties(System.Boolean value)
+        {
+            setDoAutoGenerateByProperties(this, value);
+        }
+
+        public static System.Boolean getDoAutoGenerateByProperties(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("doAutoGenerateByProperties"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setDoAutoGenerateByProperties(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("doAutoGenerateByProperties", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
@@ -3036,6 +3078,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void setStartInEditMode(DatenMeister.IObject obj, System.Boolean value)
         {
             obj.set("startInEditMode", value);
+        }
+
+        public System.Boolean getDoAutoGenerateByProperties()
+        {
+            return getDoAutoGenerateByProperties(this);
+        }
+
+        public void setDoAutoGenerateByProperties(System.Boolean value)
+        {
+            setDoAutoGenerateByProperties(this, value);
+        }
+
+        public static System.Boolean getDoAutoGenerateByProperties(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("doAutoGenerateByProperties"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setDoAutoGenerateByProperties(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("doAutoGenerateByProperties", value);
         }
 
     }

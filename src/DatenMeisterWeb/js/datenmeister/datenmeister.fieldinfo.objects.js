@@ -791,6 +791,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('startInEditMode', value);
         }
         View.setStartInEditMode = setStartInEditMode;
+
+        function getDoAutoGenerateByProperties(item) {
+            return item.get('doAutoGenerateByProperties');
+        }
+        View.getDoAutoGenerateByProperties = getDoAutoGenerateByProperties;
+
+        function setDoAutoGenerateByProperties(item, value) {
+            item.set('doAutoGenerateByProperties', value);
+        }
+        View.setDoAutoGenerateByProperties = setDoAutoGenerateByProperties;
     })(exports.View || (exports.View = {}));
     var View = exports.View;
 
@@ -897,6 +907,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('startInEditMode', value);
         }
         FormView.setStartInEditMode = setStartInEditMode;
+
+        function getDoAutoGenerateByProperties(item) {
+            return item.get('doAutoGenerateByProperties');
+        }
+        FormView.getDoAutoGenerateByProperties = getDoAutoGenerateByProperties;
+
+        function setDoAutoGenerateByProperties(item, value) {
+            item.set('doAutoGenerateByProperties', value);
+        }
+        FormView.setDoAutoGenerateByProperties = setDoAutoGenerateByProperties;
     })(exports.FormView || (exports.FormView = {}));
     var FormView = exports.FormView;
 
@@ -1003,6 +1023,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('startInEditMode', value);
         }
         TableView.setStartInEditMode = setStartInEditMode;
+
+        function getDoAutoGenerateByProperties(item) {
+            return item.get('doAutoGenerateByProperties');
+        }
+        TableView.getDoAutoGenerateByProperties = getDoAutoGenerateByProperties;
+
+        function setDoAutoGenerateByProperties(item, value) {
+            item.set('doAutoGenerateByProperties', value);
+        }
+        TableView.setDoAutoGenerateByProperties = setDoAutoGenerateByProperties;
     })(exports.TableView || (exports.TableView = {}));
     var TableView = exports.TableView;
 });

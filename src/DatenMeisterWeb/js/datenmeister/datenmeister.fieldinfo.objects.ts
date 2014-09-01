@@ -685,6 +685,14 @@ export module View {
         item.set('startInEditMode', value);
     }
 
+    export function getDoAutoGenerateByProperties(item: __d__.JsonExtentObject) {
+        return item.get('doAutoGenerateByProperties');
+    }
+
+    export function setDoAutoGenerateByProperties(item : __d__.JsonExtentObject, value: any) {
+        item.set('doAutoGenerateByProperties', value);
+    }
+
 }
 
 export module FormView {
@@ -774,6 +782,14 @@ export module FormView {
         item.set('startInEditMode', value);
     }
 
+    export function getDoAutoGenerateByProperties(item: __d__.JsonExtentObject) {
+        return item.get('doAutoGenerateByProperties');
+    }
+
+    export function setDoAutoGenerateByProperties(item : __d__.JsonExtentObject, value: any) {
+        item.set('doAutoGenerateByProperties', value);
+    }
+
 }
 
 export module TableView {
@@ -861,6 +877,14 @@ export module TableView {
 
     export function setStartInEditMode(item : __d__.JsonExtentObject, value: any) {
         item.set('startInEditMode', value);
+    }
+
+    export function getDoAutoGenerateByProperties(item: __d__.JsonExtentObject) {
+        return item.get('doAutoGenerateByProperties');
+    }
+
+    export function setDoAutoGenerateByProperties(item : __d__.JsonExtentObject, value: any) {
+        item.set('doAutoGenerateByProperties', value);
     }
 
 }
