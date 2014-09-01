@@ -212,55 +212,62 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public void Relayout()
         {
-            var pool = Injection.Application.Get<IPool>();
-
-            if (this.tableViewInfo == null)
+            try
             {
-                // Nothing to do, should not happen
-                return;
-            }
+                var pool = Injection.Application.Get<IPool>();
 
-            // Checks status of buttons
-            this.buttonNew.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
-                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonNewByType.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
-                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonEdit.Visibility = this.tableViewInfo.getAllowEdit() && !this.UseAsSelectionControl ?
-                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() && !this.UseAsSelectionControl ?
-                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonOk.Visibility = this.UseAsSelectionControl ? 
-                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-
-            //  Checks, if auto generation is necessary
-            var fieldInfos = this.tableViewInfo.getFieldInfos().AsEnumeration();
-            if (this.tableViewInfo.getDoAutoGenerateByProperties() && fieldInfos.Count() == 0)
-            {
-                ViewHelper.AutoGenerateViewDefinition(this.elementsFactory(pool), this.tableViewInfo, true);
-            }
-
-            // Now, create the fields
-            foreach (var fieldInfo in this.tableViewInfo.getFieldInfos().AsEnumeration().Select (x=> x.AsSingle().AsIObject()))
-            {
-                var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
-                var name = fieldInfoObj.getName();
-                var binding = fieldInfoObj.getBinding();
-                var column = new TableDataGridTextColumn();
-                column.Header = name;
-                column.Binding = new Binding("["+binding+"]");
-                column.AssociatedViewColumn = fieldInfo;
-
-                var width = fieldInfoObj.getColumnWidth();
-                if (width != 0)
+                if (this.tableViewInfo == null)
                 {
-                    column.Width = new DataGridLength(width);
+                    // Nothing to do, should not happen
+                    return;
                 }
 
-                this.gridContent.Columns.Add(column);
-            }
+                // Checks status of buttons
+                this.buttonNew.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                this.buttonNewByType.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                this.buttonEdit.Visibility = this.tableViewInfo.getAllowEdit() && !this.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() && !this.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                this.buttonOk.Visibility = this.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
-            // Gets the elements
-            this.RefreshItems();
+                //  Checks, if auto generation is necessary
+                var fieldInfos = this.tableViewInfo.getFieldInfos().AsEnumeration();
+                if (this.tableViewInfo.getDoAutoGenerateByProperties() && fieldInfos.Count() == 0)
+                {
+                    ViewHelper.AutoGenerateViewDefinition(this.elementsFactory(pool), this.tableViewInfo, true);
+                }
+
+                // Now, create the fields
+                foreach (var fieldInfo in this.tableViewInfo.getFieldInfos().AsEnumeration().Select(x => x.AsSingle().AsIObject()))
+                {
+                    var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
+                    var name = fieldInfoObj.getName();
+                    var binding = fieldInfoObj.getBinding();
+                    var column = new TableDataGridTextColumn();
+                    column.Header = name;
+                    column.Binding = new Binding("[" + binding + "]");
+                    column.AssociatedViewColumn = fieldInfo;
+
+                    var width = fieldInfoObj.getColumnWidth();
+                    if (width != 0)
+                    {
+                        column.Width = new DataGridLength(width);
+                    }
+
+                    this.gridContent.Columns.Add(column);
+                }
+
+                // Gets the elements
+                this.RefreshItems();
+            }
+            catch (Exception exc)
+            {
+                this.HandleException(exc);
+            }
         }
 
         /// <summary>
@@ -294,19 +301,26 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public void RefreshItems()
         {
-            if (this.ElementsFactory != null)
+            try
             {
-                var elements = this.GetElements()
-                    .Select(x => 
-                        new ObjectDictionaryForView(x.AsIObject(), this.GetFieldInfos()));
-
-                if (!string.IsNullOrEmpty(this.FilterByText))
+                if (this.ElementsFactory != null)
                 {
-                    elements = elements.Where(x =>
-                        ObjectDictionaryForView.FilterByText(x, this.FilterByText));
-                }
+                    var elements = this.GetElements()
+                        .Select(x =>
+                            new ObjectDictionaryForView(x.AsIObject(), this.GetFieldInfos()));
 
-                this.gridContent.ItemsSource = elements.ToList();
+                    if (!string.IsNullOrEmpty(this.FilterByText))
+                    {
+                        elements = elements.Where(x =>
+                            ObjectDictionaryForView.FilterByText(x, this.FilterByText));
+                    }
+
+                    this.gridContent.ItemsSource = elements.ToList();
+                }
+            }
+            catch (Exception exc)
+            {
+                this.HandleException(exc);
             }
         }
 
@@ -604,6 +618,13 @@ namespace DatenMeister.WPF.Controls
         {
             this.FilterByText = this.txtFilter.Text;
             this.RefreshItems();
+        }
+
+        private void HandleException(Exception exc)
+        {
+            this.ErrorMessage.Visibility = System.Windows.Visibility.Visible;
+            this.DataTable.Visibility = System.Windows.Visibility.Collapsed;
+            this.ErrorMessageContent.Text = exc.ToString();
         }
     }
 }

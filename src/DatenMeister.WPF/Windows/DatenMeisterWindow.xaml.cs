@@ -198,7 +198,7 @@ namespace DatenMeister.WPF.Windows
                 var tableViewInfo = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableInfoObj);
 
                 var extentUri = tableViewInfo.getExtentUri();
-                Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
+                //Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
 
                 var name = tableViewInfo.getName();
                 var tab = CreateTab(tableInfoObj, name);

@@ -6,57 +6,65 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500" KeyDown="UserControl_KeyDown">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin="0 0 0 2">
-            <TextBox Width="150" ToolTip="Search in List" x:Name="txtFilter" TextChanged="txtFilter_TextChanged"></TextBox>
-        </StackPanel>
-        <DataGrid x:Name="gridContent" Grid.Row="1" 
-                  IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-                  MouseDoubleClick="gridContent_MouseDoubleClick" FontSize="14" Margin="0" KeyDown="dataGrid_KeyDown"
-                  PreviewKeyDown="dataGrid_PreviewKeyDown">
-            <DataGrid.CellStyle>
-                <Style TargetType="DataGridCell">
-                    <Setter Property="Padding" Value="10,5,10,5"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type DataGridCell}">
-                                <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </DataGrid.CellStyle>
-        </DataGrid>
-        <Grid Grid.Row="2" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <Style x:Key="TouchButton">
-                    <Setter Property="Button.Padding" Value="10,5" />
-                    <Setter Property="Button.Margin" Value="10,5" />
-                    <Setter Property="Label.FontSize" Value="14" />
-                </Style>
-            </Grid.Resources>
-            <StackPanel x:Name="areaToolbar" Orientation="Horizontal">
-
-                <Button x:Name="buttonNew" Click="buttonNew_Click" Style="{StaticResource TouchButton}">New...</Button>
-                <Button x:Name="buttonNewByType" Click="buttonNewByType_Click" Style="{StaticResource TouchButton}">New by Type...</Button>
-                <Button x:Name="buttonEdit" Click="buttonEdit_Click" Style="{StaticResource TouchButton}">Edit...</Button>
-                <Button x:Name="buttonDelete" Click="buttonDelete_Click" Style="{StaticResource TouchButton}">Delete</Button>
-                <Button x:Name="buttonReload" Click="buttonReload_Click" Style="{StaticResource TouchButton}">Refresh</Button>
+        <Grid VerticalAlignment="Stretch" x:Name="DataTable"> 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin="0 0 0 2" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Margin="0,0,10,0">Search:</TextBlock>
+                <TextBox Width="150" ToolTip="Search in List" x:Name="txtFilter" TextChanged="txtFilter_TextChanged"></TextBox>
             </StackPanel>
+            <DataGrid x:Name="gridContent" Grid.Row="1" 
+                      IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                      MouseDoubleClick="gridContent_MouseDoubleClick" FontSize="14" Margin="0" KeyDown="dataGrid_KeyDown"
+                      PreviewKeyDown="dataGrid_PreviewKeyDown">
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="10,5,10,5"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                    <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.CellStyle>
+            </DataGrid>
+            <Grid Grid.Row="2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style x:Key="TouchButton">
+                        <Setter Property="Button.Padding" Value="10,5" />
+                        <Setter Property="Button.Margin" Value="10,5" />
+                        <Setter Property="Label.FontSize" Value="14" />
+                    </Style>
+                </Grid.Resources>
+                <StackPanel x:Name="areaToolbar" Orientation="Horizontal">
 
-            <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
-                <Button x:Name="buttonOk" Click="ok_Click" Style="{StaticResource TouchButton}">OK</Button>
-            </StackPanel>
+                    <Button x:Name="buttonNew" Click="buttonNew_Click" Style="{StaticResource TouchButton}">New...</Button>
+                    <Button x:Name="buttonNewByType" Click="buttonNewByType_Click" Style="{StaticResource TouchButton}">New by Type...</Button>
+                    <Button x:Name="buttonEdit" Click="buttonEdit_Click" Style="{StaticResource TouchButton}">Edit...</Button>
+                    <Button x:Name="buttonDelete" Click="buttonDelete_Click" Style="{StaticResource TouchButton}">Delete</Button>
+                    <Button x:Name="buttonReload" Click="buttonReload_Click" Style="{StaticResource TouchButton}">Refresh</Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
+                    <Button x:Name="buttonOk" Click="ok_Click" Style="{StaticResource TouchButton}">OK</Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid x:Name="ErrorMessage" Visibility="Collapsed">
+                <TextBox x:Name="ErrorMessageContent" 
+                         IsReadOnly="True" AcceptsReturn="True" TextWrapping="WrapWithOverflow" 
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
         </Grid>
     </Grid>
 </UserControl>
