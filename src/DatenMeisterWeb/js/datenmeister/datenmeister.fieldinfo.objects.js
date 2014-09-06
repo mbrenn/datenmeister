@@ -943,15 +943,26 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         TableView.setExtentUri = setExtentUri;
 
-        function getMainType(item) {
-            return item.get('mainType');
+        function getTypesForCreation(item) {
+            return item.get('typesForCreation');
         }
-        TableView.getMainType = getMainType;
+        TableView.getTypesForCreation = getTypesForCreation;
 
-        function setMainType(item, value) {
-            item.set('mainType', value);
+        function setTypesForCreation(item, value) {
+            item.set('typesForCreation', value);
         }
-        TableView.setMainType = setMainType;
+        TableView.setTypesForCreation = setTypesForCreation;
+
+        function pushTypesForCreation(item, value) {
+            var a = item.get('typesForCreation');
+            if (a === undefined) {
+                a = new Array();
+            }
+
+            a.push(value);
+            item.set('typesForCreation', a);
+        }
+        TableView.pushTypesForCreation = pushTypesForCreation;
 
         function getAllowEdit(item) {
             return item.get('allowEdit');

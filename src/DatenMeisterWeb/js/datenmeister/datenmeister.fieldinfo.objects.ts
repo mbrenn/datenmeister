@@ -813,12 +813,22 @@ export module TableView {
         item.set('extentUri', value);
     }
 
-    export function getMainType(item: __d__.JsonExtentObject) {
-        return item.get('mainType');
+    export function getTypesForCreation(item: __d__.JsonExtentObject) {
+        return item.get('typesForCreation');
     }
 
-    export function setMainType(item : __d__.JsonExtentObject, value: any) {
-        item.set('mainType', value);
+    export function setTypesForCreation(item : __d__.JsonExtentObject, value: any) {
+        item.set('typesForCreation', value);
+    }
+
+    export function pushTypesForCreation(item : __d__.JsonExtentObject, value: any) {
+        var a = <Array<any>> item.get('typesForCreation');
+        if (a === undefined) {
+            a = new Array<any>();
+        }
+
+        a.push(value);
+        item.set('typesForCreation', a);
     }
 
     export function getAllowEdit(item: __d__.JsonExtentObject) {
