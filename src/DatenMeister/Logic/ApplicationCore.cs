@@ -40,6 +40,9 @@ namespace DatenMeister.Logic
         /// </summary>
         private IURIExtent applicationData;
 
+        /// <summary>
+        /// Gets the application data
+        /// </summary>
         public IURIExtent ApplicationData
         {
             get { return this.applicationData; }
@@ -84,6 +87,11 @@ namespace DatenMeister.Logic
             get;
             set;
         }
+
+        /// <summary>
+        /// This event is thrown, when the viewset is initialized
+        /// </summary>
+        public event EventHandler ViewSetInitialized;
 
         /// <summary>
         /// Initializes a new instance of the project
@@ -182,6 +190,21 @@ namespace DatenMeister.Logic
             {
                 // Just replace the extent
                 instance.Extent = new EventOnChangeExtent(instance.Extent);
+            }
+
+            // Now, call the event that the initialization has been redone
+            this.OnViewSetInitialized();
+        }
+
+        /// <summary>
+        /// Calls the ViewSetInitialized event
+        /// </summary>
+        private void OnViewSetInitialized()
+        {
+            var ev = this.ViewSetInitialized;
+            if (ev != null)
+            {
+                ev(this, EventArgs.Empty);
             }
         }
 

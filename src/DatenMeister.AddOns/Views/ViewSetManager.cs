@@ -51,7 +51,16 @@ namespace DatenMeister.AddOns.Views
 
                 window.RefreshTabs();
             };
-            
+
+            // Add the event, and call yourself
+            window.Core.ViewSetInitialized += (x, y) => InitializeViewSet();
+            InitializeViewSet();
+
+            window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
+        }
+
+        private static void InitializeViewSet()
+        {
             // Assigns the viewset,
             // First, get the necessary object
             var myPool = PoolResolver.GetDefaultPool();
@@ -60,7 +69,7 @@ namespace DatenMeister.AddOns.Views
 
             // Second, create the form
             var tableViewForm = DatenMeister.Entities.AsObject.FieldInfo.FormView.create(myViewExtent);
-            var tableViewFormAsObj = new DatenMeister.Entities.AsObject.FieldInfo.FormView(tableViewForm );
+            var tableViewFormAsObj = new DatenMeister.Entities.AsObject.FieldInfo.FormView(tableViewForm);
             tableViewFormAsObj.setAllowDelete(true);
             tableViewFormAsObj.setName("FormView DetailForm");
             var myColumns = new DotNetSequence(
@@ -79,8 +88,6 @@ namespace DatenMeister.AddOns.Views
                 DatenMeister.Entities.AsObject.FieldInfo.Types.TableView,
                 tableViewForm,
                 true);
-
-            window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
         }
     }
 }
