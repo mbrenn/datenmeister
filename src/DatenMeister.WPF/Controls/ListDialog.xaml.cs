@@ -80,5 +80,10 @@ namespace DatenMeister.WPF.Controls
         {
             this.DialogResult = true;
         }
+
+        private void Table_CancelClicked(object sender, EventArgs e)
+        {
+            this.DialogResult = false;
+        }
     }
 }

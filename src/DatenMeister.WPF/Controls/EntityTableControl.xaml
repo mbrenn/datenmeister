@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500" KeyDown="UserControl_KeyDown">
+             d:DesignHeight="300" d:DesignWidth="650" KeyDown="UserControl_KeyDown">
     <Grid>
         <Grid VerticalAlignment="Stretch" x:Name="DataTable"> 
             <Grid.RowDefinitions>
@@ -57,6 +57,7 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
+                    <Button x:Name="buttonCancel" Click="cancel_Click" Style="{StaticResource TouchButton}" Visibility="Collapsed">Cancel</Button>
                     <Button x:Name="buttonOk" Click="ok_Click" Style="{StaticResource TouchButton}">OK</Button>
                 </StackPanel>
             </Grid>

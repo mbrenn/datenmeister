@@ -1,5 +1,4 @@
-﻿using BurnSystems.ObjectActivation;
-using BurnSystems.Test;
+﻿using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Pool;
 using DatenMeister.Entities.AsObject.FieldInfo;
@@ -7,23 +6,16 @@ using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Helper;
-using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DatenMeister.WPF.Controls
 {
@@ -71,9 +63,30 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
+        /// Gets or sets the visibility of the cancel button
+        /// </summary>
+        public bool ShowCancelButton
+        {
+            get
+            {
+                return this.buttonCancel.Visibility == System.Windows.Visibility.Visible;
+            }
+
+            set
+            {
+                this.buttonCancel.Visibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        /// <summary>
         /// This event handler is executed, when user clicked on the ok button
         /// </summary>
         public event EventHandler OkClicked;
+
+        /// <summary>
+        /// This event handler is executed, when user clicked on the ok button
+        /// </summary>
+        public event EventHandler CancelClicked;
 
         /// <summary>
         /// Gets or sets the meta extent type being queried, when user clicks on 'New by Type'
@@ -324,36 +337,6 @@ namespace DatenMeister.WPF.Controls
             }
         }
 
-        private void buttonNew_Click(object sender, RoutedEventArgs e)
-        {
-            this.ShowNewDialog();
-        }
-
-        private void buttonNewByType_Click(object sender, RoutedEventArgs e)
-        {
-            this.ShowNewOfGenericTypeDialog();
-        }
-
-        private void buttonEdit_Click(object sender, RoutedEventArgs e)
-        {
-            this.ShowDetailDialog();
-        }
-
-        private void buttonDelete_Click(object sender, RoutedEventArgs e)
-        {
-            this.DeleteCurrentlySelected();
-        }
-
-        private void buttonReload_Click(object sender, RoutedEventArgs e)
-        {
-            this.RefreshItems();
-        }
-
-        private void ok_Click(object sender, RoutedEventArgs e)
-        {
-            this.AcceptSelectedElements(e);
-        }
-
         /// <summary>
         /// Accepts the selected elements 
         /// </summary>
@@ -552,6 +535,45 @@ namespace DatenMeister.WPF.Controls
             }
         }
 
+        private void buttonNew_Click(object sender, RoutedEventArgs e)
+        {
+            this.ShowNewDialog();
+        }
+
+        private void buttonNewByType_Click(object sender, RoutedEventArgs e)
+        {
+            this.ShowNewOfGenericTypeDialog();
+        }
+
+        private void buttonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            this.ShowDetailDialog();
+        }
+
+        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            this.DeleteCurrentlySelected();
+        }
+
+        private void buttonReload_Click(object sender, RoutedEventArgs e)
+        {
+            this.RefreshItems();
+        }
+
+        private void ok_Click(object sender, RoutedEventArgs e)
+        {
+            this.AcceptSelectedElements(e);
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            var ev = this.CancelClicked;
+            if (ev != null)
+            {
+                ev(this, e);
+            }
+        }
+
         private void dataGrid_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F2)
@@ -589,23 +611,6 @@ namespace DatenMeister.WPF.Controls
             }
         }
 
-        /// <summary>
-        /// Gives the focus to the grid content by finding the first column of selected row.
-        /// </summary>
-        public void GiveFocusToGridContent()
-        {
-            DataGridHelper.GiveFocusToContent(this.gridContent);
-        }
-
-        private class TableDataGridTextColumn : DataGridTextColumn
-        {
-            public IObject AssociatedViewColumn
-            {
-                get;
-                set;
-            }
-        }
-
         private void UserControl_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
@@ -620,11 +625,28 @@ namespace DatenMeister.WPF.Controls
             this.RefreshItems();
         }
 
+        /// <summary>
+        /// Gives the focus to the grid content by finding the first column of selected row.
+        /// </summary>
+        public void GiveFocusToGridContent()
+        {
+            DataGridHelper.GiveFocusToContent(this.gridContent);
+        }
+
         private void HandleException(Exception exc)
         {
             this.ErrorMessage.Visibility = System.Windows.Visibility.Visible;
             this.DataTable.Visibility = System.Windows.Visibility.Collapsed;
             this.ErrorMessageContent.Text = exc.ToString();
+        }
+
+        private class TableDataGridTextColumn : DataGridTextColumn
+        {
+            public IObject AssociatedViewColumn
+            {
+                get;
+                set;
+            }
         }
     }
 }
