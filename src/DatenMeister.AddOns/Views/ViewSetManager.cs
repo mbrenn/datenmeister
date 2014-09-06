@@ -44,8 +44,17 @@ namespace DatenMeister.AddOns.Views
                 tableViewAsObj.setAllowEdit(true);
                 tableViewAsObj.setAllowNew(true);
                 tableViewAsObj.setExtentUri(viewExtent.ContextURI());
-                
-                ViewHelper.AutoGenerateViewDefinition(viewExtent, tableViewAsObj, true);
+
+                var tableColumns = new DotNetSequence(
+                    ViewHelper.ViewTypes,
+                    new TextField("Type", ObjectDictionaryForView.TypeBinding),
+                    new TextField("Name", "name"),
+                    new TextField("Extent URI", "extentUri"),
+                    new TextField("Allows Editing", "allowEdit"),
+                    new TextField("Allows Deleting", "allowDelete"),
+                    new TextField("Allows Creating", "allowNew"),
+                    new TextField("Autogenerate Fields", "doAutoGenerateByProperties"));
+                tableViewAsObj.setFieldInfos(tableColumns);
 
                 viewExtent.Elements().add(tableView);
 
@@ -67,7 +76,7 @@ namespace DatenMeister.AddOns.Views
             var myViewExtent = myPool.GetExtent(ExtentType.View).First();
             var viewManager = Injection.Application.Get<IViewManager>() as DefaultViewManager;
 
-            // Second, create the form
+            // Second, create the detail form
             var tableViewForm = DatenMeister.Entities.AsObject.FieldInfo.FormView.create(myViewExtent);
             var tableViewFormAsObj = new DatenMeister.Entities.AsObject.FieldInfo.FormView(tableViewForm);
             tableViewFormAsObj.setAllowDelete(true);
