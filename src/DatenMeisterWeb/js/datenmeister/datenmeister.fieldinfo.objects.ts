@@ -813,6 +813,14 @@ export module TableView {
         item.set('extentUri', value);
     }
 
+    export function getMainType(item: __d__.JsonExtentObject) {
+        return item.get('mainType');
+    }
+
+    export function setMainType(item : __d__.JsonExtentObject, value: any) {
+        item.set('mainType', value);
+    }
+
     export function getTypesForCreation(item: __d__.JsonExtentObject) {
         return item.get('typesForCreation');
     }

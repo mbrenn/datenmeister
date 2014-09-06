@@ -943,6 +943,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         TableView.setExtentUri = setExtentUri;
 
+        function getMainType(item) {
+            return item.get('mainType');
+        }
+        TableView.getMainType = getMainType;
+
+        function setMainType(item, value) {
+            item.set('mainType', value);
+        }
+        TableView.setMainType = setMainType;
+
         function getTypesForCreation(item) {
             return item.get('typesForCreation');
         }
