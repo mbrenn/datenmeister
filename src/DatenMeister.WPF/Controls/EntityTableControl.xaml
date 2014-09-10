@@ -35,7 +35,7 @@
                     </Style>
                 </DataGrid.CellStyle>
             </DataGrid>
-            <Grid Grid.Row="2" >
+            <Grid Grid.Row="2" x:Name="gridButtons" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition />

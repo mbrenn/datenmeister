@@ -324,10 +324,11 @@ namespace DatenMeister.Logic.SourceFactory
                         TwelveSpaces + "var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get(\"{0}\"));",
                         propertyName));
                 writer.WriteLine(TwelveSpaces + "list.Add(value);");
-                writer.WriteLine(
+                // If we already receive a reflective collection, than the resetting is not necessary
+                /*writer.WriteLine(
                     string.Format(
                         TwelveSpaces + "obj.set(\"{0}\", list);",
-                        propertyName));
+                        propertyName));*/
 
                 writer.WriteLine(EightSpaces + "}");
                 writer.WriteLine();

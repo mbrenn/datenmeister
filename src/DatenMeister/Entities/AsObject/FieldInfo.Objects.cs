@@ -2430,7 +2430,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         {
             var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
             list.Add(value);
-            obj.set("fieldInfos", list);
         }
 
         public System.Boolean getStartInEditMode()
@@ -2743,7 +2742,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         {
             var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
             list.Add(value);
-            obj.set("fieldInfos", list);
         }
 
         public System.Boolean getStartInEditMode()
@@ -2972,7 +2970,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         {
             var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("typesForCreation"));
             list.Add(value);
-            obj.set("typesForCreation", list);
         }
 
         public System.Boolean getAllowEdit()
@@ -3089,7 +3086,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         {
             var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
             list.Add(value);
-            obj.set("fieldInfos", list);
         }
 
         public System.Boolean getStartInEditMode()

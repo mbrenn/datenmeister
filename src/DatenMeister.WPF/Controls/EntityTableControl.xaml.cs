@@ -2,6 +2,7 @@
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Pool;
 using DatenMeister.Entities.AsObject.FieldInfo;
+using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Transformations;
@@ -246,6 +247,15 @@ namespace DatenMeister.WPF.Controls
                     System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
                 this.buttonOk.Visibility = this.UseAsSelectionControl ?
                     System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+
+                foreach (var element in this.tableViewInfo.getTypesForCreation())
+                {
+                    var name = NamedElement.getName(element).AsSingle();
+                    var btn = new Button();
+                    btn.Content = "New " + name;
+                    btn.Style = this.gridButtons.Resources["TouchButton"] as Style;
+                    this.areaToolbar.Children.Insert(0, btn);
+                }
 
                 //  Checks, if auto generation is necessary
                 var fieldInfos = this.tableViewInfo.getFieldInfos().AsEnumeration();
