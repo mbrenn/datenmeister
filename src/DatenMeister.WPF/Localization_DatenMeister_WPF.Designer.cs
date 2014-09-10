@@ -88,6 +88,15 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The exception is copied to clipboard..
+        /// </summary>
+        internal static string ExceptionToClipboard {
+            get {
+                return ResourceManager.GetString("ExceptionToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Xml-Files (*.xml)|*.xml|All Files (*.*)|*.*.
         /// </summary>
         internal static string File_Filter {

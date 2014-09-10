@@ -40,6 +40,7 @@ namespace DatenMeister.AddOns.Views
                 var tableViewAsObj = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableView);
                 tableViewAsObj.setName("Types");
                 tableViewAsObj.setMainType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+                tableViewAsObj.pushTypesForCreation(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
                 tableViewAsObj.setAllowDelete(true);
                 tableViewAsObj.setAllowEdit(true);
                 tableViewAsObj.setAllowNew(true);

@@ -1,4 +1,7 @@
-﻿using DatenMeister.Logic;
+﻿using BurnSystems.UserExceptionHandler;
+using DatenMeister.Logic;
+using DatenMeister.WPF.Modules;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +20,18 @@ namespace DatenMeister.WPF.Windows
         /// <returns>Returned window</returns>
         public static IDatenMeisterWindow CreateWindow(ApplicationCore core)
         {
+            Injection.Application.Bind<IExceptionHandling>().To<StandardExceptionHandling>();
+            Injection.Application.Bind<IUserExceptionHandler>().To<WindowUserExceptionHandler>();
+            
+            Application.Current.DispatcherUnhandledException += (x, y) =>
+                {
+                    var exceptionHandling = Injection.Application.Get<IExceptionHandling>();
+                    y.Handled = exceptionHandling.HandleException(y.Exception);
+#if DEBUG
+                    //y.Handled = false;
+#endif
+                };
+
             var wnd = new DatenMeisterWindow(core);
 
             // Just sets the title and shows the Window
@@ -24,7 +39,6 @@ namespace DatenMeister.WPF.Windows
             wnd.Show();
             wnd.RegisterToChangeEvent();
             wnd.RefreshTabs();
-
             return wnd;
         }
 

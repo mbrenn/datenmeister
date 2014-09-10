@@ -126,6 +126,9 @@
   <data name="CloseApplication" xml:space="preserve">
     <value>Close Application</value>
   </data>
+  <data name="ExceptionToClipboard" xml:space="preserve">
+    <value>The exception is copied to clipboard.</value>
+  </data>
   <data name="File_Filter" xml:space="preserve">
     <value>Xml-Files (*.xml)|*.xml|All Files (*.*)|*.*</value>
   </data>
