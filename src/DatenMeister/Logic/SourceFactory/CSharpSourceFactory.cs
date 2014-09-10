@@ -245,10 +245,14 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(EightSpaces + "{");
             if (this.HasPushMethod(propertyType))
             {
+                var typeOfListProperty = propertyType.GenericTypeArguments.First();
+                var typeOfListPropertyName = this.GetPropertyTypeName(typeOfListProperty);
+
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var result = DatenMeister.Extensions.AsEnumeration(obj.get(\"{0}\"));",
-                        propertyName));
+                        TwelveSpaces + "var result = DatenMeister.Extensions.AsEnumeration<{1}>(obj.get(\"{0}\"));",
+                        propertyName,
+                        typeOfListPropertyName));
             }
             else
             {
@@ -306,19 +310,19 @@ namespace DatenMeister.Logic.SourceFactory
             // Emits push method
             if (this.HasPushMethod(propertyType))
             {
-                var itemOfListProperty = propertyType.GenericTypeArguments.First();
-                var itemOfListPropertyName = this.GetPropertyTypeName(itemOfListProperty);
+                var typeOfListProperty = propertyType.GenericTypeArguments.First();
+                var typeOfListPropertyName = this.GetPropertyTypeName(typeOfListProperty);
 
                 writer.WriteLine(
                     string.Format(
                         EightSpaces + "public static void {0}(DatenMeister.IObject obj, {1} value)",
                         this.GetPushMethodName(propertyName, propertyType),
-                        itemOfListProperty));
+                        typeOfListProperty));
                 writer.WriteLine(EightSpaces + "{");
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var list = DatenMeister.Extensions.AsReflectiveCollection({0}(obj));",
-                        getMethodName));
+                        TwelveSpaces + "var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get(\"{0}\"));",
+                        propertyName));
                 writer.WriteLine(TwelveSpaces + "list.Add(value);");
                 writer.WriteLine(
                     string.Format(

@@ -37,6 +37,8 @@ namespace DatenMeister.AddOns.Views
                 Ensure.That(viewExtent != null, "No View extent has been defined");
 
                 var tableView = DatenMeister.Entities.AsObject.FieldInfo.TableView.create(viewExtent);
+                viewExtent.Elements().add(tableView);
+
                 var tableViewAsObj = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableView);
                 tableViewAsObj.setName("Types");
                 tableViewAsObj.setMainType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
@@ -56,8 +58,6 @@ namespace DatenMeister.AddOns.Views
                     new TextField("Allows Creating", "allowNew"),
                     new TextField("Autogenerate Fields", "doAutoGenerateByProperties"));
                 tableViewAsObj.setFieldInfos(tableColumns);
-
-                viewExtent.Elements().add(tableView);
 
                 window.RefreshTabs();
             };

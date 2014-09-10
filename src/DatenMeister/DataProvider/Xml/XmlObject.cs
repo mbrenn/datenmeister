@@ -383,12 +383,7 @@ namespace DatenMeister.DataProvider.Xml
                     }
                 }
             }
-            else if (value is IReflectiveCollection)
-            {
-                var asReflectiveCollection = value as IReflectiveCollection;
-                throw new NotImplementedException("IReflective Collections are not supported until now");
-            }
-            else if (value is IEnumerable)
+            else if (value is IEnumerable || value is IReflectiveCollection)
             {
                 var propertyAsReflectiveCollection = this.get(propertyName).AsReflectiveCollection();
                 foreach (var item in (value as IEnumerable))

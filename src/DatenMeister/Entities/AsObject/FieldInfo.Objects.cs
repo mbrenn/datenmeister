@@ -2417,7 +2417,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Collections.Generic.IEnumerable<System.Object> getFieldInfos(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration(obj.get("fieldInfos"));
+            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("fieldInfos"));
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -2428,7 +2428,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static void pushFieldInfo(DatenMeister.IObject obj, System.Object value)
         {
-            var list = DatenMeister.Extensions.AsReflectiveCollection(getFieldInfos(obj));
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
             list.Add(value);
             obj.set("fieldInfos", list);
         }
@@ -2730,7 +2730,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Collections.Generic.IEnumerable<System.Object> getFieldInfos(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration(obj.get("fieldInfos"));
+            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("fieldInfos"));
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -2741,7 +2741,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static void pushFieldInfo(DatenMeister.IObject obj, System.Object value)
         {
-            var list = DatenMeister.Extensions.AsReflectiveCollection(getFieldInfos(obj));
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
             list.Add(value);
             obj.set("fieldInfos", list);
         }
@@ -2959,7 +2959,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Collections.Generic.IEnumerable<DatenMeister.IObject> getTypesForCreation(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration(obj.get("typesForCreation"));
+            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.IObject>(obj.get("typesForCreation"));
             return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
         }
 
@@ -2970,7 +2970,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static void pushTypesForCreation(DatenMeister.IObject obj, DatenMeister.IObject value)
         {
-            var list = DatenMeister.Extensions.AsReflectiveCollection(getTypesForCreation(obj));
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("typesForCreation"));
             list.Add(value);
             obj.set("typesForCreation", list);
         }
@@ -3076,7 +3076,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Collections.Generic.IEnumerable<System.Object> getFieldInfos(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration(obj.get("fieldInfos"));
+            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("fieldInfos"));
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -3087,7 +3087,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static void pushFieldInfo(DatenMeister.IObject obj, System.Object value)
         {
-            var list = DatenMeister.Extensions.AsReflectiveCollection(getFieldInfos(obj));
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
             list.Add(value);
             obj.set("fieldInfos", list);
         }
