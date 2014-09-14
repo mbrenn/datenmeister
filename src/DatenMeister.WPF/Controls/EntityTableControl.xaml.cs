@@ -248,12 +248,16 @@ namespace DatenMeister.WPF.Controls
                 this.buttonOk.Visibility = this.UseAsSelectionControl ?
                     System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
-                foreach (var element in this.tableViewInfo.getTypesForCreation())
+                foreach (var elementType in this.tableViewInfo.getTypesForCreation())
                 {
-                    var name = NamedElement.getName(element).AsSingle();
+                    var name = NamedElement.getName(elementType).AsSingle();
                     var btn = new Button();
                     btn.Content = "New " + name;
                     btn.Style = this.gridButtons.Resources["TouchButton"] as Style;
+                    btn.Click += (x, y) =>
+                        {
+                            ShowNewInstanceDialog(elementType);
+                        };
                     this.areaToolbar.Children.Insert(0, btn);
                 }
 
@@ -393,7 +397,21 @@ namespace DatenMeister.WPF.Controls
             }
         }
 
+        /// <summary>
+        /// Shows the new dialog
+        /// </summary>
         private void ShowNewDialog()
+        {
+            var newType = this.MainType;
+
+            ShowNewInstanceDialog(newType);
+        }
+
+        /// <summary>
+        /// Shows the oppurtunity to create a new instance
+        /// </summary>
+        /// <param name="newType">Type to be created</param>
+        private void ShowNewInstanceDialog(IObject newType)
         {
             if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowNew(this.tableViewInfo))
             {
@@ -401,11 +419,15 @@ namespace DatenMeister.WPF.Controls
                 return;
             }
 
-            var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.GetElements(), this.Settings, this.DetailViewInfo);
+            var dialog = DetailDialog.ShowDialogToCreateTypeOf(newType, this.GetElements(), this.Settings, this.DetailViewInfo);
             Ensure.That(dialog != null);
             dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
         }
 
+        /// <summary>
+        /// Shows a list of all available types and the user can select one. 
+        /// The selected item will be created.
+        /// </summary>
         private void ShowNewOfGenericTypeDialog()
         {
             var pool = Injection.Application.Get<IPool>();
