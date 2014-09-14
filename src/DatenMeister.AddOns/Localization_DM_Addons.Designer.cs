@@ -90,6 +90,15 @@ namespace DatenMeister.AddOns {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compliance Suite.
+        /// </summary>
+        internal static string Menu_ComplianceSuite {
+            get {
+                return ResourceManager.GetString("Menu_ComplianceSuite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export to Excel....
         /// </summary>
         internal static string Menu_ExcelExport {
