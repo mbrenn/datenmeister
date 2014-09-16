@@ -45,7 +45,9 @@ namespace DatenMeister.AddOns.Export.Report.Simple
                     htmlTable.AddRow();
                     foreach (var property in properties)
                     {
-                        htmlTable.AddCellWithContent(elementAsViewObject[property].AsSingle().ToString());
+                        htmlTable.AddCellWithContent(
+                            HtmlElement.ConvertNewLineToBreaks(
+                                elementAsViewObject[property].AsSingle().ToString()));
                     }
                 }
 
