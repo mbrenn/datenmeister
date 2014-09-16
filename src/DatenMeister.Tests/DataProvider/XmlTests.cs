@@ -1,6 +1,8 @@
 ﻿using BurnSystems.Test;
 using DatenMeister;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Wrapper;
+using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using NUnit.Framework;
@@ -109,7 +111,9 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestIdConcept()
         {
-            DatenMeisterPool.DoDefaultStaticBinding();
+            ApplicationCore.PerformBinding();
+            var pool = DatenMeisterPool.Create();
+
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -137,6 +141,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestReferenceWithFullPath()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -145,9 +150,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var value = pool.ResolveByPath("test:///#e4") as IObject;
             Assert.That(value, Is.Not.Null);
@@ -162,6 +166,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestReferenceWithPartialPath()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -170,9 +175,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var value = pool.ResolveByPath("test:///#e4") as IObject;
             Assert.That(value, Is.Not.Null);
@@ -187,6 +191,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestReferenceAndRemove()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -195,9 +200,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
             
             var valueE1 = pool.ResolveByPath("test:///#e1") as IObject;
             valueE1.delete();
@@ -213,6 +217,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestSetReference()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -221,9 +226,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             var valueE1 = pool.ResolveByPath("test:///#e1") as IObject;
@@ -257,6 +261,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestGetReflectiveCollectionWithReferences()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -265,9 +270,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             Assert.That(valueE4, Is.Not.Null);
@@ -283,6 +287,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestGetAndSetReflectiveCollectionWithReferences()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -291,9 +296,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             Assert.That(valueE4, Is.Not.Null);
@@ -317,6 +321,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestReflectiveSequence()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -325,9 +330,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             var valueE1 = pool.ResolveByPath("test:///#e1") as IObject;
@@ -386,6 +390,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestReflectiveSequenceWithStrings()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -394,9 +399,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             var sequence = valueE4.get("value").AsReflectiveSequence();
@@ -419,6 +423,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestEmbeddedElementsAsSingleWithSubElement()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -427,9 +432,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             var newElement = CreateUser("Brenn", "Martin", "Teststraße 1");
@@ -447,6 +451,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestEmbeddedElementsAsReflectiveCollectionWithSubElement()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -455,9 +460,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             var newUser1 = CreateUser("Brenn", "Martin", "Teststraße 1");
@@ -501,6 +505,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestEmbeddedElementsAsSingle()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -509,9 +514,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
 
@@ -529,6 +533,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestGetAndSetOfDateTime()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                 "<element id=\"e1\" />" +
@@ -537,16 +542,15 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
 
             valueE4.set("bday", new DateTime(1981, 11, 16, 11, 42, 00));
             
             // Check, if we get all the information
-            var retrievedBDay = Extensions.ToDateTime(valueE4.get("bday").AsSingle());
+            var retrievedBDay = ObjectConversion.ToDateTime(valueE4.get("bday").AsSingle());
             Assert.That(retrievedBDay, Is.EqualTo(new DateTime(1981, 11, 16, 11, 42, 00)));
         }
 
@@ -576,6 +580,53 @@ namespace DatenMeister.Tests.DataProvider
                 Is.EqualTo("Toller Task"));
         }
 
+        [Test]
+        public void TestTypedElementsAsSubElements()
+        {
+            var extent = CreateRawTestExtent();
+            var factory = Factory.GetFor(extent);
+
+            var person1 = new GenericElement(null, null, TypePerson, null);
+            person1.set("name", "Brenn");
+            var task1 = new GenericElement(null, null, TypeTask, null);
+            task1.set("name", "nice task");
+
+            var container = factory.create(null);
+            extent.Elements().add(container);
+
+            container.set("person", person1);
+            container.set("task", task1);
+
+            // Now do the check
+
+            Assert.That(extent.Elements().Count, Is.EqualTo(1));
+            var container2 = extent.Elements().FirstOrDefault().AsSingle().AsIObject();
+
+            Assert.That(container2, Is.Not.Null);
+            var person2 = container2.get("person").AsSingle().AsIObject() as IElement;
+            var task2 = container2.get("task").AsSingle().AsIObject() as IElement;
+
+            Assert.That(person2, Is.Not.Null);
+            Assert.That(task2, Is.Not.Null);
+
+            Assert.That(person2.getMetaClass(), Is.EqualTo(TypePerson));
+            Assert.That(task2.getMetaClass(), Is.EqualTo(TypeTask));
+        }
+
+        [Test]
+        public void TestSetAndGetAllOfTypedElement()
+        {
+            var extent = CreateRawTestExtent();
+            var factory = new XmlFactory(extent);
+
+            var createdObject = factory.create(TypePerson);
+            createdObject.set("name", "yes");
+
+            var all = createdObject.getAll();
+            Assert.That(all.Count(), Is.EqualTo(2));
+        }
+
+
         public static IObject TypePerson
         {
             get;
@@ -592,46 +643,84 @@ namespace DatenMeister.Tests.DataProvider
         /// Creates a simple extent, containing some types and some elements
         /// </summary>
         /// <returns>XmlExtent being created</returns>
-        public static XmlExtent CreateTestExtent()
+        public static XmlExtent CreateRawTestExtent()
         {
+            ApplicationCore.PerformBinding();
+            BurnSystems.ObjectActivation.Global.Reset();
+            var document = XDocument.Parse(
+                "<root>" +
+                "</root>");
+
+            var typeExtent = new GenericExtent("test:///types");
+            TypeTask = new GenericObject();
+            TypeTask.set("name", "Task");
+            TypePerson = new GenericObject();
+            TypePerson.set("name", "Person");
+            typeExtent.Elements().add(TypeTask);
+            typeExtent.Elements().add(TypePerson);
+
+            var xmlExtent = new XmlExtent(document, "test:///");
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
+            pool.Add(typeExtent, null, ExtentType.Type);
+
+            return xmlExtent;
+        }
+
+        /// <summary>
+        /// Creates a simple extent, containing some types and some elements
+        /// </summary>
+        /// <returns>XmlExtent being created</returns>
+        public static XmlExtent CreateTestExtent(bool isEmpty = false)
+        {
+            ApplicationCore.PerformBinding();
+            BurnSystems.ObjectActivation.Global.Reset();
             var document = XDocument.Parse(
                 "<root>" +
                     "<tasks />" +
                     "<persons />" +
                 "</root>");
 
+            var typeExtent = new GenericExtent("test:///types");
             TypeTask = new GenericObject();
             TypeTask.set("name", "Task");
             TypePerson = new GenericObject();
             TypePerson.set("name", "Person");
+            typeExtent.Elements().add(TypeTask);
+            typeExtent.Elements().add(TypePerson);
 
             var xmlExtent = new XmlExtent(document, "test:///");
             xmlExtent.Settings.Mapping.Add("task", TypeTask, x => x.Elements("root").Elements("tasks").FirstOrDefault());
             xmlExtent.Settings.Mapping.Add("person", TypePerson, x => x.Elements("root").Elements("persons").FirstOrDefault());
-            xmlExtent.Settings.SkipRootNode = true;
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            xmlExtent.Settings.SkipRootNode = isEmpty; // When an empty node has been requested, we assume untyped objects being stored at root node
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
+            pool.Add(typeExtent, null, ExtentType.Type);
 
-            var factory = Factory.GetFor(xmlExtent);
-            var person1 = factory.CreateInExtent(xmlExtent, TypePerson);
-            var person2 = factory.CreateInExtent(xmlExtent, TypePerson);
+            if (!isEmpty)
+            {
+                var factory = Factory.GetFor(xmlExtent);
+                var person1 = factory.CreateInExtent(xmlExtent, TypePerson);
+                var person2 = factory.CreateInExtent(xmlExtent, TypePerson);
 
-            var task1 = factory.CreateInExtent(xmlExtent, TypeTask);
+                var task1 = factory.CreateInExtent(xmlExtent, TypeTask);
 
-            person1.set("name", "Brenn");
-            person1.set("prename", "Martin");
+                person1.set("name", "Brenn");
+                person1.set("prename", "Martin");
 
-            person2.set("name", "Brenner");
-            person2.set("prename", "Martina");
+                person2.set("name", "Brenner");
+                person2.set("prename", "Martina");
 
-            task1.set("name", "Toller Task");
+                task1.set("name", "Toller Task");
+            }
+
             return xmlExtent;
         }
 
         [Test]
         public void TestAutoGeneratedCode()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<comments />" +
@@ -639,7 +728,8 @@ namespace DatenMeister.Tests.DataProvider
                 "</root>");
 
             var xmlExtent = new XmlExtent(document, "test:///");
-            
+
+            var umlExtent = DatenMeister.Entities.AsObject.Uml.Types.Init();
             var typeExtent = DatenMeister.Entities.AsObject.FieldInfo.Types.Init();
 
             xmlExtent.Settings.Mapping.Add(
@@ -651,9 +741,8 @@ namespace DatenMeister.Tests.DataProvider
                 "textfield", 
                 DatenMeister.Entities.AsObject.FieldInfo.Types.TextField, 
                 x => x.Elements("root").Elements("textfields").FirstOrDefault());
-            var pool = new DatenMeisterPool();
-            pool.DoDefaultBinding();
-            pool.Add(xmlExtent, null);
+            var pool = DatenMeisterPool.Create();
+            pool.Add(xmlExtent, null, ExtentType.Data);
             var factory = new FactoryProvider().CreateFor(xmlExtent);
 
             var comment = factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.Comment);
@@ -681,6 +770,33 @@ namespace DatenMeister.Tests.DataProvider
             newAddress.set("town", "My Town");
             newElement.set("address", newAddress);
             return newElement;
+        }
+
+        [Test]
+        public void TestSkipRootElements()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<comments />" +
+                    "<textfields />" +
+                    "<other p3:type=\"Task\" xmlns:p3=\"http://www.omg.org/spec/XMI/2.4.1\" />" +
+                "</root>");
+
+            var xmlSettings = new XmlSettings()
+            {
+                SkipRootNode = false
+            };
+
+            var extent = new XmlExtent(document, "no", xmlSettings);
+            Assert.That(extent.Elements().Count, Is.EqualTo(3));
+
+            xmlSettings = new XmlSettings()
+            {
+                SkipRootNode = true
+            };
+
+            extent = new XmlExtent(document, "no", xmlSettings);
+            Assert.That(extent.Elements().Count, Is.EqualTo(1));
         }
     }
 }

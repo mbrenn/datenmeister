@@ -51,6 +51,14 @@ export module Comment {
         item.set('isReadOnly', value);
     }
 
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
 }
 
 export module General {
@@ -95,6 +103,14 @@ export module General {
         item.set('isReadOnly', value);
     }
 
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
 }
 
 export module Checkbox {
@@ -137,6 +153,14 @@ export module Checkbox {
 
     export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
         item.set('isReadOnly', value);
+    }
+
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
     }
 
 }
@@ -215,6 +239,14 @@ export module TextField {
         item.set('isReadOnly', value);
     }
 
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
 }
 
 export module DatePicker {
@@ -257,6 +289,14 @@ export module DatePicker {
 
     export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
         item.set('isReadOnly', value);
+    }
+
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
     }
 
 }
@@ -363,6 +403,14 @@ export module ReferenceBase {
         item.set('isReadOnly', value);
     }
 
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
 }
 
 export module ReferenceByValue {
@@ -429,6 +477,14 @@ export module ReferenceByValue {
 
     export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
         item.set('isReadOnly', value);
+    }
+
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
     }
 
 }
@@ -499,6 +555,14 @@ export module ReferenceByRef {
         item.set('isReadOnly', value);
     }
 
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
 }
 
 export module MultiReferenceField {
@@ -567,6 +631,14 @@ export module MultiReferenceField {
         item.set('isReadOnly', value);
     }
 
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
 }
 
 export module View {
@@ -611,6 +683,14 @@ export module View {
 
     export function setStartInEditMode(item : __d__.JsonExtentObject, value: any) {
         item.set('startInEditMode', value);
+    }
+
+    export function getDoAutoGenerateByProperties(item: __d__.JsonExtentObject) {
+        return item.get('doAutoGenerateByProperties');
+    }
+
+    export function setDoAutoGenerateByProperties(item : __d__.JsonExtentObject, value: any) {
+        item.set('doAutoGenerateByProperties', value);
     }
 
 }
@@ -702,6 +782,14 @@ export module FormView {
         item.set('startInEditMode', value);
     }
 
+    export function getDoAutoGenerateByProperties(item: __d__.JsonExtentObject) {
+        return item.get('doAutoGenerateByProperties');
+    }
+
+    export function setDoAutoGenerateByProperties(item : __d__.JsonExtentObject, value: any) {
+        item.set('doAutoGenerateByProperties', value);
+    }
+
 }
 
 export module TableView {
@@ -731,6 +819,24 @@ export module TableView {
 
     export function setMainType(item : __d__.JsonExtentObject, value: any) {
         item.set('mainType', value);
+    }
+
+    export function getTypesForCreation(item: __d__.JsonExtentObject) {
+        return item.get('typesForCreation');
+    }
+
+    export function setTypesForCreation(item : __d__.JsonExtentObject, value: any) {
+        item.set('typesForCreation', value);
+    }
+
+    export function pushTypesForCreation(item : __d__.JsonExtentObject, value: any) {
+        var a = <Array<any>> item.get('typesForCreation');
+        if (a === undefined) {
+            a = new Array<any>();
+        }
+
+        a.push(value);
+        item.set('typesForCreation', a);
     }
 
     export function getAllowEdit(item: __d__.JsonExtentObject) {
@@ -789,6 +895,14 @@ export module TableView {
 
     export function setStartInEditMode(item : __d__.JsonExtentObject, value: any) {
         item.set('startInEditMode', value);
+    }
+
+    export function getDoAutoGenerateByProperties(item: __d__.JsonExtentObject) {
+        return item.get('doAutoGenerateByProperties');
+    }
+
+    export function setDoAutoGenerateByProperties(item : __d__.JsonExtentObject, value: any) {
+        item.set('doAutoGenerateByProperties', value);
     }
 
 }

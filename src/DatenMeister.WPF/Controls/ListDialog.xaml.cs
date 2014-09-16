@@ -1,7 +1,9 @@
-﻿using DatenMeister.DataProvider;
+﻿using BurnSystems.ObjectActivation;
+using DatenMeister.DataProvider;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic.Views;
 using DatenMeister.WPF.Windows;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,17 +56,18 @@ namespace DatenMeister.WPF.Controls
             this.ViewInformation.setAllowNew(false);
             this.Table.UseAsSelectionControl = true;
 
-            DatenMeisterWindow.AutosetWindowSize(this, 0.88);
+            WindowFactory.AutosetWindowSize(this, 0.88);
         }
 
-        public void SetReflectiveCollection(Func<IPool, IReflectiveCollection> elementsFactory, IDatenMeisterSettings settings)
+        public void SetReflectiveCollection(Func<IPool, IReflectiveCollection> elementsFactory, IPublicDatenMeisterSettings settings)
         {
-            ViewHelper.AutoGenerateViewDefinition(elementsFactory(settings.Pool), this.Table.TableViewInfo, true);
+            var pool = Injection.Application.Get<IPool>();
+            ViewHelper.AutoGenerateViewDefinition(elementsFactory(pool), this.Table.TableViewInfo, true);
             this.Table.Settings = settings;
             this.Table.ElementsFactory = elementsFactory;
         }
 
-        public void SetReflectiveCollection(IReflectiveCollection elements, IDatenMeisterSettings settings)
+        public void SetReflectiveCollection(IReflectiveCollection elements, IPublicDatenMeisterSettings settings)
         {
             ViewHelper.AutoGenerateViewDefinition(elements, this.Table.TableViewInfo, true);
             this.Table.Settings = settings;
@@ -76,6 +79,11 @@ namespace DatenMeister.WPF.Controls
         private void Table_OkClicked(object sender, EventArgs e)
         {
             this.DialogResult = true;
+        }
+
+        private void Table_CancelClicked(object sender, EventArgs e)
+        {
+            this.DialogResult = false;
         }
     }
 }

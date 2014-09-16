@@ -1,4 +1,5 @@
 ﻿using BurnSystems.ObjectActivation;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,14 +52,51 @@ namespace DatenMeister.DataProvider
         /// </summary>
         /// <param name="extent">Extent, whose factory is requested</param>
         /// <returns>Factory to be created</returns>
+        public static IFactory GetFor(Type type, IURIExtent extent)
+        {
+            var factoryProvider = Injection.Application.Get<IFactoryProvider>();
+            return factoryProvider.CreateFor(type, extent);
+        }
+
+        /// <summary>
+        /// Gets the factory for a certain event by using the default binder
+        /// </summary>
+        /// <param name="extent">Extent, whose factory is requested</param>
+        /// <returns>Factory to be created</returns>
         public static IFactory GetFor(IURIExtent extent)
         {
-            var factoryProvider = Global.Application.Get<IFactoryProvider>();
-            return factoryProvider.CreateFor(extent);
+            return GetFor(extent.GetType(), extent);
         }
 
         public static IFactory GetFor(IObject value)
         {
+            // Checks whether the object is a proxy object
+            var valueAsProxy = value as IProxyObject;
+            if (valueAsProxy != null)
+            {
+                return GetFor(valueAsProxy.Value);
+            }
+
+            // Checks, if we know the type directly from extent information
+            var valueAsKnown = value as IKnowsExtentType;
+            if (valueAsKnown != null)
+            {
+                var result = GetFor(valueAsKnown.ExtentType, value.Extent);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            // Checks, if object has a special factory extent
+            var valueAsHasFactoryExtent = value as IHasFactoryExtent;
+            if (valueAsHasFactoryExtent != null)
+            {
+                var factoryExtent = valueAsHasFactoryExtent.FactoryExtent;
+                return GetFor(valueAsHasFactoryExtent.FactoryExtent);
+            }
+
+            // If not, do default implementation
             if (value.Extent != null)
             {
                 return GetFor(value.Extent);

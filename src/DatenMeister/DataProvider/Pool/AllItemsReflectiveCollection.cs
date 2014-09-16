@@ -23,7 +23,7 @@ namespace DatenMeister.DataProvider.Pool
         /// </summary>
         /// <param name="pool"></param>
         public AllItemsReflectiveCollection(IPool pool)
-            : base  (pool.Instances.Select (x=> x.Extent.Elements()))
+            : base(pool.Instances.Select(x => x.Extent.Elements()))
         {
             this.pool = pool;
         }

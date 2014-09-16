@@ -22,7 +22,7 @@ namespace DatenMeister.Logic
         }
 
         /// <summary>
-        /// Loads the specified pool from d path.
+        /// Loads the specified pool from file path.
         /// </summary>
         /// <param name='pool'>
         /// Pool to be loaded
@@ -30,7 +30,7 @@ namespace DatenMeister.Logic
         /// <param name='path'>
         /// Path where pool is stored
         /// </param>
-        public void Load(DatenMeisterPool pool, string path)
+        public void Load(DatenMeisterPool pool, string path, ExtentType extentType)
         {
             if (!File.Exists(path))
             {
@@ -73,10 +73,10 @@ namespace DatenMeister.Logic
                 var extentPath = xmlPath.Value;
 
                 var dataProvider = new XmlDataProvider();
-                var extent = dataProvider.Load(extentPath, uri, null);
+                var extent = dataProvider.Load(extentPath, uri, XmlSettings.Empty);
 
                 // Store the new provider
-                pool.Add(extent, extentPath, extentName);
+                pool.Add(extent, extentPath, extentName, extentType);
             }
         }
 

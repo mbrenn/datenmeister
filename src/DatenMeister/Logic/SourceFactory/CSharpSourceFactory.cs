@@ -13,6 +13,8 @@ namespace DatenMeister.Logic.SourceFactory
     /// </summary>
     public class CSharpSourceFactory : SourceFactoryBase
     {
+        public static Version FactoryVersion = new Version(1, 0, 6, 0);
+
         /// <summary>
         /// Namespace to be used for the class
         /// </summary>
@@ -62,11 +64,14 @@ namespace DatenMeister.Logic.SourceFactory
 
         private void EmitType(StreamWriter writer, string typeName)
         {
-            writer.WriteLine(FourSpaces + "[global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"DatenMeister.Logic.SourceFactory.CSharpSourceFactory\", \"1.0.5.0\")]");
+            writer.WriteLine(FourSpaces 
+                + "[global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"DatenMeister.Logic.SourceFactory.CSharpSourceFactory\", \"" 
+                + FactoryVersion.ToString() 
+                + "\")]");
             writer.WriteLine(FourSpaces + "[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]");
             writer.WriteLine(
                 string.Format(
-                    FourSpaces + "public class {0} : DatenMeister.IObject",
+                    FourSpaces + "public class {0} : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject",
                     typeName));
 
             writer.WriteLine(FourSpaces + "{");
@@ -199,12 +204,15 @@ namespace DatenMeister.Logic.SourceFactory
             // Emits push method
             if (this.HasPushMethod(propertyType))
             {
+                var itemOfListProperty = propertyType.GenericTypeArguments.First();
+                var itemOfListPropertyName = this.GetPropertyTypeName(itemOfListProperty);
+
                 var pushMethodName = this.GetPushMethodName(propertyName, propertyType);
                 writer.WriteLine(
                     string.Format(
                         EightSpaces + "public void {0}({1} value)",
                         pushMethodName,
-                        propertyTypeName));
+                        itemOfListPropertyName));
                 writer.WriteLine(EightSpaces + "{");
                 writer.WriteLine(
                     string.Format(
@@ -228,18 +236,23 @@ namespace DatenMeister.Logic.SourceFactory
             var propertyTypeName = this.GetPropertyTypeName(propertyType);
 
             // Emits Get-Method
+            var getMethodName = this.GetGetMethodName(propertyName, propertyType);
             writer.WriteLine(
                 string.Format(
                     EightSpaces + "public static {1} {0}(DatenMeister.IObject obj)",
-                    this.GetGetMethodName(propertyName, propertyType),
+                    getMethodName,
                     propertyTypeName));
             writer.WriteLine(EightSpaces + "{");
             if (this.HasPushMethod(propertyType))
             {
+                var typeOfListProperty = propertyType.GenericTypeArguments.First();
+                var typeOfListPropertyName = this.GetPropertyTypeName(typeOfListProperty);
+
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var result = DatenMeister.Extensions.AsEnumeration(obj.get(\"{0}\"));",
-                        propertyName));
+                        TwelveSpaces + "var result = DatenMeister.Extensions.AsEnumeration<{1}>(obj.get(\"{0}\"));",
+                        propertyName,
+                        typeOfListPropertyName));
             }
             else
             {
@@ -249,18 +262,42 @@ namespace DatenMeister.Logic.SourceFactory
                         propertyName));
             }
 
-            writer.WriteLine(
-                string.Format(
-                    TwelveSpaces + "return (result is {0}) ? (({0}) result) : default({0});",
-                    propertyTypeName));
+            // Checks, if the property type is a special type
+            if (propertyType == typeof(bool))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return DatenMeister.ObjectConversion.ToBoolean(result);"));
+            }
+            else if (propertyType == typeof(string))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return DatenMeister.ObjectConversion.ToString(result);"));
+            }
+            else if (propertyType == typeof(int))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return DatenMeister.ObjectConversion.ToInt32(result);"));
+            }
+            else
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return (result is {0}) ? (({0}) result) : default({0});",
+                        propertyTypeName));
+            }
+
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 
             // Emits Set-Method
+            var setMethodName = this.GetSetMethodName(propertyName, propertyType);
             writer.WriteLine(
                 string.Format(
                     EightSpaces + "public static void {0}(DatenMeister.IObject obj, {1} value)",
-                    this.GetSetMethodName(propertyName, propertyType),
+                    setMethodName,
                     propertyTypeName));
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(
@@ -273,21 +310,25 @@ namespace DatenMeister.Logic.SourceFactory
             // Emits push method
             if (this.HasPushMethod(propertyType))
             {
+                var typeOfListProperty = propertyType.GenericTypeArguments.First();
+                var typeOfListPropertyName = this.GetPropertyTypeName(typeOfListProperty);
+
                 writer.WriteLine(
                     string.Format(
                         EightSpaces + "public static void {0}(DatenMeister.IObject obj, {1} value)",
                         this.GetPushMethodName(propertyName, propertyType),
-                        propertyTypeName));
+                        typeOfListProperty));
                 writer.WriteLine(EightSpaces + "{");
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var list = obj.get(\"{0}\") as System.Collections.IList ?? new System.Collections.Generic.List<object>();",
+                        TwelveSpaces + "var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get(\"{0}\"));",
                         propertyName));
                 writer.WriteLine(TwelveSpaces + "list.Add(value);");
-                writer.WriteLine(
+                // If we already receive a reflective collection, than the resetting is not necessary
+                /*writer.WriteLine(
                     string.Format(
                         TwelveSpaces + "obj.set(\"{0}\", list);",
-                        propertyName));
+                        propertyName));*/
 
                 writer.WriteLine(EightSpaces + "}");
                 writer.WriteLine();

@@ -10,7 +10,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top">
             <Grid x:Name="formGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

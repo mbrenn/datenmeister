@@ -17,9 +17,76 @@ namespace DatenMeister.Logic
         /// </summary>
         /// <param name="collection">Collection, whose properties shall get reflected</param>
         /// <returns>Enumeration of property names being used</returns>
-        public static IEnumerable<string> GetConsolidatedPropertyNames(this IReflectiveCollection collection)
+        public static IEnumerable<string> GetConsolidatedPropertyNames(this IEnumerable<object> collection)
         {
             return ObjectHelper.GetColumnNames(collection.Where(x=> x is IObject).Select(x=> x as IObject));
+        }
+
+        private static int GetTypeCount(IEnumerable<object> collection)
+        {
+            return collection.Where(x => x is IElement)         // Need meta classes
+                .Select(x => (x as IElement).getMetaClass())    // As meta classed
+                .Where(x => x != null)                          // Which are metaclasses
+                .Distinct()                                     // Grouped
+                .Count();                                       // As Count
+        }
+
+        /// <summary>
+        /// Gets the number of different extents within the given reflective collection
+        /// </summary>
+        /// <param name="collection">Collection to be queried</param>
+        /// <returns>Number of extents</returns>
+        private static int GetExtentCount(IEnumerable<object> collection)
+        {
+            return collection.Where(x => x is IObject)          // Need IObjects
+                .Select(x => (x as IObject).Extent)             // given me their extent
+                .Where(x => x != null)                          // which are not null
+                .Distinct()                                     // Grouped
+                .Count();                                       // As Count
+        }
+        
+        /// <summary>
+        /// Gets the consolidated information about the complete ReflectiveCollection
+        /// </summary>
+        /// <param name="collection">Collection, whose properties shall get reflected</param>
+        /// <returns>Enumeration of property names being used</returns>
+        public static TypeInformation GetConsolidatedInformation(this IEnumerable<object> collection)
+        {
+            var result = new TypeInformation()
+            {
+                PropertyNames = GetConsolidatedPropertyNames(collection),
+                TypeCount = GetTypeCount(collection),
+                ExtentCount = GetExtentCount(collection)
+            };
+
+            return result;
+        }
+
+        public class TypeInformation
+        {
+            /// <summary>
+            /// Gets a list of all properties, that are at least available in one properties. 
+            /// </summary>
+            public IEnumerable<string> PropertyNames
+            {
+                get;
+                set;
+            }
+
+            /// <summary>
+            /// Gets or sets the number of existing types in the collection under scope
+            /// </summary>
+            public int TypeCount
+            {
+                get;
+                set;
+            }
+
+            public int ExtentCount
+            {
+                get;
+                set;
+            }
         }
     }
 }

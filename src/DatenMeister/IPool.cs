@@ -24,6 +24,6 @@ namespace DatenMeister
         /// <param name="extent">Extent to be added</param>
         /// <param name="storagePath">Path, where pool is stored</param>
         /// <param name="name">Name of the pool</param>
-        void Add(IURIExtent extent, string storagePath, string name);
+        void Add(IURIExtent extent, string storagePath, string name, ExtentType extentType);
     }
 }

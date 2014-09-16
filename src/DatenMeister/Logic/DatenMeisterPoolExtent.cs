@@ -2,6 +2,7 @@
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.Entities.FieldInfos;
+using DatenMeister.Logic.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,7 @@ namespace DatenMeister.Logic
         {
             var factory = Factory.GetFor(viewExtent);
             // Creates the view for the extents
-            var extentViewObj = factory.CreateInExtent(viewExtent, DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+            var extentViewObj = factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
             var asObjectExtentview = new DatenMeister.Entities.AsObject.FieldInfo.TableView(extentViewObj);
 
             asObjectExtentview.setExtentUri(DatenMeisterPoolExtent.DefaultUri);
@@ -68,10 +69,14 @@ namespace DatenMeister.Logic
             asObjectExtentview.setAllowNew(false);
             asObjectExtentview.setName("Extents");
             asObjectExtentview.setFieldInfos(new DotNetSequence(
+                ViewHelper.ViewTypes,
                 new TextField("Name", "name"),
                 new TextField("URI", "uri"),
                 new TextField("Type", "type"),
+                new TextField("ExtentType", "extentType"),
                 new TextField("Filename", "filename")));
+
+            viewExtent.Elements().add(extentViewObj);
 
             return extentViewObj;
         }

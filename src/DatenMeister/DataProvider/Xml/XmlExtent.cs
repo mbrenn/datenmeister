@@ -1,4 +1,5 @@
-﻿using BurnSystems.Test;
+﻿using BurnSystems.Logging;
+using BurnSystems.Test;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +12,16 @@ namespace DatenMeister.DataProvider.Xml
 {
     public class XmlExtent : IURIExtent
     {
+        /// <summary>
+        /// Stores the logger
+        /// </summary>
+        private static ILog logger = new ClassLogger(typeof(XmlExtent));
+
+        /// <summary>
+        /// Stores the xml-Extent-Settings
+        /// </summary>
+        private XmlSettings xmlSettings;
+
         /// <summary>
         /// Gets or sets the pool, where the object is stored
         /// </summary>
@@ -43,8 +54,12 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         public XmlSettings Settings
         {
-            get;
-            set;
+            get { return this.xmlSettings; }
+            set
+            {
+                Ensure.That(value != null, "Value cannot be null");
+                this.xmlSettings = value;
+            }
         }
 
         /// <summary>
@@ -66,12 +81,15 @@ namespace DatenMeister.DataProvider.Xml
             Ensure.That(!string.IsNullOrEmpty(uri));
 
             this.XmlDocument = document;
-            this.Uri = uri;
-            this.Settings = settings;
+            this.Uri = uri;            
 
-            if (this.Settings == null)
+            if (settings == null)
             {
                 this.Settings = new XmlSettings();
+            }
+            else
+            {
+                this.Settings = settings;
             }
         }
 
@@ -113,7 +131,9 @@ namespace DatenMeister.DataProvider.Xml
 
             public override void add(int index, object value)
             {
-                throw new NotImplementedException();
+                logger.LogEntry(new LogEntry("add(int, object) is not fully supported. Will be added to last position", LogLevel.Message));
+
+                this.add(value);
             }
 
             public override object get(int index)
@@ -136,6 +156,7 @@ namespace DatenMeister.DataProvider.Xml
                 if (value is XmlObject)
                 {
                     var valueAsXmlObject = value as XmlObject;
+                    valueAsXmlObject.ContainerExtent = this.extent;
                     var parentElement = this.extent.XmlDocument.Root;
 
                     // Checks, if we have a better element, where new node can be added
@@ -155,7 +176,7 @@ namespace DatenMeister.DataProvider.Xml
 
                 if (value == null)
                 {
-                    Debug.WriteLine("Null has been added");
+                    Debug.WriteLine("Nothing (null) has been added");
                     return false;
                 }
 
@@ -169,7 +190,13 @@ namespace DatenMeister.DataProvider.Xml
 
             public override bool remove(object value)
             {
-                throw new NotImplementedException();
+                Ensure.That(value != null);
+                var valueAsObject = value as XmlObject;
+                Ensure.That(valueAsObject != null, "Value is not XmlObject");
+                
+                valueAsObject.delete();
+
+                return true;
             }
 
             public override int size()
@@ -181,22 +208,51 @@ namespace DatenMeister.DataProvider.Xml
             {
                 lock (this.extent.XmlDocument)
                 {
-                    if (!this.extent.Settings.SkipRootNode)
+                    var foundItems = new List<XElement>();
+
+                    // Goes through the mapping table to find additional objects
+                    if (this.extent.Settings != null)
                     {
-                        foreach (var subNode in this.extent.XmlDocument.Root.Elements())
+                        foreach (var mapInfo in this.extent.Settings.Mapping.GetAll())
                         {
-                            var subObject = new XmlObject(this.extent, subNode);
-                            yield return subObject;
+                            var rootNode = mapInfo.RetrieveRootNode(this.extent.XmlDocument);
+                            if (rootNode != null)
+                            {
+                                foundItems.Add(rootNode);
+                                foreach (var xmlSubnode in rootNode.Elements())
+                                {
+                                    var result = new XmlObject(this.extent, xmlSubnode, null)
+                                    {
+                                        ContainerExtent = this.extent
+                                    };
+
+                                    yield return result;
+                                }
+                            }
                         }
                     }
 
-                    // Goes through the mapping table to find additional objects
-                    foreach (var mapInfo in this.extent.Settings.Mapping.GetAll())
+                    foreach (var subNode in this.extent.XmlDocument.Root.Elements())
                     {
-                        foreach (var xmlSubnode in mapInfo.RetrieveRootNode(this.extent.XmlDocument).Elements())
+                        // Only for the items, that do not have a direct mapping via settings, the elements will be returned
+                        if (!foundItems.Contains(subNode))
                         {
-                            var result = new XmlObject(this.extent, xmlSubnode, null);
-                            yield return result;
+                            var typeAttributeName = DatenMeister.Entities.AsObject.Uml.Types.XmiNamespace + "type";
+                            var hasTypeAttribute = subNode.Attribute(typeAttributeName) != null;
+
+                            // Per default, show root nodes, or if user does not want to skip the nodes
+                            // or when node has a type attribute
+                            if (this.extent.Settings == null
+                                || !this.extent.Settings.SkipRootNode
+                                || hasTypeAttribute)
+                            {
+                                var subObject = new XmlObject(this.extent, subNode)
+                                {
+                                    ContainerExtent = this.extent
+                                };
+
+                                yield return subObject;
+                            }
                         }
                     }
                 }

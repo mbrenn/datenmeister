@@ -37,6 +37,17 @@ namespace DatenMeister.Entities.FieldInfos
             set;
         }
 
+
+        /// <summary>
+        /// Gets or sets a list of maintypes that are used to open dialogs, where user can create
+        /// a new object out of the table view. 
+        /// </summary>
+        public IList<IObject> typesForCreation
+        {
+            get;
+            set;
+        }
+
         [DefaultValue(true)]
         public bool allowEdit
         {

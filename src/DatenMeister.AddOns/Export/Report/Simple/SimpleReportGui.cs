@@ -1,4 +1,5 @@
-﻿using DatenMeister.WPF.Windows;
+﻿using DatenMeister.Pool;
+using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,7 @@ namespace DatenMeister.AddOns.Export.Report.Simple
         /// </summary>
         public void StartExport(IDatenMeisterWindow window)
         {
+            var pool = PoolResolver.GetDefaultPool();
             var dlg = new Microsoft.Win32.SaveFileDialog();
             dlg.Filter = Localization_DM_Addons.Filter_HtmlExport;
             dlg.RestoreDirectory = true;
@@ -44,7 +46,7 @@ namespace DatenMeister.AddOns.Export.Report.Simple
                 var settings = new SimpleReportSettings();
                 var export = new SimpleReport();
                 export.Export(
-                    window.Settings.ProjectExtent.AsReflectiveCollection(),
+                    pool.GetExtent(Logic.ExtentType.Data).First().AsReflectiveCollection(),
                     dlg.FileName,
                     settings);
             }

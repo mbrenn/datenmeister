@@ -68,11 +68,21 @@ namespace DatenMeister.WPF.Controls.GuiElements
             if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
             {
                 this.Sequence = detailObject.get(this.FieldInfo.getBinding()).AsReflectiveSequence();
+
+                var element = new WpfMultiReferenceFieldElement(this);
+                element.RefreshData();
+                return element;
+            }
+            else if (state.EditMode == EditMode.New)
+            {
+                return new Label()
+                {
+                    Content = Localization_DatenMeister_WPF.MultiReference_NoEditPossible,
+                    FontSize = 16
+                };
             }
 
-            var element = new WpfMultiReferenceFieldElement(this);
-            element.RefreshData();
-            return element;
+            return null;
         }
         
         /// <summary>

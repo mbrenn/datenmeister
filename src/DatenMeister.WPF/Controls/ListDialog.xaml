@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Controls:EntityTableControl x:Name="Table" OkClicked="Table_OkClicked">
+        <Controls:EntityTableControl x:Name="Table" OkClicked="Table_OkClicked" ShowCancelButton="True" CancelClicked="Table_CancelClicked">
             
         </Controls:EntityTableControl>
     </Grid>

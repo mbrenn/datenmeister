@@ -41,10 +41,13 @@ namespace DatenMeister.AddOns.Export.Report.Simple
 
                 foreach (var row in pair.values)
                 {
+                    var elementAsViewObject = new ObjectDictionaryForView(row as IObject);
                     htmlTable.AddRow();
                     foreach (var property in properties)
                     {
-                        htmlTable.AddCellWithContent(row.AsIObject().get(property).AsSingle().ToString());
+                        htmlTable.AddCellWithContent(
+                            HtmlElement.ConvertNewLineToBreaks(
+                                elementAsViewObject[property].AsSingle().ToString()));
                     }
                 }
 
@@ -61,6 +64,7 @@ namespace DatenMeister.AddOns.Export.Report.Simple
                     new { 
                         Created = DateTime.Now.ToString(),
                         CreatedBy = Environment.UserName,
+                        ComputerName = Environment.MachineName,
                         Tables = tables}));
 
             File.WriteAllText(path, templateContent);

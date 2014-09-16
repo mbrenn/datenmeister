@@ -1,5 +1,6 @@
 ﻿
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Helper;
 using System;
@@ -29,7 +30,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Gets or sets the settings
         /// </summary>
-        IDatenMeisterSettings Settings
+        IPublicDatenMeisterSettings Settings
         {
             get;
         }
@@ -38,12 +39,6 @@ namespace DatenMeister.WPF.Windows
         /// Refreshes the views
         /// </summary>
         void RefreshTabs();
-
-        /// <summary>
-        /// Sets the title of the application
-        /// </summary>
-        /// <param name="title">Title of the application</param>
-        void SetTitle(string title);
 
         /// <summary>
         /// Adds a menuentry to the application window

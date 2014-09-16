@@ -1,25 +1,22 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Pool;
 using DatenMeister.Entities.AsObject.FieldInfo;
+using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic;
+using DatenMeister.Logic.Views;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Helper;
-using DatenMeister.WPF.Windows;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DatenMeister.WPF.Controls
 {
@@ -51,16 +48,68 @@ namespace DatenMeister.WPF.Controls
             set;
         }
 
-        public IDatenMeisterSettings Settings
+        public IPublicDatenMeisterSettings Settings
         {
             get;
             set;
         }
 
         /// <summary>
+        /// Gets or sets the text that shall be used for filtering the events
+        /// </summary>
+        public string FilterByText
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the visibility of the cancel button
+        /// </summary>
+        public bool ShowCancelButton
+        {
+            get
+            {
+                return this.buttonCancel.Visibility == System.Windows.Visibility.Visible;
+            }
+
+            set
+            {
+                this.buttonCancel.Visibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        /// <summary>
         /// This event handler is executed, when user clicked on the ok button
         /// </summary>
         public event EventHandler OkClicked;
+
+        /// <summary>
+        /// This event handler is executed, when user clicked on the ok button
+        /// </summary>
+        public event EventHandler CancelClicked;
+
+        /// <summary>
+        /// Gets or sets the meta extent type being queried, when user clicks on 'New by Type'
+        /// </summary>
+        public ExtentType GetMetaExtentType()
+        {
+            var pool = Injection.Application.Get<IPool>();
+
+            var mainType = TableView.getMainType(this.TableViewInfo);
+            if (mainType == null)
+            {
+                return ExtentType.View;
+            }
+
+            var instance = pool.GetInstance(mainType.Extent);
+            if (instance == null)
+            {
+                return ExtentType.View;
+            }
+
+            return DatenMeisterPool.GetMetaExtentType(instance.ExtentType);
+        }
 
         /// <summary>
         /// Defines the extent that shall be shown
@@ -162,7 +211,7 @@ namespace DatenMeister.WPF.Controls
 
         public EntityTableControl()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         public EntityTableControl(IObject tableView)
@@ -177,39 +226,75 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public void Relayout()
         {
-            if (this.tableViewInfo == null)
+            try
             {
-                // Nothing to do, should not happen
-                return;
+                var pool = Injection.Application.Get<IPool>();
+
+                if (this.tableViewInfo == null)
+                {
+                    // Nothing to do, should not happen
+                    return;
+                }
+
+                // Checks status of buttons
+                this.buttonNew.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                this.buttonNewByType.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                this.buttonEdit.Visibility = this.tableViewInfo.getAllowEdit() && !this.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() && !this.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                this.buttonOk.Visibility = this.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+
+                foreach (var elementType in this.tableViewInfo.getTypesForCreation())
+                {
+                    var name = NamedElement.getName(elementType).AsSingle();
+                    var btn = new Button();
+                    btn.Content = "New " + name;
+                    btn.Style = this.gridButtons.Resources["TouchButton"] as Style;
+                    btn.Click += (x, y) =>
+                        {
+                            ShowNewInstanceDialog(elementType);
+                        };
+                    this.areaToolbar.Children.Insert(0, btn);
+                }
+
+                //  Checks, if auto generation is necessary
+                var fieldInfos = this.tableViewInfo.getFieldInfos().AsEnumeration();
+                if (this.tableViewInfo.getDoAutoGenerateByProperties() && fieldInfos.Count() == 0)
+                {
+                    ViewHelper.AutoGenerateViewDefinition(this.elementsFactory(pool), this.tableViewInfo, true);
+                }
+
+                // Now, create the fields
+                foreach (var fieldInfo in this.tableViewInfo.getFieldInfos().AsEnumeration().Select(x => x.AsSingle().AsIObject()))
+                {
+                    var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
+                    var name = fieldInfoObj.getName();
+                    var binding = fieldInfoObj.getBinding();
+                    var column = new TableDataGridTextColumn();
+                    column.Header = name;
+                    column.Binding = new Binding("[" + binding + "]");
+                    column.AssociatedViewColumn = fieldInfo;
+
+                    var width = fieldInfoObj.getColumnWidth();
+                    if (width != 0)
+                    {
+                        column.Width = new DataGridLength(width);
+                    }
+
+                    this.gridContent.Columns.Add(column);
+                }
+
+                // Gets the elements
+                this.RefreshItems();
             }
-
-            // Checks status of buttons
-            this.buttonNew.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
-                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonNewByType.Visibility = this.tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
-                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonEdit.Visibility = this.tableViewInfo.getAllowEdit() && !this.UseAsSelectionControl ?
-                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonDelete.Visibility = this.tableViewInfo.getAllowDelete() && !this.UseAsSelectionControl ?
-                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            this.buttonOk.Visibility = this.UseAsSelectionControl ? 
-                System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-
-            foreach (var fieldInfo in this.tableViewInfo.getFieldInfos().AsEnumeration().Select (x=> x.AsSingle().AsIObject()))
+            catch (Exception exc)
             {
-                var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
-                var name = fieldInfoObj.getName();
-                var binding = fieldInfoObj.getBinding();
-                var column = new TableDataGridTextColumn();
-                column.Header = name;
-                column.Binding = new Binding("["+binding+"]");
-                column.AssociatedViewColumn = fieldInfo;
-
-                this.gridContent.Columns.Add(column);
+                this.HandleException(exc);
             }
-
-            // Gets the elements
-            this.RefreshItems();
         }
 
         /// <summary>
@@ -218,10 +303,11 @@ namespace DatenMeister.WPF.Controls
         /// <returns>The reflective collection</returns>
         public IReflectiveCollection GetElements()
         {
+            var pool = Injection.Application.Get<IPool>();
             Ensure.That(this.ElementsFactory != null, "No Elementsfactory is set");
             Ensure.That(this.Settings != null, "Settings for DatenMeister are not set");
          
-            return this.ElementsFactory(this.Settings.Pool);
+            return this.ElementsFactory(pool);
         }
 
         public IEnumerable<IObject> GetFieldInfos()
@@ -242,43 +328,27 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public void RefreshItems()
         {
-            if (this.ElementsFactory != null)
+            try
             {
-                var elements = this.GetElements()
-                    .Select(x => 
-                        new ObjectDictionaryForView(x.AsIObject(), this.GetFieldInfos())).ToList();
-                this.gridContent.ItemsSource = elements;
+                if (this.ElementsFactory != null)
+                {
+                    var elements = this.GetElements()
+                        .Select(x =>
+                            new ObjectDictionaryForView(x.AsIObject(), this.GetFieldInfos()));
+
+                    if (!string.IsNullOrEmpty(this.FilterByText))
+                    {
+                        elements = elements.Where(x =>
+                            ObjectDictionaryForView.FilterByText(x, this.FilterByText));
+                    }
+
+                    this.gridContent.ItemsSource = elements.ToList();
+                }
             }
-        }
-
-        private void buttonNew_Click(object sender, RoutedEventArgs e)
-        {
-            this.ShowNewDialog();
-        }
-
-        private void buttonNewByType_Click(object sender, RoutedEventArgs e)
-        {
-            this.ShowNewByDialog();
-        }
-
-        private void buttonEdit_Click(object sender, RoutedEventArgs e)
-        {
-            this.ShowDetailDialog();
-        }
-
-        private void buttonDelete_Click(object sender, RoutedEventArgs e)
-        {
-            this.DeleteCurrentlySelected();
-        }
-
-        private void buttonReload_Click(object sender, RoutedEventArgs e)
-        {
-            this.RefreshItems();
-        }
-
-        private void ok_Click(object sender, RoutedEventArgs e)
-        {
-            this.AcceptSelectedElements(e);
+            catch (Exception exc)
+            {
+                this.HandleException(exc);
+            }
         }
 
         /// <summary>
@@ -306,11 +376,42 @@ namespace DatenMeister.WPF.Controls
             }
             else
             {
+                // Checks, what the user has selected, only click within the form 
+                // is considered as valid
+                var dep = (DependencyObject)e.OriginalSource;
+
+                // Iteratively traverse the visual tree an check, if the user clicked on the DataGridColumnHeader
+                while ((dep != null) &&
+                        !(dep is DataGridCell) &&
+                        !(dep is DataGridColumnHeader))
+                {
+                    dep = VisualTreeHelper.GetParent(dep);
+
+                    if (dep is DataGridColumnHeader)
+                    {
+                        return;
+                    }
+                }
+
                 this.ShowDetailDialog();
             }
         }
 
+        /// <summary>
+        /// Shows the new dialog
+        /// </summary>
         private void ShowNewDialog()
+        {
+            var newType = this.MainType;
+
+            ShowNewInstanceDialog(newType);
+        }
+
+        /// <summary>
+        /// Shows the oppurtunity to create a new instance
+        /// </summary>
+        /// <param name="newType">Type to be created</param>
+        private void ShowNewInstanceDialog(IObject newType)
         {
             if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowNew(this.tableViewInfo))
             {
@@ -318,27 +419,58 @@ namespace DatenMeister.WPF.Controls
                 return;
             }
 
-            var dialog = DetailDialog.ShowDialogToCreateTypeOf(this.MainType, this.GetElements(), this.Settings, this.DetailViewInfo);
+            var dialog = DetailDialog.ShowDialogToCreateTypeOf(newType, this.GetElements(), this.Settings, this.DetailViewInfo);
             Ensure.That(dialog != null);
             dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
         }
 
-        private void ShowNewByDialog()
+        /// <summary>
+        /// Shows a list of all available types and the user can select one. 
+        /// The selected item will be created.
+        /// </summary>
+        private void ShowNewOfGenericTypeDialog()
         {
+            var pool = Injection.Application.Get<IPool>();
+
             if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowNew(this.tableViewInfo))
             {
                 // Nothing to do
                 return;
             }
 
+            var extentType = ExtentType.Type;
+            var mainType = TableView.getMainType(this.TableViewInfo);
+            var instance = pool.GetInstance(mainType.Extent);
+            if (instance != null)
+            {
+                extentType = instance.ExtentType;
+            }
+
             var dialog = new ListDialog();
-            dialog.SetReflectiveCollection(
-                new AllItemsReflectiveCollection(this.Settings.Pool)
-                .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type),
-                this.Settings);
+            var allTypes =
+                new AllItemsReflectiveCollection(pool)
+                .FilterByExtentType(extentType)
+                .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
+            dialog.SetReflectiveCollection(allTypes, this.Settings);
             if (dialog.ShowDialog() == true)
             {
-                this.RefreshItems();
+                if (dialog.SelectedElements.Count() > 0)
+                {
+                    // Finds the factory
+                    var reflectiveCollection = this.ElementsFactory(pool);
+                    var factory = Factory.GetFor(reflectiveCollection.Extent);
+
+                    // Adds the element to the reflective collection
+                    var createdElement = factory.create(dialog.SelectedElements.AsSingle().AsIObject());
+                    reflectiveCollection.add(createdElement);
+
+                    // Now, add the item, it might be, that other extent views also need to be updated.
+                    this.RefreshItems();
+                }
+                else
+                {
+                    MessageBox.Show(Localization_DatenMeister_WPF.NoElementsSelected);
+                }
             }
         }
 
@@ -349,7 +481,9 @@ namespace DatenMeister.WPF.Controls
         {
             var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
 
-            if (this.OpenSelectedViewFunc != null)
+            // Checks, if there is an function handler associated to the
+            // given table. View. If there is a function, call the associated function handler
+            if (this.OpenSelectedViewFunc != null && selectedItem != null)
             {
                 this.OpenSelectedViewFunc(
                     new DetailOpenEventArgs()
@@ -362,14 +496,15 @@ namespace DatenMeister.WPF.Controls
             }
             else if (selectedItem == null)
             {
+                // No element has been selected, so try to create a new on
                 this.ShowNewDialog();
                 return null;
             }
             else
             {
                 var readOnly = false;
-                
-                // Check, if the dialog to be opend shall be a read-only dialog
+
+                // Check, if the dialog to be opened shall be as a read-only dialog
                 if (!DatenMeister.Entities.AsObject.FieldInfo.FormView.getAllowEdit(this.tableViewInfo))
                 {
                     // Nothing to do
@@ -379,9 +514,9 @@ namespace DatenMeister.WPF.Controls
                 Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
 
                 var dialog = DetailDialog.ShowDialogFor(
-                    selectedItem.Value, 
-                    this.Settings, 
-                    this.DetailViewInfo, 
+                    selectedItem.Value,
+                    this.Settings,
+                    this.DetailViewInfo,
                     readOnly);
 
                 if (dialog == null)
@@ -392,7 +527,7 @@ namespace DatenMeister.WPF.Controls
                     return null;
                 }
 
-                // When user accepts the changes, all items shall be refreshed. 
+                // When user accepts the changes, all items in current view shall be refreshed. 
                 dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
                 return dialog;
             }
@@ -403,12 +538,71 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private void DeleteCurrentlySelected()
         {
-            var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
-
-            if (selectedItem.Value != null)
+            // Go through all the selected items and remove them
+            var any = false;
+            foreach (var selectedItem in this.gridContent.SelectedItems)
             {
-                selectedItem.Value.delete();
+                var sAsObjectDictionary = selectedItem as ObjectDictionary;
+                if (sAsObjectDictionary == null)
+                {
+                    continue;
+                }
+
+                any = true;
+                if (sAsObjectDictionary.Value != null)
+                {
+                    sAsObjectDictionary.Value.delete();
+                }
+            }
+
+            // If, something has been removed, perform the update
+            if (any)
+            {
                 this.RefreshItems();
+            }
+            else
+            {
+                MessageBox.Show(Localization_DatenMeister_WPF.NoElementsSelected);
+                return;
+            }
+        }
+
+        private void buttonNew_Click(object sender, RoutedEventArgs e)
+        {
+            this.ShowNewDialog();
+        }
+
+        private void buttonNewByType_Click(object sender, RoutedEventArgs e)
+        {
+            this.ShowNewOfGenericTypeDialog();
+        }
+
+        private void buttonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            this.ShowDetailDialog();
+        }
+
+        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            this.DeleteCurrentlySelected();
+        }
+
+        private void buttonReload_Click(object sender, RoutedEventArgs e)
+        {
+            this.RefreshItems();
+        }
+
+        private void ok_Click(object sender, RoutedEventArgs e)
+        {
+            this.AcceptSelectedElements(e);
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            var ev = this.CancelClicked;
+            if (ev != null)
+            {
+                ev(this, e);
             }
         }
 
@@ -449,6 +643,20 @@ namespace DatenMeister.WPF.Controls
             }
         }
 
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
+            {
+                this.GiveFocusToGridContent();
+            }
+        }
+
+        private void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.FilterByText = this.txtFilter.Text;
+            this.RefreshItems();
+        }
+
         /// <summary>
         /// Gives the focus to the grid content by finding the first column of selected row.
         /// </summary>
@@ -457,20 +665,19 @@ namespace DatenMeister.WPF.Controls
             DataGridHelper.GiveFocusToContent(this.gridContent);
         }
 
+        private void HandleException(Exception exc)
+        {
+            this.ErrorMessage.Visibility = System.Windows.Visibility.Visible;
+            this.DataTable.Visibility = System.Windows.Visibility.Collapsed;
+            this.ErrorMessageContent.Text = exc.ToString();
+        }
+
         private class TableDataGridTextColumn : DataGridTextColumn
         {
             public IObject AssociatedViewColumn
             {
                 get;
                 set;
-            }
-        }
-
-        private void UserControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
-            {
-                this.GiveFocusToGridContent();
             }
         }
     }

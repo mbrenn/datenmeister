@@ -27,15 +27,18 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
             {
+                var detailObjectForView = new ObjectDictionaryForView(detailObject);
                 var fieldName = textFieldObj.getBinding().ToString();
-                var propertyValue = detailObject.get(fieldName);
+
+                var propertyValue = detailObjectForView[fieldName];
                 if (propertyValue != null && propertyValue != ObjectHelper.NotSet)
                 {
                     textBox.Text = propertyValue.AsSingle().ToString();
                 }
 
                 // Do we have a read-only flag
-                if (state.EditMode == EditMode.Read || textFieldObj.isReadOnly())
+                if (state.EditMode == EditMode.Read || textFieldObj.isReadOnly()
+                    || ObjectDictionaryForView.IsSpecialBinding(textFieldObj.getBinding()))
                 {
                     textBox.IsReadOnly = true;
                     textBox.IsReadOnlyCaretVisible = true;
@@ -54,7 +57,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
             var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(entry.FieldInfo);
 
-            if (!textFieldObj.isReadOnly())
+            if (!textFieldObj.isReadOnly() && !ObjectDictionaryForView.IsSpecialBinding(textFieldObj.getBinding()))
             {
                 var textBox = entry.WPFElement as TextBox;
                 detailObject.set(textFieldObj.getBinding().ToString(), textBox.Text);

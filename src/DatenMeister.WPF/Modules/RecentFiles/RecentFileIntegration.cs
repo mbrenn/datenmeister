@@ -1,4 +1,8 @@
-﻿using DatenMeister.DataProvider;
+﻿using BurnSystems.Test;
+using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic;
+using DatenMeister.Pool;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Helper;
 using DatenMeister.WPF.Windows;
@@ -19,9 +23,13 @@ namespace DatenMeister.WPF.Modules.RecentFiles
         /// </summary>
         /// <param name="settings"></param>
         /// <param name="wnd"></param>
-        public static void AddSupport( IDatenMeisterWindow wnd)
+        public static void AddSupport(IDatenMeisterWindow wnd)
         {
-            var viewFactory = Factory.GetFor(wnd.Settings.ViewExtent);
+            var pool = PoolResolver.GetDefaultPool();
+            var viewExtent = pool.GetExtent(ExtentType.View).First();
+
+            // Includes the View
+            var viewFactory = Factory.GetFor(viewExtent);
             wnd.Core.ViewRecentObjects = viewFactory.create(
                 DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
             DatenMeister.Entities.AsObject.FieldInfo.TableView.setName(wnd.Core.ViewRecentObjects, "Recent Files");
@@ -41,27 +49,35 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Storage Path");
             fieldInfos.add(textField);
 
-            wnd.Settings.ViewExtent.Elements().Insert(0, wnd.Core.ViewRecentObjects);
+            viewExtent.Elements().Insert(0, wnd.Core.ViewRecentObjects);
+
+            // Adds the mapping for the recent projects
+            var applicationExtent = pool.GetExtent(ExtentType.ApplicationData).First() as XmlExtent;
+            Ensure.That(applicationExtent != null, "Application Extent is not XmlExtent");
+            applicationExtent.Settings.Mapping.Add(DatenMeister.Entities.AsObject.DM.Types.RecentProject);
+
+            // Updates the view to show the content
             wnd.RefreshTabs();
 
             wnd.AssociateDetailOpenEvent(
                 wnd.Core.ViewRecentObjects, (x) =>
-            {
-                var filePath = DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(x.Value);
-                if (File.Exists(filePath))
                 {
-                    wnd.LoadAndOpenFile(filePath);
-                    wnd.Settings.ViewExtent.Elements().remove(wnd.Core.ViewRecentObjects);
-                    wnd.RefreshTabs();
-                }
-                else
-                {
-                    MessageBox.Show(Localization_DatenMeister_WPF.Open_FileDoesNotExist);
-                }
-            });
-        }
+                    var innerPool = PoolResolver.GetDefaultPool();
+                    var innerViewExtent = innerPool.GetExtent(ExtentType.View).First();
 
-        /// <summary>
+                    var filePath = DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(x.Value);
+                    if (File.Exists(filePath))
+                    {
+                        wnd.LoadAndOpenFile(filePath);
+                        innerViewExtent.Elements().remove(wnd.Core.ViewRecentObjects);
+                        wnd.RefreshTabs();
+                    }
+                    else
+                    {
+                        MessageBox.Show(Localization_DatenMeister_WPF.Open_FileDoesNotExist);
+                    }
+                });
+        }
         /// Adds a file to the recent file list. 
         /// If the file is already available, it won't be added
         /// </summary>

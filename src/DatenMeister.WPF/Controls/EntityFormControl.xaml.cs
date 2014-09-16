@@ -80,7 +80,7 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private FormView formView;
 
-        public IDatenMeisterSettings Settings
+        public IPublicDatenMeisterSettings Settings
         {
             get;
             set;
@@ -153,8 +153,7 @@ namespace DatenMeister.WPF.Controls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                Ensure.That(this.Settings != null);
-                Ensure.That(this.Extent != null, "Extent has not been set");
+                Ensure.That(this.Settings != null, "Settings have not been set");
             }
         }
 
@@ -185,28 +184,39 @@ namespace DatenMeister.WPF.Controls
                     nameLabel.Content = string.Format("{0}: ", name);
                     nameLabel.Margin = new Thickness(10, 5, 10, 5);
                     nameLabel.FontSize = 16;
+                    if (ObjectDictionaryForView.IsSpecialBinding(General.getBinding(fieldInfo)))
+                    {
+                        nameLabel.FontStyle = FontStyles.Italic;
+                    }
+
                     Grid.SetRow(nameLabel, currentRow);
 
-                    formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+                    formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
                     formGrid.Children.Add(nameLabel);
 
                     // Creates the value element for the form
                     var fieldInfoAsElement = fieldInfo as IElement;
                     var wpfElementCreator = WPFElementMapping.Map(fieldInfoAsElement);
                     var wpfElement = wpfElementCreator.GenerateElement(this.DetailObject, fieldInfo, this);
-                    if (wpfElement is FrameworkElement)
+                    if (wpfElement != null)
                     {
-                        (wpfElement as FrameworkElement).Margin = new Thickness(10, 5, 10, 5);
+                        if (wpfElement is FrameworkElement)
+                        {
+                            (wpfElement as FrameworkElement).Margin = new Thickness(10, 5, 10, 5);
+                        }
+
+                        Grid.SetRow(wpfElement, currentRow);
+                        Grid.SetColumn(wpfElement, 1);
+                        formGrid.Children.Add(wpfElement);
+
+                        this.wpfElements.Add(new ElementCacheEntry(wpfElementCreator, wpfElement, fieldInfo));
                     }
-
-                    Grid.SetRow(wpfElement, currentRow);
-                    Grid.SetColumn(wpfElement, 1);
-                    formGrid.Children.Add(wpfElement);
-
-                    this.wpfElements.Add(new ElementCacheEntry(wpfElementCreator, wpfElement, fieldInfo));
 
                     currentRow++;
                 }
+
+                // Add last row to make the scrolling ok
+                formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
             }
 
             // Focuses first element

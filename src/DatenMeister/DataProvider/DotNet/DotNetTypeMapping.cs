@@ -35,5 +35,14 @@ namespace DatenMeister.DataProvider.DotNet
         {
             return this.mappings.Where(x => x.Type == type).FirstOrDefault();
         }
+
+        /// <summary>
+        /// Removes the mapping for a certain type
+        /// </summary>
+        /// <param name="type">Type, whose mapping shall get removed</param>
+        public void RemoveFor(Type type)
+        {
+            this.mappings.RemoveAll(x => x.DotNetType == type);
+        }
     }
 }

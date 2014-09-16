@@ -1,102 +1,117 @@
 namespace DatenMeister.Entities.AsObject.FieldInfo
 {
-    public static class Types
+    public static partial class Types
     {
+        public const string DefaultExtentUri="datenmeister:///types/fieldinfo";
+
         public static DatenMeister.IURIExtent Init()
         {
-            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types");
+            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(DefaultExtentUri);
+            DatenMeister.Entities.AsObject.Uml.Types.AssignTypeMapping(extent);
+            Init(extent);
+            return extent;
+        }
+
+        public static void Init(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            if(Types.Comment == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "Comment";
-                Types.Comment = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.Comment = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Comment, "Comment");
                 extent.Elements().add(Types.Comment);
             }
 
+            if(Types.General == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "General";
-                Types.General = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.General = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.General, "General");
                 extent.Elements().add(Types.General);
             }
 
+            if(Types.Checkbox == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "Checkbox";
-                Types.Checkbox = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.Checkbox = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Checkbox, "Checkbox");
                 extent.Elements().add(Types.Checkbox);
             }
 
+            if(Types.TextField == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "TextField";
-                Types.TextField = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.TextField = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.TextField, "TextField");
                 extent.Elements().add(Types.TextField);
             }
 
+            if(Types.DatePicker == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "DatePicker";
-                Types.DatePicker = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.DatePicker = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.DatePicker, "DatePicker");
                 extent.Elements().add(Types.DatePicker);
             }
 
+            if(Types.ActionButton == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "ActionButton";
-                Types.ActionButton = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.ActionButton = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ActionButton, "ActionButton");
                 extent.Elements().add(Types.ActionButton);
             }
 
+            if(Types.ReferenceBase == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "ReferenceBase";
-                Types.ReferenceBase = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.ReferenceBase = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceBase, "ReferenceBase");
                 extent.Elements().add(Types.ReferenceBase);
             }
 
+            if(Types.ReferenceByValue == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "ReferenceByValue";
-                Types.ReferenceByValue = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.ReferenceByValue = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByValue, "ReferenceByValue");
                 extent.Elements().add(Types.ReferenceByValue);
             }
 
+            if(Types.ReferenceByRef == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "ReferenceByRef";
-                Types.ReferenceByRef = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.ReferenceByRef = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByRef, "ReferenceByRef");
                 extent.Elements().add(Types.ReferenceByRef);
             }
 
+            if(Types.MultiReferenceField == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "MultiReferenceField";
-                Types.MultiReferenceField = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.MultiReferenceField = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.MultiReferenceField, "MultiReferenceField");
                 extent.Elements().add(Types.MultiReferenceField);
             }
 
+            if(Types.View == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "View";
-                Types.View = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.View = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.View, "View");
                 extent.Elements().add(Types.View);
             }
 
+            if(Types.FormView == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "FormView";
-                Types.FormView = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.FormView = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.FormView, "FormView");
                 extent.Elements().add(Types.FormView);
             }
 
+            if(Types.TableView == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "TableView";
-                Types.TableView = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.TableView = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.TableView, "TableView");
                 extent.Elements().add(Types.TableView);
             }
 
-            return extent;
+            if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)
+            {
+                (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
+            }
+
+            OnInitCompleted();
         }
 
         public static DatenMeister.IObject Comment;
@@ -143,5 +158,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TableView), Types.TableView);
         }
 
+        static partial void OnInitCompleted();
     }
 }

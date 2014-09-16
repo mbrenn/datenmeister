@@ -19,8 +19,8 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         private PropertyInfo propertyInfo;
 
-        public DotNetUnspecified(IObject owner, PropertyInfo propertyInfo, object value)
-            : base(owner, propertyInfo.Name, value)
+        public DotNetUnspecified(IObject owner, PropertyInfo propertyInfo, object value, PropertyValueType propertyValueType)
+            : base(owner, propertyInfo.Name, value, propertyValueType)
         {
             this.propertyInfo = propertyInfo;
         }

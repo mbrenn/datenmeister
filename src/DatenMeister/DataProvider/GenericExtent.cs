@@ -63,7 +63,7 @@ namespace DatenMeister.DataProvider
         /// <returns>Elements of the current extent</returns>
         public IReflectiveSequence Elements()
         {
-            return new ListWrapperReflectiveSequence<object>(this, elements);
+            return new GenericExtentReflectiveSequence(this, elements);
         }
 
         /// <summary>
@@ -82,6 +82,54 @@ namespace DatenMeister.DataProvider
         {
             get;
             set;
+        }
+
+        public class GenericExtentReflectiveSequence : ListWrapperReflectiveSequence<object>
+        {
+            public GenericExtentReflectiveSequence(IURIExtent extent, IList<object> elements)
+                : base(extent, elements)
+            {
+            }
+
+            public override void add(int index, object value)
+            {
+                this.SetExtentIfPossible(value);
+                base.add(index, value);
+            }
+
+            public override bool add(object value)
+            {
+                this.SetExtentIfPossible(value);
+                return base.add(value);
+            }
+
+            public override bool addAll(IReflectiveSequence elements)
+            {
+                foreach (var element in elements)
+                {
+                    this.SetExtentIfPossible(element);
+                }
+
+                return base.addAll(elements);
+            }
+
+            public override object set(int index, object value)
+            {
+                this.SetExtentIfPossible(value);
+                return base.set(index, value);
+            }
+
+            /// <summary>
+            /// Sets the extent, if possible to the given value
+            /// </summary>
+            /// <param name="value">Value to be set</param>
+            private void SetExtentIfPossible(object value)
+            {
+                if (value is GenericObject)
+                {
+                    (value as GenericObject).Extent = this.Extent;
+                }
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DatenMeister.DataProvider
     /// Just a generic object that is not aligned to any data provider or any other object. 
     /// The method is multithreading safe. Can be seen as a completely decoupled thing. 
     /// </summary>
-    public class GenericObject : IObject
+    public class GenericObject : IObject, IKnowsExtentType
     {
         /// <summary>
         /// Stores the owner of the extent
@@ -23,6 +23,12 @@ namespace DatenMeister.DataProvider
         /// </summary>
         private string id;
 
+        public string Id
+        {
+            get { return this.id; }
+            private set { this.id = value; }
+        }
+
         public GenericObject(IURIExtent extent = null, string id = null)
         {
             this.owner = extent;
@@ -32,11 +38,17 @@ namespace DatenMeister.DataProvider
             }
 
             this.id = id;
+
+            if (this.id == null)
+            {
+                this.Id = Guid.NewGuid().ToString();
+            }
         }
 
         public IURIExtent Extent
         {
             get { return this.owner; }
+            set { this.owner = value; }
         }
 
         /// <summary>
@@ -50,10 +62,10 @@ namespace DatenMeister.DataProvider
             {
                 if (this.isSet(propertyName))
                 {
-                    return new GenericUnspecified(this, propertyName, this.values[propertyName]);
+                    return new GenericUnspecified(this, propertyName, this.values[propertyName], PropertyValueType.Single);
                 }
 
-                return new GenericUnspecified(this, propertyName, ObjectHelper.NotSet);
+                return new GenericUnspecified(this, propertyName, ObjectHelper.NotSet, PropertyValueType.Single);
             }
         }
 
@@ -63,7 +75,7 @@ namespace DatenMeister.DataProvider
             {
                 return this.values.Select(x => 
                     new ObjectPropertyPair(x.Key,
-                    new GenericUnspecified(this, x.Key, x.Value)));
+                    new GenericUnspecified(this, x.Key, x.Value, PropertyValueType.Single)));
             }
         }
 
@@ -96,12 +108,19 @@ namespace DatenMeister.DataProvider
             this.owner.Elements().remove(this);
         }
 
-        public string Id
+        Type IKnowsExtentType.ExtentType
         {
-            get
+            get { return typeof(GenericExtent); }
+        }
+
+        public override string ToString()
+        {
+            if ( this.isSet("name") )
             {
-                return this.id;
+                return this.get("name").AsSingle().ToString();
             }
+
+            return base.ToString();
         }
     }
 }

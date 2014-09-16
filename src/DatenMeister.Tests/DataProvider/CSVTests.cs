@@ -142,7 +142,8 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestAdd()
         {
-            DatenMeisterPool.DoDefaultStaticBinding();
+            ApplicationCore.PerformBinding();
+            var pool = DatenMeisterPool.Create();
 
             var settings = new CSVSettings()
             {

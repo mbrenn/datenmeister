@@ -35,6 +35,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -49,6 +52,7 @@
     <Compile Include="BaseUnspecified.cs" />
     <Compile Include="DataProvider\BaseReflectiveCollection.cs" />
     <Compile Include="DataProvider\BaseReflectiveSequence.cs" />
+    <Compile Include="DataProvider\CollectionToSequenceWrapper.cs" />
     <Compile Include="DataProvider\Common\ResolvableByPath.cs" />
     <Compile Include="DataProvider\CSV\CSVDataProvider.cs" />
     <Compile Include="DataProvider\CSV\CSVExtent.cs" />
@@ -65,12 +69,16 @@
     <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
     <Compile Include="DataProvider\DotNet\DotNetUnspecified.cs" />
     <Compile Include="DataProvider\EnumerationReflectiveSequence.cs" />
+    <Compile Include="DataProvider\ExtensionMethods.cs" />
     <Compile Include="DataProvider\FactoryProvider.cs" />
     <Compile Include="DataProvider\GenericElement.cs" />
     <Compile Include="DataProvider\GenericExtent.cs" />
     <Compile Include="DataProvider\GenericFactory.cs" />
     <Compile Include="DataProvider\GenericObject.cs" />
     <Compile Include="DataProvider\GenericReflectiveSequence.cs" />
+    <Compile Include="DataProvider\IHasFactoryExtent.cs" />
+    <Compile Include="DataProvider\IKnowsExtentType.cs" />
+    <Compile Include="DataProvider\IProxyObject.cs" />
     <Compile Include="DataProvider\ListNonGenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListReflectiveSequence.cs" />
     <Compile Include="DataProvider\GenericUnspecified.cs" />
@@ -80,9 +88,20 @@
     <Compile Include="DataProvider\ListNonGenericWrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListWrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\Pool\AllItemsReflectiveCollection.cs" />
+    <Compile Include="DataProvider\ReflectiveExtent.cs" />
     <Compile Include="DataProvider\Views\FieldInfo.cs" />
     <Compile Include="DataProvider\Views\View.cs" />
     <Compile Include="DataProvider\Views\ViewsExtent.cs" />
+    <Compile Include="DataProvider\Wrapper\EventOnChange\EventOnChangeElement.cs" />
+    <Compile Include="DataProvider\Wrapper\EventOnChange\EventOnChangeExtent.cs" />
+    <Compile Include="DataProvider\Wrapper\EventOnChange\EventOnChangeReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Wrapper\EventOnChange\EventOnChangeUnspecified.cs" />
+    <Compile Include="DataProvider\Wrapper\IWrapperExtent.cs" />
+    <Compile Include="DataProvider\Wrapper\WrapperElement.cs" />
+    <Compile Include="DataProvider\Wrapper\WrapperExtent.cs" />
+    <Compile Include="DataProvider\Wrapper\WrapperHelper.cs" />
+    <Compile Include="DataProvider\Wrapper\WrapperReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Wrapper\WrapperUnspecified.cs" />
     <Compile Include="DataProvider\Xml\XmlDataProvider.cs" />
     <Compile Include="DataProvider\Xml\XmlExtent.cs" />
     <Compile Include="DataProvider\Xml\XmlFactory.cs" />
@@ -99,6 +118,7 @@
     <Compile Include="Entities\AsObject\FieldInfo.Types.cs" />
     <Compile Include="Entities\AsObject\UML.Objects.cs" />
     <Compile Include="Entities\AsObject\UML.Types.cs" />
+    <Compile Include="Entities\AsObject\UML.Types.User.cs" />
     <Compile Include="Entities\DM\RecentProject.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
     <Compile Include="Entities\FieldInfos\Checkbox.cs" />
@@ -119,12 +139,15 @@
     <Compile Include="IDatenMeisterSettings.cs" />
     <Compile Include="IElement.cs" />
     <Compile Include="IFactory.cs" />
+    <Compile Include="Injection.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="IPool.cs" />
+    <Compile Include="IPublicDatenMeisterSettings.cs" />
     <Compile Include="IReflectiveCollection.cs" />
     <Compile Include="IReflectiveSequence.cs" />
     <Compile Include="IUnspecified.cs" />
     <Compile Include="IURIExtent.cs" />
+    <Compile Include="Logic\ApplicationCore.cs" />
     <Compile Include="Logic\ClientActions\ClientActionInformation.cs" />
     <Compile Include="Logic\ClientActions\IClientAction.cs" />
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
@@ -145,9 +168,12 @@
     <Compile Include="Logic\SourceFactory\SourceFactoryBase.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptBuilder.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptSourceFactory.cs" />
+    <Compile Include="Logic\TypeResolver\ITypeResolver.cs" />
+    <Compile Include="Logic\TypeResolver\TypeResolverImpl.cs" />
     <Compile Include="Logic\Views\DefaultViewManager.cs" />
     <Compile Include="Logic\Views\IViewManager.cs" />
     <Compile Include="Logic\Views\ViewHelper.cs" />
+    <Compile Include="ObjectConversion.cs" />
     <Compile Include="Pool\Extensions.cs" />
     <Compile Include="Pool\ExtentNames.cs" />
     <Compile Include="Pool\IPoolResolver.cs" />
@@ -158,7 +184,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources_DatenMeister.resx</DependentUpon>
     </Compile>
+    <Compile Include="Transformations\BaseFilterTransformation.cs" />
     <Compile Include="Transformations\BaseTransformation.cs" />
+    <Compile Include="Transformations\FilterByExtentTypeTransformation.cs" />
+    <Compile Include="Transformations\FilterByPropertyTransformation.cs" />
     <Compile Include="Transformations\FilterByTypeTransformation.cs" />
     <Compile Include="Transformations\GroupBy\BaseGroupByTransformation.cs" />
     <Compile Include="Transformations\GroupBy\GroupByDictionary.cs" />
@@ -190,6 +219,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logic\SourceFactory\Resources\IObjectImplementation.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

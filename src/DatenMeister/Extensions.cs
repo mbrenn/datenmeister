@@ -1,6 +1,7 @@
 ﻿using DatenMeister.DataProvider;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
+using Ninject;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -61,11 +62,56 @@ namespace DatenMeister
 
             if (objAsString != null)
             {
-                var poolResolver = PoolResolver.GetDefault(pool);
+                var poolResolver = Injection.Application.Get<IPoolResolver>();
                 return poolResolver.Resolve(objAsString, context);
             }
 
             throw new NotImplementedException("Type of resolve cannot be done...");
+        }
+
+        /// <summary>
+        /// Gets the enumeration of extent types
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentType">The extent type to be queried</param>
+        /// <returns>Enumeration, matching to the given extentType</returns>
+        public static IEnumerable<ExtentInstance> Get(this IPool pool, ExtentType extentType)
+        {
+            return pool.Instances.Where(x => x.ExtentType == extentType);
+        }
+
+        /// <summary>
+        /// Gets the enumeration of extent types
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentType">The extent type to be queried</param>
+        /// <returns>Enumeration, matching to the given extentType</returns>
+        public static IEnumerable<IURIExtent> GetExtent(this IPool pool, ExtentType extentType)
+        {
+            return pool.Instances.Where(x => x.ExtentType == extentType).Select(x => x.Extent);
+        }
+
+        /// <summary>
+        /// Gets the extent instance of a certain extent
+        /// </summary>
+        /// <param name="pool">Pool to be used</param>
+        /// <param name="extent">Extent whose instance is queried</param>
+        /// <returns>Found extent instance</returns>
+        public static ExtentInstance GetInstance(this IPool pool, IURIExtent extent)
+        {
+            return pool.Instances.Where(x => x.Extent == extent).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Gets the extent instance of a certain extent. 
+        /// The pool will be retrieved from the DoI container
+        /// </summary>
+        /// <param name="extent">Extent whose instance is queried</param>
+        /// <returns>Found extent instance</returns>
+        public static ExtentInstance GetInstance(this IURIExtent extent)
+        {
+            var pool = Injection.Application.Get<IPool>();
+            return pool.GetInstance(extent);
         }
 
         public static JsonExtentInfo ToJson(this IURIExtent extent)
@@ -86,6 +132,11 @@ namespace DatenMeister
         /// <returns>Converted object</returns>
         public static object AsSingle(this object value, bool fullResolve = true)
         {
+            if (value == null)
+            {
+                return ObjectHelper.Null;
+            }
+
             var valueAsResolvable = value as IResolvable;
             if (valueAsResolvable != null && fullResolve)
             {
@@ -127,10 +178,6 @@ namespace DatenMeister
             if (valueAsEnumeration != null)
             {
                 return Extensions.AsSingle(valueAsEnumeration.OfType<object>().FirstOrDefault(), fullResolve);
-            }
-            else if (value == null)
-            {
-                return ObjectHelper.Null;
             }
             else
             {
@@ -280,6 +327,15 @@ namespace DatenMeister
         }
 
         /// <summary>
+        /// Releases the given extent from pool, so it can be added to a new pool
+        /// </summary>
+        /// <param name="extent">Extent to be released</param>
+        public static void ReleaseFromPool(this IURIExtent extent)
+        {
+            extent.Pool = null;
+        }
+
+        /// <summary>
         /// Transforms the given object to a pure Json-Object that can be used for web interaction
         /// </summary>
         /// <param name="value">Value to be converted</param>
@@ -373,86 +429,6 @@ namespace DatenMeister
         }
 
         /// <summary>
-        /// Returns the information whether the given object might be true or false
-        /// </summary>
-        /// <param name="value">Object to be tested</param>
-        public static bool ToBoolean(object value)
-        {
-            if (value == null)
-            {
-                return false;
-            }
-
-            if (value is bool)
-            {
-                return (bool)value;
-            }
-
-            if (value is string)
-            {
-                return value.ToString() == "True" || value.ToString() == "true";
-            }
-
-            if (value is int)
-            {
-                return ((int)value) != 0;
-            }
-
-            return false;
-        }
-
-        public static DateTime? ToDateTime(object value)
-        {
-            if (value == null)
-            {
-                return null;
-            }
-
-            if (value is DateTime)
-            {
-                return (DateTime)value;
-            }
-
-            if (value is string)
-            {
-                DateTime result;
-                if (DateTime.TryParse(
-                    value.ToString(),
-                    CultureInfo.InvariantCulture,
-                    DateTimeStyles.AssumeLocal,
-                    out result))
-                {
-                    return result;
-                }
-
-                // Parsing was not successful
-                return null;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Converts the given object to a string
-        /// </summary>
-        /// <param name="value">Value to be converted</param>
-        /// <returns>Stringified object</returns>
-        public static string ToString(object value)
-        {
-            if (value == null)
-            {
-                return null;
-            }
-
-            if (value is IFormattable)
-            {
-                return (value as IFormattable).ToString(null, CultureInfo.InvariantCulture);
-            }
-
-            return value.ToString();
-        }
-
-        /// <summary>
         /// Creates an object and stores it into the extent
         /// </summary>
         /// <param name="factory">Factory being used to create the object</param>
@@ -464,6 +440,17 @@ namespace DatenMeister
             var result = factory.create(type);
             extent.Elements().add(result);
             return result;
+        }
+
+        /// <summary>
+        /// Gets the instance within the pool by the extent Uri
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentUri">Uri of the extent</param>
+        /// <returns>Found extent id</returns>
+        public static ExtentInstance GetInstance(this IPool pool, string extentUri)
+        {
+            return pool.Instances.Where(x => x.Extent.ContextURI() == extentUri).FirstOrDefault();
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Text;
 
 namespace DatenMeister.DataProvider.DotNet
 {
+    /// <summary>
+    /// Creates dot net elements
+    /// </summary>
     public class DotNetFactory : IFactory
     {
         private DotNetExtent extent;
@@ -23,9 +26,13 @@ namespace DatenMeister.DataProvider.DotNet
             {
                 return new DotNetObject(this.extent, Activator.CreateInstance(found.DotNetType));
             }
+            else if (type == null)
+            {
+                throw new NotImplementedException("Type is null");
+            }
             else
             {
-                return null;
+                throw new NotImplementedException("Type is unknown: " + type.ToString());
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,26 @@ namespace DatenMeister.Transformations
         public static IReflectiveCollection FilterByType(this IReflectiveCollection collection, string typeName)
         {
             return new FilterByTypeTransformation(collection, typeName);
+        }
+
+        public static IReflectiveCollection FilterByExtentType(this IReflectiveCollection collection, ExtentType type)
+        {
+            return new FilterByExtentTypeTransformation(collection, type);
+        }
+
+        public static IReflectiveCollection FilterByProperty(this IReflectiveCollection collection, string propertyName, object value)
+        {
+            return new FilterByPropertyTransformation(collection, propertyName, value);
+        }
+
+        public static IReflectiveCollection Union(this IEnumerable<IReflectiveCollection> collections)
+        {
+            return new UnionTransformation(collections);
+        }
+
+        public static IReflectiveCollection Union(this IEnumerable<IURIExtent> extents)
+        {
+            return new UnionTransformation(extents.Select(x=>x.Elements()));
         }
     }
 }

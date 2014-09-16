@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,75 +8,47 @@ using System.Xml.Linq;
 
 namespace DatenMeister
 {
-    public interface IDatenMeisterSettings
+    /// <summary>
+    /// Defines the additional settings, that shall only be accessed via
+    /// the ApplicationCore helper methods
+    /// </summary>
+    public interface IDatenMeisterSettings : IPublicDatenMeisterSettings
     {
         /// <summary>
-        /// Gets or sets the applicationname
+        /// Performs the full initialization at application start. 
+        /// This method is just called once
         /// </summary>
-        string ApplicationName
-        {
-            get;
-            set;
-        } 
-        
-        /// <summary>
-        /// Gets or sets te window title
-        /// </summary>
-        string WindowTitle
-        {
-            get;
-            set;
-        }
+        void InitializeForBootUp(ApplicationCore core);
 
         /// <summary>
-        /// Gets or sets the datameister pool
+        /// This function will be called, when a new viewset needs to be created. 
+        /// It is independent to the fact whether the containing extents and viewinformation
+        /// is loaded or is created from Scratch.
         /// </summary>
-        DatenMeisterPool Pool
-        {
-            get;
-            set;
-        }
+        void InitializeViewSet(ApplicationCore core);
 
         /// <summary>
-        /// Gets or sets the project extent
+        /// The function will be called, when the user wants to have an extent/viewset from
+        /// scratch. This means, that he has clicked "File->New"
         /// </summary>
-        IURIExtent ProjectExtent
-        {
-            get;
-            set;
-        }
+        void InitializeFromScratch(ApplicationCore core);
 
         /// <summary>
-        /// Gets or sets the extent that is used to find the main views
+        /// The function will be called, when the user has loaded a ViewSet. 
         /// </summary>
-        IURIExtent ViewExtent
-        {
-            get;
-            set;
-        }
+        void InitializeAfterLoading(ApplicationCore core);
 
         /// <summary>
-        /// Stores the meta extent being used to 
+        /// The function will be called, when application has been started. 
+        /// It can be used to include some example data
         /// </summary>
-        IURIExtent TypeExtent
-        {
-            get;
-            set;
-        }
+        void InitializeForExampleData(ApplicationCore core);
 
         /// <summary>
-        /// Stores the settings for the extent
+        /// The function will be called, before the application gets closed.
+        /// It can be used to store the latest changes. 
         /// </summary>
-        XmlSettings ExtentSettings
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Creates an empty document being used
-        /// </summary>
-        /// <returns>Creates an empty document</returns>
-        XDocument CreateEmpty(); 
+        /// <param name="core">Core to be used</param>
+        void StoreViewSet(ApplicationCore core);
     }
 }

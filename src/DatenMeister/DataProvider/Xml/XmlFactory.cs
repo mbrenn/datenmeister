@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
@@ -17,25 +18,35 @@ namespace DatenMeister.DataProvider.Xml
 
         public XmlFactory(XmlExtent extent)
         {
-            Ensure.That(extent is XmlExtent, "extent != XmlExtent");
             this.extent = extent;
         }
 
         public override IObject create(IObject type)
         {
-            // Checks, if we have a better element, where new node can be added
-            var info = this.extent.Settings.Mapping.FindByType(type);
             var nodeName = "element";
-            if (info != null)
+
+            // Checks, if we have a better element, where new node can be added
+            if (this.extent != null)
             {
-                nodeName = info.NodeName;
+                var info = this.extent.Settings.Mapping.FindByType(type);
+                if (info != null)
+                {
+                    nodeName = info.NodeName;
+                }
             }
 
             // Adds a simple object 
-            var newObject = new XElement(nodeName);
-            newObject.Add(new XAttribute("id", Guid.NewGuid().ToString()));
+            var newNode = new XElement(nodeName);
+            newNode.Add(new XAttribute("id", Guid.NewGuid().ToString()));
 
-            return new XmlObject(this.extent, newObject);
+            // Check, if the given value is as an element, if yes, add the xmi:type
+            if (type != null)
+            {
+                var name = NamedElement.getName(type);
+                newNode.Add(new XAttribute(DatenMeister.Entities.AsObject.Uml.Types.XmiNamespace + "type", name));
+            }
+
+            return new XmlObject(this.extent, newNode);
         }
     }
 }

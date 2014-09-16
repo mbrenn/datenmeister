@@ -91,7 +91,7 @@ namespace DatenMeister.Transformations
         {
             foreach (var collection in this.collections)
             {
-                foreach ( var item in collection)
+                foreach (var item in collection)
                 {
                     yield return item;
                 }

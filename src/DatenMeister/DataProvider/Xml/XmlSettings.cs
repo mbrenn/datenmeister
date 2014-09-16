@@ -31,20 +31,22 @@ namespace DatenMeister.DataProvider.Xml
         }
 
         /// <summary>
-        /// Gets or set the function that is capable to initialize the database
-        /// </summary>
-        public Action<XDocument> InitDatabaseFunction
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Initializes a new instance of the XmlSettings
         /// </summary>
         public XmlSettings()
         {
             this.Mapping = new XmlTypeMapping();
+        }
+
+        /// <summary>
+        /// Gets an empty setting. Shall never be modified
+        /// </summary>
+        public static XmlSettings Empty
+        {
+            get
+            {
+                return new XmlSettings();
+            }
         }
     }
 }
