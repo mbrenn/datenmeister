@@ -62,6 +62,7 @@ namespace DatenMeister.AddOns.Export.Report.Simple
                     new { 
                         Created = DateTime.Now.ToString(),
                         CreatedBy = Environment.UserName,
+                        ComputerName = Environment.MachineName,
                         Tables = tables}));
 
             File.WriteAllText(path, templateContent);
