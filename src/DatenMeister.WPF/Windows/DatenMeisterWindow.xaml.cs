@@ -559,6 +559,11 @@ namespace DatenMeister.WPF.Windows
             {
                 e.Handled = this.FocusCurrentTab();
             }
+
+            if (e.Key == Key.S && (e.KeyboardDevice.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                this.SaveChanges();
+            }
         }
 
         /// <summary>
