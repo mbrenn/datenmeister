@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.DataProvider.DotNet
 {
-    public class DotNetReflectiveSequence<T> : ListWrapperReflectiveSequence<T>
+    public class DotNetReflectiveSequence<T> : ListWrapperReflectiveSequence<T>, IKnowsExtentType
     {
         public DotNetReflectiveSequence(IURIExtent extent, IList<T> list)
             : base(extent, list)
@@ -24,6 +24,14 @@ namespace DatenMeister.DataProvider.DotNet
             }
 
             return base.ConvertInstanceTo(value);
+        }
+
+        /// <summary>
+        /// Knows the extent type
+        /// </summary>
+        public Type ExtentType
+        {
+            get { return typeof(DotNetExtent); }
         }
     }
 }

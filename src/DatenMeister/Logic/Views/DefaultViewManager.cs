@@ -59,6 +59,13 @@ namespace DatenMeister.Logic.Views
                 
         }
 
+        /// <summary>
+        /// Gets a list of all entries, where the object and the given view
+        /// type matches to the possible views
+        /// </summary>
+        /// <param name="obj">Object to be tested</param>
+        /// <param name="viewType">Type of the view to be shown</param>
+        /// <returns>Enumeration of entries</returns>
         private IEnumerable<ViewEntry> FindEntries(IObject obj, ViewType viewType)
         {
             return this.entries.Where(viewEntry =>
