@@ -15,7 +15,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         private List<DotNetTypeInformation> mappings = new List<DotNetTypeInformation>();
 
-        public void Add(Type dotNetType, IObject type)
+        public DotNetTypeInformation Add(Type dotNetType, IObject type)
         {
             var information = new DotNetTypeInformation()
             {
@@ -24,6 +24,8 @@ namespace DatenMeister.DataProvider.DotNet
             };
 
             this.mappings.Add(information);
+
+            return information;
         }
 
         public DotNetTypeInformation FindByDotNetType(Type type)
