@@ -54,28 +54,39 @@ namespace DatenMeister.DataProvider
         }
 
         /// <summary>
-        /// This method is called, when a conversion to the store format 
+        /// This method is called, when a conversion from the element to be added to the store format 
         /// is necessary. Per default, an explicit time conversion will be used. 
-        /// This might also contain more complex functn
+        /// This might also contain more complex function.
         /// </summary>
         /// <param name="value">Value to be converted</param>
         /// <returns>The converted value</returns>
-        public virtual T ConvertInstanceTo(object value)
+        public virtual T ConvertInstanceToInternal(object value)
         {
             return (T)value;
+        }
+
+        /// <summary>
+        /// This method is called, when an internal object is sent out to a caller. 
+        /// Per default, the list content is sent out without any modification
+        /// </summary>
+        /// <param name="item">Item to be sent out</param>
+        /// <returns>The sent out item</returns>
+        public virtual object ConvertInternalToInstance(T item)
+        {
+            return item;
         }
 
         public override void add(int index, object value)
         {
             this.EnsureThatNotReadOnly();
 
-            this.GetList().Insert(index, this.ConvertInstanceTo(value));
+            this.GetList().Insert(index, this.ConvertInstanceToInternal(value));
             this.OnChange();
         }
 
         public override object get(int index)
         {
-            return this.GetList()[index];
+            return this.ConvertInternalToInstance(this.GetList()[index]);
         }
 
         public override object remove(int index)
@@ -93,7 +104,7 @@ namespace DatenMeister.DataProvider
             this.EnsureThatNotReadOnly();
 
             var oldValue = this.GetList()[index];
-            this.GetList()[index] = this.ConvertInstanceTo(value);
+            this.GetList()[index] = this.ConvertInstanceToInternal(value);
             this.OnChange();
             return oldValue;
         }
@@ -102,7 +113,7 @@ namespace DatenMeister.DataProvider
         {
             this.EnsureThatNotReadOnly();
 
-            this.GetList().Add(this.ConvertInstanceTo(value));
+            this.GetList().Add(this.ConvertInstanceToInternal(value));
             this.OnChange();
             return true;
         }
@@ -119,7 +130,7 @@ namespace DatenMeister.DataProvider
         {
             this.EnsureThatNotReadOnly();
 
-            var converted = this.ConvertInstanceTo(value);
+            var converted = this.ConvertInstanceToInternal(value);
             var list = this.GetList();
             var result = list.Contains(converted);
             this.GetList().Remove(converted);
@@ -136,7 +147,7 @@ namespace DatenMeister.DataProvider
         {
             foreach (var item in this.GetList())
             {
-                yield return item;
+                yield return this.ConvertInternalToInstance(item);
             }
         }
     }

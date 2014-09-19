@@ -1,5 +1,6 @@
 ﻿using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
+using DatenMeister.Logic;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -47,11 +48,13 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestGlobalExtentObject()
         {
+            ApplicationCore.PerformBinding();
+
             var extent = new GlobalDotNetExtent();
             var value = new TestClass();
             value.NumberValue = 2;
             value.TextValue = "Test";
-            var valueObject =extent.CreateObject(value);
+            var valueObject = extent.CreateObject(value);
 
             Assert.That(valueObject.get("NumberValue").AsSingle(), Is.InstanceOf<long>());
             Assert.That((long)valueObject.get("NumberValue").AsSingle(), Is.EqualTo(2));
@@ -72,6 +75,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestGlobalExtentReflectiveSequence()
         {
+            ApplicationCore.PerformBinding();
             var extent = new GlobalDotNetExtent();
 
             var list = new List<TestClass>();
@@ -84,13 +88,18 @@ namespace DatenMeister.Tests.DataProvider
 
             listObject.Add(newElement);
 
-            var newElement2 = new GenericObject();
+            // Element as typed
+            var newElement2 = new GenericElement(type: extent.Mapping.FindByDotNetType(typeof(TestClass)).Type);
             newElement2.set("NumberValue", 2);;
             newElement2.set("TextValue", "More Text");
-
             listObject.Add(newElement2);
 
-            Assert.That(listObject.size(), Is.EqualTo(2));
+            // Element as non-typed
+            var newElement3 = new GenericObject();
+            newElement2.set("NumberValue", 2); ;
+            newElement2.set("TextValue", "More Text");
+
+            Assert.That(listObject.size(), Is.EqualTo(3));
 
             // Check first element
             var retrievedElement = listObject.ElementAt(0).AsIObject();

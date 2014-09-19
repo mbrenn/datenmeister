@@ -107,7 +107,7 @@ namespace DatenMeister.DataProvider.DotNet
                 this.extent = extent;
             }
 
-            public override IObject ConvertInstanceTo(object value)
+            public override IObject ConvertInstanceToInternal(object value)
             {
                 if (value is DotNetObject)
                 {

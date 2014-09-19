@@ -77,6 +77,11 @@ namespace DatenMeister.DataProvider
                 return new DatenMeister.DataProvider.DotNet.DotNetFactory(extent as DotNet.DotNetExtent);
             }
 
+            if (type == typeof(DotNet.GlobalDotNetExtent))
+            {
+                return new DatenMeister.DataProvider.DotNet.DotNetFactory(extent as DotNet.DotNetExtent);
+            }
+
             if (type == typeof(CSV.CSVExtent))
             {
                 return new DatenMeister.DataProvider.CSV.CSVFactory(extent as CSV.CSVExtent);
