@@ -130,6 +130,9 @@ namespace DatenMeister.Tests.DataProvider
 
             Assert.That(retrievedElement.get("TextValue").AsSingle(), Is.InstanceOf<string>());
             Assert.That((string)retrievedElement.get("TextValue").AsSingle(), Is.EqualTo("More Text"));
+
+            listObject.RemoveAt(1);
+            Assert.That(listObject.size(), Is.EqualTo(2));
         }
 
         public class TestClass
