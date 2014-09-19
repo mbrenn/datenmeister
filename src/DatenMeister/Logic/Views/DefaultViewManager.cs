@@ -39,35 +39,29 @@ namespace DatenMeister.Logic.Views
         }
 
         /// <summary>
-        /// Adds a predicate to find out the correct 
+        /// Adds a mapping between a certain type and a view
         /// </summary>
-        /// <param name="predicate">Predicate being used to check, if view is applicable</param>
+        /// <param name="metaClass">Type being associated</param>
         /// <param name="view">View being associated</param>
-        /// <param name="isDefault">true, if this view should be seen as default. 
-        /// If there are more than one default views, the first view will be returned</param>
-        public void Add(Func<IObject, ViewType, bool> predicate, IObject view, bool isDefault)
+        /// <param name="isDefault">true, if default</param>
+        public void Add(IObject metaClass, IObject view, bool isDefault)
         {
-            Ensure.That(predicate != null);
+            Ensure.That(metaClass != null);
+            Ensure.That(view != null);
             Ensure.That(view != null);
 
             this.entries.Add(new ViewEntry()
-                {
-                    Predicate = predicate,
-                    View = view,
-                    IsDefault = isDefault
-                });
+            {
+                MetaClass = metaClass,
+                View = view,
+                IsDefault = isDefault
+            });
+                
         }
 
-        /// <summary>
-        /// Adds a mapping between a certain type and a view
-        /// </summary>
-        /// <param name="type">Type being associated</param>
-        /// <param name="view">View being associated</param>
-        /// <param name="isDefault">true, if default</param>
-        public void Add(IObject type, IObject view, bool isDefault)
+        private IEnumerable<ViewEntry> FindEntries(IObject obj, ViewType viewType)
         {
-            this.Add(
-                (obj, viewType) =>
+            return this.entries.Where(viewEntry =>
                 {
                     var asElement = obj as IElement;
                     if (asElement == null)
@@ -81,10 +75,8 @@ namespace DatenMeister.Logic.Views
                         return false;
                     }
 
-                    return metaClassOfElement.Equals(type) && viewType == ViewType.FormView;
-                },
-                view,
-                isDefault);
+                    return metaClassOfElement.Equals(viewEntry.MetaClass) && viewType == ViewType.FormView;
+                });
         }
 
         /// <summary>
@@ -95,7 +87,7 @@ namespace DatenMeister.Logic.Views
         /// <returns>The default view or nothing</returns>
         public IObject GetDefaultView(IObject obj, ViewType type)
         {
-            var result = this.entries.Where(x => x.Predicate(obj, type) && x.IsDefault).FirstOrDefault();
+            var result = FindEntries(obj, type).Where(x => x.IsDefault).FirstOrDefault();
             if (result == null)
             {
                 if (this.DoAutogenerateForm && type == ViewType.FormView)
@@ -117,7 +109,7 @@ namespace DatenMeister.Logic.Views
         /// <returns>An enumeration of all applicable view definitions</returns>
         public IEnumerable<IObject> GetViews(IObject obj, ViewType type)
         {
-            return this.entries.Where(x => x.Predicate(obj, type) && x.IsDefault).Select(x => x.View);
+            return FindEntries(obj, type).Where(x => x.IsDefault).Select(x => x.View);
         }
 
         /// <summary>
@@ -154,7 +146,7 @@ namespace DatenMeister.Logic.Views
         /// </summary>
         private class ViewEntry
         {
-            public Func<IObject, ViewType, bool> Predicate
+            public IObject MetaClass
             {
                 get;
                 set;
