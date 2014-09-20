@@ -17,7 +17,7 @@ namespace DatenMeister.Tests.DataProvider
         public void TestGettingSetting()
         {
             var extent = new DotNetExtent("test:///");
-            var value = new DotNetObject(extent, new TestClass(), Guid.Empty.ToString());
+            var value = new DotNetObject(extent.Elements(), new TestClass(), Guid.Empty.ToString());
 
             var properties = value.getAll();
             Assert.That(properties.Any(x => x.PropertyName == "TextValue"));

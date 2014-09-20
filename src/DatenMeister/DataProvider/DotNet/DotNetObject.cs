@@ -24,6 +24,8 @@ namespace DatenMeister.DataProvider.DotNet
 
         private object value;
 
+        private IReflectiveSequence sequence;
+
         /// <summary>
         /// Gets the raw value of the object
         /// </summary>
@@ -47,14 +49,20 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="extent"></param>
         /// <param name="value"></param>
-        public DotNetObject(DotNetExtent extent, object value)
+        public DotNetObject(IReflectiveSequence sequence, object value)
         {
+            // TODO: Assign yourself to the reflective collection
             Ensure.That(!(value is DotNetObject), "DotNetObject may not be hosting another DotNetObject");
             Ensure.That(!(value is IObject), "DotNetObject may not be hosting another DotNetObject");
 
             Ensure.That(value != null);
 
-            this.extent = extent;
+            if (sequence != null)
+            {
+                this.sequence = sequence;
+                this.extent = sequence.Extent as DotNetExtent;
+            }
+
             this.value = value;
 
             if (!this.isSet("name") || this.get("name") == null)
@@ -67,10 +75,12 @@ namespace DatenMeister.DataProvider.DotNet
             }
         }
 
-        public DotNetObject(DotNetExtent extent, object value, string id)
-            : this(value, id)
+        public DotNetObject(IReflectiveSequence sequence, object value, string id)
+            : this(sequence, value)
         {
-            this.extent = extent;
+            Ensure.That(id != null);
+            Ensure.That(value != null);
+            this.value = value;
             this.id = id;
         }
 
@@ -213,7 +223,7 @@ namespace DatenMeister.DataProvider.DotNet
         public void delete()
         {
             Ensure.That(extent != null, "No extent had been given");
-            this.extent.Elements().remove(this);
+            this.sequence.remove(this);
         }
 
         /// <summary>
@@ -274,7 +284,8 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else
             {
-                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
+                // It is not an enumeration and it is not a simple type
+                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent.Elements(), checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
             }
         }
 

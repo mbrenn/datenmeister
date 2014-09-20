@@ -49,7 +49,7 @@ namespace DatenMeister.Logic
         {
             return new EnumerationReflectiveSequence<IObject>(this,
                 this.pool.Instances.Select(
-                    x => new DotNetObject(this, x.ToJson(), x.Extent.ContextURI())));
+                    x => new DotNetObject(this.Elements(), x.ToJson(), x.Extent.ContextURI())));
         }
 
         /// <summary>

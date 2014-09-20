@@ -84,7 +84,7 @@ namespace DatenMeister.DataProvider.DotNet
                 return item;
             }
 
-            return new DotNetObject(this.ExtentAsDotNetExtent, item);
+            return new DotNetObject(this, item);
         }
 
         public DotNetExtent ExtentAsDotNetExtent

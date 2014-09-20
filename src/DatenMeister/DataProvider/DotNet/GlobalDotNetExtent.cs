@@ -44,7 +44,7 @@ namespace DatenMeister.DataProvider.DotNet
         {
             AddTypeMapping(extent, typeof(T));
 
-            return new DotNetObject(extent, value);
+            return new DotNetObject(extent.Elements(), value);
         }
 
         /// <summary>

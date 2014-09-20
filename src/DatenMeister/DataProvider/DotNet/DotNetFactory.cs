@@ -24,7 +24,7 @@ namespace DatenMeister.DataProvider.DotNet
             var found = this.extent.Mapping.FindByIObjectType(type);
             if (found != null)
             {
-                return new DotNetObject(this.extent, Activator.CreateInstance(found.DotNetType));
+                return new DotNetObject(this.extent.Elements(), Activator.CreateInstance(found.DotNetType));
             }
             else if (type == null)
             {

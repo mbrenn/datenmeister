@@ -115,7 +115,7 @@ namespace DatenMeister.DataProvider.DotNet
                 }
                 else
                 {
-                    return new DotNetObject(this.extent, value);
+                    return new DotNetObject(this.extent.Elements(), value);
                 }
             }
         }
