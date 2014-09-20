@@ -49,6 +49,9 @@ namespace DatenMeister.DataProvider.DotNet
         /// <param name="value"></param>
         public DotNetObject(DotNetExtent extent, object value)
         {
+            Ensure.That(!(value is DotNetObject), "DotNetObject may not be hosting another DotNetObject");
+            Ensure.That(!(value is IObject), "DotNetObject may not be hosting another DotNetObject");
+
             Ensure.That(value != null);
 
             this.extent = extent;
@@ -256,7 +259,8 @@ namespace DatenMeister.DataProvider.DotNet
                 var n = 0L;
                 foreach (var value in (checkObject as IEnumerable))
                 {
-                    sequence.Add(new DotNetObject(this.extent, value, this.Id + "[" + n.ToString() + "]"));
+                    //sequence.Add(new DotNetObject(this.extent, value, this.Id + "[" + n.ToString() + "]"));
+                    sequence.Add(value);
                     n++;
                 }
 

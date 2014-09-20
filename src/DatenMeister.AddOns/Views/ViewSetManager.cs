@@ -71,9 +71,19 @@ namespace DatenMeister.AddOns.Views
             {
                 var viewManager = Injection.Application.Get<IViewManager>() as DefaultViewManager;
                 var globalDotNetExtent = Injection.Application.Get<GlobalDotNetExtent>();
-                var assignDialog = new ListDialog();
                 var entriesAsObject = globalDotNetExtent.CreateReflectiveSequence(viewManager.Entries);
-                assignDialog.SetReflectiveCollection(entriesAsObject, window.Settings);
+
+                var formView = new TableView();
+                formView.fieldInfos = new List<object>(new[]{
+                    new TextField("View", "View"),
+                    new TextField("MetaClass", "MetaClass"),
+                    new TextField("Is Default", "IsDefault")
+                });
+
+                var assignDialog = new ListDialog(
+                    entriesAsObject,
+                    window.Settings,
+                    Injection.Application.Get<GlobalDotNetExtent>().CreateObject(formView));                
                 
                 assignDialog.ShowDialog();
             };
@@ -81,7 +91,7 @@ namespace DatenMeister.AddOns.Views
             // Add the event, and call yourself
             window.Core.ViewSetInitialized += (x, y) => InitializeViewSet();
             InitializeViewSet();
-
+             
             window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
             window.AddMenuEntry(Localization_DM_Addons.Menu_Views, assignAuto);
         }

@@ -16,9 +16,9 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         private DotNetExtent dotNetExtent;
 
-        private List<object> content = new List<object>();
+        private List<DotNetObject> content = new List<DotNetObject>();
 
-        public IObject ConvertTo(object value)
+        public DotNetObject ConvertTo(object value)
         {
             if (value is DotNetObject)
             {
