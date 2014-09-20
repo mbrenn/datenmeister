@@ -168,6 +168,9 @@ namespace DatenMeister.Logic
 
             // Initializes the default type resolver
             Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
+
+            // Initializes the global dot net extent
+            Injection.Application.Bind<GlobalDotNetExtent>().To<GlobalDotNetExtent>().InSingletonScope();
         }
 
         public void PerformInitializationOfViewSet()

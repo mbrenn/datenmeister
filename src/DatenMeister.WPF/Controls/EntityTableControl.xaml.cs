@@ -438,6 +438,7 @@ namespace DatenMeister.WPF.Controls
                 return;
             }
 
+            // Tries to fiendout the extent type
             var extentType = ExtentType.Type;
             var mainType = TableView.getMainType(this.TableViewInfo);
             var instance = pool.GetInstance(mainType.Extent);
@@ -446,31 +447,15 @@ namespace DatenMeister.WPF.Controls
                 extentType = instance.ExtentType;
             }
 
-            var dialog = new ListDialog();
-            var allTypes =
-                new AllItemsReflectiveCollection(pool)
-                .FilterByExtentType(extentType)
-                .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
-            dialog.SetReflectiveCollection(allTypes, this.Settings);
-            if (dialog.ShowDialog() == true)
+            // Shows the dialog
+            if ( SelectTypeOfNewObjectDialog.ShowNewOfGenericTypeDialog ( 
+                    this.ElementsFactory(pool),
+                    this.Settings,                    
+                    extentType) 
+                != null)
             {
-                if (dialog.SelectedElements.Count() > 0)
-                {
-                    // Finds the factory
-                    var reflectiveCollection = this.ElementsFactory(pool);
-                    var factory = Factory.GetFor(reflectiveCollection.Extent);
-
-                    // Adds the element to the reflective collection
-                    var createdElement = factory.create(dialog.SelectedElements.AsSingle().AsIObject());
-                    reflectiveCollection.add(createdElement);
-
-                    // Now, add the item, it might be, that other extent views also need to be updated.
-                    this.RefreshItems();
-                }
-                else
-                {
-                    MessageBox.Show(Localization_DatenMeister_WPF.NoElementsSelected);
-                }
+                // Only, if a new item has been created the view needs to be reupdated
+                this.RefreshItems();
             }
         }
 

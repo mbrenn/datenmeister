@@ -152,6 +152,9 @@
   <data name="Menu_ViewManager" xml:space="preserve">
     <value>View Manager</value>
   </data>
+  <data name="Menu_ViewManagerAssignTypes" xml:space="preserve">
+    <value>Assign Types</value>
+  </data>
   <data name="Menu_Views" xml:space="preserve">
     <value>View</value>
   </data>

@@ -32,6 +32,14 @@ namespace DatenMeister.Logic.Views
         /// </summary>
         private IURIExtent extent;
 
+        /// <summary>
+        /// Gets the entries.
+        /// </summary>
+        public List<ViewEntry> Entries
+        {
+            get { return this.entries; }
+        }
+
         public DefaultViewManager(IURIExtent extent)
         {
             Ensure.That(extent != null);
@@ -55,8 +63,7 @@ namespace DatenMeister.Logic.Views
                 MetaClass = metaClass,
                 View = view,
                 IsDefault = isDefault
-            });
-                
+            });                
         }
 
         /// <summary>
@@ -151,7 +158,7 @@ namespace DatenMeister.Logic.Views
         /// <summary>
         /// Defines the class, containing the view entries and their information
         /// </summary>
-        private class ViewEntry
+        public class ViewEntry
         {
             public IObject MetaClass
             {

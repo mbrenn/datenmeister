@@ -4,6 +4,7 @@ using DatenMeister.Entities.FieldInfos;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
+using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
@@ -63,13 +64,31 @@ namespace DatenMeister.AddOns.Views
                 window.RefreshTabs();
             };
 
+            var assignAuto = new RibbonButton();
+            assignAuto.Label = Localization_DM_Addons.Menu_ViewManagerAssignTypes;
+            assignAuto.LargeImageSource = AddOnHelper.LoadIcon("emblem-package.png");
+            assignAuto.Click += (x, y) =>
+            {
+                var viewManager = Injection.Application.Get<IViewManager>() as DefaultViewManager;
+                var globalDotNetExtent = Injection.Application.Get<GlobalDotNetExtent>();
+                var assignDialog = new ListDialog();
+                var entriesAsObject = globalDotNetExtent.CreateReflectiveSequence(viewManager.Entries);
+                assignDialog.SetReflectiveCollection(entriesAsObject, window.Settings);
+                
+                assignDialog.ShowDialog();
+            };
+
             // Add the event, and call yourself
             window.Core.ViewSetInitialized += (x, y) => InitializeViewSet();
             InitializeViewSet();
 
             window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
+            window.AddMenuEntry(Localization_DM_Addons.Menu_Views, assignAuto);
         }
 
+        /// <summary>
+        /// Creates the detail view for the objects
+        /// </summary>
         private static void InitializeViewSet()
         {
             // Assigns the viewset,
@@ -78,11 +97,24 @@ namespace DatenMeister.AddOns.Views
             var myViewExtent = myPool.GetExtent(ExtentType.View).First();
             var viewManager = Injection.Application.Get<IViewManager>() as DefaultViewManager;
 
+            CreateForTableView(myViewExtent, viewManager);
+            CreateForFormView(myViewExtent, viewManager);
+        }
+
+        /// <summary>
+        /// Creates the detail view for the table view
+        /// </summary>
+        /// <param name="myViewExtent">Extent to be used</param>
+        /// <param name="viewManager">ViewManager to be used</param>
+        private static void CreateForTableView(IURIExtent myViewExtent, DefaultViewManager viewManager)
+        {
+            /////////////////////////////////////////////
+            // For the tableView
             // Second, create the detail form
             var tableViewForm = DatenMeister.Entities.AsObject.FieldInfo.FormView.create(myViewExtent);
             var tableViewFormAsObj = new DatenMeister.Entities.AsObject.FieldInfo.FormView(tableViewForm);
             tableViewFormAsObj.setAllowDelete(true);
-            tableViewFormAsObj.setName("FormView DetailForm");
+            tableViewFormAsObj.setName("Form for DatenMeister.Views.TableView");
             var myColumns = new DotNetSequence(
                 ViewHelper.ViewTypes,
                 new TextField("Name", "name"),
@@ -99,6 +131,36 @@ namespace DatenMeister.AddOns.Views
                 DatenMeister.Entities.AsObject.FieldInfo.Types.TableView,
                 tableViewForm,
                 true);
+            myViewExtent.Elements().add(tableViewForm);
+        }
+
+        /// <summary>
+        /// Creates the detail view for the table view
+        /// </summary>
+        /// <param name="myViewExtent">Extent to be used</param>
+        /// <param name="viewManager">ViewManager to be used</param>
+        private static void CreateForFormView(IURIExtent myViewExtent, DefaultViewManager viewManager)
+        {
+            /////////////////////////////////////////////
+            // For the tableView
+            // Second, create the detail form
+            var tableViewForm = DatenMeister.Entities.AsObject.FieldInfo.FormView.create(myViewExtent);
+            var tableViewFormAsObj = new DatenMeister.Entities.AsObject.FieldInfo.FormView(tableViewForm);
+            tableViewFormAsObj.setAllowDelete(true);
+            tableViewFormAsObj.setName("Form for DatenMeister.Views.FormView");
+            var myColumns = new DotNetSequence(
+                ViewHelper.ViewTypes,
+                new TextField("Name", "name"),
+                new Checkbox("Autogenerate Fields", "doAutoGenerateByProperties"));
+
+            tableViewFormAsObj.setFieldInfos(myColumns);
+
+            // Third, adds the information to the view manager
+            viewManager.Add(
+                DatenMeister.Entities.AsObject.FieldInfo.Types.FormView,
+                tableViewForm,
+                true);
+            myViewExtent.Elements().add(tableViewForm);
         }
     }
 }

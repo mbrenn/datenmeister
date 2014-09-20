@@ -152,7 +152,7 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
 
         private void btnAddElement_Click(object sender, RoutedEventArgs e)
         {
-            var listForm = new ListDialog();
+            var listForm = new SelectionListDialog();
             listForm.SetReflectiveCollection(this.GetReferenceObjects(), this.field.State.Settings);
             listForm.ShowDialog();
 

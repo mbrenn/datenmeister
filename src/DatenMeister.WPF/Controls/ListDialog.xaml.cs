@@ -51,10 +51,6 @@ namespace DatenMeister.WPF.Controls
             var value = new GenericObject();
             this.Table.TableViewInfo = value;
             this.ViewInformation = new TableView(value);
-            this.ViewInformation.setAllowDelete(false);
-            this.ViewInformation.setAllowEdit(false);
-            this.ViewInformation.setAllowNew(false);
-            this.Table.UseAsSelectionControl = true;
 
             WindowFactory.AutosetWindowSize(this, 0.88);
         }

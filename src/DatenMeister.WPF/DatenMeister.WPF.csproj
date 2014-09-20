@@ -82,6 +82,8 @@
     <Compile Include="Controls\ListDialog.xaml.cs">
       <DependentUpon>ListDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SelectionListDialog.cs" />
+    <Compile Include="Controls\SelectTypeOfNewObjectDialog.cs" />
     <Compile Include="Helper\DataGridHelper.cs" />
     <Compile Include="Helper\MenuHelper.cs" />
     <Compile Include="Localization_DatenMeister_WPF.Designer.cs">
