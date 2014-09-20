@@ -16,19 +16,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         private DotNetExtent dotNetExtent;
 
-        private List<DotNetObject> content = new List<DotNetObject>();
-
-        public DotNetObject ConvertTo(object value)
-        {
-            if (value is DotNetObject)
-            {
-                return value as DotNetObject;
-            }
-
-            var dotNetObject = new DotNetObject(null, value);
-            dotNetObject.SetMetaClassByMapping(this.dotNetExtent);
-            return dotNetObject;
-        }
+        private IList<object> content = new List<object>();
 
         /// <summary>
         /// Initializes a new instance of the DotNetSequence clas
@@ -45,17 +33,30 @@ namespace DatenMeister.DataProvider.DotNet
         public DotNetSequence(DotNetExtent extent, params object[] content)
             : this(extent)
         {
-            this.content.AddRange(content.Select(x => ConvertTo(x)));
+            foreach (var item in content)
+            {
+                this.content.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DotNetSequence class and adds the array
+        /// </summary>
+        /// <param name="content">Objects to be added</param>
+        public DotNetSequence(DotNetExtent extent, IList<object> content)
+            : this(extent)
+        {
+            this.content = content;
         }
 
         public int IndexOf(object item)
         {
-            return this.content.IndexOf(ConvertTo(item));
+            return this.content.IndexOf(item);
         }
 
         public void Insert(int index, object item)
         {
-            this.content.Insert(index, ConvertTo(item));
+            this.content.Insert(index, item);
         }
 
         public void RemoveAt(int index)
@@ -67,17 +68,17 @@ namespace DatenMeister.DataProvider.DotNet
         {
             get
             {
-                return this.content[index];
+                return this.ConvertTo(this.content[index]);
             }
             set
             {
-                this.content[index] = ConvertTo(value);
+                this.content[index] = value;
             }
         }
 
         public void Add(object item)
         {
-            this.content.Add(ConvertTo(item));
+            this.content.Add(item);
         }
 
         public void Clear()
@@ -87,12 +88,12 @@ namespace DatenMeister.DataProvider.DotNet
 
         public bool Contains(object item)
         {
-            return this.content.Any(x => ConvertFrom(x).Equals(item));
+            return this.content.Any(x => x.Equals(item));
         }
 
         public void CopyTo(object[] array, int arrayIndex)
         {
-            this.content.CopyTo(array.Select(x=> ConvertTo(x)).ToArray(), arrayIndex);
+            this.content.CopyTo(array.Select(x=> x).ToArray(), arrayIndex);
         }
 
         public int Count
@@ -107,34 +108,35 @@ namespace DatenMeister.DataProvider.DotNet
 
         public bool Remove(object item)
         {
-            return this.content.RemoveAll(x => ConvertFrom(x).Equals(item)) > 0;
+            return this.content.Remove(item);
         }
 
         public IEnumerator<object> GetEnumerator()
         {
-            return this.content.GetEnumerator();
+            foreach ( var item in this.content)
+            {
+                yield return this.ConvertTo(item);
+            }
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return this.content.GetEnumerator();
+            foreach (var item in this.content)
+            {
+                yield return this.ConvertTo(item);
+            }
         }
 
-        /// <summary>
-        /// Converts the given item back to a dotnet object.
-        /// If the element is a DotNet Object, the original value will be returned
-        /// </summary>
-        /// <param name="value">Value to be converted</param>
-        /// <returns>Returned object</returns>
-        public object ConvertFrom(object value)
+        public DotNetObject ConvertTo(object value)
         {
-            var valueAsDotNetObject = value as DotNetObject;
-            if (valueAsDotNetObject != null)
+            if (value is DotNetObject)
             {
-                return valueAsDotNetObject.Value;
+                return value as DotNetObject;
             }
 
-            return value;
+            var dotNetObject = new DotNetObject(null, value);
+            dotNetObject.SetMetaClassByMapping(this.dotNetExtent);
+            return dotNetObject;
         }
     }
 }

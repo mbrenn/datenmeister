@@ -253,15 +253,17 @@ namespace DatenMeister.DataProvider.DotNet
             {
                 return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }
+            else if (checkObject is IList<object>)
+            {
+                var sequence = new DotNetSequence(this.extent, checkObject as IList<object>);
+                return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
+            }
             else if (checkObject is IEnumerable)
             {
                 var sequence = new DotNetSequence(this.extent);
-                var n = 0L;
                 foreach (var value in (checkObject as IEnumerable))
                 {
-                    //sequence.Add(new DotNetObject(this.extent, value, this.Id + "[" + n.ToString() + "]"));
                     sequence.Add(value);
-                    n++;
                 }
 
                 return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
