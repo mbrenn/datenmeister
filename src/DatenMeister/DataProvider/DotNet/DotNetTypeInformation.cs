@@ -27,5 +27,14 @@ namespace DatenMeister.DataProvider.DotNet
             get;
             set;
         }
+
+        /// <summary>
+        /// Converts to a string representation
+        /// </summary>
+        /// <returns>The string representation</returns>
+        public override string ToString()
+        {
+            return string.Format("{0} -> {1}", this.Type.ToString(), this.DotNetType.ToString());
+        }
     }
 }

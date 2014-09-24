@@ -65,7 +65,7 @@ namespace DatenMeister.DataProvider.DotNet
 
             this.value = value;
 
-            if (!this.isSet("name") || this.get("name") == null)
+            if (!this.isSet("name") || ObjectHelper.IsNull(this.get("name")))
             {
                 this.id = Guid.NewGuid().ToString();
             }
@@ -317,13 +317,15 @@ namespace DatenMeister.DataProvider.DotNet
 
         public override string ToString()
         {
-            if (this.isSet("name") && !string.IsNullOrEmpty(this.get("name").AsSingle().ToString()))
+            if (this.isSet("name") && !ObjectHelper.IsNull(this.get("name")))
             {
                 return string.Format("\"{0}\" (DotNetObject)",
                     this.get("name").AsSingle().ToString());
             }
-
-            return base.ToString();
+            else
+            {
+                return string.Format("Id: {0}", this.id.ToString());
+            }
         }
 
         Type IKnowsExtentType.ExtentType

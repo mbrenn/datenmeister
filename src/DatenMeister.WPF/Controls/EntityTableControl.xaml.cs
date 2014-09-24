@@ -249,6 +249,11 @@ namespace DatenMeister.WPF.Controls
                     System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
                 // Creates the new buttons
+                if (this.MainType == null)
+                {
+                    this.MainType = this.tableViewInfo.getMainType();
+                }
+
                 this.CreateNewInstanceButtons();
 
                 //  Checks, if auto generation is necessary
@@ -309,6 +314,7 @@ namespace DatenMeister.WPF.Controls
                     {
                         ShowNewInstanceDialog(elementType);
                     };
+
                     this.areaToolbar.Children.Insert(0, btn);
                 }
             }

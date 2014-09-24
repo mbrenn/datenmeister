@@ -19,6 +19,10 @@ namespace DatenMeister.DataProvider.DotNet
         /// Defines the uri for the extent. 
         /// </summary>
         public const string GlobalDotNetExtentUri = "datenmeister:///globaldotnextextent";
+
+        /// <summary>
+        /// Initializes a new instance of the GlobalDotNetExtent
+        /// </summary>
         public GlobalDotNetExtent()
             : base(GlobalDotNetExtentUri)
         {
@@ -73,7 +77,9 @@ namespace DatenMeister.DataProvider.DotNet
             if (mapping == null)
             {
                 // We need to have a type mapping. First of all, create the type
-                var typeObject = new GenericObject(null, type.FullName);
+                var typeObject = new GenericElement(null, type.FullName, DatenMeister.Entities.AsObject.Uml.Types.Type);
+                typeObject.set("name", type.ToString());
+
                 mapping = extent.Mapping.Add(type, typeObject);
 
                 // Now go through the properties and do it recursively
@@ -84,6 +90,17 @@ namespace DatenMeister.DataProvider.DotNet
             }
 
             return mapping;
+        }
+
+        /// <summary>
+        /// Gets the type object for a specific type
+        /// </summary>
+        /// <param name="extent">Type of the extent</param>
+        /// <param name="type">DotNetType to be queried</param>
+        /// <returns>Found object</returns>
+        public static IObject GetIObjectForType(this GlobalDotNetExtent extent, Type type)
+        {
+            return extent.AddTypeMapping(type).Type;
         }
     }
 }

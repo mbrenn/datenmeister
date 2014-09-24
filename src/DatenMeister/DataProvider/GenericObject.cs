@@ -115,7 +115,7 @@ namespace DatenMeister.DataProvider
 
         public override string ToString()
         {
-            if ( this.isSet("name") )
+            if (this.isSet("name"))
             {
                 return this.get("name").AsSingle().ToString();
             }

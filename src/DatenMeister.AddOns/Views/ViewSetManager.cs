@@ -80,10 +80,14 @@ namespace DatenMeister.AddOns.Views
                     new TextField("Is Default", "IsDefault")
                 });
 
+                formView.mainType =
+                    globalDotNetExtent.GetIObjectForType(typeof(DatenMeister.Logic.Views.DefaultViewManager.ViewEntry));
+                var formViewObj = globalDotNetExtent.CreateObject(formView);
+
                 var assignDialog = new ListDialog(
                     entriesAsObject,
                     window.Settings,
-                    Injection.Application.Get<GlobalDotNetExtent>().CreateObject(formView));                
+                    formViewObj);                
                 
                 assignDialog.ShowDialog();
             };
