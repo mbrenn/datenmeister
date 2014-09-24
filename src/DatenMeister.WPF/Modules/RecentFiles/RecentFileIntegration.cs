@@ -17,7 +17,7 @@ using System.Windows.Controls.Ribbon;
 
 namespace DatenMeister.WPF.Modules.RecentFiles
 {
-    public class RecentFileIntegration
+    public static class RecentFileIntegration
     {
         /// <summary>
         /// Adds the support for the recent files to the window
@@ -69,17 +69,27 @@ namespace DatenMeister.WPF.Modules.RecentFiles
                 });
 
             // Creates the application menu
-            var windowAsDatenMeister = wnd as DatenMeisterWindow;
             foreach (var item in 
                 applicationExtent.Elements().FilterByType(DatenMeister.Entities.AsObject.DM.Types.RecentProject)
                     .Select(x=> x.AsIObject()))
             {
-                var value = item;
-                var menu = new RibbonApplicationMenuItem();
-                menu.Header = Path.GetFileName(DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(item));
-                menu.Click += (x, y) => { OnClickOpenFile(wnd, value); y.Handled = true; };
-                windowAsDatenMeister.GetRecentFileRibbon().Items.Add(menu);
+                AddRecentFileToMenu(wnd, item);
             }
+        }
+
+        /// <summary>
+        /// Adds a certain recent file to the menu
+        /// </summary>
+        /// <param name="wnd">Window, to which the file will be added</param>
+        /// <param name="recentFile">The recent file being added</param>
+        private static void AddRecentFileToMenu(IDatenMeisterWindow wnd, IObject recentFile)
+        {
+            var windowAsDatenMeister = wnd as DatenMeisterWindow;
+            var value = recentFile;
+            var menu = new RibbonApplicationMenuItem();
+            menu.Header = Path.GetFileName(DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(recentFile));
+            menu.Click += (x, y) => { OnClickOpenFile(wnd, value); y.Handled = true; };
+            windowAsDatenMeister.GetRecentFileRibbon().Items.Add(menu);
         }
 
         /// <summary>
@@ -111,12 +121,14 @@ namespace DatenMeister.WPF.Modules.RecentFiles
                 MessageBox.Show(Localization_DatenMeister_WPF.Open_FileDoesNotExist);
             }
         }
+
         /// Adds a file to the recent file list. 
         /// If the file is already available, it won't be added
         /// </summary>
         /// <param name="filePath">Path of the file to be added</param>
-        public static void AddRecentFile(ApplicationCore core, string filePath, string name)
+        public static void AddRecentFile(IDatenMeisterWindow wnd, string filePath, string name)
         {
+            var core = wnd.Core;
             // Check, if the file is already available
             if (core.ApplicationData.Elements()
                 .FilterByType(DatenMeister.Entities.AsObject.DM.Types.RecentProject)
@@ -131,6 +143,8 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             DatenMeister.Entities.AsObject.DM.RecentProject.setFilePath(recentProject, filePath);
             DatenMeister.Entities.AsObject.DM.RecentProject.setCreated(recentProject, DateTime.Now);
             DatenMeister.Entities.AsObject.DM.RecentProject.setName(recentProject, name);
+
+            AddRecentFileToMenu(wnd, recentProject);
         }
     }
 }

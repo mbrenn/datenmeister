@@ -471,7 +471,7 @@ namespace DatenMeister.WPF.Windows
         public void AddRecentFile(string filePath)
         {
             RecentFileIntegration.AddRecentFile(
-                this.Core,
+                this,
                 filePath,
                 System.IO.Path.GetFileNameWithoutExtension(filePath));
         }
