@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls.Ribbon;
 
 namespace DatenMeister.WPF.Modules.RecentFiles
 {
@@ -62,21 +63,53 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             wnd.AssociateDetailOpenEvent(
                 wnd.Core.ViewRecentObjects, (x) =>
                 {
-                    var innerPool = PoolResolver.GetDefaultPool();
-                    var innerViewExtent = innerPool.GetExtent(ExtentType.View).First();
+                    var value = x.Value;
 
-                    var filePath = DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(x.Value);
-                    if (File.Exists(filePath))
-                    {
-                        wnd.LoadAndOpenFile(filePath);
-                        innerViewExtent.Elements().remove(wnd.Core.ViewRecentObjects);
-                        wnd.RefreshTabs();
-                    }
-                    else
-                    {
-                        MessageBox.Show(Localization_DatenMeister_WPF.Open_FileDoesNotExist);
-                    }
+                    OnClickOpenFile(wnd, value);
                 });
+
+            // Creates the application menu
+            var windowAsDatenMeister = wnd as DatenMeisterWindow;
+            foreach (var item in 
+                applicationExtent.Elements().FilterByType(DatenMeister.Entities.AsObject.DM.Types.RecentProject)
+                    .Select(x=> x.AsIObject()))
+            {
+                var value = item;
+                var menu = new RibbonApplicationMenuItem();
+                menu.Header = Path.GetFileName(DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(item));
+                menu.Click += (x, y) => { OnClickOpenFile(wnd, value); y.Handled = true; };
+                windowAsDatenMeister.GetRecentFileRibbon().Items.Add(menu);
+            }
+        }
+
+        /// <summary>
+        /// This method will be called, when the user clicks on one of the items
+        /// </summary>
+        /// <param name="wnd">Window to be used</param>
+        /// <param name="recentFile">Value being a recent project object</param>
+        private static void OnClickOpenFile(IDatenMeisterWindow wnd, IObject recentFile)
+        {
+            var innerPool = PoolResolver.GetDefaultPool();
+            var innerViewExtent = innerPool.GetExtent(ExtentType.View).First();
+
+            var filePath = DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(recentFile);
+            if (File.Exists(filePath))
+            {
+                // Loads and opens the file
+                wnd.LoadAndOpenFile(filePath);
+
+                // Removes the view for the recent files
+                if (innerViewExtent.Elements().Contains(wnd.Core.ViewRecentObjects))
+                {
+                    innerViewExtent.Elements().remove(wnd.Core.ViewRecentObjects);
+                }
+
+                wnd.RefreshTabs();
+            }
+            else
+            {
+                MessageBox.Show(Localization_DatenMeister_WPF.Open_FileDoesNotExist);
+            }
         }
         /// Adds a file to the recent file list. 
         /// If the file is already available, it won't be added

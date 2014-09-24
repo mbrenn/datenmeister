@@ -155,7 +155,6 @@ namespace DatenMeister.WPF.Controls
             Ensure.That(settings != null);
 
             viewData = GetView(value, viewData);
-
             if (viewData == null)
             {
                 return null;

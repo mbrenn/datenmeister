@@ -604,5 +604,14 @@ namespace DatenMeister.WPF.Windows
             this.Core.PerformInitializeFromScratch();
             this.Core.PerformInitializeExampleData();
         }
+
+        /// <summary>
+        /// Gets the ribbon for the open files
+        /// </summary>
+        /// <returns></returns>
+        public RibbonApplicationMenuItem GetRecentFileRibbon()
+        {
+            return this.menuOpenFiles;
+        }
     }
 }

@@ -19,10 +19,7 @@ namespace DatenMeister.WPF.Windows
         /// <param name="core">Application of the window</param>
         /// <returns>Returned window</returns>
         public static IDatenMeisterWindow CreateWindow(ApplicationCore core)
-        {
-            Injection.Application.Bind<IExceptionHandling>().To<StandardExceptionHandling>();
-            Injection.Application.Bind<IUserExceptionHandler>().To<WindowUserExceptionHandler>();
-            
+        {            
             Application.Current.DispatcherUnhandledException += (x, y) =>
                 {
                     var exceptionHandling = Injection.Application.Get<IExceptionHandling>();
@@ -33,6 +30,14 @@ namespace DatenMeister.WPF.Windows
                 };
 
             var wnd = new DatenMeisterWindow(core);
+            core.ViewSetInitialized += (x, y) =>
+                {
+                    Injection.Application.Bind<IExceptionHandling>().To<StandardExceptionHandling>();
+                    Injection.Application.Bind<IUserExceptionHandler>().To<WindowUserExceptionHandler>();
+                };
+
+            Injection.Application.Bind<IExceptionHandling>().To<StandardExceptionHandling>();
+            Injection.Application.Bind<IUserExceptionHandler>().To<WindowUserExceptionHandler>();
 
             // Just sets the title and shows the Window
             wnd.LoadExampleData();
