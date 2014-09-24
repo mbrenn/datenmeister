@@ -93,11 +93,11 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
-        /// Gets or sets the extent, where this item is assigned to. 
+        /// Gets or sets the extent, where this item shall be added to
         /// Relevant, if DetailObject == null and dialog has been opened to create a new 
         /// item. 
         /// </summary>
-        public IURIExtent Extent
+        public IReflectiveCollection Collection
         {
             get;
             set;
@@ -231,7 +231,8 @@ namespace DatenMeister.WPF.Controls
             // Creates Detailobject if necessary
             if (this.EditMode == Controls.EditMode.New)
             {
-                this.DetailObject = Factory.GetFor(this.Extent).CreateInExtent(this.Extent, this.TypeToCreate);
+                this.DetailObject = Factory.GetFor(this.Collection.Extent).create(this.TypeToCreate);
+                this.Collection.add(this.DetailObject);
                 Ensure.That(this.DetailObject != null, "Element Factory has not returned a value");
             }
 

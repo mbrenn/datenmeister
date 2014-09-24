@@ -134,7 +134,7 @@ namespace DatenMeister.WPF.Controls
             dialog.Pool = extent.Pool;
             dialog.DetailForm.EditMode = EditMode.New;
             dialog.DetailForm.FormViewInfo = viewData;
-            dialog.DetailForm.Extent = extent;
+            dialog.DetailForm.Collection = collection;
             dialog.DetailForm.TypeToCreate = type;
             dialog.DetailForm.Settings = settings;
             dialog.Show();
@@ -170,7 +170,7 @@ namespace DatenMeister.WPF.Controls
 
             dialog.DetailForm.EditMode = readOnly ? EditMode.Read : EditMode.Edit;
             dialog.DetailForm.FormViewInfo = viewData;
-            dialog.DetailForm.Extent = value.Extent;
+            dialog.DetailForm.Collection = value.Extent.Elements();
             dialog.DetailForm.DetailObject = value;
             dialog.DetailForm.Settings = settings;
             dialog.Show();
