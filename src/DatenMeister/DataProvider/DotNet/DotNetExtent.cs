@@ -95,6 +95,9 @@ namespace DatenMeister.DataProvider.DotNet
             this.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), DatenMeister.Entities.AsObject.Uml.Types.Type);
         }
 
+        /// <summary>
+        /// Creates a reflective sequence for all items within the sequence
+        /// </summary>
         private class DotNetExtentReflectiveSequence : ListWrapperReflectiveSequence<IObject>
         {
             private DotNetExtent extent;
@@ -104,7 +107,7 @@ namespace DatenMeister.DataProvider.DotNet
                 this.extent = extent;
             }
 
-            public override IObject ConvertInstanceTo(object value)
+            public override IObject ConvertInstanceToInternal(object value)
             {
                 if (value is DotNetObject)
                 {
@@ -112,7 +115,7 @@ namespace DatenMeister.DataProvider.DotNet
                 }
                 else
                 {
-                    return new DotNetObject(this.extent, value);
+                    return new DotNetObject(this.extent.Elements(), value);
                 }
             }
         }

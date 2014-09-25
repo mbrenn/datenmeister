@@ -1,6 +1,7 @@
 ﻿using BurnSystems.ObjectActivation;
 using BurnSystems.Serialization;
 using BurnSystems.Test;
+using Ninject;
 using DatenMeister;
 using DatenMeister.DataProvider.Common;
 using DatenMeister.Entities.AsObject.Uml;
@@ -260,7 +261,7 @@ namespace DatenMeister.DataProvider.Xml
 
             // Checks, if we have a value
             var result = this.get(propertyName).AsSingle();
-            if (result == null)
+            if (ObjectHelper.IsNull(result))
             {
                 return false;
             }
@@ -382,12 +383,7 @@ namespace DatenMeister.DataProvider.Xml
                     }
                 }
             }
-            else if (value is IReflectiveCollection)
-            {
-                var asReflectiveCollection = value as IReflectiveCollection;
-                throw new NotImplementedException("IReflective Collections are not supported until now");
-            }
-            else if (value is IEnumerable)
+            else if (value is IEnumerable || value is IReflectiveCollection)
             {
                 var propertyAsReflectiveCollection = this.get(propertyName).AsReflectiveCollection();
                 foreach (var item in (value as IEnumerable))
@@ -460,7 +456,7 @@ namespace DatenMeister.DataProvider.Xml
             {
                 var typeName = xmiTypeAttribute.Value;
 
-                var typeResolver = Global.Application.Get<ITypeResolver>();
+                var typeResolver = Injection.Application.Get<ITypeResolver>();
                 var type = typeResolver.GetType(typeName);
                 if (type != null)
                 {

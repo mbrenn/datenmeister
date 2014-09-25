@@ -93,11 +93,11 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
-        /// Gets or sets the extent, where this item is assigned to. 
+        /// Gets or sets the extent, where this item shall be added to
         /// Relevant, if DetailObject == null and dialog has been opened to create a new 
         /// item. 
         /// </summary>
-        public IURIExtent Extent
+        public IReflectiveCollection Collection
         {
             get;
             set;
@@ -153,8 +153,7 @@ namespace DatenMeister.WPF.Controls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                Ensure.That(this.Settings != null);
-                Ensure.That(this.Extent != null, "Extent has not been set");
+                Ensure.That(this.Settings != null, "Settings have not been set");
             }
         }
 
@@ -185,9 +184,14 @@ namespace DatenMeister.WPF.Controls
                     nameLabel.Content = string.Format("{0}: ", name);
                     nameLabel.Margin = new Thickness(10, 5, 10, 5);
                     nameLabel.FontSize = 16;
+                    if (ObjectDictionaryForView.IsSpecialBinding(General.getBinding(fieldInfo)))
+                    {
+                        nameLabel.FontStyle = FontStyles.Italic;
+                    }
+
                     Grid.SetRow(nameLabel, currentRow);
 
-                    formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+                    formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
                     formGrid.Children.Add(nameLabel);
 
                     // Creates the value element for the form
@@ -210,6 +214,9 @@ namespace DatenMeister.WPF.Controls
 
                     currentRow++;
                 }
+
+                // Add last row to make the scrolling ok
+                formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
             }
 
             // Focuses first element
@@ -224,7 +231,8 @@ namespace DatenMeister.WPF.Controls
             // Creates Detailobject if necessary
             if (this.EditMode == Controls.EditMode.New)
             {
-                this.DetailObject = Factory.GetFor(this.Extent).CreateInExtent(this.Extent, this.TypeToCreate);
+                this.DetailObject = Factory.GetFor(this.Collection.Extent).create(this.TypeToCreate);
+                this.Collection.add(this.DetailObject);
                 Ensure.That(this.DetailObject != null, "Element Factory has not returned a value");
             }
 

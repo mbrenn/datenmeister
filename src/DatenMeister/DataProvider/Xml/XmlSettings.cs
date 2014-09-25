@@ -37,5 +37,16 @@ namespace DatenMeister.DataProvider.Xml
         {
             this.Mapping = new XmlTypeMapping();
         }
+
+        /// <summary>
+        /// Gets an empty setting. Shall never be modified
+        /// </summary>
+        public static XmlSettings Empty
+        {
+            get
+            {
+                return new XmlSettings();
+            }
+        }
     }
 }

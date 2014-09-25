@@ -2,32 +2,39 @@ namespace DatenMeister.Entities.AsObject.Uml
 {
     public static partial class Types
     {
+        public const string DefaultExtentUri="datenmeister:///types/uml";
+
         public static DatenMeister.IURIExtent Init()
         {
-            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent("datenmeister:///types/uml");
+            var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(DefaultExtentUri);
+            DatenMeister.Entities.AsObject.Uml.Types.AssignTypeMapping(extent);
             Init(extent);
             return extent;
         }
 
-        public static void Init(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
+        public static void Init(DatenMeister.IURIExtent extent)
         {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
             if(Types.NamedElement == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "NamedElement";
-                Types.NamedElement = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.NamedElement = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.NamedElement, "NamedElement");
                 extent.Elements().add(Types.NamedElement);
             }
 
             if(Types.Type == null || true)
             {
-                var type = new DatenMeister.Entities.UML.Type();
-                type.name = "Type";
-                Types.Type = new DatenMeister.DataProvider.DotNet.DotNetObject(extent, type);
+                Types.Type = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Type, "Type");
                 extent.Elements().add(Types.Type);
             }
 
-            extent.AddDefaultMappings();
+            if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)
+            {
+                (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
+            }
+
+            OnInitCompleted();
         }
 
         public static DatenMeister.IObject NamedElement;
@@ -41,5 +48,6 @@ namespace DatenMeister.Entities.AsObject.Uml
             extent.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), Types.Type);
         }
 
+        static partial void OnInitCompleted();
     }
 }

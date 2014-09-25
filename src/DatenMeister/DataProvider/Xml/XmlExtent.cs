@@ -83,7 +83,7 @@ namespace DatenMeister.DataProvider.Xml
             this.XmlDocument = document;
             this.Uri = uri;            
 
-            if (this.Settings == null)
+            if (settings == null)
             {
                 this.Settings = new XmlSettings();
             }
@@ -232,12 +232,19 @@ namespace DatenMeister.DataProvider.Xml
                         }
                     }
 
-                    if (this.extent.Settings == null || !this.extent.Settings.SkipRootNode)
+                    foreach (var subNode in this.extent.XmlDocument.Root.Elements())
                     {
-                        foreach (var subNode in this.extent.XmlDocument.Root.Elements())
+                        // Only for the items, that do not have a direct mapping via settings, the elements will be returned
+                        if (!foundItems.Contains(subNode))
                         {
-                            // Only for the items, that do not have a direct mapping via settings, the elements will be returned
-                            if (!foundItems.Contains(subNode))
+                            var typeAttributeName = DatenMeister.Entities.AsObject.Uml.Types.XmiNamespace + "type";
+                            var hasTypeAttribute = subNode.Attribute(typeAttributeName) != null;
+
+                            // Per default, show root nodes, or if user does not want to skip the nodes
+                            // or when node has a type attribute
+                            if (this.extent.Settings == null
+                                || !this.extent.Settings.SkipRootNode
+                                || hasTypeAttribute)
                             {
                                 var subObject = new XmlObject(this.extent, subNode)
                                 {

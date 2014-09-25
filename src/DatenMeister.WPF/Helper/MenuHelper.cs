@@ -7,6 +7,7 @@ using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
 using DatenMeister.WPF.Windows;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,7 @@ namespace DatenMeister.WPF.Helper
                     }
 
                     // Now get the poolresolver
-                    var extent = Global.Application.Get<IPoolResolver>().Resolve(uri, z.Value) as IURIExtent;
+                    var extent = Injection.Application.Get<IPoolResolver>().Resolve(uri, z.Value) as IURIExtent;
                     if (extent == null)
                     {
                         logger.Message("No extent has been returned for: " + uri.ToString());

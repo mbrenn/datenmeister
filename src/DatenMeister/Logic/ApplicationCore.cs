@@ -2,9 +2,13 @@
 using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.DotNet;
+using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic.TypeResolver;
 using DatenMeister.Pool;
 using DatenMeister.Transformations;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +23,7 @@ namespace DatenMeister.Logic
     /// <summary>
     /// Stores the data that is used for the application specific data
     /// </summary>
-    public class ApplicationCore : IDisposable
+    public class ApplicationCore
     {
         /// <summary>
         /// Stores the logger 
@@ -36,6 +40,9 @@ namespace DatenMeister.Logic
         /// </summary>
         private IURIExtent applicationData;
 
+        /// <summary>
+        /// Gets the application data
+        /// </summary>
         public IURIExtent ApplicationData
         {
             get { return this.applicationData; }
@@ -71,6 +78,25 @@ namespace DatenMeister.Logic
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the extent containing all the meta types
+        /// </summary>
+        public GenericExtent MetaTypeExtent
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// This event is thrown, when the viewset is initialized
+        /// </summary>
+        public event EventHandler ViewSetInitialized;
+
+        /// <summary>
+        /// Stores the value whether the application data is loaded
+        /// </summary>
+        private bool isApplicationDataLoaded = false;
 
         /// <summary>
         /// Initializes a new instance of the project
@@ -113,23 +139,82 @@ namespace DatenMeister.Logic
 
         /// <summary>
         /// Starts the application. The created settings are afterwards available
-        /// at this.Settings
+        /// at this.Settings.
         /// </summary>
         /// <typeparam name="T">Type of the window</typeparam>
         public void Start<T>() where T : IDatenMeisterSettings, new()
         {
+            PerformBinding();
+
             // Initialization of all meta types
             this.privateSettings = new T();
+
+            // Initializes the metatypes
+            this.MetaTypeExtent = new GenericExtent("datenmeister:///datenmeister/metatypes/");
+            DatenMeister.Entities.AsObject.Uml.Types.Init(this.MetaTypeExtent);
+            
             this.privateSettings.InitializeForBootUp(this);
             this.PerformInitializationOfViewSet();
         }
 
+        /// <summary>
+        /// Resets and performs the necessary binding
+        /// </summary>
+        public static void PerformBinding()
+        {
+            // At the moment, reset the complete Binding
+            Injection.Reset();
+
+            // Initializes the default factory provider
+            Injection.Application.Bind<IFactoryProvider>().To<FactoryProvider>();
+
+            // Initializes the default resolver
+            Injection.Application.Bind<IPoolResolver>().To<PoolResolver>();
+
+            // Initializes the default type resolver
+            Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
+
+            // Initializes the global dot net extent
+            Injection.Application.Bind<GlobalDotNetExtent>().To<GlobalDotNetExtent>().InSingletonScope();
+        }
+
         public void PerformInitializationOfViewSet()
         {
-            DatenMeisterPool.Create();
+            PerformBinding();
+            var pool = DatenMeisterPool.Create();
+
+            // Initializes the database itself
+            this.MetaTypeExtent.ReleaseFromPool();
+
+            // Adds the metatypes
+            pool.Add(this.MetaTypeExtent, null, "MetaTypes", ExtentType.MetaType);
 
             this.LoadApplicationData();
             this.privateSettings.InitializeViewSet(this);
+
+            // After the viewset is initialized, replace the view extents by wrapped
+            // EventOnChange Extent. 
+            // So, view can be updated, when the content of the extent changed
+            foreach (var instance in pool.Instances.Where(x => x.ExtentType == ExtentType.View))
+            {
+                // Just replace the extent
+                instance.Extent = new EventOnChangeExtent(instance.Extent);
+            }
+
+            // Now, call the event that the initialization has been redone
+            this.OnViewSetInitialized();
+        }
+
+        /// <summary>
+        /// Calls the ViewSetInitialized event
+        /// </summary>
+        private void OnViewSetInitialized()
+        {
+            var ev = this.ViewSetInitialized;
+            if (ev != null)
+            {
+                ev(this, EventArgs.Empty);
+            }
         }
 
         public void PerformInitializeFromScratch()
@@ -152,6 +237,10 @@ namespace DatenMeister.Logic
         /// </summary>
         public void StoreViewSet()
         {
+            // Stores the settings
+            this.SaveApplicationData();
+
+            // and afterwards store the viewset
             this.privateSettings.StoreViewSet(this);
         }
 
@@ -165,24 +254,33 @@ namespace DatenMeister.Logic
         /// <param name="extentUri">Uri of the extent to be used</param>
         /// <param name="defaultActionForCreation">Action being called, when file is not existing.
         /// The action can be used to precreate the necessary nodes or to perform the mapping</param>
+        /// <param name="defaultActionForLoading">The action that will be performed
+        /// after the </param>
         /// <returns>Created or loaded Extent</returns>
         public IURIExtent LoadOrCreateByDefault(
             string name, 
-            string fileName, 
             string extentUri, 
             ExtentType extentType, 
-            Action<XmlExtent> defaultActionForCreation)
+            Action<XmlExtent> defaultActionForCreation,
+            Action<XmlExtent> defaultActionForLoading = null)
         {
+            logger.Message("Loading" + name);
             var filePath = this.GetApplicationStoragePathFor(name);
             IURIExtent createdPool = null;
+            var xmlSettings = this.GetXmlSettings(extentType);
+
             if (File.Exists(filePath))
             {
                 try
                 {
                     // File exists, we can directly load it
                     var dataProvider = new XmlDataProvider();
+                    createdPool = dataProvider.Load(filePath, extentUri, xmlSettings);
 
-                    createdPool = dataProvider.Load(filePath, extentUri, this.XmlSettings);
+                    if (defaultActionForLoading != null)
+                    {
+                        defaultActionForLoading(createdPool as XmlExtent);
+                    }
                 }
                 catch (Exception exc)
                 {
@@ -193,7 +291,7 @@ namespace DatenMeister.Logic
             if (createdPool == null)
             {
                 // File does not exist, we have to load it from 
-                createdPool = XmlExtent.Create(this.XmlSettings, name, extentUri);
+                createdPool = XmlExtent.Create(xmlSettings, name, extentUri);
                 if (defaultActionForCreation != null)
                 {
                     defaultActionForCreation(createdPool as XmlExtent);
@@ -212,8 +310,10 @@ namespace DatenMeister.Logic
         /// <param name="extentUri">Uri of the extent to be saved</param>
         public void SaveExtentByUri(string extentUri)
         {
+            logger.Message("Saving: " + extentUri);
+
             // Get pool entry            
-            var pool = Global.Application.Get<IPool>();
+            var pool = Injection.Application.Get<IPool>();
             var instance = pool.GetInstance(extentUri);
             Ensure.That(instance != null, "The extent with Uri has not been found: " + extentUri);
 
@@ -230,7 +330,20 @@ namespace DatenMeister.Logic
             }
 
             Ensure.That(extent is XmlExtent, "The given extent is not an XmlExtent");
-            dataProvider.Save(extent as XmlExtent, instance.StoragePath, this.XmlSettings);
+            dataProvider.Save(
+                extent as XmlExtent,
+                instance.StoragePath,
+                this.GetXmlSettings(instance.ExtentType));
+        }
+
+        public XmlSettings GetXmlSettings(ExtentType type)
+        {
+            if (type == ExtentType.Data)
+            {
+                return this.XmlSettings;
+            }
+
+            return XmlSettings.Empty;
         }
 
         #region Storing and loading of application data
@@ -240,12 +353,27 @@ namespace DatenMeister.Logic
         /// </summary>
         public void LoadApplicationData()
         {
-            this.applicationData = this.LoadOrCreateByDefault(
-                "applicationdata",
-                "Application Data",
-                ApplicationDataUri,
-                ExtentType.ApplicationData,
-                null);
+            // Stores the name of the applicationdata
+            var name = "applicationdata";
+            if (!this.isApplicationDataLoaded)
+            {
+                this.applicationData = this.LoadOrCreateByDefault(
+                    name,
+                    ApplicationDataUri,
+                    ExtentType.ApplicationData,
+                    null);
+                this.isApplicationDataLoaded = true;
+            }
+            else
+            {
+                var pool = PoolResolver.GetDefaultPool();
+                this.applicationData.ReleaseFromPool();
+                pool.Add(
+                    this.applicationData,
+                    this.GetApplicationStoragePathFor(name),
+                    name,
+                    ExtentType.ApplicationData);
+            }
         }
 
         /// <summary>
@@ -257,14 +385,5 @@ namespace DatenMeister.Logic
         }
 
         #endregion
-
-        /// <summary>
-        /// Stores the application data into the file
-        /// </summary>
-        public void Dispose()
-        {
-            this.SaveApplicationData();
-            GC.SuppressFinalize(this);
-        }
     }
 }

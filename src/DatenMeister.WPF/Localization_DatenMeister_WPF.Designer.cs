@@ -88,6 +88,15 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The exception is copied to clipboard..
+        /// </summary>
+        internal static string ExceptionToClipboard {
+            get {
+                return ResourceManager.GetString("ExceptionToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Xml-Files (*.xml)|*.xml|All Files (*.*)|*.*.
         /// </summary>
         internal static string File_Filter {
@@ -120,6 +129,15 @@ namespace DatenMeister.WPF {
         internal static string MultiReference_NoEditPossible {
             get {
                 return ResourceManager.GetString("MultiReference_NoEditPossible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No elements were selected. .
+        /// </summary>
+        internal static string NoElementsSelected {
+            get {
+                return ResourceManager.GetString("NoElementsSelected", resourceCulture);
             }
         }
         

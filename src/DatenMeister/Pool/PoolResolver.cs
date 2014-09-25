@@ -3,6 +3,7 @@ using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.Logic;
 using DatenMeister.Transformations;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace DatenMeister.Pool
 
         public static IPool GetDefaultPool()
         {
-            return Global.Application.Get<IPool>();
+            return Injection.Application.Get<IPool>();
         }
 
         /// <summary>
@@ -33,10 +34,10 @@ namespace DatenMeister.Pool
         /// <returns>The created instance</returns>
         public static IPoolResolver GetDefault(IPool pool)
         {
-            var resolver = Global.Application.Get<IPoolResolver>();
+            var resolver = Injection.Application.Get<IPoolResolver>();
             if (resolver == null)
             {
-                resolver = new PoolResolver();
+                resolver = new PoolResolver(pool as DatenMeisterPool);
             }
 
             resolver.Pool = pool;
@@ -65,8 +66,9 @@ namespace DatenMeister.Pool
         /// Initializes a new instance of the PoolResolver class. 
         /// The Pool needs to be set, otherwise it won't work
         /// </summary>
-        public PoolResolver()
+        public PoolResolver(DatenMeisterPool pool)
         {
+            this.pool = pool;
         }
 
         /// <summary>
@@ -195,6 +197,11 @@ namespace DatenMeister.Pool
             Ensure.That(this.Pool != null, "this.Pool is null");
             Ensure.That(obj.Extent != null, "GetResolvePath: Given object has no extent");
             Ensure.That(obj.Extent.Pool != null, "GetResolvePath: Given object is attached to an extent without connected pool");
+
+            if (obj.Id == null)
+            {
+                throw new InvalidOperationException("Object ID is null or not set");
+            }
 
             var result = string.Format("{0}#{1}", obj.Extent.ContextURI(), obj.Id);
             if (context != null && context.Extent != null)

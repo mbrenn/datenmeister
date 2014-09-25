@@ -1,6 +1,6 @@
 namespace DatenMeister.Entities.AsObject.FieldInfo
 {
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Comment : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -224,7 +224,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class General : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -427,7 +427,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Checkbox : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -630,7 +630,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TextField : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -917,7 +917,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class DatePicker : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -1120,7 +1120,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ActionButton : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -1281,7 +1281,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ReferenceBase : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -1528,7 +1528,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ReferenceByValue : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -1775,7 +1775,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ReferenceByRef : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -2022,7 +2022,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class MultiReferenceField : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -2269,7 +2269,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class View : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -2410,14 +2410,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             setFieldInfos(this, value);
         }
 
-        public void pushFieldInfo(System.Collections.Generic.IEnumerable<System.Object> value)
+        public void pushFieldInfo(System.Object value)
         {
             pushFieldInfo(this, value);
         }
 
         public static System.Collections.Generic.IEnumerable<System.Object> getFieldInfos(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration(obj.get("fieldInfos"));
+            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("fieldInfos"));
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -2426,11 +2426,10 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("fieldInfos", value);
         }
 
-        public static void pushFieldInfo(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<System.Object> value)
+        public static void pushFieldInfo(DatenMeister.IObject obj, System.Object value)
         {
-            var list = obj.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
             list.Add(value);
-            obj.set("fieldInfos", list);
         }
 
         public System.Boolean getStartInEditMode()
@@ -2454,9 +2453,30 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("startInEditMode", value);
         }
 
+        public System.Boolean getDoAutoGenerateByProperties()
+        {
+            return getDoAutoGenerateByProperties(this);
+        }
+
+        public void setDoAutoGenerateByProperties(System.Boolean value)
+        {
+            setDoAutoGenerateByProperties(this, value);
+        }
+
+        public static System.Boolean getDoAutoGenerateByProperties(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("doAutoGenerateByProperties"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setDoAutoGenerateByProperties(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("doAutoGenerateByProperties", value);
+        }
+
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class FormView : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -2702,14 +2722,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             setFieldInfos(this, value);
         }
 
-        public void pushFieldInfo(System.Collections.Generic.IEnumerable<System.Object> value)
+        public void pushFieldInfo(System.Object value)
         {
             pushFieldInfo(this, value);
         }
 
         public static System.Collections.Generic.IEnumerable<System.Object> getFieldInfos(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration(obj.get("fieldInfos"));
+            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("fieldInfos"));
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -2718,11 +2738,10 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("fieldInfos", value);
         }
 
-        public static void pushFieldInfo(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<System.Object> value)
+        public static void pushFieldInfo(DatenMeister.IObject obj, System.Object value)
         {
-            var list = obj.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
             list.Add(value);
-            obj.set("fieldInfos", list);
         }
 
         public System.Boolean getStartInEditMode()
@@ -2746,9 +2765,30 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("startInEditMode", value);
         }
 
+        public System.Boolean getDoAutoGenerateByProperties()
+        {
+            return getDoAutoGenerateByProperties(this);
+        }
+
+        public void setDoAutoGenerateByProperties(System.Boolean value)
+        {
+            setDoAutoGenerateByProperties(this, value);
+        }
+
+        public static System.Boolean getDoAutoGenerateByProperties(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("doAutoGenerateByProperties"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setDoAutoGenerateByProperties(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("doAutoGenerateByProperties", value);
+        }
+
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TableView : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -2900,6 +2940,38 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("mainType", value);
         }
 
+        public System.Collections.Generic.IEnumerable<DatenMeister.IObject> getTypesForCreation()
+        {
+            return getTypesForCreation(this);
+        }
+
+        public void setTypesForCreation(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        {
+            setTypesForCreation(this, value);
+        }
+
+        public void pushTypesForCreation(DatenMeister.IObject value)
+        {
+            pushTypesForCreation(this, value);
+        }
+
+        public static System.Collections.Generic.IEnumerable<DatenMeister.IObject> getTypesForCreation(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.IObject>(obj.get("typesForCreation"));
+            return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
+        }
+
+        public static void setTypesForCreation(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        {
+            obj.set("typesForCreation", value);
+        }
+
+        public static void pushTypesForCreation(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("typesForCreation"));
+            list.Add(value);
+        }
+
         public System.Boolean getAllowEdit()
         {
             return getAllowEdit(this);
@@ -2994,14 +3066,14 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             setFieldInfos(this, value);
         }
 
-        public void pushFieldInfo(System.Collections.Generic.IEnumerable<System.Object> value)
+        public void pushFieldInfo(System.Object value)
         {
             pushFieldInfo(this, value);
         }
 
         public static System.Collections.Generic.IEnumerable<System.Object> getFieldInfos(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration(obj.get("fieldInfos"));
+            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("fieldInfos"));
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -3010,11 +3082,10 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("fieldInfos", value);
         }
 
-        public static void pushFieldInfo(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<System.Object> value)
+        public static void pushFieldInfo(DatenMeister.IObject obj, System.Object value)
         {
-            var list = obj.get("fieldInfos") as System.Collections.IList ?? new System.Collections.Generic.List<object>();
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
             list.Add(value);
-            obj.set("fieldInfos", list);
         }
 
         public System.Boolean getStartInEditMode()
@@ -3036,6 +3107,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void setStartInEditMode(DatenMeister.IObject obj, System.Boolean value)
         {
             obj.set("startInEditMode", value);
+        }
+
+        public System.Boolean getDoAutoGenerateByProperties()
+        {
+            return getDoAutoGenerateByProperties(this);
+        }
+
+        public void setDoAutoGenerateByProperties(System.Boolean value)
+        {
+            setDoAutoGenerateByProperties(this, value);
+        }
+
+        public static System.Boolean getDoAutoGenerateByProperties(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("doAutoGenerateByProperties"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setDoAutoGenerateByProperties(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("doAutoGenerateByProperties", value);
         }
 
     }

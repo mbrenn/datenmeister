@@ -1,4 +1,7 @@
-﻿using DatenMeister.Logic;
+﻿using BurnSystems.UserExceptionHandler;
+using DatenMeister.Logic;
+using DatenMeister.WPF.Modules;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +19,38 @@ namespace DatenMeister.WPF.Windows
         /// <param name="core">Application of the window</param>
         /// <returns>Returned window</returns>
         public static IDatenMeisterWindow CreateWindow(ApplicationCore core)
-        {
+        {            
+            Application.Current.DispatcherUnhandledException += (x, y) =>
+                {
+                    var exceptionHandling = Injection.Application.TryGet<IExceptionHandling>();
+                    if (exceptionHandling == null)
+                    {
+                        y.Handled = false;
+                    }
+                    else
+                    {
+                        y.Handled = exceptionHandling.HandleException(y.Exception);
+                    }
+#if DEBUG
+                    //y.Handled = false;
+#endif
+                };
+
             var wnd = new DatenMeisterWindow(core);
+            core.ViewSetInitialized += (x, y) =>
+                {
+                    Injection.Application.Bind<IExceptionHandling>().To<StandardExceptionHandling>();
+                    Injection.Application.Bind<IUserExceptionHandler>().To<WindowUserExceptionHandler>();
+                };
+
+            Injection.Application.Bind<IExceptionHandling>().To<StandardExceptionHandling>();
+            Injection.Application.Bind<IUserExceptionHandler>().To<WindowUserExceptionHandler>();
 
             // Just sets the title and shows the Window
             wnd.LoadExampleData();
             wnd.Show();
+            wnd.RegisterToChangeEvent();
             wnd.RefreshTabs();
-
             return wnd;
         }
 

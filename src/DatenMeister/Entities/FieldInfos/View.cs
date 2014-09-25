@@ -38,5 +38,14 @@ namespace DatenMeister.Entities.FieldInfos
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the information whether the field infos shall be set by property
+        /// </summary>
+        public bool doAutoGenerateByProperties
+        {
+            get;
+            set;
+        }
     }
 }

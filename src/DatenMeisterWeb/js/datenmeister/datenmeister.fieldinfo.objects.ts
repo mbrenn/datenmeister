@@ -685,6 +685,14 @@ export module View {
         item.set('startInEditMode', value);
     }
 
+    export function getDoAutoGenerateByProperties(item: __d__.JsonExtentObject) {
+        return item.get('doAutoGenerateByProperties');
+    }
+
+    export function setDoAutoGenerateByProperties(item : __d__.JsonExtentObject, value: any) {
+        item.set('doAutoGenerateByProperties', value);
+    }
+
 }
 
 export module FormView {
@@ -774,6 +782,14 @@ export module FormView {
         item.set('startInEditMode', value);
     }
 
+    export function getDoAutoGenerateByProperties(item: __d__.JsonExtentObject) {
+        return item.get('doAutoGenerateByProperties');
+    }
+
+    export function setDoAutoGenerateByProperties(item : __d__.JsonExtentObject, value: any) {
+        item.set('doAutoGenerateByProperties', value);
+    }
+
 }
 
 export module TableView {
@@ -803,6 +819,24 @@ export module TableView {
 
     export function setMainType(item : __d__.JsonExtentObject, value: any) {
         item.set('mainType', value);
+    }
+
+    export function getTypesForCreation(item: __d__.JsonExtentObject) {
+        return item.get('typesForCreation');
+    }
+
+    export function setTypesForCreation(item : __d__.JsonExtentObject, value: any) {
+        item.set('typesForCreation', value);
+    }
+
+    export function pushTypesForCreation(item : __d__.JsonExtentObject, value: any) {
+        var a = <Array<any>> item.get('typesForCreation');
+        if (a === undefined) {
+            a = new Array<any>();
+        }
+
+        a.push(value);
+        item.set('typesForCreation', a);
     }
 
     export function getAllowEdit(item: __d__.JsonExtentObject) {
@@ -861,6 +895,14 @@ export module TableView {
 
     export function setStartInEditMode(item : __d__.JsonExtentObject, value: any) {
         item.set('startInEditMode', value);
+    }
+
+    export function getDoAutoGenerateByProperties(item: __d__.JsonExtentObject) {
+        return item.get('doAutoGenerateByProperties');
+    }
+
+    export function setDoAutoGenerateByProperties(item : __d__.JsonExtentObject, value: any) {
+        item.set('doAutoGenerateByProperties', value);
     }
 
 }

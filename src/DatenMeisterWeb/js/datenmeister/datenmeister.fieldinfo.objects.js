@@ -791,6 +791,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('startInEditMode', value);
         }
         View.setStartInEditMode = setStartInEditMode;
+
+        function getDoAutoGenerateByProperties(item) {
+            return item.get('doAutoGenerateByProperties');
+        }
+        View.getDoAutoGenerateByProperties = getDoAutoGenerateByProperties;
+
+        function setDoAutoGenerateByProperties(item, value) {
+            item.set('doAutoGenerateByProperties', value);
+        }
+        View.setDoAutoGenerateByProperties = setDoAutoGenerateByProperties;
     })(exports.View || (exports.View = {}));
     var View = exports.View;
 
@@ -897,6 +907,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('startInEditMode', value);
         }
         FormView.setStartInEditMode = setStartInEditMode;
+
+        function getDoAutoGenerateByProperties(item) {
+            return item.get('doAutoGenerateByProperties');
+        }
+        FormView.getDoAutoGenerateByProperties = getDoAutoGenerateByProperties;
+
+        function setDoAutoGenerateByProperties(item, value) {
+            item.set('doAutoGenerateByProperties', value);
+        }
+        FormView.setDoAutoGenerateByProperties = setDoAutoGenerateByProperties;
     })(exports.FormView || (exports.FormView = {}));
     var FormView = exports.FormView;
 
@@ -932,6 +952,27 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('mainType', value);
         }
         TableView.setMainType = setMainType;
+
+        function getTypesForCreation(item) {
+            return item.get('typesForCreation');
+        }
+        TableView.getTypesForCreation = getTypesForCreation;
+
+        function setTypesForCreation(item, value) {
+            item.set('typesForCreation', value);
+        }
+        TableView.setTypesForCreation = setTypesForCreation;
+
+        function pushTypesForCreation(item, value) {
+            var a = item.get('typesForCreation');
+            if (a === undefined) {
+                a = new Array();
+            }
+
+            a.push(value);
+            item.set('typesForCreation', a);
+        }
+        TableView.pushTypesForCreation = pushTypesForCreation;
 
         function getAllowEdit(item) {
             return item.get('allowEdit');
@@ -1003,6 +1044,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('startInEditMode', value);
         }
         TableView.setStartInEditMode = setStartInEditMode;
+
+        function getDoAutoGenerateByProperties(item) {
+            return item.get('doAutoGenerateByProperties');
+        }
+        TableView.getDoAutoGenerateByProperties = getDoAutoGenerateByProperties;
+
+        function setDoAutoGenerateByProperties(item, value) {
+            item.set('doAutoGenerateByProperties', value);
+        }
+        TableView.setDoAutoGenerateByProperties = setDoAutoGenerateByProperties;
     })(exports.TableView || (exports.TableView = {}));
     var TableView = exports.TableView;
 });

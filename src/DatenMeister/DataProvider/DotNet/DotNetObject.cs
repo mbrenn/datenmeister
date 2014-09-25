@@ -24,6 +24,8 @@ namespace DatenMeister.DataProvider.DotNet
 
         private object value;
 
+        private IReflectiveSequence sequence;
+
         /// <summary>
         /// Gets the raw value of the object
         /// </summary>
@@ -47,14 +49,23 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="extent"></param>
         /// <param name="value"></param>
-        public DotNetObject(DotNetExtent extent, object value)
+        public DotNetObject(IReflectiveSequence sequence, object value)
         {
+            // TODO: Assign yourself to the reflective collection
+            Ensure.That(!(value is DotNetObject), "DotNetObject may not be hosting another DotNetObject");
+            Ensure.That(!(value is IObject), "DotNetObject may not be hosting another DotNetObject");
+
             Ensure.That(value != null);
 
-            this.extent = extent;
+            if (sequence != null)
+            {
+                this.sequence = sequence;
+                this.extent = sequence.Extent as DotNetExtent;
+            }
+
             this.value = value;
 
-            if (!this.isSet("name") || this.get("name") == null)
+            if (!this.isSet("name") || ObjectHelper.IsNull(this.get("name")))
             {
                 this.id = Guid.NewGuid().ToString();
             }
@@ -64,10 +75,12 @@ namespace DatenMeister.DataProvider.DotNet
             }
         }
 
-        public DotNetObject(DotNetExtent extent, object value, string id)
-            : this(value, id)
+        public DotNetObject(IReflectiveSequence sequence, object value, string id)
+            : this(sequence, value)
         {
-            this.extent = extent;
+            Ensure.That(id != null);
+            Ensure.That(value != null);
+            this.value = value;
             this.id = id;
         }
 
@@ -210,7 +223,7 @@ namespace DatenMeister.DataProvider.DotNet
         public void delete()
         {
             Ensure.That(extent != null, "No extent had been given");
-            this.extent.Elements().remove(this);
+            this.sequence.remove(this);
         }
 
         /// <summary>
@@ -250,14 +263,17 @@ namespace DatenMeister.DataProvider.DotNet
             {
                 return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }
+            else if (checkObject is IList<object>)
+            {
+                var sequence = new DotNetSequence(this.extent, checkObject as IList<object>);
+                return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
+            }
             else if (checkObject is IEnumerable)
             {
                 var sequence = new DotNetSequence(this.extent);
-                var n = 0L;
                 foreach (var value in (checkObject as IEnumerable))
                 {
-                    sequence.Add(new DotNetObject(this.extent, value, this.Id + "[" + n.ToString() + "]"));
-                    n++;
+                    sequence.Add(value);
                 }
 
                 return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
@@ -268,7 +284,8 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else
             {
-                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent, checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
+                // It is not an enumeration and it is not a simple type
+                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent.Elements(), checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
             }
         }
 
@@ -300,13 +317,15 @@ namespace DatenMeister.DataProvider.DotNet
 
         public override string ToString()
         {
-            if (this.isSet("name") && !string.IsNullOrEmpty(this.get("name").AsSingle().ToString()))
+            if (this.isSet("name") && !ObjectHelper.IsNull(this.get("name")))
             {
                 return string.Format("\"{0}\" (DotNetObject)",
                     this.get("name").AsSingle().ToString());
             }
-
-            return base.ToString();
+            else
+            {
+                return string.Format("Id: {0}", this.id.ToString());
+            }
         }
 
         Type IKnowsExtentType.ExtentType

@@ -1,4 +1,5 @@
 ﻿using BurnSystems.ObjectActivation;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace DatenMeister.DataProvider
         /// <returns>Factory to be created</returns>
         public static IFactory GetFor(Type type, IURIExtent extent)
         {
-            var factoryProvider = Global.Application.Get<IFactoryProvider>();
+            var factoryProvider = Injection.Application.Get<IFactoryProvider>();
             return factoryProvider.CreateFor(type, extent);
         }
 

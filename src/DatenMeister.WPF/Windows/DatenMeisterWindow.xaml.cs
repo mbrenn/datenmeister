@@ -1,6 +1,8 @@
 ﻿using BurnSystems.Logging;
 using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
+using DatenMeister.DataProvider.Wrapper;
+using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
@@ -8,6 +10,7 @@ using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Helper;
 using DatenMeister.WPF.Modules.RecentFiles;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -162,10 +165,14 @@ namespace DatenMeister.WPF.Windows
         /// Recreates the table views for all extents being the view extent. 
         /// If one tab is already opened, the tab will not be recreated. 
         /// </summary>
+        /// <param name="assignEvent">This variable defines whether the 
+        /// windows shall assign itself on the change event. 
+        /// If yes, it will get updated, each time, the window extent changes</param>
         public void RefreshTabs()
         {
             var pool = PoolResolver.GetDefaultPool();
             var viewExtent = pool.GetExtent(ExtentType.View).First();
+
             Ensure.That(viewExtent != null, "No view extent has been given");
 
             var filteredViewExtent =
@@ -182,7 +189,7 @@ namespace DatenMeister.WPF.Windows
                 elements.Add(tableInfoObj);
 
                 // Check, if there is already a tab, which hosts the tableInfo
-                if (this.listTabs.Any(x => x.TableViewInfo.AsIObject().Id == tableInfoObj.Id))
+                if (this.listTabs.Any(x => x.TableViewInfo.Equals(tableInfoObj)))
                 {
                     // We do not need to recreate it
                     continue;
@@ -191,7 +198,7 @@ namespace DatenMeister.WPF.Windows
                 var tableViewInfo = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableInfoObj);
 
                 var extentUri = tableViewInfo.getExtentUri();
-                Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
+                //Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
 
                 var name = tableViewInfo.getName();
                 var tab = CreateTab(tableInfoObj, name);
@@ -248,6 +255,36 @@ namespace DatenMeister.WPF.Windows
         }
 
         /// <summary>
+        /// Adds the refreshing event to the view extent, if the given
+        /// instance is a event throwing instance
+        /// </summary>
+        public void RegisterToChangeEvent()
+        {
+            var pool = PoolResolver.GetDefaultPool();
+            var viewExtent = pool.GetExtent(ExtentType.View).First();
+
+            var onChangeEventExtent = WrapperHelper.FindWrappedExtent<EventOnChangeExtent>(viewExtent);
+            if (onChangeEventExtent == null)
+            {
+                logger.Fail("The ViewExtent is not wrapped by EventOnChangeExtent");
+            }
+            else
+            {
+                onChangeEventExtent.ChangeInExtent += (x, y) =>
+                    {
+                        logger.Verbose("View Extent has been changed");
+
+                        this.Dispatcher.BeginInvoke(
+                            new Action(() => this.RefreshTabs()),
+                            System.Windows.Threading.DispatcherPriority.Background);
+
+                    };
+
+                logger.Verbose("Event connection to View Extent is established");
+            }            
+        }
+
+        /// <summary>
         /// Creates a tab for the given tableInfo
         /// </summary>
         /// <param name="tableInfoObj">Information object containing the information about the
@@ -299,7 +336,7 @@ namespace DatenMeister.WPF.Windows
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            var pool = Global.Application.Get<IPool>();
+            var pool = Injection.Application.Get<IPool>();
 
             var userResult = this.DoesUserWantsToSaveData();
             if (userResult == null)
@@ -318,6 +355,7 @@ namespace DatenMeister.WPF.Windows
             this.Core.PerformInitializeFromScratch();
 
             // Refreshes the view
+            this.RefreshTabs();
             this.RefreshAllTabContent();
         }
 
@@ -341,7 +379,7 @@ namespace DatenMeister.WPF.Windows
         {
             this.Core.PerformInitializationOfViewSet();
 
-            var pool = Global.Application.Get<IPool>();
+            var pool = Injection.Application.Get<IPool>();
             var projectExtent = pool.GetExtent(ExtentType.Data).First();
 
             var loadedFile = XDocument.Load(filename);
@@ -393,6 +431,7 @@ namespace DatenMeister.WPF.Windows
 
                 // Stores the xml document
                 xmlExtent.XmlDocument.Save(this.pathOfDataExtent);
+                xmlExtent.IsDirty = false;
 
                 // Adds the file to the recent files
                 this.AddRecentFile(this.pathOfDataExtent);
@@ -432,7 +471,7 @@ namespace DatenMeister.WPF.Windows
         public void AddRecentFile(string filePath)
         {
             RecentFileIntegration.AddRecentFile(
-                this.Core,
+                this,
                 filePath,
                 System.IO.Path.GetFileNameWithoutExtension(filePath));
         }
@@ -520,6 +559,11 @@ namespace DatenMeister.WPF.Windows
             {
                 e.Handled = this.FocusCurrentTab();
             }
+
+            if (e.Key == Key.S && (e.KeyboardDevice.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                this.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -559,6 +603,15 @@ namespace DatenMeister.WPF.Windows
         {
             this.Core.PerformInitializeFromScratch();
             this.Core.PerformInitializeExampleData();
+        }
+
+        /// <summary>
+        /// Gets the ribbon for the open files
+        /// </summary>
+        /// <returns></returns>
+        public RibbonApplicationMenuItem GetRecentFileRibbon()
+        {
+            return this.menuRecentFiles;
         }
     }
 }

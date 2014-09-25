@@ -15,7 +15,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         private List<DotNetTypeInformation> mappings = new List<DotNetTypeInformation>();
 
-        public void Add(Type dotNetType, IObject type)
+        public DotNetTypeInformation Add(Type dotNetType, IObject type)
         {
             var information = new DotNetTypeInformation()
             {
@@ -24,6 +24,8 @@ namespace DatenMeister.DataProvider.DotNet
             };
 
             this.mappings.Add(information);
+
+            return information;
         }
 
         public DotNetTypeInformation FindByDotNetType(Type type)
@@ -34,6 +36,15 @@ namespace DatenMeister.DataProvider.DotNet
         public DotNetTypeInformation FindByIObjectType(IObject type)
         {
             return this.mappings.Where(x => x.Type == type).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Removes the mapping for a certain type
+        /// </summary>
+        /// <param name="type">Type, whose mapping shall get removed</param>
+        public void RemoveFor(Type type)
+        {
+            this.mappings.RemoveAll(x => x.DotNetType == type);
         }
     }
 }

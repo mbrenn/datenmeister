@@ -1,6 +1,6 @@
 namespace DatenMeister.Entities.AsObject.DM
 {
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RecentProject : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {

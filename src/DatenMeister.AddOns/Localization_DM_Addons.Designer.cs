@@ -90,6 +90,15 @@ namespace DatenMeister.AddOns {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compliance Suite.
+        /// </summary>
+        internal static string Menu_ComplianceSuite {
+            get {
+                return ResourceManager.GetString("Menu_ComplianceSuite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export to Excel....
         /// </summary>
         internal static string Menu_ExcelExport {
@@ -144,6 +153,24 @@ namespace DatenMeister.AddOns {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View Manager.
+        /// </summary>
+        internal static string Menu_ViewManager {
+            get {
+                return ResourceManager.GetString("Menu_ViewManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assign Types.
+        /// </summary>
+        internal static string Menu_ViewManagerAssignTypes {
+            get {
+                return ResourceManager.GetString("Menu_ViewManagerAssignTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View.
         /// </summary>
         internal static string Menu_Views {
@@ -171,31 +198,20 @@ namespace DatenMeister.AddOns {
         ///      td {
         ///        border: 1px solid black;
         ///        padding: 4px 10px 4px 10px;
+        ///        vertical-align: top;
         ///      }
         ///
         ///      th {
         ///        border: 1px solid black;
         ///        padding: 4px 10px 4px 10px;
+        ///        vertical-align: top;
         ///      }
         ///
-        ///      br {
-        ///        mso-data-placement:same-cell;
-        ///      }
-        ///      
-        ///   [rest of string was truncated]&quot;;.
+        ///      br { [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SimpleReport_Template {
             get {
                 return ResourceManager.GetString("SimpleReport_Template", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        internal static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
     }

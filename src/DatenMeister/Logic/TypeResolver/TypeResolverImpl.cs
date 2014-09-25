@@ -1,5 +1,6 @@
 ﻿using BurnSystems.ObjectActivation;
 using DatenMeister.Entities.AsObject.Uml;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace DatenMeister.Logic.TypeResolver
         public IObject GetType(string typeName)
         {
             // Gets the property
-            var pool = Global.Application.Get<IPool>();
+            var pool = Injection.Application.Get<IPool>();
             var type = pool.Instances.SelectMany(x => x.Extent.Elements()
                 .Where(y => y is IObject)
                 .Cast<IObject>()

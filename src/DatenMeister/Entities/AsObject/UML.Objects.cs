@@ -1,6 +1,6 @@
 namespace DatenMeister.Entities.AsObject.Uml
 {
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class NamedElement : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -133,7 +133,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.5.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Type : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {

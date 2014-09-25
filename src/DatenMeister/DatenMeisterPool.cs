@@ -152,21 +152,8 @@ namespace DatenMeister
         /// </summary>
         private static void DoDefaultBinding()
         {
-            // At the moment, reset the complete Binding
-            Global.Reset();
-
-            // Initializes the default factory provider
-            Global.Application.Bind<IFactoryProvider>().To<FactoryProvider>();
-
-            // Initializes the default pool
-            Global.Application.Bind<IPool>().ToConstant(ApplicationPool);
-            Global.Application.Bind<DatenMeisterPool>().ToConstant(ApplicationPool);
-
-            // Initializes the default resolver
-            Global.Application.Bind<IPoolResolver>().To(x => new PoolResolver() { Pool = ApplicationPool });
-
-            // Initializes the default type resolver
-            Global.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
+            Injection.Application.Rebind<IPool>().ToConstant(DatenMeisterPool.ApplicationPool);
+            Injection.Application.Rebind<DatenMeisterPool>().ToConstant(ApplicationPool);
         }
 
         /// <summary>
@@ -186,6 +173,32 @@ namespace DatenMeister
             return ApplicationPool;
         }
 
+        /// <summary>
+        /// Gets the meta extent type for a certain extenttype 
+        /// </summary>
+        /// <param name="extentType">Extenttype whose meta type is requested</param>
+        public static ExtentType GetMetaExtentType(ExtentType extentType)
+        {
+            switch (extentType)
+            {
+                case ExtentType.Extents:
+                    return ExtentType.MetaType;
+                case ExtentType.MetaType:
+                    return ExtentType.MetaType;
+                case ExtentType.Type:
+                    return ExtentType.MetaType;
+                case ExtentType.View:
+                    return ExtentType.MetaType;
+                case ExtentType.Data:
+                    return ExtentType.Type;
+                case ExtentType.ApplicationData:
+                    return ExtentType.MetaType;
+                case ExtentType.Query:
+                    return ExtentType.Type;
+                default:
+                    throw new NotImplementedException("Unknown Extenttype: " + extentType.ToString());
+            }
+        }
         public override string ToString()
         {
             return "DatenMeisterPool (#" + this.id.ToString() + ")";

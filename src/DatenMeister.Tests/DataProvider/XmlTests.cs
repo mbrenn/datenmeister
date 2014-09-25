@@ -1,6 +1,8 @@
 ﻿using BurnSystems.Test;
 using DatenMeister;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Wrapper;
+using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using NUnit.Framework;
@@ -109,6 +111,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestIdConcept()
         {
+            ApplicationCore.PerformBinding();
             var pool = DatenMeisterPool.Create();
 
             var document = XDocument.Parse(
@@ -138,6 +141,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestReferenceWithFullPath()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -162,6 +166,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestReferenceWithPartialPath()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -186,6 +191,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestReferenceAndRemove()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -211,6 +217,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestSetReference()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -254,6 +261,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestGetReflectiveCollectionWithReferences()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -279,6 +287,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestGetAndSetReflectiveCollectionWithReferences()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -312,6 +321,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestReflectiveSequence()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -380,6 +390,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestReflectiveSequenceWithStrings()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -412,6 +423,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestEmbeddedElementsAsSingleWithSubElement()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -439,6 +451,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestEmbeddedElementsAsReflectiveCollectionWithSubElement()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -492,6 +505,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestEmbeddedElementsAsSingle()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<element id=\"e1\" />" +
@@ -519,6 +533,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestGetAndSetOfDateTime()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                 "<element id=\"e1\" />" +
@@ -630,6 +645,7 @@ namespace DatenMeister.Tests.DataProvider
         /// <returns>XmlExtent being created</returns>
         public static XmlExtent CreateRawTestExtent()
         {
+            ApplicationCore.PerformBinding();
             BurnSystems.ObjectActivation.Global.Reset();
             var document = XDocument.Parse(
                 "<root>" +
@@ -657,6 +673,7 @@ namespace DatenMeister.Tests.DataProvider
         /// <returns>XmlExtent being created</returns>
         public static XmlExtent CreateTestExtent(bool isEmpty = false)
         {
+            ApplicationCore.PerformBinding();
             BurnSystems.ObjectActivation.Global.Reset();
             var document = XDocument.Parse(
                 "<root>" +
@@ -703,6 +720,7 @@ namespace DatenMeister.Tests.DataProvider
         [Test]
         public void TestAutoGeneratedCode()
         {
+            ApplicationCore.PerformBinding();
             var document = XDocument.Parse(
                 "<root>" +
                     "<comments />" +
@@ -752,6 +770,33 @@ namespace DatenMeister.Tests.DataProvider
             newAddress.set("town", "My Town");
             newElement.set("address", newAddress);
             return newElement;
+        }
+
+        [Test]
+        public void TestSkipRootElements()
+        {
+            var document = XDocument.Parse(
+                "<root>" +
+                    "<comments />" +
+                    "<textfields />" +
+                    "<other p3:type=\"Task\" xmlns:p3=\"http://www.omg.org/spec/XMI/2.4.1\" />" +
+                "</root>");
+
+            var xmlSettings = new XmlSettings()
+            {
+                SkipRootNode = false
+            };
+
+            var extent = new XmlExtent(document, "no", xmlSettings);
+            Assert.That(extent.Elements().Count, Is.EqualTo(3));
+
+            xmlSettings = new XmlSettings()
+            {
+                SkipRootNode = true
+            };
+
+            extent = new XmlExtent(document, "no", xmlSettings);
+            Assert.That(extent.Elements().Count, Is.EqualTo(1));
         }
     }
 }

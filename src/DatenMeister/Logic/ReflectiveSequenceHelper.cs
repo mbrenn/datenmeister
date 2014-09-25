@@ -17,12 +17,12 @@ namespace DatenMeister.Logic
         /// </summary>
         /// <param name="collection">Collection, whose properties shall get reflected</param>
         /// <returns>Enumeration of property names being used</returns>
-        public static IEnumerable<string> GetConsolidatedPropertyNames(this IReflectiveCollection collection)
+        public static IEnumerable<string> GetConsolidatedPropertyNames(this IEnumerable<object> collection)
         {
             return ObjectHelper.GetColumnNames(collection.Where(x=> x is IObject).Select(x=> x as IObject));
         }
 
-        private static int GetTypeCount(IReflectiveCollection collection)
+        private static int GetTypeCount(IEnumerable<object> collection)
         {
             return collection.Where(x => x is IElement)         // Need meta classes
                 .Select(x => (x as IElement).getMetaClass())    // As meta classed
@@ -31,7 +31,12 @@ namespace DatenMeister.Logic
                 .Count();                                       // As Count
         }
 
-        private static int GetExtentCount(IReflectiveCollection collection)
+        /// <summary>
+        /// Gets the number of different extents within the given reflective collection
+        /// </summary>
+        /// <param name="collection">Collection to be queried</param>
+        /// <returns>Number of extents</returns>
+        private static int GetExtentCount(IEnumerable<object> collection)
         {
             return collection.Where(x => x is IObject)          // Need IObjects
                 .Select(x => (x as IObject).Extent)             // given me their extent
@@ -45,7 +50,7 @@ namespace DatenMeister.Logic
         /// </summary>
         /// <param name="collection">Collection, whose properties shall get reflected</param>
         /// <returns>Enumeration of property names being used</returns>
-        public static TypeInformation GetConsolidatedInformation(this IReflectiveCollection collection)
+        public static TypeInformation GetConsolidatedInformation(this IEnumerable<object> collection)
         {
             var result = new TypeInformation()
             {

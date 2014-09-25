@@ -23,6 +23,12 @@ namespace DatenMeister.DataProvider
         /// </summary>
         private string id;
 
+        public string Id
+        {
+            get { return this.id; }
+            private set { this.id = value; }
+        }
+
         public GenericObject(IURIExtent extent = null, string id = null)
         {
             this.owner = extent;
@@ -32,11 +38,17 @@ namespace DatenMeister.DataProvider
             }
 
             this.id = id;
+
+            if (this.id == null)
+            {
+                this.Id = Guid.NewGuid().ToString();
+            }
         }
 
         public IURIExtent Extent
         {
             get { return this.owner; }
+            set { this.owner = value; }
         }
 
         /// <summary>
@@ -96,17 +108,19 @@ namespace DatenMeister.DataProvider
             this.owner.Elements().remove(this);
         }
 
-        public string Id
-        {
-            get
-            {
-                return this.id;
-            }
-        }
-
         Type IKnowsExtentType.ExtentType
         {
             get { return typeof(GenericExtent); }
+        }
+
+        public override string ToString()
+        {
+            if (this.isSet("name"))
+            {
+                return this.get("name").AsSingle().ToString();
+            }
+
+            return base.ToString();
         }
     }
 }

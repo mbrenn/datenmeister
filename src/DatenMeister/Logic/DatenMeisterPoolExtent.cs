@@ -49,7 +49,7 @@ namespace DatenMeister.Logic
         {
             return new EnumerationReflectiveSequence<IObject>(this,
                 this.pool.Instances.Select(
-                    x => new DotNetObject(this, x.ToJson(), x.Extent.ContextURI())));
+                    x => new DotNetObject(this.Elements(), x.ToJson(), x.Extent.ContextURI())));
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace DatenMeister.Logic
         {
             var factory = Factory.GetFor(viewExtent);
             // Creates the view for the extents
-            var extentViewObj = factory.CreateInExtent(viewExtent, DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+            var extentViewObj = factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
             var asObjectExtentview = new DatenMeister.Entities.AsObject.FieldInfo.TableView(extentViewObj);
 
             asObjectExtentview.setExtentUri(DatenMeisterPoolExtent.DefaultUri);
@@ -75,6 +75,8 @@ namespace DatenMeister.Logic
                 new TextField("Type", "type"),
                 new TextField("ExtentType", "extentType"),
                 new TextField("Filename", "filename")));
+
+            viewExtent.Elements().add(extentViewObj);
 
             return extentViewObj;
         }

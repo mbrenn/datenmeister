@@ -3,6 +3,7 @@ using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.Logic.Views;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,7 +120,7 @@ namespace DatenMeister.WPF.Controls
 
             var extent = collection.Extent;
             Ensure.That(collection.Extent != null);
-            Ensure.That(type != null, "No Type has ben set that can be used to create a new object");
+            Ensure.That(type != null, "No Type has been set that can be used to create a new object");
 
             var temp = new GenericElement(extent: extent, type: type);
             viewData = GetView(temp, viewData);
@@ -133,7 +134,7 @@ namespace DatenMeister.WPF.Controls
             dialog.Pool = extent.Pool;
             dialog.DetailForm.EditMode = EditMode.New;
             dialog.DetailForm.FormViewInfo = viewData;
-            dialog.DetailForm.Extent = extent;
+            dialog.DetailForm.Collection = collection;
             dialog.DetailForm.TypeToCreate = type;
             dialog.DetailForm.Settings = settings;
             dialog.Show();
@@ -154,17 +155,21 @@ namespace DatenMeister.WPF.Controls
             Ensure.That(settings != null);
 
             viewData = GetView(value, viewData);
-
             if (viewData == null)
             {
                 return null;
             }
 
+            // Creates the dialog
             var dialog = new DetailDialog();
-            dialog.Pool = value.Extent.Pool;
+            if (value.Extent != null)
+            {
+                dialog.Pool = value.Extent.Pool;
+            }
+
             dialog.DetailForm.EditMode = readOnly ? EditMode.Read : EditMode.Edit;
             dialog.DetailForm.FormViewInfo = viewData;
-            dialog.DetailForm.Extent = value.Extent;
+            dialog.DetailForm.Collection = value.Extent == null ? null : value.Extent.Elements();
             dialog.DetailForm.DetailObject = value;
             dialog.DetailForm.Settings = settings;
             dialog.Show();
@@ -177,7 +182,7 @@ namespace DatenMeister.WPF.Controls
             // If viewdata is already given, then we do not need to find out the correct view data
             if (viewData == null)
             {
-                var viewManager = Global.Application.Get<IViewManager>();
+                var viewManager = Injection.Application.Get<IViewManager>();
 
                 if (viewManager == null)
                 {

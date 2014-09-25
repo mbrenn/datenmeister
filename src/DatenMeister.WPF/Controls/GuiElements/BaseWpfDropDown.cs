@@ -160,6 +160,8 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 n++;
             }
 
+            values = values.OrderBy(x => (x as Item<object>).Title).ToList();
+
             // Sets the item source
             this.dropDown.ItemsSource = values;
             this.dropDown.SelectedIndex = selectedValue;

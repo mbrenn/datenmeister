@@ -91,7 +91,7 @@ namespace DatenMeister.DataProvider.CSV
                 base.OnChange();
             }
 
-            public override IObject ConvertInstanceTo(object value)
+            public override IObject ConvertInstanceToInternal(object value)
             {
                 if (value is CSVObject)
                 {

@@ -17,7 +17,8 @@
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
                     <RibbonApplicationMenuItem Header="New" Click="New_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-new.png" />
-                    <RibbonApplicationMenuItem Header="Load..." Click="Load_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-open.png" />
+                    <RibbonApplicationMenuItem Header="Load..." Click="Load_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-open.png" x:Name="menuOpenFiles" />
+                    <RibbonApplicationMenuItem Header="Recent Files" Click="Load_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-open.png" x:Name="menuRecentFiles" />
                     <RibbonApplicationMenuItem Header="Save" Click="Save_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-save.png" />
                     <RibbonApplicationMenuItem Header="Save As..." Click="SaveAs_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-save-as.png" />
                     <RibbonApplicationMenuItem Header="Export as Xml..." Click="ExportAsXml_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/emblem-downloads.png" />

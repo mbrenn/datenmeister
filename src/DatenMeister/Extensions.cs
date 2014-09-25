@@ -1,6 +1,7 @@
 ﻿using DatenMeister.DataProvider;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
+using Ninject;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace DatenMeister
 
             if (objAsString != null)
             {
-                var poolResolver = PoolResolver.GetDefault(pool);
+                var poolResolver = Injection.Application.Get<IPoolResolver>();
                 return poolResolver.Resolve(objAsString, context);
             }
 
@@ -90,6 +91,29 @@ namespace DatenMeister
             return pool.Instances.Where(x => x.ExtentType == extentType).Select(x => x.Extent);
         }
 
+        /// <summary>
+        /// Gets the extent instance of a certain extent
+        /// </summary>
+        /// <param name="pool">Pool to be used</param>
+        /// <param name="extent">Extent whose instance is queried</param>
+        /// <returns>Found extent instance</returns>
+        public static ExtentInstance GetInstance(this IPool pool, IURIExtent extent)
+        {
+            return pool.Instances.Where(x => x.Extent == extent).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Gets the extent instance of a certain extent. 
+        /// The pool will be retrieved from the DoI container
+        /// </summary>
+        /// <param name="extent">Extent whose instance is queried</param>
+        /// <returns>Found extent instance</returns>
+        public static ExtentInstance GetInstance(this IURIExtent extent)
+        {
+            var pool = Injection.Application.Get<IPool>();
+            return pool.GetInstance(extent);
+        }
+
         public static JsonExtentInfo ToJson(this IURIExtent extent)
         {
             return new JsonExtentInfo()
@@ -108,6 +132,11 @@ namespace DatenMeister
         /// <returns>Converted object</returns>
         public static object AsSingle(this object value, bool fullResolve = true)
         {
+            if (value == null)
+            {
+                return ObjectHelper.Null;
+            }
+
             var valueAsResolvable = value as IResolvable;
             if (valueAsResolvable != null && fullResolve)
             {
@@ -149,10 +178,6 @@ namespace DatenMeister
             if (valueAsEnumeration != null)
             {
                 return Extensions.AsSingle(valueAsEnumeration.OfType<object>().FirstOrDefault(), fullResolve);
-            }
-            else if (value == null)
-            {
-                return ObjectHelper.Null;
             }
             else
             {
