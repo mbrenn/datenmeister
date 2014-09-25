@@ -261,7 +261,7 @@ namespace DatenMeister.DataProvider.Xml
 
             // Checks, if we have a value
             var result = this.get(propertyName).AsSingle();
-            if (result == null)
+            if (ObjectHelper.IsNull(result))
             {
                 return false;
             }
