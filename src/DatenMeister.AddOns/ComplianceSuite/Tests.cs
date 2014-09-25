@@ -1,4 +1,5 @@
-﻿using DatenMeister.DataProvider;
+﻿using DatenMeister.AddOns.ComplianceSuite.Mof;
+using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Xml;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace DatenMeister.AddOns.ComplianceSuite
     /// <summary>
     /// Runs the compliance suite for a given extent and type extent 
     /// </summary>
-    public class Suite
+    public class Tests
     {
         /// <summary>
         /// Stores the extent factory
@@ -23,6 +24,10 @@ namespace DatenMeister.AddOns.ComplianceSuite
             set;
         }
 
+        /// <summary>
+        /// Creates another object. The object shall not be added to the 
+        /// extent
+        /// </summary>
         public Func<IURIExtent, IObject> ObjectFactory
         {
             get;
@@ -33,7 +38,7 @@ namespace DatenMeister.AddOns.ComplianceSuite
         /// Initializes the suite for a given extent, where the data shall be stored.
         /// </summary>
         /// <param name="extent">Factory for an empty extent, which shall be checked for compliance</param>
-        public Suite(Func<IURIExtent> extentFactory, Func<IURIExtent, IObject> objectFactory)
+        public Tests(Func<IURIExtent> extentFactory, Func<IURIExtent, IObject> objectFactory)
         {
             this.ExtentFactory = extentFactory;
             this.ObjectFactory = objectFactory;
@@ -47,7 +52,7 @@ namespace DatenMeister.AddOns.ComplianceSuite
         {
             var result = new GenericObject();
 
-            var mofObjectCompliance = new MofObjectCompliance(this, result);
+            var mofObjectCompliance = new Chapter9Tests(this, result);
             mofObjectCompliance.Run();
 
             return result;
@@ -56,21 +61,21 @@ namespace DatenMeister.AddOns.ComplianceSuite
         /// <summary>
         /// Gets a suite for generic objects
         /// </summary>
-        public static Suite Generic
+        public static Tests Generic
         {
             get
             {
                 // Test for Generic Extent
                 Func<IURIExtent> factoryGeneric = () => new GenericExtent("datenmeister:///temp");
                 Func<IURIExtent, IObject> factoryObject = (x) => new GenericObject(x);
-                return new ComplianceSuite.Suite(factoryGeneric, factoryObject);                
+                return new ComplianceSuite.Tests(factoryGeneric, factoryObject);                
             }
         }
 
         /// <summary>
         /// Gets a suite for generic objects
         /// </summary>
-        public static Suite Xml
+        public static Tests Xml
         {
             get
             {
@@ -86,9 +91,8 @@ namespace DatenMeister.AddOns.ComplianceSuite
                     return factory.create(null);
                 };
 
-                return new ComplianceSuite.Suite(factoryGeneric, factoryObject);
+                return new ComplianceSuite.Tests(factoryGeneric, factoryObject);
             }
         }
-
     }
 }

@@ -25,16 +25,16 @@ namespace DatenMeister.AddOns.ComplianceSuite.WPF
             InitializeComponent();
         }
 
-        public Suite GetSuite()
+        public Tests GetSuite()
         {
             if (this.radioGeneric.IsChecked == true)
             {
-                return Suite.Generic;
+                return Tests.Generic;
             }
 
             if (this.radioXml.IsChecked == true)
             {
-                return Suite.Xml;
+                return Tests.Xml;
             }
 
             return null;

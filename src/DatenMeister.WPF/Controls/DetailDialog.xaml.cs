@@ -169,7 +169,7 @@ namespace DatenMeister.WPF.Controls
 
             dialog.DetailForm.EditMode = readOnly ? EditMode.Read : EditMode.Edit;
             dialog.DetailForm.FormViewInfo = viewData;
-            dialog.DetailForm.Collection = value.Extent.Elements();
+            dialog.DetailForm.Collection = value.Extent == null ? null : value.Extent.Elements();
             dialog.DetailForm.DetailObject = value;
             dialog.DetailForm.Settings = settings;
             dialog.Show();

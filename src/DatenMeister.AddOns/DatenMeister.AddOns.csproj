@@ -68,8 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddOnHelper.cs" />
-    <Compile Include="ComplianceSuite\MofObjectCompliance.cs" />
-    <Compile Include="ComplianceSuite\Suite.cs" />
+    <Compile Include="ComplianceSuite\BaseSuite.cs" />
+    <Compile Include="ComplianceSuite\Mof\Chapter9Tests.cs" />
+    <Compile Include="ComplianceSuite\Tests.cs" />
     <Compile Include="ComplianceSuite\WPF\Plugin.cs" />
     <Compile Include="ComplianceSuite\WPF\SelectSuite.xaml.cs">
       <DependentUpon>SelectSuite.xaml</DependentUpon>
