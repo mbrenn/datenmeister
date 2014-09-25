@@ -611,7 +611,7 @@ namespace DatenMeister.WPF.Windows
         /// <returns></returns>
         public RibbonApplicationMenuItem GetRecentFileRibbon()
         {
-            return this.menuOpenFiles;
+            return this.menuRecentFiles;
         }
     }
 }

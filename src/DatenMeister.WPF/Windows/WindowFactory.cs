@@ -22,8 +22,15 @@ namespace DatenMeister.WPF.Windows
         {            
             Application.Current.DispatcherUnhandledException += (x, y) =>
                 {
-                    var exceptionHandling = Injection.Application.Get<IExceptionHandling>();
-                    y.Handled = exceptionHandling.HandleException(y.Exception);
+                    var exceptionHandling = Injection.Application.TryGet<IExceptionHandling>();
+                    if (exceptionHandling == null)
+                    {
+                        y.Handled = false;
+                    }
+                    else
+                    {
+                        y.Handled = exceptionHandling.HandleException(y.Exception);
+                    }
 #if DEBUG
                     //y.Handled = false;
 #endif

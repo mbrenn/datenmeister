@@ -94,6 +94,11 @@ namespace DatenMeister.Logic
         public event EventHandler ViewSetInitialized;
 
         /// <summary>
+        /// Stores the value whether the application data is loaded
+        /// </summary>
+        private bool isApplicationDataLoaded = false;
+
+        /// <summary>
         /// Initializes a new instance of the project
         /// </summary>
         /// <param name="projectName">Name of the project</param>
@@ -134,7 +139,7 @@ namespace DatenMeister.Logic
 
         /// <summary>
         /// Starts the application. The created settings are afterwards available
-        /// at this.Settings
+        /// at this.Settings.
         /// </summary>
         /// <typeparam name="T">Type of the window</typeparam>
         public void Start<T>() where T : IDatenMeisterSettings, new()
@@ -143,11 +148,11 @@ namespace DatenMeister.Logic
 
             // Initialization of all meta types
             this.privateSettings = new T();
-            this.MetaTypeExtent = new GenericExtent("datenmeister:///datenmeister/metatypes/");
-            //this.MetaTypeExtent.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), null);
-            DatenMeister.Entities.AsObject.Uml.Types.Init(this.MetaTypeExtent);
-            //this.MetaTypeExtent.Mapping.RemoveFor(typeof(DatenMeister.Entities.AsObject.Uml.Type));
 
+            // Initializes the metatypes
+            this.MetaTypeExtent = new GenericExtent("datenmeister:///datenmeister/metatypes/");
+            DatenMeister.Entities.AsObject.Uml.Types.Init(this.MetaTypeExtent);
+            
             this.privateSettings.InitializeForBootUp(this);
             this.PerformInitializationOfViewSet();
         }
@@ -175,12 +180,13 @@ namespace DatenMeister.Logic
 
         public void PerformInitializationOfViewSet()
         {
-            ApplicationCore.PerformBinding();
+            PerformBinding();
             var pool = DatenMeisterPool.Create();
 
             // Initializes the database itself
             this.MetaTypeExtent.ReleaseFromPool();
 
+            // Adds the metatypes
             pool.Add(this.MetaTypeExtent, null, "MetaTypes", ExtentType.MetaType);
 
             this.LoadApplicationData();
@@ -231,6 +237,10 @@ namespace DatenMeister.Logic
         /// </summary>
         public void StoreViewSet()
         {
+            // Stores the settings
+            this.SaveApplicationData();
+
+            // and afterwards store the viewset
             this.privateSettings.StoreViewSet(this);
         }
 
@@ -300,7 +310,7 @@ namespace DatenMeister.Logic
         /// <param name="extentUri">Uri of the extent to be saved</param>
         public void SaveExtentByUri(string extentUri)
         {
-            logger.Message("Saving" + extentUri);
+            logger.Message("Saving: " + extentUri);
 
             // Get pool entry            
             var pool = Injection.Application.Get<IPool>();
@@ -343,11 +353,27 @@ namespace DatenMeister.Logic
         /// </summary>
         public void LoadApplicationData()
         {
-            this.applicationData = this.LoadOrCreateByDefault(
-                "applicationdata",
-                ApplicationDataUri,
-                ExtentType.ApplicationData,
-                null);
+            // Stores the name of the applicationdata
+            var name = "applicationdata";
+            if (!this.isApplicationDataLoaded)
+            {
+                this.applicationData = this.LoadOrCreateByDefault(
+                    name,
+                    ApplicationDataUri,
+                    ExtentType.ApplicationData,
+                    null);
+                this.isApplicationDataLoaded = true;
+            }
+            else
+            {
+                var pool = PoolResolver.GetDefaultPool();
+                this.applicationData.ReleaseFromPool();
+                pool.Add(
+                    this.applicationData,
+                    this.GetApplicationStoragePathFor(name),
+                    name,
+                    ExtentType.ApplicationData);
+            }
         }
 
         /// <summary>
