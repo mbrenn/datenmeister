@@ -699,6 +699,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         MultiReferenceField.setReferenceUrl = setReferenceUrl;
 
+        function getTableViewInfo(item) {
+            return item.get('tableViewInfo');
+        }
+        MultiReferenceField.getTableViewInfo = getTableViewInfo;
+
+        function setTableViewInfo(item, value) {
+            item.set('tableViewInfo', value);
+        }
+        MultiReferenceField.setTableViewInfo = setTableViewInfo;
+
         function getName(item) {
             return item.get('name');
         }
