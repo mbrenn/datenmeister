@@ -44,9 +44,13 @@ namespace DatenMeister.AddOns.ComplianceSuite
                     this.ResultStorage.set(name, false);
                 }
             }
-            catch
+            catch(Exception exc)
             {
-                this.ResultStorage.set(name, "Exception");
+                this.ResultStorage.set(name,
+                    string.Format(
+                        "{0} - {1}",
+                        exc.GetType().Name,
+                        exc.Message));
             }
         }
 
