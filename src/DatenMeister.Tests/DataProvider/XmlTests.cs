@@ -681,8 +681,8 @@ namespace DatenMeister.Tests.DataProvider
             var tableColumns = referencedTableObject.get("fieldInfos").AsReflectiveCollection();
             Assert.That(tableColumns, Is.Not.Null);
             Assert.That(tableColumns.size(), Is.EqualTo(6));
-            Assert.That(tableColumns.ElementAt(2).AsIObject().get("name"), Is.EqualTo("Ende"));
-            Assert.That(tableColumns.ElementAt(5).AsIObject().get("name"), Is.EqualTo("Predecessors"));
+            Assert.That(tableColumns.ElementAt(2).AsIObject().get("name").AsSingle(), Is.EqualTo("Ende"));
+            Assert.That(tableColumns.ElementAt(5).AsIObject().get("name").AsSingle(), Is.EqualTo("Predecessors"));
         }
 
 
