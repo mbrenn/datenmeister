@@ -22,7 +22,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             {
                 textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Top;
                 textBox.AcceptsReturn = true;
-                textBox.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+                textBox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
                 textBox.TextWrapping = System.Windows.TextWrapping.Wrap;
                 textBox.Height = 100;
             }
