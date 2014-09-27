@@ -1,10 +1,13 @@
 ﻿using BurnSystems.Test;
 using DatenMeister;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.DotNet;
 using DatenMeister.DataProvider.Wrapper;
 using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Entities.FieldInfos;
 using DatenMeister.Logic;
+using DatenMeister.Logic.Views;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -623,7 +626,63 @@ namespace DatenMeister.Tests.DataProvider
             createdObject.set("name", "yes");
 
             var all = createdObject.getAll();
-            Assert.That(all.Count(), Is.EqualTo(2));
+            Assert.That(all.Count(), Is.EqualTo(2));        
+        }
+
+        [Test]
+        public void TestSettingOfEnumerationsWithinObjects()
+        {
+            var viewTypes = ViewHelper.ViewTypes;
+            var extent = CreateRawTestExtent();
+            var factory = new XmlFactory(extent);
+
+            var createdObject = factory.create(null);
+
+            // Creates the referenced thing
+            var table = factory.create(null);
+            var asObjectTasks = new DatenMeister.Entities.AsObject.FieldInfo.TableView(table);
+            var taskColumns = new DotNetSequence(
+                ViewHelper.ViewTypes,
+                new TextField("Name", "name"),
+                new TextField("Start", "startdate"),
+                new TextField("Ende", "enddate"),
+                new TextField("Finished", "finished"),
+                new TextField("Assigned", "assignedPerson"),
+                new TextField("Predecessors", "predecessors"));
+            asObjectTasks.setFieldInfos(taskColumns);
+            table.set("name", "My Table");
+            extent.Elements().add(table);
+            
+            // Creates the detail view
+            var detail = factory.create(null);
+            detail.set("name", "Person (Detail)");
+
+            var taskDetailColumns = new DotNetSequence(
+                viewTypes,
+                new TextField("Name", "name"),
+                new TextField("Start", "startdate"),
+                new MultiReferenceField("Predecessors", "predecessors", "uri?type=Task", "name")
+                {
+                    tableViewInfo = table
+                });
+            detail.set("fieldInfos", taskDetailColumns);
+
+            // Now is doing all the checks
+            var value = detail.get("fieldInfos").AsReflectiveCollection();
+            Assert.That(value, Is.Not.Null);
+            Assert.That(value.size(), Is.EqualTo(3));
+
+            // Gets the multireference
+            var multiReference = value.ElementAt(2).AsIObject();
+            Assert.That(multiReference, Is.Not.Null);
+            var referencedTableObject = multiReference.get("tableViewInfo").AsIObject();
+            Assert.That(referencedTableObject, Is.Not.Null);
+            Assert.That(referencedTableObject.get("name").AsSingle().ToString(), Is.EqualTo("My Table"));
+            var tableColumns = referencedTableObject.get("fieldInfos").AsReflectiveCollection();
+            Assert.That(tableColumns, Is.Not.Null);
+            Assert.That(tableColumns.size(), Is.EqualTo(6));
+            Assert.That(tableColumns.ElementAt(2).AsIObject().get("name"), Is.EqualTo("Ende"));
+            Assert.That(tableColumns.ElementAt(5).AsIObject().get("name"), Is.EqualTo("Predecessors"));
         }
 
 

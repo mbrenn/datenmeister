@@ -30,7 +30,7 @@ namespace DatenMeister.WPF.Controls
             IReflectiveCollection elements,
             IPublicDatenMeisterSettings settings,
             IObject tableView)
-            : base ( elements, settings, tableView)
+            : base(elements, settings, tableView)
         {
             this.Init();
         }

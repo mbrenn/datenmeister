@@ -66,6 +66,7 @@ namespace DatenMeister.Logic
             var pairs = sourceElement.getAll();
             foreach (var pair in pairs)
             {
+                // Checks, if the object is an IReflective Collection
                 var currentValueAsSingle = pair.Value.AsSingle(false);
 
                 if (Extensions.IsNative(currentValueAsSingle))

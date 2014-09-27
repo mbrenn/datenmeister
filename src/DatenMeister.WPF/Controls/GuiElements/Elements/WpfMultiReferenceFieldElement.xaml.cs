@@ -1,5 +1,6 @@
 ﻿using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
+using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Pool;
 using Ninject;
 using System;
@@ -153,7 +154,8 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
         private void btnAddElement_Click(object sender, RoutedEventArgs e)
         {
             var listForm = new SelectionListDialog();
-            listForm.SetReflectiveCollection(this.GetReferenceObjects(), this.field.State.Settings);
+            listForm.SetViewInformation(MultiReferenceField.getTableViewInfo(this.field.FieldInfo));
+            listForm.SetReflectiveCollection(this.GetReferenceObjects(), this.field.State.Settings, true);
             listForm.ShowDialog();
 
             if (listForm.DialogResult == true)
