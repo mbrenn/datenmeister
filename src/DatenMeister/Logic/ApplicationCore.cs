@@ -85,7 +85,7 @@ namespace DatenMeister.Logic
         public GenericExtent MetaTypeExtent
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace DatenMeister.Logic
         /// <typeparam name="T">Type of the window</typeparam>
         public void Start<T>() where T : IDatenMeisterSettings, new()
         {
-            PerformBinding();
+            PerformBinding(true /*Only Bootstrap binding*/);
 
             // Initialization of all meta types
             this.privateSettings = new T();
@@ -152,7 +152,10 @@ namespace DatenMeister.Logic
             // Initializes the metatypes
             this.MetaTypeExtent = new GenericExtent("datenmeister:///datenmeister/metatypes/");
             DatenMeister.Entities.AsObject.Uml.Types.Init(this.MetaTypeExtent);
-            
+            DatenMeister.Entities.AsObject.FieldInfo.Types.Init(this.MetaTypeExtent);
+            DatenMeister.Entities.AsObject.DM.Types.Init(this.MetaTypeExtent);
+            PerformBinding();
+
             this.privateSettings.InitializeForBootUp(this);
             this.PerformInitializationOfViewSet();
         }
@@ -160,7 +163,7 @@ namespace DatenMeister.Logic
         /// <summary>
         /// Resets and performs the necessary binding
         /// </summary>
-        public static void PerformBinding()
+        public static void PerformBinding(bool onlyBootStrap = false)
         {
             // At the moment, reset the complete Binding
             Injection.Reset();
@@ -174,8 +177,13 @@ namespace DatenMeister.Logic
             // Initializes the default type resolver
             Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
 
-            // Initializes the global dot net extent
-            Injection.Application.Bind<GlobalDotNetExtent>().To<GlobalDotNetExtent>().InSingletonScope();
+            if (!onlyBootStrap)
+            {
+                // Initializes the global dot net extent
+                var globalDotNetExtent = new GlobalDotNetExtent();
+                Injection.Application.Bind<GlobalDotNetExtent>().ToConstant(globalDotNetExtent);
+                DatenMeister.Entities.AsObject.FieldInfo.Types.AssignTypeMapping(globalDotNetExtent);
+            }
         }
 
         public void PerformInitializationOfViewSet()

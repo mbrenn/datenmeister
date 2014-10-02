@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DatenMeister.DataProvider.DotNet;
+using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +27,7 @@ namespace DatenMeister.WPF.Controls
         /// <param name="configuration">The configuration to be used</param>
         public SelectionListDialog(TableLayoutConfiguration configuration)
         {
+            this.Configure(configuration);
         }
 
         /// <summary>
@@ -34,9 +37,20 @@ namespace DatenMeister.WPF.Controls
         public override void Configure(TableLayoutConfiguration configuration)
         {
             var tableViewInfo = configuration.TableViewInfoAsTableView;
+            
+            if (tableViewInfo == null)
+            {
+                // Ok, tableview info is null... we need to create a generic one
+                var tableView = new DatenMeister.Entities.FieldInfos.TableView();
+                var tableViewObj = Injection.Application.Get<GlobalDotNetExtent>().CreateObject(tableView);
+                tableViewInfo = new Entities.AsObject.FieldInfo.TableView(tableViewObj);
+                tableViewInfo.setDoAutoGenerateByProperties(true);
+                configuration.TableViewInfo = tableViewInfo;
+            }
+
             tableViewInfo.setAllowDelete(false);
             tableViewInfo.setAllowEdit(false);
-            tableViewInfo.setAllowNew(false);
+            tableViewInfo.setAllowNew(false);            
             base.Configure(configuration);
         }
     }

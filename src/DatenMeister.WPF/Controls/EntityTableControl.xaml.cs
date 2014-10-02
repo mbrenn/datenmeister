@@ -135,7 +135,6 @@ namespace DatenMeister.WPF.Controls
             this.Configure(configuration);
         }
 
-
         /// <summary>
         /// Configures the table view
         /// </summary>
@@ -144,6 +143,7 @@ namespace DatenMeister.WPF.Controls
         {
             this.Configuration = configuration;
             this.isConfigured = true;
+            this.Relayout();
             this.RefreshItems();
         }
 
