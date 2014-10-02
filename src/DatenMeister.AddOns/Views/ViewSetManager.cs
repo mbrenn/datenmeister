@@ -84,10 +84,14 @@ namespace DatenMeister.AddOns.Views
                     globalDotNetExtent.GetIObjectForType(typeof(DatenMeister.Logic.Views.DefaultViewManager.ViewEntry));
                 var formViewObj = globalDotNetExtent.CreateObject(formView);
 
-                var assignDialog = new ListDialog(
-                    entriesAsObject,
-                    window.Settings,
-                    formViewObj);                
+                var listConfiguration = new TableLayoutConfiguration()
+                {
+                    Settings = window.Settings,
+                    TableViewInfo = formViewObj
+                };
+
+                listConfiguration.SetElements(entriesAsObject);
+                var assignDialog = new ListDialog(listConfiguration);
                 
                 assignDialog.ShowDialog();
             };

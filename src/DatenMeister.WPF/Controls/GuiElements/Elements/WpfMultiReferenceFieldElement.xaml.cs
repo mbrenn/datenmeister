@@ -153,9 +153,14 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
 
         private void btnAddElement_Click(object sender, RoutedEventArgs e)
         {
-            var listForm = new SelectionListDialog();
-            listForm.SetViewInformation(MultiReferenceField.getTableViewInfo(this.field.FieldInfo));
-            listForm.SetReflectiveCollection(this.GetReferenceObjects(), this.field.State.Settings, true);
+            var configuration = new TableLayoutConfiguration()
+            {
+                Settings = this.field.State.Settings,
+                TableViewInfo = MultiReferenceField.getTableViewInfo(this.field.FieldInfo)
+            };
+            configuration.SetElements(this.GetReferenceObjects());
+
+            var listForm = new SelectionListDialog(configuration);
             listForm.ShowDialog();
 
             if (listForm.DialogResult == true)

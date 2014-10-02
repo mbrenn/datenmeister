@@ -17,33 +17,27 @@ namespace DatenMeister.WPF.Controls
         public SelectionListDialog()
             : base()
         {
-            Init();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ListDialog class
+        /// Initializes the selection List dialog
         /// </summary>
-        /// <param name="elements">Elements to be shown</param>
-        /// <param name="settings">Settings for the list</param>
-        /// <param name="tableView">View being used for the objects</param>
-        public SelectionListDialog(
-            IReflectiveCollection elements,
-            IPublicDatenMeisterSettings settings,
-            IObject tableView)
-            : base(elements, settings, tableView)
+        /// <param name="configuration">The configuration to be used</param>
+        public SelectionListDialog(TableLayoutConfiguration configuration)
         {
-            this.Init();
         }
 
         /// <summary>
-        /// Initializes the instance
+        /// Configures the dialog by using the Table Layout Configuration
         /// </summary>
-        private void Init()
+        /// <param name="configuration">Configuration to be used for layouting</param>
+        public override void Configure(TableLayoutConfiguration configuration)
         {
-            this.ViewInformation.setAllowDelete(false);
-            this.ViewInformation.setAllowEdit(false);
-            this.ViewInformation.setAllowNew(false);
-            this.Table.UseAsSelectionControl = true;
+            var tableViewInfo = configuration.TableViewInfoAsTableView;
+            tableViewInfo.setAllowDelete(false);
+            tableViewInfo.setAllowEdit(false);
+            tableViewInfo.setAllowNew(false);
+            base.Configure(configuration);
         }
     }
 }

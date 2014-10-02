@@ -38,12 +38,16 @@ namespace DatenMeister.WPF.Controls
         {
             var pool = Injection.Application.Get<IPool>();
 
-            var dialog = new SelectionListDialog();
             var allTypes =
                 new AllItemsReflectiveCollection(pool)
                 .FilterByExtentType(extentType)
                 .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
-            dialog.SetReflectiveCollection(allTypes, settings);
+
+            var configuration = new TableLayoutConfiguration();
+            configuration.Settings = settings;
+            configuration.SetElements(allTypes);
+
+            var dialog = new SelectionListDialog(configuration);
             if (dialog.ShowDialog() == true)
             {
                 if (dialog.SelectedElements.Count() > 0)
