@@ -36,7 +36,7 @@ namespace DatenMeister.WPF.Controls
         /// <param name="configuration">Configuration to be used for layouting</param>
         public override void Configure(TableLayoutConfiguration configuration)
         {
-            var tableViewInfo = configuration.TableViewInfoAsTableView;
+            var tableViewInfo = configuration.GetTableViewInfoAsTableView();
             
             if (tableViewInfo == null)
             {
@@ -48,9 +48,7 @@ namespace DatenMeister.WPF.Controls
                 configuration.TableViewInfo = tableViewInfo;
             }
 
-            tableViewInfo.setAllowDelete(false);
-            tableViewInfo.setAllowEdit(false);
-            tableViewInfo.setAllowNew(false);            
+            configuration.UseAsSelectionControl = true;
             base.Configure(configuration);
         }
     }

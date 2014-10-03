@@ -63,7 +63,12 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         /// <param name="configuration"></param>
         public virtual void Configure(TableLayoutConfiguration configuration)
-        {
+        {            
+            if (configuration != null)
+            {
+                configuration.ShowCancelButton = true;
+            }
+
             this.Table.Configure(configuration);
         }
 

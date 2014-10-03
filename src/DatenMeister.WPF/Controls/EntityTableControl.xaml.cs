@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using BurnSystems.UserExceptionHandler;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Pool;
 using DatenMeister.Entities.AsObject.FieldInfo;
@@ -35,41 +36,9 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
-        /// Gets or sets the value whether the table control shall be used
-        /// as a selection control. 
-        /// If true, the buttons for modification will be removed, but the 
-        /// OK-button will be added
+        /// Gets or sets the text that shall be used for filtering the items in the current view
         /// </summary>
-        public bool UseAsSelectionControl
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the text that shall be used for filtering the events
-        /// </summary>
-        public string FilterByText
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the visibility of the cancel button
-        /// </summary>
-        public bool ShowCancelButton
-        {
-            get
-            {
-                return this.buttonCancel.Visibility == System.Windows.Visibility.Visible;
-            }
-
-            set
-            {
-                this.buttonCancel.Visibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-            }
-        }
+        private string filterByText;
 
         /// <summary>
         /// This event handler is executed, when user clicked on the ok button
@@ -77,7 +46,7 @@ namespace DatenMeister.WPF.Controls
         public event EventHandler OkClicked;
 
         /// <summary>
-        /// This event handler is executed, when user clicked on the ok button
+        /// This event handler is executed, when user clicked on the cancel button
         /// </summary>
         public event EventHandler CancelClicked;
 
@@ -89,21 +58,7 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Gets or sets the type that shall be created, when user clicks on 'new'.
         /// </summary>
-        public IObject MainType
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the element factory being used to create the element, 
-        /// if we are in EditMode = New
-        /// </summary>
-        public Func<IObject> NewElementFactory
-        {
-            get;
-            set;
-        }
+        private IObject mainType;
 
         /// <summary>
         /// This function will be used to open a view of the currently selected item 
@@ -124,11 +79,18 @@ namespace DatenMeister.WPF.Controls
             private  set;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the EntityTableControl class
+        /// </summary>
         public EntityTableControl()
         {
             InitializeComponent();            
         }
 
+        /// <summary>
+        /// Initializes a new instance of the EntityTableControl class
+        /// </summary>
+        /// <param name="configuration">Configuration to be used</param>
         public EntityTableControl(TableLayoutConfiguration configuration)
             : this()
         {
@@ -141,6 +103,7 @@ namespace DatenMeister.WPF.Controls
         /// <param name="configuration"></param>
         public void Configure(TableLayoutConfiguration configuration)
         {
+            Ensure.That(configuration != null, "No Configuration is given");
             this.Configuration = configuration;
             this.isConfigured = true;
             this.Relayout();
@@ -189,7 +152,7 @@ namespace DatenMeister.WPF.Controls
 
                 // Does the usual work
                 var pool = Injection.Application.Get<IPool>();
-                var tableViewInfo = this.Configuration.TableViewInfoAsTableView;
+                var tableViewInfo = this.Configuration.GetTableViewInfoAsTableView();
 
                 if (tableViewInfo == null)
                 {
@@ -198,27 +161,29 @@ namespace DatenMeister.WPF.Controls
                 }
 
                 // Checks status of buttons
-                this.buttonNew.Visibility = tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
+                this.buttonNew.Visibility = tableViewInfo.getAllowNew() && !this.Configuration.UseAsSelectionControl ?
                     System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-                this.buttonNewByType.Visibility = tableViewInfo.getAllowNew() && !this.UseAsSelectionControl ?
+                this.buttonNewByType.Visibility = tableViewInfo.getAllowNew() && !this.Configuration.UseAsSelectionControl ?
                     System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-                this.buttonEdit.Visibility = tableViewInfo.getAllowEdit() && !this.UseAsSelectionControl ?
+                this.buttonEdit.Visibility = tableViewInfo.getAllowEdit() && !this.Configuration.UseAsSelectionControl ?
                     System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-                this.buttonDelete.Visibility = tableViewInfo.getAllowDelete() && !this.UseAsSelectionControl ?
+                this.buttonDelete.Visibility = tableViewInfo.getAllowDelete() && !this.Configuration.UseAsSelectionControl ?
                     System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-                this.buttonOk.Visibility = this.UseAsSelectionControl ?
+                this.buttonOk.Visibility = this.Configuration.UseAsSelectionControl ?
+                    System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                this.buttonCancel.Visibility = this.Configuration.ShowCancelButton ?
                     System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
                 // Creates the new buttons
-                if (this.MainType == null)
+                if (this.mainType == null)
                 {
-                    this.MainType = tableViewInfo.getMainType();
+                    this.mainType = tableViewInfo.getMainType();
                 }
 
                 this.CreateNewInstanceButtons();
 
                 //  Checks, if auto generation is necessary
-                var fieldInfos = this.Configuration.TableViewInfoAsTableView.getFieldInfos().AsEnumeration();
+                var fieldInfos = this.Configuration.GetTableViewInfoAsTableView().getFieldInfos().AsEnumeration();
                 if (tableViewInfo.getDoAutoGenerateByProperties() && fieldInfos.Count() == 0)
                 {
                     ViewHelper.AutoGenerateViewDefinition(
@@ -228,7 +193,7 @@ namespace DatenMeister.WPF.Controls
                 }
 
                 // Now, create the fields, we might have autogenerated the fields
-                var fieldInfosAsObject = this.Configuration.TableViewInfoAsTableView.getFieldInfos(); // Needs to be updated
+                var fieldInfosAsObject = this.Configuration.GetTableViewInfoAsTableView().getFieldInfos(); // Needs to be updated
                 var asEnumeration = fieldInfosAsObject.AsEnumeration();
                 this.gridContent.Columns.Clear();
                 foreach (var fieldInfo in asEnumeration.Select(x => x.AsSingle().AsIObject()))
@@ -265,7 +230,7 @@ namespace DatenMeister.WPF.Controls
         private void CreateNewInstanceButtons()
         {
             // Checks, if we have additional buttons to create new instances
-            var typesForCreation = this.Configuration.TableViewInfoAsTableView.getTypesForCreation();
+            var typesForCreation = this.Configuration.GetTableViewInfoAsTableView().getTypesForCreation();
             if (typesForCreation != null && typesForCreation != ObjectHelper.NotSet && typesForCreation != ObjectHelper.Null)
             {
                 foreach (var elementType in typesForCreation)
@@ -298,10 +263,10 @@ namespace DatenMeister.WPF.Controls
 
         public IEnumerable<IObject> GetFieldInfos()
         {
-            if (this.Configuration.TableViewInfoAsTableView != null)
+            if (this.Configuration.GetTableViewInfoAsTableView() != null)
             {
                 return this.
-                    Configuration.TableViewInfoAsTableView.
+                    Configuration.GetTableViewInfoAsTableView().
                     getFieldInfos().
                     AsEnumeration<IObject>();
             }
@@ -322,10 +287,10 @@ namespace DatenMeister.WPF.Controls
                         .Select(x =>
                             new ObjectDictionaryForView(x.AsIObject(), this.GetFieldInfos()));
 
-                    if (!string.IsNullOrEmpty(this.FilterByText))
+                    if (!string.IsNullOrEmpty(this.filterByText))
                     {
                         elements = elements.Where(x =>
-                            ObjectDictionaryForView.FilterByText(x, this.FilterByText));
+                            ObjectDictionaryForView.FilterByText(x, this.filterByText));
                     }
 
                     this.gridContent.ItemsSource = elements.ToList();
@@ -356,7 +321,7 @@ namespace DatenMeister.WPF.Controls
 
         private void gridContent_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (this.UseAsSelectionControl)
+            if (this.Configuration.UseAsSelectionControl)
             {
                 this.AcceptSelectedElements(e);
             }
@@ -384,11 +349,12 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
-        /// Shows the new dialog
+        /// Shows the new dialog for the main type being 
+        /// applied used
         /// </summary>
         private void ShowNewDialog()
         {
-            ShowNewInstanceDialog(this.MainType);
+            ShowNewInstanceDialog(this.mainType);
         }
 
         /// <summary>
@@ -397,7 +363,7 @@ namespace DatenMeister.WPF.Controls
         /// <param name="newType">Type to be created</param>
         private void ShowNewInstanceDialog(IObject newType)
         {
-            if (!this.Configuration.TableViewInfoAsTableView.getAllowNew())
+            if (!this.Configuration.GetTableViewInfoAsTableView().getAllowNew())
             {
                 // Nothing to do
                 return;
@@ -420,7 +386,7 @@ namespace DatenMeister.WPF.Controls
         {
             var pool = Injection.Application.Get<IPool>();
 
-            if (!this.Configuration.TableViewInfoAsTableView.getAllowNew())
+            if (!this.Configuration.GetTableViewInfoAsTableView().getAllowNew())
             {
                 // Nothing to do
                 return;
@@ -478,7 +444,7 @@ namespace DatenMeister.WPF.Controls
                 var readOnly = false;
 
                 // Check, if the dialog to be opened shall be as a read-only dialog
-                if (!this.Configuration.TableViewInfoAsTableView.getAllowEdit())
+                if (!this.Configuration.GetTableViewInfoAsTableView().getAllowEdit())
                 {
                     // Nothing to do
                     readOnly = true;
@@ -626,7 +592,7 @@ namespace DatenMeister.WPF.Controls
 
         private void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.FilterByText = this.txtFilter.Text;
+            this.filterByText = this.txtFilter.Text;
             this.RefreshItems();
         }
 
@@ -638,13 +604,27 @@ namespace DatenMeister.WPF.Controls
             DataGridHelper.GiveFocusToContent(this.gridContent);
         }
 
+        /// <summary>
+        /// Is called, when an exception within the layout function needs to be handled
+        /// </summary>
+        /// <param name="exc">Exception to be handled</param>
         private void HandleException(Exception exc)
         {
+            var exceptionHandling = Injection.Application.TryGet<IExceptionHandling>();
+            if ( exceptionHandling != null )
+            {
+                exceptionHandling.HandleException(exc);
+            }
+
+            // Shows the content in the list window
             this.ErrorMessage.Visibility = System.Windows.Visibility.Visible;
             this.DataTable.Visibility = System.Windows.Visibility.Collapsed;
             this.ErrorMessageContent.Text = exc.ToString();
         }
 
+        /// <summary>
+        /// Adds the associated view column to the text grid
+        /// </summary>
         private class TableDataGridTextColumn : DataGridTextColumn
         {
             public IObject AssociatedViewColumn

@@ -33,7 +33,8 @@ namespace DatenMeister.WPF.Windows
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
+            //this.DialogResult = true;
+            this.Close();
         }
 
         private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)

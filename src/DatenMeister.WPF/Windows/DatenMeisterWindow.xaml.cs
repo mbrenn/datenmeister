@@ -222,7 +222,6 @@ namespace DatenMeister.WPF.Windows
                     };
 
                 var entityList = new EntityTableControl();
-                entityList.MainType = tableViewInfo.getMainType();
                 entityList.Configure(listConfiguration);
 
                 // Creates the grid being used

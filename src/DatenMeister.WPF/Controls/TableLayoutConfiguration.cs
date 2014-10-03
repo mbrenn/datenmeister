@@ -50,22 +50,41 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
+        /// Gets or sets the visibility of the cancel button
+        /// </summary>
+        public bool ShowCancelButton
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the value whether the table control shall be used
+        /// as a selection control. 
+        /// If true, the buttons for modification will be removed, but the 
+        /// OK-button will be added
+        /// </summary>
+        public bool UseAsSelectionControl
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets the tableview object as an instance of the TableView class to have type-safe access to the instance
         /// </summary>
-        public TableView TableViewInfoAsTableView
+        public TableView GetTableViewInfoAsTableView()
         {
-            get
+            if (this.TableViewInfo == null)
             {
-                if (this.TableViewInfo == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return new TableView(this.TableViewInfo);
-                }
+                return null;
+            }
+            else
+            {
+                return new TableView(this.TableViewInfo);
             }
         }
+        
 
         /// <summary>
         /// Sets the reflective collection by an extent. 
