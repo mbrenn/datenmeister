@@ -13,15 +13,6 @@ namespace DatenMeister.WPF.Controls
     public class FormLayoutConfiguration
     {
         /// <summary>
-        /// Gets or sets the datenmeister settings of the application
-        /// </summary>
-        public IPublicDatenMeisterSettings Settings
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets the table view information
         /// </summary>
         public IObject FormViewInfo

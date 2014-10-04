@@ -206,7 +206,6 @@ namespace DatenMeister.WPF.Windows
                 // Creates the list control
                 var listConfiguration = new TableLayoutConfiguration()
                 {
-                    Settings = this.Settings,
                     TableViewInfo = tableViewInfo
                 };
 

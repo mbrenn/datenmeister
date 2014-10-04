@@ -86,7 +86,6 @@ namespace DatenMeister.AddOns.Views
 
                 var listConfiguration = new TableLayoutConfiguration()
                 {
-                    Settings = window.Settings,
                     TableViewInfo = formViewObj
                 };
 

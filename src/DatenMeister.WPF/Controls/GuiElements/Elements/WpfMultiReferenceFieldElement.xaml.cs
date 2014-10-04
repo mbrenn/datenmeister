@@ -155,7 +155,6 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
         {
             var configuration = new TableLayoutConfiguration()
             {
-                Settings = this.field.State.Settings,
                 TableViewInfo = MultiReferenceField.getTableViewInfo(this.field.FieldInfo)
             };
             configuration.SetElements(this.GetReferenceObjects());

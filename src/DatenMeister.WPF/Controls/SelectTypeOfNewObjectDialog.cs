@@ -33,7 +33,6 @@ namespace DatenMeister.WPF.Controls
         /// be created</param>
         public static IObject ShowNewOfGenericTypeDialog(
             IReflectiveCollection reflectiveCollection,
-            IPublicDatenMeisterSettings settings,
             ExtentType extentType = ExtentType.Type)
         {
             var pool = Injection.Application.Get<IPool>();
@@ -44,7 +43,6 @@ namespace DatenMeister.WPF.Controls
                 .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
 
             var configuration = new TableLayoutConfiguration();
-            configuration.Settings = settings;
             configuration.SetElements(allTypes);
 
             var dialog = new SelectionListDialog(configuration);

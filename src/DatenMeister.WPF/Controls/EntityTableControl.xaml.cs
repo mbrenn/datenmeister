@@ -372,7 +372,6 @@ namespace DatenMeister.WPF.Controls
             var dialog = DetailDialog.ShowDialogToCreateTypeOf(
                 newType, 
                 this.GetElements(), 
-                this.Configuration.Settings, 
                 this.Configuration.ViewInfoForDetailView);
             Ensure.That(dialog != null);
             dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
@@ -404,7 +403,6 @@ namespace DatenMeister.WPF.Controls
             // Shows the dialog
             if (SelectTypeOfNewObjectDialog.ShowNewOfGenericTypeDialog(
                     this.Configuration.ElementsFactory(pool),
-                    this.Configuration.Settings,
                     extentType)
                 != null)
             {
@@ -454,7 +452,6 @@ namespace DatenMeister.WPF.Controls
 
                 var dialog = DetailDialog.ShowDialogFor(
                     selectedItem.Value,
-                    this.Configuration.Settings,
                     this.Configuration.ViewInfoForDetailView,
                     readOnly);
 

@@ -24,10 +24,5 @@ namespace DatenMeister.WPF.Controls
         {
             get;
         }
-
-        IPublicDatenMeisterSettings Settings
-        {
-            get;
-        }
     }
 }

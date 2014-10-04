@@ -35,7 +35,6 @@ namespace DatenMeister.AddOns.ComplianceSuite.WPF
 
                         DetailDialog.ShowDialogFor(
                             result,
-                            window.Settings,
                             null,
                             true);
                     }

@@ -148,6 +148,8 @@ namespace DatenMeister.Logic
 
             // Initialization of all meta types
             this.privateSettings = new T();
+            Injection.Application.Bind<IPublicDatenMeisterSettings>().ToConstant(this.privateSettings);
+            Injection.Application.Bind<IDatenMeisterSettings>().ToConstant(this.privateSettings);
 
             // Initializes the metatypes
             this.MetaTypeExtent = new GenericExtent("datenmeister:///datenmeister/metatypes/");

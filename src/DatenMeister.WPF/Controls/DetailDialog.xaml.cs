@@ -51,7 +51,7 @@ namespace DatenMeister.WPF.Controls
             this.UpdateWindowTitle();
         }
 
-        public DetailDialog()
+        protected DetailDialog()
         {
             InitializeComponent();
         }
@@ -126,11 +126,9 @@ namespace DatenMeister.WPF.Controls
         public static DetailDialog ShowDialogToCreateTypeOf(
             IObject type, 
             IReflectiveCollection collection, 
-            IPublicDatenMeisterSettings settings,
             IObject viewData = null)
         {
             Ensure.That(collection != null);
-            Ensure.That(settings != null);
 
             var extent = collection.Extent;
             Ensure.That(collection.Extent != null);
@@ -149,8 +147,6 @@ namespace DatenMeister.WPF.Controls
             configuration.FormViewInfo = viewData;
             configuration.StorageCollection = collection;
             configuration.TypeToCreate = type;
-            configuration.Settings = settings;
-
             var dialog = new DetailDialog(configuration);
             dialog.Show();
 
@@ -163,12 +159,9 @@ namespace DatenMeister.WPF.Controls
         /// <param name="value"></param>
         public static DetailDialog ShowDialogFor(
             IObject value,
-            IPublicDatenMeisterSettings settings,
             IObject viewData = null, 
             bool readOnly = false)
         {
-            Ensure.That(settings != null);
-
             viewData = GetView(value, viewData);
             if (viewData == null)
             {
@@ -181,10 +174,9 @@ namespace DatenMeister.WPF.Controls
             configuration.FormViewInfo = viewData;
             configuration.StorageCollection = value.Extent == null ? null : value.Extent.Elements();
             configuration.DetailObject = value;
-            configuration.Settings = settings;
+
             var dialog = new DetailDialog(configuration);
             dialog.Show();
-
             return dialog;
         }
 

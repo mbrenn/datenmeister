@@ -84,11 +84,9 @@ namespace DatenMeister.WPF.Controls
         /// <param name="e">Arguments of event</param>
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Relayout();
-
-            if (!DesignerProperties.GetIsInDesignMode(this))
+            if (this.isConfigured)
             {
-                Ensure.That(this.configuration.Settings != null, "Settings have not been set");
+                this.Relayout();
             }
         }
 
@@ -273,11 +271,6 @@ namespace DatenMeister.WPF.Controls
         DisplayMode IDataPresentationState.DisplayMode
         {
             get { return Controls.DisplayMode.Form; }
-        }
-
-        IPublicDatenMeisterSettings IDataPresentationState.Settings
-        {
-            get { return this.configuration.Settings; }
         }
     }
 }
