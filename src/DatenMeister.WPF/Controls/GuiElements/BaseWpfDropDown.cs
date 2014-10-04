@@ -73,7 +73,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             // Fills the variable and creates the combobox
             var fieldInfoObj = new ReferenceBase(fieldInfo);
-            this.resolver = PoolResolver.GetDefault(state.Pool);
+            this.resolver = PoolResolver.GetDefault(PoolResolver.GetDefaultPool());
             var referenceUrl = fieldInfoObj.getReferenceUrl();
             this.propertyValue = fieldInfoObj.getPropertyValue();
             this.binding = fieldInfoObj.getBinding(); // Stores the name of the property

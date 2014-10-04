@@ -9,14 +9,6 @@ namespace DatenMeister.WPF.Controls
     public interface IDataPresentationState
     {
         /// <summary>
-        /// Gets the pool associated with the current view
-        /// </summary>
-        IPool Pool
-        {
-            get;
-        }
-
-        /// <summary>
         /// Gets the current edit mode of the element
         /// </summary>
         EditMode EditMode

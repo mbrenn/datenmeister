@@ -27,45 +27,26 @@ namespace DatenMeister.WPF.Controls
     public partial class EntityFormControl : UserControl, IDataPresentationState
     {
         /// <summary>
+        /// Stores the information whether the list ist configured 
+        /// </summary>
+        private bool isConfigured = false;
+
+        /// <summary>
+        /// Stores the configuration for the formlayout
+        /// </summary>
+        private FormLayoutConfiguration configuration;
+
+        /// <summary>
         /// Stores the list of wpf elements
         /// </summary>
         private List<ElementCacheEntry> wpfElements = new List<ElementCacheEntry>();
 
         #region Event handlers
 
-        private event EventHandler cancelled;
-        private event EventHandler accepted;
-
-        public event EventHandler Cancelled
-        {
-            add { this.cancelled += value; }
-            remove { this.cancelled -= value; }
-        }
-
-        public event EventHandler Accepted
-        {
-            add { this.accepted += value; }
-            remove { this.accepted -= value; }
-        }
+        public event EventHandler Cancelled;
+        public event EventHandler Accepted;
 
         #endregion
-
-        /// <summary>
-        /// Gets or sets the edit mode of the form
-        /// </summary>
-        public EditMode EditMode
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Defines the display mode
-        /// </summary>
-        public DisplayMode DisplayMode
-        {
-            get { return Controls.DisplayMode.Form; }
-        }
 
         /// <summary>
         /// Initializes a new instance of the EntityFormControl class
@@ -76,70 +57,24 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
-        /// Stores the form view being used
+        /// Initializes a new instance of the EntityFormControl class
         /// </summary>
-        private FormView formView;
-
-        public IPublicDatenMeisterSettings Settings
+        public EntityFormControl(FormLayoutConfiguration configuration)
+            : this()
         {
-            get;
-            set;
-        }
-
-        public IPool Pool
-        {
-            get;
-            set;
+            this.Configure(configuration);
         }
 
         /// <summary>
-        /// Gets or sets the extent, where this item shall be added to
-        /// Relevant, if DetailObject == null and dialog has been opened to create a new 
-        /// item. 
+        /// Configures the table view
         /// </summary>
-        public IReflectiveCollection Collection
+        /// <param name="configuration"></param>
+        public void Configure(FormLayoutConfiguration configuration)
         {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the object 
-        /// </summary>
-        public IObject DetailObject
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the type to be created, when user likes to create a new type. 
-        /// May also be null, if there is no specific type. Untyped instances are also supported. 
-        /// </summary>
-        public IObject TypeToCreate
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the table view info
-        /// </summary>
-        public IObject FormViewInfo
-        {
-            get { return this.formView.Value; }
-            set
-            {
-                if (value == null)
-                {
-                    this.formView = null;
-                }
-                else
-                {
-                    this.formView = new FormView(value);
-                    this.Relayout();
-                }
-            }
+            Ensure.That(configuration != null, "No Configuration is given");
+            this.configuration = configuration;
+            this.isConfigured = true;
+            this.Relayout();
         }
 
         /// <summary>
@@ -153,7 +88,7 @@ namespace DatenMeister.WPF.Controls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                Ensure.That(this.Settings != null, "Settings have not been set");
+                Ensure.That(this.configuration.Settings != null, "Settings have not been set");
             }
         }
 
@@ -162,11 +97,16 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public void Relayout()
         {
+            if (!this.isConfigured)
+            {
+                throw new InvalidOperationException("The window is not properly configured");
+            }
+
             this.wpfElements.Clear();
 
-            if (this.formView != null)
+            if (this.configuration.FormViewInfo != null)
             {
-                var fieldInfos = this.formView.getFieldInfos();
+                var fieldInfos = this.configuration.GetFormViewInfoAsFormView().getFieldInfos();
 
                 var currentRow = 0;
                 // Goes through each element
@@ -197,7 +137,7 @@ namespace DatenMeister.WPF.Controls
                     // Creates the value element for the form
                     var fieldInfoAsElement = fieldInfo as IElement;
                     var wpfElementCreator = WPFElementMapping.Map(fieldInfoAsElement);
-                    var wpfElement = wpfElementCreator.GenerateElement(this.DetailObject, fieldInfo, this);
+                    var wpfElement = wpfElementCreator.GenerateElement(this.configuration.DetailObject, fieldInfo, this);
                     if (wpfElement != null)
                     {
                         if (wpfElement is FrameworkElement)
@@ -229,21 +169,22 @@ namespace DatenMeister.WPF.Controls
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             // Creates Detailobject if necessary
-            if (this.EditMode == Controls.EditMode.New)
+            if (this.configuration.EditMode == Controls.EditMode.New)
             {
-                this.DetailObject = Factory.GetFor(this.Collection.Extent).create(this.TypeToCreate);
-                this.Collection.add(this.DetailObject);
-                Ensure.That(this.DetailObject != null, "Element Factory has not returned a value");
+                this.configuration.DetailObject = Factory.GetFor(this.configuration.StorageCollection.Extent).create(
+                    this.configuration.TypeToCreate);
+                this.configuration.StorageCollection.add(this.configuration.DetailObject);
+                Ensure.That(this.configuration.DetailObject != null, "Element Factory has not returned a value");
             }
 
             // Store values into object
             foreach (var cacheEntry in this.wpfElements)
             {
-                cacheEntry.WPFElementCreator.SetData(this.DetailObject, cacheEntry);
+                cacheEntry.WPFElementCreator.SetData(this.configuration.DetailObject, cacheEntry);
             }
 
             // And now throw the event for the window
-            var ev = this.accepted;
+            var ev = this.Accepted;
             if (ev != null)
             {
                 ev(this, EventArgs.Empty);
@@ -255,7 +196,7 @@ namespace DatenMeister.WPF.Controls
             // Do nothing...
 
             // And throw the event for the window
-            var ev = this.cancelled;
+            var ev = this.Cancelled;
             if (ev != null)
             {
                 ev(this, EventArgs.Empty);
@@ -263,7 +204,7 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
-        /// Selects the field with the given name
+        /// Selects the field with the given name. The "name" of the fieldinfo will be used
         /// </summary>
         /// <param name="name">Name of the field, that should receive the focus</param>
         public void FocusFieldWithName(string name)
@@ -279,22 +220,10 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
-        /// Focuses a the field information behind a certain cache entry
+        /// Called, when the user asks to copy the information into the clipboard
         /// </summary>
-        /// <param name="element">Element to be focused</param>
-        private static void FocusCacheEntry(ElementCacheEntry element)
-        {
-            var asFocusable = element.WPFElementCreator as IFocusable;
-            if (asFocusable != null)
-            {
-                asFocusable.Focus(element.WPFElement);
-            }
-            else
-            {
-                element.WPFElement.Focus();
-            }
-        }
-
+        /// <param name="sender">Sender being used</param>
+        /// <param name="e">Event arguments</param>
         private void btnCopyToClipboard_Click(object sender, RoutedEventArgs e)
         {
             var tempObj = new GenericObject();
@@ -317,6 +246,38 @@ namespace DatenMeister.WPF.Controls
             Clipboard.SetText(builder.ToString());
 
             MessageBox.Show("The content has been copied to the clipboard");
+        }
+
+        /// <summary>
+        /// Focuses a the field information behind a certain cache entry
+        /// </summary>
+        /// <param name="element">Element to be focused</param>
+        private static void FocusCacheEntry(ElementCacheEntry element)
+        {
+            var asFocusable = element.WPFElementCreator as IFocusable;
+            if (asFocusable != null)
+            {
+                asFocusable.Focus(element.WPFElement);
+            }
+            else
+            {
+                element.WPFElement.Focus();
+            }
+        }
+
+        EditMode IDataPresentationState.EditMode
+        {
+            get { return this.configuration.EditMode; }
+        }
+
+        DisplayMode IDataPresentationState.DisplayMode
+        {
+            get { return Controls.DisplayMode.Form; }
+        }
+
+        IPublicDatenMeisterSettings IDataPresentationState.Settings
+        {
+            get { return this.configuration.Settings; }
         }
     }
 }
