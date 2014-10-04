@@ -90,8 +90,7 @@ namespace DatenMeister.AddOns.Views
                 };
 
                 listConfiguration.SetElements(entriesAsObject);
-                var assignDialog = new ListDialog(listConfiguration);
-                
+                var assignDialog = new ListDialog(listConfiguration);                
                 assignDialog.ShowDialog();
             };
 
