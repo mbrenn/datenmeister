@@ -103,6 +103,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             if (state.EditMode == EditMode.Read || this.isReadOnly)
             {
                 this.dropDown.IsReadOnly = true;
+                this.dropDown.IsEnabled = false;
             }
 
             stackPanel.Children.Add(this.dropDown);

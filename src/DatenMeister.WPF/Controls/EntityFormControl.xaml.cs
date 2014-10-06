@@ -1,4 +1,5 @@
-﻿using BurnSystems.Test;
+﻿using BurnSystems.Logging;
+using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic;
@@ -26,6 +27,11 @@ namespace DatenMeister.WPF.Controls
     /// </summary>
     public partial class EntityFormControl : UserControl, IDataPresentationState
     {
+        /// <summary>
+        /// Defines the logger to be used
+        /// </summary>
+        private static ILog logger = new ClassLogger(typeof(EntityFormControl));
+
         /// <summary>
         /// Stores the information whether the list ist configured 
         /// </summary>
@@ -175,10 +181,13 @@ namespace DatenMeister.WPF.Controls
                 Ensure.That(this.configuration.DetailObject != null, "Element Factory has not returned a value");
             }
 
-            // Store values into object
-            foreach (var cacheEntry in this.wpfElements)
+            // Store values into object, if the view is not in read-only mode
+            if (this.configuration.EditMode != Controls.EditMode.Read)
             {
-                cacheEntry.WPFElementCreator.SetData(this.configuration.DetailObject, cacheEntry);
+                foreach (var cacheEntry in this.wpfElements)
+                {
+                    cacheEntry.WPFElementCreator.SetData(this.configuration.DetailObject, cacheEntry);
+                }
             }
 
             // And now throw the event for the window

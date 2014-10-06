@@ -272,9 +272,9 @@ namespace DatenMeister.Logic
         /// after the </param>
         /// <returns>Created or loaded Extent</returns>
         public IURIExtent LoadOrCreateByDefault(
-            string name, 
-            string extentUri, 
-            ExtentType extentType, 
+            string name,
+            string extentUri,
+            ExtentType extentType,
             Action<XmlExtent> defaultActionForCreation,
             Action<XmlExtent> defaultActionForLoading = null)
         {
@@ -326,7 +326,7 @@ namespace DatenMeister.Logic
         {
             logger.Message("Saving: " + extentUri);
 
-            // Get pool entry            
+            // Get pool entry
             var pool = Injection.Application.Get<IPool>();
             var instance = pool.GetInstance(extentUri);
             Ensure.That(instance != null, "The extent with Uri has not been found: " + extentUri);

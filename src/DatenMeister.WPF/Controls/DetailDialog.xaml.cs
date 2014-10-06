@@ -70,7 +70,7 @@ namespace DatenMeister.WPF.Controls
         public void Configure(FormLayoutConfiguration configuration)
         {
             this.configuration = configuration;
-            this.detailForm.Configure(configuration);            
+            this.detailForm.Configure(configuration);
         }
 
         private void detailForm_Accepted(object sender, EventArgs e)

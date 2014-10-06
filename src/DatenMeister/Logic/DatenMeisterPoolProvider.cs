@@ -17,6 +17,9 @@ namespace DatenMeister.Logic
     {
         private static ILog logger = new ClassLogger(typeof(DatenMeisterPoolProvider));
 
+        /// <summary>
+        /// Initializes a new instance of the DatenMeisterPoolProvider class.
+        /// </summary>
         public DatenMeisterPoolProvider()
         {
         }
