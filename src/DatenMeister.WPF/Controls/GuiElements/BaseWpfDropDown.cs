@@ -50,11 +50,6 @@ namespace DatenMeister.WPF.Controls.GuiElements
         private object currentElement;
 
         /// <summary>
-        /// Gets or sets the value whether the element is just read-only
-        /// </summary>
-        private bool isReadOnly;
-
-        /// <summary>
         /// Configures the the drop down. May be overridden, if necessary.
         /// The method will be called after all protected variables have been set 
         /// and ComboBox and their instances has been created.
@@ -100,7 +95,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             this.RefreshDropDownElements();
 
             // Make thing read-only, if appropriate
-            if (state.EditMode == EditMode.Read || this.isReadOnly)
+            if (state.EditMode == EditMode.Read)
             {
                 this.dropDown.IsReadOnly = true;
                 this.dropDown.IsEnabled = false;

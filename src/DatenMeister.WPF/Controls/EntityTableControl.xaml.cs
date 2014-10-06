@@ -442,7 +442,8 @@ namespace DatenMeister.WPF.Controls
                 var readOnly = false;
 
                 // Check, if the dialog to be opened shall be as a read-only dialog
-                if (!FormView.getAllowEdit(this.Configuration.ViewInfoForDetailView))
+                if (this.Configuration.ViewInfoForDetailView != null &&
+                    !FormView.getAllowEdit(this.Configuration.ViewInfoForDetailView))
                 {
                     // Nothing to do
                     readOnly = true;
