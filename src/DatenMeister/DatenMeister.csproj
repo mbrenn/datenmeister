@@ -148,8 +148,8 @@
     <Compile Include="IReflectiveSequence.cs" />
     <Compile Include="IUnspecified.cs" />
     <Compile Include="IURIExtent.cs" />
+    <Compile Include="Logic\ApplicationCore.PublicViews.cs" />
     <Compile Include="Logic\ApplicationCore.cs" />
-    <Compile Include="Logic\ClientActions\ClientActionInformation.cs" />
     <Compile Include="Logic\ClientActions\IClientAction.cs" />
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
@@ -169,6 +169,7 @@
     <Compile Include="Logic\SourceFactory\SourceFactoryBase.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptBuilder.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptSourceFactory.cs" />
+    <Compile Include="Logic\Sources\AllElementsExtent.cs" />
     <Compile Include="Logic\TypeResolver\ITypeResolver.cs" />
     <Compile Include="Logic\TypeResolver\TypeResolverImpl.cs" />
     <Compile Include="Logic\Views\DefaultViewManager.cs" />

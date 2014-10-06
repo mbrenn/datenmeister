@@ -204,9 +204,12 @@ namespace DatenMeister.WPF.Windows
                 var tab = CreateTab(tableInfoObj, name);
 
                 // Creates the list control
-                var entityList = new EntityTableControl();
-                entityList.Settings = this.Settings;
-                entityList.ElementsFactory = (x) =>
+                var listConfiguration = new TableLayoutConfiguration()
+                {
+                    TableViewInfo = tableViewInfo
+                };
+
+                listConfiguration.ElementsFactory = (x) =>
                     {
                         var e = x.ResolveByPath(extentUri);
                         if (e == null || e == ObjectHelper.Null)
@@ -217,8 +220,8 @@ namespace DatenMeister.WPF.Windows
                         return e.AsReflectiveCollection();
                     };
 
-                entityList.TableViewInfo = tableViewInfo;
-                entityList.MainType = tableViewInfo.getMainType();
+                var entityList = new EntityTableControl();
+                entityList.Configure(listConfiguration);
 
                 // Creates the grid being used
                 var grid = new Grid();

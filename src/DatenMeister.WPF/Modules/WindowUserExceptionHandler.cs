@@ -14,7 +14,7 @@ namespace DatenMeister.WPF.Modules
         {
             var dlg = new ExceptionInfoWindow();
             dlg.SetException(exc);
-            dlg.ShowDialog();
+            dlg.Show();
 
             return true;
         }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DatenMeister.DataProvider;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -99,6 +101,62 @@ namespace DatenMeister.Logic
             return value == null
                 || value == ObjectHelper.Null
                 || value == ObjectHelper.NotSet;
+        }
+
+        /// <summary>
+        /// Checks whether the given object is a reflective collection
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <returns>true, if the object is a reflective </returns>
+        public static bool IsReflectiveCollection(object value)
+        {
+            if (value is IReflectiveCollection)
+            {
+                return true;
+            }
+
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null &&
+                valueAsUnspecified.PropertyValueType == PropertyValueType.Enumeration)
+            {
+                return true;
+            }
+
+            var valueAsProxyObject = value as IProxyObject;
+            if (valueAsProxyObject != null)
+            {
+                return IsReflectiveCollection(valueAsProxyObject);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks whether the given object is a reflective collection
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <returns>true, if the object is a reflective </returns>
+        public static bool IsEnumeration(object value)
+        {
+            if (value is IEnumerable && !(value is string))
+            {
+                return true;
+            }
+
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null &&
+                valueAsUnspecified.PropertyValueType == PropertyValueType.Enumeration)
+            {
+                return true;
+            }
+
+            var valueAsProxyObject = value as IProxyObject;
+            if (valueAsProxyObject != null)
+            {
+                return IsReflectiveCollection(valueAsProxyObject);
+            }
+
+            return false;
         }
     }
 }

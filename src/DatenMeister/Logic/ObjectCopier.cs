@@ -64,51 +64,78 @@ namespace DatenMeister.Logic
             }
 
             var pairs = sourceElement.getAll();
-            foreach (var pair in pairs)
+            foreach (var pair in pairs.ToList())
             {
-                var currentValueAsSingle = pair.Value.AsSingle(false);
-
-                if (Extensions.IsNative(currentValueAsSingle))
+                // Checks, if the object is an IReflective Collection
+                if (ObjectHelper.IsReflectiveCollection(pair.Value))
                 {
-                    targetElement.set(pair.PropertyName, currentValueAsSingle);
-                }
-                else if (currentValueAsSingle is ResolvableByPath)
-                {
-                    // If the given object is another object, we will do the tracing as a deferred action
-                    // after the complete file has been copied
-                    var pairValue = currentValueAsSingle.AsIObject() as IObject;
-
-                    if (deferredActions != null)
+                    var currentValueAsReflectiveCollection = pair.Value.AsReflectiveCollection();
+                    var targetCollection = targetElement.get(pair.PropertyName).AsReflectiveCollection();
+                    foreach (var element in currentValueAsReflectiveCollection)
                     {
-                        var deferredAction = new Action(() =>
+                        // TODO: Refactor this method in a way, that sourceElement may also be
+                        // a simple object
+                        if (Extensions.IsNative(element))
                         {
-                            targetElement.set(pair.PropertyName, this.mapping[pairValue.Id]);
-                        });
+                            targetCollection.add(element);
+                            continue;
+                        }
 
-                        deferredActions.Add(deferredAction);
+                        var elementAsIObject = element as IObject;
+                        if (elementAsIObject != null)
+                        {
+                            targetCollection.add(this.CopyElement(elementAsIObject, deferredActions));
+                            continue;
+                        }
+
+                        throw new NotImplementedException("Unknown enumeration type");
                     }
-                }
-                else if (currentValueAsSingle is IObject)
-                {
-                    // We got a self-contained object
-                    // Perform a temporary copy to a DotNetExtent and store these elements into the object
-                    var tempDotNetExtent = new GenericExtent("TEMP");
-                    var tempCopier = new ObjectCopier(tempDotNetExtent);
-                    var createdCopy = tempCopier.CopyElement(currentValueAsSingle as IObject);
-                    
-                    // And now store the element back
-                    targetElement.set(pair.PropertyName, createdCopy);
-                }
-                else if (currentValueAsSingle == null
-                    || currentValueAsSingle == ObjectHelper.Null
-                    || currentValueAsSingle == ObjectHelper.NotSet)
-                {
-                    // We skip null objects
-                    continue;
                 }
                 else
                 {
-                    logger.Message("Object cannot be copied: " + currentValueAsSingle.GetType().ToString());
+                    var currentValueAsSingle = pair.Value.AsSingle(false);
+
+                    if (Extensions.IsNative(currentValueAsSingle))
+                    {
+                        targetElement.set(pair.PropertyName, currentValueAsSingle);
+                    }
+                    else if (currentValueAsSingle is ResolvableByPath)
+                    {
+                        // If the given object is another object, we will do the tracing as a deferred action
+                        // after the complete file has been copied
+                        var pairValue = currentValueAsSingle.AsIObject() as IObject;
+
+                        if (deferredActions != null)
+                        {
+                            var deferredAction = new Action(() =>
+                            {
+                                targetElement.set(pair.PropertyName, this.mapping[pairValue.Id]);
+                            });
+
+                            deferredActions.Add(deferredAction);
+                        }
+                    }
+                    else if (currentValueAsSingle is IObject)
+                    {
+                        // We got a self-contained object
+                        // Perform a temporary copy to a DotNetExtent and store these elements into the object
+                        var tempDotNetExtent = new GenericExtent("TEMP");
+                        var tempCopier = new ObjectCopier(tempDotNetExtent);
+                        var createdCopy = tempCopier.CopyElement(currentValueAsSingle as IObject);
+
+                        // And now store the element back
+                        targetElement.set(pair.PropertyName, createdCopy);
+                    }
+                    else if (currentValueAsSingle == null
+                        || currentValueAsSingle == ObjectHelper.Null
+                        || currentValueAsSingle == ObjectHelper.NotSet)
+                    {
+                        // We skip null objects
+                    }
+                    else
+                    {
+                        logger.Message("Object cannot be copied: " + currentValueAsSingle.GetType().ToString());
+                    }
                 }
             }
             return targetElement;

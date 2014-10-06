@@ -73,7 +73,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             // Fills the variable and creates the combobox
             var fieldInfoObj = new ReferenceBase(fieldInfo);
-            this.resolver = PoolResolver.GetDefault(state.Pool);
+            this.resolver = PoolResolver.GetDefault(PoolResolver.GetDefaultPool());
             var referenceUrl = fieldInfoObj.getReferenceUrl();
             this.propertyValue = fieldInfoObj.getPropertyValue();
             this.binding = fieldInfoObj.getBinding(); // Stores the name of the property
@@ -98,6 +98,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             if (state.EditMode == EditMode.Read)
             {
                 this.dropDown.IsReadOnly = true;
+                this.dropDown.IsEnabled = false;
             }
 
             stackPanel.Children.Add(this.dropDown);
@@ -118,8 +119,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                     {
                         this.currentElement = selectedItem.OriginalObject;
                         var dialog = DetailDialog.ShowDialogFor(
-                            selectedItem.OriginalObject, 
-                            state.Settings);
+                            selectedItem.OriginalObject);
                         dialog.DetailForm.Accepted += (a, b) =>
                             {
                                 this.RefreshDropDownElements();
@@ -140,31 +140,44 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
         private void RefreshDropDownElements()
         {
-            // Retrieve the values and add them
-            var values = new List<object>();
-            var n = 0;
-            var selectedValue = -1;
-            foreach (var value in this.resolvedElements)
+            if (this.resolvedElements == null)
             {
-                var valueAsIObject = value as IObject;
-                var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
+                this.dropDown.ItemsSource = null;
+            }
+            else
+            {
+                // Retrieve the values and add them
+                var values = new List<Item<object>>();
+                var selectedValue = -1;
 
-                var item = new Item<object>(stringValue, valueAsIObject, this.GetValue(valueAsIObject));
-                values.Add(item);
-
-                if (this.AreValuesEqual(this.currentElement, value))
+                // Selectes the item
+                foreach (var value in this.resolvedElements)
                 {
-                    selectedValue = n;
+                    var valueAsIObject = value as IObject;
+                    var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
+
+                    var item = new Item<object>(stringValue, valueAsIObject, this.GetValue(valueAsIObject));
+                    values.Add(item);
                 }
 
-                n++;
+                values = values.OrderBy(x => (x as Item<object>).Title).ToList();
+
+                // Finds the item, that needs to be selected
+                var n = 0;
+                foreach (var value in values.Select(x=> x.Value))
+                {
+                    if (this.AreValuesEqual(this.currentElement, value))
+                    {
+                        selectedValue = n;
+                    }
+
+                    n++;
+                }
+                
+                // Sets the item source
+                this.dropDown.ItemsSource = values;
+                this.dropDown.SelectedIndex = selectedValue;
             }
-
-            values = values.OrderBy(x => (x as Item<object>).Title).ToList();
-
-            // Sets the item source
-            this.dropDown.ItemsSource = values;
-            this.dropDown.SelectedIndex = selectedValue;
         }
 
         /// <summary>

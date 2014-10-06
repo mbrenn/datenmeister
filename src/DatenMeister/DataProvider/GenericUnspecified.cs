@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,14 @@ namespace DatenMeister.DataProvider
         public GenericUnspecified(IObject owner, string propertyName, object value, PropertyValueType propertyValueType)
             : base(owner, propertyName, value, propertyValueType)
         {
+            if (ObjectHelper.IsEnumeration(value))
+            {
+                this.PropertyValueType = DatenMeister.PropertyValueType.Enumeration;
+            }
+            else
+            {
+                this.PropertyValueType = DatenMeister.PropertyValueType.Single;
+            }            
         }
 
         public override IReflectiveCollection AsReflectiveCollection()

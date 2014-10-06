@@ -2183,6 +2183,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("referenceUrl", value);
         }
 
+        public DatenMeister.IObject getTableViewInfo()
+        {
+            return getTableViewInfo(this);
+        }
+
+        public void setTableViewInfo(DatenMeister.IObject value)
+        {
+            setTableViewInfo(this, value);
+        }
+
+        public static DatenMeister.IObject getTableViewInfo(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("tableViewInfo"));
+            return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
+        }
+
+        public static void setTableViewInfo(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            obj.set("tableViewInfo", value);
+        }
+
         public System.String getName()
         {
             return getName(this);

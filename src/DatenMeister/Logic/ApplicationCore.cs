@@ -23,7 +23,7 @@ namespace DatenMeister.Logic
     /// <summary>
     /// Stores the data that is used for the application specific data
     /// </summary>
-    public class ApplicationCore
+    public partial class ApplicationCore
     {
         /// <summary>
         /// Stores the logger 
@@ -85,7 +85,7 @@ namespace DatenMeister.Logic
         public GenericExtent MetaTypeExtent
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
@@ -144,15 +144,20 @@ namespace DatenMeister.Logic
         /// <typeparam name="T">Type of the window</typeparam>
         public void Start<T>() where T : IDatenMeisterSettings, new()
         {
-            PerformBinding();
+            PerformBinding(true /*Only Bootstrap binding*/);
 
             // Initialization of all meta types
             this.privateSettings = new T();
+            Injection.Application.Bind<IPublicDatenMeisterSettings>().ToConstant(this.privateSettings);
+            Injection.Application.Bind<IDatenMeisterSettings>().ToConstant(this.privateSettings);
 
             // Initializes the metatypes
             this.MetaTypeExtent = new GenericExtent("datenmeister:///datenmeister/metatypes/");
             DatenMeister.Entities.AsObject.Uml.Types.Init(this.MetaTypeExtent);
-            
+            DatenMeister.Entities.AsObject.FieldInfo.Types.Init(this.MetaTypeExtent);
+            DatenMeister.Entities.AsObject.DM.Types.Init(this.MetaTypeExtent);
+            PerformBinding();
+
             this.privateSettings.InitializeForBootUp(this);
             this.PerformInitializationOfViewSet();
         }
@@ -160,7 +165,7 @@ namespace DatenMeister.Logic
         /// <summary>
         /// Resets and performs the necessary binding
         /// </summary>
-        public static void PerformBinding()
+        public static void PerformBinding(bool onlyBootStrap = false)
         {
             // At the moment, reset the complete Binding
             Injection.Reset();
@@ -174,8 +179,13 @@ namespace DatenMeister.Logic
             // Initializes the default type resolver
             Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
 
-            // Initializes the global dot net extent
-            Injection.Application.Bind<GlobalDotNetExtent>().To<GlobalDotNetExtent>().InSingletonScope();
+            if (!onlyBootStrap)
+            {
+                // Initializes the global dot net extent
+                var globalDotNetExtent = new GlobalDotNetExtent();
+                Injection.Application.Bind<GlobalDotNetExtent>().ToConstant(globalDotNetExtent);
+                DatenMeister.Entities.AsObject.FieldInfo.Types.AssignTypeMapping(globalDotNetExtent);
+            }
         }
 
         public void PerformInitializationOfViewSet()
@@ -190,6 +200,8 @@ namespace DatenMeister.Logic
             pool.Add(this.MetaTypeExtent, null, "MetaTypes", ExtentType.MetaType);
 
             this.LoadApplicationData();
+
+            // Call the private settings that the viewset needs to be initialized
             this.privateSettings.InitializeViewSet(this);
 
             // After the viewset is initialized, replace the view extents by wrapped
@@ -203,6 +215,8 @@ namespace DatenMeister.Logic
 
             // Now, call the event that the initialization has been redone
             this.OnViewSetInitialized();
+
+            this.AddDefaultViews();
         }
 
         /// <summary>
@@ -258,9 +272,9 @@ namespace DatenMeister.Logic
         /// after the </param>
         /// <returns>Created or loaded Extent</returns>
         public IURIExtent LoadOrCreateByDefault(
-            string name, 
-            string extentUri, 
-            ExtentType extentType, 
+            string name,
+            string extentUri,
+            ExtentType extentType,
             Action<XmlExtent> defaultActionForCreation,
             Action<XmlExtent> defaultActionForLoading = null)
         {
@@ -312,7 +326,7 @@ namespace DatenMeister.Logic
         {
             logger.Message("Saving: " + extentUri);
 
-            // Get pool entry            
+            // Get pool entry
             var pool = Injection.Application.Get<IPool>();
             var instance = pool.GetInstance(extentUri);
             Ensure.That(instance != null, "The extent with Uri has not been found: " + extentUri);

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DatenMeister.DataProvider.DotNet;
+using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,33 +19,37 @@ namespace DatenMeister.WPF.Controls
         public SelectionListDialog()
             : base()
         {
-            Init();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ListDialog class
+        /// Initializes the selection List dialog
         /// </summary>
-        /// <param name="elements">Elements to be shown</param>
-        /// <param name="settings">Settings for the list</param>
-        /// <param name="tableView">View being used for the objects</param>
-        public SelectionListDialog(
-            IReflectiveCollection elements,
-            IPublicDatenMeisterSettings settings,
-            IObject tableView)
-            : base ( elements, settings, tableView)
+        /// <param name="configuration">The configuration to be used</param>
+        public SelectionListDialog(TableLayoutConfiguration configuration)
         {
-            this.Init();
+            this.Configure(configuration);
         }
 
         /// <summary>
-        /// Initializes the instance
+        /// Configures the dialog by using the Table Layout Configuration
         /// </summary>
-        private void Init()
+        /// <param name="configuration">Configuration to be used for layouting</param>
+        public override void Configure(TableLayoutConfiguration configuration)
         {
-            this.ViewInformation.setAllowDelete(false);
-            this.ViewInformation.setAllowEdit(false);
-            this.ViewInformation.setAllowNew(false);
-            this.Table.UseAsSelectionControl = true;
+            var tableViewInfo = configuration.GetTableViewInfoAsTableView();
+            
+            if (tableViewInfo == null)
+            {
+                // Ok, tableview info is null... we need to create a generic one
+                var tableView = new DatenMeister.Entities.FieldInfos.TableView();
+                var tableViewObj = Injection.Application.Get<GlobalDotNetExtent>().CreateObject(tableView);
+                tableViewInfo = new Entities.AsObject.FieldInfo.TableView(tableViewObj);
+                tableViewInfo.setDoAutoGenerateByProperties(true);
+                configuration.TableViewInfo = tableViewInfo;
+            }
+
+            configuration.UseAsSelectionControl = true;
+            base.Configure(configuration);
         }
     }
 }

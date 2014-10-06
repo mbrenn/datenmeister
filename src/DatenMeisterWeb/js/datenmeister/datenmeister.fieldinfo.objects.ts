@@ -607,6 +607,14 @@ export module MultiReferenceField {
         item.set('referenceUrl', value);
     }
 
+    export function getTableViewInfo(item: __d__.JsonExtentObject) {
+        return item.get('tableViewInfo');
+    }
+
+    export function setTableViewInfo(item : __d__.JsonExtentObject, value: any) {
+        item.set('tableViewInfo', value);
+    }
+
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
     }

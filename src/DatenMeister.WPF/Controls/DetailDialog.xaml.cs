@@ -31,13 +31,10 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private static ILog logger = new ClassLogger(typeof(DetailDialog));
 
-        /// <summary>
-        /// Gets or sets the pool
-        /// </summary>
-        public IPool Pool
+        private FormLayoutConfiguration configuration
         {
-            get { return this.detailForm.Pool; }
-            set { this.detailForm.Pool = value; }
+            get;
+            set;
         }
 
         public EntityFormControl DetailForm
@@ -54,9 +51,26 @@ namespace DatenMeister.WPF.Controls
             this.UpdateWindowTitle();
         }
 
-        public DetailDialog()
+        protected DetailDialog()
         {
             InitializeComponent();
+        }
+
+        public DetailDialog(FormLayoutConfiguration configuration)
+            : this()
+        {
+            this.Configure(configuration);
+        }
+
+        /// <summary>
+        /// Performs the configuration of the form. 
+        /// The form is sent to the detailForm
+        /// </summary>
+        /// <param name="configuration">Configuration to be used</param>
+        public void Configure(FormLayoutConfiguration configuration)
+        {
+            this.configuration = configuration;
+            this.detailForm.Configure(configuration);
         }
 
         private void detailForm_Accepted(object sender, EventArgs e)
@@ -80,7 +94,7 @@ namespace DatenMeister.WPF.Controls
             }
             else
             {
-                if (this.detailForm.EditMode == EditMode.New)
+                if (this.configuration.EditMode == EditMode.New)
                 {
                     this.Title = "New Item";
                 }
@@ -112,11 +126,9 @@ namespace DatenMeister.WPF.Controls
         public static DetailDialog ShowDialogToCreateTypeOf(
             IObject type, 
             IReflectiveCollection collection, 
-            IPublicDatenMeisterSettings settings,
             IObject viewData = null)
         {
             Ensure.That(collection != null);
-            Ensure.That(settings != null);
 
             var extent = collection.Extent;
             Ensure.That(collection.Extent != null);
@@ -130,13 +142,12 @@ namespace DatenMeister.WPF.Controls
                 return null;
             }
 
-            var dialog = new DetailDialog();
-            dialog.Pool = extent.Pool;
-            dialog.DetailForm.EditMode = EditMode.New;
-            dialog.DetailForm.FormViewInfo = viewData;
-            dialog.DetailForm.Collection = collection;
-            dialog.DetailForm.TypeToCreate = type;
-            dialog.DetailForm.Settings = settings;
+            var configuration = new FormLayoutConfiguration();
+            configuration.EditMode = EditMode.New;
+            configuration.FormViewInfo = viewData;
+            configuration.StorageCollection = collection;
+            configuration.TypeToCreate = type;
+            var dialog = new DetailDialog(configuration);
             dialog.Show();
 
             return dialog;
@@ -148,12 +159,9 @@ namespace DatenMeister.WPF.Controls
         /// <param name="value"></param>
         public static DetailDialog ShowDialogFor(
             IObject value,
-            IPublicDatenMeisterSettings settings,
             IObject viewData = null, 
             bool readOnly = false)
         {
-            Ensure.That(settings != null);
-
             viewData = GetView(value, viewData);
             if (viewData == null)
             {
@@ -161,19 +169,14 @@ namespace DatenMeister.WPF.Controls
             }
 
             // Creates the dialog
-            var dialog = new DetailDialog();
-            if (value.Extent != null)
-            {
-                dialog.Pool = value.Extent.Pool;
-            }
+            var configuration = new FormLayoutConfiguration();
+            configuration.EditMode = readOnly ? EditMode.Read : EditMode.Edit;
+            configuration.FormViewInfo = viewData;
+            configuration.StorageCollection = value.Extent == null ? null : value.Extent.Elements();
+            configuration.DetailObject = value;
 
-            dialog.DetailForm.EditMode = readOnly ? EditMode.Read : EditMode.Edit;
-            dialog.DetailForm.FormViewInfo = viewData;
-            dialog.DetailForm.Collection = value.Extent == null ? null : value.Extent.Elements();
-            dialog.DetailForm.DetailObject = value;
-            dialog.DetailForm.Settings = settings;
+            var dialog = new DetailDialog(configuration);
             dialog.Show();
-
             return dialog;
         }
 

@@ -33,17 +33,19 @@ namespace DatenMeister.WPF.Controls
         /// be created</param>
         public static IObject ShowNewOfGenericTypeDialog(
             IReflectiveCollection reflectiveCollection,
-            IPublicDatenMeisterSettings settings,
             ExtentType extentType = ExtentType.Type)
         {
             var pool = Injection.Application.Get<IPool>();
 
-            var dialog = new SelectionListDialog();
             var allTypes =
                 new AllItemsReflectiveCollection(pool)
                 .FilterByExtentType(extentType)
                 .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
-            dialog.SetReflectiveCollection(allTypes, settings);
+
+            var configuration = new TableLayoutConfiguration();
+            configuration.SetElements(allTypes);
+
+            var dialog = new SelectionListDialog(configuration);
             if (dialog.ShowDialog() == true)
             {
                 if (dialog.SelectedElements.Count() > 0)

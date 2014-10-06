@@ -32,5 +32,14 @@ namespace DatenMeister.Entities.FieldInfos
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the view definition for the table view. 
+        /// </summary>
+        public IObject tableViewInfo
+        {
+            get;
+            set;
+        }
     }
 }
