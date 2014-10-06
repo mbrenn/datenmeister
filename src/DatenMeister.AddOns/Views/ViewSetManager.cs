@@ -73,24 +73,33 @@ namespace DatenMeister.AddOns.Views
                 var globalDotNetExtent = Injection.Application.Get<GlobalDotNetExtent>();
                 var entriesAsObject = globalDotNetExtent.CreateReflectiveSequence(viewManager.Entries);
 
-                var formView = new TableView();
-                formView.fieldInfos = new List<object>(new[]{
+                var listView = new TableView();
+                listView.fieldInfos = new List<object>(new[]{
                     new TextField("View", "View"),
                     new TextField("MetaClass", "MetaClass"),
                     new TextField("Is Default", "IsDefault")
                 });
 
-                formView.mainType =
+                var detailView = new FormView();
+                detailView.fieldInfos = new List<Object>(new object[]{
+                    new ReferenceByRef("View", "View", "datenmeister://datenmeister/all/extenttype/View", "name"),
+                    new ReferenceByRef("MetaClass", "MetaClass", "datenmeister://datenmeister/all/extenttype/Type", "name"),
+                    new Checkbox("Is Default", "IsDefault")
+                });
+
+                detailView.allowEdit = false;
+
+                listView.mainType =
                     globalDotNetExtent.GetIObjectForType(typeof(DatenMeister.Logic.Views.DefaultViewManager.ViewEntry));
-                var formViewObj = globalDotNetExtent.CreateObject(formView);
 
                 var listConfiguration = new TableLayoutConfiguration()
                 {
-                    TableViewInfo = formViewObj
+                    TableViewInfo = globalDotNetExtent.CreateObject(listView),
+                    ViewInfoForDetailView = globalDotNetExtent.CreateObject(detailView)
                 };
 
                 listConfiguration.SetElements(entriesAsObject);
-                var assignDialog = new ListDialog(listConfiguration);                
+                var assignDialog = new ListDialog(listConfiguration);
                 assignDialog.ShowDialog();
             };
 

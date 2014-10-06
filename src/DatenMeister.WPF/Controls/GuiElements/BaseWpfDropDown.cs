@@ -50,6 +50,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
         private object currentElement;
 
         /// <summary>
+        /// Gets or sets the value whether the element is just read-only
+        /// </summary>
+        private bool isReadOnly;
+
+        /// <summary>
         /// Configures the the drop down. May be overridden, if necessary.
         /// The method will be called after all protected variables have been set 
         /// and ComboBox and their instances has been created.
@@ -95,7 +100,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             this.RefreshDropDownElements();
 
             // Make thing read-only, if appropriate
-            if (state.EditMode == EditMode.Read)
+            if (state.EditMode == EditMode.Read || this.isReadOnly)
             {
                 this.dropDown.IsReadOnly = true;
             }
@@ -139,31 +144,44 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
         private void RefreshDropDownElements()
         {
-            // Retrieve the values and add them
-            var values = new List<object>();
-            var n = 0;
-            var selectedValue = -1;
-            foreach (var value in this.resolvedElements)
+            if (this.resolvedElements == null)
             {
-                var valueAsIObject = value as IObject;
-                var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
+                this.dropDown.ItemsSource = null;
+            }
+            else
+            {
+                // Retrieve the values and add them
+                var values = new List<Item<object>>();
+                var selectedValue = -1;
 
-                var item = new Item<object>(stringValue, valueAsIObject, this.GetValue(valueAsIObject));
-                values.Add(item);
-
-                if (this.AreValuesEqual(this.currentElement, value))
+                // Selectes the item
+                foreach (var value in this.resolvedElements)
                 {
-                    selectedValue = n;
+                    var valueAsIObject = value as IObject;
+                    var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
+
+                    var item = new Item<object>(stringValue, valueAsIObject, this.GetValue(valueAsIObject));
+                    values.Add(item);
                 }
 
-                n++;
+                values = values.OrderBy(x => (x as Item<object>).Title).ToList();
+
+                // Finds the item, that needs to be selected
+                var n = 0;
+                foreach (var value in values.Select(x=> x.Value))
+                {
+                    if (this.AreValuesEqual(this.currentElement, value))
+                    {
+                        selectedValue = n;
+                    }
+
+                    n++;
+                }
+                
+                // Sets the item source
+                this.dropDown.ItemsSource = values;
+                this.dropDown.SelectedIndex = selectedValue;
             }
-
-            values = values.OrderBy(x => (x as Item<object>).Title).ToList();
-
-            // Sets the item source
-            this.dropDown.ItemsSource = values;
-            this.dropDown.SelectedIndex = selectedValue;
         }
 
         /// <summary>

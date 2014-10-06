@@ -23,7 +23,7 @@ namespace DatenMeister.Logic
     /// <summary>
     /// Stores the data that is used for the application specific data
     /// </summary>
-    public class ApplicationCore
+    public partial class ApplicationCore
     {
         /// <summary>
         /// Stores the logger 
@@ -200,6 +200,8 @@ namespace DatenMeister.Logic
             pool.Add(this.MetaTypeExtent, null, "MetaTypes", ExtentType.MetaType);
 
             this.LoadApplicationData();
+
+            // Call the private settings that the viewset needs to be initialized
             this.privateSettings.InitializeViewSet(this);
 
             // After the viewset is initialized, replace the view extents by wrapped
@@ -213,6 +215,8 @@ namespace DatenMeister.Logic
 
             // Now, call the event that the initialization has been redone
             this.OnViewSetInitialized();
+
+            this.AddDefaultViews();
         }
 
         /// <summary>
