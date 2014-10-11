@@ -13,7 +13,6 @@ namespace DatenMeister
     /// </summary>
     public static class ObjectConversion
     {
-
         /// <summary>
         /// Returns the information whether the given object might be true or false
         /// </summary>
@@ -116,6 +115,37 @@ namespace DatenMeister
             }
 
             return value.ToString();
+        }
+
+        /// <summary>
+        /// Converts the object to the target type
+        /// </summary>
+        /// <param name="value">Value to be converted</param>
+        /// <param name="targetType">Type, to which the target shall be converted</param>
+        /// <returns>The converted type</returns>
+        public static object ConvertTo(object value, Type targetType)
+        {
+            if (targetType == typeof(Int32))
+            {
+                return ToInt32(value);
+            }
+
+            if (targetType == typeof(String))
+            {
+                return ToString(value);
+            }
+
+            if (targetType == typeof(Boolean))
+            {
+                return ToBoolean(value);
+            }
+
+            if (targetType == typeof(DateTime))
+            {
+                return ToDateTime(targetType);
+            }
+
+            return Convert.ChangeType(value, targetType);
         }
     }
 }

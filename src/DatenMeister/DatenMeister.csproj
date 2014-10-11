@@ -153,8 +153,10 @@
     <Compile Include="Logic\ClientActions\IClientAction.cs" />
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
+    <Compile Include="Logic\MethodProvider\StaticFunctionImpl.cs" />
     <Compile Include="Logic\MethodProvider\IFunction.cs" />
     <Compile Include="Logic\MethodProvider\IMethodProvider.cs" />
+    <Compile Include="Logic\MethodProvider\SimpleMethodProvider.cs" />
     <Compile Include="Logic\ObjectCopier.cs" />
     <Compile Include="Logic\ExtentCopier.cs" />
     <Compile Include="DataProvider\Factory.cs" />

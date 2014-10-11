@@ -16,9 +16,9 @@ namespace DatenMeister.Logic.MethodProvider
         /// Adds a static method to a type
         /// </summary>
         /// <param name="type">Type of the function which shall be callable</param>
-        /// <param name="name">Name of the function to be used</param>
+        /// <param name="id">Id of the function to be used</param>
         /// <param name="functionMethod">Method which shall be callable</param>
         /// <returns>Return the function handle</returns>
-        IFunction AddStaticMethod(IObject type, string name, Delegate functionMethod);
+        IFunction AddStaticMethod(IObject type, string id, Delegate functionMethod);
     }
 }
