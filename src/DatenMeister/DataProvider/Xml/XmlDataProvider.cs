@@ -57,6 +57,7 @@ namespace DatenMeister.DataProvider.Xml
             Ensure.That(extent != null);
 
             // Stores the file into database
+            extent.XmlDocument.AddAnnotation(SaveOptions.OmitDuplicateNamespaces);
             extent.XmlDocument.Save(path);
         }
 

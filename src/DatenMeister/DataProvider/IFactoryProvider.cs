@@ -14,6 +14,7 @@ namespace DatenMeister.DataProvider
         /// <summary>
         /// Creates a factory for the given extent
         /// </summary>
+        /// <param name="type">Type to be used</param>
         /// <param name="extent">Extent which is used to create the factory</param>
         /// <returns>The created factory</returns>
         IFactory CreateFor(Type type, IURIExtent extent);

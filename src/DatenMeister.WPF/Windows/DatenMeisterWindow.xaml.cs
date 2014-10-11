@@ -547,6 +547,7 @@ namespace DatenMeister.WPF.Windows
                 var copiedExtent = new XmlExtent(
                     XDocument.Parse("<export />"),
                     xmlExtent.Uri);
+                copiedExtent.XmlDocument.AddAnnotation(SaveOptions.OmitDuplicateNamespaces);
 
                 // Executes the copying
                 ExtentCopier.Copy(xmlExtent, copiedExtent);
