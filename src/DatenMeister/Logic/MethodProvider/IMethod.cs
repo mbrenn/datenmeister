@@ -9,8 +9,24 @@ namespace DatenMeister.Logic.MethodProvider
     /// <summary>
     /// The function being used 
     /// </summary>
-    public interface IFunction
+    public interface IMethod
     {
+        /// <summary>
+        /// Gets the id of the function
+        /// </summary>
+        string Id
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the method type
+        /// </summary>
+        MethodType MethodType
+        {
+            get;
+        }
+
         /// <summary>
         /// Invokes the given function within the given context and the given parameters
         /// </summary>

@@ -35,6 +35,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Experimental.Collections">
+      <HintPath>..\packages\Microsoft.Experimental.Collections.1.0.3-alpha\lib\portable-net45+win8+wp8\Microsoft.Experimental.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -153,8 +156,12 @@
     <Compile Include="Logic\ClientActions\IClientAction.cs" />
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
+    <Compile Include="Logic\MethodProvider\MethodType.cs" />
+    <Compile Include="Logic\MethodProvider\MethodProviderExtensions.cs" />
+    <Compile Include="Logic\MethodProvider\TypeFunctionImpl.cs" />
+    <Compile Include="Logic\MethodProvider\InstanceFunctionImpl.cs" />
     <Compile Include="Logic\MethodProvider\StaticFunctionImpl.cs" />
-    <Compile Include="Logic\MethodProvider\IFunction.cs" />
+    <Compile Include="Logic\MethodProvider\IMethod.cs" />
     <Compile Include="Logic\MethodProvider\IMethodProvider.cs" />
     <Compile Include="Logic\MethodProvider\SimpleMethodProvider.cs" />
     <Compile Include="Logic\ObjectCopier.cs" />

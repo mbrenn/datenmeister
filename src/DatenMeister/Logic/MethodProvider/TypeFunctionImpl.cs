@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.Logic.MethodProvider
 {
-    internal class StaticFunctionImpl : IMethod
+    internal class TypeFunctionImpl : IMethod
     {
         /// <summary>
         /// Gets the id
@@ -19,23 +19,23 @@ namespace DatenMeister.Logic.MethodProvider
         }
 
         /// <summary>
+        /// Defines the delegate, that will be called for the instance
+        /// </summary>
+        private Delegate del;
+        
+        /// <summary>
         /// Gets the method type
         /// </summary>
         public MethodType MethodType
         {
-            get { return MethodType.StaticMethod; }
+            get { return MethodType.TypeMethod; }
         }
-
-        /// <summary>
-        /// Defines the delegate, that will be called for the instance
-        /// </summary>
-        private Delegate del;
 
         /// <summary>
         /// Initializes a new instance of the StaticFunctionImpl class. 
         /// </summary>
         /// <param name="del"></param>
-        public StaticFunctionImpl (string id, Delegate del)
+        public TypeFunctionImpl(string id, Delegate del)
         {
             this.Id = id;
             Ensure.That(del != null);
@@ -55,16 +55,18 @@ namespace DatenMeister.Logic.MethodProvider
             var parameterTypes = del.Method.GetParameters();
 
             // Context will be ignored and the parameters need to be converted
-            if (parameters.Length != parameterTypes.Length)
+            if ((parameters.Length + 1) != parameterTypes.Length)
             {
                 throw new InvalidOperationException("Number of parameters does not match to delegate");
             }
 
             // It seems to match, now convert the parameters
-            var targetParameters = new object[parameters.Length];
+            var targetParameters = new object[parameters.Length + 1];
+            targetParameters[0] = ObjectConversion.ConvertTo(context, parameterTypes[0].ParameterType);
+
             for (var n = 0; n < parameters.Length; n++)
             {
-                targetParameters[n] =
+                targetParameters[n + 1] =
                     ObjectConversion.ConvertTo(parameters[n], parameterTypes[n].ParameterType);
             }
 
