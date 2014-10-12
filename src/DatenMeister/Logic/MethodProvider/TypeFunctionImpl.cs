@@ -67,7 +67,7 @@ namespace DatenMeister.Logic.MethodProvider
             for (var n = 0; n < parameters.Length; n++)
             {
                 targetParameters[n + 1] =
-                    ObjectConversion.ConvertTo(parameters[n], parameterTypes[n].ParameterType);
+                    ObjectConversion.ConvertTo(parameters[n], parameterTypes[n + 1].ParameterType);
             }
 
             return del.DynamicInvoke(targetParameters);

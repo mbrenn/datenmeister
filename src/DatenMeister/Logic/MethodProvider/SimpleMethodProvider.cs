@@ -110,7 +110,10 @@ namespace DatenMeister.Logic.MethodProvider
         /// <returns>Returns the functions</returns>
         public IEnumerable<IMethod> GetFunctionsOnType(IObject type)
         {
-            return this.typeMapping[type];
+            IReadOnlyCollection<IMethod> result;
+            this.typeMapping.TryGetValue(type, out result);
+
+            return result;
         }
 
         /// <summary>
@@ -120,21 +123,29 @@ namespace DatenMeister.Logic.MethodProvider
         /// <returns>Returns the functions on the instance</returns>
         public IEnumerable<IMethod> GetFunctionsOnInstance(IObject instance)
         {
-            var instanceMethods = this.instanceMapping[instance];
-            foreach (var instanceMethod in instanceMethods)
+            IReadOnlyCollection<IMethod> instanceMethods;
+            this.instanceMapping.TryGetValue(instance, out instanceMethods);
+            if (instanceMethods != null)
             {
-                yield return instanceMethod;
+                foreach (var instanceMethod in instanceMethods)
+                {
+                    yield return instanceMethod;
+                }
             }
 
             var element = instance as IElement;
             if (element != null)
             {
-                var typeFunctions = this.typeMapping[element.getMetaClass()];
+                IReadOnlyCollection<IMethod> typeFunctions;
+                this.typeMapping.TryGetValue(element.getMetaClass(), out typeFunctions);
 
-                foreach (var typeFunction in typeFunctions
-                    .Where(x => x.MethodType == MethodType.TypeMethod))
+                if (typeFunctions != null)
                 {
-                    yield return typeFunction;
+                    foreach (var typeFunction in typeFunctions
+                        .Where(x => x.MethodType == MethodType.TypeMethod))
+                    {
+                        yield return typeFunction;
+                    }
                 }
             }
         }
