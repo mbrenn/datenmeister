@@ -134,6 +134,7 @@
     <Compile Include="Entities\FieldInfos\TableView.cs" />
     <Compile Include="Entities\FieldInfos\TextField.cs" />
     <Compile Include="Entities\FieldInfos\View.cs" />
+    <Compile Include="Entities\UML\Property.cs" />
     <Compile Include="Entities\UML\Type.cs" />
     <Compile Include="Entities\UML\NamedElement.cs" />
     <Compile Include="Extensions.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Logic\ObjectDictionaryForView.cs" />
     <Compile Include="Logic\ObjectHelper.cs" />
     <Compile Include="Logic\ReflectiveSequenceHelper.cs" />
+    <Compile Include="Logic\Settings\DummyDatenMeisterSettings.cs" />
     <Compile Include="Logic\SourceFactory\CSharpSourceFactory.cs" />
     <Compile Include="Logic\SourceFactory\CSharpTypeDefinitionFactory.cs" />
     <Compile Include="Logic\SourceFactory\DotNetTypeProvider.cs" />

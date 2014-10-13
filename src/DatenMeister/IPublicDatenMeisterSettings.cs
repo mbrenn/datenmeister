@@ -18,7 +18,6 @@ namespace DatenMeister
         string ApplicationName
         {
             get;
-            set;
         }
 
         /// <summary>
@@ -27,7 +26,6 @@ namespace DatenMeister
         string WindowTitle
         {
             get;
-            set;
         }
 
         /// <summary>
@@ -36,7 +34,6 @@ namespace DatenMeister
         XmlSettings ExtentSettings
         {
             get;
-            set;
         }
     }
 }
