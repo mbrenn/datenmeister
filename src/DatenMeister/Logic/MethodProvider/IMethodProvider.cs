@@ -41,13 +41,6 @@ namespace DatenMeister.Logic.MethodProvider
         IMethod AddTypeMethod(IObject type, string id, Delegate functionMethod);
 
         /// <summary>
-        /// Gets the function by a certain id
-        /// </summary>
-        /// <param name="id">Id, of the function</param>
-        /// <returns>The function or null, if not exist</returns>
-        IMethod Get(string id);
-
-        /// <summary>
         /// Gets all function on a certain type
         /// </summary>
         /// <param name="type">Type of the function being queried</param>

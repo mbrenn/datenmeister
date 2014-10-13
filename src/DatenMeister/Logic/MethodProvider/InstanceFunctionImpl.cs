@@ -13,8 +13,8 @@ namespace DatenMeister.Logic.MethodProvider
         /// Initializes a new instance of the StaticFunctionImpl class. 
         /// </summary>
         /// <param name="del"></param>
-        public InstanceFunctionImpl(string id, Delegate del)
-            :base(id, del)
+        public InstanceFunctionImpl(string name, Delegate del)
+            :base(name, del)
         {
         }
 

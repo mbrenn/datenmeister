@@ -12,7 +12,7 @@ namespace DatenMeister.Logic.MethodProvider
         /// <summary>
         /// Gets the id
         /// </summary>
-        public string Id
+        public string Name
         {
             get;
             private set;
@@ -35,9 +35,9 @@ namespace DatenMeister.Logic.MethodProvider
         /// Initializes a new instance of the StaticFunctionImpl class. 
         /// </summary>
         /// <param name="del"></param>
-        public TypeFunctionImpl(string id, Delegate del)
+        public TypeFunctionImpl(string name, Delegate del)
         {
-            this.Id = id;
+            this.Name = name;
             Ensure.That(del != null);
             this.del = del;
         }

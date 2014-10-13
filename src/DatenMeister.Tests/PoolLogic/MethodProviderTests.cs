@@ -108,6 +108,7 @@ namespace DatenMeister.Tests.PoolLogic
                 new Func<int, int, int>((x, y) => x + y));
 
             var typeSumFunction = methodProvider.AddTypeMethod(TestDatabase.Types.Person,
+                "Sum",
                 new Func<IObject, int, int, int>((x, y, z) =>
                     {
                         var v = ObjectConversion.ToInt32(x.get("age"));
@@ -148,13 +149,19 @@ namespace DatenMeister.Tests.PoolLogic
 
             Assert.That(instanceOtherFunctions.Any(x => x.MethodType == MethodType.TypeMethod));
 
-            Assert.That(typeFunctions.Any(x => x.Id == staticSumFunction.Id));
-            Assert.That(typeFunctions.Any(x => x.Id == typeSumFunction.Id));
+            Assert.That(typeFunctions.Any(x => x.Name == staticSumFunction.Name));
+            Assert.That(typeFunctions.Any(x => x.Name == typeSumFunction.Name));
             
-            Assert.That(instanceFunctions.Any(x => x.Id == typeSumFunction.Id));
-            Assert.That(instanceFunctions.Any(x => x.Id == instanceMulFunction.Id));
+            Assert.That(instanceFunctions.Any(x => x.Name == typeSumFunction.Name));
+            Assert.That(instanceFunctions.Any(x => x.Name == instanceMulFunction.Name));
 
-            Assert.That(instanceOtherFunctions.Any(x => x.Id == typeSumFunction.Id));
+            Assert.That(instanceOtherFunctions.Any(x => x.Name == typeSumFunction.Name));
+
+            var foundMethod1 = methodProvider.GetMethodOfTypeByName(TestDatabase.Types.Person, "Sum");
+            var foundMethod2 = methodProvider.GetMethodOfInstanceByName(person, "Sum");
+
+            Assert.That(foundMethod1, Is.EqualTo(typeSumFunction));
+            Assert.That(foundMethod2, Is.EqualTo(typeSumFunction));
         }
 
         private class X

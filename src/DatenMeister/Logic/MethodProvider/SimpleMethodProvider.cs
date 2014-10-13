@@ -13,11 +13,6 @@ namespace DatenMeister.Logic.MethodProvider
     public class SimpleMethodProvider : IMethodProvider
     {
         /// <summary>
-        /// Defines the function map between id of the function and the function itself
-        /// </summary>
-        private Dictionary<string, IMethod> functionMap = new Dictionary<string, IMethod>();
-
-        /// <summary>
         /// Stores the mapping between types and methods
         /// </summary>
         private MultiValueDictionary<IObject, IMethod> typeMapping
@@ -42,7 +37,6 @@ namespace DatenMeister.Logic.MethodProvider
                 id,
                 functionMethod);
 
-            this.functionMap[id] = function;
             this.typeMapping.Add(type, function);
 
             return function;
@@ -61,7 +55,6 @@ namespace DatenMeister.Logic.MethodProvider
                 id,
                 functionMethod);
 
-            this.functionMap[id] = function;
             this.instanceMapping.Add(instance, function);
 
             return function;
@@ -81,26 +74,9 @@ namespace DatenMeister.Logic.MethodProvider
                 id,
                 functionMethod);
 
-            this.functionMap[id] = function;
             this.typeMapping.Add(type, function);
 
             return function;
-        }
-
-        /// <summary>
-        /// Gets the function by a certain id
-        /// </summary>
-        /// <param name="id">Id, of the function</param>
-        /// <returns>The function or null, if not exist</returns>
-        public IMethod Get(string id)
-        {
-            IMethod function;
-            if (this.functionMap.TryGetValue(id, out function))
-            {
-                return function;
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -113,7 +89,10 @@ namespace DatenMeister.Logic.MethodProvider
             IReadOnlyCollection<IMethod> result;
             this.typeMapping.TryGetValue(type, out result);
 
-            return result;
+            foreach (var method in result)
+            {
+                yield return method;
+            }
         }
 
         /// <summary>
@@ -136,15 +115,20 @@ namespace DatenMeister.Logic.MethodProvider
             var element = instance as IElement;
             if (element != null)
             {
-                IReadOnlyCollection<IMethod> typeFunctions;
-                this.typeMapping.TryGetValue(element.getMetaClass(), out typeFunctions);
+                var metaClass = element.getMetaClass();
 
-                if (typeFunctions != null)
+                if (metaClass != null)
                 {
-                    foreach (var typeFunction in typeFunctions
-                        .Where(x => x.MethodType == MethodType.TypeMethod))
+                    IReadOnlyCollection<IMethod> typeFunctions;
+                    this.typeMapping.TryGetValue(metaClass, out typeFunctions);
+
+                    if (typeFunctions != null)
                     {
-                        yield return typeFunction;
+                        foreach (var typeFunction in typeFunctions
+                            .Where(x => x.MethodType == MethodType.TypeMethod))
+                        {
+                            yield return typeFunction;
+                        }
                     }
                 }
             }

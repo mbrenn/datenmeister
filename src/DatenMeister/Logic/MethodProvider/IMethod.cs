@@ -14,7 +14,7 @@ namespace DatenMeister.Logic.MethodProvider
         /// <summary>
         /// Gets the id of the function
         /// </summary>
-        string Id
+        string Name
         {
             get;
         }

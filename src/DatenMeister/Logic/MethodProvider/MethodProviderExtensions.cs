@@ -40,5 +40,15 @@ namespace DatenMeister.Logic.MethodProvider
         {
             return provider.AddTypeMethod(type, Guid.NewGuid().ToString(), functionMethod);
         }
+
+        public static IMethod GetMethodOfTypeByName(this IMethodProvider provider, IObject type, string name)
+        {
+            return provider.GetFunctionsOnType(type).Where(x => x.Name == name).First();
+        }
+
+        public static IMethod GetMethodOfInstanceByName(this IMethodProvider provider, IObject instance, string name)
+        {
+            return provider.GetFunctionsOnInstance(instance).Where(x => x.Name == name).First();
+        }
     }
 }
