@@ -17,7 +17,7 @@ namespace DatenMeister.Entities.AsObject.DM
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
             if(Types.RecentProject == null || true)
             {
-                Types.RecentProject = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                Types.RecentProject = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.RecentProject, "RecentProject");
                 extent.Elements().add(Types.RecentProject);
             }

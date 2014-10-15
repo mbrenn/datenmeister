@@ -788,7 +788,8 @@ namespace DatenMeister.Tests.DataProvider
 
             var xmlExtent = new XmlExtent(document, "test:///");
 
-            var umlExtent = DatenMeister.Entities.AsObject.Uml.Types.Init();
+            var umlExtent = new GenericExtent("datenmeister:///metatypes");
+            DatenMeister.Entities.AsObject.Uml.Types.Init(umlExtent);
             var typeExtent = DatenMeister.Entities.AsObject.FieldInfo.Types.Init();
 
             xmlExtent.Settings.Mapping.Add(

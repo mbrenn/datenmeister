@@ -17,28 +17,28 @@ namespace DatenMeister.Entities.AsObject.Uml
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
             if(Types.NamedElement == null || true)
             {
-                Types.NamedElement = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                Types.NamedElement = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.NamedElement, "NamedElement");
                 extent.Elements().add(Types.NamedElement);
             }
 
             if(Types.Type == null || true)
             {
-                Types.Type = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                Types.Type = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Type, "Type");
                 extent.Elements().add(Types.Type);
             }
 
             if(Types.Property == null || true)
             {
-                Types.Property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                Types.Property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Property, "Property");
                 extent.Elements().add(Types.Property);
             }
 
             if(Types.Class == null || true)
             {
-                Types.Class = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                Types.Class = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Class, "Class");
                 extent.Elements().add(Types.Class);
             }

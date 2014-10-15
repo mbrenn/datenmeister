@@ -76,7 +76,7 @@ namespace DatenMeister.Logic.SourceFactory
                 // Creates the object instance for the type
                 writer.WriteLine(TwelveSpaces + "if({1}.{0} == null || true)", type, this.className);
                 writer.WriteLine(TwelveSpaces + "{");
-                writer.WriteLine(string.Format(SixteenSpaces + "{1}.{0} = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);", type, this.className));
+                writer.WriteLine(string.Format(SixteenSpaces + "{1}.{0} = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "DatenMeister.Entities.AsObject.Uml.Type.setName({1}.{0}, \"{0}\");", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "extent.Elements().add({1}.{0});", type, this.className));
                 writer.WriteLine(TwelveSpaces + "}");
@@ -101,7 +101,7 @@ namespace DatenMeister.Logic.SourceFactory
                     this.provider.GetFullTypeName(type),
                     type,
                     this.className);
-                assignFunction.AppendLine();                
+                assignFunction.AppendLine();
             }
 
             writer.WriteLine();
