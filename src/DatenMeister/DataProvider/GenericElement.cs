@@ -37,6 +37,17 @@ namespace DatenMeister.DataProvider
             return this.type;
         }
 
+        /// <summary>
+        /// Sets the metaclass for the given object. 
+        /// The old metaclass will be overwritten
+        /// </summary>
+        /// <remarks>Do only use this function in very specific scenarios</remarks>
+        /// <param name="metaClass">Metaclass, that will be used</param>
+        public void setMetaClass(IObject metaClass)
+        {
+            this.type = metaClass;
+        }
+
         public IObject container()
         {
             return this.containerInstance;

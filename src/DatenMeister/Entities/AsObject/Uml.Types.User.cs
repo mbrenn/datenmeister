@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.DataProvider;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,15 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// Stores the namespace for the Xml
         /// </summary>
         public static readonly XNamespace XmlNamespace = "http://www.w3.org/2000/xmlns/";
+
+        /// <summary>
+        /// Resets the type for the internal object
+        /// </summary>
+        static partial void OnInitCompleted()
+        {
+            (Types.Type as GenericElement).setMetaClass(Types.Type);
+            (Types.NamedElement as GenericElement).setMetaClass(Types.Type);
+        }
     }
+
 }
