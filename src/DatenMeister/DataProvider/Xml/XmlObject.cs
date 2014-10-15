@@ -548,13 +548,23 @@ namespace DatenMeister.DataProvider.Xml
 
         public override string ToString()
         {
+            var nameElement = this.get("name").AsSingle();
+            string nameText = string.Empty;
+            if (nameElement != null )
+            {
+                nameText =
+                    string.Format(
+                        " ({0})",
+                        ObjectConversion.ToString(nameElement));
+            }
+
             if (this.Id == null)
             {
-                return base.ToString();
+                return base.ToString() + nameText;
             }
             else
             {
-                return "XmlObject: " + this.Id.ToString();
+                return "XmlObject: " + this.Id.ToString() + nameText;
             }
         }
     }

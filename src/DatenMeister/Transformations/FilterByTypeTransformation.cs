@@ -48,7 +48,7 @@ namespace DatenMeister.Transformations
                 string.IsNullOrEmpty(this.nameOfTypeToFilter))
             {
                 // No filter criteria at all
-                foreach (var obj in this)
+                foreach (var obj in this.source)
                 {
                     var element = obj as IElement;
                     if (element == null && this.typeToFilter == null)

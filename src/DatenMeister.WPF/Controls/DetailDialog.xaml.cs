@@ -135,7 +135,7 @@ namespace DatenMeister.WPF.Controls
             Ensure.That(type != null, "No Type has been set that can be used to create a new object");
 
             var temp = new GenericElement(extent: extent, type: type);
-            viewData = GetView(temp, viewData);
+            viewData = GetView(temp, viewData, collection);
 
             if (viewData == null)
             {
@@ -180,7 +180,20 @@ namespace DatenMeister.WPF.Controls
             return dialog;
         }
 
-        private static IObject GetView(IObject value, IObject viewData)
+        /// <summary>
+        /// Gets the view for a certain object
+        /// </summary>
+        /// <param name="value">Object, for which the view shall be generated</param>
+        /// <param name="viewData">View data, where the information about the 
+        /// textfields and other data elements will be stored. If the view data is existing, 
+        /// it will be directly returned</param>
+        /// <param name="collection">Collection, that will be used, when the element value
+        /// does not return useful elements</param>
+        /// <returns>The new view data. It may be a new one or the modified viewData argument</returns>
+        private static IObject GetView(
+            IObject value, 
+            IObject viewData, 
+            IReflectiveCollection collection = null)
         {
             // If viewdata is already given, then we do not need to find out the correct view data
             if (viewData == null)
@@ -194,7 +207,7 @@ namespace DatenMeister.WPF.Controls
                 else
                 {
                     // Gets the default view for the object
-                    viewData = viewManager.GetDefaultView(value, ViewType.FormView);
+                    viewData = viewManager.GetDefaultView(value, ViewType.FormView, collection);
                     if (viewData == null)
                     {
                         logger.Message("No default view had been given.");
