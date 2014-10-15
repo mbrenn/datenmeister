@@ -156,7 +156,10 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Has to be called, when the dialog for an entity shall be shown
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">Value, for which the dialog shall be shown</param>
+        /// <param name="viewData">Data, which can be used to create the view, 
+        /// if null, the IViewManager will be asked for a type</param>
+        /// <param name="readOnly">true, if a read-only dialog</param>
         public static DetailDialog ShowDialogFor(
             IObject value,
             IObject viewData = null, 
