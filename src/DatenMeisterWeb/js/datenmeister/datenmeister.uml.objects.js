@@ -75,6 +75,37 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         }
         Class.create = create;
 
+        function isAbstract(item) {
+            return item.get('isAbstract');
+        }
+        Class.isAbstract = isAbstract;
+
+        function setAbstract(item, value) {
+            item.set('isAbstract', value);
+        }
+        Class.setAbstract = setAbstract;
+
+        function getOwnedAttribute(item) {
+            return item.get('ownedAttribute');
+        }
+        Class.getOwnedAttribute = getOwnedAttribute;
+
+        function setOwnedAttribute(item, value) {
+            item.set('ownedAttribute', value);
+        }
+        Class.setOwnedAttribute = setOwnedAttribute;
+
+        function pushOwnedAttribute(item, value) {
+            var a = item.get('ownedAttribute');
+            if (a === undefined) {
+                a = new Array();
+            }
+
+            a.push(value);
+            item.set('ownedAttribute', a);
+        }
+        Class.pushOwnedAttribute = pushOwnedAttribute;
+
         function getName(item) {
             return item.get('name');
         }

@@ -71,6 +71,32 @@ export module Class {
     }
 
 
+    export function isAbstract(item: __d__.JsonExtentObject) {
+        return item.get('isAbstract');
+    }
+
+    export function setAbstract(item : __d__.JsonExtentObject, value: any) {
+        item.set('isAbstract', value);
+    }
+
+    export function getOwnedAttribute(item: __d__.JsonExtentObject) {
+        return item.get('ownedAttribute');
+    }
+
+    export function setOwnedAttribute(item : __d__.JsonExtentObject, value: any) {
+        item.set('ownedAttribute', value);
+    }
+
+    export function pushOwnedAttribute(item : __d__.JsonExtentObject, value: any) {
+        var a = <Array<any>> item.get('ownedAttribute');
+        if (a === undefined) {
+            a = new Array<any>();
+        }
+
+        a.push(value);
+        item.set('ownedAttribute', a);
+    }
+
     export function getName(item: __d__.JsonExtentObject) {
         return item.get('name');
     }

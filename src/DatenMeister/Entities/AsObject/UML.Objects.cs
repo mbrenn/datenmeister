@@ -509,6 +509,59 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         #endregion
 
+        public System.Boolean isAbstract()
+        {
+            return isAbstract(this);
+        }
+
+        public void setAbstract(System.Boolean value)
+        {
+            setAbstract(this, value);
+        }
+
+        public static System.Boolean isAbstract(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("isAbstract"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setAbstract(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("isAbstract", value);
+        }
+
+        public System.Collections.Generic.IEnumerable<DatenMeister.IObject> getOwnedAttribute()
+        {
+            return getOwnedAttribute(this);
+        }
+
+        public void setOwnedAttribute(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        {
+            setOwnedAttribute(this, value);
+        }
+
+        public void pushOwnedAttribute(DatenMeister.IObject value)
+        {
+            pushOwnedAttribute(this, value);
+        }
+
+        public static System.Collections.Generic.IEnumerable<DatenMeister.IObject> getOwnedAttribute(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.IObject>(obj.get("ownedAttribute"));
+            return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
+        }
+
+        public static void setOwnedAttribute(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        {
+            obj.set("ownedAttribute", value);
+        }
+
+        public static void pushOwnedAttribute(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("ownedAttribute"));
+            list.Add(value);
+        }
+
         public System.String getName()
         {
             return getName(this);

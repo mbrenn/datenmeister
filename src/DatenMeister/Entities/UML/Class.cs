@@ -12,5 +12,22 @@ namespace DatenMeister.Entities.UML
     /// </summary>
     public class Class : Type
     {
+        /// <summary>
+        /// Gets or sets the value whether the class is abstract
+        /// </summary>
+        public bool isAbstract
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the owned attribute by this class
+        /// </summary>
+        public IList<IObject> ownedAttribute
+        {
+            get;
+            set;
+        }
     }
 }
