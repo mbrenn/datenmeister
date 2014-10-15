@@ -61,3 +61,23 @@ export module Property {
 
 }
 
+export module Class {
+    export var TypeName='Class';
+
+    export function create() {
+        var result = new __d__.JsonExtentObject();
+        result.set('type', 'Class');
+        return result;
+    }
+
+
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
+}
+

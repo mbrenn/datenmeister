@@ -51,7 +51,8 @@ tsUMLFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.um
 umlTypes = [
          DatenMeister.Entities.UML.NamedElement,       
          DatenMeister.Entities.UML.Type,       
-         DatenMeister.Entities.UML.Property ]
+         DatenMeister.Entities.UML.Property,    
+         DatenMeister.Entities.UML.Class ]
 TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Objects.cs"

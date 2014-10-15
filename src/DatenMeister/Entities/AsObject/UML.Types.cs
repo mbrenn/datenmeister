@@ -36,6 +36,13 @@ namespace DatenMeister.Entities.AsObject.Uml
                 extent.Elements().add(Types.Property);
             }
 
+            if(Types.Class == null || true)
+            {
+                Types.Class = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Class, "Class");
+                extent.Elements().add(Types.Class);
+            }
+
             if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)
             {
                 (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
@@ -50,12 +57,15 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public static DatenMeister.IObject Property;
 
+        public static DatenMeister.IObject Class;
+
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
             extent.Mapping.Add(typeof(DatenMeister.Entities.UML.NamedElement), Types.NamedElement);
             extent.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), Types.Type);
             extent.Mapping.Add(typeof(DatenMeister.Entities.UML.Property), Types.Property);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.UML.Class), Types.Class);
         }
 
         static partial void OnInitCompleted();

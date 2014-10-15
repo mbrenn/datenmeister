@@ -134,6 +134,7 @@
     <Compile Include="Entities\FieldInfos\TableView.cs" />
     <Compile Include="Entities\FieldInfos\TextField.cs" />
     <Compile Include="Entities\FieldInfos\View.cs" />
+    <Compile Include="Entities\UML\Class.cs" />
     <Compile Include="Entities\UML\Property.cs" />
     <Compile Include="Entities\UML\Type.cs" />
     <Compile Include="Entities\UML\NamedElement.cs" />
