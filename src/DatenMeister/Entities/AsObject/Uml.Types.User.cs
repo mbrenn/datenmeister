@@ -25,9 +25,10 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         static partial void OnInitCompleted()
         {
-            (Types.Type as GenericElement).setMetaClass(Types.Type);
-            (Types.NamedElement as GenericElement).setMetaClass(Types.Type);
-            (Types.Property as GenericElement).setMetaClass(Types.Type);
+            (Types.Type as GenericElement).setMetaClass(Types.Class);
+            (Types.NamedElement as GenericElement).setMetaClass(Types.Class);
+            (Types.Property as GenericElement).setMetaClass(Types.Class);
+            (Types.Class as GenericElement).setMetaClass(Types.Class);
         }
     }
 

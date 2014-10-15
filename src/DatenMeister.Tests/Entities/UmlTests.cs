@@ -26,6 +26,8 @@ namespace DatenMeister.Tests.Entities
 
             Assert.That(DatenMeister.Entities.AsObject.Uml.Types.Type, Is.Not.Null);
             Assert.That(DatenMeister.Entities.AsObject.Uml.Types.NamedElement, Is.Not.Null);
+            Assert.That(DatenMeister.Entities.AsObject.Uml.Types.Property, Is.Not.Null);
+            Assert.That(DatenMeister.Entities.AsObject.Uml.Types.Class, Is.Not.Null);
 
             // Checks the names
             Assert.That(
@@ -37,17 +39,23 @@ namespace DatenMeister.Tests.Entities
             Assert.That(
                 DatenMeister.Entities.AsObject.Uml.Types.Property.get("name").AsSingle().ToString(),
                 Is.EqualTo("Property"));
+            Assert.That(
+                DatenMeister.Entities.AsObject.Uml.Types.Class.get("name").AsSingle().ToString(),
+                Is.EqualTo("Class"));
 
             // Checks the types
             Assert.That(
                 (DatenMeister.Entities.AsObject.Uml.Types.Type as IElement).getMetaClass(),
-                Is.EqualTo(DatenMeister.Entities.AsObject.Uml.Types.Type));
+                Is.EqualTo(DatenMeister.Entities.AsObject.Uml.Types.Class));
             Assert.That(
                 (DatenMeister.Entities.AsObject.Uml.Types.NamedElement as IElement).getMetaClass(),
-                Is.EqualTo(DatenMeister.Entities.AsObject.Uml.Types.Type));
+                Is.EqualTo(DatenMeister.Entities.AsObject.Uml.Types.Class));
             Assert.That(
                 (DatenMeister.Entities.AsObject.Uml.Types.Property as IElement).getMetaClass(),
-                Is.EqualTo(DatenMeister.Entities.AsObject.Uml.Types.Type));
+                Is.EqualTo(DatenMeister.Entities.AsObject.Uml.Types.Class));
+            Assert.That(
+                (DatenMeister.Entities.AsObject.Uml.Types.Class as IElement).getMetaClass(),
+                Is.EqualTo(DatenMeister.Entities.AsObject.Uml.Types.Class));
         }
 
     }
