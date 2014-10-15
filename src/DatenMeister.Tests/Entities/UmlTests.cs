@@ -34,6 +34,9 @@ namespace DatenMeister.Tests.Entities
             Assert.That(
                 DatenMeister.Entities.AsObject.Uml.Types.NamedElement.get("name").AsSingle().ToString(),
                 Is.EqualTo("NamedElement"));
+            Assert.That(
+                DatenMeister.Entities.AsObject.Uml.Types.Property.get("name").AsSingle().ToString(),
+                Is.EqualTo("Property"));
 
             // Checks the types
             Assert.That(
@@ -41,6 +44,9 @@ namespace DatenMeister.Tests.Entities
                 Is.EqualTo(DatenMeister.Entities.AsObject.Uml.Types.Type));
             Assert.That(
                 (DatenMeister.Entities.AsObject.Uml.Types.NamedElement as IElement).getMetaClass(),
+                Is.EqualTo(DatenMeister.Entities.AsObject.Uml.Types.Type));
+            Assert.That(
+                (DatenMeister.Entities.AsObject.Uml.Types.Property as IElement).getMetaClass(),
                 Is.EqualTo(DatenMeister.Entities.AsObject.Uml.Types.Type));
         }
 

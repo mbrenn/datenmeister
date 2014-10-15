@@ -27,6 +27,7 @@ namespace DatenMeister.Entities.AsObject.Uml
         {
             (Types.Type as GenericElement).setMetaClass(Types.Type);
             (Types.NamedElement as GenericElement).setMetaClass(Types.Type);
+            (Types.Property as GenericElement).setMetaClass(Types.Type);
         }
     }
 

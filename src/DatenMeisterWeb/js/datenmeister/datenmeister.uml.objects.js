@@ -42,5 +42,27 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         Type.setName = setName;
     })(exports.Type || (exports.Type = {}));
     var Type = exports.Type;
+
+    (function (Property) {
+        Property.TypeName = 'Property';
+
+        function create() {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'Property');
+            return result;
+        }
+        Property.create = create;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        Property.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        Property.setName = setName;
+    })(exports.Property || (exports.Property = {}));
+    var Property = exports.Property;
 });
 //# sourceMappingURL=datenmeister.uml.objects.js.map
