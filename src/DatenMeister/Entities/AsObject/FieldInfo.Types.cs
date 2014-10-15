@@ -106,12 +106,539 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.TableView);
             }
 
+
             if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)
             {
                 (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
             }
 
             OnInitCompleted();
+
+            {
+                // Comment.comment
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "comment");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Comment, property);
+            }
+
+            {
+                // Comment.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Comment, property);
+            }
+
+            {
+                // Comment.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Comment, property);
+            }
+
+            {
+                // Comment.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Comment, property);
+            }
+
+            {
+                // Comment.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Comment, property);
+            }
+
+            {
+                // General.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.General, property);
+            }
+
+            {
+                // General.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.General, property);
+            }
+
+            {
+                // General.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.General, property);
+            }
+
+            {
+                // General.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.General, property);
+            }
+
+            {
+                // Checkbox.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Checkbox, property);
+            }
+
+            {
+                // Checkbox.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Checkbox, property);
+            }
+
+            {
+                // Checkbox.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Checkbox, property);
+            }
+
+            {
+                // Checkbox.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Checkbox, property);
+            }
+
+            {
+                // TextField.width
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "width");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
+            }
+
+            {
+                // TextField.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
+            }
+
+            {
+                // TextField.isMultiline
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isMultiline");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
+            }
+
+            {
+                // TextField.isDateTime
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isDateTime");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
+            }
+
+            {
+                // TextField.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
+            }
+
+            {
+                // TextField.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
+            }
+
+            {
+                // TextField.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
+            }
+
+            {
+                // TextField.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
+            }
+
+            {
+                // DatePicker.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.DatePicker, property);
+            }
+
+            {
+                // DatePicker.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.DatePicker, property);
+            }
+
+            {
+                // DatePicker.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.DatePicker, property);
+            }
+
+            {
+                // DatePicker.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.DatePicker, property);
+            }
+
+            {
+                // ActionButton.text
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "text");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ActionButton, property);
+            }
+
+            {
+                // ActionButton.clickUrl
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "clickUrl");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ActionButton, property);
+            }
+
+            {
+                // ReferenceBase.propertyValue
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "propertyValue");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceBase, property);
+            }
+
+            {
+                // ReferenceBase.referenceUrl
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "referenceUrl");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceBase, property);
+            }
+
+            {
+                // ReferenceBase.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceBase, property);
+            }
+
+            {
+                // ReferenceBase.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceBase, property);
+            }
+
+            {
+                // ReferenceBase.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceBase, property);
+            }
+
+            {
+                // ReferenceBase.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceBase, property);
+            }
+
+            {
+                // ReferenceByValue.propertyValue
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "propertyValue");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.referenceUrl
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "referenceUrl");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByRef.propertyValue
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "propertyValue");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByRef, property);
+            }
+
+            {
+                // ReferenceByRef.referenceUrl
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "referenceUrl");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByRef, property);
+            }
+
+            {
+                // ReferenceByRef.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByRef, property);
+            }
+
+            {
+                // ReferenceByRef.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByRef, property);
+            }
+
+            {
+                // ReferenceByRef.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByRef, property);
+            }
+
+            {
+                // ReferenceByRef.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByRef, property);
+            }
+
+            {
+                // MultiReferenceField.propertyValue
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "propertyValue");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.MultiReferenceField, property);
+            }
+
+            {
+                // MultiReferenceField.referenceUrl
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "referenceUrl");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.MultiReferenceField, property);
+            }
+
+            {
+                // MultiReferenceField.tableViewInfo
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "tableViewInfo");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.MultiReferenceField, property);
+            }
+
+            {
+                // MultiReferenceField.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.MultiReferenceField, property);
+            }
+
+            {
+                // MultiReferenceField.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.MultiReferenceField, property);
+            }
+
+            {
+                // MultiReferenceField.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.MultiReferenceField, property);
+            }
+
+            {
+                // MultiReferenceField.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.MultiReferenceField, property);
+            }
+
+            {
+                // View.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.View, property);
+            }
+
+            {
+                // View.fieldInfos
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "fieldInfos");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.View, property);
+            }
+
+            {
+                // View.startInEditMode
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "startInEditMode");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.View, property);
+            }
+
+            {
+                // View.doAutoGenerateByProperties
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "doAutoGenerateByProperties");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.View, property);
+            }
+
+            {
+                // FormView.allowEdit
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "allowEdit");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.FormView, property);
+            }
+
+            {
+                // FormView.allowDelete
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "allowDelete");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.FormView, property);
+            }
+
+            {
+                // FormView.allowNew
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "allowNew");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.FormView, property);
+            }
+
+            {
+                // FormView.showColumnHeaders
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "showColumnHeaders");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.FormView, property);
+            }
+
+            {
+                // FormView.allowNewProperty
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "allowNewProperty");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.FormView, property);
+            }
+
+            {
+                // FormView.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.FormView, property);
+            }
+
+            {
+                // FormView.fieldInfos
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "fieldInfos");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.FormView, property);
+            }
+
+            {
+                // FormView.startInEditMode
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "startInEditMode");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.FormView, property);
+            }
+
+            {
+                // FormView.doAutoGenerateByProperties
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "doAutoGenerateByProperties");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.FormView, property);
+            }
+
+            {
+                // TableView.extentUri
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentUri");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
+            }
+
+            {
+                // TableView.mainType
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "mainType");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
+            }
+
+            {
+                // TableView.typesForCreation
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "typesForCreation");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
+            }
+
+            {
+                // TableView.allowEdit
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "allowEdit");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
+            }
+
+            {
+                // TableView.allowDelete
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "allowDelete");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
+            }
+
+            {
+                // TableView.allowNew
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "allowNew");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
+            }
+
+            {
+                // TableView.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
+            }
+
+            {
+                // TableView.fieldInfos
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "fieldInfos");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
+            }
+
+            {
+                // TableView.startInEditMode
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "startInEditMode");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
+            }
+
+            {
+                // TableView.doAutoGenerateByProperties
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "doAutoGenerateByProperties");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
+            }
+
         }
 
         public static DatenMeister.IObject Comment;

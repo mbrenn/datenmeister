@@ -65,6 +65,7 @@ namespace DatenMeister.Logic.SourceFactory
             assignFunction.AppendLine(EightSpaces + "public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)");
             assignFunction.AppendLine(EightSpaces + "{");
 
+            var propertyAssignments = new StringBuilder();
             foreach (var type in provider.GetTypes())
             {
                 // Creates property for the type
@@ -81,14 +82,29 @@ namespace DatenMeister.Logic.SourceFactory
                 writer.WriteLine(TwelveSpaces + "}");
                 writer.WriteLine();
 
+                // Assigns the properties
+                foreach (var property in provider.GetProperties(type))
+                {
+                    propertyAssignments.AppendLine();
+                    
+                    propertyAssignments.AppendLine(TwelveSpaces + "{");
+                    propertyAssignments.AppendLine(string.Format(SixteenSpaces + "// {0}.{1}", type, property));
+                    propertyAssignments.AppendLine(string.Format(SixteenSpaces + "var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);"));
+                    propertyAssignments.AppendLine(string.Format(SixteenSpaces + "DatenMeister.Entities.AsObject.Uml.Property.setName(property, \"{0}\");", property));
+                    propertyAssignments.AppendLine(string.Format(SixteenSpaces + "DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute({1}.{0}, property);", type, this.className));
+                    propertyAssignments.AppendLine(TwelveSpaces + "}");
+                }
+
                 // Performs the assignment
                 assignFunction.AppendFormat(
                     TwelveSpaces + "extent.Mapping.Add(typeof({0}), {2}.{1});",
                     this.provider.GetFullTypeName(type),
                     type,
                     this.className);
-                assignFunction.AppendLine();
+                assignFunction.AppendLine();                
             }
+
+            writer.WriteLine();
 
             writer.WriteLine(TwelveSpaces + "if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)");
             writer.WriteLine(TwelveSpaces + "{");
@@ -96,6 +112,7 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(TwelveSpaces + "}");
             writer.WriteLine();
             writer.WriteLine(TwelveSpaces + "OnInitCompleted();");
+            writer.WriteLine(propertyAssignments.ToString());
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 
@@ -104,6 +121,7 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(typeProperties.ToString());
             writer.WriteLine(assignFunction.ToString());
             writer.WriteLine(EightSpaces + "static partial void OnInitCompleted();");
+
 
             writer.WriteLine(FourSpaces + "}");
             writer.WriteLine("}");

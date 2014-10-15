@@ -62,6 +62,12 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine("}");
         }
 
+        /// <summary>
+        /// Emits the definition for the complete type. 
+        /// It include the class, the property get and setters and the static access properties
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="typeName"></param>
         private void EmitType(StreamWriter writer, string typeName)
         {
             writer.WriteLine(FourSpaces 
@@ -89,9 +95,9 @@ namespace DatenMeister.Logic.SourceFactory
             // Now write all the properties
             foreach (var propertyName in this.provider.GetProperties(typeName))
             {
-                this.EmitProperty(writer, typeName, propertyName);
+                this.EmitGetSetForProperty(writer, typeName, propertyName);
 
-                this.EmitStaticProperty(writer, typeName, propertyName);
+                this.EmitStaticGetSetForProperty(writer, typeName, propertyName);
             }
 
             // End of class
@@ -166,7 +172,7 @@ namespace DatenMeister.Logic.SourceFactory
         /// <param name="writer">Writer to be used</param>
         /// <param name="typeName">Type to be used</param>
         /// <param name="propertyName">Property to be emitted</param>
-        private void EmitProperty(StreamWriter writer, string typeName, string propertyName)
+        private void EmitGetSetForProperty(StreamWriter writer, string typeName, string propertyName)
         {
             var propertyType = this.provider.GetTypeOfProperty(typeName, propertyName);
             var propertyTypeName = this.GetPropertyTypeName(propertyType);
@@ -230,7 +236,7 @@ namespace DatenMeister.Logic.SourceFactory
         /// <param name="writer">Writer to be used</param>
         /// <param name="typeName">Type to be used</param>
         /// <param name="propertyName">Property to be emitted</param>
-        private void EmitStaticProperty(StreamWriter writer, string typeName, string propertyName)
+        private void EmitStaticGetSetForProperty(StreamWriter writer, string typeName, string propertyName)
         {
             var propertyType = this.provider.GetTypeOfProperty(typeName, propertyName);
             var propertyTypeName = this.GetPropertyTypeName(propertyType);
@@ -345,6 +351,8 @@ namespace DatenMeister.Logic.SourceFactory
         /// <returns>Typename as being used in C# file</returns>
         public string GetPropertyTypeName(Type type)
         {
+            // Type of string needs to be skipped, it is an enumeration, but we do not
+            // want to offer strings as enums
             if (type != typeof(string))
             {
                 // Ok, we might have an enumeration, which is a list, a collection or any other type

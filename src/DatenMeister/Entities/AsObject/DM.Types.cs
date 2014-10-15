@@ -22,12 +22,35 @@ namespace DatenMeister.Entities.AsObject.DM
                 extent.Elements().add(Types.RecentProject);
             }
 
+
             if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)
             {
                 (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
             }
 
             OnInitCompleted();
+
+            {
+                // RecentProject.filePath
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "filePath");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
+            }
+
+            {
+                // RecentProject.created
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "created");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
+            }
+
+            {
+                // RecentProject.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
+            }
+
         }
 
         public static DatenMeister.IObject RecentProject;

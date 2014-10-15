@@ -43,12 +43,56 @@ namespace DatenMeister.Entities.AsObject.Uml
                 extent.Elements().add(Types.Class);
             }
 
+
             if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)
             {
                 (extent as DatenMeister.DataProvider.DotNet.DotNetExtent).AddDefaultMappings();
             }
 
             OnInitCompleted();
+
+            {
+                // NamedElement.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.NamedElement, property);
+            }
+
+            {
+                // Type.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Type, property);
+            }
+
+            {
+                // Property.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Property, property);
+            }
+
+            {
+                // Class.isAbstract
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isAbstract");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Class, property);
+            }
+
+            {
+                // Class.ownedAttribute
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "ownedAttribute");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Class, property);
+            }
+
+            {
+                // Class.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Class, property);
+            }
+
         }
 
         public static DatenMeister.IObject NamedElement;
