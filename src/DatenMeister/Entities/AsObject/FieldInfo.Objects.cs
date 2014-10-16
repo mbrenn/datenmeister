@@ -2447,6 +2447,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("fieldInfos", value);
         }
 
+        public static void pushFieldInfo(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
+            list.Add(value);
+        }
+
         public static void pushFieldInfo(DatenMeister.IObject obj, System.Object value)
         {
             var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
@@ -2757,6 +2763,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void setFieldInfos(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<System.Object> value)
         {
             obj.set("fieldInfos", value);
+        }
+
+        public static void pushFieldInfo(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
+            list.Add(value);
         }
 
         public static void pushFieldInfo(DatenMeister.IObject obj, System.Object value)
@@ -3101,6 +3113,12 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void setFieldInfos(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<System.Object> value)
         {
             obj.set("fieldInfos", value);
+        }
+
+        public static void pushFieldInfo(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("fieldInfos"));
+            list.Add(value);
         }
 
         public static void pushFieldInfo(DatenMeister.IObject obj, System.Object value)

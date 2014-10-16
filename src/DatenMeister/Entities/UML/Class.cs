@@ -24,7 +24,7 @@ namespace DatenMeister.Entities.UML
         /// <summary>
         /// Gets or sets the owned attribute by this class
         /// </summary>
-        public IList<IObject> ownedAttribute
+        public IList<Property> ownedAttribute
         {
             get;
             set;

@@ -316,29 +316,45 @@ namespace DatenMeister.Logic.SourceFactory
             // Emits push method
             if (this.HasPushMethod(propertyType))
             {
-                var typeOfListProperty = propertyType.GenericTypeArguments.First();
-                var typeOfListPropertyName = this.GetPropertyTypeName(typeOfListProperty);
+                if (propertyType != typeof(IList<IObject>))
+                {
+                    this.CreatePushMethod(writer, propertyName, typeof(IList<IObject>));
+                }
 
-                writer.WriteLine(
-                    string.Format(
-                        EightSpaces + "public static void {0}(DatenMeister.IObject obj, {1} value)",
-                        this.GetPushMethodName(propertyName, propertyType),
-                        typeOfListProperty));
-                writer.WriteLine(EightSpaces + "{");
-                writer.WriteLine(
-                    string.Format(
-                        TwelveSpaces + "var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get(\"{0}\"));",
-                        propertyName));
-                writer.WriteLine(TwelveSpaces + "list.Add(value);");
-                // If we already receive a reflective collection, than the resetting is not necessary
-                /*writer.WriteLine(
-                    string.Format(
-                        TwelveSpaces + "obj.set(\"{0}\", list);",
-                        propertyName));*/
-
-                writer.WriteLine(EightSpaces + "}");
-                writer.WriteLine();
+                this.CreatePushMethod(writer, propertyName, propertyType);
             }
+        }
+
+        /// <summary>
+        /// Creates the push method for the given property type and property name
+        /// </summary>
+        /// <param name="writer">Writer to be used</param>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="propertyType">Tpye of the property, that can be added to the list</param>
+        private void CreatePushMethod(StreamWriter writer, string propertyName, Type propertyType)
+        {
+            var typeOfListProperty = propertyType.GenericTypeArguments.First();
+            var typeOfListPropertyName = this.GetPropertyTypeName(typeOfListProperty);
+
+            writer.WriteLine(
+                string.Format(
+                    EightSpaces + "public static void {0}(DatenMeister.IObject obj, {1} value)",
+                    this.GetPushMethodName(propertyName, propertyType),
+                    typeOfListProperty));
+            writer.WriteLine(EightSpaces + "{");
+            writer.WriteLine(
+                string.Format(
+                    TwelveSpaces + "var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get(\"{0}\"));",
+                    propertyName));
+            writer.WriteLine(TwelveSpaces + "list.Add(value);");
+            // If we already receive a reflective collection, than the resetting is not necessary
+            /*writer.WriteLine(
+                string.Format(
+                    TwelveSpaces + "obj.set(\"{0}\", list);",
+                    propertyName));*/
+
+            writer.WriteLine(EightSpaces + "}");
+            writer.WriteLine();
         }
 
         /// <summary>

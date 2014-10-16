@@ -13,7 +13,6 @@ namespace DatenMeister
     /// </summary>
     public static class ObjectConversion
     {
-
         /// <summary>
         /// Returns the information whether the given object might be true or false
         /// </summary>

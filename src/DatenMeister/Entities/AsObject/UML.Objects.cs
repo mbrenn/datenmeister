@@ -530,33 +530,39 @@ namespace DatenMeister.Entities.AsObject.Uml
             obj.set("isAbstract", value);
         }
 
-        public System.Collections.Generic.IEnumerable<DatenMeister.IObject> getOwnedAttribute()
+        public System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property> getOwnedAttribute()
         {
             return getOwnedAttribute(this);
         }
 
-        public void setOwnedAttribute(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        public void setOwnedAttribute(System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property> value)
         {
             setOwnedAttribute(this, value);
         }
 
-        public void pushOwnedAttribute(DatenMeister.IObject value)
+        public void pushOwnedAttribute(DatenMeister.Entities.UML.Property value)
         {
             pushOwnedAttribute(this, value);
         }
 
-        public static System.Collections.Generic.IEnumerable<DatenMeister.IObject> getOwnedAttribute(DatenMeister.IObject obj)
+        public static System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property> getOwnedAttribute(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.IObject>(obj.get("ownedAttribute"));
-            return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
+            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.Entities.UML.Property>(obj.get("ownedAttribute"));
+            return (result is System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property>);
         }
 
-        public static void setOwnedAttribute(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        public static void setOwnedAttribute(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property> value)
         {
             obj.set("ownedAttribute", value);
         }
 
         public static void pushOwnedAttribute(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("ownedAttribute"));
+            list.Add(value);
+        }
+
+        public static void pushOwnedAttribute(DatenMeister.IObject obj, DatenMeister.Entities.UML.Property value)
         {
             var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("ownedAttribute"));
             list.Add(value);

@@ -80,7 +80,15 @@ namespace DatenMeister.DataProvider.DotNet
                     }
 
                     // Got the interface, now create the associated List
-                    var genericListType = typeof(List<>).MakeGenericType(interfaceType.GetGenericArguments().First());
+                    var listElementType = interfaceType.GetGenericArguments().First();
+                    if ( listElementType == typeof(IObject))
+                    {
+                        // if the list element type is IObject, return objects, since the DotNetObject
+                        // will convert IObjects to objects
+                        listElementType = typeof(object);
+                    }
+
+                    var genericListType = typeof(List<>).MakeGenericType(listElementType);
                     newList = Activator.CreateInstance(genericListType) as IList;
                 }
                 else
