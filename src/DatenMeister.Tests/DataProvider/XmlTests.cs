@@ -617,6 +617,25 @@ namespace DatenMeister.Tests.DataProvider
         }
 
         [Test]
+        public void TestNoPropertiesForNotSetItemsIssue99()
+        {
+            var extent = CreateRawTestExtent();
+            var factory = new XmlFactory(extent);
+
+            var createdObject = factory.create(TypePerson) as XmlObject;
+            Assert.That(createdObject, Is.Not.Null);
+            extent.Elements().add(createdObject);
+
+            createdObject.set("valueNotSet", ObjectHelper.NotSet);
+            createdObject.set("valueSet", ObjectHelper.Null);
+            var xmlNode = createdObject.Node;
+            Assert.That(xmlNode.Attributes().Any(x=>x.Name == "value123"), Is.False);
+            Assert.That(xmlNode.Elements().Any(x => x.Name == "value123"), Is.False);
+            Assert.That(xmlNode.Attributes().Any(x => x.Name == "valueSet"), Is.True);
+            Assert.That(xmlNode.Elements().Any(x => x.Name == "valueSet"), Is.True);
+        }
+
+        [Test]
         public void TestSetAndGetAllOfTypedElement()
         {
             var extent = CreateRawTestExtent();
@@ -626,7 +645,7 @@ namespace DatenMeister.Tests.DataProvider
             createdObject.set("name", "yes");
 
             var all = createdObject.getAll();
-            Assert.That(all.Count(), Is.EqualTo(2));        
+            Assert.That(all.Count(), Is.EqualTo(2));
         }
 
         [Test]
