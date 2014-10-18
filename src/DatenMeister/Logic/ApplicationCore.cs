@@ -177,7 +177,7 @@ namespace DatenMeister.Logic
             Injection.Application.Bind<IPoolResolver>().To<PoolResolver>();
 
             // Initializes the default type resolver
-            Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>();
+            Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>().InSingletonScope();
 
             if (!onlyBootStrap)
             {

@@ -18,8 +18,25 @@ namespace DatenMeister.Logic.TypeResolver
     /// </summary>
     public class TypeResolverImpl : ITypeResolver
     {
+        /// <summary>
+        /// Defines the cache for the type resolver. It just works, when 
+        /// the object is singleton or something like that
+        /// </summary>
+        private Dictionary<string, IObject> cache = new Dictionary<string, IObject>();
+
+        /// <summary>
+        /// Returned type by name
+        /// </summary>
+        /// <param name="typeName">Name of the type</param>
+        /// <returns>Found type</returns>
         public IObject GetType(string typeName)
         {
+            IObject result;
+            if (this.cache.TryGetValue(typeName, out result))
+            {
+                return result;
+            }
+
             // Gets the property
             var pool = Injection.Application.Get<IPool>();
             var type = pool.Instances.SelectMany(x => x.Extent.Elements()
@@ -29,6 +46,7 @@ namespace DatenMeister.Logic.TypeResolver
 
             if (type != null)
             {
+                this.cache[typeName] = type;
                 return type;
             }
 
