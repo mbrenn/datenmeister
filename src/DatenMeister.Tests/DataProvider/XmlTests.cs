@@ -627,10 +627,23 @@ namespace DatenMeister.Tests.DataProvider
             extent.Elements().add(createdObject);
 
             createdObject.set("valueNotSet", ObjectHelper.NotSet);
-            createdObject.set("valueSet", ObjectHelper.Null);
             var xmlNode = createdObject.Node;
             Assert.That(xmlNode.Attributes().Any(x=>x.Name == "value123"), Is.False);
             Assert.That(xmlNode.Elements().Any(x => x.Name == "value123"), Is.False);
+        }
+
+        [Test]
+        public void TestSettingOfNull()
+        {
+            var extent = CreateRawTestExtent();
+            var factory = new XmlFactory(extent);
+
+            var createdObject = factory.create(TypePerson) as XmlObject;
+            Assert.That(createdObject, Is.Not.Null);
+            extent.Elements().add(createdObject);
+
+            createdObject.set("valueSet", ObjectHelper.Null);
+            var xmlNode = createdObject.Node;
             Assert.That(xmlNode.Attributes().Any(x => x.Name == "valueSet"), Is.True);
             Assert.That(xmlNode.Elements().Any(x => x.Name == "valueSet"), Is.True);
         }
