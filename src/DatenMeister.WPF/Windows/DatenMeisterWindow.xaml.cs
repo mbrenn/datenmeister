@@ -302,14 +302,14 @@ namespace DatenMeister.WPF.Windows
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition());
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition());
             var textField = new TextBlock();
+            textField.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            textField.Margin = new Thickness(0, 0, 0, 2);
             headerGrid.Children.Add(textField);
             textField.Text = name;
             var button = new Button();
-            button.Content = "X";
-            button.FontSize = 10;
-            button.FontWeight = FontWeights.Bold;
-            button.Width = 16;
-            button.Height = 16;
+            button.Template = this.Resources["Cross"] as ControlTemplate;
+            button.Width = 12;
+            button.Height = 12;
             button.Margin = new Thickness(8, 0, 0, 0);
             button.Click += (x, y) =>
             {

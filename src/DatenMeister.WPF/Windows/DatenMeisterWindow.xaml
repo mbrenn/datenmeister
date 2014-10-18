@@ -5,6 +5,13 @@
         WindowStartupLocation="CenterScreen"
         Title="Unnamed Application" Height="350" Width="525" Closing="Window_Closing" 
         Icon="../resources/icons.ico" KeyDown="Window_KeyDown">
+    <RibbonWindow.Resources>
+        <ControlTemplate x:Key="Cross">
+            <Viewbox>
+                <Path Width="23.3774" Height="23.46" Stretch="Uniform" Fill="Black" Data="F1 M 4.70432,0L 0.0480347,4.77802L 7.00842,11.6812L 0,18.7292L 4.70432,23.46L 11.6647,16.412L 18.6252,23.46L 23.3774,18.7774L 16.369,11.6812L 23.3294,4.77802L 18.6252,0L 11.6647,6.9986L 4.70432,0 Z "/>
+            </Viewbox>
+        </ControlTemplate>
+    </RibbonWindow.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
