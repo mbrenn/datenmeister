@@ -230,7 +230,11 @@ namespace DatenMeister
             }
             else
             {
-                yield return resolveFunc(value);
+                // Single object, if single object is NotSet, skip it
+                if (value != ObjectHelper.NotSet)
+                {
+                    yield return resolveFunc(value);
+                }
             }
         }
 
@@ -406,6 +410,17 @@ namespace DatenMeister
                 return true;
             }
 
+            var type = checkObject.GetType();
+            return IsNativeByType(type);
+        }
+
+        /// <summary>
+        /// Checks, if a certain type is a native .Net object
+        /// </summary>
+        /// <param name="type">Type to be considered</param>
+        /// <returns>true, if the object type is native</returns>
+        public static bool IsNativeByType(Type type)
+        {
             // Initializes list of primitiveTypes if necessary
             if (primitiveTypes.Count == 0)
             {
@@ -425,7 +440,7 @@ namespace DatenMeister
             }
 
             // Checks, if type of given object is in the list above
-            return primitiveTypes.Contains(checkObject.GetType());
+            return primitiveTypes.Contains(type);
         }
 
         /// <summary>

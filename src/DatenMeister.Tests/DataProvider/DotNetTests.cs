@@ -71,6 +71,23 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(valueObject.get("TextValue").AsSingle(), Is.InstanceOf<string>());
             Assert.That((string)valueObject.get("TextValue").AsSingle(), Is.EqualTo("no Test"));
         }
+        [Test]
+        public void TestPropertiesGlobalExtentObject()
+        {
+            ApplicationCore.PerformBinding();
+
+            var extent = new GlobalDotNetExtent();
+            var value = new TestClass();
+            value.NumberValue = 2;
+            value.TextValue = "Test";
+            var valueObject = extent.CreateObject(value) as IElement;
+            Assert.That(valueObject, Is.Not.Null);
+
+            var enumeration = valueObject.getMetaClass().get("ownedAttribute").AsEnumeration().ToList();
+            Assert.That(enumeration.Count, Is.EqualTo(2));
+            Assert.That(enumeration[0].AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("TextValue"));
+            Assert.That(enumeration[1].AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("NumberValue"));
+        }
 
         [Test]
         public void TestGlobalExtentReflectiveSequence()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,10 +83,19 @@ namespace DatenMeister.DataProvider.DotNet
 
                 mapping = extent.Mapping.Add(type, typeObject);
 
-                // Now go through the properties and do it recursively
+                // Now go through the properties 
                 foreach (var property in type.GetProperties())
                 {
-                    AddTypeMapping(extent, property.PropertyType);
+                    if (!Extensions.IsNativeByType(property.PropertyType))
+                    {
+                        // Add the type of the property recursively
+                        AddTypeMapping(extent, property.PropertyType);
+                    }
+
+                    // Add the property to the type
+                    var propertyObject = new GenericElement(null, type.FullName, DatenMeister.Entities.AsObject.Uml.Types.Type);
+                    propertyObject.set("name", property.Name.ToString());
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(typeObject, propertyObject);
                 }
             }
 
