@@ -140,7 +140,7 @@ namespace DatenMeister.WPF.Controls
 
                     // Creates the value element for the form
                     var fieldInfoAsElement = fieldInfo as IElement;
-                    var wpfElementCreator = WPFElementMapping.Map(fieldInfoAsElement);
+                    var wpfElementCreator = WPFElementMapping.MapForForm(fieldInfoAsElement);
                     var wpfElement = wpfElementCreator.GenerateElement(this.configuration.DetailObject, fieldInfo, this);
                     if (wpfElement != null)
                     {

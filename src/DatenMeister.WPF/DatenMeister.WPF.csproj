@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="Controls\DetailOpenEventArgs.cs" />
     <Compile Include="Controls\GuiElements\BaseWpfDropDown.cs" />
+    <Compile Include="Controls\GuiElements\Elements\DataDefaultColumn.cs" />
     <Compile Include="Controls\GuiElements\ElementCacheEntry.cs" />
     <Compile Include="Controls\EntityFormControl.xaml.cs">
       <DependentUpon>EntityFormControl.xaml</DependentUpon>
@@ -64,6 +65,7 @@
     <Compile Include="Controls\EntityTableControl.xaml.cs">
       <DependentUpon>EntityTableControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GuiElements\Elements\GenericColumn.cs" />
     <Compile Include="Controls\GuiElements\Elements\WpfMultiReferenceFieldElement.xaml.cs">
       <DependentUpon>WpfMultiReferenceFieldElement.xaml</DependentUpon>
     </Compile>

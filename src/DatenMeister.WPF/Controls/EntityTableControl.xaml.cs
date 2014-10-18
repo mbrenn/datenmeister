@@ -7,6 +7,8 @@ using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Transformations;
+using DatenMeister.WPF.Controls.GuiElements;
+using DatenMeister.WPF.Controls.GuiElements.Elements;
 using DatenMeister.WPF.Helper;
 using Ninject;
 using System;
@@ -84,7 +86,7 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public EntityTableControl()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         /// <summary>
@@ -201,9 +203,10 @@ namespace DatenMeister.WPF.Controls
                     var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
                     var name = fieldInfoObj.getName();
                     var binding = fieldInfoObj.getBinding();
-                    var column = new TableDataGridTextColumn();
+                    var column = WPFElementMapping.MapForTable(fieldInfo);
                     column.Header = name;
                     column.Binding = new Binding("[" + binding + "]");
+                    //column.CellTemplateSelector = new TableCellTemplateSelector(binding);
                     column.AssociatedViewColumn = fieldInfo;
 
                     var width = fieldInfoObj.getColumnWidth();
@@ -554,7 +557,7 @@ namespace DatenMeister.WPF.Controls
                     var selectedCell = this.gridContent.CurrentCell;
                     if (selectedCell != null)
                     {
-                        var column = selectedCell.Column as TableDataGridTextColumn;
+                        var column = selectedCell.Column as GenericColumn;
                         var name = column.AssociatedViewColumn.get("name").AsSingle().ToString();
                         dialog.SelectFieldWithName(name);
                     }
@@ -618,18 +621,6 @@ namespace DatenMeister.WPF.Controls
             this.ErrorMessage.Visibility = System.Windows.Visibility.Visible;
             this.DataTable.Visibility = System.Windows.Visibility.Collapsed;
             this.ErrorMessageContent.Text = exc.ToString();
-        }
-
-        /// <summary>
-        /// Adds the associated view column to the text grid
-        /// </summary>
-        private class TableDataGridTextColumn : DataGridTextColumn
-        {
-            public IObject AssociatedViewColumn
-            {
-                get;
-                set;
-            }
         }
     }
 }

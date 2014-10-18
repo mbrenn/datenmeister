@@ -46,5 +46,15 @@ namespace DatenMeister.Entities.FieldInfos
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the information whether the content is a hyperlink
+        /// which will be opened, when the user clicks on it
+        /// </summary>
+        public bool isHyperlink
+        {
+            get;
+            set;
+        }
     }
 }

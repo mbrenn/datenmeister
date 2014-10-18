@@ -1,8 +1,10 @@
-﻿using System;
+﻿using DatenMeister.WPF.Controls.GuiElements.Elements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
@@ -16,7 +18,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// </summary>
         /// <param name="viewElement">Element, which gets transformed</param>
         /// <returns>Transformed element</returns>
-        public static IWPFElementGenerator Map(IElement viewElement)
+        public static IWPFElementGenerator MapForForm(IElement viewElement)
         {
             var metaClass = viewElement.getMetaClass();
             if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.TextField)
@@ -60,6 +62,16 @@ namespace DatenMeister.WPF.Controls.GuiElements
             }
 
             throw new NotImplementedException(metaClass.get("name") + " is not a known WPF Element");
+        }
+
+        /// <summary>
+        /// Performs the mapping for a certain table
+        /// </summary>
+        /// <param name="viewElement">View element being used to show the columns</param>
+        /// <returns>Returned column information</returns>
+        public static GenericColumn MapForTable(IObject viewElement)
+        {
+            return new DataDefaultColumn();
         }
     }
 }
