@@ -289,6 +289,98 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     })(exports.TextField || (exports.TextField = {}));
     var TextField = exports.TextField;
 
+    (function (HyperLinkColumn) {
+        HyperLinkColumn.TypeName = 'HyperLinkColumn';
+
+        function create() {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'HyperLinkColumn');
+            return result;
+        }
+        HyperLinkColumn.create = create;
+
+        function getWidth(item) {
+            return item.get('width');
+        }
+        HyperLinkColumn.getWidth = getWidth;
+
+        function setWidth(item, value) {
+            item.set('width', value);
+        }
+        HyperLinkColumn.setWidth = setWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        HyperLinkColumn.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        HyperLinkColumn.setHeight = setHeight;
+
+        function isMultiline(item) {
+            return item.get('isMultiline');
+        }
+        HyperLinkColumn.isMultiline = isMultiline;
+
+        function setMultiline(item, value) {
+            item.set('isMultiline', value);
+        }
+        HyperLinkColumn.setMultiline = setMultiline;
+
+        function isDateTime(item) {
+            return item.get('isDateTime');
+        }
+        HyperLinkColumn.isDateTime = isDateTime;
+
+        function setDateTime(item, value) {
+            item.set('isDateTime', value);
+        }
+        HyperLinkColumn.setDateTime = setDateTime;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        HyperLinkColumn.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        HyperLinkColumn.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        HyperLinkColumn.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        HyperLinkColumn.setBinding = setBinding;
+
+        function isReadOnly(item) {
+            return item.get('isReadOnly');
+        }
+        HyperLinkColumn.isReadOnly = isReadOnly;
+
+        function setReadOnly(item, value) {
+            item.set('isReadOnly', value);
+        }
+        HyperLinkColumn.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        HyperLinkColumn.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        HyperLinkColumn.setColumnWidth = setColumnWidth;
+    })(exports.HyperLinkColumn || (exports.HyperLinkColumn = {}));
+    var HyperLinkColumn = exports.HyperLinkColumn;
+
     (function (DatePicker) {
         DatePicker.TypeName = 'DatePicker';
 

@@ -43,6 +43,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.TextField);
             }
 
+            if(Types.HyperLinkColumn == null || true)
+            {
+                Types.HyperLinkColumn = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.HyperLinkColumn, "HyperLinkColumn");
+                extent.Elements().add(Types.HyperLinkColumn);
+            }
+
             if(Types.DatePicker == null || true)
             {
                 Types.DatePicker = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
@@ -259,6 +266,62 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
+            }
+
+            {
+                // HyperLinkColumn.width
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "width");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
+            }
+
+            {
+                // HyperLinkColumn.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
+            }
+
+            {
+                // HyperLinkColumn.isMultiline
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isMultiline");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
+            }
+
+            {
+                // HyperLinkColumn.isDateTime
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isDateTime");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
+            }
+
+            {
+                // HyperLinkColumn.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
+            }
+
+            {
+                // HyperLinkColumn.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
+            }
+
+            {
+                // HyperLinkColumn.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
+            }
+
+            {
+                // HyperLinkColumn.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
             }
 
             {
@@ -649,6 +712,8 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject TextField;
 
+        public static DatenMeister.IObject HyperLinkColumn;
+
         public static DatenMeister.IObject DatePicker;
 
         public static DatenMeister.IObject ActionButton;
@@ -674,6 +739,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.General), Types.General);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.Checkbox), Types.Checkbox);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TextField), Types.TextField);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.HyperLinkColumn), Types.HyperLinkColumn);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.DatePicker), Types.DatePicker);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ActionButton), Types.ActionButton);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceBase), Types.ReferenceBase);

@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="Controls\DetailOpenEventArgs.cs" />
     <Compile Include="Controls\GuiElements\BaseWpfDropDown.cs" />
+    <Compile Include="Controls\GuiElements\Elements\HyperLinkColumn.cs" />
     <Compile Include="Controls\GuiElements\Elements\DataDefaultColumn.cs" />
     <Compile Include="Controls\GuiElements\ElementCacheEntry.cs" />
     <Compile Include="Controls\EntityFormControl.xaml.cs">

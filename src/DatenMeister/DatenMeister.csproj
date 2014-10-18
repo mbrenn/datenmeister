@@ -127,6 +127,7 @@
     <Compile Include="Entities\FieldInfos\DatePicker.cs" />
     <Compile Include="Entities\FieldInfos\FormView.cs" />
     <Compile Include="Entities\FieldInfos\General.cs" />
+    <Compile Include="Entities\FieldInfos\HyperLinkColumn.cs" />
     <Compile Include="Entities\FieldInfos\MultiReferenceField.cs" />
     <Compile Include="Entities\FieldInfos\ReferenceBase.cs" />
     <Compile Include="Entities\FieldInfos\ReferenceByRef.cs" />

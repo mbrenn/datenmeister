@@ -71,6 +71,16 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <returns>Returned column information</returns>
         public static GenericColumn MapForTable(IObject viewElement)
         {
+            var element = viewElement as IElement;
+            if ( element != null )
+            {
+                var metaClass = element.getMetaClass();
+                if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.HyperLinkColumn)
+                {
+                    return new HyperLinkColumn();
+                }
+            }
+
             return new DataDefaultColumn();
         }
     }

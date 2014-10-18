@@ -45,9 +45,9 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Name");
             fieldInfos.add(textField);
 
-            textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
-            DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "filePath");
-            DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Storage Path");
+            textField = DatenMeister.Entities.AsObject.FieldInfo.HyperLinkColumn.create(viewFactory);
+            DatenMeister.Entities.AsObject.FieldInfo.HyperLinkColumn.setBinding(textField, "filePath");
+            DatenMeister.Entities.AsObject.FieldInfo.HyperLinkColumn.setName(textField, "Storage Path");
             fieldInfos.add(textField);
 
             viewExtent.Elements().Insert(0, wnd.Core.ViewRecentObjects);
