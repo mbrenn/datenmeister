@@ -35,9 +35,9 @@ namespace DatenMeister.Logic.Views
         /// </summary>
         /// <param name="viewDefinition">View Definition that shall be filled out</param>
         /// <param name="typeInfo">Type, which shall be included</param>
-        public static void AutoGenerateViewDefinition(IObject viewDefinition, Type typeInfo)
+        public static bool AutoGenerateViewDefinition(IObject viewDefinition, Type typeInfo)
         {
-            AutoGenerateViewDefinition(viewDefinition, new DotNetTypeProvider(new[] { typeInfo }));
+            return AutoGenerateViewDefinition(viewDefinition, new DotNetTypeProvider(new[] { typeInfo }));
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace DatenMeister.Logic.Views
         /// </summary>
         /// <param name="viewDefinition">View Definition that shall be filled out</param>
         /// <param name="provider">Provider to be used</param>
-        public static void AutoGenerateViewDefinition(IObject viewDefinition, ITypeInfoProvider provider)
+        public static bool AutoGenerateViewDefinition(IObject viewDefinition, ITypeInfoProvider provider)
         {
             throw new NotImplementedException();
         }
@@ -57,9 +57,9 @@ namespace DatenMeister.Logic.Views
         /// </summary>
         /// <param name="extent">Extent, being used</param>
         /// <param name="viewInfo">View Information, where the objects will be stored</param>
-        public static void AutoGenerateViewDefinition(IObject value, IObject viewInfo, bool orderByName = false)
+        public static bool AutoGenerateViewDefinition(IObject value, IObject viewInfo, bool orderByName = false)
         {
-            AutoGenerateViewDefinition(new object[] { value }, viewInfo, orderByName);
+            return AutoGenerateViewDefinition(new object[] { value }, viewInfo, orderByName);
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace DatenMeister.Logic.Views
         /// </summary>
         /// <param name="extent">Extent, being used</param>
         /// <param name="viewInfo">View Information, where the objects will be stored</param>
-        public static void AutoGenerateViewDefinition(IURIExtent extent, IObject viewInfo, bool orderByName = false)
+        public static bool AutoGenerateViewDefinition(IURIExtent extent, IObject viewInfo, bool orderByName = false)
         {
-            AutoGenerateViewDefinition(extent.Elements(), viewInfo, orderByName);
+            return AutoGenerateViewDefinition(extent.Elements(), viewInfo, orderByName);
         }
 
         /// <summary>
@@ -79,8 +79,11 @@ namespace DatenMeister.Logic.Views
         /// </summary>
         /// <param name="extent">Extent, being used</param>
         /// <param name="viewInfo">View Information, where the objects will be stored</param>
-        public static void AutoGenerateViewDefinition(IEnumerable<object> collection, IObject viewInfo, bool orderByName = false)
+        /// <returns>true, when a useful view generation could be performed. For empty
+        /// views, a false will be returned</returns>
+        public static bool AutoGenerateViewDefinition(IEnumerable<object> collection, IObject viewInfo, bool orderByName = false)
         {
+            var result = false;
             var factory = Factory.GetFor(viewInfo);
             var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
             var info = collection.GetConsolidatedInformation();
@@ -89,6 +92,7 @@ namespace DatenMeister.Logic.Views
             if (info.TypeCount > 1)
             {
                 fieldInfos.add(AddTextField(factory, "Type", ObjectDictionaryForView.TypeBinding));
+                result = true;
             }
 
             // Gets the propertynames
@@ -102,13 +106,17 @@ namespace DatenMeister.Logic.Views
             foreach (var name in propertyNames)
             {
                 fieldInfos.add(AddTextField(factory, name));
+                result = true;
             }
 
             // Gets the extentUri, if necessary
             if (info.ExtentCount > 1)
             {
                 fieldInfos.add(AddTextField(factory, "ExtentUri", ObjectDictionaryForView.ExtentUriBinding));
+                result = true;
             }
+
+            return result;
         }
 
         /// <summary>
