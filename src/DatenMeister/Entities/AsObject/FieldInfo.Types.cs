@@ -157,6 +157,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
 
             {
+                // Comment.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Comment, property);
+            }
+
+            {
                 // General.name
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
@@ -181,6 +188,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 // General.columnWidth
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.General, property);
+            }
+
+            {
+                // General.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.General, property);
             }
 
@@ -213,16 +227,16 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
 
             {
-                // TextField.width
+                // Checkbox.height
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "width");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Checkbox, property);
             }
 
             {
-                // TextField.height
+                // TextField.width
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "width");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
             }
 
@@ -269,16 +283,16 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
 
             {
-                // HyperLinkColumn.width
+                // TextField.height
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "width");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TextField, property);
             }
 
             {
-                // HyperLinkColumn.height
+                // HyperLinkColumn.width
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "width");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
             }
 
@@ -325,6 +339,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
 
             {
+                // HyperLinkColumn.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.HyperLinkColumn, property);
+            }
+
+            {
                 // DatePicker.name
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
@@ -349,6 +370,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 // DatePicker.columnWidth
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.DatePicker, property);
+            }
+
+            {
+                // DatePicker.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.DatePicker, property);
             }
 
@@ -409,6 +437,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
 
             {
+                // ReferenceBase.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceBase, property);
+            }
+
+            {
                 // ReferenceByValue.propertyValue
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "propertyValue");
@@ -451,6 +486,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
 
             {
+                // ReferenceByValue.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
                 // ReferenceByRef.propertyValue
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "propertyValue");
@@ -489,6 +531,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 // ReferenceByRef.columnWidth
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByRef, property);
+            }
+
+            {
+                // ReferenceByRef.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByRef, property);
             }
 
@@ -538,6 +587,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 // MultiReferenceField.columnWidth
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.MultiReferenceField, property);
+            }
+
+            {
+                // MultiReferenceField.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.MultiReferenceField, property);
             }
 

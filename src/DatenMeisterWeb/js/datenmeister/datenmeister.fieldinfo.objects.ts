@@ -59,6 +59,14 @@ export module Comment {
         item.set('columnWidth', value);
     }
 
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
+    }
+
 }
 
 export module General {
@@ -109,6 +117,14 @@ export module General {
 
     export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
         item.set('columnWidth', value);
+    }
+
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
     }
 
 }
@@ -163,6 +179,14 @@ export module Checkbox {
         item.set('columnWidth', value);
     }
 
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
+    }
+
 }
 
 export module TextField {
@@ -191,14 +215,6 @@ export module TextField {
         item.set('width', value);
     }
 
-    export function getHeight(item: __d__.JsonExtentObject) {
-        return item.get('height');
-    }
-
-    export function setHeight(item : __d__.JsonExtentObject, value: any) {
-        item.set('height', value);
-    }
-
     export function isMultiline(item: __d__.JsonExtentObject) {
         return item.get('isMultiline');
     }
@@ -247,14 +263,30 @@ export module TextField {
         item.set('columnWidth', value);
     }
 
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
+    }
+
 }
 
 export module HyperLinkColumn {
     export var TypeName='HyperLinkColumn';
 
-    export function create() {
+    export function create(name?: any, binding?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'HyperLinkColumn');
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
+        }
+
         return result;
     }
 
@@ -267,14 +299,6 @@ export module HyperLinkColumn {
         item.set('width', value);
     }
 
-    export function getHeight(item: __d__.JsonExtentObject) {
-        return item.get('height');
-    }
-
-    export function setHeight(item : __d__.JsonExtentObject, value: any) {
-        item.set('height', value);
-    }
-
     export function isMultiline(item: __d__.JsonExtentObject) {
         return item.get('isMultiline');
     }
@@ -321,6 +345,14 @@ export module HyperLinkColumn {
 
     export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
         item.set('columnWidth', value);
+    }
+
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
     }
 
 }
@@ -373,6 +405,14 @@ export module DatePicker {
 
     export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
         item.set('columnWidth', value);
+    }
+
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
     }
 
 }
@@ -487,6 +527,14 @@ export module ReferenceBase {
         item.set('columnWidth', value);
     }
 
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
+    }
+
 }
 
 export module ReferenceByValue {
@@ -563,6 +611,14 @@ export module ReferenceByValue {
         item.set('columnWidth', value);
     }
 
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
+    }
+
 }
 
 export module ReferenceByRef {
@@ -637,6 +693,14 @@ export module ReferenceByRef {
 
     export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
         item.set('columnWidth', value);
+    }
+
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
     }
 
 }
@@ -721,6 +785,14 @@ export module MultiReferenceField {
 
     export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
         item.set('columnWidth', value);
+    }
+
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
     }
 
 }

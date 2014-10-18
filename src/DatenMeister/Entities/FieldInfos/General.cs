@@ -47,6 +47,17 @@ namespace DatenMeister.Entities.FieldInfos
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the height of the column. This value is only valid for form views
+        /// 0 means an automatic column.
+        /// -1 means maximum height as appropriate
+        /// </summary>
+        public int height
+        {
+            get;
+            set;
+        }
     }
 
 }

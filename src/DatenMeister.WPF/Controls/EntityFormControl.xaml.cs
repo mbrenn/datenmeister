@@ -110,13 +110,23 @@ namespace DatenMeister.WPF.Controls
 
             if (this.configuration.FormViewInfo != null)
             {
+                // Creates the form 
                 var fieldInfos = this.configuration.GetFormViewInfoAsFormView().getFieldInfos();
+                this.formGrid.RowDefinitions.Clear();
 
                 var currentRow = 0;
+
+                // when one height is a Star-Height (auto height), this value 
+                // will be set to true. If still false at end, the last row will be set to autoheight
+                var hadOneStarHeight = false; 
+
                 // Goes through each element
                 foreach (var fieldInfo in fieldInfos.Cast<IObject>())
                 {
+                    // Gets fieldinformation as object
                     var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
+
+                    /////////////////////////////////////////////////
                     // Creates the key element for the form
                     var name = (fieldInfoObj.getName() ?? string.Empty).ToString();
                     if (string.IsNullOrEmpty(name))
@@ -135,32 +145,58 @@ namespace DatenMeister.WPF.Controls
 
                     Grid.SetRow(nameLabel, currentRow);
 
-                    formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
-                    formGrid.Children.Add(nameLabel);
-
+                    /////////////////////////////////////////////////
                     // Creates the value element for the form
                     var fieldInfoAsElement = fieldInfo as IElement;
                     var wpfElementCreator = WPFElementMapping.MapForForm(fieldInfoAsElement);
-                    var wpfElement = wpfElementCreator.GenerateElement(this.configuration.DetailObject, fieldInfo, this);
+                    var wpfElement = wpfElementCreator.GenerateElement(this.configuration.DetailObject, fieldInfo, this);                    
                     if (wpfElement != null)
                     {
-                        if (wpfElement is FrameworkElement)
+                        var border = new Border()
                         {
-                            (wpfElement as FrameworkElement).Margin = new Thickness(10, 5, 10, 5);
-                        }
+                            Child = wpfElement,
+                            //BorderBrush = Brushes.Black,
+                            //BorderThickness = new Thickness(2),
+                            Margin = new Thickness(10,5,10,5)
+                        };
 
-                        Grid.SetRow(wpfElement, currentRow);
-                        Grid.SetColumn(wpfElement, 1);
-                        formGrid.Children.Add(wpfElement);
+                        Grid.SetRow(border, currentRow);
+                        Grid.SetColumn(border, 1);
+                        formGrid.Children.Add(border);
 
+                        // Adds the information into the storage
                         this.wpfElements.Add(new ElementCacheEntry(wpfElementCreator, wpfElement, fieldInfo));
                     }
+
+                    /////////////////////////////////////////////////
+                    // Defines the height
+                    var height = fieldInfoObj.getHeight();
+                    if (height == 0)
+                    {
+                        this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+                    }
+                    else if (height < 0)
+                    {
+                        this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(-height, GridUnitType.Star) });
+                        hadOneStarHeight = true;
+                    }
+                    else
+                    {
+                        this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(height, GridUnitType.Pixel) });
+                    }
+
+                    formGrid.Children.Add(nameLabel);
 
                     currentRow++;
                 }
 
-                // Add last row to make the scrolling ok
-                formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
+                if (!hadOneStarHeight)
+                {
+                    // Add last row to make the scrolling ok
+                    formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
+                }
+
+                //formGrid.Background = Brushes.Red;
             }
 
             // Focuses first element

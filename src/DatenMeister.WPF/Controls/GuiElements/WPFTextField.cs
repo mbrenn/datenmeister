@@ -17,6 +17,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var textBox = new System.Windows.Controls.TextBox();
             textBox.FontSize = 16;
             textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
+            var height = textFieldObj.getHeight();
 
             if (textFieldObj.isMultiline())
             {
@@ -24,7 +25,10 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 textBox.AcceptsReturn = true;
                 textBox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
                 textBox.TextWrapping = System.Windows.TextWrapping.Wrap;
-                textBox.Height = 100;
+                if (height >= 0)
+                {
+                    textBox.Height = 100;
+                }
             }
 
             if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)

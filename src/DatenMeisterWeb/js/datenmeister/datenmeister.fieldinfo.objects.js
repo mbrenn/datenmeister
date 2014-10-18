@@ -66,6 +66,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('columnWidth', value);
         }
         Comment.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        Comment.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        Comment.setHeight = setHeight;
     })(exports.Comment || (exports.Comment = {}));
     var Comment = exports.Comment;
 
@@ -126,6 +136,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('columnWidth', value);
         }
         General.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        General.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        General.setHeight = setHeight;
     })(exports.General || (exports.General = {}));
     var General = exports.General;
 
@@ -186,6 +206,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('columnWidth', value);
         }
         Checkbox.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        Checkbox.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        Checkbox.setHeight = setHeight;
     })(exports.Checkbox || (exports.Checkbox = {}));
     var Checkbox = exports.Checkbox;
 
@@ -216,16 +246,6 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('width', value);
         }
         TextField.setWidth = setWidth;
-
-        function getHeight(item) {
-            return item.get('height');
-        }
-        TextField.getHeight = getHeight;
-
-        function setHeight(item, value) {
-            item.set('height', value);
-        }
-        TextField.setHeight = setHeight;
 
         function isMultiline(item) {
             return item.get('isMultiline');
@@ -286,15 +306,33 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('columnWidth', value);
         }
         TextField.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        TextField.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        TextField.setHeight = setHeight;
     })(exports.TextField || (exports.TextField = {}));
     var TextField = exports.TextField;
 
     (function (HyperLinkColumn) {
         HyperLinkColumn.TypeName = 'HyperLinkColumn';
 
-        function create() {
+        function create(name, binding) {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'HyperLinkColumn');
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
+            }
+
             return result;
         }
         HyperLinkColumn.create = create;
@@ -308,16 +346,6 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('width', value);
         }
         HyperLinkColumn.setWidth = setWidth;
-
-        function getHeight(item) {
-            return item.get('height');
-        }
-        HyperLinkColumn.getHeight = getHeight;
-
-        function setHeight(item, value) {
-            item.set('height', value);
-        }
-        HyperLinkColumn.setHeight = setHeight;
 
         function isMultiline(item) {
             return item.get('isMultiline');
@@ -378,6 +406,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('columnWidth', value);
         }
         HyperLinkColumn.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        HyperLinkColumn.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        HyperLinkColumn.setHeight = setHeight;
     })(exports.HyperLinkColumn || (exports.HyperLinkColumn = {}));
     var HyperLinkColumn = exports.HyperLinkColumn;
 
@@ -438,6 +476,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('columnWidth', value);
         }
         DatePicker.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        DatePicker.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        DatePicker.setHeight = setHeight;
     })(exports.DatePicker || (exports.DatePicker = {}));
     var DatePicker = exports.DatePicker;
 
@@ -566,6 +614,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('columnWidth', value);
         }
         ReferenceBase.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        ReferenceBase.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        ReferenceBase.setHeight = setHeight;
     })(exports.ReferenceBase || (exports.ReferenceBase = {}));
     var ReferenceBase = exports.ReferenceBase;
 
@@ -654,6 +712,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('columnWidth', value);
         }
         ReferenceByValue.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        ReferenceByValue.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        ReferenceByValue.setHeight = setHeight;
     })(exports.ReferenceByValue || (exports.ReferenceByValue = {}));
     var ReferenceByValue = exports.ReferenceByValue;
 
@@ -742,6 +810,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('columnWidth', value);
         }
         ReferenceByRef.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        ReferenceByRef.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        ReferenceByRef.setHeight = setHeight;
     })(exports.ReferenceByRef || (exports.ReferenceByRef = {}));
     var ReferenceByRef = exports.ReferenceByRef;
 
@@ -840,6 +918,16 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
             item.set('columnWidth', value);
         }
         MultiReferenceField.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        MultiReferenceField.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        MultiReferenceField.setHeight = setHeight;
     })(exports.MultiReferenceField || (exports.MultiReferenceField = {}));
     var MultiReferenceField = exports.MultiReferenceField;
 

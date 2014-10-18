@@ -222,6 +222,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("columnWidth", value);
         }
 
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
@@ -423,6 +444,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
         {
             obj.set("columnWidth", value);
+        }
+
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
         }
 
     }
@@ -628,6 +670,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("columnWidth", value);
         }
 
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
@@ -768,27 +831,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("width", value);
         }
 
-        public System.Int32 getHeight()
-        {
-            return getHeight(this);
-        }
-
-        public void setHeight(System.Int32 value)
-        {
-            setHeight(this, value);
-        }
-
-        public static System.Int32 getHeight(DatenMeister.IObject obj)
-        {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
-            return DatenMeister.ObjectConversion.ToInt32(result);
-        }
-
-        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
-        {
-            obj.set("height", value);
-        }
-
         public System.Boolean isMultiline()
         {
             return isMultiline(this);
@@ -915,6 +957,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("columnWidth", value);
         }
 
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
@@ -925,6 +988,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public HyperLinkColumn(DatenMeister.IObject obj)
         {
             this.obj = obj;
+        }
+
+        public HyperLinkColumn(DatenMeister.IObject obj, object name, object binding)
+            : this(obj)
+        {
+            this.set("name", name);
+            this.set("binding", binding);
         }
 
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
@@ -1048,27 +1118,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("width", value);
         }
 
-        public System.Int32 getHeight()
-        {
-            return getHeight(this);
-        }
-
-        public void setHeight(System.Int32 value)
-        {
-            setHeight(this, value);
-        }
-
-        public static System.Int32 getHeight(DatenMeister.IObject obj)
-        {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
-            return DatenMeister.ObjectConversion.ToInt32(result);
-        }
-
-        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
-        {
-            obj.set("height", value);
-        }
-
         public System.Boolean isMultiline()
         {
             return isMultiline(this);
@@ -1193,6 +1242,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
         {
             obj.set("columnWidth", value);
+        }
+
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
         }
 
     }
@@ -1396,6 +1466,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
         {
             obj.set("columnWidth", value);
+        }
+
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
         }
 
     }
@@ -1806,6 +1897,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("columnWidth", value);
         }
 
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
@@ -2053,6 +2165,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("columnWidth", value);
         }
 
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
@@ -2298,6 +2431,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
         {
             obj.set("columnWidth", value);
+        }
+
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
         }
 
     }
@@ -2566,6 +2720,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
         {
             obj.set("columnWidth", value);
+        }
+
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
         }
 
     }

@@ -22,12 +22,6 @@ namespace DatenMeister.Entities.FieldInfos
             set;
         }
 
-        public int height
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// Gets or sets the value whether the text box shall be shown as a multiline item. 
         /// </summary>
