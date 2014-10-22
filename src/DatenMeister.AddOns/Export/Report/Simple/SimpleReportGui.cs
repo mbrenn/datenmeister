@@ -1,5 +1,7 @@
-﻿using DatenMeister.Pool;
+﻿using DatenMeister.AddOns.IconRepository;
+using DatenMeister.Pool;
 using DatenMeister.WPF.Windows;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +22,7 @@ namespace DatenMeister.AddOns.Export.Report.Simple
         {
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_SimpleReport;
-            menuItem.LargeImageSource = AddOnHelper.LoadIcon("x-office-document.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("x-office-document.png");
             menuItem.Click += (x, y) =>
                 {
                     var gui = new SimpleReportGui();

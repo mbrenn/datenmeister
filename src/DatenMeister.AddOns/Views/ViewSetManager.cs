@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.AddOns.IconRepository;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.Entities.FieldInfos;
 using DatenMeister.Logic;
@@ -29,7 +30,7 @@ namespace DatenMeister.AddOns.Views
         {
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_ViewManager;
-            menuItem.LargeImageSource = AddOnHelper.LoadIcon("emblem-package.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("emblem-package.png");
             menuItem.Click += (x, y) =>
             {
                 var pool = PoolResolver.GetDefaultPool();
@@ -66,7 +67,7 @@ namespace DatenMeister.AddOns.Views
 
             var assignAuto = new RibbonButton();
             assignAuto.Label = Localization_DM_Addons.Menu_ViewManagerAssignTypes;
-            assignAuto.LargeImageSource = AddOnHelper.LoadIcon("emblem-package.png");
+            assignAuto.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("emblem-package.png");
             assignAuto.Click += (x, y) =>
             {
                 var viewManager = Injection.Application.Get<IViewManager>() as DefaultViewManager;

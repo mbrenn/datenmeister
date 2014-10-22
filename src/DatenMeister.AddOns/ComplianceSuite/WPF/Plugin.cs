@@ -1,6 +1,8 @@
-﻿using DatenMeister.DataProvider;
+﻿using DatenMeister.AddOns.IconRepository;
+using DatenMeister.DataProvider;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Windows;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,7 @@ namespace DatenMeister.AddOns.ComplianceSuite.WPF
         {
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_ComplianceSuite;
-            menuItem.LargeImageSource = AddOnHelper.LoadIcon("x-office-document.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("x-office-document.png");
             menuItem.Click += (x, y) =>
                 {
                     var dialog = new SelectSuite();

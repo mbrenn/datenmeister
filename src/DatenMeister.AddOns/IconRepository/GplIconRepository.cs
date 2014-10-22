@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace DatenMeister.AddOns
+namespace DatenMeister.AddOns.IconRepository
 {
-    static class AddOnHelper
+    /// <summary>
+    /// Defines the icon repository for the gpl released icons (Gnome)
+    /// </summary>
+    public class GplIconRepository : IIconRepository
     {
-        public static BitmapImage LoadIcon(string iconFilename)
+        public System.Windows.Media.ImageSource GetIcon(string iconFilename)
         {
             var image = new BitmapImage();
             image.BeginInit();

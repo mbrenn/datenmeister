@@ -1,6 +1,8 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.AddOns.IconRepository;
 using DatenMeister.Pool;
 using DatenMeister.WPF.Windows;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,7 +25,7 @@ namespace DatenMeister.AddOns.Export.Excel
 
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_ExcelExport;
-            menuItem.LargeImageSource = AddOnHelper.LoadIcon("x-office-spreadsheet.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("x-office-spreadsheet.png");
 
             menuItem.Click += (x, y) =>
                 {
