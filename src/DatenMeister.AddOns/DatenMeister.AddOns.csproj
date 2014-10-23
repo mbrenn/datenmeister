@@ -80,9 +80,6 @@
     <Compile Include="Export\Report\Simple\SimpleReport.cs" />
     <Compile Include="Export\Report\Simple\SimpleReportGui.cs" />
     <Compile Include="Export\Report\Simple\SimpleReportSettings.cs" />
-    <Compile Include="IconRepository\GplIconRepository.cs" />
-    <Compile Include="IconRepository\IIconRepository.cs" />
-    <Compile Include="IconRepository\Integrate.cs" />
     <Compile Include="Localization_DM_Addons.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

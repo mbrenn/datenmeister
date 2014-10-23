@@ -96,6 +96,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Localization_DatenMeister_WPF.resx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\IconRepository\GplIconRepository.cs" />
+    <Compile Include="Modules\IconRepository\IIconRepository.cs" />
+    <Compile Include="Modules\IconRepository\Integrate.cs" />
     <Compile Include="Modules\RecentFiles\RecentFileIntegration.cs" />
     <Compile Include="Modules\WindowUserExceptionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

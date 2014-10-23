@@ -1,11 +1,11 @@
 ﻿using BurnSystems.Test;
-using DatenMeister.AddOns.IconRepository;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.Entities.FieldInfos;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
 using DatenMeister.WPF.Controls;
+using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
 using Ninject;
 using System;

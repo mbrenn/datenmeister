@@ -1,6 +1,6 @@
 ﻿using BurnSystems.Test;
-using DatenMeister.AddOns.IconRepository;
 using DatenMeister.Pool;
+using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
 using Ninject;
 using System;

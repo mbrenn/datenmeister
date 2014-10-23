@@ -1,6 +1,6 @@
-﻿using DatenMeister.AddOns.IconRepository;
-using DatenMeister.DataProvider;
+﻿using DatenMeister.DataProvider;
 using DatenMeister.WPF.Controls;
+using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
 using Ninject;
 using System;

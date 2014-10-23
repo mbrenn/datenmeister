@@ -23,23 +23,23 @@
         <Ribbon x:Name="menuMain" ShowQuickAccessToolBarOnTop="False" >
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
-                    <RibbonApplicationMenuItem Header="New" Click="New_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-new.png" />
-                    <RibbonApplicationMenuItem Header="Load..." Click="Load_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-open.png" x:Name="menuOpenFiles" />
-                    <RibbonApplicationMenuItem Header="Recent Files" Click="Load_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-open.png" x:Name="menuRecentFiles" />
-                    <RibbonApplicationMenuItem Header="Save" Click="Save_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-save.png" />
-                    <RibbonApplicationMenuItem Header="Save As..." Click="SaveAs_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-save-as.png" />
-                    <RibbonApplicationMenuItem Header="Export as Xml..." Click="ExportAsXml_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/emblem-downloads.png" />
+                    <RibbonApplicationMenuItem x:Name="MenuFileNew" Header="New" Click="New_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-new.png" />
+                    <RibbonApplicationMenuItem x:Name="MenuFileOpen" Header="Load..." Click="Load_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-open.png" />
+                    <RibbonApplicationMenuItem x:Name="MenuFileRecentFiles" Header="Recent Files" Click="Load_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-open.png" />
+                    <RibbonApplicationMenuItem x:Name="MenuFileSave" Header="Save" Click="Save_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-save.png" />
+                    <RibbonApplicationMenuItem x:Name="MenuFileSaveAs" Header="Save As..." Click="SaveAs_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/document-save-as.png" />
+                    <RibbonApplicationMenuItem x:Name="MenuFileExportAsXml" Header="Export as Xml..." Click="ExportAsXml_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/emblem-downloads.png" />
                     <RibbonSeparator />
-                    <RibbonApplicationMenuItem Header="About (Licenses and Thanks to)..." Click="About_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/dialog-question.png" />
+                    <RibbonApplicationMenuItem x:Name="MenuFileAbout" Header="About (Licenses and Thanks to)..." Click="About_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/dialog-question.png" />
                     <RibbonSeparator />
-                    <RibbonApplicationMenuItem Header="Exit" Click="Exit_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/application-exit.png" />
+                    <RibbonApplicationMenuItem x:Name="MenuFileExit" Header="Exit" Click="Exit_Click" ImageSource="/DatenMeister.WPF;component/resources/icons/application-exit.png" />
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
-            <RibbonTab Header="Export">
+            <!--<RibbonTab Header="Export">
                 <RibbonGroup>
                     <RibbonButton Label="Export as Xml..." Click="ExportAsXml_Click" SmallImageSource="/DatenMeister.WPF;component/resources/icons/emblem-downloads.48.png" LargeImageSource="../resources/icons/emblem-downloads.48.png" />
                 </RibbonGroup>
-            </RibbonTab>
+            </RibbonTab>-->
         </Ribbon>
         <TabControl Grid.Row="1" Grid.ColumnSpan="2" x:Name="tabMain" FontSize="16">
         </TabControl>

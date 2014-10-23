@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatenMeister.AddOns.IconRepository
+namespace DatenMeister.WPF.Modules.IconRepository
 {
     /// <summary>
     /// Integrates the icon repository
