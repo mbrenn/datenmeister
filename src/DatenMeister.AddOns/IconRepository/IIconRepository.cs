@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using BurnSystems.License;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace DatenMeister.AddOns.IconRepository
     /// <summary>
     /// Single source to retrieve the icons for the project
     /// </summary>
+    [NonGPLInterface]
     public interface IIconRepository
     {
         /// <summary>
