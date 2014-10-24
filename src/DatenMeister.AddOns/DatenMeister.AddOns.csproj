@@ -114,9 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Export\Report\Resources\SimpleReport_Template.html" />
-    <Resource Include="resources\icons\emblem-package.png" />
-    <Resource Include="resources\icons\x-office-document.png" />
-    <Resource Include="resources\icons\x-office-spreadsheet.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="ComplianceSuite\WPF\SelectSuite.xaml">

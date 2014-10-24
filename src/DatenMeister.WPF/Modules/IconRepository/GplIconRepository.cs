@@ -26,8 +26,13 @@ namespace DatenMeister.WPF.Modules.IconRepository
         static GplIconRepository()
         {
             nameToFilename["show-extents"] = "emblem-documents.png";
-            nameToFilename["spreadsheet"] = "x-soffice-spreadsheet.48.png";
+            nameToFilename["spreadsheet"] = "x-office-spreadsheet.48.png";
             nameToFilename["report-export"] = "x-office-document.png";
+
+            nameToFilename["compliancesuite"] = "emblem-package.png";
+            nameToFilename["viewmanager"] = "emblem-package.png";
+            nameToFilename["viewmanager-assigntypes"] = "emblem-package.png";
+            nameToFilename["typemanager"] = "emblem-package.png";
         }
 
         /// <summary>
@@ -46,7 +51,7 @@ namespace DatenMeister.WPF.Modules.IconRepository
                     var image = new BitmapImage();
                     image.BeginInit();
                     image.UriSource =
-                                new Uri("pack://application:,,,/DatenMeister.AddOns;component/resources/icons/" + result);
+                                new Uri("pack://application:,,,/DatenMeister.WPF;component/resources/icons/" + result);
                     image.EndInit();
                     return image;
                 }
