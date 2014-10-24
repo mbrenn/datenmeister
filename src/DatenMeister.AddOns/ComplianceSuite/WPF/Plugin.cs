@@ -21,7 +21,7 @@ namespace DatenMeister.AddOns.ComplianceSuite.WPF
         {
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_ComplianceSuite;
-            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("x-office-document.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("compliancesuite");
             menuItem.Click += (x, y) =>
                 {
                     var dialog = new SelectSuite();

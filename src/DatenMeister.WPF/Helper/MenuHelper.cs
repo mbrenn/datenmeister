@@ -6,6 +6,7 @@ using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
+using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
@@ -39,7 +40,7 @@ namespace DatenMeister.WPF.Helper
 
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DatenMeister_WPF.Menu_ViewExtents;
-            menuItem.LargeImageSource = LoadIcon("emblem-documents.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("show-extents");
 
             menuItem.Click += (x, y) =>
             {
@@ -87,16 +88,6 @@ namespace DatenMeister.WPF.Helper
             };
 
             window.AddMenuEntry(Localization_DatenMeister_WPF.Menu_View, menuItem);
-        }
-
-        public static BitmapImage LoadIcon(string iconFilename)
-        {
-            var image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource =
-                        new Uri("pack://application:,,,/DatenMeister.WPF;component/resources/icons/" + iconFilename);
-            image.EndInit();
-            return image;
         }
     }
 }

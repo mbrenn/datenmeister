@@ -22,7 +22,7 @@ namespace DatenMeister.AddOns.Export.Report.Simple
         {
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_SimpleReport;
-            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("x-office-document.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("report-export");
             menuItem.Click += (x, y) =>
                 {
                     var gui = new SimpleReportGui();

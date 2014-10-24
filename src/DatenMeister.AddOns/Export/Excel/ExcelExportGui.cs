@@ -25,7 +25,7 @@ namespace DatenMeister.AddOns.Export.Excel
 
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_ExcelExport;
-            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("x-office-spreadsheet.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("spreadsheet");
 
             menuItem.Click += (x, y) =>
                 {

@@ -29,7 +29,7 @@ namespace DatenMeister.AddOns.Views
         {            
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_TypeManager;
-            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("emblem-package.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("typemanager");
             menuItem.Click += (x, y) =>
                 {
                     var pool = PoolResolver.GetDefaultPool();

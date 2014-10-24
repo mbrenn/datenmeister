@@ -25,7 +25,9 @@ namespace DatenMeister.WPF.Modules.IconRepository
 
         static GplIconRepository()
         {
-
+            nameToFilename["show-extents"] = "emblem-documents.png";
+            nameToFilename["spreadsheet"] = "x-soffice-spreadsheet.48.png";
+            nameToFilename["report-export"] = "x-office-document.png";
         }
 
         /// <summary>
@@ -36,19 +38,27 @@ namespace DatenMeister.WPF.Modules.IconRepository
         /// in the repository</returns>
         public System.Windows.Media.ImageSource GetIcon(string name)
         {
-            string result;
-            if (nameToFilename.TryGetValue(name, out result))
+            try
             {
-                var image = new BitmapImage();
-                image.BeginInit();
-                image.UriSource =
-                            new Uri("pack://application:,,,/DatenMeister.AddOns;component/resources/icons/" + result);
-                image.EndInit();
-                return image;
-            }
+                string result;
+                if (nameToFilename.TryGetValue(name, out result))
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.UriSource =
+                                new Uri("pack://application:,,,/DatenMeister.AddOns;component/resources/icons/" + result);
+                    image.EndInit();
+                    return image;
+                }
 
-            logger.Message("Unknown GPL icon: " + name);
-            return null;
+                logger.Message("Unknown GPL icon: " + name);
+                return null;
+            }
+            catch (Exception exc)
+            {
+                logger.Fail("Error during loading of " + name + ": " + exc.Message);
+                return null;
+            }
         }
     }
 }
