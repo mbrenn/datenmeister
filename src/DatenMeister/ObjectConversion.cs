@@ -39,6 +39,12 @@ namespace DatenMeister
                 return ((int)value) != 0;
             }
 
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null)
+            {
+                return ToBoolean(valueAsUnspecified.AsSingle());
+            }
+
             return false;
         }
 
@@ -61,6 +67,12 @@ namespace DatenMeister
                 {
                     return result;
                 }
+            }
+
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null)
+            {
+                return ToInt32(valueAsUnspecified.AsSingle());
             }
 
             return 0;
@@ -94,6 +106,12 @@ namespace DatenMeister
                 return null;
             }
 
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null)
+            {
+                return ToDateTime(valueAsUnspecified.AsSingle());
+            }
+
             return null;
         }
 
@@ -114,7 +132,56 @@ namespace DatenMeister
                 return (value as IFormattable).ToString(null, CultureInfo.InvariantCulture);
             }
 
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null)
+            {
+                return ToString(valueAsUnspecified.AsSingle());
+            }
+
             return value.ToString();
+        }
+
+        /// <summary>
+        /// Converts the object to the target type
+        /// </summary>
+        /// <param name="value">Value to be converted</param>
+        /// <param name="targetType">Type, to which the target shall be converted</param>
+        /// <returns>The converted type</returns>
+        public static object ConvertTo(object value, Type targetType)
+        {
+
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null)
+            {
+                return ConvertTo(valueAsUnspecified.AsSingle(), targetType);
+            }
+
+            if (targetType == typeof(Int32))
+            {
+                return ToInt32(value);
+            }
+
+            if (targetType == typeof(String))
+            {
+                return ToString(value);
+            }
+
+            if (targetType == typeof(Boolean))
+            {
+                return ToBoolean(value);
+            }
+
+            if (targetType == typeof(DateTime))
+            {
+                return ToDateTime(targetType);
+            }
+
+            if(targetType.IsAssignableFrom(value.GetType()))
+            {
+                return value;
+            }
+
+            return Convert.ChangeType(value, targetType);
         }
     }
 }

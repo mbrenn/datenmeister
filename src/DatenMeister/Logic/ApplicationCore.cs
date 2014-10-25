@@ -5,6 +5,7 @@ using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
+using DatenMeister.Logic.MethodProvider;
 using DatenMeister.Logic.TypeResolver;
 using DatenMeister.Pool;
 using DatenMeister.Transformations;
@@ -178,6 +179,9 @@ namespace DatenMeister.Logic
 
             // Initializes the default type resolver
             Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>().InSingletonScope();
+
+            // Initializes the Method provider
+            Injection.Application.Bind<IMethodProvider>().To<SimpleMethodProvider>().InSingletonScope();
 
             if (!onlyBootStrap)
             {
