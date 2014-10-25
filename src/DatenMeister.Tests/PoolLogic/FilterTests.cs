@@ -1,4 +1,5 @@
 ﻿using BurnSystems.ObjectActivation;
+using DatenMeister.DataProvider;
 using DatenMeister.Logic;
 using DatenMeister.Transformations;
 using NUnit.Framework;
@@ -55,6 +56,25 @@ namespace DatenMeister.Tests.PoolLogic
 
             filtered = database.ProjectExtent.Elements().FilterByExtentType(ExtentType.Data);
             Assert.That(filtered.Count(), Is.EqualTo(TestDatabase.TotalElements));
+        }
+
+        [Test]
+        public void TestMakeUnique()
+        {
+            var extent = new GenericExtent("dm:///test");
+            var obj1 = new GenericObject();
+            var obj2 = new GenericObject(); 
+            var obj3 = new GenericObject();
+
+            extent.Elements().Add(obj1);
+            extent.Elements().Add(obj1);
+            extent.Elements().Add(obj2);
+            extent.Elements().Add(obj3);
+            extent.Elements().Add(obj3);
+
+            Assert.That(extent.Elements().Count(), Is.EqualTo(5));
+
+            Assert.That(extent.Elements().MakeUnique().Count(), Is.EqualTo(3));
         }
     }
 }
