@@ -38,7 +38,7 @@ namespace DatenMeister.WPF.Controls
             var pool = Injection.Application.Get<IPool>();
 
             var allTypes =
-                new AllItemsReflectiveCollection(pool)
+                new AllItemsReflectiveCollection(pool, ExtentType.Type)
                 .FilterByExtentType(extentType)
                 .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
 

@@ -115,15 +115,6 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show Extents.
-        /// </summary>
-        internal static string Menu_ViewExtents {
-            get {
-                return ResourceManager.GetString("Menu_ViewExtents", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No edit is possible, until the object is stored. .
         /// </summary>
         internal static string MultiReference_NoEditPossible {

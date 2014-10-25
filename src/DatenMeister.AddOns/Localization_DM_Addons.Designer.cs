@@ -153,6 +153,15 @@ namespace DatenMeister.AddOns {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Extents.
+        /// </summary>
+        internal static string Menu_ViewExtents {
+            get {
+                return ResourceManager.GetString("Menu_ViewExtents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View Manager.
         /// </summary>
         internal static string Menu_ViewManager {
@@ -186,6 +195,7 @@ namespace DatenMeister.AddOns {
         ///    &lt;title&gt;
         ///      Export of DatenMeister
         ///    &lt;/title&gt;
+        ///    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;/&gt;
         ///    &lt;style type=&quot;text/css&quot;&gt;
         ///      body {
         ///        font-family: Arial, Helvetica;
@@ -203,11 +213,7 @@ namespace DatenMeister.AddOns {
         ///
         ///      th {
         ///        border: 1px solid black;
-        ///        padding: 4px 10px 4px 10px;
-        ///        vertical-align: top;
-        ///      }
-        ///
-        ///      br { [rest of string was truncated]&quot;;.
+        ///        paddin [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SimpleReport_Template {
             get {

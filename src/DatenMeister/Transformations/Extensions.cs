@@ -17,6 +17,11 @@ namespace DatenMeister.Transformations
             return new RecurseObjectTransformation(collection);
         }
 
+        public static IReflectiveCollection MakeUnique(this IReflectiveCollection collection)
+        {
+            return new MakeUniqueTransformation(collection);
+        }
+
         public static IReflectiveCollection FilterByType(this IReflectiveCollection collection, IObject type)
         {
             return new FilterByTypeTransformation(collection, type);

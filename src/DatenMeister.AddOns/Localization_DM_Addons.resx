@@ -149,6 +149,9 @@
   <data name="Menu_TypeManager" xml:space="preserve">
     <value>Type Manager</value>
   </data>
+  <data name="Menu_ViewExtents" xml:space="preserve">
+    <value>Show Extents</value>
+  </data>
   <data name="Menu_ViewManager" xml:space="preserve">
     <value>View Manager</value>
   </data>

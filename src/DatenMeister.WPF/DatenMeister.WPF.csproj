@@ -90,7 +90,6 @@
     <Compile Include="Controls\FormLayoutConfiguration.cs" />
     <Compile Include="Controls\TableLayoutConfiguration.cs" />
     <Compile Include="Helper\DataGridHelper.cs" />
-    <Compile Include="Helper\MenuHelper.cs" />
     <Compile Include="Localization_DatenMeister_WPF.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

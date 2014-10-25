@@ -397,20 +397,36 @@ namespace DatenMeister.WPF.Controls
             // Tries to fiendout the extent type
             var extentType = ExtentType.Type;
             var mainType = TableView.getMainType(this.Configuration.TableViewInfo);
-            var instance = pool.GetInstance(mainType.Extent);
-            if (instance != null)
+
+            if (mainType != null)
             {
-                extentType = instance.ExtentType;
+                var instance = pool.GetInstance(mainType.Extent);
+                if (instance != null)
+                {
+                    extentType = instance.ExtentType;
+                }
             }
 
             // Shows the dialog
-            if (SelectTypeOfNewObjectDialog.ShowNewOfGenericTypeDialog(
+            var newItem = SelectTypeOfNewObjectDialog.ShowNewOfGenericTypeDialog(
                     this.Configuration.ElementsFactory(pool),
-                    extentType)
-                != null)
+                    extentType);
+            if (newItem != null)
             {
                 // Only, if a new item has been created the view needs to be reupdated
                 this.RefreshItems();
+
+                // If item was created, open the detail form
+
+                var dialog = DetailDialog.ShowDialogFor(
+                    newItem,
+                    null,
+                    false);
+
+                if (dialog != null)
+                {
+                    dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+                }
             }
         }
 

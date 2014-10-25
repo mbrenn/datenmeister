@@ -19,17 +19,14 @@ using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Media.Imaging;
 
-namespace DatenMeister.WPF.Helper
+namespace DatenMeister.AddOns.Views
 {
-    /// <summary>
-    /// Defines some menu helper, which can be used for some default entries
-    /// </summary>
-    public static class MenuHelper
+    public static class AllExtentView
     {
         /// <summary>
         /// Stores the logger
         /// </summary>
-        private static ILog logger = new ClassLogger(typeof(MenuHelper));
+        private static ILog logger = new ClassLogger(typeof(AllExtentView));
 
         /// <summary>
         /// Adds the view, that the user can be 
@@ -37,9 +34,8 @@ namespace DatenMeister.WPF.Helper
         /// <param name="window">Window which sall be used</param>
         public static void AddExtentView(IDatenMeisterWindow window)
         {
-
             var menuItem = new RibbonButton();
-            menuItem.Label = Localization_DatenMeister_WPF.Menu_ViewExtents;
+            menuItem.Label = Localization_DM_Addons.Menu_ViewExtents;
             menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("show-extents");
 
             menuItem.Click += (x, y) =>
@@ -61,7 +57,8 @@ namespace DatenMeister.WPF.Helper
                     }
 
                     // Now get the poolresolver
-                    var extent = Injection.Application.Get<IPoolResolver>().Resolve(uri, z.Value) as IURIExtent;
+                    var poolResolver = Injection.Application.Get<IPoolResolver>();
+                    var extent = poolResolver.Resolve(uri, z.Value) as IURIExtent;
                     if (extent == null)
                     {
                         logger.Message("No extent has been returned for: " + uri.ToString());
@@ -70,24 +67,36 @@ namespace DatenMeister.WPF.Helper
 
                     // Get Factory
                     var factory = Factory.GetFor(extentView);
+
                     // Creates the view for the extents
                     var extentViewObj = factory.CreateInExtent(extentView, DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
                     var asObjectExtentview = new DatenMeister.Entities.AsObject.FieldInfo.TableView(extentViewObj);
 
                     asObjectExtentview.setExtentUri(uri);
-                    asObjectExtentview.setAllowDelete(false);
-                    asObjectExtentview.setAllowEdit(false);
-                    asObjectExtentview.setAllowNew(false);
+                    var instance = poolResolver.Pool.GetInstance(extent);
+
+                    if (instance.ExtentType == ExtentType.Data)
+                    {
+                        asObjectExtentview.setAllowDelete(false);
+                        asObjectExtentview.setAllowEdit(false);
+                        asObjectExtentview.setAllowNew(true);
+                    }
+                    else
+                    {
+                        asObjectExtentview.setAllowDelete(false);
+                        asObjectExtentview.setAllowEdit(false);
+                        asObjectExtentview.setAllowNew(false);
+                    }
                     asObjectExtentview.setName(z.Value.AsSingle().AsIObject().get("name").AsSingle().ToString());
 
                     // Gets the referenced extent
-                    ViewHelper.AutoGenerateViewDefinition(extent, asObjectExtentview); ;
+                    ViewHelper.AutoGenerateViewDefinition(extent, asObjectExtentview);
 
                     window.RefreshTabs();
                 });
             };
 
-            window.AddMenuEntry(Localization_DatenMeister_WPF.Menu_View, menuItem);
+            window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
         }
     }
 }

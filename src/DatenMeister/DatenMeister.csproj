@@ -213,6 +213,7 @@
     <Compile Include="Transformations\GroupBy\GroupByTypeTransformation.cs" />
     <Compile Include="Transformations\ITransformation.cs" />
     <Compile Include="Transformations\Extensions.cs" />
+    <Compile Include="Transformations\MakeUniqueTransformation.cs" />
     <Compile Include="Transformations\RecurseObjectTransformation.cs" />
     <Compile Include="Logic\ExtentPoolLogic.cs" />
     <Compile Include="Logic\ExtentInstance.cs" />
