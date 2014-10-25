@@ -77,8 +77,8 @@ namespace DatenMeister.AddOns.Views
 
                     if (instance.ExtentType == ExtentType.Data)
                     {
-                        asObjectExtentview.setAllowDelete(false);
-                        asObjectExtentview.setAllowEdit(false);
+                        asObjectExtentview.setAllowDelete(true);
+                        asObjectExtentview.setAllowEdit(true);
                         asObjectExtentview.setAllowNew(true);
                     }
                     else
@@ -87,6 +87,7 @@ namespace DatenMeister.AddOns.Views
                         asObjectExtentview.setAllowEdit(false);
                         asObjectExtentview.setAllowNew(false);
                     }
+
                     asObjectExtentview.setName(z.Value.AsSingle().AsIObject().get("name").AsSingle().ToString());
 
                     // Gets the referenced extent

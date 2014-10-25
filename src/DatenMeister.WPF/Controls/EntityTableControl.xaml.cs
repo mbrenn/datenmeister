@@ -78,7 +78,7 @@ namespace DatenMeister.WPF.Controls
         public IEnumerable<IObject> SelectedElements
         {
             get;
-            private  set;
+            private set;
         }
 
         /// <summary>
@@ -189,8 +189,8 @@ namespace DatenMeister.WPF.Controls
                 if (tableViewInfo.getDoAutoGenerateByProperties() && fieldInfos.Count() == 0)
                 {
                     ViewHelper.AutoGenerateViewDefinition(
-                        this.Configuration.ElementsFactory(pool), 
-                        this.Configuration.TableViewInfo, 
+                        this.Configuration.ElementsFactory(pool),
+                        this.Configuration.TableViewInfo,
                         true /*order by name*/);
                 }
 
@@ -373,8 +373,8 @@ namespace DatenMeister.WPF.Controls
             }
 
             var dialog = DetailDialog.ShowDialogToCreateTypeOf(
-                newType, 
-                this.GetElements(), 
+                newType,
+                this.GetElements(),
                 this.Configuration.ViewInfoForDetailView);
             Ensure.That(dialog != null);
             dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
@@ -628,7 +628,7 @@ namespace DatenMeister.WPF.Controls
         private void HandleException(Exception exc)
         {
             var exceptionHandling = Injection.Application.TryGet<IExceptionHandling>();
-            if ( exceptionHandling != null )
+            if (exceptionHandling != null)
             {
                 exceptionHandling.HandleException(exc);
             }
