@@ -5,6 +5,7 @@ using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
 using DatenMeister.WPF.Controls;
+using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
@@ -29,7 +30,7 @@ namespace DatenMeister.AddOns.Views
         {
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_ViewManager;
-            menuItem.LargeImageSource = AddOnHelper.LoadIcon("emblem-package.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("viewmanager");
             menuItem.Click += (x, y) =>
             {
                 var pool = PoolResolver.GetDefaultPool();
@@ -66,7 +67,7 @@ namespace DatenMeister.AddOns.Views
 
             var assignAuto = new RibbonButton();
             assignAuto.Label = Localization_DM_Addons.Menu_ViewManagerAssignTypes;
-            assignAuto.LargeImageSource = AddOnHelper.LoadIcon("emblem-package.png");
+            assignAuto.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("viewmanager-assigntypes");
             assignAuto.Click += (x, y) =>
             {
                 var viewManager = Injection.Application.Get<IViewManager>() as DefaultViewManager;
@@ -106,9 +107,9 @@ namespace DatenMeister.AddOns.Views
             // Add the event, and call yourself
             window.Core.ViewSetInitialized += (x, y) => InitializeViewSet();
             InitializeViewSet();
-             
-            window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
+
             window.AddMenuEntry(Localization_DM_Addons.Menu_Views, assignAuto);
+            window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
         }
 
         /// <summary>

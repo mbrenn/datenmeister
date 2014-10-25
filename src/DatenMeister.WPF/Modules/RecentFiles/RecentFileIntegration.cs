@@ -5,7 +5,9 @@ using DatenMeister.Logic;
 using DatenMeister.Pool;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Helper;
+using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -88,6 +90,8 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             var value = recentFile;
             var menu = new RibbonApplicationMenuItem();
             menu.Header = Path.GetFileName(DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(recentFile));
+            menu.ImageSource = Injection.Application.Get<IIconRepository>().GetIcon("file-file");
+
             menu.Click += (x, y) => { OnClickOpenFile(wnd, value); y.Handled = true; };
             windowAsDatenMeister.GetRecentFileRibbon().Items.Add(menu);
         }

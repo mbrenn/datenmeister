@@ -9,6 +9,7 @@ using DatenMeister.Pool;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Helper;
+using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Modules.RecentFiles;
 using Ninject;
 using System;
@@ -73,6 +74,9 @@ namespace DatenMeister.WPF.Windows
             this.InitializeComponent();
 
             WindowFactory.AutosetWindowSize(this);
+
+            // Replaces the icons, if necessary
+            this.ReplaceDefaultIcons();
         }
 
         public DatenMeisterWindow(ApplicationCore core)
@@ -85,6 +89,59 @@ namespace DatenMeister.WPF.Windows
                 if (!string.IsNullOrEmpty(core.Settings.WindowTitle))
                 {
                     this.UpdateWindowTitle();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Replaces the default icons
+        /// </summary>
+        private void ReplaceDefaultIcons()
+        {
+            var iconRepository = Injection.Application.Get<IIconRepository>();
+            if (iconRepository != null)
+            {
+                var image = iconRepository.GetIcon("file-new");
+                if (image != null)
+                {
+                    this.MenuFileNew.ImageSource = image;
+                }
+
+                image = iconRepository.GetIcon("file-open");
+                if (image != null)
+                {
+                    this.MenuFileOpen.ImageSource = image;
+                    this.MenuFileRecentFiles.ImageSource = image;
+                }
+
+                image = iconRepository.GetIcon("file-save");
+                if (image != null)
+                {
+                    this.MenuFileSave.ImageSource = image;
+                }
+
+                image = iconRepository.GetIcon("file-saveas");
+                if (image != null)
+                {
+                    this.MenuFileSaveAs.ImageSource = image;
+                }
+
+                image = iconRepository.GetIcon("file-about");
+                if (image != null)
+                {
+                    this.MenuFileAbout.ImageSource = image;
+                }
+
+                image = iconRepository.GetIcon("file-exit");
+                if (image != null)
+                {
+                    this.MenuFileExit.ImageSource = image;
+                }
+
+                image = iconRepository.GetIcon("save-export");
+                if (image != null)
+                {
+                    this.MenuFileExportAsXml.ImageSource = image;
                 }
             }
         }
@@ -139,7 +196,8 @@ namespace DatenMeister.WPF.Windows
 
                 // Inserts the new item into the main menu bar. 
                 // Last item is the "?"-Menu containing the about dialog. And it shall stay the last item
-                this.menuMain.Items.Insert(this.menuMain.Items.Count - 1, found);
+                // If no item is already in, include it on the first position
+                this.menuMain.Items.Insert(Math.Max(0, this.menuMain.Items.Count - 1), found);
             }
 
             // Now create the item
@@ -615,7 +673,7 @@ namespace DatenMeister.WPF.Windows
         /// <returns></returns>
         public RibbonApplicationMenuItem GetRecentFileRibbon()
         {
-            return this.menuRecentFiles;
+            return this.MenuFileRecentFiles;
         }
     }
 }

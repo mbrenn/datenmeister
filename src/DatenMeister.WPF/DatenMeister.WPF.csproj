@@ -96,6 +96,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Localization_DatenMeister_WPF.resx</DependentUpon>
     </Compile>
+    <Compile Include="Modules\IconRepository\GplIconRepository.cs" />
+    <Compile Include="Modules\IconRepository\IIconRepository.cs" />
+    <Compile Include="Modules\IconRepository\Integrate.cs" />
     <Compile Include="Modules\RecentFiles\RecentFileIntegration.cs" />
     <Compile Include="Modules\WindowUserExceptionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -186,6 +189,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icons\emblem-package.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icons\x-office-document.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\icons\x-office-spreadsheet.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

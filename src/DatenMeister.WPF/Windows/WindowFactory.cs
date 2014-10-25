@@ -19,7 +19,7 @@ namespace DatenMeister.WPF.Windows
         /// <param name="core">Application of the window</param>
         /// <returns>Returned window</returns>
         public static IDatenMeisterWindow CreateWindow(ApplicationCore core)
-        {            
+        {
             Application.Current.DispatcherUnhandledException += (x, y) =>
                 {
                     var exceptionHandling = Injection.Application.TryGet<IExceptionHandling>();

@@ -2,7 +2,9 @@
 using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
+using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +29,7 @@ namespace DatenMeister.AddOns.Views
         {            
             var menuItem = new RibbonButton();
             menuItem.Label = Localization_DM_Addons.Menu_TypeManager;
-            menuItem.LargeImageSource = AddOnHelper.LoadIcon("emblem-package.png");
+            menuItem.LargeImageSource = Injection.Application.Get<IIconRepository>().GetIcon("typemanager");
             menuItem.Click += (x, y) =>
                 {
                     var pool = PoolResolver.GetDefaultPool();
