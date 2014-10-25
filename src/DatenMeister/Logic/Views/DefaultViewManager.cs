@@ -141,14 +141,11 @@ namespace DatenMeister.Logic.Views
             viewObj.setAllowEdit(false);
             viewObj.setAllowNew(false);
 
-            if (obj.Extent != null)
-            {
                 // Don't know what to do... throw exception
-                if (!ViewHelper.AutoGenerateViewDefinition(obj, view, true) 
-                    && collection != null)
-                {
-                    ViewHelper.AutoGenerateViewDefinition(collection, view, true);
-                }
+            if (!ViewHelper.AutoGenerateViewDefinition(obj, view, true)
+                && collection != null)
+            {
+                ViewHelper.AutoGenerateViewDefinition(collection, view, true);
             }
 
             return view;
