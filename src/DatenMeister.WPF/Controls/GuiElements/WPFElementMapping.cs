@@ -18,7 +18,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// </summary>
         /// <param name="viewElement">Element, which gets transformed</param>
         /// <returns>Transformed element</returns>
-        public static IWPFElementGenerator MapForForm(IElement viewElement)
+        public static IWpfElementGenerator MapForForm(IElement viewElement)
         {
             var metaClass = viewElement.getMetaClass();
             if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.TextField)

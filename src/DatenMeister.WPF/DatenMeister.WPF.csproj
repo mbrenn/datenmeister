@@ -78,7 +78,7 @@
     <Compile Include="Controls\GuiElements\WpfDropDownByValue.cs" />
     <Compile Include="Controls\GuiElements\WpfDropDownSettings.cs" />
     <Compile Include="Controls\GuiElements\WpfElementMapping.cs" />
-    <Compile Include="Controls\GuiElements\IWPFElementGenerator.cs" />
+    <Compile Include="Controls\GuiElements\IWpfElementGenerator.cs" />
     <Compile Include="Controls\GuiElements\WpfMultiReferenceField.cs" />
     <Compile Include="Controls\GuiElements\WPFTextField.cs" />
     <Compile Include="Controls\IDataPresentationState.cs" />

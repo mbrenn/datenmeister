@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    class WpfDatePicker : IWPFElementGenerator
+    class WpfDatePicker : IWpfElementGenerator
     {
         private DatePicker fieldInfo;
 

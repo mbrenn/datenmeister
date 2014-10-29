@@ -10,7 +10,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
     /// <summary>
     /// 
     /// </summary>
-    public interface IWPFElementGenerator
+    public interface IWpfElementGenerator
     {
         /// <summary>
         /// Generates the WPF element for the Gui Element

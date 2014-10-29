@@ -12,7 +12,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
     /// </summary>
     public class ElementCacheEntry
     {
-        public IWPFElementGenerator WPFElementCreator
+        public IWpfElementGenerator WPFElementCreator
         {
             get;
             set;
@@ -33,7 +33,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             set;
         }
 
-        public ElementCacheEntry(IWPFElementGenerator wpfElementCreator, UIElement wpfElement, IObject fieldInfo)
+        public ElementCacheEntry(IWpfElementGenerator wpfElementCreator, UIElement wpfElement, IObject fieldInfo)
         {
             this.WPFElement = wpfElement;
             this.WPFElementCreator = wpfElementCreator;

@@ -14,7 +14,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
     /// <summary>
     /// Shows the interface for the MultiReferenceField
     /// </summary>
-    public class WpfMultiReferenceField : IWPFElementGenerator
+    public class WpfMultiReferenceField : IWpfElementGenerator
     {
         /// <summary>
         /// Stores the detailobject

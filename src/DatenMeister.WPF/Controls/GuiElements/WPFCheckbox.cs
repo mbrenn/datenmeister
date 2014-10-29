@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    public class WpfCheckbox : IWPFElementGenerator
+    public class WpfCheckbox : IWpfElementGenerator
     {
         public UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
         {
