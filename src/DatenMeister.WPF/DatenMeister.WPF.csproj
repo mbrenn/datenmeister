@@ -55,6 +55,7 @@
       <DependentUpon>DetailDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DetailOpenEventArgs.cs" />
+    <Compile Include="Controls\GuiElements\BaseReferenceWpfDropDown.cs" />
     <Compile Include="Controls\GuiElements\BaseWpfDropDown.cs" />
     <Compile Include="Controls\GuiElements\Elements\HyperLinkColumn.cs" />
     <Compile Include="Controls\GuiElements\Elements\DataDefaultColumn.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Controls\GuiElements\WpfCheckbox.cs" />
     <Compile Include="Controls\GuiElements\WpfComment.cs" />
     <Compile Include="Controls\GuiElements\WpfDatePicker.cs" />
+    <Compile Include="Controls\GuiElements\WpfDropDownByConstant.cs" />
     <Compile Include="Controls\GuiElements\WpfDropDownByRef.cs" />
     <Compile Include="Controls\GuiElements\WpfDropDownByValue.cs" />
     <Compile Include="Controls\GuiElements\WpfDropDownSettings.cs" />

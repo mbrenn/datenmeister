@@ -386,7 +386,16 @@ namespace DatenMeister.DataProvider.Xml
                 var xmlObject = this.Unspecified.Owner as XmlObject;
                 foreach (var node in xmlObject.Node.Elements(this.Unspecified.PropertyName))
                 {
-                    yield return new XmlObject(this.Extent as XmlExtent, node, xmlObject);
+                    if (!node.HasAttributes && !node.HasElements)
+                    {
+                        // If the node does not have any subelements and does not have any attributes
+                        // we assume, that this is a single value being used and not an XmlObject
+                        yield return node.Value;
+                    }
+                    else
+                    {
+                        yield return new XmlObject(this.Extent as XmlExtent, node, xmlObject);
+                    }
                 }
             }
         }

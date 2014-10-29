@@ -12,7 +12,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
     /// Creates a drop down field which gives all possible information
     /// by value
     /// </summary>
-    public class WpfDropDownByValue : BaseWpfDropDown, IWpfElementGenerator
+    public class WpfDropDownByValue : BaseReferenceWpfDropDown, IWpfElementGenerator
     {
         /// <summary>
         /// Initializes a new instance of the WpfDropDownByValue class

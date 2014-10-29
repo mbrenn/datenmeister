@@ -11,7 +11,7 @@ using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    public abstract class BaseWpfDropDown : IFocusable
+    public abstract class BaseWpfDropDown: IFocusable
     {
         /// <summary>
         /// Stores the name of the property being used to retrieve the value 
@@ -27,7 +27,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <summary>
         /// Stores an enumeration of all objects
         /// </summary>
-        protected IEnumerable<IObject> resolvedElements;
+        protected IEnumerable<object> resolvedElements;
 
         /// <summary>
         /// Stores the object, that shall be shown and/or evaluated
@@ -38,11 +38,6 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// Stores the WPF element for the drop down
         /// </summary>
         protected ComboBox dropDown;
-
-        /// <summary>
-        /// Stores the pool resolver
-        /// </summary>
-        private IPoolResolver resolver;
 
         /// <summary>
         /// Stores the current object
@@ -72,12 +67,10 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var settings = new WpfDropDownSettings();
 
             // Fills the variable and creates the combobox
-            var fieldInfoObj = new ReferenceBase(fieldInfo);
-            this.resolver = PoolResolver.GetDefault(PoolResolver.GetDefaultPool());
-            var referenceUrl = fieldInfoObj.getReferenceUrl();
-            this.propertyValue = fieldInfoObj.getPropertyValue();
-            this.binding = fieldInfoObj.getBinding(); // Stores the name of the property
-            this.resolvedElements = this.resolver.ResolveAsObjects(referenceUrl);
+            this.binding = General.getBinding(fieldInfo); // Stores the name of the property
+            var resolvedElements = this.GetDropDownValues(fieldInfo);
+
+            this.resolvedElements = resolvedElements;
             this.detailObject = detailObject;
 
             this.Configure(settings);
@@ -117,13 +110,16 @@ namespace DatenMeister.WPF.Controls.GuiElements
                     }
                     else
                     {
-                        this.currentElement = selectedItem.OriginalObject;
-                        var dialog = DetailDialog.ShowDialogFor(
-                            selectedItem.OriginalObject);
-                        dialog.DetailForm.Accepted += (a, b) =>
+                        if (selectedItem.OriginalObject != null)
+                        {
+                            this.currentElement = selectedItem.OriginalObject;
+                            var dialog = DetailDialog.ShowDialogFor(
+                                selectedItem.OriginalObject);
+                            dialog.DetailForm.Accepted += (a, b) =>
                             {
                                 this.RefreshDropDownElements();
                             };
+                        }
                     }
                 };
 
@@ -153,10 +149,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 // Selectes the item
                 foreach (var value in this.resolvedElements)
                 {
-                    var valueAsIObject = value as IObject;
-                    var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
-
-                    var item = new Item<object>(stringValue, valueAsIObject, this.GetValue(valueAsIObject));
+                    var item = this.ConvertToDropDownItem(value);
                     values.Add(item);
                 }
 
@@ -164,7 +157,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
                 // Finds the item, that needs to be selected
                 var n = 0;
-                foreach (var value in values.Select(x=> x.Value))
+                foreach (var value in values.Select(x => x.Value))
                 {
                     if (this.AreValuesEqual(this.currentElement, value))
                     {
@@ -173,12 +166,27 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
                     n++;
                 }
-                
+
                 // Sets the item source
                 this.dropDown.ItemsSource = values;
                 this.dropDown.SelectedIndex = selectedValue;
             }
         }
+
+        /// <summary>
+        /// Converts the referenced item to a drop down item
+        /// </summary>
+        /// <param name="value">Value to be converted</param>
+        /// <returns>Item being added to the drop down</returns>
+        protected abstract Item<object> ConvertToDropDownItem(object value);
+
+        /// <summary>
+        /// Gets all drop down values for the field. 
+        /// </summary>
+        /// <param name="fieldInfo">Field information, which might contain additional information 
+        /// how to retrieve the object</param>
+        /// <returns>Enumeration of drop down values</returns>
+        protected abstract IEnumerable<object> GetDropDownValues(IObject fieldInfo);
 
         /// <summary>
         /// Gets the current element out of the detailobject
@@ -195,15 +203,6 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// from resolve path</param>
         /// <returns>true, if the values are equal</returns>
         protected abstract bool AreValuesEqual(object currentValue, object otherElement);
-
-        /// <summary>
-        /// Gets the value as returned from the objects being returned from resolve path. 
-        /// This value will be set to the 'DetailObject', if the user has selected the given
-        /// element in the drop down box. 
-        /// </summary>
-        /// <param name="otherElement">The detail object being used</param>
-        /// <returns>Returned object</returns>
-        protected abstract object GetValue(IObject otherElement);
 
         /// <summary>
         /// Sets the data
