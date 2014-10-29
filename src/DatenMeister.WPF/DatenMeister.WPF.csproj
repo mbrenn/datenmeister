@@ -71,13 +71,13 @@
       <DependentUpon>WpfMultiReferenceFieldElement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\GuiElements\IFocusable.cs" />
-    <Compile Include="Controls\GuiElements\WPFCheckbox.cs" />
-    <Compile Include="Controls\GuiElements\WPFComment.cs" />
+    <Compile Include="Controls\GuiElements\WpfCheckbox.cs" />
+    <Compile Include="Controls\GuiElements\WpfComment.cs" />
     <Compile Include="Controls\GuiElements\WpfDatePicker.cs" />
     <Compile Include="Controls\GuiElements\WpfDropDownByRef.cs" />
     <Compile Include="Controls\GuiElements\WpfDropDownByValue.cs" />
     <Compile Include="Controls\GuiElements\WpfDropDownSettings.cs" />
-    <Compile Include="Controls\GuiElements\WPFElementMapping.cs" />
+    <Compile Include="Controls\GuiElements\WpfElementMapping.cs" />
     <Compile Include="Controls\GuiElements\IWPFElementGenerator.cs" />
     <Compile Include="Controls\GuiElements\WpfMultiReferenceField.cs" />
     <Compile Include="Controls\GuiElements\WPFTextField.cs" />

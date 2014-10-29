@@ -11,7 +11,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
     /// <summary>
     /// Defines the mapping of the elements from DatenMeister tye to the specific Mapping
     /// </summary>
-    public static class WPFElementMapping
+    public static class WpfElementMapping
     {
         /// <summary>
         /// Maps the type of the given element to a gui element
@@ -33,12 +33,12 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.Comment)
             {
-                return new WPFComment();
+                return new WpfComment();
             }
 
             if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.Checkbox)
             {
-                return new WPFCheckbox();
+                return new WpfCheckbox();
             }
 
             if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceByValue)

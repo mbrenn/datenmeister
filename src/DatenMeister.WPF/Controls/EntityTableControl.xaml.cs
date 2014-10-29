@@ -203,7 +203,7 @@ namespace DatenMeister.WPF.Controls
                     var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
                     var name = fieldInfoObj.getName();
                     var binding = fieldInfoObj.getBinding();
-                    var column = WPFElementMapping.MapForTable(fieldInfo);
+                    var column = WpfElementMapping.MapForTable(fieldInfo);
                     column.Header = name;
                     column.Binding = new Binding("[" + binding + "]");
                     //column.CellTemplateSelector = new TableCellTemplateSelector(binding);

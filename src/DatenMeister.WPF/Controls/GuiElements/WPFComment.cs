@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    class WPFComment : IWPFElementGenerator
+    class WpfComment : IWPFElementGenerator
     {
         /// <summary>
         /// Generates the element
