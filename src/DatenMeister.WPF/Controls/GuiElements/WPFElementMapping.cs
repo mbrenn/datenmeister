@@ -23,7 +23,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var metaClass = viewElement.getMetaClass();
             if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.TextField)
             {
-                return new WPFTextField();
+                return new WpfTextField();
             }
 
             if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.DatePicker)

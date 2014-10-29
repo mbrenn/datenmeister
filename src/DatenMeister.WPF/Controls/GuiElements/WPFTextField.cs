@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    public class WPFTextField : IWpfElementGenerator, IFocusable
+    public class WpfTextField : IWpfElementGenerator, IFocusable
     {
         public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
         {
