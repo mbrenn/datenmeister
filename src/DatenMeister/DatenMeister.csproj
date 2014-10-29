@@ -135,6 +135,7 @@
     <Compile Include="Entities\FieldInfos\ReferenceBase.cs" />
     <Compile Include="Entities\FieldInfos\ReferenceByRef.cs" />
     <Compile Include="Entities\FieldInfos\ReferenceByValue.cs" />
+    <Compile Include="Entities\FieldInfos\ReferenceByConstant.cs" />
     <Compile Include="Entities\FieldInfos\TableView.cs" />
     <Compile Include="Entities\FieldInfos\TextField.cs" />
     <Compile Include="Entities\FieldInfos\View.cs" />

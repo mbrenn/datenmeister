@@ -238,13 +238,13 @@ namespace DatenMeister.WPF.Controls
             {
                 foreach (var elementType in typesForCreation)
                 {
-                    var name = NamedElement.getName(elementType).AsSingle();
+                    var name = NamedElement.getName(elementType.AsIObject()).AsSingle();
                     var btn = new Button();
                     btn.Content = "New " + name;
                     btn.Style = this.gridButtons.Resources["TouchButton"] as Style;
                     btn.Click += (x, y) =>
                     {
-                        ShowNewInstanceDialog(elementType);
+                        ShowNewInstanceDialog(elementType.AsIObject());
                     };
 
                     this.areaToolbar.Children.Insert(0, btn);

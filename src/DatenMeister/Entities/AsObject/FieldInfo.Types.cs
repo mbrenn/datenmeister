@@ -71,11 +71,11 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.ReferenceBase);
             }
 
-            if(Types.ReferenceByValue == null || true)
+            if(Types.ReferenceByConstant == null || true)
             {
-                Types.ReferenceByValue = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
-                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByValue, "ReferenceByValue");
-                extent.Elements().add(Types.ReferenceByValue);
+                Types.ReferenceByConstant = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByConstant, "ReferenceByConstant");
+                extent.Elements().add(Types.ReferenceByConstant);
             }
 
             if(Types.ReferenceByRef == null || true)
@@ -83,6 +83,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 Types.ReferenceByRef = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByRef, "ReferenceByRef");
                 extent.Elements().add(Types.ReferenceByRef);
+            }
+
+            if(Types.ReferenceByValue == null || true)
+            {
+                Types.ReferenceByValue = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByValue, "ReferenceByValue");
+                extent.Elements().add(Types.ReferenceByValue);
             }
 
             if(Types.MultiReferenceField == null || true)
@@ -444,52 +451,45 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
 
             {
-                // ReferenceByValue.propertyValue
+                // ReferenceByConstant.values
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "propertyValue");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "values");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByConstant, property);
             }
 
             {
-                // ReferenceByValue.referenceUrl
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "referenceUrl");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
-            }
-
-            {
-                // ReferenceByValue.name
+                // ReferenceByConstant.name
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByConstant, property);
             }
 
             {
-                // ReferenceByValue.binding
+                // ReferenceByConstant.binding
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByConstant, property);
             }
 
             {
-                // ReferenceByValue.isReadOnly
+                // ReferenceByConstant.isReadOnly
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByConstant, property);
             }
 
             {
-                // ReferenceByValue.columnWidth
+                // ReferenceByConstant.columnWidth
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByConstant, property);
             }
 
             {
-                // ReferenceByValue.height
+                // ReferenceByConstant.height
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByConstant, property);
             }
 
             {
@@ -539,6 +539,55 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByRef, property);
+            }
+
+            {
+                // ReferenceByValue.propertyValue
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "propertyValue");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.referenceUrl
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "referenceUrl");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
+            }
+
+            {
+                // ReferenceByValue.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ReferenceByValue, property);
             }
 
             {
@@ -776,9 +825,11 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject ReferenceBase;
 
-        public static DatenMeister.IObject ReferenceByValue;
+        public static DatenMeister.IObject ReferenceByConstant;
 
         public static DatenMeister.IObject ReferenceByRef;
+
+        public static DatenMeister.IObject ReferenceByValue;
 
         public static DatenMeister.IObject MultiReferenceField;
 
@@ -799,8 +850,9 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.DatePicker), Types.DatePicker);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ActionButton), Types.ActionButton);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceBase), Types.ReferenceBase);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByValue), Types.ReferenceByValue);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByConstant), Types.ReferenceByConstant);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByRef), Types.ReferenceByRef);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByValue), Types.ReferenceByValue);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.MultiReferenceField), Types.MultiReferenceField);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.View), Types.View);
             extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.FormView), Types.FormView);

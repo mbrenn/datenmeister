@@ -152,6 +152,37 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(listObject.size(), Is.EqualTo(2));
         }
 
+        [Test]
+        public void TestListClasses()
+        {
+            var extent = new DotNetExtent("test:///");
+
+            var netValue = new TestListClass();
+            netValue.Values.Add("A");
+            netValue.Values.Add("B");
+
+            var value = new DotNetObject(extent.Elements(), netValue, Guid.Empty.ToString());
+
+            foreach (var item in value.get("Values").AsReflectiveSequence())
+            {
+                var x = item.AsSingle();
+                Assert.That(x, Is.TypeOf<string>());
+                Assert.That(x.ToString(), Is.EqualTo("A").Or.EqualTo("B"));
+            }
+
+            foreach (var pair in value.getAll())
+            {
+                Assert.That(pair.PropertyName, Is.EqualTo("Values"));
+
+                foreach (var item in pair.Value.AsReflectiveSequence())
+                {
+                    var x = item.AsSingle();
+                    Assert.That(x, Is.TypeOf<string>());
+                    Assert.That(x.ToString(), Is.EqualTo("A").Or.EqualTo("B"));
+                }
+            }
+        }
+
         public class TestClass
         {
             public string TextValue
@@ -161,6 +192,20 @@ namespace DatenMeister.Tests.DataProvider
             }
 
             public long NumberValue
+            {
+                get;
+                set;
+            }
+        }
+
+        public class TestListClass
+        {
+            public TestListClass()
+            {
+                this.Values = new List<string>();
+            }
+
+            public List<string> Values
             {
                 get;
                 set;

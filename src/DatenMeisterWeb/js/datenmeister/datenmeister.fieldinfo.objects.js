@@ -627,103 +627,88 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     })(exports.ReferenceBase || (exports.ReferenceBase = {}));
     var ReferenceBase = exports.ReferenceBase;
 
-    (function (ReferenceByValue) {
-        ReferenceByValue.TypeName = 'ReferenceByValue';
+    (function (ReferenceByConstant) {
+        ReferenceByConstant.TypeName = 'ReferenceByConstant';
 
-        function create(name, binding, referenceUrl, propertyValue) {
+        function create() {
             var result = new __d__.JsonExtentObject();
-            result.set('type', 'ReferenceByValue');
-            if (name !== undefined) {
-                result.set('name', name);
-            }
-
-            if (binding !== undefined) {
-                result.set('binding', binding);
-            }
-
-            if (referenceUrl !== undefined) {
-                result.set('referenceUrl', referenceUrl);
-            }
-
-            if (propertyValue !== undefined) {
-                result.set('propertyValue', propertyValue);
-            }
-
+            result.set('type', 'ReferenceByConstant');
             return result;
         }
-        ReferenceByValue.create = create;
+        ReferenceByConstant.create = create;
 
-        function getPropertyValue(item) {
-            return item.get('propertyValue');
+        function getValues(item) {
+            return item.get('values');
         }
-        ReferenceByValue.getPropertyValue = getPropertyValue;
+        ReferenceByConstant.getValues = getValues;
 
-        function setPropertyValue(item, value) {
-            item.set('propertyValue', value);
+        function setValues(item, value) {
+            item.set('values', value);
         }
-        ReferenceByValue.setPropertyValue = setPropertyValue;
+        ReferenceByConstant.setValues = setValues;
 
-        function getReferenceUrl(item) {
-            return item.get('referenceUrl');
-        }
-        ReferenceByValue.getReferenceUrl = getReferenceUrl;
+        function pushValue(item, value) {
+            var a = item.get('values');
+            if (a === undefined) {
+                a = new Array();
+            }
 
-        function setReferenceUrl(item, value) {
-            item.set('referenceUrl', value);
+            a.push(value);
+            item.set('values', a);
         }
-        ReferenceByValue.setReferenceUrl = setReferenceUrl;
+        ReferenceByConstant.pushValue = pushValue;
 
         function getName(item) {
             return item.get('name');
         }
-        ReferenceByValue.getName = getName;
+        ReferenceByConstant.getName = getName;
 
         function setName(item, value) {
             item.set('name', value);
         }
-        ReferenceByValue.setName = setName;
+        ReferenceByConstant.setName = setName;
 
         function getBinding(item) {
             return item.get('binding');
         }
-        ReferenceByValue.getBinding = getBinding;
+        ReferenceByConstant.getBinding = getBinding;
 
         function setBinding(item, value) {
             item.set('binding', value);
         }
-        ReferenceByValue.setBinding = setBinding;
+        ReferenceByConstant.setBinding = setBinding;
 
         function isReadOnly(item) {
             return item.get('isReadOnly');
         }
-        ReferenceByValue.isReadOnly = isReadOnly;
+        ReferenceByConstant.isReadOnly = isReadOnly;
 
         function setReadOnly(item, value) {
             item.set('isReadOnly', value);
         }
-        ReferenceByValue.setReadOnly = setReadOnly;
+        ReferenceByConstant.setReadOnly = setReadOnly;
 
         function getColumnWidth(item) {
             return item.get('columnWidth');
         }
-        ReferenceByValue.getColumnWidth = getColumnWidth;
+        ReferenceByConstant.getColumnWidth = getColumnWidth;
 
         function setColumnWidth(item, value) {
             item.set('columnWidth', value);
         }
-        ReferenceByValue.setColumnWidth = setColumnWidth;
+        ReferenceByConstant.setColumnWidth = setColumnWidth;
 
         function getHeight(item) {
             return item.get('height');
         }
-        ReferenceByValue.getHeight = getHeight;
+        ReferenceByConstant.getHeight = getHeight;
 
         function setHeight(item, value) {
             item.set('height', value);
         }
-        ReferenceByValue.setHeight = setHeight;
-    })(exports.ReferenceByValue || (exports.ReferenceByValue = {}));
-    var ReferenceByValue = exports.ReferenceByValue;
+        ReferenceByConstant.setHeight = setHeight;
+    })(exports.ReferenceByConstant || (exports.ReferenceByConstant = {}));
+    var ReferenceByConstant = exports.ReferenceByConstant;
 
     (function (ReferenceByRef) {
         ReferenceByRef.TypeName = 'ReferenceByRef';
@@ -822,6 +807,104 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         ReferenceByRef.setHeight = setHeight;
     })(exports.ReferenceByRef || (exports.ReferenceByRef = {}));
     var ReferenceByRef = exports.ReferenceByRef;
+
+    (function (ReferenceByValue) {
+        ReferenceByValue.TypeName = 'ReferenceByValue';
+
+        function create(name, binding, referenceUrl, propertyValue) {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'ReferenceByValue');
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
+            }
+
+            if (referenceUrl !== undefined) {
+                result.set('referenceUrl', referenceUrl);
+            }
+
+            if (propertyValue !== undefined) {
+                result.set('propertyValue', propertyValue);
+            }
+
+            return result;
+        }
+        ReferenceByValue.create = create;
+
+        function getPropertyValue(item) {
+            return item.get('propertyValue');
+        }
+        ReferenceByValue.getPropertyValue = getPropertyValue;
+
+        function setPropertyValue(item, value) {
+            item.set('propertyValue', value);
+        }
+        ReferenceByValue.setPropertyValue = setPropertyValue;
+
+        function getReferenceUrl(item) {
+            return item.get('referenceUrl');
+        }
+        ReferenceByValue.getReferenceUrl = getReferenceUrl;
+
+        function setReferenceUrl(item, value) {
+            item.set('referenceUrl', value);
+        }
+        ReferenceByValue.setReferenceUrl = setReferenceUrl;
+
+        function getName(item) {
+            return item.get('name');
+        }
+        ReferenceByValue.getName = getName;
+
+        function setName(item, value) {
+            item.set('name', value);
+        }
+        ReferenceByValue.setName = setName;
+
+        function getBinding(item) {
+            return item.get('binding');
+        }
+        ReferenceByValue.getBinding = getBinding;
+
+        function setBinding(item, value) {
+            item.set('binding', value);
+        }
+        ReferenceByValue.setBinding = setBinding;
+
+        function isReadOnly(item) {
+            return item.get('isReadOnly');
+        }
+        ReferenceByValue.isReadOnly = isReadOnly;
+
+        function setReadOnly(item, value) {
+            item.set('isReadOnly', value);
+        }
+        ReferenceByValue.setReadOnly = setReadOnly;
+
+        function getColumnWidth(item) {
+            return item.get('columnWidth');
+        }
+        ReferenceByValue.getColumnWidth = getColumnWidth;
+
+        function setColumnWidth(item, value) {
+            item.set('columnWidth', value);
+        }
+        ReferenceByValue.setColumnWidth = setColumnWidth;
+
+        function getHeight(item) {
+            return item.get('height');
+        }
+        ReferenceByValue.getHeight = getHeight;
+
+        function setHeight(item, value) {
+            item.set('height', value);
+        }
+        ReferenceByValue.setHeight = setHeight;
+    })(exports.ReferenceByValue || (exports.ReferenceByValue = {}));
+    var ReferenceByValue = exports.ReferenceByValue;
 
     (function (MultiReferenceField) {
         MultiReferenceField.TypeName = 'MultiReferenceField';

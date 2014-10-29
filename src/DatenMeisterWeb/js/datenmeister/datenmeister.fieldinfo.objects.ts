@@ -537,12 +537,82 @@ export module ReferenceBase {
 
 }
 
-export module ReferenceByValue {
-    export var TypeName='ReferenceByValue';
+export module ReferenceByConstant {
+    export var TypeName='ReferenceByConstant';
+
+    export function create() {
+        var result = new __d__.JsonExtentObject();
+        result.set('type', 'ReferenceByConstant');
+        return result;
+    }
+
+
+    export function getValues(item: __d__.JsonExtentObject) {
+        return item.get('values');
+    }
+
+    export function setValues(item : __d__.JsonExtentObject, value: any) {
+        item.set('values', value);
+    }
+
+    export function pushValue(item : __d__.JsonExtentObject, value: any) {
+        var a = <Array<any>> item.get('values');
+        if (a === undefined) {
+            a = new Array<any>();
+        }
+
+        a.push(value);
+        item.set('values', a);
+    }
+
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
+    }
+
+    export function isReadOnly(item: __d__.JsonExtentObject) {
+        return item.get('isReadOnly');
+    }
+
+    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
+        item.set('isReadOnly', value);
+    }
+
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
+    }
+
+}
+
+export module ReferenceByRef {
+    export var TypeName='ReferenceByRef';
 
     export function create(name?: any, binding?: any, referenceUrl?: any, propertyValue?: any) {
         var result = new __d__.JsonExtentObject();
-        result.set('type', 'ReferenceByValue');
+        result.set('type', 'ReferenceByRef');
         if (name !== undefined) {
             result.set('name', name);
         }
@@ -621,12 +691,12 @@ export module ReferenceByValue {
 
 }
 
-export module ReferenceByRef {
-    export var TypeName='ReferenceByRef';
+export module ReferenceByValue {
+    export var TypeName='ReferenceByValue';
 
     export function create(name?: any, binding?: any, referenceUrl?: any, propertyValue?: any) {
         var result = new __d__.JsonExtentObject();
-        result.set('type', 'ReferenceByRef');
+        result.set('type', 'ReferenceByValue');
         if (name !== undefined) {
             result.set('name', name);
         }

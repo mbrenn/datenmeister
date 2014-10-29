@@ -33,6 +33,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatenMeister.AddOns", "Date
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatenMeister.Icons", "..\..\datenmeister.icons\src\DatenMeister.Icons\DatenMeister.Icons.csproj", "{C2BC0E95-4D38-4584-B6A0-B08DEC6DE504}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{B6E28C88-FF12-4632-B789-1420C6CFDEC6}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TypeScriptCreator", "..\tools\TypeScriptCreator\TypeScriptCreator.pyproj", "{D0D6E716-07F9-417E-ADAC-77D6A7566881}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -175,9 +179,18 @@ Global
 		{C2BC0E95-4D38-4584-B6A0-B08DEC6DE504}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C2BC0E95-4D38-4584-B6A0-B08DEC6DE504}.Release|x64.ActiveCfg = Release|Any CPU
 		{C2BC0E95-4D38-4584-B6A0-B08DEC6DE504}.Release|x86.ActiveCfg = Release|Any CPU
+		{D0D6E716-07F9-417E-ADAC-77D6A7566881}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0D6E716-07F9-417E-ADAC-77D6A7566881}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D0D6E716-07F9-417E-ADAC-77D6A7566881}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D0D6E716-07F9-417E-ADAC-77D6A7566881}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0D6E716-07F9-417E-ADAC-77D6A7566881}.Release|x64.ActiveCfg = Release|Any CPU
+		{D0D6E716-07F9-417E-ADAC-77D6A7566881}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D0D6E716-07F9-417E-ADAC-77D6A7566881} = {B6E28C88-FF12-4632-B789-1420C6CFDEC6}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = DatenmeisterServer\DatenmeisterServer.csproj

@@ -1922,15 +1922,270 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ReferenceByValue : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
+    public class ReferenceByConstant : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
-        public ReferenceByValue(DatenMeister.IObject obj)
+        public ReferenceByConstant(DatenMeister.IObject obj)
         {
             this.obj = obj;
         }
 
-        public ReferenceByValue(DatenMeister.IObject obj, object name, object binding, object referenceUrl, object propertyValue)
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
+        {
+            return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceByConstant);
+        }
+
+        #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public DatenMeister.IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public object get(string propertyName)
+        {
+            return this.obj.get(propertyName);
+        }
+
+        /// <summary>
+        /// Gets all properties as key value pairs
+        /// </summary>
+        /// <returns></returns>
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
+        {
+            return this.obj.getAll();
+        }
+
+        /// <summary>
+        /// Checks, if a certain property is set
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if set</returns>
+        public bool isSet(string propertyName)
+        {
+            return this.obj.isSet(propertyName);
+        }
+
+        /// <summary>
+        /// Sets the value of the property 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="value">Value to be set</param>
+        public void set(string propertyName, object value)
+        {
+            this.obj.set(propertyName, value);
+        }
+
+        /// <summary>
+        /// Unsets the property
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be removed</param>
+        public bool unset(string propertyName)
+        {
+            return this.obj.unset(propertyName);
+        }
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        public void delete()
+        {
+            this.obj.delete();
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                return this.obj.Id;
+            }
+        }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				return this.obj.Extent;
+			}
+		}
+
+        #endregion
+
+        public System.Collections.Generic.IEnumerable<System.Object> getValues()
+        {
+            return getValues(this);
+        }
+
+        public void setValues(System.Collections.Generic.IEnumerable<System.Object> value)
+        {
+            setValues(this, value);
+        }
+
+        public void pushValue(System.Object value)
+        {
+            pushValue(this, value);
+        }
+
+        public static System.Collections.Generic.IEnumerable<System.Object> getValues(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("values"));
+            return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
+        }
+
+        public static void setValues(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<System.Object> value)
+        {
+            obj.set("values", value);
+        }
+
+        public static void pushValue(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("values"));
+            list.Add(value);
+        }
+
+        public static void pushValue(DatenMeister.IObject obj, System.Object value)
+        {
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("values"));
+            list.Add(value);
+        }
+
+        public System.String getName()
+        {
+            return getName(this);
+        }
+
+        public void setName(System.String value)
+        {
+            setName(this, value);
+        }
+
+        public static System.String getName(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setName(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("name", value);
+        }
+
+        public System.String getBinding()
+        {
+            return getBinding(this);
+        }
+
+        public void setBinding(System.String value)
+        {
+            setBinding(this, value);
+        }
+
+        public static System.String getBinding(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setBinding(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("binding", value);
+        }
+
+        public System.Boolean isReadOnly()
+        {
+            return isReadOnly(this);
+        }
+
+        public void setReadOnly(System.Boolean value)
+        {
+            setReadOnly(this, value);
+        }
+
+        public static System.Boolean isReadOnly(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("isReadOnly", value);
+        }
+
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
+        }
+
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class ReferenceByRef : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
+    {
+        private DatenMeister.IObject obj;
+        public ReferenceByRef(DatenMeister.IObject obj)
+        {
+            this.obj = obj;
+        }
+
+        public ReferenceByRef(DatenMeister.IObject obj, object name, object binding, object referenceUrl, object propertyValue)
             : this(obj)
         {
             this.set("name", name);
@@ -1941,7 +2196,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
-            return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceByValue);
+            return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceByRef);
         }
 
         #region IObject Implementation
@@ -2190,15 +2445,15 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ReferenceByRef : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
+    public class ReferenceByValue : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
-        public ReferenceByRef(DatenMeister.IObject obj)
+        public ReferenceByValue(DatenMeister.IObject obj)
         {
             this.obj = obj;
         }
 
-        public ReferenceByRef(DatenMeister.IObject obj, object name, object binding, object referenceUrl, object propertyValue)
+        public ReferenceByValue(DatenMeister.IObject obj, object name, object binding, object referenceUrl, object propertyValue)
             : this(obj)
         {
             this.set("name", name);
@@ -2209,7 +2464,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
-            return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceByRef);
+            return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceByValue);
         }
 
         #region IObject Implementation
@@ -3428,33 +3683,39 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("mainType", value);
         }
 
-        public System.Collections.Generic.IEnumerable<DatenMeister.IObject> getTypesForCreation()
+        public System.Collections.Generic.IEnumerable<System.Object> getTypesForCreation()
         {
             return getTypesForCreation(this);
         }
 
-        public void setTypesForCreation(System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        public void setTypesForCreation(System.Collections.Generic.IEnumerable<System.Object> value)
         {
             setTypesForCreation(this, value);
         }
 
-        public void pushTypesForCreation(DatenMeister.IObject value)
+        public void pushTypesForCreation(System.Object value)
         {
             pushTypesForCreation(this, value);
         }
 
-        public static System.Collections.Generic.IEnumerable<DatenMeister.IObject> getTypesForCreation(DatenMeister.IObject obj)
+        public static System.Collections.Generic.IEnumerable<System.Object> getTypesForCreation(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.IObject>(obj.get("typesForCreation"));
-            return (result is System.Collections.Generic.IEnumerable<DatenMeister.IObject>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.IObject>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.IObject>);
+            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("typesForCreation"));
+            return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
-        public static void setTypesForCreation(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<DatenMeister.IObject> value)
+        public static void setTypesForCreation(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<System.Object> value)
         {
             obj.set("typesForCreation", value);
         }
 
         public static void pushTypesForCreation(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("typesForCreation"));
+            list.Add(value);
+        }
+
+        public static void pushTypesForCreation(DatenMeister.IObject obj, System.Object value)
         {
             var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("typesForCreation"));
             list.Add(value);

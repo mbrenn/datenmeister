@@ -39,6 +39,21 @@ namespace DatenMeister
         {
             this.PropertyName = propertyName;
             this.Value = value;
+       }
+
+        public override string ToString()
+        {
+            if (this.Value == null)
+            {
+                return this.PropertyName + ": null";
+            }
+            else
+            {
+                return string.Format(
+                    "{0}: {1}",
+                    this.PropertyName,
+                    this.Value.ToString());
+            }
         }
     }
 
