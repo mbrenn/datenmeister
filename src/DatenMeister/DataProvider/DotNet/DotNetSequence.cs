@@ -127,11 +127,23 @@ namespace DatenMeister.DataProvider.DotNet
             }
         }
 
-        public DotNetObject ConvertTo(object value)
+        /// <summary>
+        /// Converts the object to a dotnet object, if the value is a class object
+        /// If this is just a native object, the object itself is returned without
+        /// being converted to a DotNetObject
+        /// </summary>
+        /// <param name="value">Value to be converted</param>
+        /// <returns>Object, that is converted</returns>
+        public object ConvertTo(object value)
         {
             if (value is DotNetObject)
             {
                 return value as DotNetObject;
+            }
+
+            if (Extensions.IsNative(value))
+            {
+                return value;
             }
 
             var dotNetObject = new DotNetObject(null, value);
