@@ -540,9 +540,17 @@ export module ReferenceBase {
 export module ReferenceByConstant {
     export var TypeName='ReferenceByConstant';
 
-    export function create() {
+    export function create(name?: any, binding?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'ReferenceByConstant');
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
+        }
+
         return result;
     }
 

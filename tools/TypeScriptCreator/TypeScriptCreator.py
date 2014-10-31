@@ -68,8 +68,9 @@ print('Creating the ProjektMeister')
 clr.AddReferenceToFile("ProjektMeister")
 import ProjektMeister
 projektMeisterTypes = [
-         ProjektMeister.Data.Entities.Person,       
-         ProjektMeister.Data.Entities.Task ]
+    ProjektMeister.Data.Entities.Comment,     
+    ProjektMeister.Data.Entities.Person,         
+    ProjektMeister.Data.Entities.Task ]
 
 csFilename = "..\\..\\..\\projektmeister\\src\\ProjektMeister\\Data\\Entities\\AsObject\\PM.Objects.cs"
 CSharpFactory.createFiles(csFilename, projektMeisterTypes, "ProjektMeister.Data.Entities.AsObject");

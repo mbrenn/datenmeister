@@ -630,9 +630,17 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
     (function (ReferenceByConstant) {
         ReferenceByConstant.TypeName = 'ReferenceByConstant';
 
-        function create() {
+        function create(name, binding) {
             var result = new __d__.JsonExtentObject();
             result.set('type', 'ReferenceByConstant');
+            if (name !== undefined) {
+                result.set('name', name);
+            }
+
+            if (binding !== undefined) {
+                result.set('binding', binding);
+            }
+
             return result;
         }
         ReferenceByConstant.create = create;

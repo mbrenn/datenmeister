@@ -1930,6 +1930,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.obj = obj;
         }
 
+        public ReferenceByConstant(DatenMeister.IObject obj, object name, object binding)
+            : this(obj)
+        {
+            this.set("name", name);
+            this.set("binding", binding);
+        }
+
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.ReferenceByConstant);
