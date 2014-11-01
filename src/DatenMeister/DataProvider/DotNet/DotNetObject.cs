@@ -259,7 +259,7 @@ namespace DatenMeister.DataProvider.DotNet
         {
             var propertyName = propertyInfo.Name;
 
-            if (Extensions.IsNative(checkObject))
+            if (ObjectConversion.IsNative(checkObject))
             {
                 return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }

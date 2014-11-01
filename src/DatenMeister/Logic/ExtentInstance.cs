@@ -7,6 +7,11 @@ namespace DatenMeister.Logic
     public enum ExtentType
     {
         /// <summary>
+        /// Defines the extent type, when the given type is unknown
+        /// </summary>
+        Unknown, 
+
+        /// <summary>
         /// Defines that the given extent contains all extents
         /// </summary>
         Extents, 

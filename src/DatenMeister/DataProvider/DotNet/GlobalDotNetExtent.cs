@@ -86,7 +86,7 @@ namespace DatenMeister.DataProvider.DotNet
                 // Now go through the properties 
                 foreach (var property in type.GetProperties())
                 {
-                    if (!Extensions.IsNativeByType(property.PropertyType))
+                    if (!ObjectConversion.IsNativeByType(property.PropertyType))
                     {
                         // Add the type of the property recursively
                         AddTypeMapping(extent, property.PropertyType);

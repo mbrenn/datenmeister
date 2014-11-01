@@ -199,7 +199,7 @@ namespace DatenMeister.DataProvider.Xml
                     this.SetAttributeAsList(list);
                 }
             }
-            else if (Extensions.IsNative(value))
+            else if (ObjectConversion.IsNative(value))
             {
                 // Add it as a new Xml Element, containing the property as a value
                 var element = new XElement(this.Unspecified.PropertyName);

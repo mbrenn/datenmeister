@@ -303,7 +303,7 @@ namespace DatenMeister.DataProvider.Xml
             if (string.IsNullOrEmpty(propertyName))
             {
                 // Content of the node will be set
-                if (Extensions.IsNative(value))
+                if (ObjectConversion.IsNative(value))
                 {
                     if (value == null)
                     {
@@ -344,13 +344,13 @@ namespace DatenMeister.DataProvider.Xml
                 }
                 else
                 {
-                    if (Extensions.IsNative(value))
+                    if (ObjectConversion.IsNative(value))
                     {
                         this.Node.Element(propertyName).Value = ObjectConversion.ToString(value);
                     }
                 }
             }
-            else if (Extensions.IsNative(value))
+            else if (ObjectConversion.IsNative(value))
             {
                 // Ok, we have no attribute and no element with the name.
                 // If this is a simple type, we just assume that this is a property, otherwise no suppurt

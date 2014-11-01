@@ -360,7 +360,7 @@ namespace DatenMeister
 
         private static object ConvertAsFlatObject(object pairValue, IURIExtent extent)
         {
-            if (IsNative(pairValue))
+            if (ObjectConversion.IsNative(pairValue))
             {
                 return pairValue;
             }
@@ -390,57 +390,6 @@ namespace DatenMeister
             {
                 value.set(pair.Key, pair.Value);
             }
-        }
-
-        /// <summary>
-        /// Stores a list of all primitive types that are supported by DatenMeister directly
-        /// </summary>
-        private static List<Type> primitiveTypes = new List<Type>();
-
-        /// <summary>
-        /// Checks, if the given object is a native object or if the objects needs to be converted
-        /// </summary>
-        /// <param name="checkObject">CheckObject to be checked</param>
-        /// <returns>true, if object is not native</returns>
-        public static bool IsNative(object checkObject)
-        {
-            // An empty object is null
-            if (checkObject == null)
-            {
-                return true;
-            }
-
-            var type = checkObject.GetType();
-            return IsNativeByType(type);
-        }
-
-        /// <summary>
-        /// Checks, if a certain type is a native .Net object
-        /// </summary>
-        /// <param name="type">Type to be considered</param>
-        /// <returns>true, if the object type is native</returns>
-        public static bool IsNativeByType(Type type)
-        {
-            // Initializes list of primitiveTypes if necessary
-            if (primitiveTypes.Count == 0)
-            {
-                lock (primitiveTypes)
-                {
-                    primitiveTypes.Clear();
-                    primitiveTypes.Add(typeof(Boolean));
-                    primitiveTypes.Add(typeof(Int16));
-                    primitiveTypes.Add(typeof(Int32));
-                    primitiveTypes.Add(typeof(Int64));
-                    primitiveTypes.Add(typeof(Double));
-                    primitiveTypes.Add(typeof(Single));
-                    primitiveTypes.Add(typeof(String));
-                    primitiveTypes.Add(typeof(DateTime));
-                    primitiveTypes.Add(typeof(TimeSpan));
-                }
-            }
-
-            // Checks, if type of given object is in the list above
-            return primitiveTypes.Contains(type);
         }
 
         /// <summary>

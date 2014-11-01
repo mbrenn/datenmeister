@@ -141,7 +141,7 @@ namespace DatenMeister.DataProvider.DotNet
                 return value as DotNetObject;
             }
 
-            if (Extensions.IsNative(value))
+            if (ObjectConversion.IsNative(value))
             {
                 return value;
             }

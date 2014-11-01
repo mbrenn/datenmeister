@@ -75,7 +75,7 @@ namespace DatenMeister.Logic
                     {
                         // TODO: Refactor this method in a way, that sourceElement may also be
                         // a simple object
-                        if (Extensions.IsNative(element))
+                        if (ObjectConversion.IsNative(element))
                         {
                             targetCollection.add(element);
                             continue;
@@ -95,7 +95,7 @@ namespace DatenMeister.Logic
                 {
                     var currentValueAsSingle = pair.Value.AsSingle(false);
 
-                    if (Extensions.IsNative(currentValueAsSingle))
+                    if (ObjectConversion.IsNative(currentValueAsSingle))
                     {
                         targetElement.set(pair.PropertyName, currentValueAsSingle);
                     }

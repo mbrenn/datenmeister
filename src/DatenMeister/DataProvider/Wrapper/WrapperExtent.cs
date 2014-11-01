@@ -161,7 +161,7 @@ namespace DatenMeister.DataProvider.Wrapper
         /// <returns>Converted error</returns>
         public object Convert(object value)
         {
-            if (Extensions.IsNative(value))
+            if (ObjectConversion.IsNative(value))
             {
                 return value;
             }
