@@ -234,5 +234,52 @@ namespace DatenMeister
             // Checks, if type of given object is in the list above
             return primitiveTypes.Contains(type);
         }
+
+        /// <summary>
+        /// Checks, if the object is an enumeration object
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <returns>true, if the object is an enumeratio</returns>
+        public static bool IsEnumeration(object value)
+        {
+            return IsEnumerationByType(value.GetType());
+        }
+
+        /// <summary>
+        /// Checks, if the given type is an enumeration type. It just calls IsEnum
+        /// </summary>
+        /// <param name="type">Type to be checked</param>
+        /// <returns></returns>
+        public static bool IsEnumerationByType(Type type)
+        {
+            return type.IsEnum;
+        }
+
+        /// <summary>
+        /// Converts an object to an enumeration.
+        /// It can be a string or any other object
+        /// </summary>
+        /// <param name="value">Value to be convered</param>
+        /// <param name="type">Type to be used for this conversion</param>
+        /// <returns>The enumeration object of type 'type'</returns>
+        public static object ConvertToEnumeration(object value, Type type)
+        {
+            if (value.GetType() == type)
+            {
+                return value;
+            }
+
+            var valueAsString = value.ToString();
+            // TryParse
+            try
+            {
+                return Enum.Parse(type, valueAsString);
+            }
+            catch
+            {
+                // Per default, return the first name, if not found
+                return Enum.GetNames(type).First();
+            }
+        }
     }
 }
