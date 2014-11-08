@@ -72,11 +72,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <summary>
         /// Performs the mapping for a certain table
         /// </summary>
-        /// <param name="viewElement">View element being used to show the columns</param>
+        /// <param name="fieldInfo">View element being used to show the columns</param>
         /// <returns>Returned column information</returns>
-        public static GenericColumn MapForTable(IObject viewElement)
+        public static GenericColumn MapForTable(IObject tableInfo, IObject fieldInfo)
         {
-            var element = viewElement as IElement;
+            var element = fieldInfo as IElement;
             if ( element != null )
             {
                 var metaClass = element.getMetaClass();
@@ -86,7 +86,10 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 }
             }
 
-            return new DataDefaultColumn();
+            return new DataDefaultColumn()
+            {
+                ViewItem = tableInfo
+            };
         }
     }
 }

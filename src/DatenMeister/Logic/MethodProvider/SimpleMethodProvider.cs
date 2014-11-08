@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BurnSystems.Logging;
+using DatenMeister.DataProvider;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,11 @@ namespace DatenMeister.Logic.MethodProvider
     /// </summary>
     public class SimpleMethodProvider : IMethodProvider
     {
+        /// <summary>
+        /// Stores the logger
+        /// </summary>
+        private static ILog logger = new ClassLogger(typeof(SimpleMethodProvider));
+        
         /// <summary>
         /// Stores the mapping between types and methods
         /// </summary>
@@ -51,13 +58,24 @@ namespace DatenMeister.Logic.MethodProvider
         /// <returns>The created function</returns>
         public IMethod AddInstanceMethod(IObject instance, string id, Delegate functionMethod)
         {
-            var function = new InstanceFunctionImpl(
-                id,
-                functionMethod);
+            logger.Message("Add instance: " + instance.Id);
 
-            this.instanceMapping.Add(instance, function);
+            // Check, if the object is a proxy object
+            var instanceAsProxy = instance as IProxyObject;
+            if (instanceAsProxy != null)
+            {
+                return AddInstanceMethod(instanceAsProxy.Value, id, functionMethod);
+            }
+            else
+            {
+                var function = new InstanceFunctionImpl(
+                    id,
+                    functionMethod);
 
-            return function;
+                this.instanceMapping.Add(instance, function);
+
+                return function;
+            }
         }
 
         /// <summary>
@@ -102,32 +120,45 @@ namespace DatenMeister.Logic.MethodProvider
         /// <returns>Returns the functions on the instance</returns>
         public IEnumerable<IMethod> GetFunctionsOnInstance(IObject instance)
         {
-            IReadOnlyCollection<IMethod> instanceMethods;
-            this.instanceMapping.TryGetValue(instance, out instanceMethods);
-            if (instanceMethods != null)
+            logger.Message("Get instance: " + instance.Id);
+
+            var instanceAsProxy = instance as IProxyObject;
+            if (instanceAsProxy != null)
             {
-                foreach (var instanceMethod in instanceMethods)
+                foreach (var result in GetFunctionsOnInstance(instanceAsProxy.Value))
                 {
-                    yield return instanceMethod;
+                    yield return result;
                 }
             }
-
-            var element = instance as IElement;
-            if (element != null)
+            else
             {
-                var metaClass = element.getMetaClass();
-
-                if (metaClass != null)
+                IReadOnlyCollection<IMethod> instanceMethods;
+                this.instanceMapping.TryGetValue(instance, out instanceMethods);
+                if (instanceMethods != null)
                 {
-                    IReadOnlyCollection<IMethod> typeFunctions;
-                    this.typeMapping.TryGetValue(metaClass, out typeFunctions);
-
-                    if (typeFunctions != null)
+                    foreach (var instanceMethod in instanceMethods)
                     {
-                        foreach (var typeFunction in typeFunctions
-                            .Where(x => x.MethodType == MethodType.TypeMethod))
+                        yield return instanceMethod;
+                    }
+                }
+
+                var element = instance as IElement;
+                if (element != null)
+                {
+                    var metaClass = element.getMetaClass();
+
+                    if (metaClass != null)
+                    {
+                        IReadOnlyCollection<IMethod> typeFunctions;
+                        this.typeMapping.TryGetValue(metaClass, out typeFunctions);
+
+                        if (typeFunctions != null)
                         {
-                            yield return typeFunction;
+                            foreach (var typeFunction in typeFunctions
+                                .Where(x => x.MethodType == MethodType.TypeMethod))
+                            {
+                                yield return typeFunction;
+                            }
                         }
                     }
                 }

@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.DataProvider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace DatenMeister.Logic
     /// <summary>
     /// Implements the IDictionary interface to make IObjects available as IObjects
     /// </summary>
-    public class ObjectDictionary : IDictionary<string, object>
+    public class ObjectDictionary : IDictionary<string, object>, IProxyObject
     {
         /// <summary>
         /// Stores the value

@@ -43,12 +43,12 @@ namespace DatenMeister.Logic.MethodProvider
 
         public static IMethod GetMethodOfTypeByName(this IMethodProvider provider, IObject type, string name)
         {
-            return provider.GetFunctionsOnType(type).Where(x => x.Name == name).First();
+            return provider.GetFunctionsOnType(type).Where(x => x.Name == name).FirstOrDefault();
         }
 
         public static IMethod GetMethodOfInstanceByName(this IMethodProvider provider, IObject instance, string name)
         {
-            return provider.GetFunctionsOnInstance(instance).Where(x => x.Name == name).First();
+            return provider.GetFunctionsOnInstance(instance).Where(x => x.Name == name).FirstOrDefault();
         }
     }
 }

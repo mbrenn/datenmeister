@@ -5,6 +5,7 @@ using DatenMeister.DataProvider.Pool;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic;
+using DatenMeister.Logic.MethodProvider;
 using DatenMeister.Logic.Views;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls.GuiElements;
@@ -203,10 +204,9 @@ namespace DatenMeister.WPF.Controls
                     var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
                     var name = fieldInfoObj.getName();
                     var binding = fieldInfoObj.getBinding();
-                    var column = WpfElementMapping.MapForTable(fieldInfo);
+                    var column = WpfElementMapping.MapForTable(this.Configuration.TableViewInfo, fieldInfo);
                     column.Header = name;
                     column.Binding = new Binding("[" + binding + "]");
-                    //column.CellTemplateSelector = new TableCellTemplateSelector(binding);
                     column.AssociatedViewColumn = fieldInfo;
 
                     var width = fieldInfoObj.getColumnWidth();

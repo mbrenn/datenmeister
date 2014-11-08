@@ -176,7 +176,7 @@ namespace DatenMeister
                 return ToDateTime(targetType);
             }
 
-            if(targetType.IsAssignableFrom(value.GetType()))
+            if (targetType.IsAssignableFrom(value.GetType()))
             {
                 return value;
             }

@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.DataProvider.Wrapper
 {
-    public class WrapperElement : IElement
+    public class WrapperElement : IElement, IProxyObject
     {
         /// <summary>
         /// Stores the inner element
         /// </summary>
-        private IElement inner;
+        private IElement value;
 
-        internal IElement Inner
+        internal IElement Value
         {
-            get { return this.inner; }
-            set { this.inner = value; }
+            get { return this.value; }
+            set { this.value = value; }
         }
 
         /// <summary>
@@ -47,35 +47,35 @@ namespace DatenMeister.DataProvider.Wrapper
         public WrapperElement(IWrapperExtent extent, IElement element)
         {
             this.WrapperExtent = extent;
-            this.inner = element;
+            this.value = element;
         }
 
         public IElement Unwrap()
         {
-            return this.inner;
+            return this.value;
         }
 
         public virtual IObject getMetaClass()
         {
-            return this.inner.getMetaClass();
+            return this.value.getMetaClass();
         }
 
         public virtual IObject container()
         {
             // TODO: Convert
-            return this.WrapperExtent.Convert(this.inner.container()).AsIObject();
+            return this.WrapperExtent.Convert(this.value.container()).AsIObject();
         }
 
         public virtual object get(string propertyName)
         {
             // TODO Convert
-            return this.WrapperExtent.Convert(this.inner.get(propertyName));
+            return this.WrapperExtent.Convert(this.value.get(propertyName));
         }
 
         public virtual IEnumerable<ObjectPropertyPair> getAll()
         {
             // TODO: Convert
-            foreach (var pair in this.inner.getAll())
+            foreach (var pair in this.value.getAll())
             {
                 yield return new ObjectPropertyPair(pair.PropertyName, this.WrapperExtent.Convert(pair.Value));
             }
@@ -83,27 +83,27 @@ namespace DatenMeister.DataProvider.Wrapper
 
         public virtual bool isSet(string propertyName)
         {
-            return this.inner.isSet(propertyName);
+            return this.value.isSet(propertyName);
         }
 
         public virtual void set(string propertyName, object value)
         {
-            this.inner.set(propertyName, value);
+            this.value.set(propertyName, value);
         }
 
         public virtual bool unset(string propertyName)
         {
-            return this.inner.unset(propertyName);
+            return this.value.unset(propertyName);
         }
 
         public virtual void delete()
         {
-            this.inner.delete();
+            this.value.delete();
         }
 
         public virtual string Id
         {
-            get { return this.inner.Id; }
+            get { return this.value.Id; }
         }
 
         public virtual IURIExtent Extent
@@ -118,12 +118,20 @@ namespace DatenMeister.DataProvider.Wrapper
                 return Equals((obj as WrapperElement).Unwrap());
             }
 
-            return this.Inner.Equals(obj);
+            return this.Value.Equals(obj);
         }
 
         public override int GetHashCode()
         {
-            return this.Inner.GetHashCode();
+            return this.Value.GetHashCode();
+        }
+
+        /// <summary>
+        /// Gets the value
+        /// </summary>
+        IObject IProxyObject.Value
+        {
+            get { return this.Value; }
         }
     }
 }

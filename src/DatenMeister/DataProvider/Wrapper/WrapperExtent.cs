@@ -138,7 +138,7 @@ namespace DatenMeister.DataProvider.Wrapper
         {
             var result = new TElement();
             result.WrapperExtent = this;
-            result.Inner = element;
+            result.Value = element;
             return result;
         }
 
