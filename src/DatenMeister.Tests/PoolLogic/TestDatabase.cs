@@ -216,6 +216,18 @@ namespace DatenMeister.Tests
                 get;
                 set;
             }
+
+            private int PrivateVariable
+            {
+                get;
+                set;
+            }
+
+            public static int StaticVariable
+            {
+                get;
+                set;
+            }
         }
     }
 }

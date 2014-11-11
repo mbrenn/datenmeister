@@ -34,6 +34,8 @@ namespace DatenMeister.Tests.Modules
             Assert.That(attributes.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "FirstName"));
             Assert.That(attributes.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "LastName"));
             Assert.That(attributes.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "Age"));
+            Assert.That(!attributes.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "PrivateVariable"));
+            Assert.That(!attributes.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "StaticVariable"));
         }
     }
 }

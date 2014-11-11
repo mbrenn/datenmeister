@@ -4,6 +4,7 @@ using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,7 +43,7 @@ namespace DatenMeister.Logic.TypeConverter
             typeObject.set("name", type.ToString());
 
             // Now go through the properties 
-            foreach (var property in type.GetProperties())
+            foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 if (!Extensions.IsNativeByType(property.PropertyType))
                 {
