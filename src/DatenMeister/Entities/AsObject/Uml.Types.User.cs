@@ -1,4 +1,5 @@
-﻿using DatenMeister.DataProvider;
+﻿using BurnSystems.Logging;
+using DatenMeister.DataProvider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,11 @@ namespace DatenMeister.Entities.AsObject.Uml
 {
     public static partial class Types
     {
+        /// <summary>
+        /// Stores the logger for the extent
+        /// </summary>
+        public static ILog logger = new ClassLogger(typeof(Types));
+
         /// <summary>
         /// Stores the xmi namespace being used to define the types
         /// </summary>
@@ -32,6 +38,10 @@ namespace DatenMeister.Entities.AsObject.Uml
                 (Types.NamedElement as GenericElement).setMetaClass(Types.Class);
                 (Types.Property as GenericElement).setMetaClass(Types.Class);
                 (Types.Class as GenericElement).setMetaClass(Types.Class);
+            }
+            else
+            {
+                logger.Message("The given extent is not a GenericExtent, so the UML types do not have the correct meta class");
             }
         }
     }
