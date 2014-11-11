@@ -9,7 +9,7 @@ namespace DatenMeister.AddOns.Data.FileSystem
 {
     public class File : FileSystemObject
     {
-        public virtual int Length
+        public virtual int length
         {
             get;
             set;
