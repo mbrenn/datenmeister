@@ -25,10 +25,14 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         static partial void OnInitCompleted()
         {
-            (Types.Type as GenericElement).setMetaClass(Types.Class);
-            (Types.NamedElement as GenericElement).setMetaClass(Types.Class);
-            (Types.Property as GenericElement).setMetaClass(Types.Class);
-            (Types.Class as GenericElement).setMetaClass(Types.Class);
+            if (Types.Type is GenericElement)
+            {
+                // We can only do correct initialization of UML, when we can change the metaclass
+                (Types.Type as GenericElement).setMetaClass(Types.Class);
+                (Types.NamedElement as GenericElement).setMetaClass(Types.Class);
+                (Types.Property as GenericElement).setMetaClass(Types.Class);
+                (Types.Class as GenericElement).setMetaClass(Types.Class);
+            }
         }
     }
 

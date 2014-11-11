@@ -186,6 +186,8 @@
     <Compile Include="Logic\SourceFactory\TypeScriptBuilder.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptSourceFactory.cs" />
     <Compile Include="Logic\Sources\AllElementsExtent.cs" />
+    <Compile Include="Logic\TypeConverter\DotNetTypeConverter.cs" />
+    <Compile Include="Logic\TypeConverter\IDotNetTypeConverter.cs" />
     <Compile Include="Logic\TypeResolver\ITypeResolver.cs" />
     <Compile Include="Logic\TypeResolver\TypeResolverImpl.cs" />
     <Compile Include="Logic\Views\DefaultViewManager.cs" />
