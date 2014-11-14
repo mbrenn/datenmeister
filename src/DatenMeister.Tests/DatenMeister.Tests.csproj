@@ -70,6 +70,7 @@
     <Compile Include="Export\ExcelExportTests.cs" />
     <Compile Include="ExtensionTests.cs" />
     <Compile Include="Modules\DotNetTypeConverterTests.cs" />
+    <Compile Include="Modules\FileSystemTests.cs" />
     <Compile Include="PoolLogic\CopyExtentsTests.cs" />
     <Compile Include="PoolLogic\FilterTests.cs" />
     <Compile Include="PoolLogic\MethodProviderTests.cs" />

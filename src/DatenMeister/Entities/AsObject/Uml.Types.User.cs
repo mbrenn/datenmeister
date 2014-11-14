@@ -44,6 +44,18 @@ namespace DatenMeister.Entities.AsObject.Uml
                 logger.Message("The given extent is not a GenericExtent, so the UML types do not have the correct meta class");
             }
         }
+
+        /// <summary>
+        /// Performs the initialization in a way that all
+        /// the types are stored in a GenericExtent. By defeult, the initialization
+        /// is done in a DotNetExtent, which is not possible for the UML stuff
+        /// </summary>
+        public static IURIExtent InitDecoupled()
+        {
+            var genericExtent = new GenericExtent("datenmeister:///metatypes/");
+            Init(genericExtent);
+            return genericExtent;
+        }
     }
 
 }

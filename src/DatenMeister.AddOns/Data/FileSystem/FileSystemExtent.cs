@@ -49,10 +49,14 @@ namespace DatenMeister.AddOns.Data.FileSystem
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the dirty flag. 
+        /// Since all operations will be directly executed, the filesystem cannot be dirty
+        /// </summary>
         public bool IsDirty
         {
-            get;
-            set;
+            get { return false; }
+            set { throw new NotImplementedException("IsDirty cannot be set"); }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using DatenMeister.Logic;
+﻿using BurnSystems.Test;
+using DatenMeister.DataProvider;
+using DatenMeister.Logic;
 using DatenMeister.Logic.TypeConverter;
 using DatenMeister.Pool;
 using Ninject;
@@ -15,6 +17,32 @@ namespace DatenMeister.AddOns.Data.FileSystem
     /// </summary>
     public class Init
     {
+        /// <summary>
+        /// Performs te default iniialization
+        /// </summary>
+        /// <param name="pool">The pool to be used for initialization</param>
+        /// <returns>Returns the method itself</returns>
+        public static Init DoDefault(IPool pool)
+        {
+            var init = Injection.Application.Get<Init>();
+            init.Do(pool);
+            return init;
+        }
+
+        /// <summary>
+        /// Performs a decoupled initialization
+        /// </summary>
+        /// <returns>Returns the class</returns>
+        public static Init DoDecoupled()
+        {
+            var genericExtent = new GenericExtent("datenmeister:///types/FileSystems");
+
+            var init = Injection.Application.Get<Init>();
+            init.Do(genericExtent);
+            return init;
+        }
+
+
         /// <summary>
         /// Gets or sets the DotNetTypeConverter
         /// </summary>
@@ -41,13 +69,33 @@ namespace DatenMeister.AddOns.Data.FileSystem
         public void Do(IPool pool)
         {
             var typeExtent = pool.GetExtent(ExtentType.Type).First();
+            Do(typeExtent);
+        }
+
+        /// <summary>
+        /// Initializes the files and stores the resulting type instances into the given typeExtent
+        /// </summary>
+        /// <param name="typeExtent">Extent being used for the types</param>
+        private void Do(IURIExtent typeExtent)
+        {
 
             // Checks, if the File is already in database, if yes, then the initialization is skipped
-            if (!typeExtent.Elements().Any(x => x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.File"))
+            var elements = typeExtent.Elements();
+            if (!elements.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.File"))
             {
-                this.DotNetTypeConverter.Convert(typeExtent, typeof(File));
-                this.DotNetTypeConverter.Convert(typeExtent, typeof(Directory));
+                Types.File = this.DotNetTypeConverter.Convert(typeExtent, typeof(File));
+                Types.Directory = this.DotNetTypeConverter.Convert(typeExtent, typeof(Directory));
             }
+            else
+            {
+                Types.File = elements.Where(x =>
+                    x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.File").First().AsIObject();
+                Types.Directory = elements.Where(x =>
+                    x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.Directory").First().AsIObject();
+            }
+
+            Ensure.That(Types.File != null && Types.Directory != null,
+                "File or Directory types could not be found. Reinitialize the type extent");
         }
     }
 }
