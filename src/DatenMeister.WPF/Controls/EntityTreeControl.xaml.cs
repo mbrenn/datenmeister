@@ -1,0 +1,68 @@
+﻿using BurnSystems.Test;
+using Ninject;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace DatenMeister.WPF.Controls
+{
+    /// <summary>
+    /// Interaction logic for EntityTreeControl.xaml
+    /// </summary>
+    public partial class EntityTreeControl : UserControl
+    {
+        /// <summary>
+        /// Stores the items that shall be shown
+        /// </summary>
+        public TreeLayoutConfiguration Configuration
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the EntityTreeControl
+        /// </summary>
+        public EntityTreeControl()
+        {
+            InitializeComponent();
+        }
+
+        public EntityTreeControl(TreeLayoutConfiguration configuration)
+        {
+            this.Configuration = configuration;
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            var elements = GetElements();
+
+            this.treeView.ItemsSource = elements.Select(x => new ObjectForTreeView(x.AsIObject()));
+        }
+
+        /// <summary>
+        /// Gets all the elements being returned by the elements factory
+        /// </summary>
+        /// <returns>Collection, containing all the elements</returns>
+        private IReflectiveCollection GetElements()
+        {
+            var pool = Injection.Application.Get<IPool>();
+            Ensure.That(this.Configuration.ElementsFactory != null, "No Elementsfactory is set");
+
+            var elements = this.Configuration.ElementsFactory(pool);
+            return elements;
+        }
+    }
+}

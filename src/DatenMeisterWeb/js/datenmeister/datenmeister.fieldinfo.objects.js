@@ -1337,5 +1337,27 @@ define(["require", "exports", 'datenmeister.objects'], function(require, exports
         TableView.setDoAutoGenerateByProperties = setDoAutoGenerateByProperties;
     })(exports.TableView || (exports.TableView = {}));
     var TableView = exports.TableView;
+
+    (function (TreeView) {
+        TreeView.TypeName = 'TreeView';
+
+        function create() {
+            var result = new __d__.JsonExtentObject();
+            result.set('type', 'TreeView');
+            return result;
+        }
+        TreeView.create = create;
+
+        function getExtentUri(item) {
+            return item.get('extentUri');
+        }
+        TreeView.getExtentUri = getExtentUri;
+
+        function setExtentUri(item, value) {
+            item.set('extentUri', value);
+        }
+        TreeView.setExtentUri = setExtentUri;
+    })(exports.TreeView || (exports.TreeView = {}));
+    var TreeView = exports.TreeView;
 });
 //# sourceMappingURL=datenmeister.fieldinfo.objects.js.map

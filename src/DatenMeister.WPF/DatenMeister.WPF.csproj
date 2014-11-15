@@ -51,6 +51,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\EntityTreeControl.xaml.cs">
+      <DependentUpon>EntityTreeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\IListLayout.cs" />
+    <Compile Include="Controls\ListLayoutConfiguration.cs" />
+    <Compile Include="Controls\ObjectForTreeView.cs" />
+    <Compile Include="Controls\TreeLayoutConfiguration.cs" />
     <Compile Include="Windows\DetailDialog.xaml.cs">
       <DependentUpon>DetailDialog.xaml</DependentUpon>
     </Compile>
@@ -118,6 +125,10 @@
     <Compile Include="Windows\WindowFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\EntityTreeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\DetailDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

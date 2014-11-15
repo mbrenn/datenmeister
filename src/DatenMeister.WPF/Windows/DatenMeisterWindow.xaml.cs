@@ -1,5 +1,4 @@
 ﻿using BurnSystems.Logging;
-using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider.Wrapper;
 using DatenMeister.DataProvider.Wrapper.EventOnChange;
@@ -8,26 +7,16 @@ using DatenMeister.Logic;
 using DatenMeister.Pool;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
-using DatenMeister.WPF.Helper;
 using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Modules.RecentFiles;
 using Ninject;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml.Linq;
 
 namespace DatenMeister.WPF.Windows
@@ -235,7 +224,13 @@ namespace DatenMeister.WPF.Windows
 
             var filteredViewExtent =
                 viewExtent.Elements()
-                    .FilterByType(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
+                    .Where(
+                        x =>
+                        {
+                            var metaClass = (x as IElement).getMetaClass();
+                            return metaClass.Equals(DatenMeister.Entities.AsObject.FieldInfo.Types.TableView)
+                                || metaClass.Equals(DatenMeister.Entities.AsObject.FieldInfo.Types.TreeView);
+                        });
 
             var elements = new List<IObject>();
             var first = true;
@@ -244,6 +239,9 @@ namespace DatenMeister.WPF.Windows
             foreach (var tableInfo in filteredViewExtent)
             {
                 var tableInfoObj = tableInfo.AsIObject();
+                var name = DatenMeister.Entities.AsObject.Uml.NamedElement.getName(tableInfoObj);
+                var extentUri = DatenMeister.Entities.AsObject.FieldInfo.TableView.getExtentUri(tableInfoObj);
+
                 elements.Add(tableInfoObj);
 
                 // Check, if there is already a tab, which hosts the tableInfo
@@ -253,46 +251,47 @@ namespace DatenMeister.WPF.Windows
                     continue;
                 }
 
-                var tableViewInfo = new DatenMeister.Entities.AsObject.FieldInfo.TableView(tableInfoObj);
-
-                var extentUri = tableViewInfo.getExtentUri();
-                //Ensure.That(!string.IsNullOrEmpty(extentUri), "ExtentURI has not been given");
-
-                var name = tableViewInfo.getName();
-                var tab = CreateTab(tableInfoObj, name);
-
-                // Creates the list control
-                var listConfiguration = new TableLayoutConfiguration()
+                ///////////////////////////////////
+                // Creates the Elements Factory
+                Func<IPool, IReflectiveCollection> elementsFactory = (x) =>
                 {
-                    TableViewInfo = tableViewInfo
+                    var e = x.ResolveByPath(extentUri);
+                    if (e == null || e == ObjectHelper.Null)
+                    {
+                        throw new InvalidOperationException(extentUri + " did return null");
+                    }
+
+                    return e.AsReflectiveCollection();
                 };
 
-                listConfiguration.ElementsFactory = (x) =>
-                    {
-                        var e = x.ResolveByPath(extentUri);
-                        if (e == null || e == ObjectHelper.Null)
-                        {
-                            throw new InvalidOperationException(extentUri + " did return null");
-                        }
-                        
-                        return e.AsReflectiveCollection();
-                    };
+                ///////////////////////////
+                // Creates the lsit control itself
+                UIElement entityList;
+                if ((tableInfoObj as IElement).getMetaClass() == DatenMeister.Entities.AsObject.FieldInfo.Types.TableView)
+                {
+                    entityList = this.CreateTableLayoutElement(tableInfoObj, elementsFactory);
+                }
+                else
+                {
+                    throw new NotImplementedException("Unknown View Type");
+                }
 
-                var entityList = new EntityTableControl();
-                entityList.Configure(listConfiguration);
-
-                // Creates the grid being used
+                //////////////////////////////////////////////
+                // Creates the grid, where the control is hosted. 
+                // The grid will be included into a new tab
+                var tab = CreateTab(tableInfoObj, name);
                 var grid = new Grid();
                 grid.Children.Add(entityList);
                 tab.Content = grid;
 
                 this.tabMain.Items.Add(tab);
 
+                Ensure.That(entityList is IListLayout, "Given list is not of type IListLayout");
                 this.listTabs.Add(new TabInformation()
                     {
                         Name = name,
                         TabItem = tab,
-                        TableControl = entityList,
+                        TableControl = entityList as IListLayout,
                         TableViewInfo = tableInfo
                     });
 
@@ -313,6 +312,29 @@ namespace DatenMeister.WPF.Windows
                     this.tabMain.Items.Remove(listTab.TabItem);
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates the UI element for the table layout 
+        /// </summary>
+        /// <param name="tableInfoObj">View information being used for the element</param>
+        /// <param name="elementsFactory">The element factory, which is used to retrieve
+        /// all the elements</param>
+        /// <returns>The created UI Element</returns>
+        private UIElement CreateTableLayoutElement(IObject tableInfoObj, Func<IPool, IReflectiveCollection> elementsFactory)
+        {
+            UIElement entityList;
+            var listConfiguration = new TableLayoutConfiguration()
+            {
+                TableViewInfo = tableInfoObj
+            };
+
+            listConfiguration.ElementsFactory = elementsFactory;
+
+            var tableControlList = new EntityTableControl();
+            tableControlList.Configure(listConfiguration);
+            entityList = tableControlList;
+            return entityList;
         }
 
         /// <summary>

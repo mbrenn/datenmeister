@@ -26,9 +26,19 @@ namespace DatenMeister.WPF.Controls
         Read
     }
 
+    /// <summary>
+    /// Enumeration of all available display modes for a certain view
+    /// </summary>
     public enum DisplayMode
     {
+        /// <summary>
+        /// Table view being used
+        /// </summary>
         Table, 
+
+        /// <summary>
+        /// Formview being used
+        /// </summary>
         Form
     }
 }

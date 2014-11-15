@@ -28,7 +28,7 @@ namespace DatenMeister.WPF.Controls
     /// <summary>
     /// Interaktionslogik für ObjectTable.xaml
     /// </summary>
-    public partial class EntityTableControl : UserControl
+    public partial class EntityTableControl : UserControl, IListLayout
     {
         /// <summary>
         /// Gets or sets the configuration of the class

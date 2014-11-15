@@ -37,7 +37,8 @@ types = [
          DatenMeister.Entities.FieldInfos.MultiReferenceField,
          DatenMeister.Entities.FieldInfos.View,
          DatenMeister.Entities.FieldInfos.FormView,
-         DatenMeister.Entities.FieldInfos.TableView]
+         DatenMeister.Entities.FieldInfos.TableView,
+         DatenMeister.Entities.FieldInfos.TreeView]
 TypeScriptFactory.createFiles(tsFilename, types)
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Objects.cs"

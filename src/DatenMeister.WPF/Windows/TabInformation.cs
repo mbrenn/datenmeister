@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Windows
@@ -34,7 +35,7 @@ namespace DatenMeister.WPF.Windows
         /// <summary>
         /// Gets or sets the instance of the control, which show the table control
         /// </summary>
-        public EntityTableControl TableControl
+        public IListLayout TableControl
         {
             get;
             set;
