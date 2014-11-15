@@ -14,7 +14,7 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
-        /// Gets or sets the value that shall be represented
+        /// Gets or sets the value that shall be representeds
         /// </summary>
         public IObject Value
         {
@@ -28,8 +28,7 @@ namespace DatenMeister.WPF.Controls
         /// <returns>The string representation of the item</returns>
         public override string ToString()
         {
-            this.Value.ToString();
-            return base.ToString();
+            return this.Value.ToString();
         }
     }
 }

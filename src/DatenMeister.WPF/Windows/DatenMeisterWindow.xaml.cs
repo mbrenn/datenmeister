@@ -386,7 +386,6 @@ namespace DatenMeister.WPF.Windows
                         this.Dispatcher.BeginInvoke(
                             new Action(() => this.RefreshTabs()),
                             System.Windows.Threading.DispatcherPriority.Background);
-
                     };
 
                 logger.Verbose("Event connection to View Extent is established");

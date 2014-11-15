@@ -36,19 +36,13 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public EntityTreeControl()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         public EntityTreeControl(TreeLayoutConfiguration configuration)
         {
             this.Configuration = configuration;
-        }
-
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
-
-            this.RefreshItems();
+            this.InitializeComponent();
         }
 
         /// <summary>
@@ -62,6 +56,12 @@ namespace DatenMeister.WPF.Controls
 
             var elements = this.Configuration.ElementsFactory(pool);
             return elements;
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            this.RefreshItems();
         }
 
         public void RefreshItems()

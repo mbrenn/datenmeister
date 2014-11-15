@@ -133,5 +133,14 @@ namespace DatenMeister.DataProvider.Wrapper
         {
             get { return this.Value; }
         }
+
+        /// <summary>
+        /// Converts the element to a string element
+        /// </summary>
+        /// <returns>The value as a string representation</returns>
+        public override string ToString()
+        {
+            return this.Value.ToString() + "*";
+        }
     }
 }
