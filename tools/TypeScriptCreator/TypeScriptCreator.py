@@ -77,8 +77,23 @@ CSharpFactory.createFiles(csFilename, projektMeisterTypes, "ProjektMeister.Data.
 csFilename = "..\\..\\..\\projektmeister\\src\\ProjektMeister\\Data\\Entities\\AsObject\\PM.Types.cs"
 CSharpFactory.createTypeFile(csFilename, projektMeisterTypes, "ProjektMeister.Data.Entities.AsObject", "Types", "datenmeister:///projektmeister/types");
 
-print('Compiling the TypeScript-File')
-TypeScriptFactory.compile(tsFilename)
-TypeScriptFactory.compile(tsUMLFilename)
+#print('Compiling the TypeScript-File')
+#TypeScriptFactory.compile(tsFilename)
+#TypeScriptFactory.compile(tsUMLFilename)
  
 print('Files have been created and compiled')
+
+#
+# Creates the entities for the DatenMeister.AddOns
+print('Creating for the DatenMeister.AddOns')
+clr.AddReferenceToFile("DatenMeister.AddOns");
+import DatenMeister.AddOns
+datenMeisterAddonsTypes = [
+        DatenMeister.AddOns.Data.FileSystem.File,
+        DatenMeister.AddOns.Data.FileSystem.Directory
+        ]
+
+csFilename = "..\\..\\src\\DatenMeister.AddOns\\Data\\FileSystem\\AsObjects.cs"
+CSharpFactory.createFiles(csFilename, datenMeisterAddonsTypes, "DatenMeister.AddOns.Data.FileSystem.AsObject");
+csFilename = "..\\..\\src\\DatenMeister.AddOns\\Data\\FileSystem\\FileSystemTypes.cs"
+CSharpFactory.createTypeFile(csFilename, datenMeisterAddonsTypes, "DatenMeister.AddOns.Data.FileSystem.AsObject", "Types", "datenmeister:///types/dmaddons/filesystem");

@@ -53,7 +53,7 @@ namespace DatenMeister.DataProvider.DotNet
         {
             // TODO: Assign yourself to the reflective collection
             Ensure.That(!(value is DotNetObject), "DotNetObject may not be hosting another DotNetObject");
-            Ensure.That(!(value is IObject), "DotNetObject may not be hosting another DotNetObject");
+            Ensure.That(!(value is IObject), "DotNetObject may not be hosting another IObject");
 
             Ensure.That(value != null);
 
@@ -127,7 +127,7 @@ namespace DatenMeister.DataProvider.DotNet
         public object get(string propertyName)
         {
             var property = GetProperty(propertyName);
-            if ( property == null )
+            if (property == null)
             {
                 return ObjectHelper.NotSet;
             }
@@ -222,7 +222,6 @@ namespace DatenMeister.DataProvider.DotNet
 
         public void delete()
         {
-            Ensure.That(extent != null, "No extent had been given");
             this.sequence.remove(this);
         }
 
@@ -284,7 +283,8 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else
             {
-                // It is not an enumeration and it is not a simple type
+                // It is not an enumeration and it is not a simple type. 
+                // It is a complex .Net-Type
                 return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent.Elements(), checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
             }
         }

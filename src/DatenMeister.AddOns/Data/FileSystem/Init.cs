@@ -78,23 +78,21 @@ namespace DatenMeister.AddOns.Data.FileSystem
         /// <param name="typeExtent">Extent being used for the types</param>
         private void Do(IURIExtent typeExtent)
         {
-
             // Checks, if the File is already in database, if yes, then the initialization is skipped
             var elements = typeExtent.Elements();
             if (!elements.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.File"))
             {
-                Types.File = this.DotNetTypeConverter.Convert(typeExtent, typeof(File));
-                Types.Directory = this.DotNetTypeConverter.Convert(typeExtent, typeof(Directory));
+                AsObject.Types.Init(typeExtent);
             }
             else
             {
-                Types.File = elements.Where(x =>
+                AsObject.Types.File = elements.Where(x =>
                     x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.File").First().AsIObject();
-                Types.Directory = elements.Where(x =>
+                AsObject.Types.Directory = elements.Where(x =>
                     x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.Directory").First().AsIObject();
             }
 
-            Ensure.That(Types.File != null && Types.Directory != null,
+            Ensure.That(AsObject.Types.File != null && AsObject.Types.Directory != null,
                 "File or Directory types could not be found. Reinitialize the type extent");
         }
     }

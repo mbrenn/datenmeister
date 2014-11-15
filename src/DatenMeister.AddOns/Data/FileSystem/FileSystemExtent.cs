@@ -40,7 +40,8 @@ namespace DatenMeister.AddOns.Data.FileSystem
 
         public IReflectiveSequence Elements()
         {
-            throw new NotImplementedException();
+            var result = Directory.CreateOnDirectory(this.RootPath).ToList();
+            return new DataProvider.DotNet.DotNetReflectiveSequence<FileSystemObject>(this, result);
         }
 
         public IPool Pool

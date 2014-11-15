@@ -87,6 +87,9 @@ namespace DatenMeister.DataProvider.DotNet
             return new DotNetObject(this, item);
         }
 
+        /// <summary>
+        /// Return the extent as a dot net extent
+        /// </summary>
         public DotNetExtent ExtentAsDotNetExtent
         {
             get { return (DotNetExtent)this.Extent; }

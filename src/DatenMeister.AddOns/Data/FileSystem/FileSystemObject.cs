@@ -1,24 +1,34 @@
 ﻿using DatenMeister.Entities.UML;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DatenMeister.AddOns.Data.FileSystem
 {
-    public class FileSystemObject : NamedElement
+    public abstract class FileSystemObject : NamedElement
     {
-        public virtual string id
+        /// <summary>
+        /// Stores the file system information, which is used to get the properties
+        /// </summary>
+        protected abstract System.IO.FileSystemInfo FileSystemInfo
         {
             get;
-            set;
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public virtual string id
+        {
+            get { return this.relativePath; }
         }
 
         public new virtual string name
         {
-            get;
-            set;
+            get { return this.FileSystemInfo.Name; }
         }
 
         public virtual string relativePath
@@ -29,8 +39,7 @@ namespace DatenMeister.AddOns.Data.FileSystem
 
         public virtual string extension
         {
-            get;
-            set;
+            get { return Path.GetExtension(this.FileSystemInfo.Name); }
         }
     }
 }

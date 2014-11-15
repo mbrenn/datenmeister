@@ -74,12 +74,13 @@
     <Compile Include="ComplianceSuite\WPF\SelectSuite.xaml.cs">
       <DependentUpon>SelectSuite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\FileSystem\AsObjects.cs" />
     <Compile Include="Data\FileSystem\FileSystemExtent.cs" />
     <Compile Include="Data\FileSystem\Directory.cs" />
     <Compile Include="Data\FileSystem\File.cs" />
     <Compile Include="Data\FileSystem\FileSystemObject.cs" />
+    <Compile Include="Data\FileSystem\FileSystemTypes.cs" />
     <Compile Include="Data\FileSystem\Init.cs" />
-    <Compile Include="Data\FileSystem\Types.cs" />
     <Compile Include="Export\Excel\ExcelExport.cs" />
     <Compile Include="Export\Excel\ExcelExportSettings.cs" />
     <Compile Include="Export\Excel\ExcelExportGui.cs" />
