@@ -44,6 +44,7 @@ namespace DatenMeister.Logic.SourceFactory
                 + "[global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"DatenMeister.Logic.SourceFactory.CSharpTypeDefinitionFactory\", \""
                 + CSharpSourceFactory.FactoryVersion.ToString()
                 + "\")]");
+            writer.WriteLine(FourSpaces + "[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]");
             writer.WriteLine(string.Format(
                 FourSpaces + "public static partial class {0}",
                 this.className));

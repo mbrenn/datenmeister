@@ -1,6 +1,7 @@
 namespace DatenMeister.AddOns.Data.FileSystem.AsObject
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpTypeDefinitionFactory", "1.0.7.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public static partial class Types
     {
         public const string DefaultExtentUri="datenmeister:///types/dmaddons/filesystem";
