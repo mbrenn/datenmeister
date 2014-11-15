@@ -95,7 +95,7 @@ namespace DatenMeister.AddOns.Views
 
                 var listConfiguration = new TableLayoutConfiguration()
                 {
-                    TableViewInfo = globalDotNetExtent.CreateObject(listView),
+                    LayoutInfo = globalDotNetExtent.CreateObject(listView),
                     ViewInfoForDetailView = globalDotNetExtent.CreateObject(detailView)
                 };
 

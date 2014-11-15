@@ -12,6 +12,15 @@ namespace DatenMeister.WPF.Controls
     public class ListLayoutConfiguration
     {
         /// <summary>
+        /// Gets or sets the table view information
+        /// </summary>
+        public IObject LayoutInfo
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the factory being used for the reflective collections
         /// </summary>
         public Func<IPool, IReflectiveCollection> ElementsFactory

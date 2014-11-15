@@ -271,6 +271,10 @@ namespace DatenMeister.WPF.Windows
                 {
                     entityList = this.CreateTableLayoutElement(tableInfoObj, elementsFactory);
                 }
+                else if ((tableInfoObj as IElement).getMetaClass() == DatenMeister.Entities.AsObject.FieldInfo.Types.TreeView)
+                {
+                    entityList = this.CreateTreeLayoutElement(tableInfoObj, elementsFactory);
+                }
                 else
                 {
                     throw new NotImplementedException("Unknown View Type");
@@ -326,13 +330,35 @@ namespace DatenMeister.WPF.Windows
             UIElement entityList;
             var listConfiguration = new TableLayoutConfiguration()
             {
-                TableViewInfo = tableInfoObj
+                LayoutInfo = tableInfoObj
             };
 
             listConfiguration.ElementsFactory = elementsFactory;
 
             var tableControlList = new EntityTableControl();
             tableControlList.Configure(listConfiguration);
+            entityList = tableControlList;
+            return entityList;
+        }
+
+        /// <summary>
+        /// Creates the UI element for the table layout 
+        /// </summary>
+        /// <param name="tableInfoObj">View information being used for the element</param>
+        /// <param name="elementsFactory">The element factory, which is used to retrieve
+        /// all the elements</param>
+        /// <returns>The created UI Element</returns>
+        private UIElement CreateTreeLayoutElement(IObject tableInfoObj, Func<IPool, IReflectiveCollection> elementsFactory)
+        {
+            UIElement entityList;
+            var listConfiguration = new TreeLayoutConfiguration()
+            {
+                LayoutInfo = tableInfoObj
+            };
+
+            listConfiguration.ElementsFactory = elementsFactory;
+
+            var tableControlList = new EntityTreeControl(listConfiguration);
             entityList = tableControlList;
             return entityList;
         }

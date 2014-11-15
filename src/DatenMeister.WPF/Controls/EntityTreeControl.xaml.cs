@@ -20,7 +20,7 @@ namespace DatenMeister.WPF.Controls
     /// <summary>
     /// Interaction logic for EntityTreeControl.xaml
     /// </summary>
-    public partial class EntityTreeControl : UserControl
+    public partial class EntityTreeControl : UserControl, IListLayout
     {
         /// <summary>
         /// Stores the items that shall be shown
@@ -47,9 +47,8 @@ namespace DatenMeister.WPF.Controls
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            var elements = GetElements();
 
-            this.treeView.ItemsSource = elements.Select(x => new ObjectForTreeView(x.AsIObject()));
+            this.RefreshItems();
         }
 
         /// <summary>
@@ -63,6 +62,26 @@ namespace DatenMeister.WPF.Controls
 
             var elements = this.Configuration.ElementsFactory(pool);
             return elements;
+        }
+
+        public void RefreshItems()
+        {
+            var elements = GetElements();
+
+            this.treeView.ItemsSource = elements.Select(x => new ObjectForTreeView(x.AsIObject()));
+        }
+
+        public void GiveFocusToGridContent()
+        {
+        }
+
+        /// <summary>
+        /// Defines what shall happen, when the user doubleclicks on a specific element
+        /// </summary>
+        public Action<DetailOpenEventArgs> OpenSelectedViewFunc
+        {
+            get;
+            set;
         }
     }
 }

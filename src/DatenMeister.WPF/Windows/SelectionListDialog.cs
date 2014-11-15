@@ -46,7 +46,7 @@ namespace DatenMeister.WPF.Windows
                 var tableViewObj = Injection.Application.Get<GlobalDotNetExtent>().CreateObject(tableView);
                 tableViewInfo = new Entities.AsObject.FieldInfo.TableView(tableViewObj);
                 tableViewInfo.setDoAutoGenerateByProperties(true);
-                configuration.TableViewInfo = tableViewInfo;
+                configuration.LayoutInfo = tableViewInfo;
             }
 
             configuration.UseAsSelectionControl = true;
