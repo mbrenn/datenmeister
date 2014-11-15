@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Test;
+using DatenMeister.Logic;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -68,7 +69,54 @@ namespace DatenMeister.WPF.Controls
         {
             var elements = GetElements();
 
-            this.treeView.ItemsSource = elements.Select(x => new ObjectForTreeView(x.AsIObject()));
+            this.treeView.ItemsSource = elements.Select(x => this.ConvertToTreeViewItem(x.AsIObject()));
+        }
+
+        /// <summary>
+        /// Converts the given item to a treeview item, which will be shown in the treeview 
+        /// </summary>
+        /// <param name="item">Item to be converted</param>
+        /// <returns>The treeview item being used</returns>
+        private TreeViewItem ConvertToTreeViewItem(IObject item, List<IObject> alreadyCovered = null)
+        {
+            if ( alreadyCovered == null )
+            {
+                alreadyCovered = new List<IObject>();
+            }
+
+            var treeViewItem = new TreeViewItem();
+            treeViewItem.Header = new ObjectDictionaryForView(item)["name"];
+
+            foreach (var pair in item.getAll().ToList())
+            {
+                var tempList = new List<TreeViewItem>();
+                var asEnumeration = pair.Value.AsEnumeration();
+                foreach (var subItem in asEnumeration.Where(x => x is IObject).Select(x => x.AsIObject()))
+                {
+                    if (!alreadyCovered.Any(x => subItem == x))
+                    {
+                        var treeSubItem = this.ConvertToTreeViewItem(subItem, alreadyCovered);
+                        tempList.Add(treeSubItem);
+                    }
+                }
+
+                if (tempList.Count > 0)
+                {
+                    var propertyItem = new TreeViewItem()
+                    {
+                        Header = pair.PropertyName
+                    };
+
+                    foreach (var temp in tempList)
+                    {
+                        propertyItem.Items.Add(temp);
+                    }
+
+                    treeViewItem.Items.Add(propertyItem);
+                }
+            }
+
+            return treeViewItem;
         }
 
         public void GiveFocusToGridContent()
