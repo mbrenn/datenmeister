@@ -3,6 +3,7 @@ using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic.Views;
+using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
@@ -20,7 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DatenMeister.WPF.Controls
+namespace DatenMeister.WPF.Windows
 {
     /// <summary>
     /// Interaction logic for ListDialog.xaml

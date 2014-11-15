@@ -1,4 +1,4 @@
-﻿<Window xmlns:Controls="clr-namespace:DatenMeister.WPF.Controls"  x:Class="DatenMeister.WPF.Controls.ListDialog"
+﻿<Window xmlns:Controls="clr-namespace:DatenMeister.WPF.Controls"  x:Class="DatenMeister.WPF.Windows.ListDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

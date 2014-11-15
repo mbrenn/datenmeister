@@ -2,6 +2,7 @@
 using BurnSystems.Test;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Pool;
+using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
 using System.Collections.Generic;

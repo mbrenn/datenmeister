@@ -11,6 +11,7 @@ using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls.GuiElements;
 using DatenMeister.WPF.Controls.GuiElements.Elements;
 using DatenMeister.WPF.Helper;
+using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider.DotNet;
+using DatenMeister.WPF.Controls;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatenMeister.WPF.Controls
+namespace DatenMeister.WPF.Windows
 {
     /// <summary>
     /// Opens the list dialog, where the user can select one or more items

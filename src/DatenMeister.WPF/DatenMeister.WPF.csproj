@@ -51,7 +51,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\DetailDialog.xaml.cs">
+    <Compile Include="Windows\DetailDialog.xaml.cs">
       <DependentUpon>DetailDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DetailOpenEventArgs.cs" />
@@ -84,11 +84,11 @@
     <Compile Include="Controls\GuiElements\WpfMultiReferenceField.cs" />
     <Compile Include="Controls\GuiElements\WpfTextField.cs" />
     <Compile Include="Controls\IDataPresentationState.cs" />
-    <Compile Include="Controls\ListDialog.xaml.cs">
+    <Compile Include="Windows\ListDialog.xaml.cs">
       <DependentUpon>ListDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SelectionListDialog.cs" />
-    <Compile Include="Controls\SelectTypeOfNewObjectDialog.cs" />
+    <Compile Include="Windows\SelectionListDialog.cs" />
+    <Compile Include="Windows\SelectTypeOfNewObjectDialog.cs" />
     <Compile Include="Controls\FormLayoutConfiguration.cs" />
     <Compile Include="Controls\TableLayoutConfiguration.cs" />
     <Compile Include="Helper\DataGridHelper.cs" />
@@ -118,7 +118,7 @@
     <Compile Include="Windows\WindowFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\DetailDialog.xaml">
+    <Page Include="Windows\DetailDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,7 +134,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ListDialog.xaml">
+    <Page Include="Windows\ListDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
