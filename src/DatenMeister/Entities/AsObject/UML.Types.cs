@@ -1,5 +1,6 @@
 namespace DatenMeister.Entities.AsObject.Uml
 {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpTypeDefinitionFactory", "1.0.7.0")]
     public static partial class Types
     {
         public const string DefaultExtentUri="datenmeister:///types/uml";
@@ -106,10 +107,15 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
-            extent.Mapping.Add(typeof(DatenMeister.Entities.UML.NamedElement), Types.NamedElement);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.UML.Type), Types.Type);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.UML.Property), Types.Property);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.UML.Class), Types.Class);
+            AssignTypeMapping(extent.Mapping);
+        }
+
+        public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)
+        {
+            mapping.Add(typeof(DatenMeister.Entities.UML.NamedElement), Types.NamedElement);
+            mapping.Add(typeof(DatenMeister.Entities.UML.Type), Types.Type);
+            mapping.Add(typeof(DatenMeister.Entities.UML.Property), Types.Property);
+            mapping.Add(typeof(DatenMeister.Entities.UML.Class), Types.Class);
         }
 
         static partial void OnInitCompleted();

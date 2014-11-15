@@ -13,7 +13,7 @@ namespace DatenMeister.Logic.SourceFactory
     /// </summary>
     public class CSharpSourceFactory : SourceFactoryBase
     {
-        public static Version FactoryVersion = new Version(1, 0, 6, 0);
+        public static Version FactoryVersion = new Version(1, 0, 7, 0);
 
         /// <summary>
         /// Namespace to be used for the class

@@ -91,8 +91,9 @@ namespace DatenMeister.Tests.Modules
             Assert.That(foundDirectory.get("name").AsSingle().ToString(), Is.EqualTo("First"));
             Assert.That(foundDirectory.get("extension").AsSingle().ToString(), Is.EqualTo(""));
             Assert.That(foundDirectory.get("relativePath").AsSingle().ToString(), Is.EqualTo("/First"));
-            Assert.That(foundFileXTxt.getMetaClass()
-                    == DatenMeister.AddOns.Data.FileSystem.AsObject.Types.Directory);
+            Assert.That(
+                foundDirectory.getMetaClass(),
+                Is.EqualTo(DatenMeister.AddOns.Data.FileSystem.AsObject.Types.Directory));
             // Everything is done, now remove all the stuff
             System.IO.Directory.Delete(rootPath, true);
         }

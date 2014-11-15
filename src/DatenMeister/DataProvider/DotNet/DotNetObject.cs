@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.Logic;
+using Ninject;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -94,21 +95,40 @@ namespace DatenMeister.DataProvider.DotNet
 
         public void SetMetaClassByMapping(DotNetExtent extent)
         {
-            if (this.value == null || extent == null)
+            if (this.value == null)
             {
+                // No value given
                 this.metaClass = null;
-                return;
             }
-
-            var result = extent.Mapping.FindByDotNetType(this.value.GetType());
-            if (result != null)
+            else
             {
-                this.metaClass = result.Type;
-                return;
+                if (this.extent == null)
+                {
+                    // Find by general, perhabs global mapper
+                    var mappings = Injection.Application.TryGet<IMapsMetaClassFromDotNet>();
+                    if (mappings != null)
+                    {
+                        this.metaClass = mappings.GetMetaClass(this.value.GetType());
+                    }
+                    else
+                    {
+                        this.metaClass = null;
+                    }
+                }
+                else
+                {
+                    // Find by the internal mapping
+                    var result = extent.Mapping.FindByDotNetType(this.value.GetType());
+                    if (result != null)
+                    {
+                        this.metaClass = result.Type;
+                    }
+                    else
+                    {
+                        this.metaClass = null;
+                    }
+                }
             }
-
-            this.metaClass = null;
-            return;
         }
 
         /// <summary>

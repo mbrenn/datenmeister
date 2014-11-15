@@ -181,6 +181,7 @@ namespace DatenMeister.Logic
 
             // Initializes the default type resolver
             Injection.Application.Bind<ITypeResolver>().To<TypeResolverImpl>().InSingletonScope();
+            Injection.Application.Bind<IMapsMetaClassFromDotNet>().To<DotNetTypeMapping>().InSingletonScope();
 
             // Initializes the Method provider
             Injection.Application.Bind<IMethodProvider>().To<SimpleMethodProvider>().InSingletonScope();

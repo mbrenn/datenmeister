@@ -72,6 +72,7 @@
     <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
     <Compile Include="DataProvider\DotNet\DotNetUnspecified.cs" />
     <Compile Include="DataProvider\DotNet\GlobalDotNetExtent.cs" />
+    <Compile Include="DataProvider\DotNet\IMapsMetaClassFromDotNet.cs" />
     <Compile Include="DataProvider\EnumerationReflectiveSequence.cs" />
     <Compile Include="DataProvider\ExtensionMethods.cs" />
     <Compile Include="DataProvider\FactoryProvider.cs" />

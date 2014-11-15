@@ -1,6 +1,6 @@
 namespace DatenMeister.AddOns.Data.FileSystem.AsObject
 {
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class File : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -140,7 +140,7 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Directory : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {

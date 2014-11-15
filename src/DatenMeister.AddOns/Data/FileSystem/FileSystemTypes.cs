@@ -1,5 +1,6 @@
 namespace DatenMeister.AddOns.Data.FileSystem.AsObject
 {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpTypeDefinitionFactory", "1.0.7.0")]
     public static partial class Types
     {
         public const string DefaultExtentUri="datenmeister:///types/dmaddons/filesystem";
@@ -60,8 +61,13 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
-            extent.Mapping.Add(typeof(DatenMeister.AddOns.Data.FileSystem.File), Types.File);
-            extent.Mapping.Add(typeof(DatenMeister.AddOns.Data.FileSystem.Directory), Types.Directory);
+            AssignTypeMapping(extent.Mapping);
+        }
+
+        public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)
+        {
+            mapping.Add(typeof(DatenMeister.AddOns.Data.FileSystem.File), Types.File);
+            mapping.Add(typeof(DatenMeister.AddOns.Data.FileSystem.Directory), Types.Directory);
         }
 
         static partial void OnInitCompleted();

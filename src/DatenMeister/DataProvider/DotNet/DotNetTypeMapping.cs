@@ -8,7 +8,7 @@ namespace DatenMeister.DataProvider.DotNet
     /// <summary>
     /// Manages the mapping between .Net Types and DatenMeister types
     /// </summary>
-    public class DotNetTypeMapping
+    public class DotNetTypeMapping : IMapsMetaClassFromDotNet
     {
         /// <summary>
         /// Stores the mappings
@@ -45,6 +45,28 @@ namespace DatenMeister.DataProvider.DotNet
         public void RemoveFor(Type type)
         {
             this.mappings.RemoveAll(x => x.DotNetType == type);
+        }
+
+        public IObject GetMetaClass(Type dotNetType)
+        {
+            var result = this.FindByDotNetType(dotNetType);
+            if (result != null)
+            {
+                return result.Type;
+            }
+
+            return null;
+        }
+
+        public Type GetDotNetType(IObject type)
+        {
+            var result = this.FindByIObjectType(type);
+            if (result != null)
+            {
+                return result.DotNetType;
+            }
+
+            return null;
         }
     }
 }

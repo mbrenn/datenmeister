@@ -1,5 +1,6 @@
 namespace DatenMeister.Entities.AsObject.DM
 {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpTypeDefinitionFactory", "1.0.7.0")]
     public static partial class Types
     {
         public const string DefaultExtentUri="datenmeister:///types/datenmeister";
@@ -58,7 +59,12 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
-            extent.Mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
+            AssignTypeMapping(extent.Mapping);
+        }
+
+        public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)
+        {
+            mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
         }
 
         static partial void OnInitCompleted();

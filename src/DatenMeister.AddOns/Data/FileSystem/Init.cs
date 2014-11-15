@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.DotNet;
 using DatenMeister.Logic;
 using DatenMeister.Logic.TypeConverter;
 using DatenMeister.Pool;
@@ -91,6 +92,10 @@ namespace DatenMeister.AddOns.Data.FileSystem
                 AsObject.Types.Directory = elements.Where(x =>
                     x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.Directory").First().AsIObject();
             }
+
+            // Performs the type mapping
+            var mapping = Injection.Application.Get<IMapsMetaClassFromDotNet>();
+            AsObject.Types.AssignTypeMapping(mapping);
 
             Ensure.That(AsObject.Types.File != null && AsObject.Types.Directory != null,
                 "File or Directory types could not be found. Reinitialize the type extent");
