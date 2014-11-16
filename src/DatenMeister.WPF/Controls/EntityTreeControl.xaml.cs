@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.Logic;
+using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -79,12 +80,13 @@ namespace DatenMeister.WPF.Controls
         /// <returns>The treeview item being used</returns>
         private TreeViewItem ConvertToTreeViewItem(IObject item, List<IObject> alreadyCovered = null)
         {
-            if ( alreadyCovered == null )
+            if (alreadyCovered == null)
             {
                 alreadyCovered = new List<IObject>();
             }
 
             var treeViewItem = new TreeViewItem();
+            treeViewItem.Tag = item;
             treeViewItem.Header = new ObjectDictionaryForView(item)["name"];
 
             foreach (var pair in item.getAll().ToList())
@@ -104,7 +106,8 @@ namespace DatenMeister.WPF.Controls
                 {
                     var propertyItem = new TreeViewItem()
                     {
-                        Header = pair.PropertyName
+                        Header = "Property: " + pair.PropertyName,
+                        Tag = item
                     };
 
                     foreach (var temp in tempList)
@@ -130,6 +133,32 @@ namespace DatenMeister.WPF.Controls
         {
             get;
             set;
+        }
+
+        private void treeView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = this.treeView.SelectedItem as TreeViewItem;
+            var asIObject = item.Tag as IObject;
+
+            // Checks, if there is an function handler associated to the
+            // given table. View. If there is a function, call the associated function handler
+            if (this.OpenSelectedViewFunc != null && asIObject != null)
+            {
+                this.OpenSelectedViewFunc(
+                    new DetailOpenEventArgs()
+                    {
+                        Collection = this.GetElements(),
+                        Value = asIObject
+                    });
+            }
+            else if (asIObject != null)
+            {
+                DetailDialog.ShowDialogFor(asIObject);
+            }
+            else
+            {
+                MessageBox.Show("Item is not an object");
+            }
         }
     }
 }
