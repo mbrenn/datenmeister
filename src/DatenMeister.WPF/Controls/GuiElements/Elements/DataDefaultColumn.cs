@@ -35,12 +35,16 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
             if (methodSetBackgroundColor != null)
             {
                 var color = methodSetBackgroundColor.Invoke(null, realItem) as DatenMeister.Entities.DM.Primitives.Color;
-                cell.Background = new SolidColorBrush(
-                    Color.FromArgb(
-                        (byte)(color.A * 255),
-                        (byte)(color.R * 255),
-                        (byte)(color.G * 255),
-                        (byte)(color.B * 255)));
+
+                if (color != null)
+                {
+                    cell.Background = new SolidColorBrush(
+                        Color.FromArgb(
+                            (byte)(color.A * 255),
+                            (byte)(color.R * 255),
+                            (byte)(color.G * 255),
+                            (byte)(color.B * 255)));
+                }
             }
 
             return result;
