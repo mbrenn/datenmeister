@@ -38,6 +38,7 @@ namespace DatenMeister.AddOns.Views
 
                 Ensure.That(viewExtent != null, "No View extent has been defined");
 
+                //var tableView = DatenMeister.Entities.AsObject.FieldInfo.TreeView.create(viewExtent);
                 var tableView = DatenMeister.Entities.AsObject.FieldInfo.TableView.create(viewExtent);
                 viewExtent.Elements().add(tableView);
 
