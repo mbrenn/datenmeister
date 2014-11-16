@@ -195,8 +195,6 @@ namespace DatenMeister.WPF.Controls
                     // Add last row to make the scrolling ok
                     formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(0, GridUnitType.Star) });
                 }
-
-                //formGrid.Background = Brushes.Red;
             }
 
             // Focuses first element

@@ -102,7 +102,7 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else
             {
-                if (this.extent == null)
+                if (extent == null)
                 {
                     // Find by general, perhabs global mapper
                     var mappings = Injection.Application.TryGet<IMapsMetaClassFromDotNet>();
