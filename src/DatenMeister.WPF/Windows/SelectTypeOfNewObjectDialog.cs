@@ -9,8 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using DatenMeister.WPF.Controls;
 
-namespace DatenMeister.WPF.Controls
+namespace DatenMeister.WPF.Windows
 {
     public class SelectTypeOfNewObjectDialog : SelectionListDialog
     {

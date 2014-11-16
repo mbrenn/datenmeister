@@ -3,6 +3,7 @@ using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.Logic.Views;
+using DatenMeister.WPF.Controls;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DatenMeister.WPF.Controls
+namespace DatenMeister.WPF.Windows
 {
     /// <summary>
     /// Interaction logic for DetailDialog.xaml

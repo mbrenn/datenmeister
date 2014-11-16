@@ -122,6 +122,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.TableView);
             }
 
+            if(Types.TreeView == null || true)
+            {
+                Types.TreeView = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.TreeView, "TreeView");
+                extent.Elements().add(Types.TreeView);
+            }
+
 
             if(extent is DatenMeister.DataProvider.DotNet.DotNetExtent)
             {
@@ -809,6 +816,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TableView, property);
             }
 
+            {
+                // TreeView.extentUri
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentUri");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TreeView, property);
+            }
+
         }
 
         public static DatenMeister.IObject Comment;
@@ -841,10 +855,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject TableView;
 
+        public static DatenMeister.IObject TreeView;
+
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
             AssignTypeMapping(extent.Mapping);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TreeView), Types.TreeView);
         }
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)

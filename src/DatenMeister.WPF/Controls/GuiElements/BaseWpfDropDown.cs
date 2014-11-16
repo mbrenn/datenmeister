@@ -1,6 +1,7 @@
 ﻿using BurnSystems.ObjectActivation;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Pool;
+using DatenMeister.WPF.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;

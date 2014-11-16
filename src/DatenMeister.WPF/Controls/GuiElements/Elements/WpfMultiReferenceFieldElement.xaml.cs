@@ -2,6 +2,7 @@
 using BurnSystems.Test;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Pool;
+using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -155,7 +156,7 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
         {
             var configuration = new TableLayoutConfiguration()
             {
-                TableViewInfo = MultiReferenceField.getTableViewInfo(this.field.FieldInfo)
+                LayoutInfo = MultiReferenceField.getTableViewInfo(this.field.FieldInfo)
             };
             configuration.SetElements(this.GetReferenceObjects());
 

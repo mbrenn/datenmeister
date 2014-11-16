@@ -38,6 +38,7 @@ namespace DatenMeister.AddOns.Views
 
                 Ensure.That(viewExtent != null, "No View extent has been defined");
 
+                //var tableView = DatenMeister.Entities.AsObject.FieldInfo.TreeView.create(viewExtent);
                 var tableView = DatenMeister.Entities.AsObject.FieldInfo.TableView.create(viewExtent);
                 viewExtent.Elements().add(tableView);
 
@@ -95,7 +96,7 @@ namespace DatenMeister.AddOns.Views
 
                 var listConfiguration = new TableLayoutConfiguration()
                 {
-                    TableViewInfo = globalDotNetExtent.CreateObject(listView),
+                    LayoutInfo = globalDotNetExtent.CreateObject(listView),
                     ViewInfoForDetailView = globalDotNetExtent.CreateObject(detailView)
                 };
 

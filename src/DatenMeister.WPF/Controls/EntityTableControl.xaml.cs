@@ -11,6 +11,7 @@ using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls.GuiElements;
 using DatenMeister.WPF.Controls.GuiElements.Elements;
 using DatenMeister.WPF.Helper;
+using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace DatenMeister.WPF.Controls
     /// <summary>
     /// Interaktionslogik für ObjectTable.xaml
     /// </summary>
-    public partial class EntityTableControl : UserControl
+    public partial class EntityTableControl : UserControl, IListLayout
     {
         /// <summary>
         /// Gets or sets the configuration of the class
@@ -125,7 +126,7 @@ namespace DatenMeister.WPF.Controls
 
             var pool = Injection.Application.Get<IPool>();
 
-            var mainType = TableView.getMainType(this.Configuration.TableViewInfo);
+            var mainType = TableView.getMainType(this.Configuration.LayoutInfo);
             if (mainType == null)
             {
                 return ExtentType.View;
@@ -191,7 +192,7 @@ namespace DatenMeister.WPF.Controls
                 {
                     ViewHelper.AutoGenerateViewDefinition(
                         this.Configuration.ElementsFactory(pool),
-                        this.Configuration.TableViewInfo,
+                        this.Configuration.LayoutInfo,
                         true /*order by name*/);
                 }
 
@@ -204,7 +205,7 @@ namespace DatenMeister.WPF.Controls
                     var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
                     var name = fieldInfoObj.getName();
                     var binding = fieldInfoObj.getBinding();
-                    var column = WpfElementMapping.MapForTable(this.Configuration.TableViewInfo, fieldInfo);
+                    var column = WpfElementMapping.MapForTable(this.Configuration.LayoutInfo, fieldInfo);
                     column.Header = name;
                     column.Binding = new Binding("[" + binding + "]");
                     column.AssociatedViewColumn = fieldInfo;
@@ -396,7 +397,7 @@ namespace DatenMeister.WPF.Controls
 
             // Tries to fiendout the extent type
             var extentType = ExtentType.Type;
-            var mainType = TableView.getMainType(this.Configuration.TableViewInfo);
+            var mainType = TableView.getMainType(this.Configuration.LayoutInfo);
 
             if (mainType != null)
             {

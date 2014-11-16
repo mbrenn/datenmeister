@@ -1141,3 +1141,23 @@ export module TableView {
 
 }
 
+export module TreeView {
+    export var TypeName='TreeView';
+
+    export function create() {
+        var result = new __d__.JsonExtentObject();
+        result.set('type', 'TreeView');
+        return result;
+    }
+
+
+    export function getExtentUri(item: __d__.JsonExtentObject) {
+        return item.get('extentUri');
+    }
+
+    export function setExtentUri(item : __d__.JsonExtentObject, value: any) {
+        item.set('extentUri', value);
+    }
+
+}
+
