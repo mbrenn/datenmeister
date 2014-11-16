@@ -13,7 +13,7 @@ namespace DatenMeister.Logic.SourceFactory
     /// </summary>
     public class CSharpSourceFactory : SourceFactoryBase
     {
-        public static Version FactoryVersion = new Version(1, 0, 7, 0);
+        public static Version FactoryVersion = new Version(1, 0, 8, 0);
 
         /// <summary>
         /// Namespace to be used for the class
@@ -112,6 +112,8 @@ namespace DatenMeister.Logic.SourceFactory
         /// <param name="typeName">Type name, for whom the factory shall be created</param>
         private void EmitCreationByFactory(StreamWriter writer, string typeName)
         {
+            //////////////////////////
+            // Writes the generic creation method
             writer.WriteLine(
                 string.Format(
                     EightSpaces + "public static DatenMeister.IObject create(DatenMeister.IFactory factory)")
@@ -120,6 +122,20 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(EightSpaces + "{");
             //writer.WriteLine(TwelveSpaces + "throw new System.InvalidOperationException();");
             writer.WriteLine(TwelveSpaces + "return factory.create(" + this.nameSpace + ".Types." + typeName + ");");
+            writer.WriteLine(EightSpaces + "}");
+            writer.WriteLine();
+
+            ///////////////////////////////
+            // Writes the typed creation method
+            writer.WriteLine(
+                string.Format(
+                    EightSpaces + "public static {0} createTyped(DatenMeister.IFactory factory)",
+                    typeName)
+                );
+
+            writer.WriteLine(EightSpaces + "{");
+            //writer.WriteLine(TwelveSpaces + "throw new System.InvalidOperationException();");
+            writer.WriteLine(TwelveSpaces + "return new {0}(create(factory));", typeName);
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
         }

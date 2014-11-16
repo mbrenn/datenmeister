@@ -1,6 +1,6 @@
 namespace DatenMeister.Entities.AsObject.Uml
 {
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class NamedElement : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -15,6 +15,11 @@ namespace DatenMeister.Entities.AsObject.Uml
             return factory.create(DatenMeister.Entities.AsObject.Uml.Types.NamedElement);
         }
 
+        public static NamedElement createTyped(DatenMeister.IFactory factory)
+        {
+            return new NamedElement(create(factory));
+        }
+
         #region IObject Implementation
 
         public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
@@ -133,7 +138,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Type : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -148,6 +153,11 @@ namespace DatenMeister.Entities.AsObject.Uml
             return factory.create(DatenMeister.Entities.AsObject.Uml.Types.Type);
         }
 
+        public static Type createTyped(DatenMeister.IFactory factory)
+        {
+            return new Type(create(factory));
+        }
+
         #region IObject Implementation
 
         public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
@@ -266,7 +276,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Property : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -281,6 +291,11 @@ namespace DatenMeister.Entities.AsObject.Uml
             return factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
         }
 
+        public static Property createTyped(DatenMeister.IFactory factory)
+        {
+            return new Property(create(factory));
+        }
+
         #region IObject Implementation
 
         public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
@@ -399,7 +414,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Class : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -412,6 +427,11 @@ namespace DatenMeister.Entities.AsObject.Uml
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+        }
+
+        public static Class createTyped(DatenMeister.IFactory factory)
+        {
+            return new Class(create(factory));
         }
 
         #region IObject Implementation

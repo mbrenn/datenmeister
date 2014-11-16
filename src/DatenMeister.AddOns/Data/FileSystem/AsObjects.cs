@@ -1,6 +1,6 @@
 namespace DatenMeister.AddOns.Data.FileSystem.AsObject
 {
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class File : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -20,6 +20,11 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.AddOns.Data.FileSystem.AsObject.Types.File);
+        }
+
+        public static File createTyped(DatenMeister.IFactory factory)
+        {
+            return new File(create(factory));
         }
 
         #region IObject Implementation
@@ -140,7 +145,7 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Directory : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -160,6 +165,11 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.AddOns.Data.FileSystem.AsObject.Types.Directory);
+        }
+
+        public static Directory createTyped(DatenMeister.IFactory factory)
+        {
+            return new Directory(create(factory));
         }
 
         #region IObject Implementation
