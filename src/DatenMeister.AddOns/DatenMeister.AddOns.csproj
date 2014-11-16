@@ -81,6 +81,7 @@
     <Compile Include="Data\FileSystem\FileSystemObject.cs" />
     <Compile Include="Data\FileSystem\FileSystemTypes.cs" />
     <Compile Include="Data\FileSystem\Init.cs" />
+    <Compile Include="DefaultModules.cs" />
     <Compile Include="Export\Excel\ExcelExport.cs" />
     <Compile Include="Export\Excel\ExcelExportSettings.cs" />
     <Compile Include="Export\Excel\ExcelExportGui.cs" />
