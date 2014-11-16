@@ -3894,7 +3894,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TreeView : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -4023,6 +4023,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void setExtentUri(DatenMeister.IObject obj, System.String value)
         {
             obj.set("extentUri", value);
+        }
+
+        public System.String getName()
+        {
+            return getName(this);
+        }
+
+        public void setName(System.String value)
+        {
+            setName(this, value);
+        }
+
+        public static System.String getName(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setName(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("name", value);
         }
 
     }

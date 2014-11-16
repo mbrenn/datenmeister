@@ -823,6 +823,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TreeView, property);
             }
 
+            {
+                // TreeView.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.TreeView, property);
+            }
+
         }
 
         public static DatenMeister.IObject Comment;
@@ -861,7 +868,6 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
             AssignTypeMapping(extent.Mapping);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TreeView), Types.TreeView);
         }
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)
@@ -881,6 +887,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.View), Types.View);
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.FormView), Types.FormView);
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TableView), Types.TableView);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TreeView), Types.TreeView);
         }
 
         static partial void OnInitCompleted();

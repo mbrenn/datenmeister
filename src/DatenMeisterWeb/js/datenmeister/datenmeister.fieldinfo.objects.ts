@@ -1159,5 +1159,13 @@ export module TreeView {
         item.set('extentUri', value);
     }
 
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
 }
 
