@@ -292,6 +292,8 @@ namespace DatenMeister.Logic
             var filePath = this.GetApplicationStoragePathFor(name);
             IURIExtent createdPool = null;
             var xmlSettings = this.GetXmlSettings(extentType);
+            
+            var pool = PoolResolver.GetDefaultPool();
 
             if (File.Exists(filePath))
             {
@@ -300,11 +302,12 @@ namespace DatenMeister.Logic
                     // File exists, we can directly load it
                     var dataProvider = new XmlDataProvider();
                     createdPool = dataProvider.Load(filePath, extentUri, xmlSettings);
+                    pool.Add(createdPool, filePath, name, extentType);
 
                     if (defaultActionForLoading != null)
                     {
                         defaultActionForLoading(createdPool as XmlExtent);
-                    }
+                    }                    
                 }
                 catch (Exception exc)
                 {
@@ -316,14 +319,12 @@ namespace DatenMeister.Logic
             {
                 // File does not exist, we have to load it from 
                 createdPool = XmlExtent.Create(xmlSettings, name, extentUri);
+                pool.Add(createdPool, filePath, name, extentType);
                 if (defaultActionForCreation != null)
                 {
                     defaultActionForCreation(createdPool as XmlExtent);
                 }
             }
-
-            var pool = PoolResolver.GetDefaultPool();
-            pool.Add(createdPool, filePath, name, extentType);
 
             return createdPool;
         }

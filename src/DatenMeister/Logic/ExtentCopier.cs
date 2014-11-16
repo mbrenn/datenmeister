@@ -14,13 +14,19 @@ namespace DatenMeister.Logic
     /// </summary>
     public class ExtentCopier : ObjectCopier
     {
-        private IReflectiveSequence source
+        /// <summary>
+        /// Gets or sets the source for the copying
+        /// </summary>
+        private IReflectiveCollection source
         {
             get;
             set;
         }
 
-        private IReflectiveSequence target
+        /// <summary>
+        /// Gets or sets the target for the copying
+        /// </summary>
+        private IReflectiveCollection target
         {
             get;
             set;
@@ -56,7 +62,7 @@ namespace DatenMeister.Logic
         /// </summary>
         /// <param name="source">Source to be copied</param>
         /// <param name="target">Target, which shall receive the copy</param>
-        public ExtentCopier(IReflectiveSequence source, IReflectiveSequence target)
+        public ExtentCopier(IReflectiveCollection source, IReflectiveCollection target)
             : base(target.Extent)
         {
             Ensure.That(source != null);

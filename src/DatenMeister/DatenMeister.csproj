@@ -107,6 +107,7 @@
     <Compile Include="DataProvider\Wrapper\WrapperHelper.cs" />
     <Compile Include="DataProvider\Wrapper\WrapperReflectiveSequence.cs" />
     <Compile Include="DataProvider\Wrapper\WrapperUnspecified.cs" />
+    <Compile Include="DataProvider\Xml\XmlRepresentation.cs" />
     <Compile Include="DataProvider\Xml\XmlDataProvider.cs" />
     <Compile Include="DataProvider\Xml\XmlExtent.cs" />
     <Compile Include="DataProvider\Xml\XmlFactory.cs" />
