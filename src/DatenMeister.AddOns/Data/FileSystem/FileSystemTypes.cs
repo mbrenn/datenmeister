@@ -1,10 +1,10 @@
-namespace DatenMeister.Entities.AsObject.DM
+namespace DatenMeister.AddOns.Data.FileSystem.AsObject
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpTypeDefinitionFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public static partial class Types
     {
-        public const string DefaultExtentUri="datenmeister:///types/datenmeister";
+        public const string DefaultExtentUri="datenmeister:///types/dmaddons/filesystem";
 
         public static DatenMeister.IURIExtent Init()
         {
@@ -17,11 +17,18 @@ namespace DatenMeister.Entities.AsObject.DM
         public static void Init(DatenMeister.IURIExtent extent)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
-            if(Types.RecentProject == null || true)
+            if(Types.File == null || true)
             {
-                Types.RecentProject = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
-                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.RecentProject, "RecentProject");
-                extent.Elements().add(Types.RecentProject);
+                Types.File = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.File, "File");
+                extent.Elements().add(Types.File);
+            }
+
+            if(Types.Directory == null || true)
+            {
+                Types.Directory = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Directory, "Directory");
+                extent.Elements().add(Types.Directory);
             }
 
 
@@ -33,29 +40,24 @@ namespace DatenMeister.Entities.AsObject.DM
             OnInitCompleted();
 
             {
-                // RecentProject.filePath
+                // File.relativePath
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "filePath");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "relativePath");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.File, property);
             }
 
             {
-                // RecentProject.created
+                // Directory.relativePath
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "created");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
-            }
-
-            {
-                // RecentProject.name
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "relativePath");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Directory, property);
             }
 
         }
 
-        public static DatenMeister.IObject RecentProject;
+        public static DatenMeister.IObject File;
+
+        public static DatenMeister.IObject Directory;
 
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
@@ -65,7 +67,8 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)
         {
-            mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
+            mapping.Add(typeof(DatenMeister.AddOns.Data.FileSystem.File), Types.File);
+            mapping.Add(typeof(DatenMeister.AddOns.Data.FileSystem.Directory), Types.Directory);
         }
 
         static partial void OnInitCompleted();

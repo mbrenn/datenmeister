@@ -93,7 +93,7 @@ namespace DatenMeister.DataProvider.DotNet
                     }
 
                     // Add the property to the type
-                    var propertyObject = new GenericElement(null, type.FullName, DatenMeister.Entities.AsObject.Uml.Types.Type);
+                    var propertyObject = new GenericElement(null, type.FullName, DatenMeister.Entities.AsObject.Uml.Types.Property);
                     propertyObject.set("name", property.Name.ToString());
                     DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(typeObject, propertyObject);
                 }

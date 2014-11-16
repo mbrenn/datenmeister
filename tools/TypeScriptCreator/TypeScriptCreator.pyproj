@@ -53,6 +53,11 @@
       <Project>{428163f4-fcc1-4b17-b393-33f785bd2ca0}</Project>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\DatenMeister.AddOns\DatenMeister.AddOns.csproj">
+      <Name>DatenMeister.AddOns</Name>
+      <Project>{c4672023-3e93-45eb-a797-7c144dff43fc}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

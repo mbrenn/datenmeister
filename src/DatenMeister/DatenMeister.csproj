@@ -72,6 +72,7 @@
     <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
     <Compile Include="DataProvider\DotNet\DotNetUnspecified.cs" />
     <Compile Include="DataProvider\DotNet\GlobalDotNetExtent.cs" />
+    <Compile Include="DataProvider\DotNet\IMapsMetaClassFromDotNet.cs" />
     <Compile Include="DataProvider\EnumerationReflectiveSequence.cs" />
     <Compile Include="DataProvider\ExtensionMethods.cs" />
     <Compile Include="DataProvider\FactoryProvider.cs" />
@@ -187,6 +188,8 @@
     <Compile Include="Logic\SourceFactory\TypeScriptBuilder.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptSourceFactory.cs" />
     <Compile Include="Logic\Sources\AllElementsExtent.cs" />
+    <Compile Include="Logic\TypeConverter\DotNetTypeConverter.cs" />
+    <Compile Include="Logic\TypeConverter\IDotNetTypeConverter.cs" />
     <Compile Include="Logic\TypeResolver\ITypeResolver.cs" />
     <Compile Include="Logic\TypeResolver\TypeResolverImpl.cs" />
     <Compile Include="Logic\Views\DefaultViewManager.cs" />

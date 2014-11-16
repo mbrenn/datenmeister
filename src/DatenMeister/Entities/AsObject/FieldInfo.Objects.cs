@@ -1,6 +1,6 @@
 namespace DatenMeister.Entities.AsObject.FieldInfo
 {
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Comment : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -245,7 +245,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class General : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -469,7 +469,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Checkbox : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -693,7 +693,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TextField : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -980,7 +980,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class HyperLinkColumn : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -1267,7 +1267,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class DatePicker : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -1491,7 +1491,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ActionButton : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -1652,7 +1652,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ReferenceBase : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -1920,7 +1920,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ReferenceByConstant : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -2182,7 +2182,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ReferenceByRef : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -2450,7 +2450,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ReferenceByValue : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -2718,7 +2718,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class MultiReferenceField : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -3007,7 +3007,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class View : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -3220,7 +3220,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class FormView : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -3538,7 +3538,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.7.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TableView : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {

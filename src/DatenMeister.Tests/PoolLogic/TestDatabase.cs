@@ -196,5 +196,38 @@ namespace DatenMeister.Tests
                 internal set;
             }
         }
+
+        public class Person
+        {
+            public string FirstName
+            {
+                get;
+                set;
+            }
+
+            public string LastName
+            {
+                get;
+                set;
+            }
+
+            public int Age
+            {
+                get;
+                set;
+            }
+
+            private int PrivateVariable
+            {
+                get;
+                set;
+            }
+
+            public static int StaticVariable
+            {
+                get;
+                set;
+            }
+        }
     }
 }

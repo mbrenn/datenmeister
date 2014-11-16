@@ -1,5 +1,7 @@
 namespace DatenMeister.Entities.AsObject.FieldInfo
 {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpTypeDefinitionFactory", "1.0.7.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public static partial class Types
     {
         public const string DefaultExtentUri="datenmeister:///types/fieldinfo";
@@ -842,21 +844,26 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.Comment), Types.Comment);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.General), Types.General);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.Checkbox), Types.Checkbox);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TextField), Types.TextField);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.HyperLinkColumn), Types.HyperLinkColumn);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.DatePicker), Types.DatePicker);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ActionButton), Types.ActionButton);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceBase), Types.ReferenceBase);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByConstant), Types.ReferenceByConstant);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByRef), Types.ReferenceByRef);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByValue), Types.ReferenceByValue);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.MultiReferenceField), Types.MultiReferenceField);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.View), Types.View);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.FormView), Types.FormView);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TableView), Types.TableView);
+            AssignTypeMapping(extent.Mapping);
+        }
+
+        public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)
+        {
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.Comment), Types.Comment);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.General), Types.General);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.Checkbox), Types.Checkbox);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TextField), Types.TextField);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.HyperLinkColumn), Types.HyperLinkColumn);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.DatePicker), Types.DatePicker);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ActionButton), Types.ActionButton);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceBase), Types.ReferenceBase);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByConstant), Types.ReferenceByConstant);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByRef), Types.ReferenceByRef);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByValue), Types.ReferenceByValue);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.MultiReferenceField), Types.MultiReferenceField);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.View), Types.View);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.FormView), Types.FormView);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TableView), Types.TableView);
         }
 
         static partial void OnInitCompleted();

@@ -40,6 +40,11 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(string.Format(
                 "namespace {0}", this.nameSpace));
             writer.WriteLine("{");
+            writer.WriteLine(FourSpaces
+                + "[global::System.CodeDom.Compiler.GeneratedCodeAttribute(\"DatenMeister.Logic.SourceFactory.CSharpTypeDefinitionFactory\", \""
+                + CSharpSourceFactory.FactoryVersion.ToString()
+                + "\")]");
+            writer.WriteLine(FourSpaces + "[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]");
             writer.WriteLine(string.Format(
                 FourSpaces + "public static partial class {0}",
                 this.className));
@@ -63,6 +68,11 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(TwelveSpaces + "var factory = DatenMeister.DataProvider.Factory.GetFor(extent);");
 
             assignFunction.AppendLine(EightSpaces + "public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)");
+            assignFunction.AppendLine(EightSpaces + "{");
+            assignFunction.AppendLine(TwelveSpaces + "AssignTypeMapping(extent.Mapping);");
+            assignFunction.AppendLine(EightSpaces + "}");
+            assignFunction.AppendLine();
+            assignFunction.AppendLine(EightSpaces + "public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)");
             assignFunction.AppendLine(EightSpaces + "{");
 
             var propertyAssignments = new StringBuilder();
@@ -97,7 +107,7 @@ namespace DatenMeister.Logic.SourceFactory
 
                 // Performs the assignment
                 assignFunction.AppendFormat(
-                    TwelveSpaces + "extent.Mapping.Add(typeof({0}), {2}.{1});",
+                    TwelveSpaces + "mapping.Add(typeof({0}), {2}.{1});",
                     this.provider.GetFullTypeName(type),
                     type,
                     this.className);
