@@ -120,7 +120,6 @@ namespace DatenMeister.Logic.SourceFactory
                 );
 
             writer.WriteLine(EightSpaces + "{");
-            //writer.WriteLine(TwelveSpaces + "throw new System.InvalidOperationException();");
             writer.WriteLine(TwelveSpaces + "return factory.create(" + this.nameSpace + ".Types." + typeName + ");");
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
@@ -134,7 +133,6 @@ namespace DatenMeister.Logic.SourceFactory
                 );
 
             writer.WriteLine(EightSpaces + "{");
-            //writer.WriteLine(TwelveSpaces + "throw new System.InvalidOperationException();");
             writer.WriteLine(TwelveSpaces + "return new {0}(create(factory));", typeName);
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
