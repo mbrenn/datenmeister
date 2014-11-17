@@ -120,8 +120,6 @@ namespace DatenMeister.Logic.MethodProvider
         /// <returns>Returns the functions on the instance</returns>
         public IEnumerable<IMethod> GetFunctionsOnInstance(IObject instance)
         {
-            logger.Message("Get instance: " + instance.Id);
-
             var instanceAsProxy = instance as IProxyObject;
             if (instanceAsProxy != null)
             {
