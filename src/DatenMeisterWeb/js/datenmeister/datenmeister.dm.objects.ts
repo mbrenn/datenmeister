@@ -43,6 +43,14 @@ export module ExtentInstance {
         item.set('isPrepopulated', value);
     }
 
+    export function getLoadConfiguration(item: __d__.JsonExtentObject) {
+        return item.get('loadConfiguration');
+    }
+
+    export function setLoadConfiguration(item : __d__.JsonExtentObject, value: any) {
+        item.set('loadConfiguration', value);
+    }
+
 }
 
 export module RecentProject {

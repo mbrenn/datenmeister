@@ -1,5 +1,4 @@
 ﻿using BurnSystems.Logging;
-using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
@@ -8,15 +7,10 @@ using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic.MethodProvider;
 using DatenMeister.Logic.TypeResolver;
 using DatenMeister.Pool;
-using DatenMeister.Transformations;
 using Ninject;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Xml.Linq;
 
 namespace DatenMeister.Logic
@@ -66,15 +60,6 @@ namespace DatenMeister.Logic
         /// Gets or serts the xml settings
         /// </summary>
         private XmlSettings XmlSettings
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Defines the object that is used to show 
-        /// </summary>
-        public IObject ViewRecentObjects
         {
             get;
             set;

@@ -51,5 +51,15 @@ namespace DatenMeister.Entities.DM
             get;
             set;
         }
+
+        /// <summary>
+        /// Gets or sets the configuration being used to load the extent. It also includes the type of extent (.Net, Xml, etc) by using the correct metaClass
+        /// </summary>
+        public object loadConfiguration
+        {
+            get;
+            set;
+        }
+
     }
 }

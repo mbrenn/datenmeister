@@ -194,6 +194,27 @@ namespace DatenMeister.Entities.AsObject.DM
             obj.set("isPrepopulated", value);
         }
 
+        public System.Object getLoadConfiguration()
+        {
+            return getLoadConfiguration(this);
+        }
+
+        public void setLoadConfiguration(System.Object value)
+        {
+            setLoadConfiguration(this, value);
+        }
+
+        public static System.Object getLoadConfiguration(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("loadConfiguration"));
+            return (result is System.Object) ? ((System.Object) result) : default(System.Object);
+        }
+
+        public static void setLoadConfiguration(DatenMeister.IObject obj, System.Object value)
+        {
+            obj.set("loadConfiguration", value);
+        }
+
     }
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]

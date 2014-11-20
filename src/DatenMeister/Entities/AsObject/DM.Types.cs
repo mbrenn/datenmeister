@@ -73,6 +73,13 @@ namespace DatenMeister.Entities.AsObject.DM
             }
 
             {
+                // ExtentInstance.loadConfiguration
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "loadConfiguration");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInstance, property);
+            }
+
+            {
                 // RecentProject.filePath
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "filePath");
