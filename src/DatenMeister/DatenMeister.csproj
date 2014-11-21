@@ -243,6 +243,7 @@
     <Content Include="Logic\SourceFactory\Resources\IObjectImplementation.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\Extensions.Pool.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
