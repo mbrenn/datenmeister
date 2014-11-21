@@ -30,12 +30,12 @@ namespace DatenMeister.Web
             set;
         }
 
-        [Inject(IsMandatory = true)]
+        /*[Inject(IsMandatory = true)]
         public ExtentPoolLogic PoolLogic
         {
             get;
             set;
-        }
+        }*/
 
         [WebMethod]
         public IActionResult GetServerInfo()
@@ -198,12 +198,14 @@ namespace DatenMeister.Web
         [WebMethod]
         public IActionResult Create([PostModel] CreateExtentModel model)
         {
-            // At the moment, just xml files are supported
+            throw new NotImplementedException();
+            
+            /*// At the moment, just xml files are supported
             var newPool = this.PoolLogic.CreateEmpty(model.name, model.url, model.filename, ExtentType.Data);
             this.Pool.Add(newPool);
 
             return this.ReturnClientAction(
-                new RefreshBrowserWindow());
+                new RefreshBrowserWindow());*/
         }
 
         /// <summary>

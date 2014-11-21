@@ -10,11 +10,11 @@ namespace DatenMeister.Entities.DM
     /// <summary>
     /// Gets or sets the information for the extent information
     /// </summary>
-    public class ExtentInstance
+    public class ExtentInWorkbench
     {
         /// <summary>
         /// Gets or sets the url, under which the extent can be found
-        /// The url has to be unique for all instances
+        /// The url has to be unique for all instances.
         /// </summary>
         public string url
         {
@@ -60,6 +60,5 @@ namespace DatenMeister.Entities.DM
             get;
             set;
         }
-
     }
 }

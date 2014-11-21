@@ -35,7 +35,7 @@ namespace DatenMeister
         /// <summary>
         /// Stores the extents itself
         /// </summary>
-        private List<ExtentInstance> extents = new List<ExtentInstance>();
+        private List<ExtentMapping> extents = new List<ExtentMapping>();
 
         /// <summary>
         /// Gets the extents as a read copty
@@ -54,7 +54,21 @@ namespace DatenMeister
         /// <summary>
         /// Gets a list of instances, this list is thread-safe
         /// </summary>
-        public IEnumerable<ExtentInstance> Instances
+        public IEnumerable<ExtentInfoForPool> Instances
+        {
+            get
+            {
+                lock (this.syncObject)
+                {
+                    return this.extents.Select(x=> x.ExtentInfo).ToList();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of all extent Mappings, this list is thread-safe
+        /// </summary>
+        public IEnumerable<ExtentMapping> ExtentMappings
         {
             get
             {
@@ -101,21 +115,22 @@ namespace DatenMeister
             {
                 this.CheckIfExtentAlreadyInAnyPool(extent);
                 this.Add(
-                    new ExtentInstance(extent, storagePath, name, extentType));
+                    new ExtentInfoForPool(storagePath, name, extentType), 
+                    extent);
             }
         }
 
-        public void Add(ExtentInstance instance)
+        public void Add(ExtentInfoForPool instance, IURIExtent extent)
         {
             lock (this.syncObject)
             {
-                this.CheckIfExtentAlreadyInAnyPool(instance.Extent);
+                this.CheckIfExtentAlreadyInAnyPool(extent);
 
                 // Check, if an extent with the same url already exists
                 var number = 0;
-                foreach (var extent in this.extents)
+                foreach (var innerExtent in this.extents)
                 {
-                    if (extent.Extent.ContextURI() == instance.Extent.ContextURI())
+                    if (innerExtent.Extent.ContextURI() == extent.ContextURI())
                     {
                         this.extents.RemoveAt(number);
                         break;
@@ -125,8 +140,9 @@ namespace DatenMeister
                 }
 
                 // Adds the instance and assign it
-                this.extents.Add(instance);
-                instance.Extent.Pool = this;
+                this.extents.Add(
+                    new ExtentMapping(instance, extent));
+                extent.Pool = this;
             }
         }
 
@@ -148,15 +164,6 @@ namespace DatenMeister
         }
 
         /// <summary>
-        /// Performs the default binding, attached to the current pool.
-        /// </summary>
-        private static void DoDefaultBinding()
-        {
-            Injection.Application.Rebind<IPool>().ToConstant(DatenMeisterPool.ApplicationPool);
-            Injection.Application.Rebind<DatenMeisterPool>().ToConstant(ApplicationPool);
-        }
-
-        /// <summary>
         /// Creates a default empty pool, where the DatenMeisterPoolExtent is already associated.
         /// The Pool will also be bound to the Global Application Binding
         /// </summary>
@@ -164,7 +171,9 @@ namespace DatenMeister
         public static DatenMeisterPool Create()
         {
             ApplicationPool = new DatenMeisterPool();
-            DoDefaultBinding();
+
+            Injection.Application.Rebind<IPool>().ToConstant(DatenMeisterPool.ApplicationPool);
+            Injection.Application.Rebind<DatenMeisterPool>().ToConstant(ApplicationPool);
 
             // Adds the extent for the extents
             var poolExtent = new DatenMeisterPoolExtent(ApplicationPool);

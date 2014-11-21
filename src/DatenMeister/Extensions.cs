@@ -75,7 +75,7 @@ namespace DatenMeister
         /// <param name="pool">Pool to be queried</param>
         /// <param name="extentType">The extent type to be queried</param>
         /// <returns>Enumeration, matching to the given extentType</returns>
-        public static IEnumerable<ExtentInstance> Get(this IPool pool, ExtentType extentType)
+        public static IEnumerable<ExtentInfoForPool> Get(this IPool pool, ExtentType extentType)
         {
             return pool.Instances.Where(x => x.ExtentType == extentType);
         }
@@ -88,7 +88,7 @@ namespace DatenMeister
         /// <returns>Enumeration, matching to the given extentType</returns>
         public static IEnumerable<IURIExtent> GetExtent(this IPool pool, ExtentType extentType)
         {
-            return pool.Instances.Where(x => x.ExtentType == extentType).Select(x => x.Extent);
+            return pool.ExtentMappings.Where(x => x.ExtentInfo.ExtentType == extentType).Select(x => x.Extent);
         }
 
         /// <summary>
@@ -97,9 +97,9 @@ namespace DatenMeister
         /// <param name="pool">Pool to be used</param>
         /// <param name="extent">Extent whose instance is queried</param>
         /// <returns>Found extent instance</returns>
-        public static ExtentInstance GetInstance(this IPool pool, IURIExtent extent)
+        public static ExtentInfoForPool GetInstance(this IPool pool, IURIExtent extent)
         {
-            return pool.Instances.Where(x => x.Extent == extent).FirstOrDefault();
+            return pool.ExtentMappings.Where(x => x.Extent == extent).Select(x=>x.ExtentInfo).FirstOrDefault();
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace DatenMeister
         /// </summary>
         /// <param name="extent">Extent whose instance is queried</param>
         /// <returns>Found extent instance</returns>
-        public static ExtentInstance GetInstance(this IURIExtent extent)
+        public static ExtentInfoForPool GetInstance(this IURIExtent extent)
         {
             var pool = Injection.Application.Get<IPool>();
             return pool.GetInstance(extent);
@@ -412,9 +412,20 @@ namespace DatenMeister
         /// <param name="pool">Pool to be queried</param>
         /// <param name="extentUri">Uri of the extent</param>
         /// <returns>Found extent id</returns>
-        public static ExtentInstance GetInstance(this IPool pool, string extentUri)
+        public static ExtentInfoForPool GetInstance(this IPool pool, string extentUri)
         {
-            return pool.Instances.Where(x => x.Extent.ContextURI() == extentUri).FirstOrDefault();
+            return pool.ExtentMappings.Where(x => x.Extent.ContextURI() == extentUri).Select(x => x.ExtentInfo).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Gets the container within the pool by the extent Uri
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentUri">Uri of the extent</param>
+        /// <returns>Found extent id</returns>
+        public static ExtentMapping GetContainer(this IPool pool, string extentUri)
+        {
+            return pool.ExtentMappings.Where(x => x.Extent.ContextURI() == extentUri).FirstOrDefault();
         }
     }
 }

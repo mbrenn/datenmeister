@@ -544,28 +544,28 @@ namespace DatenMeister.Entities.AsObject.DM
             obj.set("type", value);
         }
 
-        public System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInstance> getInstances()
+        public System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInWorkbench> getInstances()
         {
             return getInstances(this);
         }
 
-        public void setInstances(System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInstance> value)
+        public void setInstances(System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInWorkbench> value)
         {
             setInstances(this, value);
         }
 
-        public void pushInstance(DatenMeister.Entities.DM.ExtentInstance value)
+        public void pushInstance(DatenMeister.Entities.DM.ExtentInWorkbench value)
         {
             pushInstance(this, value);
         }
 
-        public static System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInstance> getInstances(DatenMeister.IObject obj)
+        public static System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInWorkbench> getInstances(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.Entities.DM.ExtentInstance>(obj.get("Instances"));
-            return (result is System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInstance>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInstance>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInstance>);
+            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.Entities.DM.ExtentInWorkbench>(obj.get("Instances"));
+            return (result is System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInWorkbench>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInWorkbench>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInWorkbench>);
         }
 
-        public static void setInstances(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInstance> value)
+        public static void setInstances(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInWorkbench> value)
         {
             obj.set("Instances", value);
         }
@@ -576,7 +576,7 @@ namespace DatenMeister.Entities.AsObject.DM
             list.Add(value);
         }
 
-        public static void pushInstance(DatenMeister.IObject obj, DatenMeister.Entities.DM.ExtentInstance value)
+        public static void pushInstance(DatenMeister.IObject obj, DatenMeister.Entities.DM.ExtentInWorkbench value)
         {
             var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("Instances"));
             list.Add(value);

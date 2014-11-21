@@ -48,8 +48,8 @@ namespace DatenMeister.Logic
         public new IReflectiveSequence Elements()
         {
             return new EnumerationReflectiveSequence<IObject>(this,
-                this.pool.Instances.Select(
-                    x => new DotNetObject(this.Elements(), x.ToJson(), x.Extent.ContextURI())));
+                this.pool.ExtentMappings.Select(
+                    x => new DotNetObject(this.Elements(), x.ExtentInfo, x.Extent.ContextURI())));
         }
 
         /// <summary>

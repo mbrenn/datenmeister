@@ -24,7 +24,7 @@ namespace DatenMeister.DataProvider.Pool
         /// </summary>
         /// <param name="pool"></param>
         public AllItemsReflectiveCollection(IPool pool)
-            : base(pool.Instances.Select(x => x.Extent.Elements()))
+            : base(pool.Extents.Select(x => x.Elements()))
         {
             this.pool = pool;
         }
@@ -34,8 +34,8 @@ namespace DatenMeister.DataProvider.Pool
         /// </summary>
         /// <param name="pool"></param>
         public AllItemsReflectiveCollection(IPool pool, ExtentType extentType)
-            : base(pool.Instances
-                .Where (x=> x.ExtentType == extentType)
+            : base(pool.ExtentMappings
+                .Where (x=> x.ExtentInfo.ExtentType == extentType)
                 .Select(x => x.Extent.Elements()))
         {
             this.pool = pool;

@@ -123,7 +123,7 @@
     <Compile Include="Entities\AsObject\UML.Objects.cs" />
     <Compile Include="Entities\AsObject\UML.Types.cs" />
     <Compile Include="Entities\AsObject\UML.Types.User.cs" />
-    <Compile Include="Entities\DM\ExtentInstance.cs" />
+    <Compile Include="Entities\DM\ExtentInWorkbench.cs" />
     <Compile Include="Entities\DM\RecentProject.cs" />
     <Compile Include="Entities\DM\Workbench.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
@@ -162,6 +162,8 @@
     <Compile Include="Logic\ClientActions\IClientAction.cs" />
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
+    <Compile Include="Logic\ExtentInfoForPool.cs" />
+    <Compile Include="Logic\ExtentMapping.cs" />
     <Compile Include="Logic\MethodProvider\MethodType.cs" />
     <Compile Include="Logic\MethodProvider\MethodProviderExtensions.cs" />
     <Compile Include="Logic\MethodProvider\TypeFunctionImpl.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Logic\Views\DefaultViewManager.cs" />
     <Compile Include="Logic\Views\IViewManager.cs" />
     <Compile Include="Logic\Views\ViewHelper.cs" />
+    <Compile Include="Logic\WorkbenchManager.cs" />
     <Compile Include="ObjectConversion.cs" />
     <Compile Include="Pool\Extensions.cs" />
     <Compile Include="Pool\ExtentNames.cs" />
@@ -218,9 +221,7 @@
     <Compile Include="Transformations\Extensions.cs" />
     <Compile Include="Transformations\MakeUniqueTransformation.cs" />
     <Compile Include="Transformations\RecurseObjectTransformation.cs" />
-    <Compile Include="Logic\ExtentPoolLogic.cs" />
-    <Compile Include="Logic\ExtentInstance.cs" />
-    <Compile Include="Logic\DatenMeisterPoolProvider.cs" />
+    <Compile Include="Logic\ExtentType.cs" />
     <Compile Include="Transformations\UnionTransformation.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,8 @@ using System.Xml.Linq;
 namespace DatenMeister.Logic
 {
     /// <summary>
-    /// Stores the data that is used for the application specific data
+    /// Stores and manages the data for a user-driven application, which handles the 
+    /// extents and the workbench
     /// </summary>
     public partial class ApplicationCore
     {
@@ -196,7 +197,7 @@ namespace DatenMeister.Logic
             // After the viewset is initialized, replace the view extents by wrapped
             // EventOnChange Extent. 
             // So, view can be updated, when the content of the extent changed
-            foreach (var instance in pool.Instances.Where(x => x.ExtentType == ExtentType.View))
+            foreach (var instance in pool.ExtentMappings.Where(x => x.ExtentInfo.ExtentType == ExtentType.View))
             {
                 // Just replace the extent
                 instance.Extent = new EventOnChangeExtent(instance.Extent);
@@ -317,7 +318,7 @@ namespace DatenMeister.Logic
 
             // Get pool entry
             var pool = Injection.Application.Get<IPool>();
-            var instance = pool.GetInstance(extentUri);
+            var instance = pool.GetContainer(extentUri);
             Ensure.That(instance != null, "The extent with Uri has not been found: " + extentUri);
 
             // Save the data
@@ -335,8 +336,8 @@ namespace DatenMeister.Logic
             Ensure.That(extent is XmlExtent, "The given extent is not an XmlExtent");
             dataProvider.Save(
                 extent as XmlExtent,
-                instance.StoragePath,
-                this.GetXmlSettings(instance.ExtentType));
+                instance.ExtentInfo.StoragePath,
+                this.GetXmlSettings(instance.ExtentInfo.ExtentType));
         }
 
         public XmlSettings GetXmlSettings(ExtentType type)

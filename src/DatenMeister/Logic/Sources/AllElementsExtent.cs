@@ -43,14 +43,14 @@ namespace DatenMeister.Logic.Sources
 
             if (this.extentType == null)
             {
-                return this.Pool.Instances
+                return this.Pool.ExtentMappings
                     .Where (x=> x.Extent != this)
                     .Select(x => x.Extent);
             }
             else
             {
-                return this.Pool.Instances
-                    .Where(x => x.ExtentType == extentType && x.Extent != this)
+                return this.Pool.ExtentMappings
+                    .Where(x => x.ExtentInfo.ExtentType == extentType && x.Extent != this)
                     .Select(x => x.Extent);
             }
         }

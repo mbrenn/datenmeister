@@ -30,7 +30,7 @@ namespace DatenMeister.Entities.DM
         /// Gets or sets a list of all loaded extents. Does not contain the instances themselves, but contains the loading
         /// and storing behavior. This information is necessary to reload the extent.
         /// </summary>
-        public IList<ExtentInstance> Instances
+        public IList<ExtentInWorkbench> Instances
         {
             get;
             set;

@@ -132,7 +132,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
-            extent.Mapping.Add(typeof(DatenMeister.Entities.DM.ExtentInstance), Types.ExtentInstance);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.DM.ExtentInWorkbench), Types.ExtentInstance);
             extent.Mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
             extent.Mapping.Add(typeof(DatenMeister.Entities.DM.Workbench), Types.Workbench);
         }
