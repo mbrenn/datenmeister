@@ -78,18 +78,7 @@ namespace DatenMeister.Entities.DM
         }
 
         /// <summary>
-        /// Initializes a new instance of the ExtentInstance class. 
-        /// </summary>
-        /// <param name="extent">Extent to be stored</param>
-        /// <param name="path">Path, where data will be stored</param>
-        public ExtentInfo(string path, ExtentType extentType)
-        {
-            this.storagePath = path;
-            this.extentType = extentType;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DatenMeister.PoolInstance"/> class.
+        /// Initializes a new instance of the ExtentInfo class.
         /// </summary>
         /// <param name='extent'>
         /// Extent.

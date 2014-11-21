@@ -2,17 +2,25 @@ namespace DatenMeister.Entities.AsObject.DM
 {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ExtentInstance : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
+    public class ExtentInfo : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;
-        public ExtentInstance(DatenMeister.IObject obj)
+        public ExtentInfo(DatenMeister.IObject obj)
         {
             this.obj = obj;
         }
 
+        public ExtentInfo(DatenMeister.IObject obj, object storagePath, object name, object extentType)
+            : this(obj)
+        {
+            this.set("storagePath", storagePath);
+            this.set("name", name);
+            this.set("extentType", extentType);
+        }
+
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
-            return factory.create(DatenMeister.Entities.AsObject.DM.Types.ExtentInstance);
+            return factory.create(DatenMeister.Entities.AsObject.DM.Types.ExtentInfo);
         }
 
         #region IObject Implementation
@@ -150,6 +158,27 @@ namespace DatenMeister.Entities.AsObject.DM
         public static void setName(DatenMeister.IObject obj, System.String value)
         {
             obj.set("name", value);
+        }
+
+        public System.String getStoragePath()
+        {
+            return getStoragePath(this);
+        }
+
+        public void setStoragePath(System.String value)
+        {
+            setStoragePath(this, value);
+        }
+
+        public static System.String getStoragePath(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("storagePath"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setStoragePath(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("storagePath", value);
         }
 
         public DatenMeister.Logic.ExtentType getExtentType()

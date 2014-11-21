@@ -1,12 +1,24 @@
 /// <reference path="../backbone/backbone.d.ts" />
 import __d__ = require('datenmeister.objects');
 
-export module ExtentInstance {
-    export var TypeName='ExtentInstance';
+export module ExtentInfo {
+    export var TypeName='ExtentInfo';
 
-    export function create() {
+    export function create(storagePath?: any, name?: any, extentType?: any) {
         var result = new __d__.JsonExtentObject();
-        result.set('type', 'ExtentInstance');
+        result.set('type', 'ExtentInfo');
+        if (storagePath !== undefined) {
+            result.set('storagePath', storagePath);
+        }
+
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        if (extentType !== undefined) {
+            result.set('extentType', extentType);
+        }
+
         return result;
     }
 
@@ -25,6 +37,14 @@ export module ExtentInstance {
 
     export function setName(item : __d__.JsonExtentObject, value: any) {
         item.set('name', value);
+    }
+
+    export function getStoragePath(item: __d__.JsonExtentObject) {
+        return item.get('storagePath');
+    }
+
+    export function setStoragePath(item : __d__.JsonExtentObject, value: any) {
+        item.set('storagePath', value);
     }
 
     export function getExtentType(item: __d__.JsonExtentObject) {

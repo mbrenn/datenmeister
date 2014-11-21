@@ -15,11 +15,11 @@ namespace DatenMeister.Entities.AsObject.DM
         public static void Init(DatenMeister.IURIExtent extent)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
-            if(Types.ExtentInstance == null || true)
+            if(Types.ExtentInfo == null || true)
             {
-                Types.ExtentInstance = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
-                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ExtentInstance, "ExtentInstance");
-                extent.Elements().add(Types.ExtentInstance);
+                Types.ExtentInfo = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ExtentInfo, "ExtentInfo");
+                extent.Elements().add(Types.ExtentInfo);
             }
 
             if(Types.RecentProject == null || true)
@@ -45,38 +45,45 @@ namespace DatenMeister.Entities.AsObject.DM
             OnInitCompleted();
 
             {
-                // ExtentInstance.url
+                // ExtentInfo.url
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "url");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInstance, property);
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
             }
 
             {
-                // ExtentInstance.name
+                // ExtentInfo.name
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInstance, property);
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
             }
 
             {
-                // ExtentInstance.extentType
+                // ExtentInfo.storagePath
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "storagePath");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
+            }
+
+            {
+                // ExtentInfo.extentType
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentType");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInstance, property);
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
             }
 
             {
-                // ExtentInstance.isPrepopulated
+                // ExtentInfo.isPrepopulated
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isPrepopulated");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInstance, property);
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
             }
 
             {
-                // ExtentInstance.loadConfiguration
+                // ExtentInfo.loadConfiguration
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "loadConfiguration");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInstance, property);
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
             }
 
             {
@@ -123,7 +130,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         }
 
-        public static DatenMeister.IObject ExtentInstance;
+        public static DatenMeister.IObject ExtentInfo;
 
         public static DatenMeister.IObject RecentProject;
 
@@ -132,7 +139,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
-            extent.Mapping.Add(typeof(DatenMeister.Entities.DM.ExtentInfo), Types.ExtentInstance);
+            extent.Mapping.Add(typeof(DatenMeister.Entities.DM.ExtentInfo), Types.ExtentInfo);
             extent.Mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
             extent.Mapping.Add(typeof(DatenMeister.Entities.DM.Workbench), Types.Workbench);
         }
