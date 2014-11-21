@@ -10,12 +10,14 @@ namespace DatenMeister.Entities.AsObject.DM
             this.obj = obj;
         }
 
-        public ExtentInfo(DatenMeister.IObject obj, object storagePath, object name, object extentType)
+        public ExtentInfo(DatenMeister.IObject obj, object storagePath, object name, object extentType, object url, object extentClass)
             : this(obj)
         {
             this.set("storagePath", storagePath);
             this.set("name", name);
             this.set("extentType", extentType);
+            this.set("url", url);
+            this.set("extentClass", extentClass);
         }
 
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
@@ -242,6 +244,27 @@ namespace DatenMeister.Entities.AsObject.DM
         public static void setLoadConfiguration(DatenMeister.IObject obj, System.Object value)
         {
             obj.set("loadConfiguration", value);
+        }
+
+        public System.String getExtentClass()
+        {
+            return getExtentClass(this);
+        }
+
+        public void setExtentClass(System.String value)
+        {
+            setExtentClass(this, value);
+        }
+
+        public static System.String getExtentClass(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("extentClass"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setExtentClass(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("extentClass", value);
         }
 
     }

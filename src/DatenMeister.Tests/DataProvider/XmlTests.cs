@@ -862,11 +862,11 @@ namespace DatenMeister.Tests.DataProvider
             var factory = new FactoryProvider().CreateFor(xmlExtent);
             var xmlNode = factory.create(null);
 
-            DatenMeister.Entities.AsObject.DM.ExtentInstance.setName(xmlNode, "ABC");
-            var name = DatenMeister.Entities.AsObject.DM.ExtentInstance.getName(xmlNode);
+            DatenMeister.Entities.AsObject.DM.ExtentInfo.setName(xmlNode, "ABC");
+            var name = DatenMeister.Entities.AsObject.DM.ExtentInfo.getName(xmlNode);
 
-            DatenMeister.Entities.AsObject.DM.ExtentInstance.setExtentType(xmlNode, ExtentType.Query);
-            var type = DatenMeister.Entities.AsObject.DM.ExtentInstance.getName(xmlNode);
+            DatenMeister.Entities.AsObject.DM.ExtentInfo.setExtentType(xmlNode, ExtentType.Query);
+            var type = DatenMeister.Entities.AsObject.DM.ExtentInfo.getName(xmlNode);
 
             Assert.That(name, Is.EqualTo("ABC"));
             Assert.That(type, Is.EqualTo(ExtentType.Query));

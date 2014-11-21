@@ -16,7 +16,7 @@ namespace DatenMeister.Entities.DM
         /// Gets or sets the url, under which the extent can be found
         /// The url has to be unique for all instances.
         /// </summary>
-        public string url
+        public string uri
         {
             get;
             set;
@@ -71,6 +71,15 @@ namespace DatenMeister.Entities.DM
         }
 
         /// <summary>
+        /// Gets or sets the type of the extent itself
+        /// </summary>
+        public string extentClass
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the ExtentInWorkbench class
         /// </summary>
         public ExtentInfo()
@@ -86,11 +95,13 @@ namespace DatenMeister.Entities.DM
         /// <param name='storagePath'>
         /// Path.
         /// </param>
-        public ExtentInfo(string storagePath, string name, ExtentType extentType)
+        public ExtentInfo(string storagePath, string name, ExtentType extentType, string uri, string extentClass)
         {
             this.storagePath = storagePath;
             this.name = name;
             this.extentType = extentType;
+            this.uri = uri;
+            this.extentClass = extentClass;
         }
     }
 }

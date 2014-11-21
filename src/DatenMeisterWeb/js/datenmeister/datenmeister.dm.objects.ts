@@ -4,7 +4,7 @@ import __d__ = require('datenmeister.objects');
 export module ExtentInfo {
     export var TypeName='ExtentInfo';
 
-    export function create(storagePath?: any, name?: any, extentType?: any) {
+    export function create(storagePath?: any, name?: any, extentType?: any, url?: any, extentClass?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'ExtentInfo');
         if (storagePath !== undefined) {
@@ -17,6 +17,14 @@ export module ExtentInfo {
 
         if (extentType !== undefined) {
             result.set('extentType', extentType);
+        }
+
+        if (url !== undefined) {
+            result.set('url', url);
+        }
+
+        if (extentClass !== undefined) {
+            result.set('extentClass', extentClass);
         }
 
         return result;
@@ -69,6 +77,14 @@ export module ExtentInfo {
 
     export function setLoadConfiguration(item : __d__.JsonExtentObject, value: any) {
         item.set('loadConfiguration', value);
+    }
+
+    export function getExtentClass(item: __d__.JsonExtentObject) {
+        return item.get('extentClass');
+    }
+
+    export function setExtentClass(item : __d__.JsonExtentObject, value: any) {
+        item.set('extentClass', value);
     }
 
 }

@@ -71,10 +71,16 @@ namespace DatenMeister.Logic
             asObjectExtentview.setFieldInfos(new DotNetSequence(
                 ViewHelper.ViewTypes,
                 new TextField("Name", "name"),
-                new TextField("URI", "uri"),
-                new TextField("Type", "type"),
                 new TextField("ExtentType", "extentType"),
-                new TextField("Filename", "filename")));
+                new TextField("URI", "uri")
+                {
+                    width = 150
+                },
+                new TextField("Type", "extentClass")
+                {
+                    width = 150
+                },
+                new TextField("Filename", "storagePath")));
 
             viewExtent.Elements().add(extentViewObj);
 

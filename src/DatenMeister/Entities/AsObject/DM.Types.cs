@@ -87,6 +87,13 @@ namespace DatenMeister.Entities.AsObject.DM
             }
 
             {
+                // ExtentInfo.extentClass
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentClass");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
+            }
+
+            {
                 // RecentProject.filePath
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "filePath");

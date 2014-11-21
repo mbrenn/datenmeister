@@ -9,7 +9,5 @@ namespace DatenMeister.Pool
     public static class ExtentNames
     {
         public const string DataExtent = "Data";
-
-
     }
 }

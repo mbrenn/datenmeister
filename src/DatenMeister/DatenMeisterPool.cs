@@ -88,7 +88,7 @@ namespace DatenMeister
             {
                 this.CheckIfExtentAlreadyInAnyPool(extent);
                 this.Add(
-                    new ExtentInfo(storagePath, name, extentType), 
+                    new ExtentInfo(storagePath, name, extentType, extent.ContextURI(), extent.GetType().ToString()), 
                     extent);
             }
         }

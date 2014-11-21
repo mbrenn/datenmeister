@@ -263,6 +263,10 @@ namespace DatenMeister.DataProvider.DotNet
             {
                 return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }
+            else if (ObjectConversion.IsEnumeration(checkObject))
+            {
+                return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
+            }
             else if (checkObject is IList<object>)
             {
                 var sequence = new DotNetSequence(this.extent, checkObject as IList<object>);
