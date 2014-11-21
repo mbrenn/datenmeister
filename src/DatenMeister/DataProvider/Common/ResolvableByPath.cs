@@ -1,6 +1,7 @@
 ﻿
 using BurnSystems.Test;
 using DatenMeister;
+using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;

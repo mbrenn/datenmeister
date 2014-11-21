@@ -1,4 +1,5 @@
-﻿using DatenMeister.Pool;
+﻿using DatenMeister.Logic;
+using DatenMeister.Pool;
 using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
 using Ninject;

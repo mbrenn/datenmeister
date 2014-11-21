@@ -14,7 +14,7 @@ namespace DatenMeister.Logic
         /// <summary>
         /// Gets or sets the information for the extent
         /// </summary>
-        public ExtentInfoForPool ExtentInfo
+        public ExtentInfoForPool Info
         {
             get;
             set;
@@ -32,11 +32,11 @@ namespace DatenMeister.Logic
         /// <summary>
         /// Initializes a new instance of the ExtentMapping
         /// </summary>
-        /// <param name="extentInfo">Information of the extent</param>
+        /// <param name="info">Information of the extent</param>
         /// <param name="extent">Extent being associated</param>
-        public ExtentContainer(ExtentInfoForPool extentInfo, IURIExtent extent)
+        public ExtentContainer(ExtentInfoForPool info, IURIExtent extent)
         {
-            this.ExtentInfo = extentInfo;
+            this.Info = info;
             this.Extent = extent;
         }
     }
