@@ -35,40 +35,12 @@ namespace DatenMeister
         /// <summary>
         /// Stores the extents itself
         /// </summary>
-        private List<ExtentMapping> extents = new List<ExtentMapping>();
-
-        /// <summary>
-        /// Gets the extents as a read copty
-        /// </summary>
-        public IEnumerable<IURIExtent> Extents
-        {
-            get
-            {
-                lock (this.syncObject)
-                {
-                    return this.extents.Select(x => x.Extent).ToList();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of instances, this list is thread-safe
-        /// </summary>
-        public IEnumerable<ExtentInfoForPool> Instances
-        {
-            get
-            {
-                lock (this.syncObject)
-                {
-                    return this.extents.Select(x=> x.ExtentInfo).ToList();
-                }
-            }
-        }
+        private List<ExtentContainer> extents = new List<ExtentContainer>();
 
         /// <summary>
         /// Gets a list of all extent Mappings, this list is thread-safe
         /// </summary>
-        public IEnumerable<ExtentMapping> ExtentMappings
+        public IEnumerable<ExtentContainer> ExtentContainer
         {
             get
             {
@@ -141,7 +113,7 @@ namespace DatenMeister
 
                 // Adds the instance and assign it
                 this.extents.Add(
-                    new ExtentMapping(instance, extent));
+                    new ExtentContainer(instance, extent));
                 extent.Pool = this;
             }
         }

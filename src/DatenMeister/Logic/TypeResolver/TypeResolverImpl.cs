@@ -39,7 +39,7 @@ namespace DatenMeister.Logic.TypeResolver
 
             // Gets the property
             var pool = Injection.Application.Get<IPool>();
-            var type = pool.Extents.SelectMany(x => x.Elements()
+            var type = pool.GetExtents().SelectMany(x => x.Elements()
                 .Where(y => y is IObject)
                 .Cast<IObject>()
                 .Where(y => NamedElement.getName(y) == typeName)).FirstOrDefault();

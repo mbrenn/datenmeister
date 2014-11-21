@@ -9,7 +9,7 @@ namespace DatenMeister.Logic
     /// <summary>
     /// Maps the extent information and the extent itself together
     /// </summary>
-    public class ExtentMapping
+    public class ExtentContainer
     {
         /// <summary>
         /// Gets or sets the information for the extent
@@ -34,7 +34,7 @@ namespace DatenMeister.Logic
         /// </summary>
         /// <param name="extentInfo">Information of the extent</param>
         /// <param name="extent">Extent being associated</param>
-        public ExtentMapping(ExtentInfoForPool extentInfo, IURIExtent extent)
+        public ExtentContainer(ExtentInfoForPool extentInfo, IURIExtent extent)
         {
             this.ExtentInfo = extentInfo;
             this.Extent = extent;

@@ -163,7 +163,7 @@
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
     <Compile Include="Logic\ExtentInfoForPool.cs" />
-    <Compile Include="Logic\ExtentMapping.cs" />
+    <Compile Include="Logic\ExtentContainer.cs" />
     <Compile Include="Logic\MethodProvider\MethodType.cs" />
     <Compile Include="Logic\MethodProvider\MethodProviderExtensions.cs" />
     <Compile Include="Logic\MethodProvider\TypeFunctionImpl.cs" />

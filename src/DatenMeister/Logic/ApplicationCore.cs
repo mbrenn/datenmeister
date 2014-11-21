@@ -197,7 +197,7 @@ namespace DatenMeister.Logic
             // After the viewset is initialized, replace the view extents by wrapped
             // EventOnChange Extent. 
             // So, view can be updated, when the content of the extent changed
-            foreach (var instance in pool.ExtentMappings.Where(x => x.ExtentInfo.ExtentType == ExtentType.View))
+            foreach (var instance in pool.ExtentContainer.Where(x => x.ExtentInfo.ExtentType == ExtentType.View))
             {
                 // Just replace the extent
                 instance.Extent = new EventOnChangeExtent(instance.Extent);

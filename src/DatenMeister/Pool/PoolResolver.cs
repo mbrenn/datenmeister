@@ -97,7 +97,7 @@ namespace DatenMeister.Pool
             // 
             // Now try to find url
             var extentUrl = new Uri(uri.Scheme + "://" + uri.Authority + uri.AbsolutePath);
-            var extent = this.pool.Extents.Where(x =>
+            var extent = this.pool.GetExtents().Where(x =>
                 {
                     return new Uri(x.ContextURI()) == extentUrl;
                 }).FirstOrDefault();

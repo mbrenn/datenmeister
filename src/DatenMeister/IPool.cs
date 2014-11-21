@@ -9,28 +9,10 @@ namespace DatenMeister
     public interface IPool
     {
         /// <summary>
-        /// Gets a list of extent information. 
-        /// This method shall be thread-safe
-        /// </summary>
-        IEnumerable<ExtentInfoForPool> Instances
-        {
-            get;
-        }
-
-        /// <summary>
-        /// Gets a list of extents
-        /// This method shall be thread-safe
-        /// </summary>
-        IEnumerable<IURIExtent> Extents
-        {
-            get;
-        }
-
-        /// <summary>
         /// Gets a list of extent instances. 
         /// This method shall be thread-safe
         /// </summary>
-        IEnumerable<ExtentMapping> ExtentMappings
+        IEnumerable<ExtentContainer> ExtentContainer
         {
             get;
         }
