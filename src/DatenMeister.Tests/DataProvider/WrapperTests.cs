@@ -2,6 +2,7 @@
 using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
+using DatenMeister.Pool;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

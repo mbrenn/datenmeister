@@ -8,6 +8,7 @@ using DatenMeister.DataProvider.Xml;
 using DatenMeister.Entities.FieldInfos;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
+using DatenMeister.Pool;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

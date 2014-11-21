@@ -115,7 +115,7 @@
     <Compile Include="DataProvider\Xml\XmlTypeInformation.cs" />
     <Compile Include="DataProvider\Xml\XmlTypeMapping.cs" />
     <Compile Include="DataProvider\Xml\XmlUnspecified.cs" />
-    <Compile Include="DatenMeisterPool.cs" />
+    <Compile Include="Pool\DatenMeisterPool.cs" />
     <Compile Include="Entities\AsObject\DM.Objects.cs" />
     <Compile Include="Entities\AsObject\DM.Types.cs" />
     <Compile Include="Entities\AsObject\FieldInfo.Objects.cs" />
@@ -151,7 +151,7 @@
     <Compile Include="IFactory.cs" />
     <Compile Include="Injection.cs" />
     <Compile Include="IObject.cs" />
-    <Compile Include="IPool.cs" />
+    <Compile Include="Pool\IPool.cs" />
     <Compile Include="IPublicDatenMeisterSettings.cs" />
     <Compile Include="IReflectiveCollection.cs" />
     <Compile Include="IReflectiveSequence.cs" />
