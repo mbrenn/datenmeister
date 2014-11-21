@@ -35,7 +35,7 @@ namespace DatenMeister.DataProvider.Pool
         /// <param name="pool"></param>
         public AllItemsReflectiveCollection(IPool pool, ExtentType extentType)
             : base(pool.ExtentContainer
-                .Where (x=> x.Info.ExtentType == extentType)
+                .Where (x=> x.Info.extentType == extentType)
                 .Select(x => x.Extent.Elements()))
         {
             this.pool = pool;

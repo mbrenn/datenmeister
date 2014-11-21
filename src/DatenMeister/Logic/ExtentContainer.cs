@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Entities.DM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace DatenMeister.Logic
         /// <summary>
         /// Gets or sets the information for the extent
         /// </summary>
-        public ExtentInfoForPool Info
+        public ExtentInfo Info
         {
             get;
             set;
@@ -34,7 +35,7 @@ namespace DatenMeister.Logic
         /// </summary>
         /// <param name="info">Information of the extent</param>
         /// <param name="extent">Extent being associated</param>
-        public ExtentContainer(ExtentInfoForPool info, IURIExtent extent)
+        public ExtentContainer(ExtentInfo info, IURIExtent extent)
         {
             this.Info = info;
             this.Extent = extent;

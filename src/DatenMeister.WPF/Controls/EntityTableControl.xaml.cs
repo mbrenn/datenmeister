@@ -136,7 +136,7 @@ namespace DatenMeister.WPF.Controls
                 return ExtentType.View;
             }
 
-            return DatenMeisterPool.GetMetaExtentType(instance.ExtentType);
+            return DatenMeisterPool.GetMetaExtentType(instance.extentType);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace DatenMeister.WPF.Controls
                 var instance = pool.GetInstance(mainType.Extent);
                 if (instance != null)
                 {
-                    extentType = instance.ExtentType;
+                    extentType = instance.extentType;
                 }
             }
 

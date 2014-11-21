@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider;
+using DatenMeister.Entities.DM;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
 using Ninject;
@@ -20,7 +21,7 @@ namespace DatenMeister
         /// </summary>
         /// <param name="extent">Extent whose instance is queried</param>
         /// <returns>Found extent instance</returns>
-        public static ExtentInfoForPool GetInstance(this IURIExtent extent)
+        public static ExtentInfo GetInstance(this IURIExtent extent)
         {
             var pool = Injection.Application.Get<IPool>();
             return pool.GetInstance(extent);

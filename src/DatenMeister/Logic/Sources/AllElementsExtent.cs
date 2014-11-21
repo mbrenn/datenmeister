@@ -50,7 +50,7 @@ namespace DatenMeister.Logic.Sources
             else
             {
                 return this.Pool.ExtentContainer
-                    .Where(x => x.Info.ExtentType == extentType && x.Extent != this)
+                    .Where(x => x.Info.extentType == extentType && x.Extent != this)
                     .Select(x => x.Extent);
             }
         }

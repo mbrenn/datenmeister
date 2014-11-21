@@ -197,7 +197,7 @@ namespace DatenMeister.Logic
             // After the viewset is initialized, replace the view extents by wrapped
             // EventOnChange Extent. 
             // So, view can be updated, when the content of the extent changed
-            foreach (var instance in pool.ExtentContainer.Where(x => x.Info.ExtentType == ExtentType.View))
+            foreach (var instance in pool.ExtentContainer.Where(x => x.Info.extentType == ExtentType.View))
             {
                 // Just replace the extent
                 instance.Extent = new EventOnChangeExtent(instance.Extent);
@@ -336,8 +336,8 @@ namespace DatenMeister.Logic
             Ensure.That(extent is XmlExtent, "The given extent is not an XmlExtent");
             dataProvider.Save(
                 extent as XmlExtent,
-                instance.Info.StoragePath,
-                this.GetXmlSettings(instance.Info.ExtentType));
+                instance.Info.storagePath,
+                this.GetXmlSettings(instance.Info.extentType));
         }
 
         public XmlSettings GetXmlSettings(ExtentType type)

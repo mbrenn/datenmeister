@@ -8,6 +8,7 @@ using DatenMeister.Pool;
 using BurnSystems.ObjectActivation;
 using DatenMeister.DataProvider;
 using DatenMeister.Logic.TypeResolver;
+using DatenMeister.Entities.DM;
 
 namespace DatenMeister
 {
@@ -87,12 +88,12 @@ namespace DatenMeister
             {
                 this.CheckIfExtentAlreadyInAnyPool(extent);
                 this.Add(
-                    new ExtentInfoForPool(storagePath, name, extentType), 
+                    new ExtentInfo(storagePath, name, extentType), 
                     extent);
             }
         }
 
-        public void Add(ExtentInfoForPool instance, IURIExtent extent)
+        public void Add(ExtentInfo info, IURIExtent extent)
         {
             lock (this.syncObject)
             {
@@ -113,7 +114,7 @@ namespace DatenMeister
 
                 // Adds the instance and assign it
                 this.extents.Add(
-                    new ExtentContainer(instance, extent));
+                    new ExtentContainer(info, extent));
                 extent.Pool = this;
             }
         }

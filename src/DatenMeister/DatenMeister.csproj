@@ -123,7 +123,7 @@
     <Compile Include="Entities\AsObject\UML.Objects.cs" />
     <Compile Include="Entities\AsObject\UML.Types.cs" />
     <Compile Include="Entities\AsObject\UML.Types.User.cs" />
-    <Compile Include="Entities\DM\ExtentInWorkbench.cs" />
+    <Compile Include="Entities\DM\ExtentInfo.cs" />
     <Compile Include="Entities\DM\RecentProject.cs" />
     <Compile Include="Entities\DM\Workbench.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
@@ -162,7 +162,6 @@
     <Compile Include="Logic\ClientActions\IClientAction.cs" />
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
-    <Compile Include="Logic\ExtentInfoForPool.cs" />
     <Compile Include="Logic\ExtentContainer.cs" />
     <Compile Include="Logic\MethodProvider\MethodType.cs" />
     <Compile Include="Logic\MethodProvider\MethodProviderExtensions.cs" />

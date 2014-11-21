@@ -75,7 +75,7 @@ namespace DatenMeister.AddOns.Views
                     asObjectExtentview.setExtentUri(uri);
                     var instance = poolResolver.Pool.GetInstance(extent);
 
-                    if (instance.ExtentType == ExtentType.Data)
+                    if (instance.extentType == ExtentType.Data)
                     {
                         asObjectExtentview.setAllowDelete(true);
                         asObjectExtentview.setAllowEdit(true);

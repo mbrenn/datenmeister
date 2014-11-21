@@ -10,7 +10,7 @@ namespace DatenMeister.Entities.DM
     /// <summary>
     /// Gets or sets the information for the extent information
     /// </summary>
-    public class ExtentInWorkbench
+    public class ExtentInfo
     {
         /// <summary>
         /// Gets or sets the url, under which the extent can be found
@@ -26,6 +26,15 @@ namespace DatenMeister.Entities.DM
         /// Gets or sets the name
         /// </summary>
         public string name
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the path, where the extent itself is stored
+        /// </summary>
+        public string storagePath
         {
             get;
             set;
@@ -59,6 +68,40 @@ namespace DatenMeister.Entities.DM
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ExtentInWorkbench class
+        /// </summary>
+        public ExtentInfo()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ExtentInstance class. 
+        /// </summary>
+        /// <param name="extent">Extent to be stored</param>
+        /// <param name="path">Path, where data will be stored</param>
+        public ExtentInfo(string path, ExtentType extentType)
+        {
+            this.storagePath = path;
+            this.extentType = extentType;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DatenMeister.PoolInstance"/> class.
+        /// </summary>
+        /// <param name='extent'>
+        /// Extent.
+        /// </param>
+        /// <param name='storagePath'>
+        /// Path.
+        /// </param>
+        public ExtentInfo(string storagePath, string name, ExtentType extentType)
+        {
+            this.storagePath = storagePath;
+            this.name = name;
+            this.extentType = extentType;
         }
     }
 }
