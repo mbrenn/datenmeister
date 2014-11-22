@@ -24,6 +24,9 @@ namespace DatenMeister.DataProvider.DotNet
 
         private object value;
 
+        /// <summary>
+        /// Stores the reflective sequence where the object is stored. May be null, when object is not connected
+        /// </summary>
         private IReflectiveSequence sequence;
 
         /// <summary>
@@ -173,7 +176,7 @@ namespace DatenMeister.DataProvider.DotNet
 
         public IEnumerable<ObjectPropertyPair> getAll()
         {
-            foreach (var property in this.value.GetType().GetProperties())
+            foreach (var property in this.value.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 var value = property.GetValue(this.value, null);
 
@@ -289,7 +292,8 @@ namespace DatenMeister.DataProvider.DotNet
             else
             {
                 // It is not an enumeration and it is not a simple type
-                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent.Elements(), checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
+                var elements = this.extent == null ? null : this.extent.Elements();
+                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(elements, checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
             }
         }
 

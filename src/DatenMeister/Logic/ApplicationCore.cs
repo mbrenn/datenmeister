@@ -179,6 +179,7 @@ namespace DatenMeister.Logic
                 var globalDotNetExtent = new GlobalDotNetExtent();
                 Injection.Application.Bind<GlobalDotNetExtent>().ToConstant(globalDotNetExtent);
                 DatenMeister.Entities.AsObject.FieldInfo.Types.AssignTypeMapping(globalDotNetExtent);
+                DatenMeister.Entities.AsObject.DM.Types.AssignTypeMapping(globalDotNetExtent);
             }
         }
 
@@ -253,10 +254,10 @@ namespace DatenMeister.Logic
         public void StoreWorkbench(string path)
         {
             // Saves the complete workbench at the given path
-            WorkbenchManager.Get().SaveWorkbench(path);
+            WorkbenchManager.Get().SaveWorkbench("C:\\Users\\Martin\\Desktop\\test.xml");
 
             // and afterwards store the viewset
-            this.privateSettings.StoreViewSet(this);
+            //this.privateSettings.StoreViewSet(this);
         }
 
         /// <summary>
@@ -266,60 +267,6 @@ namespace DatenMeister.Logic
         {
             // Stores the settings
             this.SaveApplicationData();
-        }
-
-        /// <summary>
-        /// Tries to load an extent from the given file. 
-        /// The path of the file will be retrieved by GetStoragePathFor, which is within
-        /// the LocalAppData of the user
-        /// </summary>
-        /// <param name="name">Name of the new extent</param>
-        /// <param name="fileName">Used filename to load the extent</param>
-        /// <param name="extentUri">Uri of the extent to be used</param>
-        /// <param name="defaultActionForCreation">Action being called, when file is not existing.
-        /// The action can be used to precreate the necessary nodes or to perform the mapping</param>
-        /// <param name="defaultActionForLoading">The action that will be performed
-        /// after the </param>
-        /// <returns>Created or loaded Extent</returns>
-        public IURIExtent LoadOrCreateApplicationDataByDefault(
-            string name,
-            string extentUri,
-            ExtentType extentType,
-            ISettings settings,
-            Action<XmlExtent> defaultActionForCreation,
-            Action<XmlExtent> defaultActionForLoading = null)
-        {
-            var workBenchManager = WorkbenchManager.Get();
-                        
-            logger.Message("Loading" + name);
-            var filePath = this.GetApplicationStoragePathFor(name);
-
-            var info = workBenchManager.LoadOrCreateExtent(
-                filePath,
-                extentUri,
-                new ExtentParam(name, extentType, filePath)
-                {
-                    DataProviderSettings = settings
-                },
-                () =>
-                {
-                    var createdExtent = XmlExtent.Create(settings as XmlSettings, name, extentUri);
-                    if (defaultActionForCreation != null)
-                    {
-                        defaultActionForCreation(createdExtent);
-                    }
-
-                    return createdExtent;
-                },
-                (x) =>
-                {
-                    if (defaultActionForLoading != null)
-                    {
-                        defaultActionForLoading(x as XmlExtent);
-                    }
-                });
-
-            return workBenchManager.Pool.GetExtent(info);
         }
 
         /// <summary>
@@ -375,13 +322,20 @@ namespace DatenMeister.Logic
             var name = "applicationdata";
             if (!this.isApplicationDataLoaded)
             {
+                var filePath = this.GetApplicationStoragePathFor(name);
                 var workBenchManager = WorkbenchManager.Get();
-                this.applicationData = this.LoadOrCreateApplicationDataByDefault(
-                    name,
-                    ApplicationDataUri,
-                    ExtentType.ApplicationData,
-                    XmlSettings.Empty,
-                    null);
+                var info = workBenchManager.LoadOrCreateExtent(
+                     filePath,
+                     ApplicationDataUri,
+                     new ExtentParam(name, ExtentType.ApplicationData, filePath)
+                     {
+                         DataProviderSettings = XmlSettings.Empty,
+                         IsPrepopulated = true
+                     },
+                     () => { return XmlExtent.Create(XmlSettings.Empty, name, ApplicationDataUri); },
+                     null);
+                this.applicationData = workBenchManager.Pool.GetExtent(info);
+
                 this.isApplicationDataLoaded = true;
             }
             else

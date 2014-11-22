@@ -99,7 +99,7 @@ namespace DatenMeister.Pool
         /// <returns>The created extent information</returns>
         public ExtentInfo LoadOrCreateExtent(string storagePath, string uri, ExtentParam info, Func<IURIExtent> funcWhenNotLoaded, Action<IURIExtent> actionWhenLoaded)
         {
-            logger.Message("Loading" + info.Name);
+            logger.Message("Loading Extent: " + info.Name);
 
             IURIExtent createdExtent = null;
             var xmlSettings = info.DataProviderSettings as XmlSettings;
@@ -108,6 +108,7 @@ namespace DatenMeister.Pool
             {
                 try
                 {
+                    logger.Message("- Existing, will be loaded");
                     // File exists, we can directly load it
                     var dataProvider = new XmlDataProvider();
                     createdExtent = dataProvider.Load(storagePath, uri, xmlSettings);
@@ -119,12 +120,14 @@ namespace DatenMeister.Pool
                 }
                 catch (Exception exc)
                 {
-                    logger.Fail("Failure during loading of " + info.Name + ": " + exc.Message);
+                    logger.Fail("- Failure during loading of " + info.Name + ": " + exc.Message);
                 }
             }
 
             if (createdExtent == null)
             {
+                logger.Message("- Not existing, will be created");
+
                 // File does not exist, we have to load it from 
                 if (funcWhenNotLoaded != null)
                 {
@@ -160,6 +163,9 @@ namespace DatenMeister.Pool
             {
                 throw new ArgumentException("path is null and now default path is given");
             }
+
+            // Updates the path of the workbench
+            this.WorkbenchContainer.Workbench.path = path;
 
             var dotNetObject = Injection.Application.Get<GlobalDotNetExtent>().CreateObject(this.WorkbenchContainer.Workbench);
 
