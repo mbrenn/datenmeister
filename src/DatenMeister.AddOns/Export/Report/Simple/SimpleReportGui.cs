@@ -49,7 +49,7 @@ namespace DatenMeister.AddOns.Export.Report.Simple
                 var settings = new SimpleReportSettings();
                 var export = new SimpleReport();
                 export.Export(
-                    pool.GetExtent(Logic.ExtentType.Data).First().AsReflectiveCollection(),
+                    pool.GetExtents(Logic.ExtentType.Data).First().AsReflectiveCollection(),
                     dlg.FileName,
                     settings);
             }

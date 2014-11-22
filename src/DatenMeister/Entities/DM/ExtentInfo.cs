@@ -1,4 +1,5 @@
-﻿using DatenMeister.Logic;
+﻿using DatenMeister.DataProvider;
+using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +65,7 @@ namespace DatenMeister.Entities.DM
         /// <summary>
         /// Gets or sets the configuration being used to load the extent. It also includes the type of extent (.Net, Xml, etc) by using the correct metaClass
         /// </summary>
-        public object loadConfiguration
+        public ISettings dataProviderSettings
         {
             get;
             set;

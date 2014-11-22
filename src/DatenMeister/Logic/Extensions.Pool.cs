@@ -128,9 +128,20 @@ namespace DatenMeister.Logic
         /// <param name="pool">Pool to be queried</param>
         /// <param name="extentType">The extent type to be queried</param>
         /// <returns>Enumeration, matching to the given extentType</returns>
-        public static IEnumerable<IURIExtent> GetExtent(this IPool pool, ExtentType extentType)
+        public static IEnumerable<IURIExtent> GetExtents(this IPool pool, ExtentType extentType)
         {
             return pool.ExtentContainer.Where(x => x.Info.extentType == extentType).Select(x => x.Extent);
+        }
+
+        /// <summary>
+        /// Gets the enumeration of extent types
+        /// </summary>
+        /// <param name="pool">Pool to be queried</param>
+        /// <param name="extentType">The extent type to be queried</param>
+        /// <returns>Enumeration, matching to the given extentType</returns>
+        public static IURIExtent GetExtent(this IPool pool, ExtentInfo extentInfo)
+        {
+            return pool.ExtentContainer.Where(x => x.Info.uri == extentInfo.uri).Select(x => x.Extent).FirstOrDefault();
         }
 
         /// <summary>

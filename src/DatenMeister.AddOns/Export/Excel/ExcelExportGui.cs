@@ -32,7 +32,7 @@ namespace DatenMeister.AddOns.Export.Excel
                 {
                     try
                     {
-                        var dataExtent = PoolResolver.GetDefaultPool().GetExtent(Logic.ExtentType.Data).First();
+                        var dataExtent = PoolResolver.GetDefaultPool().GetExtents(Logic.ExtentType.Data).First();
 
                         var dlg = new Microsoft.Win32.SaveFileDialog();
                         dlg.Filter = Localization_DM_Addons.Filter_ExcelExport;

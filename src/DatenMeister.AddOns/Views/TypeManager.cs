@@ -33,8 +33,8 @@ namespace DatenMeister.AddOns.Views
             menuItem.Click += (x, y) =>
                 {
                     var pool = PoolResolver.GetDefaultPool();
-                    var typeExtent = pool.GetExtent(ExtentType.Type).First();
-                    var viewExtent = pool.GetExtent(ExtentType.View).First();
+                    var typeExtent = pool.GetExtents(ExtentType.Type).First();
+                    var viewExtent = pool.GetExtents(ExtentType.View).First();
 
                     Ensure.That(typeExtent != null, "No Type extent has been defined");
                     Ensure.That(viewExtent != null, "No View extent has been defined");

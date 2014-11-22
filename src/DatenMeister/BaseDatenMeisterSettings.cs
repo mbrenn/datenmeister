@@ -34,7 +34,7 @@ namespace DatenMeister
         {
             get
             {
-                return PoolResolver.GetDefaultPool().GetExtent(ExtentType.Data).FirstOrDefault();
+                return PoolResolver.GetDefaultPool().GetExtents(ExtentType.Data).FirstOrDefault();
             }
         }
 
@@ -42,7 +42,7 @@ namespace DatenMeister
         {
             get
             {
-                return PoolResolver.GetDefaultPool().GetExtent(ExtentType.View).FirstOrDefault();
+                return PoolResolver.GetDefaultPool().GetExtents(ExtentType.View).FirstOrDefault();
             }
         }
 
@@ -53,7 +53,7 @@ namespace DatenMeister
         {
             get
             {
-                return PoolResolver.GetDefaultPool().GetExtent(ExtentType.Type).LastOrDefault();
+                return PoolResolver.GetDefaultPool().GetExtents(ExtentType.Type).LastOrDefault();
             }
         }
 

@@ -29,7 +29,7 @@ namespace DatenMeister.WPF.Modules.RecentFiles
         public static void AddSupport(IDatenMeisterWindow wnd)
         {
             var pool = PoolResolver.GetDefaultPool();
-            var viewExtent = pool.GetExtent(ExtentType.View).First();
+            var viewExtent = pool.GetExtents(ExtentType.View).First();
 
             // Includes the View
             var viewFactory = Factory.GetFor(viewExtent);
@@ -55,7 +55,7 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             viewExtent.Elements().Insert(0, layoutRecentObjects);
 
             // Adds the mapping for the recent projects
-            var applicationExtent = pool.GetExtent(ExtentType.ApplicationData).First() as XmlExtent;
+            var applicationExtent = pool.GetExtents(ExtentType.ApplicationData).First() as XmlExtent;
             Ensure.That(applicationExtent != null, "Application Extent is not XmlExtent");
             applicationExtent.Settings.Mapping.Add(DatenMeister.Entities.AsObject.DM.Types.RecentProject);
 
@@ -104,7 +104,7 @@ namespace DatenMeister.WPF.Modules.RecentFiles
         private static void OnClickOpenFile(IDatenMeisterWindow wnd, IObject recentFile, IObject viewRecentObjects)
         {
             var innerPool = PoolResolver.GetDefaultPool();
-            var innerViewExtent = innerPool.GetExtent(ExtentType.View).First();
+            var innerViewExtent = innerPool.GetExtents(ExtentType.View).First();
 
             var filePath = DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(recentFile);
             if (File.Exists(filePath))

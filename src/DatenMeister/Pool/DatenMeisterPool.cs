@@ -66,12 +66,12 @@ namespace DatenMeister.Pool
         /// Adds the uri extent to datenmeister pool
         /// </summary>
         /// <param name="extent">Extent to be added</param>
-        public void Add(IURIExtent extent, string storagePath, ExtentType extentType)
+        public ExtentInfo Add(IURIExtent extent, string storagePath, ExtentType extentType)
         {
             lock (this.syncObject)
             {
                 this.CheckIfExtentAlreadyInAnyPool(extent);
-                this.Add(extent, storagePath, null, extentType);
+                return this.Add(extent, storagePath, null, extentType);
             }
         }
 
@@ -82,18 +82,18 @@ namespace DatenMeister.Pool
         /// <param name="extent">Extent to be added</param>
         /// <param name="storagePath">Path, where pool is stored</param>
         /// <param name="name">Name of the pool</param>
-        public void Add(IURIExtent extent, string storagePath, string name, ExtentType extentType)
+        public ExtentInfo Add(IURIExtent extent, string storagePath, string name, ExtentType extentType)
         {
             lock (this.syncObject)
             {
                 this.CheckIfExtentAlreadyInAnyPool(extent);
-                this.Add(
+                return this.Add(
                     new ExtentInfo(storagePath, name, extentType, extent.ContextURI(), extent.GetType().ToString()), 
                     extent);
             }
         }
 
-        public void Add(ExtentInfo info, IURIExtent extent)
+        public ExtentInfo Add(ExtentInfo info, IURIExtent extent)
         {
             lock (this.syncObject)
             {
@@ -116,6 +116,8 @@ namespace DatenMeister.Pool
                 this.extents.Add(
                     new ExtentContainer(info, extent));
                 extent.Pool = this;
+
+                return info;
             }
         }
 

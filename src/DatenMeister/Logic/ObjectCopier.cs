@@ -57,7 +57,18 @@ namespace DatenMeister.Logic
 
             var factory = Factory.GetFor(this.targetExtent);
             var targetElement = factory.create(type);
+            this.CopyElement(sourceElement, targetElement, deferredActions);
+            return targetElement;
+        }
 
+        /// <summary>
+        /// Copies a specific source element onto the target element
+        /// </summary>
+        /// <param name="sourceElement">The source element being used to copy the data</param>
+        /// <param name="targetElement">The target element receiving the elements</param>
+        /// <param name="deferredActions">List of deferred actions to complete the copying</param>
+        public void CopyElement(IObject sourceElement, IObject targetElement, List<Action> deferredActions = null)
+        {
             if (sourceElement.Id != null)
             {
                 this.mapping[sourceElement.Id] = targetElement;
@@ -138,7 +149,6 @@ namespace DatenMeister.Logic
                     }
                 }
             }
-            return targetElement;
         }
     }
 }

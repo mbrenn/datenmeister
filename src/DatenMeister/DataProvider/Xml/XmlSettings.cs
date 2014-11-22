@@ -10,7 +10,7 @@ namespace DatenMeister.DataProvider.Xml
     /// <summary>
     /// Defines the settings for reading, manipulating and storing the xml file. 
     /// </summary>
-    public class XmlSettings
+    public class XmlSettings : ISettings
     {
         /// <summary>
         /// Stores the type mapping between 

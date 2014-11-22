@@ -40,7 +40,7 @@ namespace DatenMeister.AddOns.Views
 
             menuItem.Click += (x, y) =>
             {
-                var extentView = PoolResolver.GetDefaultPool().GetExtent(ExtentType.View).First();
+                var extentView = PoolResolver.GetDefaultPool().GetExtents(ExtentType.View).First();
 
                 // Creates the view for the extents
                 var newView = DatenMeisterPoolExtent.AddView(extentView);

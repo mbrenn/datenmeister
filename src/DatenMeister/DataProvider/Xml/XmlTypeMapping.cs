@@ -92,7 +92,7 @@ namespace DatenMeister.DataProvider.Xml
                 return null;
             }
 
-            return this.information.Where(x => x.Type.Equals(type)).FirstOrDefault();
+            return this.information.Where(x => type.Equals(x.Type)).FirstOrDefault();
         }
     }
 }

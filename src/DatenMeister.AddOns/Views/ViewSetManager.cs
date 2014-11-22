@@ -34,7 +34,7 @@ namespace DatenMeister.AddOns.Views
             menuItem.Click += (x, y) =>
             {
                 var pool = PoolResolver.GetDefaultPool();
-                var viewExtent = pool.GetExtent(ExtentType.View).First();
+                var viewExtent = pool.GetExtents(ExtentType.View).First();
 
                 Ensure.That(viewExtent != null, "No View extent has been defined");
 
@@ -120,7 +120,7 @@ namespace DatenMeister.AddOns.Views
             // Assigns the viewset,
             // First, get the necessary object
             var myPool = PoolResolver.GetDefaultPool();
-            var myViewExtent = myPool.GetExtent(ExtentType.View).First();
+            var myViewExtent = myPool.GetExtents(ExtentType.View).First();
             var viewManager = Injection.Application.Get<IViewManager>() as DefaultViewManager;
 
             CreateForTableView(myViewExtent, viewManager);

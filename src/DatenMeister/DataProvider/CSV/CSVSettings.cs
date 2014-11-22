@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.DataProvider.CSV
 {
-    public class CSVSettings
+    public class CSVSettings : ISettings
     {
         public CSVSettings()
         {

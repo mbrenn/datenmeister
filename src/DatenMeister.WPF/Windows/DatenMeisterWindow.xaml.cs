@@ -229,7 +229,7 @@ namespace DatenMeister.WPF.Windows
         public void RefreshTabs()
         {
             var pool = PoolResolver.GetDefaultPool();
-            var viewExtent = pool.GetExtent(ExtentType.View).First();
+            var viewExtent = pool.GetExtents(ExtentType.View).First();
 
             Ensure.That(viewExtent != null, "No view extent has been given");
 
@@ -322,7 +322,7 @@ namespace DatenMeister.WPF.Windows
         public void RegisterToChangeEvent()
         {
             var pool = PoolResolver.GetDefaultPool();
-            var viewExtent = pool.GetExtent(ExtentType.View).First();
+            var viewExtent = pool.GetExtents(ExtentType.View).First();
 
             var onChangeEventExtent = WrapperHelper.FindWrappedExtent<EventOnChangeExtent>(viewExtent);
             if (onChangeEventExtent == null)
@@ -441,7 +441,7 @@ namespace DatenMeister.WPF.Windows
             this.Core.PerformInitializationOfViewSet();
 
             var pool = Injection.Application.Get<IPool>();
-            var projectExtent = pool.GetExtent(ExtentType.Data).First();
+            var projectExtent = pool.GetExtents(ExtentType.Data).First();
 
             var loadedFile = XDocument.Load(filename);
 
@@ -487,11 +487,12 @@ namespace DatenMeister.WPF.Windows
             else
             {
                 var pool = PoolResolver.GetDefaultPool();
-                var xmlExtent = pool.GetExtent(Logic.ExtentType.Data).First() as XmlExtent;
+                var xmlExtent = pool.GetExtents(Logic.ExtentType.Data).First() as XmlExtent;
                 Ensure.That(xmlExtent != null);
 
                 // Stores the xml document
-                xmlExtent.XmlDocument.Save(this.pathOfDataExtent);
+                // Will be redone afterwards
+                // xmlExtent.XmlDocument.Save(this.pathOfDataExtent);
                 xmlExtent.IsDirty = false;
 
                 // Adds the file to the recent files
@@ -499,6 +500,7 @@ namespace DatenMeister.WPF.Windows
 
                 MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
 
+                this.Core.StoreWorkbench(this.pathOfDataExtent);
                 this.UpdateWindowTitle();
             }
         }
@@ -548,7 +550,7 @@ namespace DatenMeister.WPF.Windows
         {
             
             var pool = PoolResolver.GetDefaultPool();
-            var dataExtent = pool.GetExtent(ExtentType.Data).First();
+            var dataExtent = pool.GetExtents(ExtentType.Data).First();
 
             if (!dataExtent.IsDirty)
             {
@@ -599,7 +601,7 @@ namespace DatenMeister.WPF.Windows
             dialog.RestoreDirectory = true;
             if (dialog.ShowDialog(this) == true)
             {
-                var xmlExtent = pool.GetExtent(Logic.ExtentType.Data).First() as XmlExtent;
+                var xmlExtent = pool.GetExtents(Logic.ExtentType.Data).First() as XmlExtent;
 
                 // Prepare extent, receiving the copy
                 var copiedExtent = new XmlExtent(

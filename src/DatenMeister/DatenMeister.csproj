@@ -83,6 +83,7 @@
     <Compile Include="DataProvider\IHasFactoryExtent.cs" />
     <Compile Include="DataProvider\IKnowsExtentType.cs" />
     <Compile Include="DataProvider\IProxyObject.cs" />
+    <Compile Include="DataProvider\ISettings.cs" />
     <Compile Include="DataProvider\ListNonGenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListReflectiveSequence.cs" />
     <Compile Include="DataProvider\GenericUnspecified.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="IFactory.cs" />
     <Compile Include="Injection.cs" />
     <Compile Include="IObject.cs" />
+    <Compile Include="Pool\ExtentParam.cs" />
     <Compile Include="Pool\IPool.cs" />
     <Compile Include="IPublicDatenMeisterSettings.cs" />
     <Compile Include="IReflectiveCollection.cs" />
@@ -194,7 +196,8 @@
     <Compile Include="Logic\Views\DefaultViewManager.cs" />
     <Compile Include="Logic\Views\IViewManager.cs" />
     <Compile Include="Logic\Views\ViewHelper.cs" />
-    <Compile Include="Logic\WorkbenchManager.cs" />
+    <Compile Include="Pool\WorkbenchContainer.cs" />
+    <Compile Include="Pool\WorkbenchManager.cs" />
     <Compile Include="ObjectConversion.cs" />
     <Compile Include="Pool\Extensions.cs" />
     <Compile Include="Pool\ExtentNames.cs" />
