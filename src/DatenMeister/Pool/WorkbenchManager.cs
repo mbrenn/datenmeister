@@ -147,6 +147,7 @@ namespace DatenMeister.Pool
         {
             var loadProvider = new XmlDataProvider();
             var xmlExtent = loadProvider.Load(path);
+            xmlExtent.Settings.UseRootNode = true;
 
             var dotNetExtent = Injection.Application.Get<GlobalDotNetExtent>();
             var workBenchAsIObject = dotNetExtent.CreateObject(this.WorkbenchContainer.Workbench);

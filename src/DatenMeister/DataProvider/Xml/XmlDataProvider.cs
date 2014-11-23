@@ -25,7 +25,7 @@ namespace DatenMeister.DataProvider.Xml
         public XmlExtent Load(string path)
         {
             var loadedDocument = XDocument.Load(path);
-            var extent = new XmlExtent(loadedDocument, path);
+            var extent = new XmlExtent(loadedDocument, path, new XmlSettings());
 
             return extent;
         }
