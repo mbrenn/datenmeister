@@ -150,10 +150,6 @@ namespace DatenMeister.Pool
             Injection.Application.Rebind<IPool>().ToConstant(DatenMeisterPool.ApplicationPool);
             Injection.Application.Rebind<DatenMeisterPool>().ToConstant(ApplicationPool);
 
-            // Adds the extent for the extents
-            var poolExtent = new DatenMeisterPoolExtent(ApplicationPool);
-            ApplicationPool.Add(poolExtent, null, DatenMeisterPoolExtent.DefaultName, ExtentType.Extents);
-
             return ApplicationPool;
         }
 

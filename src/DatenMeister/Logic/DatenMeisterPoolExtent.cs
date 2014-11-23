@@ -1,4 +1,5 @@
 ﻿using BurnSystems.ObjectActivation;
+using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.Entities.FieldInfos;
@@ -38,7 +39,8 @@ namespace DatenMeister.Logic
         /// <param name="pool">Pool to be used for this extent</param>
         public DatenMeisterPoolExtent(DatenMeisterPool pool)
             : base(DefaultUri)
-        {            
+        {
+            Ensure.That(pool != null);
             this.pool = pool;
         }
 

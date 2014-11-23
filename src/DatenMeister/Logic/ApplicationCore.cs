@@ -199,6 +199,12 @@ namespace DatenMeister.Logic
                     IsPrepopulated = true
                 });
 
+            // Adds the extent for the extents
+            var poolExtent = new DatenMeisterPoolExtent(workBenchManager.Pool as DatenMeisterPool);
+            workBenchManager.AddExtent(
+                poolExtent, 
+                new ExtentParam(DatenMeisterPoolExtent.DefaultName, ExtentType.Extents)
+                    .AsPrepopulated());
             // Loads the application data from file
             this.LoadApplicationDataIfNotLoaded();
 
@@ -253,10 +259,22 @@ namespace DatenMeister.Logic
         public void StoreWorkbench(string path)
         {
             // Saves the complete workbench at the given path
-            WorkbenchManager.Get().SaveWorkbench("C:\\Users\\Martin\\Desktop\\test.xml");
+            WorkbenchManager.Get().SaveWorkbench(path);
 
             // and afterwards store the viewset
             //this.privateSettings.StoreViewSet(this);
+        }
+
+        /// <summary>
+        /// Loads the workbench by giving a path
+        /// </summary>
+        /// <param name="path">Path to be loaded</param>
+        public void LoadWorkbench(string path)
+        {
+            this.PerformInitializationOfViewSet();
+            WorkbenchManager.Get().LoadWorkbench(path);
+
+            this.privateSettings.InitializeAfterLoading(this);
         }
 
         /// <summary>
