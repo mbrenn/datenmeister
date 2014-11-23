@@ -93,7 +93,7 @@ namespace DatenMeister.Logic
         {
             this.XmlSettings = new XmlSettings()
             {
-                SkipRootNode = true
+                OnlyUseAssignedNodes = true
             };
         }
 

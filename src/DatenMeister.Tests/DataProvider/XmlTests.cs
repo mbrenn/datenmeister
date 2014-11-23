@@ -559,6 +559,32 @@ namespace DatenMeister.Tests.DataProvider
         }
 
         [Test]
+        public void TestRetrieveInformationFromRootNode()
+        {
+            ApplicationCore.PerformBinding();
+            var document = XDocument.Parse(
+                "<root property=\"value\">" +
+                "<element id=\"e1\" />" +
+                "<element id=\"e2\" />" +
+                "<element id=\"e4\" />" +
+                "</root>");
+
+            var xmlExtent = new XmlExtent(
+                document, 
+                "test:///",
+                new XmlSettings()
+                {
+                    UseRootNode = true
+                });
+
+            var valueAsIObject = xmlExtent.Elements().First().AsIObject();
+            Assert.That(valueAsIObject, Is.Not.Null);
+
+            var propertyValue = valueAsIObject.get("property").AsSingle().ToString();
+            Assert.That(propertyValue, Is.EqualTo("value"));
+        }
+
+        [Test]
         public void TestFactory()
         {
             var xmlExtent = CreateTestExtent();
@@ -784,7 +810,7 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = new XmlExtent(document, "test:///");
             xmlExtent.Settings.Mapping.Add("task", TypeTask, x => x.Elements("root").Elements("tasks").FirstOrDefault());
             xmlExtent.Settings.Mapping.Add("person", TypePerson, x => x.Elements("root").Elements("persons").FirstOrDefault());
-            xmlExtent.Settings.SkipRootNode = isEmpty; // When an empty node has been requested, we assume untyped objects being stored at root node
+            xmlExtent.Settings.OnlyUseAssignedNodes = isEmpty; // When an empty node has been requested, we assume untyped objects being stored at root node
             var pool = DatenMeisterPool.Create();
             pool.Add(xmlExtent, null, ExtentType.Data);
             pool.Add(typeExtent, null, ExtentType.Type);
@@ -903,7 +929,7 @@ namespace DatenMeister.Tests.DataProvider
 
             var xmlSettings = new XmlSettings()
             {
-                SkipRootNode = false
+                OnlyUseAssignedNodes = false
             };
 
             var extent = new XmlExtent(document, "no", xmlSettings);
@@ -911,7 +937,7 @@ namespace DatenMeister.Tests.DataProvider
 
             xmlSettings = new XmlSettings()
             {
-                SkipRootNode = true
+                OnlyUseAssignedNodes = true
             };
 
             extent = new XmlExtent(document, "no", xmlSettings);

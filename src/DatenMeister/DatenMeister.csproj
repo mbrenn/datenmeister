@@ -109,6 +109,8 @@
     <Compile Include="DataProvider\Wrapper\WrapperUnspecified.cs" />
     <Compile Include="DataProvider\Xml\XmlDataProvider.cs" />
     <Compile Include="DataProvider\Xml\XmlExtent.cs" />
+    <Compile Include="DataProvider\Xml\XmlExtentSubNodeReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Xml\XmlExtentRootReflectiveSequence.cs" />
     <Compile Include="DataProvider\Xml\XmlFactory.cs" />
     <Compile Include="DataProvider\Xml\XmlObject.cs" />
     <Compile Include="DataProvider\Xml\XmlReflectiveSequence.cs" />

@@ -152,7 +152,8 @@ namespace DatenMeister.Pool
             var workBenchAsIObject = dotNetExtent.CreateObject(this.WorkbenchContainer.Workbench);
 
             var copier = new ObjectCopier(dotNetExtent);
-            copier.CopyElement(xmlExtent.Elements().First().AsIObject(), workBenchAsIObject);
+            var toLoadFrom = xmlExtent.Elements().First().AsIObject();
+            copier.CopyElement(toLoadFrom, workBenchAsIObject);
         }
 
         /// <summary>
