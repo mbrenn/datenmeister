@@ -145,6 +145,14 @@ namespace DatenMeister.Pool
         /// <param name="path">Path, where workbench will be loaded</param>
         public void LoadWorkbench(string path)
         {
+            var loadProvider = new XmlDataProvider();
+            var xmlExtent = loadProvider.Load(path);
+
+            var dotNetExtent = Injection.Application.Get<GlobalDotNetExtent>();
+            var workBenchAsIObject = dotNetExtent.CreateObject(this.WorkbenchContainer.Workbench);
+
+            var copier = new ObjectCopier(dotNetExtent);
+            copier.CopyElement(xmlExtent.Elements().First().AsIObject(), workBenchAsIObject);
         }
 
         /// <summary>

@@ -438,20 +438,7 @@ namespace DatenMeister.WPF.Windows
         /// <param name="path">Path of the object to be loaded</param>
         public void LoadAndOpenFile(string filename)
         {
-            this.Core.PerformInitializationOfViewSet();
-
-            var pool = Injection.Application.Get<IPool>();
-            var projectExtent = pool.GetExtents(ExtentType.Data).First();
-
-            var loadedFile = XDocument.Load(filename);
-
-            // Loads the extent into the same uri
-            var extent = new XmlExtent(loadedFile, projectExtent.ContextURI());
-
-            // Sets the settings and stores it into the main window. The old one gets removed
-            extent.Settings = this.Settings.ExtentSettings;
-            pool.Add(extent, filename, ExtentNames.DataExtent, ExtentType.Data);
-            this.Core.PerformInitializeAfterLoading();
+            this.Core.LoadWorkbench(filename);
 
             // Adds the file to the recent files
             this.AddRecentFile(filename);

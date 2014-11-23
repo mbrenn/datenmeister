@@ -150,13 +150,25 @@ namespace DatenMeister.DataProvider.DotNet
             var property = GetProperty(propertyName);
             if (property == null)
             {
-                throw new ArgumentException("Property " + propertyName + " cannot be set, because it does not exist");
+                if (propertyName == "id")
+                {
+                    // Exception for id
+                    return;
+                }
+
+                throw new ArgumentException("Property '" + propertyName + "' cannot be set, because it does not exist");
             }
 
             var method = property.GetSetMethod();
             if (method == null)
             {
-                throw new ArgumentException("Setter for " + propertyName + " not found");
+                if (propertyName == "id")
+                {
+                    // Exception for id
+                    return;
+                }
+
+                throw new ArgumentException("Setter for '" + propertyName + "' not found");
             }
 
             // Converts to target type, if necessary
