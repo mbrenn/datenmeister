@@ -190,7 +190,6 @@ namespace DatenMeister.Logic
             // Creates the workbench
             var workBenchManager = WorkbenchManager.Get();
             workBenchManager.CreateNewWorkbench();
-            //var pool = DatenMeisterPool.Create();
 
             // Initializes the database itself and adds the metatype to the workbench
             this.MetaTypeExtent.ReleaseFromPool();
@@ -218,7 +217,7 @@ namespace DatenMeister.Logic
             // Now, call the event that the initialization has been redone
             this.OnViewSetInitialized();
 
-            this.AddDefaultViews();
+            this.AddDefaultQueries();
         }
 
         /// <summary>
@@ -297,8 +296,7 @@ namespace DatenMeister.Logic
             Ensure.That(extent is XmlExtent, "The given extent is not an XmlExtent");
             dataProvider.Save(
                 extent as XmlExtent,
-                instance.Info.storagePath,
-                this.GetXmlSettings(instance.Info.extentType));
+                instance.Info.storagePath);
         }
 
         public XmlSettings GetXmlSettings(ExtentType type)

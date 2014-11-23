@@ -22,11 +22,10 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="uri">The URI which shall be associated</param>
         /// <param name="setttings">Settings being used to load the data</param>
         /// <returns></returns>
-        public XmlExtent Load(string path, XmlSettings settings)
+        public XmlExtent Load(string path)
         {
             var loadedDocument = XDocument.Load(path);
             var extent = new XmlExtent(loadedDocument, path);
-            extent.Settings = settings;
 
             return extent;
         }
@@ -38,9 +37,9 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="uri"></param>
         /// <param name="setttings"></param>
         /// <returns></returns>
-        public XmlExtent Load(string path, string uri, XmlSettings settings)
+        public XmlExtent Load(string path, string uri)
         {
-            var extent = this.Load(path, settings);
+            var extent = this.Load(path);
             extent.Uri = uri;
 
             return extent;
@@ -52,7 +51,7 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="extent">Extent to be stored</param>
         /// <param name="path">Path, where file shall be stored</param>
         /// <param name="settings">Settings being used</param>
-        public void Save(XmlExtent extent, string path, XmlSettings settings)
+        public void Save(XmlExtent extent, string path)
         {
             Ensure.That(extent != null);
 

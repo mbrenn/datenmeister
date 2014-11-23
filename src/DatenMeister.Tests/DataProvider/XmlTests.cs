@@ -26,7 +26,7 @@ namespace DatenMeister.Tests.DataProvider
         public void TestReadingSimpleListWithIdGet()
         {
             var xmlProvider = new XmlDataProvider();
-            var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml", new XmlSettings());
+            var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml");
             Assert.That(xmlExtent, Is.Not.Null);
 
             var xmlRootElement = xmlExtent.Elements();
@@ -46,7 +46,7 @@ namespace DatenMeister.Tests.DataProvider
         public void TestReadingSimpleListWithIdGetAll()
         {
             var xmlProvider = new XmlDataProvider();
-            var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml", new XmlSettings());
+            var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml");
 
             // Gets the first object '/list/item[0]'
             var firstElement = xmlExtent.Elements().AsIObject();
@@ -62,7 +62,7 @@ namespace DatenMeister.Tests.DataProvider
         public void TestReadingSimpleListWithIdSet()
         {
             var xmlProvider = new XmlDataProvider();
-            var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml", new XmlSettings());
+            var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml");
 
             // Gets the first object '/list/item[0]'
             var firstElement = xmlExtent.Elements().AsIObject();
@@ -77,7 +77,7 @@ namespace DatenMeister.Tests.DataProvider
         public void TestGetGetAllAndSetByAttributes()
         {
             var xmlProvider = new XmlDataProvider();
-            var xmlExtent = xmlProvider.Load("data/xml/simplelistinattribute.xml", new XmlSettings());
+            var xmlExtent = xmlProvider.Load("data/xml/simplelistinattribute.xml");
             Assert.That(xmlExtent, Is.Not.Null);
 
             // Gets the first object '/list/item[0]'

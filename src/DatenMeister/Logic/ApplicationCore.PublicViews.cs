@@ -29,13 +29,13 @@ namespace DatenMeister.Logic
         /// <summary>
         /// Adds the default views
         /// </summary>
-        public void AddDefaultViews()
+        public void AddDefaultQueries()
         {
             var names = Enum.GetNames(typeof(ExtentType));
 
             foreach (var name in names)
             {
-                var pool = Injection.Application.Get<IPool>();
+                var workbenchManager = WorkbenchManager.Get();
 
                 var enumValue = (ExtentType) Enum.Parse(typeof(ExtentType), name);
                 var uri = string.Format ( 
@@ -43,7 +43,9 @@ namespace DatenMeister.Logic
                     enumValue.ToString());
 
                 var extent = new AllElementsExtent(uri, enumValue);
-                pool.Add(extent, null, "All Extents of Type " + name, ExtentType.Query);
+                workbenchManager.AddExtent(extent,
+                    new ExtentParam("All Extents of Type " + name, ExtentType.Query)
+                        .AsPrepopulated());
             }
         }
     }

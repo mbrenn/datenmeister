@@ -1,4 +1,5 @@
 ﻿using BurnSystems.Logging;
+using BurnSystems.Test;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Entities.DM;
@@ -110,7 +111,7 @@ namespace DatenMeister.Pool
                     logger.Message("- Existing, will be loaded");
                     // File exists, we can directly load it
                     var dataProvider = new XmlDataProvider();
-                    createdExtent = dataProvider.Load(storagePath, uri, XmlSettings.Empty);
+                    createdExtent = dataProvider.Load(storagePath, uri);
 
                     if (actionWhenLoaded != null)
                     {
@@ -166,9 +167,60 @@ namespace DatenMeister.Pool
             // Updates the path of the workbench
             this.WorkbenchContainer.Workbench.path = path;
 
-            var dotNetObject = Injection.Application.Get<GlobalDotNetExtent>().CreateObject(this.WorkbenchContainer.Workbench);
+            // Afterwards, we go through the extents and save all the ones, which are not prepopulated
+            this.SaveExtentsInWorkbenches(path);
 
-            var xDocument = new XDocument (new XElement("workbench") );
+            // Second, we save the workbench itself
+            this.SaveWorkbenchItself(path);
+        }
+
+        /// <summary>
+        /// Saves the extents in the workbenches themselves
+        /// </summary>
+        /// <param name="path">Path being used to save the workbench</param>
+        private void SaveExtentsInWorkbenches(string path)
+        {
+            var workBench = this.WorkbenchContainer.Workbench;
+            var xmlDataProvider = new XmlDataProvider();
+
+            foreach (var info in workBench.instances)
+            {
+                if (info.isPrepopulated)
+                {
+                    // Prepopulated instances do not need to be 
+                    continue;
+                }
+
+                // Gets the extent itself
+                var extent = this.Pool.GetExtent(info);
+                Ensure.That(extent is XmlExtent, "At the moment, only XmlExtents are supported. Sorry");
+
+                if (info.storagePath == null)
+                {
+                    // Get the storage path, will be retrieved out of the workbench path
+                    var filenameWithoutExtension = Path.GetFileNameWithoutExtension(path);
+                    var extension = Path.GetExtension(path);
+                    var directoryPath = Path.GetDirectoryName(path);
+
+                    // Creates the new path
+                    var newPath = Path.Combine(directoryPath, filenameWithoutExtension + "." + info.name + extension);
+                    info.storagePath = newPath;
+                }
+
+                xmlDataProvider.Save(extent as XmlExtent, info.storagePath);
+            }
+        }
+
+        /// <summary>
+        /// Saves the workbench itself at the given location
+        /// </summary>
+        /// <param name="path">Path being used</param>
+        private void SaveWorkbenchItself(string path)
+        {
+            var workBench = this.WorkbenchContainer.Workbench;
+            var dotNetObject = Injection.Application.Get<GlobalDotNetExtent>().CreateObject(workBench);
+
+            var xDocument = new XDocument(new XElement("workbench"));
             var xmlExtent = new XmlExtent(xDocument, "datenmeister:///application/workbench");
             var xmlObject = new XmlObject(xmlExtent, xDocument.Root);
             var objCopier = new ObjectCopier(xmlExtent);
@@ -176,7 +228,7 @@ namespace DatenMeister.Pool
 
             // Stores the object into the file
             var provider = new XmlDataProvider();
-            provider.Save(xmlExtent, path, XmlSettings.Empty);
+            provider.Save(xmlExtent, path);
         }
     }
 }
