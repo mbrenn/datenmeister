@@ -329,7 +329,6 @@ namespace DatenMeister.Logic
                      ApplicationDataUri,
                      new ExtentParam(name, ExtentType.ApplicationData, filePath)
                      {
-                         DataProviderSettings = XmlSettings.Empty,
                          IsPrepopulated = true
                      },
                      () => { return XmlExtent.Create(XmlSettings.Empty, name, ApplicationDataUri); },

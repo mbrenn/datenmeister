@@ -70,5 +70,26 @@ namespace DatenMeister.Pool
             this.ExtentType = extentType;
             this.StoragePath = storagePath;
         }
+
+        /// <summary>
+        /// Sets the property IsPrepopulated as true and returns the instance itself.
+        /// </summary>
+        /// <returns>The instance itself</returns>
+        public ExtentParam AsPrepopulated()
+        {
+            this.IsPrepopulated = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the data provider setttings and returns the instance itself
+        /// </summary>
+        /// <param name="settings">Settings to be used</param>
+        /// <returns>The instance itself</returns>
+        public ExtentParam WithDataProviderSettings(ISettings settings)
+        {
+            this.DataProviderSettings = settings;
+            return this;
+        }
     }
 }

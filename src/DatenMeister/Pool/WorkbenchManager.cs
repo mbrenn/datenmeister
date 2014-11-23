@@ -102,7 +102,6 @@ namespace DatenMeister.Pool
             logger.Message("Loading Extent: " + info.Name);
 
             IURIExtent createdExtent = null;
-            var xmlSettings = info.DataProviderSettings as XmlSettings;
 
             if (File.Exists(storagePath))
             {
@@ -111,7 +110,7 @@ namespace DatenMeister.Pool
                     logger.Message("- Existing, will be loaded");
                     // File exists, we can directly load it
                     var dataProvider = new XmlDataProvider();
-                    createdExtent = dataProvider.Load(storagePath, uri, xmlSettings);
+                    createdExtent = dataProvider.Load(storagePath, uri, XmlSettings.Empty);
 
                     if (actionWhenLoaded != null)
                     {
