@@ -37,7 +37,7 @@ namespace DatenMeister.WPF.Windows
                 };
 
             var wnd = new DatenMeisterWindow(core);
-            core.ViewSetInitialized += (x, y) =>
+            core.ViewSetFinalized += (x, y) =>
                 {
                     Injection.Application.Bind<IExceptionHandling>().To<StandardExceptionHandling>();
                     Injection.Application.Bind<IUserExceptionHandler>().To<WindowUserExceptionHandler>();

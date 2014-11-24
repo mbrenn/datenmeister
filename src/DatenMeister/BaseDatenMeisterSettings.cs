@@ -89,12 +89,7 @@ namespace DatenMeister
         /// scratch. This means, that he has clicked "File->New".
         /// It is recommended to create a complete new pool. 
         /// </summary>
-        public abstract void InitializeFromScratch(ApplicationCore core);
-
-        /// <summary>
-        /// The function will be called, when the user has loaded a ViewSet. 
-        /// </summary>
-        public abstract void InitializeAfterLoading(ApplicationCore core);
+        public abstract void FinalizeExtents(ApplicationCore core, bool wasLoading);
         
         /// <summary>
         /// The function will be called, when application has been started. 

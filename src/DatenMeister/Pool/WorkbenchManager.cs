@@ -145,6 +145,36 @@ namespace DatenMeister.Pool
         /// <param name="path">Path, where workbench will be loaded</param>
         public void LoadWorkbench(string path)
         {
+            this.LoadWorkbenchItself(path);
+
+            var workBench = this.WorkbenchContainer.Workbench;
+            foreach (var extentInfo in workBench.instances)
+            {
+                if (extentInfo.isPrepopulated)
+                {
+                    // Check, if the prepopulated instance exists
+                    if (this.Pool.GetExtent(extentInfo) == null)
+                    {
+                        logger.Fail("Prepopulated instance is not found: " + extentInfo.ToString());
+                    }
+                }
+                else
+                {
+                    if (this.Pool.GetExtent(extentInfo) != null)
+                    {
+                        logger.Fail("Non-Prepopulated instance already exists: " + extentInfo.ToString());
+                    }
+
+                    // Load the instance and store it into the database                    
+                    var loadProvider = new XmlDataProvider();
+                    var xmlExtent = loadProvider.Load(extentInfo.storagePath);
+                    this.Pool.Add(xmlExtent, extentInfo.storagePath, extentInfo.name, extentInfo.extentType);
+                }
+            }
+        }
+
+        private void LoadWorkbenchItself(string path)
+        {
             var loadProvider = new XmlDataProvider();
             var xmlExtent = loadProvider.Load(path);
             xmlExtent.Settings.UseRootNode = true;

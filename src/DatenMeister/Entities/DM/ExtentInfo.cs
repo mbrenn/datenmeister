@@ -104,5 +104,10 @@ namespace DatenMeister.Entities.DM
             this.uri = uri;
             this.extentClass = extentClass;
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0}: {1}", this.name, this.uri);
+        }
     }
 }

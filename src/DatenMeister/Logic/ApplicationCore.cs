@@ -81,6 +81,11 @@ namespace DatenMeister.Logic
         public event EventHandler ViewSetInitialized;
 
         /// <summary>
+        /// This event is thrown, when the viewset is finalized
+        /// </summary>
+        public event EventHandler ViewSetFinalized;
+
+        /// <summary>
         /// Stores the value whether the application data is loaded
         /// </summary>
         private bool isApplicationDataLoaded = false;
@@ -220,10 +225,9 @@ namespace DatenMeister.Logic
                 instance.Extent = new EventOnChangeExtent(instance.Extent);
             }
 
-            // Now, call the event that the initialization has been redone
-            this.OnViewSetInitialized();
-
             this.AddDefaultQueries();
+
+            this.OnViewSetInitialized();
         }
 
         /// <summary>
@@ -238,14 +242,32 @@ namespace DatenMeister.Logic
             }
         }
 
+        /// <summary>
+        /// Calls the ViewSetInitialized event
+        /// </summary>
+        private void OnViewSetFinalized()
+        {
+            var ev = this.ViewSetFinalized;
+            if (ev != null)
+            {
+                ev(this, EventArgs.Empty);
+            }
+        }
+
         public void PerformInitializeFromScratch()
         {
-            this.privateSettings.InitializeFromScratch(this);
+            this.privateSettings.FinalizeExtents(this, false);
+
+            // Now, call the event that the initialization has been redone
+            this.OnViewSetFinalized();
         }
 
         public void PerformInitializeAfterLoading()
         {
-            this.privateSettings.InitializeAfterLoading(this);
+            this.privateSettings.FinalizeExtents(this, true);
+
+            // Now, call the event that the initialization has been redone
+            this.OnViewSetFinalized();
         }
 
         public void PerformInitializeExampleData()
@@ -274,7 +296,7 @@ namespace DatenMeister.Logic
             this.PerformInitializationOfViewSet();
             WorkbenchManager.Get().LoadWorkbench(path);
 
-            this.privateSettings.InitializeAfterLoading(this);
+            this.privateSettings.FinalizeExtents(this, true);
         }
 
         /// <summary>
@@ -349,6 +371,7 @@ namespace DatenMeister.Logic
                      },
                      () => { return XmlExtent.Create(XmlSettings.Empty, name, ApplicationDataUri); },
                      null);
+                info.isPrepopulated = true;
                 this.applicationData = workBenchManager.Pool.GetExtent(info);
 
                 this.isApplicationDataLoaded = true;
@@ -359,12 +382,13 @@ namespace DatenMeister.Logic
                 this.applicationData.ReleaseFromPool();
 
                 // Adds the application data to the workbench
-                WorkbenchManager.Get().AddExtent(
+                var info = WorkbenchManager.Get().AddExtent(
                     this.applicationData,
                     new ExtentParam(
                         name,
                         ExtentType.ApplicationData,
                         this.GetApplicationStoragePathFor(name)));
+                info.isPrepopulated = true;
             }
         }
 
