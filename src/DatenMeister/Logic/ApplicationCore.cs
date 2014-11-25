@@ -210,6 +210,7 @@ namespace DatenMeister.Logic
                 poolExtent, 
                 new ExtentParam(DatenMeisterPoolExtent.DefaultName, ExtentType.Extents)
                     .AsPrepopulated());
+
             // Loads the application data from file
             this.LoadApplicationDataIfNotLoaded();
 
