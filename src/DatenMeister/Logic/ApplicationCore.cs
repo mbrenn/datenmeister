@@ -217,15 +217,6 @@ namespace DatenMeister.Logic
             // Call the private settings that the viewset needs to be initialized
             this.privateSettings.InitializeViewSet(this);
 
-            // After the viewset is initialized, replace the view extents by wrapped
-            // EventOnChange Extent. 
-            // So, view can be updated, when the content of the extent changed
-            foreach (var instance in workBenchManager.Pool.ExtentContainer.Where(x => x.Info.extentType == ExtentType.View))
-            {
-                // Just replace the extent
-                instance.Extent = new EventOnChangeExtent(instance.Extent);
-            }
-
             this.AddDefaultQueries();
 
             this.OnViewSetInitialized();
@@ -248,10 +239,21 @@ namespace DatenMeister.Logic
         /// </summary>
         private void OnViewSetFinalized()
         {
+            var workBenchManager = WorkbenchManager.Get();
+
             var ev = this.ViewSetFinalized;
             if (ev != null)
             {
                 ev(this, EventArgs.Empty);
+            }
+
+            // After the viewset is finalized, replace the view extents by wrapped
+            // EventOnChange Extent. 
+            // So, view can be updated, when the content of the extent changed
+            foreach (var instance in workBenchManager.Pool.ExtentContainer.Where(x => x.Info.extentType == ExtentType.View))
+            {
+                // Just replace the extent
+                instance.Extent = new EventOnChangeExtent(instance.Extent);
             }
         }
 
