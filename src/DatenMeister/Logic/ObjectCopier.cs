@@ -110,7 +110,7 @@ namespace DatenMeister.Logic
                     {
                         targetElement.set(pair.PropertyName, currentValueAsSingle);
                     }
-                    if (ObjectConversion.IsEnumeration(currentValueAsSingle))
+                    if (ObjectConversion.IsEnum(currentValueAsSingle))
                     {
                         targetElement.set(pair.PropertyName, currentValueAsSingle);
                     }

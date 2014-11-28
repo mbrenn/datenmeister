@@ -178,11 +178,11 @@ namespace DatenMeister.DataProvider.DotNet
                 // We can directly assign
                 method.Invoke(this.value, new object[] { value });
             }
-            else if (ObjectConversion.IsEnumerationByType(targetType))
+            else if (ObjectConversion.IsEnumByType(targetType))
             {
                 // For enumerations, an explicit converstion need to happen
                 // It is necessary to convert, we do the default conversion
-                var convertedValue = ObjectConversion.ConvertToEnumeration(value, targetType);
+                var convertedValue = ObjectConversion.ConvertToEnum(value, targetType);
                 method.Invoke(this.value, new object[] { convertedValue });
             }
             else
@@ -285,7 +285,7 @@ namespace DatenMeister.DataProvider.DotNet
             {
                 return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }
-            else if (ObjectConversion.IsEnumeration(checkObject))
+            else if (ObjectConversion.IsEnum(checkObject))
             {
                 return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }

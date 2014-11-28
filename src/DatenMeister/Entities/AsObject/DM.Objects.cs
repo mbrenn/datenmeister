@@ -196,7 +196,7 @@ namespace DatenMeister.Entities.AsObject.DM
         public static DatenMeister.Logic.ExtentType getExtentType(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("extentType"));
-            return (DatenMeister.Logic.ExtentType) DatenMeister.ObjectConversion.ConvertToEnumeration(result, typeof(DatenMeister.Logic.ExtentType));
+            return (DatenMeister.Logic.ExtentType) DatenMeister.ObjectConversion.ConvertToEnum(result, typeof(DatenMeister.Logic.ExtentType));
         }
 
         public static void setExtentType(DatenMeister.IObject obj, DatenMeister.Logic.ExtentType value)

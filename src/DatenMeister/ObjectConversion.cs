@@ -1,5 +1,7 @@
-﻿using DatenMeister.Logic;
+﻿using DatenMeister.DataProvider;
+using DatenMeister.Logic;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -240,9 +242,9 @@ namespace DatenMeister
         /// </summary>
         /// <param name="value">Value to be checked</param>
         /// <returns>true, if the object is an enumeratio</returns>
-        public static bool IsEnumeration(object value)
+        public static bool IsEnum(object value)
         {
-            return IsEnumerationByType(value.GetType());
+            return IsEnumByType(value.GetType());
         }
 
         /// <summary>
@@ -250,7 +252,7 @@ namespace DatenMeister
         /// </summary>
         /// <param name="type">Type to be checked</param>
         /// <returns></returns>
-        public static bool IsEnumerationByType(Type type)
+        public static bool IsEnumByType(Type type)
         {
             return type.IsEnum;
         }
@@ -262,7 +264,7 @@ namespace DatenMeister
         /// <param name="value">Value to be convered</param>
         /// <param name="type">Type to be used for this conversion</param>
         /// <returns>The enumeration object of type 'type'</returns>
-        public static object ConvertToEnumeration(object value, Type type)
+        public static object ConvertToEnum(object value, Type type)
         {
             if (value.GetType() == type)
             {
@@ -280,6 +282,34 @@ namespace DatenMeister
                 // Per default, return the first name, if not found
                 return Enum.GetNames(type).First();
             }
+        }
+
+        /// <summary>
+        /// Checks whether the given object is a reflective collection
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <returns>true, if the object is a reflective </returns>
+        public static bool IsEnumeration(object value)
+        {
+            if (value is IEnumerable && !(value is string))
+            {
+                return true;
+            }
+
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null &&
+                valueAsUnspecified.PropertyValueType == PropertyValueType.Enumeration)
+            {
+                return true;
+            }
+
+            var valueAsProxyObject = value as IProxyObject;
+            if (valueAsProxyObject != null)
+            {
+                return IsEnumeration(valueAsProxyObject.Value);
+            }
+
+            return false;
         }
     }
 }

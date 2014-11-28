@@ -54,7 +54,7 @@ namespace DatenMeister.Tests.PoolLogic
             var enumTest = targetElement.get("test").AsSingle();
             Assert.That(enumTest, Is.Not.Null);
             Assert.That(enumTest, Is.Not.EqualTo(ObjectHelper.NotSet));
-            Assert.That(ObjectConversion.IsEnumeration(enumTest), Is.True);
+            Assert.That(ObjectConversion.IsEnum(enumTest), Is.True);
             Assert.That((ConsoleColor)enumTest, Is.EqualTo(ConsoleColor.DarkBlue));
         }
 

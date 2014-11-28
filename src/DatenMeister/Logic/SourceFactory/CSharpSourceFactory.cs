@@ -287,7 +287,7 @@ namespace DatenMeister.Logic.SourceFactory
                     string.Format(
                         TwelveSpaces + "return DatenMeister.ObjectConversion.ToInt32(result);"));
             }
-            else if (ObjectConversion.IsEnumerationByType(propertyType))
+            else if (ObjectConversion.IsEnumByType(propertyType))
             {
                 writer.WriteLine(
                     string.Format(
