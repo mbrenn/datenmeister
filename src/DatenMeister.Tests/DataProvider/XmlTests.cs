@@ -893,7 +893,7 @@ namespace DatenMeister.Tests.DataProvider
             var name = DatenMeister.Entities.AsObject.DM.ExtentInfo.getName(xmlNode);
 
             DatenMeister.Entities.AsObject.DM.ExtentInfo.setExtentType(xmlNode, ExtentType.Query);
-            var type = DatenMeister.Entities.AsObject.DM.ExtentInfo.getName(xmlNode);
+            var type = DatenMeister.Entities.AsObject.DM.ExtentInfo.getExtentType(xmlNode);
 
             Assert.That(name, Is.EqualTo("ABC"));
             Assert.That(type, Is.EqualTo(ExtentType.Query));

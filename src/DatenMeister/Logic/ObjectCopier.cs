@@ -110,6 +110,10 @@ namespace DatenMeister.Logic
                     {
                         targetElement.set(pair.PropertyName, currentValueAsSingle);
                     }
+                    if (ObjectConversion.IsEnumeration(currentValueAsSingle))
+                    {
+                        targetElement.set(pair.PropertyName, currentValueAsSingle);
+                    }
                     else if (currentValueAsSingle is ResolvableByPath)
                     {
                         // If the given object is another object, we will do the tracing as a deferred action
