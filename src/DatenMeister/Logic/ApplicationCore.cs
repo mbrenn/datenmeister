@@ -285,9 +285,6 @@ namespace DatenMeister.Logic
         {
             // Saves the complete workbench at the given path
             WorkbenchManager.Get().SaveWorkbench(path);
-
-            // and afterwards store the viewset
-            //this.privateSettings.StoreViewSet(this);
         }
 
         /// <summary>
