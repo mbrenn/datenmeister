@@ -4,7 +4,7 @@ import __d__ = require('datenmeister.objects');
 export module ExtentInfo {
     export var TypeName='ExtentInfo';
 
-    export function create(storagePath?: any, name?: any, extentType?: any, url?: any, extentClass?: any) {
+    export function create(storagePath?: any, name?: any, extentType?: any, uri?: any, extentClass?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'ExtentInfo');
         if (storagePath !== undefined) {
@@ -19,8 +19,8 @@ export module ExtentInfo {
             result.set('extentType', extentType);
         }
 
-        if (url !== undefined) {
-            result.set('url', url);
+        if (uri !== undefined) {
+            result.set('uri', uri);
         }
 
         if (extentClass !== undefined) {
@@ -31,12 +31,12 @@ export module ExtentInfo {
     }
 
 
-    export function getUrl(item: __d__.JsonExtentObject) {
-        return item.get('url');
+    export function getUri(item: __d__.JsonExtentObject) {
+        return item.get('uri');
     }
 
-    export function setUrl(item : __d__.JsonExtentObject, value: any) {
-        item.set('url', value);
+    export function setUri(item : __d__.JsonExtentObject, value: any) {
+        item.set('uri', value);
     }
 
     export function getName(item: __d__.JsonExtentObject) {
@@ -71,12 +71,12 @@ export module ExtentInfo {
         item.set('isPrepopulated', value);
     }
 
-    export function getLoadConfiguration(item: __d__.JsonExtentObject) {
-        return item.get('loadConfiguration');
+    export function getDataProviderSettings(item: __d__.JsonExtentObject) {
+        return item.get('dataProviderSettings');
     }
 
-    export function setLoadConfiguration(item : __d__.JsonExtentObject, value: any) {
-        item.set('loadConfiguration', value);
+    export function setDataProviderSettings(item : __d__.JsonExtentObject, value: any) {
+        item.set('dataProviderSettings', value);
     }
 
     export function getExtentClass(item: __d__.JsonExtentObject) {
@@ -152,21 +152,21 @@ export module Workbench {
     }
 
     export function getInstances(item: __d__.JsonExtentObject) {
-        return item.get('Instances');
+        return item.get('instances');
     }
 
     export function setInstances(item : __d__.JsonExtentObject, value: any) {
-        item.set('Instances', value);
+        item.set('instances', value);
     }
 
     export function pushInstance(item : __d__.JsonExtentObject, value: any) {
-        var a = <Array<any>> item.get('Instances');
+        var a = <Array<any>> item.get('instances');
         if (a === undefined) {
             a = new Array<any>();
         }
 
         a.push(value);
-        item.set('Instances', a);
+        item.set('instances', a);
     }
 
 }

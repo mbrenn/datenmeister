@@ -45,9 +45,9 @@ namespace DatenMeister.Entities.AsObject.DM
             OnInitCompleted();
 
             {
-                // ExtentInfo.url
+                // ExtentInfo.uri
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "url");
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "uri");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
             }
 
@@ -80,9 +80,9 @@ namespace DatenMeister.Entities.AsObject.DM
             }
 
             {
-                // ExtentInfo.loadConfiguration
+                // ExtentInfo.dataProviderSettings
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "loadConfiguration");
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "dataProviderSettings");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
             }
 
@@ -129,9 +129,9 @@ namespace DatenMeister.Entities.AsObject.DM
             }
 
             {
-                // Workbench.Instances
+                // Workbench.instances
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "Instances");
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "instances");
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Workbench, property);
             }
 

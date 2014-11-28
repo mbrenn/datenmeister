@@ -10,13 +10,13 @@ namespace DatenMeister.Entities.AsObject.DM
             this.obj = obj;
         }
 
-        public ExtentInfo(DatenMeister.IObject obj, object storagePath, object name, object extentType, object url, object extentClass)
+        public ExtentInfo(DatenMeister.IObject obj, object storagePath, object name, object extentType, object uri, object extentClass)
             : this(obj)
         {
             this.set("storagePath", storagePath);
             this.set("name", name);
             this.set("extentType", extentType);
-            this.set("url", url);
+            this.set("uri", uri);
             this.set("extentClass", extentClass);
         }
 
@@ -120,25 +120,25 @@ namespace DatenMeister.Entities.AsObject.DM
 
         #endregion
 
-        public System.String getUrl()
+        public System.String getUri()
         {
-            return getUrl(this);
+            return getUri(this);
         }
 
-        public void setUrl(System.String value)
+        public void setUri(System.String value)
         {
-            setUrl(this, value);
+            setUri(this, value);
         }
 
-        public static System.String getUrl(DatenMeister.IObject obj)
+        public static System.String getUri(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("url"));
+            var result = DatenMeister.Extensions.AsSingle(obj.get("uri"));
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
-        public static void setUrl(DatenMeister.IObject obj, System.String value)
+        public static void setUri(DatenMeister.IObject obj, System.String value)
         {
-            obj.set("url", value);
+            obj.set("uri", value);
         }
 
         public System.String getName()
@@ -196,7 +196,7 @@ namespace DatenMeister.Entities.AsObject.DM
         public static DatenMeister.Logic.ExtentType getExtentType(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("extentType"));
-            return (result is DatenMeister.Logic.ExtentType) ? ((DatenMeister.Logic.ExtentType) result) : default(DatenMeister.Logic.ExtentType);
+            return (DatenMeister.Logic.ExtentType) DatenMeister.ObjectConversion.ConvertToEnumeration(result, typeof(DatenMeister.Logic.ExtentType));
         }
 
         public static void setExtentType(DatenMeister.IObject obj, DatenMeister.Logic.ExtentType value)
@@ -225,25 +225,25 @@ namespace DatenMeister.Entities.AsObject.DM
             obj.set("isPrepopulated", value);
         }
 
-        public System.Object getLoadConfiguration()
+        public DatenMeister.DataProvider.ISettings getDataProviderSettings()
         {
-            return getLoadConfiguration(this);
+            return getDataProviderSettings(this);
         }
 
-        public void setLoadConfiguration(System.Object value)
+        public void setDataProviderSettings(DatenMeister.DataProvider.ISettings value)
         {
-            setLoadConfiguration(this, value);
+            setDataProviderSettings(this, value);
         }
 
-        public static System.Object getLoadConfiguration(DatenMeister.IObject obj)
+        public static DatenMeister.DataProvider.ISettings getDataProviderSettings(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("loadConfiguration"));
-            return (result is System.Object) ? ((System.Object) result) : default(System.Object);
+            var result = DatenMeister.Extensions.AsSingle(obj.get("dataProviderSettings"));
+            return (result is DatenMeister.DataProvider.ISettings) ? ((DatenMeister.DataProvider.ISettings) result) : default(DatenMeister.DataProvider.ISettings);
         }
 
-        public static void setLoadConfiguration(DatenMeister.IObject obj, System.Object value)
+        public static void setDataProviderSettings(DatenMeister.IObject obj, DatenMeister.DataProvider.ISettings value)
         {
-            obj.set("loadConfiguration", value);
+            obj.set("dataProviderSettings", value);
         }
 
         public System.String getExtentClass()
@@ -613,24 +613,24 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInfo> getInstances(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.Entities.DM.ExtentInfo>(obj.get("Instances"));
+            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.Entities.DM.ExtentInfo>(obj.get("instances"));
             return (result is System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInfo>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInfo>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInfo>);
         }
 
         public static void setInstances(DatenMeister.IObject obj, System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInfo> value)
         {
-            obj.set("Instances", value);
+            obj.set("instances", value);
         }
 
         public static void pushInstance(DatenMeister.IObject obj, DatenMeister.IObject value)
         {
-            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("Instances"));
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("instances"));
             list.Add(value);
         }
 
         public static void pushInstance(DatenMeister.IObject obj, DatenMeister.Entities.DM.ExtentInfo value)
         {
-            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("Instances"));
+            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("instances"));
             list.Add(value);
         }
 

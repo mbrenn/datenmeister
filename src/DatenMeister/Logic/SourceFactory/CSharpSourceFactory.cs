@@ -287,6 +287,13 @@ namespace DatenMeister.Logic.SourceFactory
                     string.Format(
                         TwelveSpaces + "return DatenMeister.ObjectConversion.ToInt32(result);"));
             }
+            else if (ObjectConversion.IsEnumerationByType(propertyType))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return ({0}) DatenMeister.ObjectConversion.ConvertToEnumeration(result, typeof({0}));",
+                        propertyTypeName));
+            }
             else
             {
                 writer.WriteLine(
