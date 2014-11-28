@@ -1,4 +1,5 @@
-﻿using DatenMeister.DataProvider.Xml;
+﻿using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
 using NUnit.Framework;
@@ -30,6 +31,31 @@ namespace DatenMeister.Tests.PoolLogic
             Assert.That(copyExtent.Elements().ElementAt(0).AsIObject().Id, Is.EqualTo("e1"));
             Assert.That(copyExtent.Elements().ElementAt(0).AsIObject().get("text").AsSingle().ToString(), Is.EqualTo("xyz"));
             Assert.That(copyExtent.Elements().ElementAt(1).AsIObject().Id, Is.EqualTo("e2"));
+        }
+
+        [Test]
+        public void TestCopyIncludingEnumeration()
+        {
+            ApplicationCore.PerformBinding();
+            var pool = DatenMeisterPool.Create();
+
+            var sourceExtent = new GenericExtent("datenmeister:///source");
+            var targetExtent = new GenericExtent("datenmeister:///target");
+
+            var sourceElement = new GenericElement();
+            sourceElement.set("test", ConsoleColor.DarkBlue);
+            sourceExtent.Elements().add(sourceElement);
+
+            ExtentCopier.Copy(sourceExtent, targetExtent);
+
+            var targetElement = targetExtent.Elements().FirstOrDefault() as IObject;
+            Assert.That(targetElement, Is.Not.Null);
+
+            var enumTest = targetElement.get("test").AsSingle();
+            Assert.That(enumTest, Is.Not.Null);
+            Assert.That(enumTest, Is.Not.EqualTo(ObjectHelper.NotSet));
+            Assert.That(ObjectHelper.IsEnumeration(enumTest), Is.True);
+            Assert.That((ConsoleColor)enumTest, Is.EqualTo(ConsoleColor.DarkBlue));
         }
 
         [Test]
