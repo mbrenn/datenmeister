@@ -178,9 +178,16 @@ namespace DatenMeister.DataProvider.DotNet
                 // We can directly assign
                 method.Invoke(this.value, new object[] { value });
             }
-            else
+            else if (ObjectConversion.IsEnumerationByType(targetType))
             {
-                // It is necessary to convert
+                // For enumerations, an explicit converstion need to happen
+                // It is necessary to convert, we do the default conversion
+                var convertedValue = ObjectConversion.ConvertToEnumeration(value, targetType);
+                method.Invoke(this.value, new object[] { convertedValue });
+            }
+            else
+            {                
+                // It is necessary to convert, we do the default conversion
                 var convertedValue = Convert.ChangeType(value, targetType);
                 method.Invoke(this.value, new object[] { convertedValue });
             }
