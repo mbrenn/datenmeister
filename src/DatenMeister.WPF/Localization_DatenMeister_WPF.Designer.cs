@@ -97,7 +97,7 @@ namespace DatenMeister.WPF {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Xml-Files (*.xml)|*.xml|All Files (*.*)|*.*.
+        ///   Looks up a localized string similar to DatenMeister Workbench (*.dmwb)|*.dmwb|All Files (*.*)|*.*.
         /// </summary>
         internal static string File_Filter {
             get {

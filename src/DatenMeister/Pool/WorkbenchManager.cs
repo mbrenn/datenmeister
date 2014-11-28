@@ -239,7 +239,7 @@ namespace DatenMeister.Pool
                 {
                     // Get the storage path, will be retrieved out of the workbench path
                     var filenameWithoutExtension = Path.GetFileNameWithoutExtension(path);
-                    var extension = Path.GetExtension(path);
+                    var extension = ".xml";// Path.GetExtension(path);
                     var directoryPath = Path.GetDirectoryName(path);
 
                     // Creates the new path

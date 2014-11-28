@@ -534,8 +534,7 @@ namespace DatenMeister.WPF.Windows
         /// <returns>true, if user wants to save the data. 
         /// Null</returns>
         private bool? DoesUserWantsToSaveData()
-        {
-            
+        {            
             var pool = PoolResolver.GetDefaultPool();
             var dataExtent = pool.GetExtents(ExtentType.Data).First();
 
