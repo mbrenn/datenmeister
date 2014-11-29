@@ -173,6 +173,10 @@ namespace DatenMeister.Pool
             }
         }
 
+        /// <summary>
+        /// Loads the workbench itself by the given path
+        /// </summary>
+        /// <param name="path">Path of the file, where the workbench shall be loaded</param>
         private void LoadWorkbenchItself(string path)
         {
             var loadProvider = new XmlDataProvider();
@@ -180,6 +184,9 @@ namespace DatenMeister.Pool
             xmlExtent.Settings.UseRootNode = true;
 
             var dotNetExtent = Injection.Application.Get<GlobalDotNetExtent>();
+
+            // Creates a new and empty workbench
+            this.WorkbenchContainer.Workbench = new Workbench();
             var workBenchAsIObject = dotNetExtent.CreateObject(this.WorkbenchContainer.Workbench);
 
             var copier = new ObjectCopier(dotNetExtent);
