@@ -34,7 +34,7 @@ namespace DatenMeister.Tests.PoolLogic
         }
 
         [Test]
-        public void TestCopyIncludingEnumeration()
+        public void TestCopyIncludingEnums()
         {
             ApplicationCore.PerformBinding();
             var pool = DatenMeisterPool.Create();
@@ -56,6 +56,31 @@ namespace DatenMeister.Tests.PoolLogic
             Assert.That(enumTest, Is.Not.EqualTo(ObjectHelper.NotSet));
             Assert.That(ObjectConversion.IsEnum(enumTest), Is.True);
             Assert.That((ConsoleColor)enumTest, Is.EqualTo(ConsoleColor.DarkBlue));
+        }
+
+        [Test]
+        public void TestCopyIncludingStrings()
+        {
+            ApplicationCore.PerformBinding();
+            var pool = DatenMeisterPool.Create();
+
+            var sourceExtent = new GenericExtent("datenmeister:///source");
+            var targetExtent = new GenericExtent("datenmeister:///target");
+
+            var sourceElement = new GenericElement();
+            sourceElement.set("test", "ABC");
+            sourceExtent.Elements().add(sourceElement);
+
+            ExtentCopier.Copy(sourceExtent, targetExtent);
+
+            var targetElement = targetExtent.Elements().FirstOrDefault() as IObject;
+            Assert.That(targetElement, Is.Not.Null);
+
+            var enumTest = targetElement.get("test").AsSingle();
+            Assert.That(enumTest, Is.Not.Null);
+            Assert.That(enumTest, Is.Not.EqualTo(ObjectHelper.NotSet));
+            Assert.That(enumTest, Is.TypeOf<string>());
+            Assert.That(enumTest, Is.EqualTo("ABC"));
         }
 
         [Test]

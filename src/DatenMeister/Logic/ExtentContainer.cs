@@ -40,5 +40,14 @@ namespace DatenMeister.Logic
             this.Info = info;
             this.Extent = extent;
         }
+
+        /// <summary>
+        /// Converts the container to a string
+        /// </summary>
+        /// <returns>The container being converted to a string</returns>
+        public override string ToString()
+        {
+            return this.Info.ToString();
+        }
     }
 }

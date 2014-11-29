@@ -1,4 +1,5 @@
-﻿using DatenMeister.Entities.AsObject.Uml;
+﻿using BurnSystems.Test;
+using DatenMeister.Entities.AsObject.Uml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,8 @@ namespace DatenMeister.DataProvider.Xml
         /// <param name="retrieveRootNode">Function which retrieves the root node for a certain type</param>
         public void Add(string nodeName, IObject type, Func<XDocument, XElement> retrieveRootNode)
         {
+            Ensure.That(type != null);
+
             var info = new XmlTypeInformation()
             {
                 NodeName = nodeName,
