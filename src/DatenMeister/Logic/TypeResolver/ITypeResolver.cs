@@ -9,7 +9,7 @@ namespace DatenMeister.Logic.TypeResolver
     /// <summary>
     /// Resolves the name of a type to its instance
     /// </summary>
-    interface ITypeResolver
+    public interface ITypeResolver
     {
         /// <summary>
         /// Returned type by name

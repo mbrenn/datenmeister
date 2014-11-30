@@ -183,8 +183,26 @@ namespace DatenMeister.Logic
                 // Initializes the global dot net extent
                 var globalDotNetExtent = new GlobalDotNetExtent();
                 Injection.Application.Bind<GlobalDotNetExtent>().ToConstant(globalDotNetExtent);
-                DatenMeister.Entities.AsObject.FieldInfo.Types.AssignTypeMapping(globalDotNetExtent);
-                DatenMeister.Entities.AsObject.DM.Types.AssignTypeMapping(globalDotNetExtent);
+
+                // Assigns the type mappings for FieldInfos
+                if (DatenMeister.Entities.AsObject.FieldInfo.Types.Comment != null)
+                {
+                    DatenMeister.Entities.AsObject.FieldInfo.Types.AssignTypeMapping(globalDotNetExtent);
+                }
+                else
+                {
+                    logger.Message("No binding of FieldInfo-Types due to not-set types");
+                }
+
+                // Assigns the type mappings for DatenMeister
+                if (DatenMeister.Entities.AsObject.DM.Types.Workbench != null)
+                {
+                    DatenMeister.Entities.AsObject.DM.Types.AssignTypeMapping(globalDotNetExtent);
+                }
+                else
+                {
+                    logger.Message("No binding of DM-Types due to not-set types");
+                }
             }
         }
 

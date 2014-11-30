@@ -74,5 +74,39 @@ namespace DatenMeister.Tests.DataProvider
                 Assert.That(child.ToString(), Is.EqualTo("Child 1"));
             }
         }
+
+        [Test]
+        public void TestGetTypeOfEnumerationByType()
+        {
+            Assert.That(
+                ObjectConversion.GetTypeOfEnumerationByType(typeof(string)),
+                Is.Null);
+
+            Assert.That(
+                ObjectConversion.GetTypeOfEnumerationByType(typeof(int)),
+                Is.Null);
+
+            Assert.That(
+                ObjectConversion.GetTypeOfEnumerationByType(typeof(ConsoleColor)),
+                Is.Null);
+
+            Assert.That(
+                ObjectConversion.GetTypeOfEnumerationByType(typeof(TimeZone)),
+                Is.Null);
+
+            Assert.That(
+                ObjectConversion.GetTypeOfEnumerationByType(typeof(List<int>)),
+                Is.EqualTo(typeof(int)));
+            Assert.That(
+                ObjectConversion.GetTypeOfEnumerationByType(typeof(List<string>)),
+                Is.EqualTo(typeof(string)));
+            Assert.That(
+                ObjectConversion.GetTypeOfEnumerationByType(typeof(List<TimeZone>)),
+                Is.EqualTo(typeof(TimeZone)));
+
+            Assert.That(
+                ObjectConversion.GetTypeOfEnumerationByType(typeof(System.Collections.Generic.LinkedList<double>)),
+                Is.EqualTo(typeof(double)));
+        }
     }
 }

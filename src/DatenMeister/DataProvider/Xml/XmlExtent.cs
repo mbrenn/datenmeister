@@ -1,6 +1,7 @@
 ﻿using BurnSystems.Logging;
 using BurnSystems.Test;
 using DatenMeister.Pool;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -74,6 +75,16 @@ namespace DatenMeister.DataProvider.Xml
         {
             get;
             set;
+        }
+
+        private IKernel injection = new StandardKernel();
+                
+        /// <summary>
+        /// Gets or sets the kernel for the injections
+        /// </summary>
+        public IKernel Injection
+        {
+            get { return this.injection; }
         }
 
         /// <summary>

@@ -1,7 +1,11 @@
 ﻿using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.DotNet;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
+using DatenMeister.Logic.TypeResolver;
 using DatenMeister.Pool;
+using DatenMeister.Tests.DataProvider;
+using Ninject;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -109,6 +113,55 @@ namespace DatenMeister.Tests.PoolLogic
 
             Assert.That(refValueAsIObject.Id, Is.EqualTo("e1"));
         }
+
+        /// <summary>
+        /// Checks, if we can convert a list to an xml file and back 
+        /// </summary>
+        [Test]
+        public void TestListOfInstances()
+        {
+            ApplicationCore.PerformBinding();
+            var pool = DatenMeisterPool.Create();
+            
+            var globalDotNetExtent = Injection.Application.Get<GlobalDotNetExtent>();
+            var list = new DotNetTests.TestListOfTestClasses();
+            list.Instances.Add(new DotNetTests.TestClass()
+                {
+                    NumberValue = 5,
+                    TextValue = "Hallo"
+                });
+            list.Instances.Add(new DotNetTests.TestClass()
+            {
+                NumberValue = 15,
+                TextValue = "Martin"
+            });
+            list.InnerValue = "Inner Value";
+
+            var listAsIObject = globalDotNetExtent.CreateObject(list);
+
+            var xmlExtent = new XmlExtent(
+                new XDocument(
+                    new XElement("list")), 
+                "datenmeister:///test");
+            xmlExtent.Settings.UseRootNode = true;
+            xmlExtent.Injection.Bind<ITypeResolver>().ToConstant(globalDotNetExtent);
+
+            // Copy to Xml
+            var copier = new ObjectCopier(xmlExtent);
+            copier.CopyElement(
+                listAsIObject,
+                xmlExtent.Elements().FirstOrDefault().AsIObject());
+
+            // Copy back to .Net instance 
+            var newList = new DotNetTests.TestListOfTestClasses();
+            var newListAsIObject = globalDotNetExtent.CreateObject(list);
+
+            var otherCopier = new ObjectCopier(globalDotNetExtent);
+            otherCopier.CopyElement(
+                xmlExtent.Elements().FirstOrDefault().AsIObject(),
+                newListAsIObject);
+        }
+
 
         /// <summary>
         /// Helper method, which gets an XDocument, stores it into an XmlExtent and

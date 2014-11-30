@@ -91,7 +91,8 @@ namespace DatenMeister.Logic
                             targetCollection.add(element);
                             continue;
                         }
-
+                        
+                        // Checks, if the instance is an IObject
                         var elementAsIObject = element as IObject;
                         if (elementAsIObject != null)
                         {

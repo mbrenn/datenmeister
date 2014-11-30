@@ -448,13 +448,27 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Found Metaclass or null, if not found</returns>
         public IObject getMetaClass()
         {
-            var nodeName = this.Node.Name.ToString();
-
             // Checks the type by xmi:type attribute
             var xmiTypeAttribute = this.Node.Attribute(DatenMeister.Entities.AsObject.Uml.Types.XmiNamespace + "type");
             if (xmiTypeAttribute != null)
             {
                 var typeName = xmiTypeAttribute.Value;
+
+                // First, try it via the local TypeResolver,
+                if (this.FactoryExtent != null)
+                {
+                    var localTypeResolver = this.FactoryExtent.Injection.TryGet<ITypeResolver>();
+                    if (localTypeResolver != null)
+                    {
+                        var localType = localTypeResolver.GetType(typeName);
+                        if (localType != null)
+                        {
+                            return localType;
+                        }
+                    }
+                }
+
+                // If it does not work, try it via global TypeResolver
 
                 var typeResolver = Injection.Application.Get<ITypeResolver>();
                 var type = typeResolver.GetType(typeName);
@@ -463,6 +477,8 @@ namespace DatenMeister.DataProvider.Xml
                     return type;
                 }
             }
+
+            var nodeName = this.Node.Name.ToString();
 
             // Checks the type by mapping
             if (this.FactoryExtent != null)

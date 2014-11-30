@@ -272,6 +272,7 @@ namespace DatenMeister
             }
 
             var valueAsString = value.ToString();
+
             // TryParse
             try
             {
@@ -310,6 +311,40 @@ namespace DatenMeister
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Gets the type of the enumeration
+        /// </summary>
+        /// <param name="value">Value, which might be an enumeration. </param>
+        /// <returns>The type of the enumeration or null, the if the type is not an enumeration</returns>
+        public static Type GetTypeOfEnumeration(object value)
+        {
+            var type = value.GetType();
+
+            return GetTypeOfEnumerationByType(type);
+        }
+
+        /// <summary>
+        /// Gets the type of the enumeration, if the given type is an enumeration
+        /// </summary>
+        /// <param name="type">Type to be tested</param>
+        /// <returns>The type of the enumerable, otherwise null, if the enumerable is not a 
+        /// </returns>
+        public static Type GetTypeOfEnumerationByType(Type type)
+        {
+            if (type == typeof(string))
+            {
+                // We don't like strings
+                return null;
+            }
+
+            var result = type.GetInterfaces()
+                .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                .Select(x => x.GetGenericArguments()[0])
+                .FirstOrDefault();
+
+            return result;
         }
     }
 }
