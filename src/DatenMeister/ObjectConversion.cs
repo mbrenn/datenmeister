@@ -346,5 +346,27 @@ namespace DatenMeister
 
             return result;
         }
+
+        /// <summary>
+        /// Gets the type of the enumeration, if the given type is an enumeration
+        /// </summary>
+        /// <param name="type">Type to be tested</param>
+        /// <returns>The type of the enumerable, otherwise null, if the enumerable is not a 
+        /// </returns>
+        public static Type GetTypeOfListByType(Type type)
+        {
+            if (type == typeof(string))
+            {
+                // We don't like strings
+                return null;
+            }
+
+            var result = type.GetInterfaces()
+                .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>))
+                .Select(x => x.GetGenericArguments()[0])
+                .FirstOrDefault();
+
+            return result;
+        }
     }
 }

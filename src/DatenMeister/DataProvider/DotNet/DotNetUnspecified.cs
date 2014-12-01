@@ -75,13 +75,13 @@ namespace DatenMeister.DataProvider.DotNet
                     }
 
                     if (interfaceType == null)
-                    {                        
+                    {
                         throw new NotImplementedException("The type is not of type IList<>, the type is of: " + this.propertyInfo.PropertyType.ToString());
                     }
 
                     // Got the interface, now create the associated List
                     var listElementType = interfaceType.GetGenericArguments().First();
-                    if ( listElementType == typeof(IObject))
+                    if (listElementType == typeof(IObject))
                     {
                         // if the list element type is IObject, return objects, since the DotNetObject
                         // will convert IObjects to objects

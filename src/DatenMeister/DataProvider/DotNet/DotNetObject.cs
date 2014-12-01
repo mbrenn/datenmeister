@@ -291,12 +291,29 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else if (checkObject is IList<object>)
             {
-                var sequence = new DotNetSequence(this.extent, checkObject as IList<object>);
+                var sequence = DotNetSequence.CreateFromList(this.extent, checkObject as IList<object>);
                 return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
             }
-            else if (checkObject is IEnumerable)
+            else
+            {
+                // It might be a generic list. We also need to support the interface
+                // to a generic list. Sad but true
+                var listType = ObjectConversion.GetTypeOfListByType(checkObject.GetType());
+                if (listType != null)
+                {
+                    var dotNetSequenceType = typeof(DotNetSequence<>).MakeGenericType(listType);
+                    var sequence = dotNetSequenceType
+                        .GetMethod("CreateFromList")
+                        .Invoke(null, new object[] { this.Extent, checkObject });
+                    return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
+                }
+            }
+            
+            if (checkObject is IEnumerable)
             {
                 var sequence = new DotNetSequence(this.extent);
+                sequence.IsReadOnly = true;
+
                 foreach (var value in (checkObject as IEnumerable))
                 {
                     sequence.Add(value);

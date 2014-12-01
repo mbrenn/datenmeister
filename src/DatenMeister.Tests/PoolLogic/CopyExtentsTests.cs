@@ -162,7 +162,6 @@ namespace DatenMeister.Tests.PoolLogic
                 newListAsIObject);
         }
 
-
         /// <summary>
         /// Helper method, which gets an XDocument, stores it into an XmlExtent and
         /// copies the XmlExtent. The XmlExtent containing the copy is returned
