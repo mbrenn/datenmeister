@@ -1,4 +1,5 @@
 ﻿using DatenMeister.Logic;
+using DatenMeister.Pool;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -161,7 +162,7 @@ namespace DatenMeister.DataProvider.Wrapper
         /// <returns>Converted error</returns>
         public object Convert(object value)
         {
-            if (Extensions.IsNative(value))
+            if (ObjectConversion.IsNative(value))
             {
                 return value;
             }

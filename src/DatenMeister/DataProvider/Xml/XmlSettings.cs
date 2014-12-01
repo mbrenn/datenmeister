@@ -22,9 +22,18 @@ namespace DatenMeister.DataProvider.Xml
         }
 
         /// <summary>
-        /// Gets or sets the skips the root node by the enumeration of elements
+        /// Gets or sets the skips the sub root node by the enumeration of elements
         /// </summary>
-        public bool SkipRootNode
+        public bool OnlyUseAssignedNodes
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the value whether to use the root node.
+        /// </summary>
+        public bool UseRootNode
         {
             get;
             set;

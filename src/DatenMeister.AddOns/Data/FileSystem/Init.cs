@@ -69,7 +69,7 @@ namespace DatenMeister.AddOns.Data.FileSystem
         /// <param name="pool">Pool to be used</param>
         public void Do(IPool pool)
         {
-            var typeExtent = pool.GetExtent(ExtentType.Type).First();
+            var typeExtent = pool.GetExtents(ExtentType.Type).First();
             Do(typeExtent);
         }
 

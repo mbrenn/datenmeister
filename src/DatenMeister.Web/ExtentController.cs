@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic.ClientActions;
+using DatenMeister.Pool;
 
 namespace DatenMeister.Web
 {
@@ -30,12 +31,12 @@ namespace DatenMeister.Web
             set;
         }
 
-        [Inject(IsMandatory = true)]
+        /*[Inject(IsMandatory = true)]
         public ExtentPoolLogic PoolLogic
         {
             get;
             set;
-        }
+        }*/
 
         [WebMethod]
         public IActionResult GetServerInfo()
@@ -55,7 +56,7 @@ namespace DatenMeister.Web
             return this.Json(new
             {
                 success = true,
-                extents = this.Pool.Extents.Select(x => x.ToJson())
+                extents = this.Pool.GetExtents().Select(x => x.ToJson())
             }
             );
         }
@@ -63,7 +64,7 @@ namespace DatenMeister.Web
         [WebMethod]
         public IActionResult GetObjectsInExtent(string uri)
         {
-            var extent = this.Pool.Extents.Where(x => x.ContextURI() == uri).FirstOrDefault();
+            var extent = this.Pool.GetExtents().Where(x => x.ContextURI() == uri).FirstOrDefault();
             if (extent == null)
             {
                 throw new MVCProcessException(
@@ -198,12 +199,14 @@ namespace DatenMeister.Web
         [WebMethod]
         public IActionResult Create([PostModel] CreateExtentModel model)
         {
-            // At the moment, just xml files are supported
+            throw new NotImplementedException();
+            
+            /*// At the moment, just xml files are supported
             var newPool = this.PoolLogic.CreateEmpty(model.name, model.url, model.filename, ExtentType.Data);
             this.Pool.Add(newPool);
 
             return this.ReturnClientAction(
-                new RefreshBrowserWindow());
+                new RefreshBrowserWindow());*/
         }
 
         /// <summary>
@@ -225,7 +228,7 @@ namespace DatenMeister.Web
 
             var extentUri = uri.Substring(0, positionHash);
             var objectId = uri.Substring(positionHash + 1);
-            extent = this.Pool.Extents.Where(x => x.ContextURI() == extentUri).FirstOrDefault();
+            extent = this.Pool.GetExtents().Where(x => x.ContextURI() == extentUri).FirstOrDefault();
             if (extent == null)
             {
                 throw new MVCProcessException(
@@ -254,7 +257,7 @@ namespace DatenMeister.Web
         /// <returns>Found extent</returns>
         private IURIExtent GetExtentByUri(string extentUri)
         {
-            var extent = this.Pool.Extents.Where(x => x.ContextURI() == extentUri)
+            var extent = this.Pool.GetExtents().Where(x => x.ContextURI() == extentUri)
                 .FirstOrDefault();
             if (extent == null)
             {

@@ -29,19 +29,19 @@ namespace DatenMeister.WPF.Modules.RecentFiles
         public static void AddSupport(IDatenMeisterWindow wnd)
         {
             var pool = PoolResolver.GetDefaultPool();
-            var viewExtent = pool.GetExtent(ExtentType.View).First();
+            var viewExtent = pool.GetExtents(ExtentType.View).First();
 
             // Includes the View
             var viewFactory = Factory.GetFor(viewExtent);
-            wnd.Core.ViewRecentObjects = viewFactory.create(
+            var layoutRecentObjects = viewFactory.create(
                 DatenMeister.Entities.AsObject.FieldInfo.Types.TableView);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setName(wnd.Core.ViewRecentObjects, "Recent Files");
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowEdit(wnd.Core.ViewRecentObjects, false);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowNew(wnd.Core.ViewRecentObjects, false);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(wnd.Core.ViewRecentObjects, true);
-            DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(wnd.Core.ViewRecentObjects, ApplicationCore.ApplicationDataUri);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setName(layoutRecentObjects, "Recent Files");
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowEdit(layoutRecentObjects, false);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowNew(layoutRecentObjects, false);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(layoutRecentObjects, true);
+            DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(layoutRecentObjects, ApplicationCore.ApplicationDataUri);
 
-            var fieldInfos = wnd.Core.ViewRecentObjects.get("fieldInfos").AsReflectiveSequence();
+            var fieldInfos = layoutRecentObjects.get("fieldInfos").AsReflectiveSequence();
             var textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
             DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "name");
             DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Name");
@@ -52,10 +52,10 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             DatenMeister.Entities.AsObject.FieldInfo.HyperLinkColumn.setName(textField, "Storage Path");
             fieldInfos.add(textField);
 
-            viewExtent.Elements().Insert(0, wnd.Core.ViewRecentObjects);
+            viewExtent.Elements().Insert(0, layoutRecentObjects);
 
             // Adds the mapping for the recent projects
-            var applicationExtent = pool.GetExtent(ExtentType.ApplicationData).First() as XmlExtent;
+            var applicationExtent = pool.GetExtents(ExtentType.ApplicationData).First() as XmlExtent;
             Ensure.That(applicationExtent != null, "Application Extent is not XmlExtent");
             applicationExtent.Settings.Mapping.Add(DatenMeister.Entities.AsObject.DM.Types.RecentProject);
 
@@ -63,11 +63,11 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             wnd.RefreshTabs();
 
             wnd.AssociateDetailOpenEvent(
-                wnd.Core.ViewRecentObjects, (x) =>
+                layoutRecentObjects, (x) =>
                 {
                     var value = x.Value;
 
-                    OnClickOpenFile(wnd, value);
+                    OnClickOpenFile(wnd, value, layoutRecentObjects);
                 });
 
             // Creates the application menu
@@ -92,7 +92,7 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             menu.Header = Path.GetFileName(DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(recentFile));
             menu.ImageSource = Injection.Application.Get<IIconRepository>().GetIcon("file-file");
 
-            menu.Click += (x, y) => { OnClickOpenFile(wnd, value); y.Handled = true; };
+            menu.Click += (x, y) => { OnClickOpenFile(wnd, value, null); y.Handled = true; };
             windowAsDatenMeister.GetRecentFileRibbon().Items.Add(menu);
         }
 
@@ -101,10 +101,10 @@ namespace DatenMeister.WPF.Modules.RecentFiles
         /// </summary>
         /// <param name="wnd">Window to be used</param>
         /// <param name="recentFile">Value being a recent project object</param>
-        private static void OnClickOpenFile(IDatenMeisterWindow wnd, IObject recentFile)
+        private static void OnClickOpenFile(IDatenMeisterWindow wnd, IObject recentFile, IObject viewRecentObjects)
         {
             var innerPool = PoolResolver.GetDefaultPool();
-            var innerViewExtent = innerPool.GetExtent(ExtentType.View).First();
+            var innerViewExtent = innerPool.GetExtents(ExtentType.View).First();
 
             var filePath = DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(recentFile);
             if (File.Exists(filePath))
@@ -112,10 +112,13 @@ namespace DatenMeister.WPF.Modules.RecentFiles
                 // Loads and opens the file
                 wnd.LoadAndOpenFile(filePath);
 
-                // Removes the view for the recent files
-                if (innerViewExtent.Elements().Contains(wnd.Core.ViewRecentObjects))
+                if (viewRecentObjects != null)
                 {
-                    innerViewExtent.Elements().remove(wnd.Core.ViewRecentObjects);
+                    // Removes the view for the recent files
+                    if (innerViewExtent.Elements().Contains(viewRecentObjects))
+                    {
+                        innerViewExtent.Elements().remove(viewRecentObjects);
+                    }
                 }
 
                 wnd.RefreshTabs();

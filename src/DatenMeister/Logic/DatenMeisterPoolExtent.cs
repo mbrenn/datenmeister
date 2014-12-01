@@ -1,8 +1,10 @@
 ﻿using BurnSystems.ObjectActivation;
+using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.Entities.FieldInfos;
 using DatenMeister.Logic.Views;
+using DatenMeister.Pool;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +39,8 @@ namespace DatenMeister.Logic
         /// <param name="pool">Pool to be used for this extent</param>
         public DatenMeisterPoolExtent(DatenMeisterPool pool)
             : base(DefaultUri)
-        {            
+        {
+            Ensure.That(pool != null);
             this.pool = pool;
         }
 
@@ -48,8 +51,8 @@ namespace DatenMeister.Logic
         public new IReflectiveSequence Elements()
         {
             return new EnumerationReflectiveSequence<IObject>(this,
-                this.pool.Instances.Select(
-                    x => new DotNetObject(this.Elements(), x.ToJson(), x.Extent.ContextURI())));
+                this.pool.ExtentContainer.Select(
+                    x => new DotNetObject(this.Elements(), x.Info, x.Extent.ContextURI())));
         }
 
         /// <summary>
@@ -71,10 +74,16 @@ namespace DatenMeister.Logic
             asObjectExtentview.setFieldInfos(new DotNetSequence(
                 ViewHelper.ViewTypes,
                 new TextField("Name", "name"),
-                new TextField("URI", "uri"),
-                new TextField("Type", "type"),
                 new TextField("ExtentType", "extentType"),
-                new TextField("Filename", "filename")));
+                new TextField("URI", "uri")
+                {
+                    width = 150
+                },
+                new TextField("Type", "extentClass")
+                {
+                    width = 150
+                },
+                new TextField("Filename", "storagePath")));
 
             viewExtent.Elements().add(extentViewObj);
 

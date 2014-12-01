@@ -7,6 +7,7 @@ using DatenMeister.DataProvider.Xml;
 using DatenMeister.Entities.FieldInfos;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
+using DatenMeister.Pool;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,7 +96,7 @@ namespace DatenMeister.Tests
             var dataDocument = new XDocument(new XElement("data"));
             var xmlProjectExtent = new XmlExtent(dataDocument, uri);
             this.xmlSettings = new XmlSettings();
-            this.xmlSettings.SkipRootNode = true;
+            this.xmlSettings.OnlyUseAssignedNodes = true;
             this.xmlSettings.Mapping.Add("person", TestDatabase.Types.Person, (x) => x.Elements("data").Elements("persons").First());
             this.xmlSettings.Mapping.Add("task", TestDatabase.Types.Task, (x) => x.Elements("data").Elements("tasks").First());
 

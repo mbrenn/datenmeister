@@ -45,7 +45,7 @@ namespace DatenMeister.Logic.TypeConverter
             // Now go through the properties 
             foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                if (!Extensions.IsNativeByType(property.PropertyType))
+                if (!ObjectConversion.IsNativeByType(property.PropertyType))
                 {
                     // Add the type of the property recursively
                     throw new NotImplementedException("Subtypes are not exported");

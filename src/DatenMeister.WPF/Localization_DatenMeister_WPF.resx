@@ -130,7 +130,7 @@
     <value>The exception is copied to clipboard.</value>
   </data>
   <data name="File_Filter" xml:space="preserve">
-    <value>Xml-Files (*.xml)|*.xml|All Files (*.*)|*.*</value>
+    <value>DatenMeister Workbench (*.dmwb)|*.dmwb|All Files (*.*)|*.*</value>
   </data>
   <data name="Menu_View" xml:space="preserve">
     <value>View</value>

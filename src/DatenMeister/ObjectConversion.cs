@@ -1,5 +1,7 @@
-﻿using DatenMeister.Logic;
+﻿using DatenMeister.DataProvider;
+using DatenMeister.Logic;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -182,6 +184,189 @@ namespace DatenMeister
             }
 
             return Convert.ChangeType(value, targetType);
+        }
+
+        /// <summary>
+        /// Stores a list of all primitive types that are supported by DatenMeister directly
+        /// </summary>
+        private static List<Type> primitiveTypes = new List<Type>();
+
+        /// <summary>
+        /// Checks, if the given object is a native object or if the objects needs to be converted
+        /// </summary>
+        /// <param name="checkObject">CheckObject to be checked</param>
+        /// <returns>true, if object is not native</returns>
+        public static bool IsNative(object checkObject)
+        {
+            // An empty object is null
+            if (checkObject == null)
+            {
+                return true;
+            }
+
+            var type = checkObject.GetType();
+            return IsNativeByType(type);
+        }
+
+        /// <summary>
+        /// Checks, if a certain type is a native .Net object
+        /// </summary>
+        /// <param name="type">Type to be considered</param>
+        /// <returns>true, if the object type is native</returns>
+        public static bool IsNativeByType(Type type)
+        {
+            // Initializes list of primitiveTypes if necessary
+            if (primitiveTypes.Count == 0)
+            {
+                lock (primitiveTypes)
+                {
+                    primitiveTypes.Clear();
+                    primitiveTypes.Add(typeof(Boolean));
+                    primitiveTypes.Add(typeof(Int16));
+                    primitiveTypes.Add(typeof(Int32));
+                    primitiveTypes.Add(typeof(Int64));
+                    primitiveTypes.Add(typeof(Double));
+                    primitiveTypes.Add(typeof(Single));
+                    primitiveTypes.Add(typeof(String));
+                    primitiveTypes.Add(typeof(DateTime));
+                    primitiveTypes.Add(typeof(TimeSpan));
+                }
+            }
+
+            // Checks, if type of given object is in the list above
+            return primitiveTypes.Contains(type);
+        }
+
+        /// <summary>
+        /// Checks, if the object is an enumeration object
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <returns>true, if the object is an enumeratio</returns>
+        public static bool IsEnum(object value)
+        {
+            return IsEnumByType(value.GetType());
+        }
+
+        /// <summary>
+        /// Checks, if the given type is an enumeration type. It just calls IsEnum
+        /// </summary>
+        /// <param name="type">Type to be checked</param>
+        /// <returns></returns>
+        public static bool IsEnumByType(Type type)
+        {
+            return type.IsEnum;
+        }
+
+        /// <summary>
+        /// Converts an object to an enumeration.
+        /// It can be a string or any other object
+        /// </summary>
+        /// <param name="value">Value to be convered</param>
+        /// <param name="type">Type to be used for this conversion</param>
+        /// <returns>The enumeration object of type 'type'</returns>
+        public static object ConvertToEnum(object value, Type type)
+        {
+            if (value.GetType() == type)
+            {
+                return value;
+            }
+
+            var valueAsString = value.ToString();
+
+            // TryParse
+            try
+            {
+                return Enum.Parse(type, valueAsString);
+            }
+            catch
+            {
+                // Per default, return the first name, if not found
+                return Enum.GetNames(type).First();
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the given object is a reflective collection
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <returns>true, if the object is a reflective </returns>
+        public static bool IsEnumeration(object value)
+        {
+            if (value is IEnumerable && !(value is string))
+            {
+                return true;
+            }
+
+            var valueAsUnspecified = value as IUnspecified;
+            if (valueAsUnspecified != null &&
+                valueAsUnspecified.PropertyValueType == PropertyValueType.Enumeration)
+            {
+                return true;
+            }
+
+            var valueAsProxyObject = value as IProxyObject;
+            if (valueAsProxyObject != null)
+            {
+                return IsEnumeration(valueAsProxyObject.Value);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the type of the enumeration
+        /// </summary>
+        /// <param name="value">Value, which might be an enumeration. </param>
+        /// <returns>The type of the enumeration or null, the if the type is not an enumeration</returns>
+        public static Type GetTypeOfEnumeration(object value)
+        {
+            var type = value.GetType();
+
+            return GetTypeOfEnumerationByType(type);
+        }
+
+        /// <summary>
+        /// Gets the type of the enumeration, if the given type is an enumeration
+        /// </summary>
+        /// <param name="type">Type to be tested</param>
+        /// <returns>The type of the enumerable, otherwise null, if the enumerable is not a 
+        /// </returns>
+        public static Type GetTypeOfEnumerationByType(Type type)
+        {
+            if (type == typeof(string))
+            {
+                // We don't like strings
+                return null;
+            }
+
+            var result = type.GetInterfaces()
+                .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                .Select(x => x.GetGenericArguments()[0])
+                .FirstOrDefault();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the type of the enumeration, if the given type is an enumeration
+        /// </summary>
+        /// <param name="type">Type to be tested</param>
+        /// <returns>The type of the enumerable, otherwise null, if the enumerable is not a 
+        /// </returns>
+        public static Type GetTypeOfListByType(Type type)
+        {
+            if (type == typeof(string))
+            {
+                // We don't like strings
+                return null;
+            }
+
+            var result = type.GetInterfaces()
+                .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>))
+                .Select(x => x.GetGenericArguments()[0])
+                .FirstOrDefault();
+
+            return result;
         }
     }
 }

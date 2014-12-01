@@ -1,4 +1,5 @@
 ﻿using DatenMeister.Logic;
+using DatenMeister.Pool;
 using DatenMeister.Transformations;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace DatenMeister.DataProvider.Pool
         /// </summary>
         /// <param name="pool"></param>
         public AllItemsReflectiveCollection(IPool pool)
-            : base(pool.Instances.Select(x => x.Extent.Elements()))
+            : base(pool.GetExtents().Select(x => x.Elements()))
         {
             this.pool = pool;
         }
@@ -34,8 +35,8 @@ namespace DatenMeister.DataProvider.Pool
         /// </summary>
         /// <param name="pool"></param>
         public AllItemsReflectiveCollection(IPool pool, ExtentType extentType)
-            : base(pool.Instances
-                .Where (x=> x.ExtentType == extentType)
+            : base(pool.ExtentContainer
+                .Where (x=> x.Info.extentType == extentType)
                 .Select(x => x.Extent.Elements()))
         {
             this.pool = pool;

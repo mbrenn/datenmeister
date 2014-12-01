@@ -37,13 +37,13 @@ namespace DatenMeister.AddOns
             DatenMeister.AddOns.ComplianceSuite.WPF.Plugin.Integrate(wnd);
 
             // Registers to exit event of the application
-            if (application != null)
+            /*if (application != null)
             {
                 if (core.Settings != null)
                 {
-                    core.StoreViewSet();
+                    core.SaveApplicationData();
                 }
-            }
+            }*/
 
             return new StartResult()
             {

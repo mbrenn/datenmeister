@@ -1,5 +1,4 @@
 ﻿using BurnSystems.Logging;
-using BurnSystems.ObjectActivation;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
@@ -9,21 +8,17 @@ using DatenMeister.Logic.MethodProvider;
 using DatenMeister.Logic.TypeConverter;
 using DatenMeister.Logic.TypeResolver;
 using DatenMeister.Pool;
-using DatenMeister.Transformations;
 using Ninject;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Xml.Linq;
 
 namespace DatenMeister.Logic
 {
     /// <summary>
-    /// Stores the data that is used for the application specific data
+    /// Stores and manages the data for a user-driven application, which handles the 
+    /// extents and the workbench
     /// </summary>
     public partial class ApplicationCore
     {
@@ -73,15 +68,6 @@ namespace DatenMeister.Logic
         }
 
         /// <summary>
-        /// Defines the object that is used to show 
-        /// </summary>
-        public IObject ViewRecentObjects
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets the extent containing all the meta types
         /// </summary>
         public GenericExtent MetaTypeExtent
@@ -96,6 +82,11 @@ namespace DatenMeister.Logic
         public event EventHandler ViewSetInitialized;
 
         /// <summary>
+        /// This event is thrown, when the viewset is finalized
+        /// </summary>
+        public event EventHandler ViewSetFinalized;
+
+        /// <summary>
         /// Stores the value whether the application data is loaded
         /// </summary>
         private bool isApplicationDataLoaded = false;
@@ -108,7 +99,7 @@ namespace DatenMeister.Logic
         {
             this.XmlSettings = new XmlSettings()
             {
-                SkipRootNode = true
+                OnlyUseAssignedNodes = true
             };
         }
 
@@ -158,7 +149,7 @@ namespace DatenMeister.Logic
             DatenMeister.Entities.AsObject.Uml.Types.Init(this.MetaTypeExtent);
             DatenMeister.Entities.AsObject.FieldInfo.Types.Init(this.MetaTypeExtent);
             DatenMeister.Entities.AsObject.DM.Types.Init(this.MetaTypeExtent);
-            PerformBinding();
+            PerformBinding();            
 
             this.privateSettings.InitializeForBootUp(this);
             this.PerformInitializationOfViewSet();
@@ -189,44 +180,70 @@ namespace DatenMeister.Logic
             // Initializes the DotNetTypeConverter
             Injection.Application.Bind<IDotNetTypeConverter>().To<DotNetTypeConverter>();
 
+            // Initializes the workbench
+            Injection.Application.Bind<WorkbenchManager>().To<WorkbenchManager>();
+            Injection.Application.Bind<WorkbenchContainer>().To<WorkbenchContainer>().InSingletonScope();
+
             if (!onlyBootStrap)
             {
                 // Initializes the global dot net extent
                 var globalDotNetExtent = new GlobalDotNetExtent();
                 Injection.Application.Bind<GlobalDotNetExtent>().ToConstant(globalDotNetExtent);
-                DatenMeister.Entities.AsObject.FieldInfo.Types.AssignTypeMapping(globalDotNetExtent);
+
+                // Assigns the type mappings for FieldInfos
+                if (DatenMeister.Entities.AsObject.FieldInfo.Types.Comment != null)
+                {
+                    DatenMeister.Entities.AsObject.FieldInfo.Types.AssignTypeMapping(globalDotNetExtent);
+                }
+                else
+                {
+                    logger.Message("No binding of FieldInfo-Types due to not-set types");
+                }
+
+                // Assigns the type mappings for DatenMeister
+                if (DatenMeister.Entities.AsObject.DM.Types.Workbench != null)
+                {
+                    DatenMeister.Entities.AsObject.DM.Types.AssignTypeMapping(globalDotNetExtent);
+                }
+                else
+                {
+                    logger.Message("No binding of DM-Types due to not-set types");
+                }
             }
         }
 
         public void PerformInitializationOfViewSet()
-        {
+        {            
             PerformBinding();
-            var pool = DatenMeisterPool.Create();
 
-            // Initializes the database itself
+            // Creates the workbench
+            var workBenchManager = WorkbenchManager.Get();
+            workBenchManager.CreateNewWorkbench();
+
+            // Initializes the database itself and adds the metatype to the workbench
             this.MetaTypeExtent.ReleaseFromPool();
+            workBenchManager.AddExtent(this.MetaTypeExtent,
+                new ExtentParam("MetaTypes", ExtentType.MetaType)
+                {
+                    IsPrepopulated = true
+                });
 
-            // Adds the metatypes
-            pool.Add(this.MetaTypeExtent, null, "MetaTypes", ExtentType.MetaType);
+            // Adds the extent for the extents
+            var poolExtent = new DatenMeisterPoolExtent(workBenchManager.Pool as DatenMeisterPool);
+            workBenchManager.AddExtent(
+                poolExtent, 
+                new ExtentParam(DatenMeisterPoolExtent.DefaultName, ExtentType.Extents)
+                    .AsPrepopulated());
 
-            this.LoadApplicationData();
+            // Loads the application data from file
+            this.LoadApplicationDataIfNotLoaded();
 
             // Call the private settings that the viewset needs to be initialized
             this.privateSettings.InitializeViewSet(this);
 
-            // After the viewset is initialized, replace the view extents by wrapped
-            // EventOnChange Extent. 
-            // So, view can be updated, when the content of the extent changed
-            foreach (var instance in pool.Instances.Where(x => x.ExtentType == ExtentType.View))
-            {
-                // Just replace the extent
-                instance.Extent = new EventOnChangeExtent(instance.Extent);
-            }
+            this.AddDefaultQueries();
 
-            // Now, call the event that the initialization has been redone
             this.OnViewSetInitialized();
-
-            this.AddDefaultViews();
         }
 
         /// <summary>
@@ -241,14 +258,43 @@ namespace DatenMeister.Logic
             }
         }
 
+        /// <summary>
+        /// Calls the ViewSetInitialized event
+        /// </summary>
+        private void OnViewSetFinalized()
+        {
+            var workBenchManager = WorkbenchManager.Get();
+
+            var ev = this.ViewSetFinalized;
+            if (ev != null)
+            {
+                ev(this, EventArgs.Empty);
+            }
+
+            // After the viewset is finalized, replace the view extents by wrapped
+            // EventOnChange Extent. 
+            // So, view can be updated, when the content of the extent changed
+            foreach (var instance in workBenchManager.Pool.ExtentContainer.Where(x => x.Info.extentType == ExtentType.View))
+            {
+                // Just replace the extent
+                instance.Extent = new EventOnChangeExtent(instance.Extent);
+            }
+        }
+
         public void PerformInitializeFromScratch()
         {
-            this.privateSettings.InitializeFromScratch(this);
+            this.privateSettings.FinalizeExtents(this, false);
+
+            // Now, call the event that the initialization has been redone
+            this.OnViewSetFinalized();
         }
 
         public void PerformInitializeAfterLoading()
         {
-            this.privateSettings.InitializeAfterLoading(this);
+            this.privateSettings.FinalizeExtents(this, true);
+
+            // Now, call the event that the initialization has been redone
+            this.OnViewSetFinalized();
         }
 
         public void PerformInitializeExampleData()
@@ -259,74 +305,33 @@ namespace DatenMeister.Logic
         /// <summary>
         /// Calls the StoreViewSet method in the settings
         /// </summary>
-        public void StoreViewSet()
+        public void StoreWorkbench(string path)
         {
-            // Stores the settings
-            this.SaveApplicationData();
-
-            // and afterwards store the viewset
-            this.privateSettings.StoreViewSet(this);
+            // Saves the complete workbench at the given path
+            WorkbenchManager.Get().SaveWorkbench(path);
         }
 
         /// <summary>
-        /// Tries to load an extent from the given file. 
-        /// The path of the file will be retrieved by GetStoragePathFor, which is within
-        /// the LocalAppData of the user
+        /// Loads the workbench by giving a path
         /// </summary>
-        /// <param name="name">Name of the new extent</param>
-        /// <param name="fileName">Used filename to load the extent</param>
-        /// <param name="extentUri">Uri of the extent to be used</param>
-        /// <param name="defaultActionForCreation">Action being called, when file is not existing.
-        /// The action can be used to precreate the necessary nodes or to perform the mapping</param>
-        /// <param name="defaultActionForLoading">The action that will be performed
-        /// after the </param>
-        /// <returns>Created or loaded Extent</returns>
-        public IURIExtent LoadOrCreateByDefault(
-            string name,
-            string extentUri,
-            ExtentType extentType,
-            Action<XmlExtent> defaultActionForCreation,
-            Action<XmlExtent> defaultActionForLoading = null)
+        /// <param name="path">Path to be loaded</param>
+        public void LoadWorkbench(string path)
         {
-            logger.Message("Loading" + name);
-            var filePath = this.GetApplicationStoragePathFor(name);
-            IURIExtent createdPool = null;
-            var xmlSettings = this.GetXmlSettings(extentType);
+            this.PerformInitializationOfViewSet();
+            WorkbenchManager.Get().LoadWorkbench(path);
             
             var pool = PoolResolver.GetDefaultPool();
 
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    // File exists, we can directly load it
-                    var dataProvider = new XmlDataProvider();
-                    createdPool = dataProvider.Load(filePath, extentUri, xmlSettings);
-                    pool.Add(createdPool, filePath, name, extentType);
+            this.privateSettings.FinalizeExtents(this, true);
+        }
 
-                    if (defaultActionForLoading != null)
-                    {
-                        defaultActionForLoading(createdPool as XmlExtent);
-                    }                    
-                }
-                catch (Exception exc)
-                {
-                    logger.Fail("Failure during loading of " + name + ": " + exc.Message);
-                }
-            }
-
-            if (createdPool == null)
-            {
-                // File does not exist, we have to load it from 
-                createdPool = XmlExtent.Create(xmlSettings, name, extentUri);
-                pool.Add(createdPool, filePath, name, extentType);
-                if (defaultActionForCreation != null)
-                {
-                    defaultActionForCreation(createdPool as XmlExtent);
-                }
-            }
-
-            return createdPool;
+        /// <summary>
+        /// Saves the complete application setting
+        /// </summary>
+        public void Stop()
+        {
+            // Stores the settings
+            this.SaveApplicationData();
         }
 
         /// <summary>
@@ -339,7 +344,7 @@ namespace DatenMeister.Logic
 
             // Get pool entry
             var pool = Injection.Application.Get<IPool>();
-            var instance = pool.GetInstance(extentUri);
+            var instance = pool.GetContainer(extentUri);
             Ensure.That(instance != null, "The extent with Uri has not been found: " + extentUri);
 
             // Save the data
@@ -357,8 +362,7 @@ namespace DatenMeister.Logic
             Ensure.That(extent is XmlExtent, "The given extent is not an XmlExtent");
             dataProvider.Save(
                 extent as XmlExtent,
-                instance.StoragePath,
-                this.GetXmlSettings(instance.ExtentType));
+                instance.Info.storagePath);
         }
 
         public XmlSettings GetXmlSettings(ExtentType type)
@@ -374,30 +378,43 @@ namespace DatenMeister.Logic
         #region Storing and loading of application data
 
         /// <summary>
-        /// Saves the application data
+        /// Loads the application data, if the data is not already loaded
         /// </summary>
-        public void LoadApplicationData()
+        public void LoadApplicationDataIfNotLoaded()
         {
             // Stores the name of the applicationdata
             var name = "applicationdata";
             if (!this.isApplicationDataLoaded)
             {
-                this.applicationData = this.LoadOrCreateByDefault(
-                    name,
-                    ApplicationDataUri,
-                    ExtentType.ApplicationData,
-                    null);
+                var filePath = this.GetApplicationStoragePathFor(name);
+                var workBenchManager = WorkbenchManager.Get();
+                var info = workBenchManager.LoadOrCreateExtent(
+                     filePath,
+                     ApplicationDataUri,
+                     new ExtentParam(name, ExtentType.ApplicationData, filePath)
+                     {
+                         IsPrepopulated = true
+                     },
+                     () => { return XmlExtent.Create(XmlSettings.Empty, name, ApplicationDataUri); },
+                     null);
+                info.isPrepopulated = true;
+                this.applicationData = workBenchManager.Pool.GetExtent(info);
+
                 this.isApplicationDataLoaded = true;
             }
             else
             {
                 var pool = PoolResolver.GetDefaultPool();
                 this.applicationData.ReleaseFromPool();
-                pool.Add(
+
+                // Adds the application data to the workbench
+                var info = WorkbenchManager.Get().AddExtent(
                     this.applicationData,
-                    this.GetApplicationStoragePathFor(name),
-                    name,
-                    ExtentType.ApplicationData);
+                    new ExtentParam(
+                        name,
+                        ExtentType.ApplicationData,
+                        this.GetApplicationStoragePathFor(name)));
+                info.isPrepopulated = true;
             }
         }
 

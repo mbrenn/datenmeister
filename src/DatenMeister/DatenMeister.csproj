@@ -84,6 +84,7 @@
     <Compile Include="DataProvider\IHasFactoryExtent.cs" />
     <Compile Include="DataProvider\IKnowsExtentType.cs" />
     <Compile Include="DataProvider\IProxyObject.cs" />
+    <Compile Include="DataProvider\ISettings.cs" />
     <Compile Include="DataProvider\ListNonGenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListReflectiveSequence.cs" />
     <Compile Include="DataProvider\GenericUnspecified.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="DataProvider\Xml\XmlRepresentation.cs" />
     <Compile Include="DataProvider\Xml\XmlDataProvider.cs" />
     <Compile Include="DataProvider\Xml\XmlExtent.cs" />
+    <Compile Include="DataProvider\Xml\XmlExtentSubNodeReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Xml\XmlExtentRootReflectiveSequence.cs" />
     <Compile Include="DataProvider\Xml\XmlFactory.cs" />
     <Compile Include="DataProvider\Xml\XmlObject.cs" />
     <Compile Include="DataProvider\Xml\XmlReflectiveSequence.cs" />
@@ -117,7 +120,7 @@
     <Compile Include="DataProvider\Xml\XmlTypeInformation.cs" />
     <Compile Include="DataProvider\Xml\XmlTypeMapping.cs" />
     <Compile Include="DataProvider\Xml\XmlUnspecified.cs" />
-    <Compile Include="DatenMeisterPool.cs" />
+    <Compile Include="Pool\DatenMeisterPool.cs" />
     <Compile Include="Entities\AsObject\DM.Objects.cs" />
     <Compile Include="Entities\AsObject\DM.Types.cs" />
     <Compile Include="Entities\AsObject\FieldInfo.Objects.cs" />
@@ -126,7 +129,9 @@
     <Compile Include="Entities\AsObject\UML.Types.cs" />
     <Compile Include="Entities\AsObject\UML.Types.User.cs" />
     <Compile Include="Entities\DM\Primitives\Color.cs" />
+    <Compile Include="Entities\DM\ExtentInfo.cs" />
     <Compile Include="Entities\DM\RecentProject.cs" />
+    <Compile Include="Entities\DM\Workbench.cs" />
     <Compile Include="Entities\FieldInfos\ActionButton.cs" />
     <Compile Include="Entities\FieldInfos\Checkbox.cs" />
     <Compile Include="Entities\FieldInfos\Comment.cs" />
@@ -153,7 +158,8 @@
     <Compile Include="IFactory.cs" />
     <Compile Include="Injection.cs" />
     <Compile Include="IObject.cs" />
-    <Compile Include="IPool.cs" />
+    <Compile Include="Pool\ExtentParam.cs" />
+    <Compile Include="Pool\IPool.cs" />
     <Compile Include="IPublicDatenMeisterSettings.cs" />
     <Compile Include="IReflectiveCollection.cs" />
     <Compile Include="IReflectiveSequence.cs" />
@@ -164,6 +170,7 @@
     <Compile Include="Logic\ClientActions\IClientAction.cs" />
     <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
+    <Compile Include="Logic\ExtentContainer.cs" />
     <Compile Include="Logic\MethodProvider\MethodType.cs" />
     <Compile Include="Logic\MethodProvider\MethodProviderExtensions.cs" />
     <Compile Include="Logic\MethodProvider\TypeFunctionImpl.cs" />
@@ -197,6 +204,8 @@
     <Compile Include="Logic\Views\DefaultViewManager.cs" />
     <Compile Include="Logic\Views\IViewManager.cs" />
     <Compile Include="Logic\Views\ViewHelper.cs" />
+    <Compile Include="Pool\WorkbenchContainer.cs" />
+    <Compile Include="Pool\WorkbenchManager.cs" />
     <Compile Include="ObjectConversion.cs" />
     <Compile Include="Pool\Extensions.cs" />
     <Compile Include="Pool\ExtentNames.cs" />
@@ -222,9 +231,7 @@
     <Compile Include="Transformations\Extensions.cs" />
     <Compile Include="Transformations\MakeUniqueTransformation.cs" />
     <Compile Include="Transformations\RecurseObjectTransformation.cs" />
-    <Compile Include="Logic\ExtentPoolLogic.cs" />
-    <Compile Include="Logic\ExtentInstance.cs" />
-    <Compile Include="Logic\DatenMeisterPoolProvider.cs" />
+    <Compile Include="Logic\ExtentType.cs" />
     <Compile Include="Transformations\UnionTransformation.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +253,7 @@
     <Content Include="Logic\SourceFactory\Resources\IObjectImplementation.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\Extensions.Pool.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

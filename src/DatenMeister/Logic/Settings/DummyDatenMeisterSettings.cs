@@ -16,11 +16,7 @@ namespace DatenMeister.Logic.Settings
         {
         }
 
-        public void InitializeFromScratch(ApplicationCore core)
-        {
-        }
-
-        public void InitializeAfterLoading(ApplicationCore core)
+        public void FinalizeExtents(ApplicationCore core, bool wasLoading)
         {
         }
 

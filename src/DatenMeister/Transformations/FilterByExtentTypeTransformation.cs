@@ -39,7 +39,7 @@ namespace DatenMeister.Transformations
                 var extent = vAsObject.Extent;
                 if (extent != null)
                 {
-                    return extent.Pool.GetInstance(extent.ContextURI()).ExtentType == this.extentType;
+                    return extent.Pool.GetInstance(extent.ContextURI()).extentType == this.extentType;
                 }
             }
 

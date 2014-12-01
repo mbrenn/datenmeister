@@ -14,7 +14,7 @@ namespace DatenMeister.DataProvider
         public GenericUnspecified(IObject owner, string propertyName, object value, PropertyValueType propertyValueType)
             : base(owner, propertyName, value, propertyValueType)
         {
-            if (ObjectHelper.IsEnumeration(value))
+            if (ObjectConversion.IsEnumeration(value))
             {
                 this.PropertyValueType = DatenMeister.PropertyValueType.Enumeration;
             }

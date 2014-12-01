@@ -37,6 +37,8 @@ namespace DatenMeister.WPF.Modules.IconRepository
                 {
                     Injection.Application.Bind<IIconRepository>().To(type);
                 };
+
+                Injection.Application.Bind<IIconRepository>().To(type);
             }
             else
             {
@@ -44,6 +46,9 @@ namespace DatenMeister.WPF.Modules.IconRepository
                     {
                         Injection.Application.Bind<IIconRepository>().To<GplIconRepository>();
                     };
+
+
+                Injection.Application.Bind<IIconRepository>().To<GplIconRepository>();
             }
         }
     }

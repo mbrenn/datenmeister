@@ -10,7 +10,9 @@ from BurnSystems.DatenMeister import CSharpFactory
 print('Creating the DatenMeister')
 tsUMLFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.dm.objects.ts"
 umlTypes = [
-         DatenMeister.Entities.DM.RecentProject ]
+    DatenMeister.Entities.DM.ExtentInfo,     
+    DatenMeister.Entities.DM.RecentProject,         
+    DatenMeister.Entities.DM.Workbench]
 TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\DM.Objects.cs"

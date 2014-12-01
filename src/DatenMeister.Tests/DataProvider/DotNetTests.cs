@@ -107,7 +107,7 @@ namespace DatenMeister.Tests.DataProvider
 
             // Element as typed
             var newElement2 = new GenericElement(type: extent.Mapping.FindByDotNetType(typeof(TestClass)).Type);
-            newElement2.set("NumberValue", 2);;
+            newElement2.set("NumberValue", 2); ;
             newElement2.set("TextValue", "More Text");
             listObject.Add(newElement2);
 
@@ -157,7 +157,7 @@ namespace DatenMeister.Tests.DataProvider
         {
             var extent = new DotNetExtent("test:///");
 
-            var netValue = new TestListClass();
+            var netValue = new TestStringClass();
             netValue.Values.Add("A");
             netValue.Values.Add("B");
 
@@ -198,9 +198,9 @@ namespace DatenMeister.Tests.DataProvider
             }
         }
 
-        public class TestListClass
+        public class TestStringClass
         {
-            public TestListClass()
+            public TestStringClass()
             {
                 this.Values = new List<string>();
             }
@@ -209,6 +209,29 @@ namespace DatenMeister.Tests.DataProvider
             {
                 get;
                 set;
+            }
+        }
+
+        /// <summary>
+        /// Defines a test class that can be used to test the creation of instances
+        /// </summary>
+        public class TestListOfTestClasses
+        {
+            public string InnerValue
+            {
+                get;
+                set;
+            }
+
+            public List<TestClass> Instances
+            {
+                get;
+                set;
+            }
+
+            public TestListOfTestClasses()
+            {
+                this.Instances = new List<TestClass>();
             }
         }
     }

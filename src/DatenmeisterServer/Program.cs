@@ -40,23 +40,6 @@ namespace DatenmeisterServer
 
             var activationContainer = new ActivationContainer("Website");
 
-            // Initialize DatenMeisterPool
-            ApplicationCore.PerformBinding();
-            var pool = DatenMeisterPool.Create();
-            activationContainer.Bind<ExtentPoolLogic>().To<ExtentPoolLogic>();
-
-            // Adds pool
-            var poolExtent = new DatenMeisterPoolExtent(pool);
-            pool.Add(poolExtent, null, ExtentType.Extents);
-
-            // Add view pool
-            var viewExtent = new ViewsExtent("datenmeister:///defaultviews/");
-            viewExtent.Fill();
-            pool.Add(viewExtent, null, ExtentType.View);
-
-            var poolProvider = new DatenMeisterPoolProvider();
-            poolProvider.Load(pool, "data/pools.xml", ExtentType.Extents);
-
             // Adds the csv-extent
             /*
             var provider = new CSVDataProvider ();
@@ -72,7 +55,6 @@ namespace DatenmeisterServer
             }
 
             pool.Add (extent, "data/test_save.csv");*/
-            activationContainer.Bind<DatenMeisterPool>().ToConstant(pool);
             activationContainer.Bind<XmlDataProvider>().To<XmlDataProvider>();
 
             using (var server = Server.CreateDefaultServer(activationContainer))
@@ -95,7 +77,6 @@ namespace DatenmeisterServer
 
             // Storing the data
             Log.TheLog.Message("Storing data");
-            poolProvider.Save(pool, "data/pools.xml");
         }
     }
 }

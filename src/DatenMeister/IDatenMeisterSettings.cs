@@ -29,14 +29,12 @@ namespace DatenMeister
 
         /// <summary>
         /// The function will be called, when the user wants to have an extent/viewset from
-        /// scratch. This means, that he has clicked "File->New"
+        /// scratch. This means, that he has clicked "File->New".
+        /// The function will also be called, when the user has loaded a new workbench. 
+        /// The parameter wasLoading defines whether a loading was done or whether a
+        /// new initialization shall be performed
         /// </summary>
-        void InitializeFromScratch(ApplicationCore core);
-
-        /// <summary>
-        /// The function will be called, when the user has loaded a ViewSet. 
-        /// </summary>
-        void InitializeAfterLoading(ApplicationCore core);
+        void FinalizeExtents(ApplicationCore core, bool wasLoading);
 
         /// <summary>
         /// The function will be called, when application has been started. 

@@ -1,4 +1,5 @@
 ﻿using DatenMeister.Logic;
+using DatenMeister.Logic.TypeResolver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace DatenMeister.DataProvider.DotNet
     /// 
     /// The extent does not need to be assigned to a certain Pool
     /// </summary>
-    public class GlobalDotNetExtent : DotNetExtent
+    public class GlobalDotNetExtent : DotNetExtent, ITypeResolver
     {
         /// <summary>
         /// Defines the uri for the extent. 
@@ -27,6 +28,22 @@ namespace DatenMeister.DataProvider.DotNet
         public GlobalDotNetExtent()
             : base(GlobalDotNetExtentUri)
         {
+        }
+
+        /// <summary>
+        /// Gets the type by name
+        /// </summary>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
+        public IObject GetType(string typeName)
+        {
+            var value =  this.Mapping.FindByName(typeName);
+            if ( value != null)
+            {
+                return value.Type;
+            }
+
+            return null;
         }
     }
 
@@ -86,7 +103,15 @@ namespace DatenMeister.DataProvider.DotNet
                 // Now go through the properties 
                 foreach (var property in type.GetProperties())
                 {
-                    if (!Extensions.IsNativeByType(property.PropertyType))
+
+                    // Checks, if the given property is an enumeration
+                    // If the element is a list or enumeration. 
+                    var underlyingListType = ObjectConversion.GetTypeOfEnumerationByType(property.PropertyType);
+                    if (underlyingListType != null)
+                    {
+                        AddTypeMapping(extent, underlyingListType);
+                    }
+                    else if (!ObjectConversion.IsNativeByType(property.PropertyType))
                     {
                         // Add the type of the property recursively
                         AddTypeMapping(extent, property.PropertyType);
@@ -98,7 +123,7 @@ namespace DatenMeister.DataProvider.DotNet
                     DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(typeObject, propertyObject);
                 }
             }
-
+            
             return mapping;
         }
 

@@ -25,6 +25,9 @@ namespace DatenMeister.DataProvider.DotNet
 
         private object value;
 
+        /// <summary>
+        /// Stores the reflective sequence where the object is stored. May be null, when object is not connected
+        /// </summary>
         private IReflectiveSequence sequence;
 
         /// <summary>
@@ -167,13 +170,25 @@ namespace DatenMeister.DataProvider.DotNet
             var property = GetProperty(propertyName);
             if (property == null)
             {
-                throw new ArgumentException("Property " + propertyName + " cannot be set, because it does not exist");
+                if (propertyName == "id")
+                {
+                    // Exception for id
+                    return;
+                }
+
+                throw new ArgumentException("Property '" + propertyName + "' cannot be set, because it does not exist");
             }
 
             var method = property.GetSetMethod();
             if (method == null)
             {
-                throw new ArgumentException("Setter for " + propertyName + " not found");
+                if (propertyName == "id")
+                {
+                    // Exception for id
+                    return;
+                }
+
+                throw new ArgumentException("Setter for '" + propertyName + "' not found");
             }
 
             // Converts to target type, if necessary
@@ -183,9 +198,16 @@ namespace DatenMeister.DataProvider.DotNet
                 // We can directly assign
                 method.Invoke(this.value, new object[] { value });
             }
-            else
+            else if (ObjectConversion.IsEnumByType(targetType))
             {
-                // It is necessary to convert
+                // For enumerations, an explicit converstion need to happen
+                // It is necessary to convert, we do the default conversion
+                var convertedValue = ObjectConversion.ConvertToEnum(value, targetType);
+                method.Invoke(this.value, new object[] { convertedValue });
+            }
+            else
+            {                
+                // It is necessary to convert, we do the default conversion
                 var convertedValue = Convert.ChangeType(value, targetType);
                 method.Invoke(this.value, new object[] { convertedValue });
             }
@@ -193,7 +215,7 @@ namespace DatenMeister.DataProvider.DotNet
 
         public IEnumerable<ObjectPropertyPair> getAll()
         {
-            foreach (var property in this.value.GetType().GetProperties())
+            foreach (var property in this.value.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 var value = property.GetValue(this.value, null);
 
@@ -278,18 +300,39 @@ namespace DatenMeister.DataProvider.DotNet
         {
             var propertyName = propertyInfo.Name;
 
-            if (Extensions.IsNative(checkObject))
+            if (ObjectConversion.IsNative(checkObject))
+            {
+                return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
+            }
+            else if (ObjectConversion.IsEnum(checkObject))
             {
                 return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
             }
             else if (checkObject is IList<object>)
             {
-                var sequence = new DotNetSequence(this.extent, checkObject as IList<object>);
+                var sequence = DotNetSequence.CreateFromList(this.extent, checkObject as IList<object>);
                 return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
             }
-            else if (checkObject is IEnumerable)
+            else
+            {
+                // It might be a generic list. We also need to support the interface
+                // to a generic list. Sad but true
+                var listType = ObjectConversion.GetTypeOfListByType(checkObject.GetType());
+                if (listType != null)
+                {
+                    var dotNetSequenceType = typeof(DotNetSequence<>).MakeGenericType(listType);
+                    var sequence = dotNetSequenceType
+                        .GetMethod("CreateFromList")
+                        .Invoke(null, new object[] { this.Extent, checkObject });
+                    return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
+                }
+            }
+            
+            if (checkObject is IEnumerable)
             {
                 var sequence = new DotNetSequence(this.extent);
+                sequence.IsReadOnly = true;
+
                 foreach (var value in (checkObject as IEnumerable))
                 {
                     sequence.Add(value);
@@ -305,7 +348,8 @@ namespace DatenMeister.DataProvider.DotNet
             {
                 // It is not an enumeration and it is not a simple type. 
                 // It is a complex .Net-Type
-                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(this.extent.Elements(), checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
+                var elements = this.extent == null ? null : this.extent.Elements();
+                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(elements, checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
             }
         }
 

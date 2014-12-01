@@ -1,4 +1,5 @@
-﻿using DatenMeister.Pool;
+﻿using DatenMeister.Logic;
+using DatenMeister.Pool;
 using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
 using Ninject;
@@ -48,7 +49,7 @@ namespace DatenMeister.AddOns.Export.Report.Simple
                 var settings = new SimpleReportSettings();
                 var export = new SimpleReport();
                 export.Export(
-                    pool.GetExtent(Logic.ExtentType.Data).First().AsReflectiveCollection(),
+                    pool.GetExtents(Logic.ExtentType.Data).First().AsReflectiveCollection(),
                     dlg.FileName,
                     settings);
             }

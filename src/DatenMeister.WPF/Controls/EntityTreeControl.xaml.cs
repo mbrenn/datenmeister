@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.Logic;
+using DatenMeister.Pool;
 using DatenMeister.WPF.Windows;
 using Ninject;
 using System;

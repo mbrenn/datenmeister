@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BurnSystems.Test;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +18,14 @@ namespace DatenMeister.DataProvider.DotNet
 
         public DotNetTypeInformation Add(Type dotNetType, IObject type)
         {
+            Ensure.That(type != null);
+            Ensure.That(dotNetType != null);
+
             var information = new DotNetTypeInformation()
             {
                 DotNetType = dotNetType,
-                Type = type
+                Type = type,
+                Name = type.get("name").AsSingle().ToString()
             };
 
             this.mappings.Add(information);
@@ -28,13 +33,38 @@ namespace DatenMeister.DataProvider.DotNet
             return information;
         }
 
+        /// <summary>
+        /// Finds the .Net Type 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public DotNetTypeInformation FindByName(string name)
+        {
+            if (name == null)
+            {
+                return null;
+            }
+
+            return this.mappings.Where(x => x.Name == name).FirstOrDefault();
+        }
+
         public DotNetTypeInformation FindByDotNetType(Type type)
         {
+            if (type == null)
+            {
+                return null;
+            }
+
             return this.mappings.Where(x => x.DotNetType == type).FirstOrDefault();
         }
 
         public DotNetTypeInformation FindByIObjectType(IObject type)
         {
+            if (type == null)
+            {
+                return null;
+            }
+
             return this.mappings.Where(x => x.Type == type).FirstOrDefault();
         }
 

@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider;
+using DatenMeister.Entities.DM;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
 using Ninject;
@@ -15,100 +16,12 @@ namespace DatenMeister
     public static class Extensions
     {
         /// <summary>
-        /// Resolves the object if necessary. 
-        /// If there is no reason to resolve the object, the object itself is returned
-        /// </summary>
-        /// <param name="pool">Pool, which shall be used to resolve the object</param>
-        /// <param name="obj">Object that is used for resolvinb</param>
-        /// <returns>Returned object that can be used</returns>
-        public static object Resolve(this IPool pool, IObject context, object obj)
-        {
-            var asEnumerable = obj as IEnumerable;
-            if (asEnumerable != null && !(obj is string))
-            {
-                var list = new List<object>();
-                foreach (var value in asEnumerable)
-                {
-                    // Not very beautiful. It would be better to make this more abstract and to resolve
-                    // the values within the list itself
-                    list.Add(Resolve(pool, context, value));
-                }
-
-                return list;
-            }
-
-            var asResolvable = obj as IResolvable;
-            if (asResolvable != null)
-            {
-                // Resolve object and see, if it can be further resolved
-                var resolved = asResolvable.Resolve();
-                return Resolve(pool, context, resolved);
-            }
-
-            return obj;
-        }
-
-        /// <summary>
-        /// Resolves the given object by using the PoolResolver. 
-        /// It resolves object by path or other means
-        /// </summary>
-        /// <param name="pool">Pool being used to resolve</param>
-        /// <param name="obj">Object to be resolved</param>
-        /// <returns>Object being resolved</returns>
-        public static object ResolveByPath(this IPool pool, string obj, IObject context = null)
-        {
-            // at the moment, nothing to resolve
-            var objAsString = obj as String;
-
-            if (objAsString != null)
-            {
-                var poolResolver = Injection.Application.Get<IPoolResolver>();
-                return poolResolver.Resolve(objAsString, context);
-            }
-
-            throw new NotImplementedException("Type of resolve cannot be done...");
-        }
-
-        /// <summary>
-        /// Gets the enumeration of extent types
-        /// </summary>
-        /// <param name="pool">Pool to be queried</param>
-        /// <param name="extentType">The extent type to be queried</param>
-        /// <returns>Enumeration, matching to the given extentType</returns>
-        public static IEnumerable<ExtentInstance> Get(this IPool pool, ExtentType extentType)
-        {
-            return pool.Instances.Where(x => x.ExtentType == extentType);
-        }
-
-        /// <summary>
-        /// Gets the enumeration of extent types
-        /// </summary>
-        /// <param name="pool">Pool to be queried</param>
-        /// <param name="extentType">The extent type to be queried</param>
-        /// <returns>Enumeration, matching to the given extentType</returns>
-        public static IEnumerable<IURIExtent> GetExtent(this IPool pool, ExtentType extentType)
-        {
-            return pool.Instances.Where(x => x.ExtentType == extentType).Select(x => x.Extent);
-        }
-
-        /// <summary>
-        /// Gets the extent instance of a certain extent
-        /// </summary>
-        /// <param name="pool">Pool to be used</param>
-        /// <param name="extent">Extent whose instance is queried</param>
-        /// <returns>Found extent instance</returns>
-        public static ExtentInstance GetInstance(this IPool pool, IURIExtent extent)
-        {
-            return pool.Instances.Where(x => x.Extent == extent).FirstOrDefault();
-        }
-
-        /// <summary>
         /// Gets the extent instance of a certain extent. 
         /// The pool will be retrieved from the DoI container
         /// </summary>
         /// <param name="extent">Extent whose instance is queried</param>
         /// <returns>Found extent instance</returns>
-        public static ExtentInstance GetInstance(this IURIExtent extent)
+        public static ExtentInfo GetInstance(this IURIExtent extent)
         {
             var pool = Injection.Application.Get<IPool>();
             return pool.GetInstance(extent);
@@ -360,7 +273,7 @@ namespace DatenMeister
 
         private static object ConvertAsFlatObject(object pairValue, IURIExtent extent)
         {
-            if (IsNative(pairValue))
+            if (ObjectConversion.IsNative(pairValue))
             {
                 return pairValue;
             }
@@ -393,57 +306,6 @@ namespace DatenMeister
         }
 
         /// <summary>
-        /// Stores a list of all primitive types that are supported by DatenMeister directly
-        /// </summary>
-        private static List<Type> primitiveTypes = new List<Type>();
-
-        /// <summary>
-        /// Checks, if the given object is a native object or if the objects needs to be converted
-        /// </summary>
-        /// <param name="checkObject">CheckObject to be checked</param>
-        /// <returns>true, if object is not native</returns>
-        public static bool IsNative(object checkObject)
-        {
-            // An empty object is null
-            if (checkObject == null)
-            {
-                return true;
-            }
-
-            var type = checkObject.GetType();
-            return IsNativeByType(type);
-        }
-
-        /// <summary>
-        /// Checks, if a certain type is a native .Net object
-        /// </summary>
-        /// <param name="type">Type to be considered</param>
-        /// <returns>true, if the object type is native</returns>
-        public static bool IsNativeByType(Type type)
-        {
-            // Initializes list of primitiveTypes if necessary
-            if (primitiveTypes.Count == 0)
-            {
-                lock (primitiveTypes)
-                {
-                    primitiveTypes.Clear();
-                    primitiveTypes.Add(typeof(Boolean));
-                    primitiveTypes.Add(typeof(Int16));
-                    primitiveTypes.Add(typeof(Int32));
-                    primitiveTypes.Add(typeof(Int64));
-                    primitiveTypes.Add(typeof(Double));
-                    primitiveTypes.Add(typeof(Single));
-                    primitiveTypes.Add(typeof(String));
-                    primitiveTypes.Add(typeof(DateTime));
-                    primitiveTypes.Add(typeof(TimeSpan));
-                }
-            }
-
-            // Checks, if type of given object is in the list above
-            return primitiveTypes.Contains(type);
-        }
-
-        /// <summary>
         /// Creates an object and stores it into the extent
         /// </summary>
         /// <param name="factory">Factory being used to create the object</param>
@@ -455,17 +317,6 @@ namespace DatenMeister
             var result = factory.create(type);
             extent.Elements().add(result);
             return result;
-        }
-
-        /// <summary>
-        /// Gets the instance within the pool by the extent Uri
-        /// </summary>
-        /// <param name="pool">Pool to be queried</param>
-        /// <param name="extentUri">Uri of the extent</param>
-        /// <returns>Found extent id</returns>
-        public static ExtentInstance GetInstance(this IPool pool, string extentUri)
-        {
-            return pool.Instances.Where(x => x.Extent.ContextURI() == extentUri).FirstOrDefault();
         }
     }
 }

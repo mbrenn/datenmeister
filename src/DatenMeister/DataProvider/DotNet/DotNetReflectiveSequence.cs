@@ -74,7 +74,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// <returns>The sent out item</returns>
         public override object ConvertInternalToInstance(T item)
         {
-            if (Extensions.IsNative(item))
+            if (ObjectConversion.IsNative(item))
             {
                 return item;
             }
