@@ -67,7 +67,7 @@ namespace DatenMeister.Transformations
                     var element = obj as IElement;
                     var metaClass = element.getMetaClass();
 
-                    if (element.getMetaClass() == this.typeToFilter)
+                    if (this.typeToFilter.Equals(element.getMetaClass()))
                     {
                         // Metaclass is equivalent
                         yield return element;

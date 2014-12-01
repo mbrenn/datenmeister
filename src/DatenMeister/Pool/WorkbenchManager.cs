@@ -155,19 +155,19 @@ namespace DatenMeister.Pool
                     // Check, if the prepopulated instance exists
                     if (this.Pool.GetExtent(extentInfo) == null)
                     {
-                        logger.Fail("Prepopulated instance is not found: " + extentInfo.ToString());
+                        logger.Notify("Prepopulated instance is not found: " + extentInfo.ToString());
                     }
                 }
                 else
                 {
                     if (this.Pool.GetExtent(extentInfo) != null)
                     {
-                        logger.Fail("Non-Prepopulated instance already exists: " + extentInfo.ToString());
+                        logger.Notify("Non-Prepopulated instance already exists: " + extentInfo.ToString());
                     }
 
                     // Load the instance and store it into the database                    
                     var loadProvider = new XmlDataProvider();
-                    var xmlExtent = loadProvider.Load(extentInfo.storagePath);
+                    var xmlExtent = loadProvider.Load(extentInfo.storagePath, extentInfo.uri);
                     this.Pool.Add(xmlExtent, extentInfo.storagePath, extentInfo.name, extentInfo.extentType);
                 }
             }
