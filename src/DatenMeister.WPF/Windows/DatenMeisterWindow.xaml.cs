@@ -532,10 +532,10 @@ namespace DatenMeister.WPF.Windows
                 // Adds the file to the recent files
                 this.AddRecentFile(this.pathOfDataExtent);
 
-                MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
-
                 this.Core.StoreWorkbench(this.pathOfDataExtent);
                 this.UpdateWindowTitle();
+
+                MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
             }
         }
 

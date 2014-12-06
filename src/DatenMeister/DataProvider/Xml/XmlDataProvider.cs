@@ -7,6 +7,8 @@ using System.Xml.Linq;
 using System.Xml;
 using DatenMeister.Logic;
 using BurnSystems.Test;
+using System.IO;
+using BurnSystems;
 
 namespace DatenMeister.DataProvider.Xml
 {
@@ -57,7 +59,34 @@ namespace DatenMeister.DataProvider.Xml
 
             // Stores the file into database
             extent.XmlDocument.AddAnnotation(SaveOptions.OmitDuplicateNamespaces);
-            extent.XmlDocument.Save(path);
+
+            // Creates the filename for a temporary path
+            var directory = Path.GetDirectoryName(path);
+            string randomFilename;
+            string totalPath;
+
+            do
+            {
+                randomFilename = StringManipulation.RandomString(16);
+                totalPath = Path.Combine(directory, randomFilename) + ".xml";
+
+                if (File.Exists(totalPath))
+                {
+                    continue;
+                }
+            }
+            while (false);
+
+            // Stores the file into the temporary path
+            extent.XmlDocument.Save(totalPath);
+
+            // And moves it to the final one
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            File.Move(totalPath, path);
         }
     }
 }
