@@ -82,6 +82,10 @@ namespace DatenMeister.AddOns.Export.Excel
             // Ok, first step... get all properties as a list
             var properties = elements.GetConsolidatedPropertyNames();
 
+            //to enable newlines you need set a cell styles with wrap=true
+            var cs = this.workbook.CreateCellStyle();
+            cs.WrapText = true;
+
             // Now set the header
             var row = sheet.CreateRow(0);
 
@@ -106,7 +110,7 @@ namespace DatenMeister.AddOns.Export.Excel
 
             // Now include the rows
             var r = 1;
-            foreach (var element in elements.Where(x => x is IObject).Select(x => x.AsIObject()))            
+            foreach (var element in elements.Where(x => x is IObject).Select(x => x.AsIObject()))
             {
                 var elementAsViewObject = new ObjectDictionaryForView(element);
 
@@ -135,7 +139,14 @@ namespace DatenMeister.AddOns.Export.Excel
                     if (element.isSet(property))
                     {
                         cell = row.CreateCell(c);
-                        cell.SetCellValue(elementAsViewObject[property].AsSingle().ToString());
+
+                        var value = elementAsViewObject[property].AsSingle().ToString();
+                        cell.SetCellValue(value);
+
+                        if (value.Contains('\r') || value.Contains('\n'))
+                        {
+                            cell.CellStyle = cs;
+                        }
                     }
 
                     c++;
