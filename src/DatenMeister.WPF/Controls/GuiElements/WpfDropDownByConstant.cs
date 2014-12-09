@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatenMeister.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,15 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <param name="detailObject">Detailobject, where the current element shall be retrieved</param>
         protected override object GetCurrentValue()
         {
-            // As given, without a string conversion, since the string itself is contained
-            return this.detailObject.get(this.binding).AsSingle();
+            if (this.detailObject != null)
+            {
+                // As given, without a string conversion, since the string itself is contained
+                return this.detailObject.get(this.binding).AsSingle();
+            }
+            else
+            {
+                return ObjectHelper.NotSet;
+            }
         }
 
         protected override IEnumerable<object> GetDropDownValues(IObject fieldInfo)
