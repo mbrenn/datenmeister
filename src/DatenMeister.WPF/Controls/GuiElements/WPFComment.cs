@@ -23,7 +23,6 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var commentText = comment.getComment();
 
             var label = new Label();
-            label.FontSize = 16;
             label.Content = commentText;
 
             return label;

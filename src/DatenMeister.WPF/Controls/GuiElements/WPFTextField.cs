@@ -15,7 +15,6 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(fieldInfo);
             
             var textBox = new System.Windows.Controls.TextBox();
-            textBox.FontSize = 16;
             textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
             var height = textFieldObj.getHeight();
 

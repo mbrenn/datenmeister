@@ -81,7 +81,6 @@ namespace DatenMeister.WPF.Controls.GuiElements
             stackPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
 
             this.dropDown = new ComboBox();
-            this.dropDown.FontSize = 16;
             this.dropDown.HorizontalAlignment = HorizontalAlignment.Stretch;
             Grid.SetColumn(this.dropDown, 0);
 

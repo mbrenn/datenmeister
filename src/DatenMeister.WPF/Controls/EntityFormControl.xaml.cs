@@ -107,18 +107,54 @@ namespace DatenMeister.WPF.Controls
             }
 
             this.wpfElements.Clear();
+            var additionalColumns = this.GetAdditionalColumns();
+            var hasAdditionalColumns = additionalColumns.Length > 0;
+            while (additionalColumns.Length + 2 > this.formGrid.ColumnDefinitions.Count)
+            {
+                var definition = new ColumnDefinition()
+                {
+                    Width = new GridLength(1, GridUnitType.Auto)
+                };
+
+                this.formGrid.ColumnDefinitions.Add(definition);
+            }
 
             if (this.configuration.FormViewInfo != null)
             {
                 // Creates the form 
                 var fieldInfos = this.configuration.GetFormViewInfoAsFormView().getFieldInfos();
                 this.formGrid.RowDefinitions.Clear();
-
+                
                 var currentRow = 0;
 
-                // when one height is a Star-Height (auto height), this value 
+                // Checks, if we have an additional column, if yes, we need to create an 
+                // extra row
+                if (hasAdditionalColumns)
+                {
+                    this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+                    var currentColumn = 2;
+
+                    foreach (var column in additionalColumns)
+                    {
+                        var text = new TextBlock()
+                        {
+                            Text = column.Name,
+                            Style = this.Resources["TitleAdditionalColumn"] as Style
+                        };
+
+                        Grid.SetColumn(text, currentColumn);
+                        Grid.SetRow(text, currentRow);
+                        currentColumn++;
+
+                        this.formGrid.Children.Add(text);
+                    }
+
+                    currentRow++;
+                }
+
+                // When one height is a Star-Height (auto height), this value 
                 // will be set to true. If still false at end, the last row will be set to autoheight
-                var hadOneStarHeight = false; 
+                var hadOneStarHeight = false;
 
                 // Goes through each element
                 foreach (var fieldInfo in fieldInfos.Cast<IObject>())
@@ -137,7 +173,6 @@ namespace DatenMeister.WPF.Controls
                     var nameLabel = new Label();
                     nameLabel.Content = string.Format("{0}: ", name);
                     nameLabel.Margin = new Thickness(10, 5, 10, 5);
-                    nameLabel.FontSize = 16;
                     if (ObjectDictionaryForView.IsSpecialBinding(General.getBinding(fieldInfo)))
                     {
                         nameLabel.FontStyle = FontStyles.Italic;
@@ -149,15 +184,13 @@ namespace DatenMeister.WPF.Controls
                     // Creates the value element for the form
                     var fieldInfoAsElement = fieldInfo as IElement;
                     var wpfElementCreator = WpfElementMapping.MapForForm(fieldInfoAsElement);
-                    var wpfElement = wpfElementCreator.GenerateElement(this.configuration.DetailObject, fieldInfo, this);                    
+                    var wpfElement = wpfElementCreator.GenerateElement(this.configuration.DetailObject, fieldInfo, this);
                     if (wpfElement != null)
                     {
                         var border = new Border()
                         {
                             Child = wpfElement,
-                            //BorderBrush = Brushes.Black,
-                            //BorderThickness = new Thickness(2),
-                            Margin = new Thickness(10,5,10,5)
+                            Margin = new Thickness(10, 5, 10, 5)
                         };
 
                         Grid.SetRow(border, currentRow);
@@ -186,6 +219,17 @@ namespace DatenMeister.WPF.Controls
                     }
 
                     formGrid.Children.Add(nameLabel);
+
+                    // Add the additional columns
+                    var currentColumn = 2;
+                    foreach (var column in additionalColumns)
+                    {
+                        var checkBox = new CheckBox();
+                        Grid.SetRow(checkBox, currentRow);
+                        Grid.SetColumn(checkBox, currentColumn);
+                        checkBox.Style = this.Resources["CheckBoxAdditionalColumn"] as Style;
+                        this.formGrid.Children.Add(checkBox);
+                    }
 
                     currentRow++;
                 }
@@ -314,6 +358,35 @@ namespace DatenMeister.WPF.Controls
         DisplayMode IDataPresentationState.DisplayMode
         {
             get { return Controls.DisplayMode.Form; }
+        }
+
+        /// <summary>
+        /// Gets the additional columns
+        /// </summary>
+        /// <returns></returns>
+        public virtual AdditionalColumn[] GetAdditionalColumns()
+        {
+            return new AdditionalColumn[] {
+                new AdditionalColumn()
+                {
+                    Name = "Is Set"
+                }
+            };
+        }
+
+        /// <summary>
+        /// Defines the information that shall be given in the additional column
+        /// </summary>
+        public class AdditionalColumn
+        {
+            /// <summary>
+            /// Gets or sets the name of the additional column
+            /// </summary>
+            public string Name
+            {
+                get;
+                set;
+            }
         }
     }
 }

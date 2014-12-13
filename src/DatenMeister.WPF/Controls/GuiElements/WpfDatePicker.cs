@@ -37,7 +37,6 @@ namespace DatenMeister.WPF.Controls.GuiElements
             this.fieldInfo = new DatePicker(fieldInfo);
 
             this.datePicker = new System.Windows.Controls.DatePicker();
-            this.datePicker.FontSize = 16;
             this.datePicker.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
             
             if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
