@@ -12,6 +12,8 @@ namespace DatenMeister.WPF.Controls.GuiElements
     /// </summary>
     public class ElementCacheEntry
     {
+        private List<AdditionalColumnInfo> additionalColumns = new List<AdditionalColumnInfo>();
+
         public IWpfElementGenerator WPFElementCreator
         {
             get;
@@ -33,11 +35,47 @@ namespace DatenMeister.WPF.Controls.GuiElements
             set;
         }
 
+        /// <summary>
+        /// Gets the list of additional columns
+        /// </summary>
+        public List<AdditionalColumnInfo> AdditionalColumns
+        {
+            get { return this.additionalColumns; }
+        }
+
+        public ElementCacheEntry(IObject fieldInfo)
+        {
+            this.FieldInfo = fieldInfo;
+        }
+
         public ElementCacheEntry(IWpfElementGenerator wpfElementCreator, UIElement wpfElement, IObject fieldInfo)
         {
             this.WPFElement = wpfElement;
             this.WPFElementCreator = wpfElementCreator;
             this.FieldInfo = fieldInfo;
+        }
+
+        public class AdditionalColumnInfo
+        {
+            /// <summary>
+            /// Defines a function, which is used to retrieve the checklist status
+            /// </summary>
+            public Func<bool> GetChecklistStatus
+            {
+                get;
+                set;
+            }
+
+            /// <summary>
+            /// Gets the object, which is determined whether the checkbox is still checked.
+            /// If the return value is null, the value is not set and the next checkbox will be
+            /// used as a trigger
+            /// </summary>
+            public Func<bool, object> ValueFunction
+            {
+                get;
+                set;
+            }
         }
     }
 }

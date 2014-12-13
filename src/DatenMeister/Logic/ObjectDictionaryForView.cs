@@ -39,6 +39,24 @@ namespace DatenMeister.Logic
             this.fieldInfos = fieldInfos;
         }
 
+        /// <summary>
+        /// Checks, if the given property is set. 
+        /// If the object is not set, false will be returned
+        /// </summary>
+        /// <param name="propertyName">Index to be set</param>
+        /// <returns>true, property is set</returns>
+        public bool IsSet ( string propertyName)
+        {
+            if (this.Value.get(propertyName).AsSingle() == ObjectHelper.NotSet)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public override object Get(string index)
         {
             var fieldInfo = this.FindFieldInfo(index);
@@ -157,7 +175,7 @@ namespace DatenMeister.Logic
         {
             if (result is DateTime)
             {
-                result = ((DateTime)result).ToString(Thread.CurrentThread.CurrentCulture);
+                result = ((DateTime)result).ToString(CultureInfo.InvariantCulture);
             }
             else
             {

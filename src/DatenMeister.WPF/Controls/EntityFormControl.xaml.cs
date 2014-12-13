@@ -185,6 +185,7 @@ namespace DatenMeister.WPF.Controls
                     var fieldInfoAsElement = fieldInfo as IElement;
                     var wpfElementCreator = WpfElementMapping.MapForForm(fieldInfoAsElement);
                     var wpfElement = wpfElementCreator.GenerateElement(this.configuration.DetailObject, fieldInfo, this);
+                    var elementCacheEntry = new ElementCacheEntry(fieldInfo);
                     if (wpfElement != null)
                     {
                         var border = new Border()
@@ -198,7 +199,8 @@ namespace DatenMeister.WPF.Controls
                         formGrid.Children.Add(border);
 
                         // Adds the information into the storage
-                        this.wpfElements.Add(new ElementCacheEntry(wpfElementCreator, wpfElement, fieldInfo));
+                        elementCacheEntry.WPFElement = wpfElement;
+                        elementCacheEntry.WPFElementCreator = wpfElementCreator;                        
                     }
 
                     /////////////////////////////////////////////////
@@ -224,12 +226,25 @@ namespace DatenMeister.WPF.Controls
                     var currentColumn = 2;
                     foreach (var column in additionalColumns)
                     {
+                        var copyColumn = column; // Avoid problems with closures
+
+                        var objectValue = this.configuration.DetailObject.get(fieldInfoObj.getBinding());
                         var checkBox = new CheckBox();
+                        checkBox.IsChecked = column.IsCheckedFunction(objectValue);
                         Grid.SetRow(checkBox, currentRow);
                         Grid.SetColumn(checkBox, currentColumn);
                         checkBox.Style = this.Resources["CheckBoxAdditionalColumn"] as Style;
                         this.formGrid.Children.Add(checkBox);
+
+                        elementCacheEntry.AdditionalColumns.Add(
+                            new ElementCacheEntry.AdditionalColumnInfo()
+                            {
+                                GetChecklistStatus = () => checkBox.IsChecked == true,
+                                ValueFunction = (x) => copyColumn.ValueFunction(x)
+                            });
                     }
+
+                    this.wpfElements.Add(elementCacheEntry);
 
                     currentRow++;
                 }
@@ -261,10 +276,31 @@ namespace DatenMeister.WPF.Controls
 
             // Store values into object, if the view is not in read-only mode
             if (this.configuration.EditMode != Controls.EditMode.Read)
-            {
+            {                
                 foreach (var cacheEntry in this.wpfElements)
                 {
-                    cacheEntry.WPFElementCreator.SetData(this.configuration.DetailObject, cacheEntry);
+                    var wasSet = false;
+
+                    // Checks, if one of the additional columns sets the property
+                    foreach (var column in cacheEntry.AdditionalColumns)
+                    {
+                        var isChecked = column.GetChecklistStatus();
+                        var value = column.ValueFunction(isChecked);
+                        if (value != null)
+                        {
+                            this.configuration.DetailObject.set(
+                                General.getBinding(cacheEntry.FieldInfo),
+                                value);
+                            wasSet = true;
+                            break;
+                        }
+                    }
+
+                    if (!wasSet)
+                    {
+                        // Check for additional columns
+                        cacheEntry.WPFElementCreator.SetData(this.configuration.DetailObject, cacheEntry);
+                    }
                 }
             }
 
@@ -369,7 +405,9 @@ namespace DatenMeister.WPF.Controls
             return new AdditionalColumn[] {
                 new AdditionalColumn()
                 {
-                    Name = "Is Set"
+                    Name = "Not Set",
+                    IsCheckedFunction = (x)=> x.AsSingle() == ObjectHelper.NotSet,
+                    ValueFunction = (x) => x ? ObjectHelper.NotSet : null
                 }
             };
         }
@@ -383,6 +421,26 @@ namespace DatenMeister.WPF.Controls
             /// Gets or sets the name of the additional column
             /// </summary>
             public string Name
+            {
+                get;
+                set;
+            }
+
+            /// <summary>
+            /// Gets or sets the function, which determines whether a checkbox is checked.
+            /// </summary>
+            public Func<object, bool> IsCheckedFunction
+            {
+                get;
+                set;
+            }
+
+            /// <summary>
+            /// Gets the object, which is determined whether the checkbox is still checked.
+            /// If the return value is null, the value is not set and the next checkbox will be
+            /// used as a trigger
+            /// </summary>
+            public Func<bool, object> ValueFunction
             {
                 get;
                 set;

@@ -33,20 +33,27 @@ namespace DatenMeister.WPF.Controls.GuiElements
             if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
             {
                 var detailObjectForView = new ObjectDictionaryForView(detailObject);
-                var fieldName = textFieldObj.getBinding().ToString();
+                var propertyName = textFieldObj.getBinding().ToString();
 
-                var propertyValue = detailObjectForView[fieldName];
-                if (propertyValue != null && propertyValue != ObjectHelper.NotSet)
+                if (detailObjectForView.IsSet(propertyName))
                 {
-                    textBox.Text = propertyValue.AsSingle().ToString();
+                    var propertyValue = detailObjectForView[propertyName];
+                    if (propertyValue != null && propertyValue != ObjectHelper.NotSet)
+                    {
+                        textBox.Text = propertyValue.AsSingle().ToString();
+                    }
+
+                    // Do we have a read-only flag
+                    if (state.EditMode == EditMode.Read || textFieldObj.isReadOnly()
+                        || ObjectDictionaryForView.IsSpecialBinding(textFieldObj.getBinding()))
+                    {
+                        textBox.IsReadOnly = true;
+                        textBox.IsReadOnlyCaretVisible = true;
+                    }
                 }
-
-                // Do we have a read-only flag
-                if (state.EditMode == EditMode.Read || textFieldObj.isReadOnly()
-                    || ObjectDictionaryForView.IsSpecialBinding(textFieldObj.getBinding()))
+                else
                 {
-                    textBox.IsReadOnly = true;
-                    textBox.IsReadOnlyCaretVisible = true;
+                    textBox.Text = string.Empty;
                 }
             }
 
