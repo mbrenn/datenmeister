@@ -54,6 +54,7 @@
     <Compile Include="Controls\EntityTreeControl.xaml.cs">
       <DependentUpon>EntityTreeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GuiElements\IPropertyToMultipleValues.cs" />
     <Compile Include="Controls\IListLayout.cs" />
     <Compile Include="Controls\ListLayoutConfiguration.cs" />
     <Compile Include="Controls\ObjectForTreeView.cs" />

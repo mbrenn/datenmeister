@@ -149,49 +149,69 @@ namespace DatenMeister.WPF.Controls
                     // Creates the value element for the form
                     var fieldInfoAsElement = fieldInfo as IElement;
                     var wpfElementCreator = WpfElementMapping.MapForForm(fieldInfoAsElement);
-                    var wpfElement = wpfElementCreator.GenerateElement(this.configuration.DetailObject, fieldInfo, this);
-                    var elementCacheEntry = new ElementCacheEntry(fieldInfo);
-                    if (wpfElement != null)
-                    {
-                        var border = new Border()
-                        {
-                            Child = wpfElement,
-                            Margin = new Thickness(10, 5, 10, 5)
-                        };
+                    UIElement wpfElement = null;
 
-                        Grid.SetRow(border, currentRow);
-                        Grid.SetColumn(border, 1);
-                        formGrid.Children.Add(border);
-
-                        // Adds the information into the storage
-                        elementCacheEntry.WPFElement = wpfElement;
-                        elementCacheEntry.WPFElementCreator = wpfElementCreator;
-                    }
-
-                    /////////////////////////////////////////////////
-                    // Defines the height
-                    var height = fieldInfoObj.getHeight();
-                    if (height == 0)
+                    // Only, if we show a single object or the field info supports
+                    // multiple values
+                    if (!this.configuration.HasMultipleObjects)
                     {
-                        this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
-                    }
-                    else if (height < 0)
-                    {
-                        this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(-height, GridUnitType.Star) });
-                        hadOneStarHeight = true;
+                        wpfElement = wpfElementCreator.GenerateElement(this.configuration.DetailObject, fieldInfo, this);
                     }
                     else
                     {
-                        this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(height, GridUnitType.Pixel) });
+                        var multiCreator = wpfElementCreator as IPropertyToMultipleValues;
+                        if (multiCreator != null)
+                        {
+                            wpfElement = multiCreator.GenerateElement(this.configuration.DetailObjects, fieldInfo, this);
+                        }
                     }
 
-                    formGrid.Children.Add(nameLabel);
+                    // Checks, if we have an element, otherwise we skip this row
+                    if (wpfElement != null)
+                    {
+                        var elementCacheEntry = new ElementCacheEntry(fieldInfo);
+                        if (wpfElement != null)
+                        {
+                            var border = new Border()
+                            {
+                                Child = wpfElement,
+                                Margin = new Thickness(10, 5, 10, 5)
+                            };
 
-                    this.AddAdditionalColumnForRow(additionalColumns, currentRow, fieldInfoObj, elementCacheEntry);
+                            Grid.SetRow(border, currentRow);
+                            Grid.SetColumn(border, 1);
+                            formGrid.Children.Add(border);
 
-                    this.wpfElements.Add(elementCacheEntry);
+                            // Adds the information into the storage
+                            elementCacheEntry.WPFElement = wpfElement;
+                            elementCacheEntry.WPFElementCreator = wpfElementCreator;
+                        }
 
-                    currentRow++;
+                        /////////////////////////////////////////////////
+                        // Defines the height
+                        var height = fieldInfoObj.getHeight();
+                        if (height == 0)
+                        {
+                            this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+                        }
+                        else if (height < 0)
+                        {
+                            this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(-height, GridUnitType.Star) });
+                            hadOneStarHeight = true;
+                        }
+                        else
+                        {
+                            this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(height, GridUnitType.Pixel) });
+                        }
+
+                        formGrid.Children.Add(nameLabel);
+
+                        this.AddAdditionalColumnForRow(additionalColumns, currentRow, fieldInfoObj, elementCacheEntry);
+
+                        this.wpfElements.Add(elementCacheEntry);
+
+                        currentRow++;
+                    }
                 }
 
                 if (!hadOneStarHeight)
@@ -222,15 +242,15 @@ namespace DatenMeister.WPF.Controls
             // Store values into object, if the view is not in read-only mode
             if (this.configuration.EditMode != Controls.EditMode.Read)
             {
-                foreach (var cacheEntry in this.wpfElements)
+                if (!this.configuration.HasMultipleObjects)
                 {
-                    // Checks, if one of the additional columns set the content
-                    var wasSet = this.CheckForValueByAdditionalContent(cacheEntry);
-
-                    if (!wasSet)
+                    this.SetPropertiesOnObject(this.configuration.DetailObject);
+                }
+                else
+                {
+                    foreach (var detailObject in this.configuration.DetailObjects)
                     {
-                        // Check for additional columns
-                        cacheEntry.WPFElementCreator.SetData(this.configuration.DetailObject, cacheEntry);
+                        this.SetPropertiesOnObject(detailObject);
                     }
                 }
             }
@@ -240,6 +260,26 @@ namespace DatenMeister.WPF.Controls
             if (ev != null)
             {
                 ev(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Sets the properties on a detail object by using the additional columns
+        /// or the UIElement of the row
+        /// </summary>
+        /// <param name="detailObject">Detail object, whose values shall be set</param>
+        private void SetPropertiesOnObject(IObject detailObject)
+        {
+            foreach (var cacheEntry in this.wpfElements)
+            {
+                // Checks, if one of the additional columns set the content
+                var wasSet = this.CheckForValueByAdditionalContent(detailObject, cacheEntry);
+
+                if (!wasSet)
+                {
+                    // Check for additional columns
+                    cacheEntry.WPFElementCreator.SetData(detailObject, cacheEntry);
+                }
             }
         }
 
@@ -417,7 +457,16 @@ namespace DatenMeister.WPF.Controls
             {
                 var objectValue = this.configuration.DetailObject.get(fieldInfoObj.getBinding());
                 var checkBox = new CheckBox();
-                checkBox.IsChecked = column.IsChecked(objectValue);
+                if (this.configuration.HasMultipleObjects)
+                {
+                    checkBox.IsThreeState = true;
+                    checkBox.IsChecked = null;
+                }
+                else
+                {
+                    checkBox.IsChecked = column.IsChecked(objectValue);
+                }
+
                 Grid.SetRow(checkBox, currentRow);
                 Grid.SetColumn(checkBox, currentColumn);
                 checkBox.Style = this.Resources["CheckBoxAdditionalColumn"] as Style;
@@ -453,7 +502,7 @@ namespace DatenMeister.WPF.Controls
         /// <param name="cacheEntry">The cache entry to be used to retrive the information
         /// fast</param>
         /// <returns>true, if the element has been set by the additional content</returns>
-        private bool CheckForValueByAdditionalContent(ElementCacheEntry cacheEntry)
+        private bool CheckForValueByAdditionalContent(IObject detailObject, ElementCacheEntry cacheEntry)
         {
             var wasSet = false;
 
@@ -461,7 +510,7 @@ namespace DatenMeister.WPF.Controls
             foreach (var column in cacheEntry.AdditionalColumns)
             {
                 wasSet = column.Assign(
-                    this.configuration.DetailObject,
+                    detailObject,
                     cacheEntry.FieldInfo);
 
                 if (wasSet)
