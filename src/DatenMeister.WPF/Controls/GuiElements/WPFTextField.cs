@@ -8,56 +8,24 @@ using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    public class WpfTextField : IWpfElementGenerator, IFocusable
+    public class WpfTextField : IWpfElementGenerator, IFocusable, IPropertyToMultipleValues
     {
         public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
         {
-            var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(fieldInfo);
-            
-            var textBox = new System.Windows.Controls.TextBox();
-            textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
-            var height = textFieldObj.getHeight();
-
-            if (textFieldObj.isMultiline())
+            if (detailObject == null)
             {
-                textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Top;
-                textBox.AcceptsReturn = true;
-                textBox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                textBox.TextWrapping = System.Windows.TextWrapping.Wrap;
-                if (height >= 0)
-                {
-                    textBox.Height = 100;
-                }
+                return this.GenerateElement(
+                    (IEnumerable<IObject>) null,
+                    fieldInfo,
+                    state);
             }
-
-            if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
+            else
             {
-                var detailObjectForView = new ObjectDictionaryForView(detailObject);
-                var propertyName = textFieldObj.getBinding().ToString();
-
-                if (detailObjectForView.IsSet(propertyName))
-                {
-                    var propertyValue = detailObjectForView[propertyName];
-                    if (propertyValue != null && propertyValue != ObjectHelper.NotSet)
-                    {
-                        textBox.Text = propertyValue.AsSingle().ToString();
-                    }
-
-                    // Do we have a read-only flag
-                    if (state.EditMode == EditMode.Read || textFieldObj.isReadOnly()
-                        || ObjectDictionaryForView.IsSpecialBinding(textFieldObj.getBinding()))
-                    {
-                        textBox.IsReadOnly = true;
-                        textBox.IsReadOnlyCaretVisible = true;
-                    }
-                }
-                else
-                {
-                    textBox.Text = string.Empty;
-                }
+                return this.GenerateElement(
+                    new IObject[] { detailObject },
+                    fieldInfo,
+                    state);
             }
-
-            return textBox;
         }
 
         /// <summary>
@@ -85,6 +53,55 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var textBox = element as TextBox;
             textBox.Focus();
             textBox.SelectAll();
+        }
+
+        public System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state)
+        {
+            var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(fieldInfo);
+
+            var textBox = new System.Windows.Controls.TextBox();
+            textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
+            var height = textFieldObj.getHeight();
+
+            if (textFieldObj.isMultiline())
+            {
+                textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Top;
+                textBox.AcceptsReturn = true;
+                textBox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                textBox.TextWrapping = System.Windows.TextWrapping.Wrap;
+                if (height >= 0)
+                {
+                    textBox.Height = 100;
+                }
+            }
+
+            if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObjects != null)
+            {
+                var propertyName = textFieldObj.getBinding().ToString();
+
+                var commonValue = ObjectHelper.GetCommonValue(detailObjects, propertyName);
+                                
+                if ( commonValue == null 
+                    || commonValue == ObjectHelper.NotSet
+                    || commonValue == ObjectHelper.Different)
+                {
+                    textBox.Text = string.Empty;
+                }
+                else
+                {
+                    textBox.Text = commonValue.AsSingle().ToString();
+                }
+
+                // Do we have a read-only flag
+                if (state.EditMode == EditMode.Read || textFieldObj.isReadOnly()
+                    || ObjectDictionaryForView.IsSpecialBinding(textFieldObj.getBinding()))
+                {
+                    textBox.IsReadOnly = true;
+                    textBox.IsReadOnlyCaretVisible = true;
+                }
+            }
+
+            return textBox;
         }
     }
 }

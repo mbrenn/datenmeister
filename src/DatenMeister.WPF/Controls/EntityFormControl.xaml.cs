@@ -453,19 +453,18 @@ namespace DatenMeister.WPF.Controls
         {
             // Add the additional columns
             var currentColumn = 2;
+            var propertyName = fieldInfoObj.getBinding();
+
             foreach (var column in additionalColumns)
             {
-                var objectValue = this.configuration.DetailObject.get(fieldInfoObj.getBinding());
+                var objectValue = ObjectHelper.GetCommonValue(this.configuration.DetailObjects, propertyName);
                 var checkBox = new CheckBox();
                 if (this.configuration.HasMultipleObjects)
                 {
                     checkBox.IsThreeState = true;
-                    checkBox.IsChecked = null;
                 }
-                else
-                {
-                    checkBox.IsChecked = column.IsChecked(objectValue);
-                }
+
+                checkBox.IsChecked = column.IsChecked(objectValue);
 
                 Grid.SetRow(checkBox, currentRow);
                 Grid.SetColumn(checkBox, currentColumn);
@@ -543,7 +542,7 @@ namespace DatenMeister.WPF.Controls
             /// <summary>
             /// Gets or sets the function, which determines whether a checkbox is checked.
             /// </summary>
-            public abstract bool IsChecked(object value);
+            public abstract bool? IsChecked(object value);
         }
 
         /// <summary>
@@ -573,8 +572,13 @@ namespace DatenMeister.WPF.Controls
                 set;
             }
 
-            public override bool IsChecked(object value)
+            public override bool? IsChecked(object value)
             {
+                if (value == ObjectHelper.Different)
+                {
+                    return null;
+                }
+
                 return value.AsSingle() == ObjectHelper.NotSet;
             }
         }
@@ -597,7 +601,7 @@ namespace DatenMeister.WPF.Controls
                 this.defaultCheckStatus = defaultCheckStatus;
             }
 
-            public override bool IsChecked(object value)
+            public override bool? IsChecked(object value)
             {
                 return this.defaultCheckStatus;
             }

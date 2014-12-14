@@ -13,11 +13,6 @@ namespace DatenMeister.WPF.Controls
     public class FormLayoutConfiguration
     {
         /// <summary>
-        /// Stores the value of detailObject to be shown
-        /// </summary>
-        private IObject detailObject;
-
-        /// <summary>
         /// Stores the values for all the detailObjects to be shown
         /// </summary>
         private IEnumerable<IObject> detailObjects;
@@ -54,11 +49,16 @@ namespace DatenMeister.WPF.Controls
                     throw new InvalidOperationException("HasMultipleObjects == true");
                 }
 
-                return this.detailObject;
+                if (this.detailObjects == null)
+                {
+                    return null;
+                }
+
+                return this.detailObjects.FirstOrDefault();
             }
             set
             {
-                this.detailObject = value;
+                this.detailObjects = new IObject[] { value };
                 this.HasMultipleObjects = false;
             }
         }
@@ -71,11 +71,6 @@ namespace DatenMeister.WPF.Controls
         {
             get
             {
-                if (!this.HasMultipleObjects)
-                {
-                    throw new InvalidOperationException("HasMultipleObjects == false");
-                }
-
                 return this.detailObjects;
             }
             set
