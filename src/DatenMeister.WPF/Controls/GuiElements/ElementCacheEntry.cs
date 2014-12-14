@@ -13,7 +13,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
     /// </summary>
     public class ElementCacheEntry
     {
-        private List<AdditionalColumnInfo> additionalColumns = new List<AdditionalColumnInfo>();
+        private List<AdditionalCheckBox> additionalColumns = new List<AdditionalCheckBox>();
 
         public IWpfElementGenerator WPFElementCreator
         {
@@ -39,7 +39,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <summary>
         /// Gets the list of additional columns
         /// </summary>
-        public List<AdditionalColumnInfo> AdditionalColumns
+        public List<AdditionalCheckBox> AdditionalColumns
         {
             get { return this.additionalColumns; }
         }
@@ -56,7 +56,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             this.FieldInfo = fieldInfo;
         }
 
-        public abstract class AdditionalColumnInfo
+        public abstract class AdditionalCheckBox
         {
             /// <summary>
             /// Defines a function, which is used to retrieve the checklist status
@@ -81,7 +81,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// This object sets a specific value to the property, if the checkbox is set.
         /// The value of the object will be retrieved via the ValueFunction Functor
         /// </summary>
-        public class SetValueColumnInfo : AdditionalColumnInfo
+        public class SetValueCheckBox : AdditionalCheckBox
         {
             /// <summary>
             /// Gets the object, which is determined whether the checkbox is still checked.
@@ -98,7 +98,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             /// Initializes a new instance of the DefaultColumnInfo class
             /// </summary>
             /// <param name="valueFunction">Gets or sets the value function</param>
-            public SetValueColumnInfo(Func<bool, object> valueFunction)
+            public SetValueCheckBox(Func<bool, object> valueFunction)
             {
                 this.ValueFunction = valueFunction;
             }
@@ -123,6 +123,17 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 }
 
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// When the user has checked the checkbox, the value will not be updated. 
+        /// </summary>
+        public class IgnoreChangeCheckBox : AdditionalCheckBox
+        {
+            public override bool Assign(IObject detailObject, IObject fieldInfo)
+            {
+                return this.GetCheckBoxStatus();
             }
         }
     }
