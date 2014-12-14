@@ -185,6 +185,43 @@ namespace DatenMeister.WPF.Windows
         }
 
         /// <summary>
+        /// Has to be called, when the dialog for an entity shall be shown
+        /// </summary>
+        /// <param name="value">Value, for which the dialog shall be shown</param>
+        /// <param name="viewData">Data, which can be used to create the view, 
+        /// if null, the IViewManager will be asked for a type</param>
+        /// <param name="readOnly">true, if a read-only dialog</param>
+        public static DetailDialog ShowDialogFor(
+            IEnumerable<IObject> values,
+            IObject viewData = null,
+            bool readOnly = false)
+        {
+            if ( values.Count() == 0)
+            {
+                throw new InvalidOperationException("Cannot show a document out of nothing");
+            }
+
+            var value = values.First();
+
+            viewData = GetView(value, viewData);
+            if (viewData == null)
+            {
+                return null;
+            }
+
+            // Creates the dialog
+            var configuration = new FormLayoutConfiguration();
+            configuration.EditMode = readOnly ? EditMode.Read : EditMode.Edit;
+            configuration.FormViewInfo = viewData;
+            configuration.StorageCollection = value.Extent == null ? null : value.Extent.Elements();
+            configuration.DetailObjects = values;
+
+            var dialog = new DetailDialog(configuration);
+            dialog.Show();
+            return dialog;
+        }
+
+        /// <summary>
         /// Gets the view for a certain object
         /// </summary>
         /// <param name="value">Object, for which the view shall be generated</param>

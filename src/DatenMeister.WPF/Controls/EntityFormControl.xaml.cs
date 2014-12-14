@@ -335,13 +335,21 @@ namespace DatenMeister.WPF.Controls
         /// <returns></returns>
         public virtual AdditionalColumn[] GetAdditionalColumns()
         {
-            return new AdditionalColumn[] {
+            if (!this.configuration.HasMultipleObjects)
+            {
+                return new AdditionalColumn[] {
                 new SetValueColumnInfo(
-                    "Notset",
-                     (x) => x ? ObjectHelper.NotSet : null)/*,
-                new IgnoreChangeColumnInfo(
-                    "No change", true)*/
-            };
+                    "Not Set",
+                     (x) => x ? ObjectHelper.NotSet : null)
+                };
+            }
+            else
+            {
+                return new AdditionalColumn[] {
+                    new IgnoreChangeColumnInfo(
+                        "No change", true)
+                };
+            }
         }
 
         /// <summary>
@@ -368,8 +376,7 @@ namespace DatenMeister.WPF.Controls
         /// Adds an additional column for a row
         /// </summary>
         /// <param name="additionalColumns"></param>
-        /// 
-        /// <returns></returns>
+        /// <returns>The number of the row after the headlines</returns>
         private int AddAdditionalColumnAtHeadline(AdditionalColumn[] additionalColumns)
         {
             var hasAdditionalColumns = additionalColumns.Length > 0;

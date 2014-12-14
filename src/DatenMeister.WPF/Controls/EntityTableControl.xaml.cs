@@ -437,43 +437,77 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         private DetailDialog ShowDetailDialog()
         {
-            var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
+            var readOnly = false;
 
-            // Checks, if there is an function handler associated to the
-            // given table. View. If there is a function, call the associated function handler
-            if (this.OpenSelectedViewFunc != null && selectedItem != null)
+            // Check, if the dialog to be opened shall be as a read-only dialog
+            if (this.Configuration.ViewInfoForDetailView != null &&
+                !FormView.getAllowEdit(this.Configuration.ViewInfoForDetailView))
             {
-                this.OpenSelectedViewFunc(
-                    new DetailOpenEventArgs()
-                    {
-                        Collection = this.GetElements(),
-                        Value = selectedItem.Value
-                    });
-
-                return null;
+                // Nothing to do
+                readOnly = true;
             }
-            else if (selectedItem == null)
+
+            var numberOfSelectedItems = this.gridContent.SelectedItems.Count;
+
+            if (numberOfSelectedItems <= 1)
             {
-                // No element has been selected, so try to create a new on
-                this.ShowNewDialog();
-                return null;
+                var selectedItem = this.gridContent.SelectedItem as ObjectDictionary;
+
+                // Checks, if there is an function handler associated to the
+                // given table. View. If there is a function, call the associated function handler
+                if (this.OpenSelectedViewFunc != null && selectedItem != null)
+                {
+                    this.OpenSelectedViewFunc(
+                        new DetailOpenEventArgs()
+                        {
+                            Collection = this.GetElements(),
+                            Value = selectedItem.Value
+                        });
+
+                    return null;
+                }
+                else if (selectedItem == null)
+                {
+                    // No element has been selected, so try to create a new on
+                    this.ShowNewDialog();
+                    return null;
+                }
+                else
+                {
+
+                    Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
+
+                    var dialog = DetailDialog.ShowDialogFor(
+                        selectedItem.Value,
+                        this.Configuration.ViewInfoForDetailView,
+                        readOnly);
+
+                    if (dialog == null)
+                    {
+                        MessageBox.Show(
+                            Localization_DatenMeister_WPF.NoItemDialogFound);
+
+                        return null;
+                    }
+
+                    // When user accepts the changes, all items in current view shall be refreshed. 
+                    dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+                    return dialog;
+                }
             }
             else
             {
-                var readOnly = false;
-
-                // Check, if the dialog to be opened shall be as a read-only dialog
-                if (this.Configuration.ViewInfoForDetailView != null &&
-                    !FormView.getAllowEdit(this.Configuration.ViewInfoForDetailView))
+                var selectedItems = this.gridContent.SelectedItems;
+                var convertedItems = new List<IObject>();
+                foreach (var item in selectedItems)
                 {
-                    // Nothing to do
-                    readOnly = true;
+                    var convertedItem = (item as ObjectDictionary).Value;
+                    convertedItems.Add(convertedItem);
                 }
-
-                Ensure.That(selectedItem.Value != null, "selectedItem.Value == null");
-
+                
+                // Multiple dialog
                 var dialog = DetailDialog.ShowDialogFor(
-                    selectedItem.Value,
+                    convertedItems,
                     this.Configuration.ViewInfoForDetailView,
                     readOnly);
 
@@ -488,6 +522,7 @@ namespace DatenMeister.WPF.Controls
                 // When user accepts the changes, all items in current view shall be refreshed. 
                 dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
                 return dialog;
+
             }
         }
 

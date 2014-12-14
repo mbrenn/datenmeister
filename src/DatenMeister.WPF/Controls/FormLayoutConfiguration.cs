@@ -13,6 +13,16 @@ namespace DatenMeister.WPF.Controls
     public class FormLayoutConfiguration
     {
         /// <summary>
+        /// Stores the value of detailObject to be shown
+        /// </summary>
+        private IObject detailObject;
+
+        /// <summary>
+        /// Stores the values for all the detailObjects to be shown
+        /// </summary>
+        private IEnumerable<IObject> detailObjects;
+
+        /// <summary>
         /// Gets or sets the table view information
         /// </summary>
         public IObject FormViewInfo
@@ -37,8 +47,55 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public IObject DetailObject
         {
+            get
+            {
+                if (this.HasMultipleObjects)
+                {
+                    throw new InvalidOperationException("HasMultipleObjects == true");
+                }
+
+                return this.detailObject;
+            }
+            set
+            {
+                this.detailObject = value;
+                this.HasMultipleObjects = false;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the objects to be shown. The value may only be set, 
+        /// when HasMultipleObjects is set as true
+        /// </summary>
+        public IEnumerable<IObject> DetailObjects
+        {
+            get
+            {
+                if (!this.HasMultipleObjects)
+                {
+                    throw new InvalidOperationException("HasMultipleObjects == false");
+                }
+
+                return this.detailObjects;
+            }
+            set
+            {
+                this.detailObjects = value;
+                this.HasMultipleObjects = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets the value whether we have to show multiple values
+        /// or just one. If we have just one value, the object is stored in 
+        /// DetailObject, otherwise the objects are stored in DetailObjects.
+        /// 
+        /// The value is defined by setting DetailObject or DetailObjects
+        /// </summary>
+        public bool HasMultipleObjects
+        {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
