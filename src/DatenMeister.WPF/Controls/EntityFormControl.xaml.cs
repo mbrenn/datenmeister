@@ -108,49 +108,14 @@ namespace DatenMeister.WPF.Controls
 
             this.wpfElements.Clear();
             var additionalColumns = this.GetAdditionalColumns();
-            var hasAdditionalColumns = additionalColumns.Length > 0;
-            while (additionalColumns.Length + 2 > this.formGrid.ColumnDefinitions.Count)
-            {
-                var definition = new ColumnDefinition()
-                {
-                    Width = new GridLength(1, GridUnitType.Auto)
-                };
-
-                this.formGrid.ColumnDefinitions.Add(definition);
-            }
+            var hasAdditionalColumns = this.AddFirstRowForAdditionalColumns(additionalColumns);
 
             if (this.configuration.FormViewInfo != null)
             {
                 // Creates the form 
                 var fieldInfos = this.configuration.GetFormViewInfoAsFormView().getFieldInfos();
                 this.formGrid.RowDefinitions.Clear();
-                
-                var currentRow = 0;
-
-                // Checks, if we have an additional column, if yes, we need to create an 
-                // extra row
-                if (hasAdditionalColumns)
-                {
-                    this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
-                    var currentColumn = 2;
-
-                    foreach (var column in additionalColumns)
-                    {
-                        var text = new TextBlock()
-                        {
-                            Text = column.Name,
-                            Style = this.Resources["TitleAdditionalColumn"] as Style
-                        };
-
-                        Grid.SetColumn(text, currentColumn);
-                        Grid.SetRow(text, currentRow);
-                        currentColumn++;
-
-                        this.formGrid.Children.Add(text);
-                    }
-
-                    currentRow++;
-                }
+                var currentRow = this.AddAdditionalColumnAtHeadline(additionalColumns);
 
                 // When one height is a Star-Height (auto height), this value 
                 // will be set to true. If still false at end, the last row will be set to autoheight
@@ -221,28 +186,8 @@ namespace DatenMeister.WPF.Controls
                     }
 
                     formGrid.Children.Add(nameLabel);
-
-                    // Add the additional columns
-                    var currentColumn = 2;
-                    foreach (var column in additionalColumns)
-                    {
-                        var copyColumn = column; // Avoid problems with closures
-
-                        var objectValue = this.configuration.DetailObject.get(fieldInfoObj.getBinding());
-                        var checkBox = new CheckBox();
-                        checkBox.IsChecked = column.IsCheckedFunction(objectValue);
-                        Grid.SetRow(checkBox, currentRow);
-                        Grid.SetColumn(checkBox, currentColumn);
-                        checkBox.Style = this.Resources["CheckBoxAdditionalColumn"] as Style;
-                        this.formGrid.Children.Add(checkBox);
-
-                        elementCacheEntry.AdditionalColumns.Add(
-                            new ElementCacheEntry.AdditionalColumnInfo()
-                            {
-                                GetChecklistStatus = () => checkBox.IsChecked == true,
-                                ValueFunction = (x) => copyColumn.ValueFunction(x)
-                            });
-                    }
+                    
+                    this.AddAdditionalColumnForRow(additionalColumns, currentRow, fieldInfoObj, elementCacheEntry);
 
                     this.wpfElements.Add(elementCacheEntry);
 
@@ -279,22 +224,8 @@ namespace DatenMeister.WPF.Controls
             {                
                 foreach (var cacheEntry in this.wpfElements)
                 {
-                    var wasSet = false;
-
-                    // Checks, if one of the additional columns sets the property
-                    foreach (var column in cacheEntry.AdditionalColumns)
-                    {
-                        var isChecked = column.GetChecklistStatus();
-                        var value = column.ValueFunction(isChecked);
-                        if (value != null)
-                        {
-                            this.configuration.DetailObject.set(
-                                General.getBinding(cacheEntry.FieldInfo),
-                                value);
-                            wasSet = true;
-                            break;
-                        }
-                    }
+                    // Checks, if one of the additional columns set the content
+                    var wasSet = this.CheckForValueByAdditionalContent(cacheEntry);
 
                     if (!wasSet)
                     {
@@ -396,6 +327,8 @@ namespace DatenMeister.WPF.Controls
             get { return Controls.DisplayMode.Form; }
         }
 
+        #region Functions for the additional columns
+
         /// <summary>
         /// Gets the additional columns
         /// </summary>
@@ -410,6 +343,115 @@ namespace DatenMeister.WPF.Controls
                     ValueFunction = (x) => x ? ObjectHelper.NotSet : null
                 }
             };
+        }
+
+        /// <summary>
+        /// Adds the additional columns at the header line
+        /// </summary>
+        /// <param name="additionalColumns">Additional columns being used</param>
+        /// <returns>triue, if we have additional columns</returns>
+        private bool AddFirstRowForAdditionalColumns(AdditionalColumn[] additionalColumns)
+        {
+            var hasAdditionalColumns = additionalColumns.Length > 0;
+            while (additionalColumns.Length + 2 > this.formGrid.ColumnDefinitions.Count)
+            {
+                var definition = new ColumnDefinition()
+                {
+                    Width = new GridLength(1, GridUnitType.Auto)
+                };
+
+                this.formGrid.ColumnDefinitions.Add(definition);
+            }
+            return hasAdditionalColumns;
+        }
+
+        /// <summary>
+        /// Adds an additional column for a row
+        /// </summary>
+        /// <param name="additionalColumns"></param>
+        /// 
+        /// <returns></returns>
+        private int AddAdditionalColumnAtHeadline(AdditionalColumn[] additionalColumns)
+        {
+            var hasAdditionalColumns = additionalColumns.Length > 0;
+            var currentRow = 0;
+
+            // Checks, if we have an additional column, if yes, we need to create an 
+            // extra row
+            if (hasAdditionalColumns)
+            {
+                this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
+                var currentColumn = 2;
+
+                foreach (var column in additionalColumns)
+                {
+                    var text = new TextBlock()
+                    {
+                        Text = column.Name,
+                        Style = this.Resources["TitleAdditionalColumn"] as Style
+                    };
+
+                    Grid.SetColumn(text, currentColumn);
+                    Grid.SetRow(text, currentRow);
+                    currentColumn++;
+
+                    this.formGrid.Children.Add(text);
+                }
+
+                currentRow++;
+            }
+            return currentRow;
+        }
+
+        private void AddAdditionalColumnForRow(AdditionalColumn[] additionalColumns, int currentRow, General fieldInfoObj, ElementCacheEntry elementCacheEntry)
+        {
+
+            // Add the additional columns
+            var currentColumn = 2;
+            foreach (var column in additionalColumns)
+            {
+                var copyColumn = column; // Avoid problems with closures
+
+                var objectValue = this.configuration.DetailObject.get(fieldInfoObj.getBinding());
+                var checkBox = new CheckBox();
+                checkBox.IsChecked = column.IsCheckedFunction(objectValue);
+                Grid.SetRow(checkBox, currentRow);
+                Grid.SetColumn(checkBox, currentColumn);
+                checkBox.Style = this.Resources["CheckBoxAdditionalColumn"] as Style;
+                this.formGrid.Children.Add(checkBox);
+
+                elementCacheEntry.AdditionalColumns.Add(
+                    new ElementCacheEntry.SetValueColumnInfo(
+                        copyColumn.ValueFunction)
+                        {
+                            GetCheckBoxStatus = () => checkBox.IsChecked == true
+                        });
+            }
+        }
+
+        /// <summary>
+        /// Sets the value for a property by an additional content
+        /// </summary>
+        /// <param name="cacheEntry">The cache entry to be used to retrive the information
+        /// fast</param>
+        /// <returns>true, if the element has been set by the additional content</returns>
+        private bool CheckForValueByAdditionalContent(ElementCacheEntry cacheEntry)
+        {
+            var wasSet = false;
+
+            // Checks, if one of the additional columns sets the property
+            foreach (var column in cacheEntry.AdditionalColumns)
+            {
+                wasSet = column.Assign(
+                    this.configuration.DetailObject,
+                    cacheEntry.FieldInfo);
+
+                if ( wasSet )
+                {
+                    break;
+                }
+            }
+            return wasSet;
         }
 
         /// <summary>
@@ -446,5 +488,7 @@ namespace DatenMeister.WPF.Controls
                 set;
             }
         }
+
+        #endregion
     }
 }
