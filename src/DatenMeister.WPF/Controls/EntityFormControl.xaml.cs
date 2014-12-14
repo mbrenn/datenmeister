@@ -165,7 +165,7 @@ namespace DatenMeister.WPF.Controls
 
                         // Adds the information into the storage
                         elementCacheEntry.WPFElement = wpfElement;
-                        elementCacheEntry.WPFElementCreator = wpfElementCreator;                        
+                        elementCacheEntry.WPFElementCreator = wpfElementCreator;
                     }
 
                     /////////////////////////////////////////////////
@@ -186,7 +186,7 @@ namespace DatenMeister.WPF.Controls
                     }
 
                     formGrid.Children.Add(nameLabel);
-                    
+
                     this.AddAdditionalColumnForRow(additionalColumns, currentRow, fieldInfoObj, elementCacheEntry);
 
                     this.wpfElements.Add(elementCacheEntry);
@@ -221,7 +221,7 @@ namespace DatenMeister.WPF.Controls
 
             // Store values into object, if the view is not in read-only mode
             if (this.configuration.EditMode != Controls.EditMode.Read)
-            {                
+            {
                 foreach (var cacheEntry in this.wpfElements)
                 {
                     // Checks, if one of the additional columns set the content
@@ -338,11 +338,9 @@ namespace DatenMeister.WPF.Controls
             return new AdditionalColumn[] {
                 new SetValueColumnInfo(
                     "Notset",
-                    (x) => x.AsSingle() == ObjectHelper.NotSet,
-                    (x) => x ? ObjectHelper.NotSet : null),
+                     (x) => x ? ObjectHelper.NotSet : null)/*,
                 new IgnoreChangeColumnInfo(
-                    "No change", 
-                    (x)=> false)
+                    "No change", true)*/
             };
         }
 
@@ -412,7 +410,7 @@ namespace DatenMeister.WPF.Controls
             {
                 var objectValue = this.configuration.DetailObject.get(fieldInfoObj.getBinding());
                 var checkBox = new CheckBox();
-                checkBox.IsChecked = column.IsCheckedFunction(objectValue);
+                checkBox.IsChecked = column.IsChecked(objectValue);
                 Grid.SetRow(checkBox, currentRow);
                 Grid.SetColumn(checkBox, currentColumn);
                 checkBox.Style = this.Resources["CheckBoxAdditionalColumn"] as Style;
@@ -472,10 +470,9 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public abstract class AdditionalColumn
         {
-            public AdditionalColumn(string name, Func<object, bool> isCheckedFunction)
+            public AdditionalColumn(string name)
             {
                 this.Name = name;
-                this.IsCheckedFunction = isCheckedFunction;
             }
 
             /// <summary>
@@ -490,20 +487,21 @@ namespace DatenMeister.WPF.Controls
             /// <summary>
             /// Gets or sets the function, which determines whether a checkbox is checked.
             /// </summary>
-            public Func<object, bool> IsCheckedFunction
-            {
-                get;
-                set;
-            }
+            public abstract bool IsChecked(object value);
         }
 
+        /// <summary>
+        /// Offers a checkbox which is checked, when the property has a certain value. 
+        /// This is determined by IsCheckedFunction
+        /// When the checkbox is still checked on submission, the property will receive 
+        /// a value given by ValueFunction. 
+        /// </summary>
         public class SetValueColumnInfo : AdditionalColumn
         {
             public SetValueColumnInfo(
                 string name,
-                Func<object, bool> isCheckedFunction,
                 Func<bool, object> valueFunction)
-                : base(name, isCheckedFunction)
+                : base(name)
             {
                 this.ValueFunction = valueFunction;
             }
@@ -518,6 +516,11 @@ namespace DatenMeister.WPF.Controls
                 get;
                 set;
             }
+
+            public override bool IsChecked(object value)
+            {
+                return value.AsSingle() == ObjectHelper.NotSet;
+            }
         }
 
         /// <summary>
@@ -527,9 +530,20 @@ namespace DatenMeister.WPF.Controls
         /// </summary>
         public class IgnoreChangeColumnInfo : AdditionalColumn
         {
-            public IgnoreChangeColumnInfo(string name, Func<object, bool> isCheckedFunction)
-                : base(name, isCheckedFunction)
+            /// <summary>
+            /// Stores the default check status for the columns
+            /// </summary>
+            private bool defaultCheckStatus;
+
+            public IgnoreChangeColumnInfo(string name, bool defaultCheckStatus = false)
+                : base(name)
             {
+                this.defaultCheckStatus = defaultCheckStatus;
+            }
+
+            public override bool IsChecked(object value)
+            {
+                return this.defaultCheckStatus;
             }
         }
 
