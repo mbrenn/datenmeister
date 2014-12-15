@@ -1,4 +1,5 @@
-﻿using DatenMeister.Pool;
+﻿using DatenMeister.Logic;
+using DatenMeister.Pool;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,10 +34,8 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <returns></returns>
         protected override object GetCurrentValue()
         {
-            // Gets the current element
-            var currentValue = this.detailObject == null ?
-                null : this.detailObject.get(this.binding).AsSingle() as IObject;
-            return currentValue;
+            var value = ObjectHelper.GetCommonValue(this.detailObjects, this.binding);
+            return value.AsSingle() as IObject;
         }
 
         protected override bool AreValuesEqual(object currentValue, object otherElement)

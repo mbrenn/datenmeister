@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    class WpfDatePicker : IWpfElementGenerator
+    class WpfDatePicker : IWpfElementGenerator, IPropertyToMultipleValues
     {
         private DatePicker fieldInfo;
 
@@ -24,26 +24,46 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
         public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
         {
+            if (detailObject == null)
+            {
+                return this.GenerateElement(
+                    (IEnumerable<IObject>)null,
+                    fieldInfo,
+                    state);
+            }
+            else
+            {
+                return this.GenerateElement(
+                    new IObject[] { detailObject },
+                    fieldInfo,
+                    state);
+            }            
+        }
+
+        public System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state)
+        {
             this.wpfGrid = new System.Windows.Controls.Grid();
             this.wpfGrid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition()
-                {
-                    Width = new System.Windows.GridLength(1, System.Windows.GridUnitType.Star)
-                });
+            {
+                Width = new System.Windows.GridLength(1, System.Windows.GridUnitType.Star)
+            });
             this.wpfGrid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition()
-                {
-                    Width = new System.Windows.GridLength(0, System.Windows.GridUnitType.Auto)
-                });
+            {
+                Width = new System.Windows.GridLength(0, System.Windows.GridUnitType.Auto)
+            });
 
             this.fieldInfo = new DatePicker(fieldInfo);
 
             this.datePicker = new System.Windows.Controls.DatePicker();
             this.datePicker.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
-            
-            if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
+
+            if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObjects != null)
             {
                 var fieldName = this.fieldInfo.getBinding().ToString();
-                var propertyValue = detailObject.get(fieldName);
-                if (propertyValue != null && propertyValue != ObjectHelper.NotSet)
+                var propertyValue = ObjectHelper.GetCommonValue(detailObjects, fieldName);
+                if (propertyValue != null 
+                    && propertyValue != ObjectHelper.NotSet
+                    && propertyValue != ObjectHelper.Different)
                 {
                     var date = ObjectConversion.ToDateTime(
                         propertyValue.AsSingle());

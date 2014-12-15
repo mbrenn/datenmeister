@@ -31,6 +31,11 @@ namespace DatenMeister.Logic
 
         public static object Null = new NullObject();
 
+        /// <summary>
+        /// This value is used, when the common value of multiple objects is requested
+        /// and there is no common value. This indicates, that not all properties
+        /// have the same value
+        /// </summary>
         public static object Different = new DifferentObject();
 
         /// <summary>
@@ -172,15 +177,14 @@ namespace DatenMeister.Logic
             {
                 noElement = false;
 
-                var detailObjectForView = new ObjectDictionaryForView(detailObject);
-                var isSet = detailObjectForView.IsSet(propertyName);
+                var isSet = detailObject.isSet(propertyName);
                 if (isSet)
                 {
                     nothingIsSet = false;
 
                     if (value != ObjectHelper.Different)
                     {
-                        var propertyValue = detailObjectForView[propertyName];
+                        var propertyValue = detailObject.get(propertyName);
 
                         if (value == firstRoundIndicator)
                         {

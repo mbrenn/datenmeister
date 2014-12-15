@@ -1,4 +1,5 @@
-﻿using DatenMeister.Pool;
+﻿using DatenMeister.Logic;
+using DatenMeister.Pool;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,8 +41,9 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
         protected override object GetCurrentValue()
         {
-            var currentValue = this.detailObject == null ?
-                null : this.detailObject.get(this.binding).AsSingle().ToString();
+            var value = ObjectHelper.GetCommonValue(this.detailObjects, this.binding);
+
+            var currentValue = value.AsSingle().ToString();
             return currentValue;
         }
     }

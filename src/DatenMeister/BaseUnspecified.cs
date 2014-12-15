@@ -58,6 +58,41 @@ namespace DatenMeister
         }
 
         /// <summary>
+        /// Gets the hashcode
+        /// </summary>
+        /// <returns>The hashcode</returns>
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
+        }
+
+        /// <summary>
+        /// Checks, if the two objects are equal
+        /// </summary>
+        /// <param name="obj">Object to be checked</param>
+        /// <returns>true, if both objects are equal</returns>
+        public override bool Equals(object obj)
+        {
+            var asBaseUnspecified = obj as BaseUnspecified;
+            if (asBaseUnspecified != null)
+            {
+                if ( this.PropertyValueType != asBaseUnspecified.PropertyValueType)
+                {
+                    return false;
+                }
+
+                if ( this.PropertyValueType == DatenMeister.PropertyValueType.Single)
+                {
+                    return this.Value.AsSingle().Equals(asBaseUnspecified.Value.AsSingle());
+                }
+
+                return this.Value.Equals(asBaseUnspecified.Value);
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Returns the object as a reflective collection
         /// </summary>
         /// <returns>The returned collection</returns>

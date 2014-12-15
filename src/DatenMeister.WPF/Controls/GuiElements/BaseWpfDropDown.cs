@@ -12,7 +12,7 @@ using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    public abstract class BaseWpfDropDown: IFocusable
+    public abstract class BaseWpfDropDown: IFocusable, IPropertyToMultipleValues
     {
         /// <summary>
         /// Stores the name of the property being used to retrieve the value 
@@ -33,7 +33,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <summary>
         /// Stores the object, that shall be shown and/or evaluated
         /// </summary>
-        protected IObject detailObject;
+        protected IEnumerable<IObject> detailObjects;
 
         /// <summary>
         /// Stores the WPF element for the drop down
@@ -65,6 +65,24 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <returns>Generated UI element</returns>
         public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
         {
+            if (detailObject == null)
+            {
+                return this.GenerateElement(
+                    (IEnumerable<IObject>)null,
+                    fieldInfo,
+                    state);
+            }
+            else
+            {
+                return this.GenerateElement(
+                    new IObject[] { detailObject },
+                    fieldInfo,
+                    state);
+            }
+        }
+
+        public System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state)
+        {
             var settings = new WpfDropDownSettings();
 
             // Fills the variable and creates the combobox
@@ -72,7 +90,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var resolvedElements = this.GetDropDownValues(fieldInfo);
 
             this.resolvedElements = resolvedElements;
-            this.detailObject = detailObject;
+            this.detailObjects = detailObjects;
 
             this.Configure(settings);
 

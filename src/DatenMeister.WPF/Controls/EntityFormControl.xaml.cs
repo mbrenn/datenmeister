@@ -377,17 +377,20 @@ namespace DatenMeister.WPF.Controls
         {
             if (!this.configuration.HasMultipleObjects)
             {
-                return new AdditionalColumn[] {
-                new SetValueColumnInfo(
-                    "Not Set",
-                     (x) => x ? ObjectHelper.NotSet : null)
+                return new AdditionalColumn[] {   
+                    new SetValueColumnInfo(
+                        "Not Set",
+                         (x) => x ? ObjectHelper.NotSet : null)
                 };
             }
             else
             {
                 return new AdditionalColumn[] {
                     new IgnoreChangeColumnInfo(
-                        "No change", true)
+                        "No change", true),                        
+                    new SetValueColumnInfo(
+                        "Not Set",
+                         (x) => x ? ObjectHelper.NotSet : null)
                 };
             }
         }
@@ -461,7 +464,8 @@ namespace DatenMeister.WPF.Controls
                 var checkBox = new CheckBox();
                 if (this.configuration.HasMultipleObjects)
                 {
-                    checkBox.IsThreeState = true;
+                    // As long, as we need the "No change thing", we cannot use the three states
+                    // checkBox.IsThreeState = true;
                 }
 
                 checkBox.IsChecked = column.IsChecked(objectValue);
