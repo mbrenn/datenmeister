@@ -12,7 +12,7 @@ using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    public abstract class BaseWpfDropDown: IFocusable, IPropertyToMultipleValues
+    public abstract class BaseWpfDropDown : BasePropertyToMultipleValue, IFocusable, IPropertyToMultipleValues
     {
         /// <summary>
         /// Stores the name of the property being used to retrieve the value 
@@ -56,32 +56,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             // Nothing to do per default
         }
 
-        /// <summary>
-        /// Generates the element 
-        /// </summary>
-        /// <param name="detailObject">Detail object containing all the parameters</param>
-        /// <param name="fieldInfo">Fieldinformation being used</param>
-        /// <param name="state">Status of the presentation</param>
-        /// <returns>Generated UI element</returns>
-        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
-        {
-            if (detailObject == null)
-            {
-                return this.GenerateElement(
-                    (IEnumerable<IObject>)null,
-                    fieldInfo,
-                    state);
-            }
-            else
-            {
-                return this.GenerateElement(
-                    new IObject[] { detailObject },
-                    fieldInfo,
-                    state);
-            }
-        }
-
-        public System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state)
+        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry entry)
         {
             var settings = new WpfDropDownSettings();
 
@@ -227,7 +202,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// </summary>
         /// <param name="detailObject">Detail object to be set</param>
         /// <param name="entry">Entry containing used information and references, etc</param>
-        public void SetData(IObject detailObject, ElementCacheEntry entry)
+        public override void SetData(IObject detailObject, ElementCacheEntry entry)
         {
             var combobox = this.dropDown;
             var selectedObject = combobox.SelectedValue as Item<object>;

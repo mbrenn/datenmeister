@@ -150,26 +150,34 @@ namespace DatenMeister.WPF.Controls
                     var fieldInfoAsElement = fieldInfo as IElement;
                     var wpfElementCreator = WpfElementMapping.MapForForm(fieldInfoAsElement);
                     UIElement wpfElement = null;
+                    var elementCacheEntry = new ElementCacheEntry(fieldInfo);
 
                     // Only, if we show a single object or the field info supports
                     // multiple values
                     if (!this.configuration.HasMultipleObjects)
                     {
-                        wpfElement = wpfElementCreator.GenerateElement(this.configuration.DetailObject, fieldInfo, this);
+                        wpfElement = wpfElementCreator.GenerateElement(
+                            this.configuration.DetailObject, 
+                            fieldInfo, 
+                            this,
+                            elementCacheEntry);
                     }
                     else
                     {
                         var multiCreator = wpfElementCreator as IPropertyToMultipleValues;
                         if (multiCreator != null)
                         {
-                            wpfElement = multiCreator.GenerateElement(this.configuration.DetailObjects, fieldInfo, this);
+                            wpfElement = multiCreator.GenerateElement(
+                                this.configuration.DetailObjects, 
+                                fieldInfo, 
+                                this, 
+                                elementCacheEntry);
                         }
                     }
 
                     // Checks, if we have an element, otherwise we skip this row
                     if (wpfElement != null)
                     {
-                        var elementCacheEntry = new ElementCacheEntry(fieldInfo);
                         if (wpfElement != null)
                         {
                             var border = new Border()
@@ -206,7 +214,11 @@ namespace DatenMeister.WPF.Controls
 
                         formGrid.Children.Add(nameLabel);
 
-                        this.AddAdditionalColumnForRow(additionalColumns, currentRow, fieldInfoObj, elementCacheEntry);
+                        this.AddAdditionalColumnForRow(
+                            additionalColumns, 
+                            currentRow, 
+                            fieldInfoObj, 
+                            elementCacheEntry);
 
                         this.wpfElements.Add(elementCacheEntry);
 
@@ -491,7 +503,11 @@ namespace DatenMeister.WPF.Controls
 
                 if (newCheckBox != null)
                 {
-                    newCheckBox.GetCheckBoxStatus = () => checkBox.IsChecked == true;
+                    newCheckBox.Checkbox = checkBox;
+                    elementCacheEntry.ChangeContent += (x, y) =>
+                        {
+                            newCheckBox.OnContentChange();
+                        };
                     elementCacheEntry.AdditionalColumns.Add(newCheckBox);
                 }
 
@@ -609,6 +625,8 @@ namespace DatenMeister.WPF.Controls
             {
                 return this.defaultCheckStatus;
             }
+
+            
         }
 
         #endregion

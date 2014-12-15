@@ -51,6 +51,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\GuiElements\BasePropertyToMultipleValue.cs" />
     <Compile Include="Controls\EntityTreeControl.xaml.cs">
       <DependentUpon>EntityTreeControl.xaml</DependentUpon>
     </Compile>

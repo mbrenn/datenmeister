@@ -19,7 +19,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <param name="fieldInfo">Stores the information of the element</param>
         /// <param name="state">The current state of the element</param>
         /// <returns>The returned element</returns>
-        UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state);
+        UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry cacheEntry);
         
         /// <summary>
         /// Sets the data by the element cache information. This method will be used to 

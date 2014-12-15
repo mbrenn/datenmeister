@@ -11,27 +11,9 @@ using System.Windows.Media;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    public class WpfCheckbox : IWpfElementGenerator, IPropertyToMultipleValues
+    public class WpfCheckbox : BasePropertyToMultipleValue, IWpfElementGenerator, IPropertyToMultipleValues
     {
-        public UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
-        {
-            if (detailObject == null)
-            {
-                return this.GenerateElement(
-                    (IEnumerable<IObject>)null,
-                    fieldInfo,
-                    state);
-            }
-            else
-            {
-                return this.GenerateElement(
-                    new IObject[] { detailObject },
-                    fieldInfo,
-                    state);
-            }
-        }
-
-        public System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state)
+        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry entry)
         {
             var checkbox = new DatenMeister.Entities.AsObject.FieldInfo.Checkbox(fieldInfo);
 
@@ -56,7 +38,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             return wpfCheckbox;
         }
 
-        public void SetData(IObject detailObject, ElementCacheEntry entry)
+        public override void SetData(IObject detailObject, ElementCacheEntry entry)
         {
             var checkBoxInfo = new DatenMeister.Entities.AsObject.FieldInfo.Checkbox(entry.FieldInfo);
             var checkBox = entry.WPFElement as CheckBox;

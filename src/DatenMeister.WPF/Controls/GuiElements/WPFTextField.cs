@@ -8,32 +8,14 @@ using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    public class WpfTextField : IWpfElementGenerator, IFocusable, IPropertyToMultipleValues
+    public class WpfTextField : BasePropertyToMultipleValue, IWpfElementGenerator, IFocusable, IPropertyToMultipleValues
     {
-        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
-        {
-            if (detailObject == null)
-            {
-                return this.GenerateElement(
-                    (IEnumerable<IObject>) null,
-                    fieldInfo,
-                    state);
-            }
-            else
-            {
-                return this.GenerateElement(
-                    new IObject[] { detailObject },
-                    fieldInfo,
-                    state);
-            }
-        }
-
         /// <summary>
         /// Sets the data by the element cache information
         /// </summary>
         /// <param name="detailObject">Object, which shall receive the information</param>
         /// <param name="entry">Cache entry, which has the connection between WPF element and fieldinfo</param>
-        public void SetData(IObject detailObject, ElementCacheEntry entry)
+        public override void SetData(IObject detailObject, ElementCacheEntry entry)
         {
             var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(entry.FieldInfo);
 
@@ -55,13 +37,14 @@ namespace DatenMeister.WPF.Controls.GuiElements
             textBox.SelectAll();
         }
 
-        public System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state)
+        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry cacheEntry)
         {
             var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(fieldInfo);
 
             var textBox = new System.Windows.Controls.TextBox();
             textBox.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
             var height = textFieldObj.getHeight();
+            textBox.TextChanged += (x, y) => cacheEntry.OnChangeContent();
 
             if (textFieldObj.isMultiline())
             {

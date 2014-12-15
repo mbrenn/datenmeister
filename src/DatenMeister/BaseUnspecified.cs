@@ -76,12 +76,12 @@ namespace DatenMeister
             var asBaseUnspecified = obj as BaseUnspecified;
             if (asBaseUnspecified != null)
             {
-                if ( this.PropertyValueType != asBaseUnspecified.PropertyValueType)
+                if (this.PropertyValueType != asBaseUnspecified.PropertyValueType)
                 {
                     return false;
                 }
 
-                if ( this.PropertyValueType == DatenMeister.PropertyValueType.Single)
+                if (this.PropertyValueType == DatenMeister.PropertyValueType.Single)
                 {
                     return this.Value.AsSingle().Equals(asBaseUnspecified.Value.AsSingle());
                 }

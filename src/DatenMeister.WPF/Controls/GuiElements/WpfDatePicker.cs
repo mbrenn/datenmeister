@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    class WpfDatePicker : IWpfElementGenerator, IPropertyToMultipleValues
+    class WpfDatePicker : BasePropertyToMultipleValue, IWpfElementGenerator, IPropertyToMultipleValues
     {
         private DatePicker fieldInfo;
 
@@ -22,25 +22,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// </summary>
         private System.Windows.Controls.DatePicker datePicker;
 
-        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state)
-        {
-            if (detailObject == null)
-            {
-                return this.GenerateElement(
-                    (IEnumerable<IObject>)null,
-                    fieldInfo,
-                    state);
-            }
-            else
-            {
-                return this.GenerateElement(
-                    new IObject[] { detailObject },
-                    fieldInfo,
-                    state);
-            }            
-        }
-
-        public System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state)
+        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry cacheEntry)
         {
             this.wpfGrid = new System.Windows.Controls.Grid();
             this.wpfGrid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition()
@@ -102,7 +84,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             return this.wpfGrid;
         }
 
-        public void SetData(IObject detailObject, ElementCacheEntry entry)
+        public override void SetData(IObject detailObject, ElementCacheEntry entry)
         {
             if (!this.fieldInfo.isReadOnly())
             {

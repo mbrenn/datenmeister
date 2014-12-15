@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
@@ -30,6 +31,9 @@ namespace DatenMeister.WPF.Controls.GuiElements
             set;
         }
 
+        /// <summary>
+        /// Gets or sets 
+        /// </summary>
         public IObject FieldInfo
         {
             get;
@@ -44,6 +48,12 @@ namespace DatenMeister.WPF.Controls.GuiElements
             get { return this.additionalColumns; }
         }
 
+        /// <summary>
+        /// This event will be thrown, when the content behind the created item
+        /// has changes. This event will be triggered by the WPFElement
+        /// </summary>
+        public event EventHandler ChangeContent;
+
         public ElementCacheEntry(IObject fieldInfo)
         {
             this.FieldInfo = fieldInfo;
@@ -56,15 +66,34 @@ namespace DatenMeister.WPF.Controls.GuiElements
             this.FieldInfo = fieldInfo;
         }
 
+        /// <summary>
+        /// This methods throws the <c>ChangeContent</c> event
+        /// </summary>
+        public void OnChangeContent()
+        {
+            var ev = this.ChangeContent;
+            if ( ev != null)
+            {
+                this.ChangeContent(this, EventArgs.Empty);
+            }
+        }
+
         public abstract class AdditionalCheckBox
         {
             /// <summary>
-            /// Defines a function, which is used to retrieve the checklist status
+            /// Gets the checkbox status
             /// </summary>
-            public Func<bool> GetCheckBoxStatus
+            public CheckBox Checkbox
             {
                 get;
                 set;
+            }
+            
+            /// <summary>
+            /// This method will be called, when the content of the associated field has changed.
+            /// </summary>
+            public virtual void OnContentChange()
+            {
             }
 
             /// <summary>
@@ -112,9 +141,10 @@ namespace DatenMeister.WPF.Controls.GuiElements
             /// <returns>true, if an assignment occured</returns>
             public override bool Assign(IObject detailObject, IObject fieldInfo)
             {
-                if (this.GetCheckBoxStatus())
+                var checkBoxStatus = this.Checkbox.IsChecked;
+                if (checkBoxStatus == true)
                 {
-                    var newValue = this.ValueFunction(this.GetCheckBoxStatus());
+                    var newValue = this.ValueFunction(checkBoxStatus == true);
                     detailObject.set(
                         General.getBinding(fieldInfo),
                         newValue);
@@ -123,6 +153,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 }
 
                 return false;
+            }
+
+            public override void OnContentChange()
+            {
+                this.Checkbox.IsChecked = false;
             }
         }
 
@@ -133,7 +168,12 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
             public override bool Assign(IObject detailObject, IObject fieldInfo)
             {
-                return this.GetCheckBoxStatus();
+                return this.Checkbox.IsChecked == true;
+            }
+
+            public override void OnContentChange()
+            {
+                this.Checkbox.IsChecked = false;
             }
         }
     }
