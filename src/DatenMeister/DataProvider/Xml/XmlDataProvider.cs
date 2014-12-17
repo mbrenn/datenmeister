@@ -57,6 +57,16 @@ namespace DatenMeister.DataProvider.Xml
         {
             Ensure.That(extent != null);
 
+            var rootNode = extent.XmlDocument.Root;
+            if (rootNode.Attribute(DatenMeister.Entities.AsObject.Uml.Types.XmlNamespace + "xmi")
+                == null)
+            {
+                extent.XmlDocument.Root.Add(
+                    new XAttribute(
+                        DatenMeister.Entities.AsObject.Uml.Types.XmlNamespace + "xmi",
+                        DatenMeister.Entities.AsObject.Uml.Types.XmiNamespace.ToString()));
+            }
+
             // Stores the file into database
             extent.XmlDocument.AddAnnotation(SaveOptions.OmitDuplicateNamespaces);
 
