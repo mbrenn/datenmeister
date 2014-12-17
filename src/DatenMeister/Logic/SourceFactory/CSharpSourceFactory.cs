@@ -305,7 +305,7 @@ namespace DatenMeister.Logic.SourceFactory
             {
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "return ({0}) DatenMeister.ObjectConversion.ConvertToEnumeration(result, typeof({0}));",
+                        TwelveSpaces + "return ({0}) DatenMeister.ObjectConversion.ConvertToEnum(result, typeof({0}));",
                         propertyTypeName));
             }
             else

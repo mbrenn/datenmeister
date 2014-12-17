@@ -325,7 +325,6 @@ namespace DatenMeister.WPF.Controls
                     }
 
                     this.gridContent.ItemsSource = elements.ToList();
-
                     
                     // Resorts the columns, if they had been sorted before
                     if (this.lastSortedColumn != null)

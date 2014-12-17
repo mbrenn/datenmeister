@@ -101,6 +101,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 extent.Elements().add(Types.MultiReferenceField);
             }
 
+            if(Types.SubElementList == null || true)
+            {
+                Types.SubElementList = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.SubElementList, "SubElementList");
+                extent.Elements().add(Types.SubElementList);
+            }
+
             if(Types.View == null || true)
             {
                 Types.View = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
@@ -656,6 +663,55 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             }
 
             {
+                // SubElementList.typeForNew
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "typeForNew");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.SubElementList, property);
+            }
+
+            {
+                // SubElementList.listTableView
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "listTableView");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.SubElementList, property);
+            }
+
+            {
+                // SubElementList.name
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.SubElementList, property);
+            }
+
+            {
+                // SubElementList.binding
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "binding");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.SubElementList, property);
+            }
+
+            {
+                // SubElementList.isReadOnly
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isReadOnly");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.SubElementList, property);
+            }
+
+            {
+                // SubElementList.columnWidth
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "columnWidth");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.SubElementList, property);
+            }
+
+            {
+                // SubElementList.height
+                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "height");
+                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.SubElementList, property);
+            }
+
+            {
                 // View.name
                 var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
                 DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
@@ -856,6 +912,8 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject MultiReferenceField;
 
+        public static DatenMeister.IObject SubElementList;
+
         public static DatenMeister.IObject View;
 
         public static DatenMeister.IObject FormView;
@@ -884,6 +942,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByRef), Types.ReferenceByRef);
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.ReferenceByValue), Types.ReferenceByValue);
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.MultiReferenceField), Types.MultiReferenceField);
+            mapping.Add(typeof(DatenMeister.Entities.FieldInfos.SubElementList), Types.SubElementList);
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.View), Types.View);
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.FormView), Types.FormView);
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TableView), Types.TableView);

@@ -148,16 +148,14 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)
         {
-            extent.Mapping.Add(typeof(DatenMeister.Entities.DM.ExtentInfo), Types.ExtentInfo);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
-            extent.Mapping.Add(typeof(DatenMeister.Entities.DM.Workbench), Types.Workbench);
             AssignTypeMapping(extent.Mapping);
-
         }
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)
         {
+            mapping.Add(typeof(DatenMeister.Entities.DM.ExtentInfo), Types.ExtentInfo);
             mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
+            mapping.Add(typeof(DatenMeister.Entities.DM.Workbench), Types.Workbench);
         }
 
         static partial void OnInitCompleted();

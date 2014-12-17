@@ -61,6 +61,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 return new WpfDropDownByConstant();
             }
 
+            if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.SubElementList)
+            {
+                return new WpfSubElementList();
+            }
+
             if (metaClass == null)
             {
                 throw new NotImplementedException("metaClass is null and not known");

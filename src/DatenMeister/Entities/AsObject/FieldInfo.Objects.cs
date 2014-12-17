@@ -3069,6 +3069,270 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class SubElementList : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
+    {
+        private DatenMeister.IObject obj;
+        public SubElementList(DatenMeister.IObject obj)
+        {
+            this.obj = obj;
+        }
+
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
+        {
+            return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.SubElementList);
+        }
+
+        public static SubElementList createTyped(DatenMeister.IFactory factory)
+        {
+            return new SubElementList(create(factory));
+        }
+
+        #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public DatenMeister.IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public object get(string propertyName)
+        {
+            return this.obj.get(propertyName);
+        }
+
+        /// <summary>
+        /// Gets all properties as key value pairs
+        /// </summary>
+        /// <returns></returns>
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
+        {
+            return this.obj.getAll();
+        }
+
+        /// <summary>
+        /// Checks, if a certain property is set
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if set</returns>
+        public bool isSet(string propertyName)
+        {
+            return this.obj.isSet(propertyName);
+        }
+
+        /// <summary>
+        /// Sets the value of the property 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="value">Value to be set</param>
+        public void set(string propertyName, object value)
+        {
+            this.obj.set(propertyName, value);
+        }
+
+        /// <summary>
+        /// Unsets the property
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be removed</param>
+        public bool unset(string propertyName)
+        {
+            return this.obj.unset(propertyName);
+        }
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        public void delete()
+        {
+            this.obj.delete();
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                return this.obj.Id;
+            }
+        }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				return this.obj.Extent;
+			}
+		}
+
+        #endregion
+
+        public DatenMeister.IObject getTypeForNew()
+        {
+            return getTypeForNew(this);
+        }
+
+        public void setTypeForNew(DatenMeister.IObject value)
+        {
+            setTypeForNew(this, value);
+        }
+
+        public static DatenMeister.IObject getTypeForNew(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("typeForNew"));
+            return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
+        }
+
+        public static void setTypeForNew(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            obj.set("typeForNew", value);
+        }
+
+        public DatenMeister.IObject getListTableView()
+        {
+            return getListTableView(this);
+        }
+
+        public void setListTableView(DatenMeister.IObject value)
+        {
+            setListTableView(this, value);
+        }
+
+        public static DatenMeister.IObject getListTableView(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("listTableView"));
+            return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
+        }
+
+        public static void setListTableView(DatenMeister.IObject obj, DatenMeister.IObject value)
+        {
+            obj.set("listTableView", value);
+        }
+
+        public System.String getName()
+        {
+            return getName(this);
+        }
+
+        public void setName(System.String value)
+        {
+            setName(this, value);
+        }
+
+        public static System.String getName(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("name"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setName(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("name", value);
+        }
+
+        public System.String getBinding()
+        {
+            return getBinding(this);
+        }
+
+        public void setBinding(System.String value)
+        {
+            setBinding(this, value);
+        }
+
+        public static System.String getBinding(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("binding"));
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setBinding(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("binding", value);
+        }
+
+        public System.Boolean isReadOnly()
+        {
+            return isReadOnly(this);
+        }
+
+        public void setReadOnly(System.Boolean value)
+        {
+            setReadOnly(this, value);
+        }
+
+        public static System.Boolean isReadOnly(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly"));
+            return DatenMeister.ObjectConversion.ToBoolean(result);
+        }
+
+        public static void setReadOnly(DatenMeister.IObject obj, System.Boolean value)
+        {
+            obj.set("isReadOnly", value);
+        }
+
+        public System.Int32 getColumnWidth()
+        {
+            return getColumnWidth(this);
+        }
+
+        public void setColumnWidth(System.Int32 value)
+        {
+            setColumnWidth(this, value);
+        }
+
+        public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setColumnWidth(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("columnWidth", value);
+        }
+
+        public System.Int32 getHeight()
+        {
+            return getHeight(this);
+        }
+
+        public void setHeight(System.Int32 value)
+        {
+            setHeight(this, value);
+        }
+
+        public static System.Int32 getHeight(DatenMeister.IObject obj)
+        {
+            var result = DatenMeister.Extensions.AsSingle(obj.get("height"));
+            return DatenMeister.ObjectConversion.ToInt32(result);
+        }
+
+        public static void setHeight(DatenMeister.IObject obj, System.Int32 value)
+        {
+            obj.set("height", value);
+        }
+
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class View : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;

@@ -875,6 +875,74 @@ export module MultiReferenceField {
 
 }
 
+export module SubElementList {
+    export var TypeName='SubElementList';
+
+    export function create() {
+        var result = new __d__.JsonExtentObject();
+        result.set('type', 'SubElementList');
+        return result;
+    }
+
+
+    export function getTypeForNew(item: __d__.JsonExtentObject) {
+        return item.get('typeForNew');
+    }
+
+    export function setTypeForNew(item : __d__.JsonExtentObject, value: any) {
+        item.set('typeForNew', value);
+    }
+
+    export function getListTableView(item: __d__.JsonExtentObject) {
+        return item.get('listTableView');
+    }
+
+    export function setListTableView(item : __d__.JsonExtentObject, value: any) {
+        item.set('listTableView', value);
+    }
+
+    export function getName(item: __d__.JsonExtentObject) {
+        return item.get('name');
+    }
+
+    export function setName(item : __d__.JsonExtentObject, value: any) {
+        item.set('name', value);
+    }
+
+    export function getBinding(item: __d__.JsonExtentObject) {
+        return item.get('binding');
+    }
+
+    export function setBinding(item : __d__.JsonExtentObject, value: any) {
+        item.set('binding', value);
+    }
+
+    export function isReadOnly(item: __d__.JsonExtentObject) {
+        return item.get('isReadOnly');
+    }
+
+    export function setReadOnly(item : __d__.JsonExtentObject, value: any) {
+        item.set('isReadOnly', value);
+    }
+
+    export function getColumnWidth(item: __d__.JsonExtentObject) {
+        return item.get('columnWidth');
+    }
+
+    export function setColumnWidth(item : __d__.JsonExtentObject, value: any) {
+        item.set('columnWidth', value);
+    }
+
+    export function getHeight(item: __d__.JsonExtentObject) {
+        return item.get('height');
+    }
+
+    export function setHeight(item : __d__.JsonExtentObject, value: any) {
+        item.set('height', value);
+    }
+
+}
+
 export module View {
     export var TypeName='View';
 

@@ -25,6 +25,11 @@ namespace DatenMeister.Entities.AsObject.DM
             return factory.create(DatenMeister.Entities.AsObject.DM.Types.ExtentInfo);
         }
 
+        public static ExtentInfo createTyped(DatenMeister.IFactory factory)
+        {
+            return new ExtentInfo(create(factory));
+        }
+
         #region IObject Implementation
 
         public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
@@ -269,7 +274,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RecentProject : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -449,7 +454,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.6.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Workbench : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -462,6 +467,11 @@ namespace DatenMeister.Entities.AsObject.DM
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.DM.Types.Workbench);
+        }
+
+        public static Workbench createTyped(DatenMeister.IFactory factory)
+        {
+            return new Workbench(create(factory));
         }
 
         #region IObject Implementation

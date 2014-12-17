@@ -120,6 +120,7 @@
     <Compile Include="DataProvider\Xml\XmlTypeInformation.cs" />
     <Compile Include="DataProvider\Xml\XmlTypeMapping.cs" />
     <Compile Include="DataProvider\Xml\XmlUnspecified.cs" />
+    <Compile Include="Entities\FieldInfos\SubElementList.cs" />
     <Compile Include="Pool\DatenMeisterPool.cs" />
     <Compile Include="Entities\AsObject\DM.Objects.cs" />
     <Compile Include="Entities\AsObject\DM.Types.cs" />
