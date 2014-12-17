@@ -13,6 +13,15 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
 {
     public class DataDefaultColumn : GenericColumn
     {
+        public DataDefaultColumn(IObject associatedViewColumn, string propertyName)
+            : base(associatedViewColumn, propertyName)
+        {
+        }
+
+        /// <summary>
+        /// Gets the view item. The view item is necessary
+        /// to find out additional properties for the view, like background color
+        /// </summary>
         public IObject ViewItem
         {
             get;

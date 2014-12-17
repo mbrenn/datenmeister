@@ -74,19 +74,19 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// </summary>
         /// <param name="fieldInfo">View element being used to show the columns</param>
         /// <returns>Returned column information</returns>
-        public static GenericColumn MapForTable(IObject tableInfo, IObject fieldInfo)
+        public static GenericColumn MapForTable(IObject tableInfo, IObject fieldInfo, string binding)
         {
             var element = fieldInfo as IElement;
-            if ( element != null )
+            if (element != null)
             {
                 var metaClass = element.getMetaClass();
                 if (metaClass == DatenMeister.Entities.AsObject.FieldInfo.Types.HyperLinkColumn)
                 {
-                    return new HyperLinkColumn();
+                    return new HyperLinkColumn(fieldInfo, binding);
                 }
             }
 
-            return new DataDefaultColumn()
+            return new DataDefaultColumn(fieldInfo, binding)
             {
                 ViewItem = tableInfo
             };

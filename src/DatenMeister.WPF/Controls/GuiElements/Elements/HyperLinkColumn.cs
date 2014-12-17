@@ -13,6 +13,11 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
 {
     public class HyperLinkColumn : GenericColumn
     {
+        public HyperLinkColumn(IObject associatedViewColumn, string propertyName)
+            : base(associatedViewColumn, propertyName)
+        {
+        }
+
         protected override System.Windows.FrameworkElement GenerateEditingElement(DataGridCell cell, object dataItem)
         {
             return this.GenerateElement(cell, dataItem);

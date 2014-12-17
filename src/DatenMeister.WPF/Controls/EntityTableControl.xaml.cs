@@ -16,6 +16,7 @@ using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -63,7 +64,17 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// Gets or sets the type that shall be created, when user clicks on 'new'.
         /// </summary>
-        private IObject mainType;
+        private IObject mainType; 
+        
+        /// <summary>
+        /// Stores the last column, which has been used to perform sorting
+        /// </summary>
+        private GenericColumn lastSortedColumn;
+
+        /// <summary>
+        /// Stores the last direction of the sorting
+        /// </summary>
+        private ListSortDirection? lastSortedDirection;
 
         /// <summary>
         /// This function will be used to open a view of the currently selected item 
@@ -206,7 +217,7 @@ namespace DatenMeister.WPF.Controls
                     var fieldInfoObj = new DatenMeister.Entities.AsObject.FieldInfo.General(fieldInfo);
                     var name = fieldInfoObj.getName();
                     var binding = fieldInfoObj.getBinding();
-                    var column = WpfElementMapping.MapForTable(this.Configuration.LayoutInfo, fieldInfo);
+                    var column = WpfElementMapping.MapForTable(this.Configuration.LayoutInfo, fieldInfo, binding);
                     column.Header = name;
                     column.Binding = new Binding("[" + binding + "]");
                     column.AssociatedViewColumn = fieldInfo;
@@ -298,7 +309,29 @@ namespace DatenMeister.WPF.Controls
                             ObjectDictionaryForView.FilterByText(x, this.filterByText));
                     }
 
+                    // Resorts the columns, if they had been sorted before
+                    if (this.lastSortedColumn != null)
+                    {
+                        if (this.lastSortedDirection == ListSortDirection.Ascending)
+                        {
+                            elements = elements.OrderBy(
+                                x => x.Get(this.lastSortedColumn.PropertyName));
+                        }
+                        else
+                        {
+                            elements = elements.OrderByDescending(
+                                x => x.Get(this.lastSortedColumn.PropertyName));
+                        }
+                    }
+
                     this.gridContent.ItemsSource = elements.ToList();
+
+                    
+                    // Resorts the columns, if they had been sorted before
+                    if (this.lastSortedColumn != null)
+                    {
+                        this.lastSortedColumn.SortDirection = this.lastSortedDirection;
+                    }
                 }
             }
             catch (Exception exc)
@@ -674,6 +707,30 @@ namespace DatenMeister.WPF.Controls
             this.ErrorMessage.Visibility = System.Windows.Visibility.Visible;
             this.DataTable.Visibility = System.Windows.Visibility.Collapsed;
             this.ErrorMessageContent.Text = exc.ToString();
+        }
+
+        private void gridContent_Sorting(object sender, DataGridSortingEventArgs e)
+        {
+            switch (e.Column.SortDirection)
+            {
+                case null:
+                    this.lastSortedDirection = ListSortDirection.Ascending;
+                    break;
+                case ListSortDirection.Ascending:
+                    this.lastSortedDirection = ListSortDirection.Descending;
+                    break;
+                case ListSortDirection.Descending:
+                    this.lastSortedDirection = ListSortDirection.Ascending;
+                    break;
+            }
+
+            var asGenericColumn = e.Column as GenericColumn;
+            Ensure.That(asGenericColumn != null);
+
+            this.lastSortedColumn = asGenericColumn;
+
+            e.Handled = true;
+            this.RefreshItems();
         }
     }
 }
