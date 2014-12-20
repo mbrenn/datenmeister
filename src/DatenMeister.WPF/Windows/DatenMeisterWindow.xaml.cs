@@ -584,9 +584,9 @@ namespace DatenMeister.WPF.Windows
         private bool? DoesUserWantsToSaveData()
         {            
             var pool = PoolResolver.GetDefaultPool();
-            var dataExtent = pool.GetExtents(ExtentType.Data).First();
+            var dataExtents = pool.GetExtents(ExtentType.Data);
 
-            if (!dataExtent.IsDirty)
+            if (dataExtents.All(x => !x.IsDirty))
             {
                 // Content is not dirty, user will accept that content is not stored
                 return false;

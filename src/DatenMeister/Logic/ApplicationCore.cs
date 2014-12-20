@@ -248,7 +248,7 @@ namespace DatenMeister.Logic
             // Adds the extent of views to the pool
             var viewExtent = new XmlExtent(new XDocument(new XElement("views")), ViewDataUri); ;
             workBenchManager.AddExtent(
-                viewExtent, new ExtentParam("ProjektMeister Views", ExtentType.View).AsPrepopulated()); 
+                viewExtent, new ExtentParam("DatenMeister Views", ExtentType.View).AsPrepopulated()); 
 
             // Call the private settings that the viewset needs to be initialized
             this.privateSettings.InitializeViewSet(this);

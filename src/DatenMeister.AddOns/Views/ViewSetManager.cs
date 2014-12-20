@@ -107,7 +107,6 @@ namespace DatenMeister.AddOns.Views
 
             // Add the event, and call yourself
             window.Core.ViewSetFinalized += (x, y) => InitializeViewSet();
-            InitializeViewSet();
 
             window.AddMenuEntry(Localization_DM_Addons.Menu_Views, assignAuto);
             window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
