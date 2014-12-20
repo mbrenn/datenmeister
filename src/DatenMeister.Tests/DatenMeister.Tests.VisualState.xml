@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]D:\Projekte\datenmeister\src\DatenMeister.Tests\DatenMeister.Tests.nunit</TopNode>
+  <SelectedNode>[0-1000]D:\Projekte\datenmeister\src\DatenMeister.Tests\DatenMeister.Tests.nunit</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]D:\Projekte\datenmeister\src\DatenMeister.Tests\DatenMeister.Tests.nunit" Expanded="true" />
+    <Node UniqueName="[0-1057]D:\Projekte\datenmeister\src\DatenMeister.Tests\bin\Debug\DatenMeister.Tests.dll" Expanded="true" />
+    <Node UniqueName="[0-1058]DatenMeister" Expanded="true" />
+    <Node UniqueName="[0-1059]DatenMeister.Tests" Expanded="true" />
+    <Node UniqueName="[0-1060]DatenMeister.Tests.DataProvider" Expanded="true" />
+    <Node UniqueName="[0-1061]DatenMeister.Tests.DataProvider.GroupBy" Expanded="true" />
+    <Node UniqueName="[0-1062]DatenMeister.Tests.Export" Expanded="true" />
+    <Node UniqueName="[0-1063]DatenMeister.Tests.PoolLogic" Expanded="true" />
+    <Node UniqueName="[0-1052]DatenMeister.Tests.PoolLogic.PoolProviderTests" Expanded="true" />
+  </Nodes>
+</VisualState>

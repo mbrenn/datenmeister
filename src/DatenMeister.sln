@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{B6E28C
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TypeScriptCreator", "..\tools\TypeScriptCreator\TypeScriptCreator.pyproj", "{D0D6E716-07F9-417E-ADAC-77D6A7566881}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatenMeisterGui", "DatenMeisterGui\DatenMeisterGui.csproj", "{B1F26843-88DC-4849-B6E8-DFF3C76B78E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,14 @@ Global
 		{D0D6E716-07F9-417E-ADAC-77D6A7566881}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0D6E716-07F9-417E-ADAC-77D6A7566881}.Release|x64.ActiveCfg = Release|Any CPU
 		{D0D6E716-07F9-417E-ADAC-77D6A7566881}.Release|x86.ActiveCfg = Release|Any CPU
+		{B1F26843-88DC-4849-B6E8-DFF3C76B78E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F26843-88DC-4849-B6E8-DFF3C76B78E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F26843-88DC-4849-B6E8-DFF3C76B78E0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B1F26843-88DC-4849-B6E8-DFF3C76B78E0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B1F26843-88DC-4849-B6E8-DFF3C76B78E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F26843-88DC-4849-B6E8-DFF3C76B78E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F26843-88DC-4849-B6E8-DFF3C76B78E0}.Release|x64.ActiveCfg = Release|Any CPU
+		{B1F26843-88DC-4849-B6E8-DFF3C76B78E0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
