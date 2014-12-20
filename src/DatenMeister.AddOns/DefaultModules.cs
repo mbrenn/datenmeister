@@ -2,6 +2,7 @@
 using DatenMeister.AddOns.Export.Report.Simple;
 using DatenMeister.AddOns.Views;
 using DatenMeister.Logic;
+using DatenMeister.Logic.Settings;
 using DatenMeister.WPF.Modules.RecentFiles;
 using DatenMeister.WPF.Windows;
 using System;

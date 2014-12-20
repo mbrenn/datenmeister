@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseDatenMeisterSettings.cs" />
+    <Compile Include="Logic\Settings\BaseDatenMeisterSettings.cs" />
     <Compile Include="BaseUnspecified.cs" />
     <Compile Include="DataProvider\BaseReflectiveCollection.cs" />
     <Compile Include="DataProvider\BaseReflectiveSequence.cs" />
@@ -154,14 +154,14 @@
     <Compile Include="Entities\UML\Type.cs" />
     <Compile Include="Entities\UML\NamedElement.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="IDatenMeisterSettings.cs" />
+    <Compile Include="Logic\Settings\IDatenMeisterSettings.cs" />
     <Compile Include="IElement.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="Injection.cs" />
     <Compile Include="IObject.cs" />
     <Compile Include="Pool\ExtentParam.cs" />
     <Compile Include="Pool\IPool.cs" />
-    <Compile Include="IPublicDatenMeisterSettings.cs" />
+    <Compile Include="Logic\Settings\IPublicDatenMeisterSettings.cs" />
     <Compile Include="IReflectiveCollection.cs" />
     <Compile Include="IReflectiveSequence.cs" />
     <Compile Include="IUnspecified.cs" />

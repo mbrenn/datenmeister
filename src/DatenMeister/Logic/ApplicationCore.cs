@@ -5,6 +5,7 @@ using DatenMeister.DataProvider.DotNet;
 using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic.MethodProvider;
+using DatenMeister.Logic.Settings;
 using DatenMeister.Logic.TypeConverter;
 using DatenMeister.Logic.TypeResolver;
 using DatenMeister.Pool;

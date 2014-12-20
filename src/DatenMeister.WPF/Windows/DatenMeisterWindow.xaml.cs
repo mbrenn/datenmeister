@@ -4,6 +4,7 @@ using DatenMeister.DataProvider.Wrapper;
 using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
+using DatenMeister.Logic.Settings;
 using DatenMeister.Pool;
 using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
