@@ -75,6 +75,15 @@ namespace DatenMeister.AddOns
                 get;
                 set;
             }
+
+            /// <summary>
+            /// Stores the created setting
+            /// </summary>
+            public IDatenMeisterSettings Settings
+            {
+                get;
+                set;
+            }
         }
     }
 }

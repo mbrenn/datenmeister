@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DatenMeisterGui</RootNamespace>
     <AssemblyName>DatenMeisterGui</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,6 +60,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatenMeisterGuiSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -84,6 +86,32 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\burnsystems\src\BurnSystems.csproj">
+      <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
+      <Name>BurnSystems</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\datenmeister.icons\src\DatenMeister.Icons\DatenMeister.Icons.csproj">
+      <Project>{c2bc0e95-4d38-4584-b6a0-b08dec6de504}</Project>
+      <Name>DatenMeister.Icons</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatenMeister.AddOns\DatenMeister.AddOns.csproj">
+      <Project>{c4672023-3e93-45eb-a797-7c144dff43fc}</Project>
+      <Name>DatenMeister.AddOns</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatenMeister.Tests\DatenMeister.Tests.csproj">
+      <Project>{a0a0f8c5-4fe1-422f-bd74-5917df8d9565}</Project>
+      <Name>DatenMeister.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatenMeister.WPF\DatenMeister.WPF.csproj">
+      <Project>{89161f62-500b-41b3-937e-e9850cf689af}</Project>
+      <Name>DatenMeister.WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatenMeister\DatenMeister.csproj">
+      <Project>{d0c28956-4eee-4af0-a0ed-a500a558c5d8}</Project>
+      <Name>DatenMeister</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
