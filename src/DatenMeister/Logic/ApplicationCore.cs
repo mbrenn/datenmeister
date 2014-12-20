@@ -8,6 +8,7 @@ using DatenMeister.Logic.MethodProvider;
 using DatenMeister.Logic.Settings;
 using DatenMeister.Logic.TypeConverter;
 using DatenMeister.Logic.TypeResolver;
+using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
 using Ninject;
 using System;
@@ -32,6 +33,8 @@ namespace DatenMeister.Logic
         /// Defines the uri for the application core
         /// </summary>
         public const string ApplicationDataUri = "datenmeister:///applications";
+
+        public const string ViewDataUri = "datenmeister:///views";
 
         /// <summary>
         /// Stores the application data in an extent
@@ -185,6 +188,9 @@ namespace DatenMeister.Logic
             Injection.Application.Bind<WorkbenchManager>().To<WorkbenchManager>();
             Injection.Application.Bind<WorkbenchContainer>().To<WorkbenchContainer>().InSingletonScope();
 
+            // Initializes the viewsetmanager
+            Injection.Application.Bind<IViewManager>().To<DefaultViewManager>().InSingletonScope();
+
             if (!onlyBootStrap)
             {
                 // Initializes the global dot net extent
@@ -238,6 +244,11 @@ namespace DatenMeister.Logic
 
             // Loads the application data from file
             this.LoadApplicationDataIfNotLoaded();
+
+            // Adds the extent of views to the pool
+            var viewExtent = new XmlExtent(new XDocument(new XElement("views")), ViewDataUri); ;
+            workBenchManager.AddExtent(
+                viewExtent, new ExtentParam("ProjektMeister Views", ExtentType.View).AsPrepopulated()); 
 
             // Call the private settings that the viewset needs to be initialized
             this.privateSettings.InitializeViewSet(this);

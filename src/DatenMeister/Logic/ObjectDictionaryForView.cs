@@ -45,7 +45,7 @@ namespace DatenMeister.Logic
         /// </summary>
         /// <param name="propertyName">Index to be set</param>
         /// <returns>true, property is set</returns>
-        public bool IsSet ( string propertyName)
+        public bool IsSet(string propertyName)
         {
             if (this.Value.get(propertyName).AsSingle() == ObjectHelper.NotSet)
             {
