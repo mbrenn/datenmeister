@@ -31,6 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BurnSystems, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5e47e01beba24f18, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\BurnSystems.1.0.0.0\lib\net451\BurnSystems.dll</HintPath>
+    </Reference>
+    <Reference Include="BurnSystems.Logger">
+      <HintPath>..\packages\BurnSystems.Logger.1.0.2.0\lib\net45\BurnSystems.Logger.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -166,10 +173,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\burnsystems\src\BurnSystems.csproj">
-      <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
-      <Name>BurnSystems</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DatenMeister\DatenMeister.csproj">
       <Project>{d0c28956-4eee-4af0-a0ed-a500a558c5d8}</Project>
       <Name>DatenMeister</Name>

@@ -35,6 +35,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BurnSystems, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5e47e01beba24f18, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\BurnSystems.1.0.0.0\lib\net451\BurnSystems.dll</HintPath>
+    </Reference>
+    <Reference Include="BurnSystems.Logger">
+      <HintPath>..\packages\BurnSystems.Logger.1.0.2.0\lib\net45\BurnSystems.Logger.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Experimental.Collections">
       <HintPath>..\packages\Microsoft.Experimental.Collections.1.0.3-alpha\lib\portable-net45+win8+wp8\Microsoft.Experimental.Collections.dll</HintPath>
     </Reference>
@@ -235,12 +242,6 @@
     <Compile Include="Transformations\RecurseObjectTransformation.cs" />
     <Compile Include="Logic\ExtentType.cs" />
     <Compile Include="Transformations\UnionTransformation.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\burnsystems\src\BurnSystems.csproj">
-      <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
-      <Name>BurnSystems</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources_DatenMeister.resx">

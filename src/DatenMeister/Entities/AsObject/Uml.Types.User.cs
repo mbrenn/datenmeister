@@ -1,4 +1,4 @@
-﻿using BurnSystems.Logging;
+﻿using BurnSystems.Logger;
 using DatenMeister.DataProvider;
 using System;
 using System.Collections.Generic;

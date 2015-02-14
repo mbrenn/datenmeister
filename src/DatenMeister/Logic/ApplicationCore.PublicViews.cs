@@ -1,5 +1,4 @@
-﻿using BurnSystems.Logging;
-using BurnSystems.ObjectActivation;
+﻿using BurnSystems.Logger;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;

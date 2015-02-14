@@ -1,4 +1,4 @@
-﻿using BurnSystems.Logging;
+﻿using BurnSystems.Logger;
 using BurnSystems.Test;
 using DatenMeister.DataProvider.Wrapper;
 using DatenMeister.DataProvider.Wrapper.EventOnChange;

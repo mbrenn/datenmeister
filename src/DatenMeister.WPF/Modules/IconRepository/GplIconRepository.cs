@@ -1,4 +1,4 @@
-﻿using BurnSystems.Logging;
+﻿using BurnSystems.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;

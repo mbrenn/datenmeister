@@ -31,6 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BurnSystems, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5e47e01beba24f18, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\BurnSystems.1.0.0.0\lib\net451\BurnSystems.dll</HintPath>
+    </Reference>
+    <Reference Include="BurnSystems.Logger">
+      <HintPath>..\packages\BurnSystems.Logger.1.0.2.0\lib\net45\BurnSystems.Logger.dll</HintPath>
+    </Reference>
     <Reference Include="DotLiquid">
       <HintPath>..\packages\DotLiquid.1.8.0\lib\NET45\DotLiquid.dll</HintPath>
     </Reference>
@@ -102,10 +109,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\burnsystems\src\BurnSystems.csproj">
-      <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
-      <Name>BurnSystems</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DatenMeister.WPF\DatenMeister.WPF.csproj">
       <Project>{89161f62-500b-41b3-937e-e9850cf689af}</Project>
       <Name>DatenMeister.WPF</Name>

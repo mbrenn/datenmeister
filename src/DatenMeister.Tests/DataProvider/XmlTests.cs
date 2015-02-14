@@ -764,7 +764,6 @@ namespace DatenMeister.Tests.DataProvider
         public static XmlExtent CreateRawTestExtent()
         {
             ApplicationCore.PerformBinding();
-            BurnSystems.ObjectActivation.Global.Reset();
             var document = XDocument.Parse(
                 "<root>" +
                 "</root>");
@@ -792,7 +791,6 @@ namespace DatenMeister.Tests.DataProvider
         public static XmlExtent CreateTestExtent(bool isEmpty = false)
         {
             ApplicationCore.PerformBinding();
-            BurnSystems.ObjectActivation.Global.Reset();
             var document = XDocument.Parse(
                 "<root>" +
                     "<tasks />" +

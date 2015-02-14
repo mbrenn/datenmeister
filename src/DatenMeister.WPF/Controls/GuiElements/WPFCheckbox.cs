@@ -1,5 +1,4 @@
-﻿using BurnSystems.Serialization;
-using DatenMeister.Logic;
+﻿using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +16,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
             var checkbox = new DatenMeister.Entities.AsObject.FieldInfo.Checkbox(fieldInfo);
 
-            var wpfCheckbox = new CheckBox();            
+            var wpfCheckbox = new CheckBox();
             wpfCheckbox.VerticalAlignment = VerticalAlignment.Center;
 
             if (state.EditMode == EditMode.Edit && detailObjects != null)
@@ -29,7 +28,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                     wpfCheckbox.IsChecked = null;
                 }
                 else if (propertyValue != null)
-                {                    
+                {
                     var asSingle = propertyValue.AsSingle();
                     wpfCheckbox.IsChecked = ObjectConversion.ToBoolean(asSingle);
                 }

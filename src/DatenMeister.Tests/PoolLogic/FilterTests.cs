@@ -1,5 +1,4 @@
-﻿using BurnSystems.ObjectActivation;
-using DatenMeister.DataProvider;
+﻿using DatenMeister.DataProvider;
 using DatenMeister.Logic;
 using DatenMeister.Transformations;
 using NUnit.Framework;
@@ -31,7 +30,6 @@ namespace DatenMeister.Tests.PoolLogic
         [Test]
         public void FilterByPropertyBoolean()
         {
-            Global.Reset();
             var db = new TestDatabase();
             var pool = db.Init();
             var filtered =

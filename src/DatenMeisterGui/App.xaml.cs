@@ -1,4 +1,5 @@
-﻿using DatenMeister.AddOns;
+﻿using BurnSystems.Logger;
+using DatenMeister.AddOns;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Settings;
 using System;
@@ -20,8 +21,8 @@ namespace DatenMeisterGui
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            BurnSystems.Logging.Log.TheLog.FilterLevel = BurnSystems.Logging.LogLevel.Everything;
-            BurnSystems.Logging.Log.TheLog.AddLogProvider(new BurnSystems.Logging.DebugProvider());
+            Log.TheLog.FilterLevel = LogLevel.Everything;
+            Log.TheLog.AddLogProvider(new DebugProvider());
 
             var result = DefaultModules.DefaultStartWith<DatenMeisterGuiSettings>(this);
             this.core = result.Core;

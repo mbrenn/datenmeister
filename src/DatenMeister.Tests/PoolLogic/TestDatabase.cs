@@ -1,5 +1,4 @@
-﻿using BurnSystems.ObjectActivation;
-using DatenMeister;
+﻿using DatenMeister;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.DataProvider.Views;
@@ -79,8 +78,6 @@ namespace DatenMeister.Tests
         /// </summary>
         public DatenMeisterPool Init()
         {
-            Global.Reset();
-
             ApplicationCore.PerformBinding();
             this.pool = DatenMeisterPool.Create();
 

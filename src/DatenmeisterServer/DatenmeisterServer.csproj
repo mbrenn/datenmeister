@@ -73,10 +73,6 @@
       <Project>{42023d16-afd1-4d99-bc39-9ef46982eb54}</Project>
       <Name>BurnSystems</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DatenMeister.Web\DatenMeister.Web.csproj">
-      <Project>{07032e56-402b-404a-aed3-cdb3305ab39a}</Project>
-      <Name>DatenMeister.Web</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DatenMeister\DatenMeister.csproj">
       <Project>{D0C28956-4EEE-4AF0-A0ED-A500A558C5D8}</Project>
       <Name>DatenMeister</Name>
