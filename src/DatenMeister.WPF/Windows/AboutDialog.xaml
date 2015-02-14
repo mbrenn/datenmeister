@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              Title="DatenMeister - About Dialog"
              WindowStartupLocation="CenterScreen"
-             Width="630" Height="500" WindowStartupLocation="CenterOwner"
+             Width="630" Height="500" 
              Icon="../resources/icons.ico" >
     <Grid>
         <Grid.RowDefinitions>
@@ -35,7 +35,9 @@
                     <LineBreak />
                     Thanks to DotLiquid (http://dotliquidmarkup.org/), which is used for Html export und is licensed under the Apache License, Version 2.0.<LineBreak />
                     <LineBreak />
-                    Thanks to Gnome Icon Theme (http://ftp.gnome.org/pub/GNOME/sources/gnome-icon-theme/3.12/), which is used for the icons.
+                    Thanks to Gnome Icon Theme (http://ftp.gnome.org/pub/GNOME/sources/gnome-icon-theme/3.12/), which is used for the icons in the OpenSource version.<LineBreak />
+                    <LineBreak />
+                    Thanks to Axialis (http://www.axialis.com/) for the icons in the proprietery, released version.
                     <LineBreak />
                      ====================================================================<LineBreak />
                 Apache Licence, Version 2.0: <LineBreak />
