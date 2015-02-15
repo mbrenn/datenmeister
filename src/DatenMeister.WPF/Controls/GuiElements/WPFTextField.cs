@@ -37,7 +37,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             textBox.SelectAll();
         }
 
-        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry cacheEntry)
+        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, ILayoutHostState state, ElementCacheEntry cacheEntry)
         {
             var textFieldObj = new DatenMeister.Entities.AsObject.FieldInfo.TextField(fieldInfo);
 

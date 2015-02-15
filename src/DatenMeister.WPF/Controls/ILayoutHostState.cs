@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.WPF.Controls
 {
-    public interface IDataPresentationState
+    /// <summary>
+    /// Defines the interface for the layout, which is hosting the control
+    /// </summary>
+    public interface ILayoutHostState
     {
         /// <summary>
         /// Gets the current edit mode of the element

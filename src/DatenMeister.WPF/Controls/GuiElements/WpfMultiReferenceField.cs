@@ -36,7 +36,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <summary>
         /// Stores the context information
         /// </summary>
-        public IDataPresentationState State
+        public ILayoutHostState State
         {
             get;
             set;
@@ -58,7 +58,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <param name="fieldInfo">The field information being used to design the field</param>
         /// <param name="state">Gives the context</param>
         /// <returns>Creates the element</returns>
-        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry entry)
+        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, ILayoutHostState state, ElementCacheEntry entry)
         {
             this.DetailObject = detailObject;
             this.FieldInfo = new Entities.AsObject.FieldInfo.MultiReferenceField(fieldInfo);

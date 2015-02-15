@@ -25,7 +25,7 @@ namespace DatenMeister.WPF.Controls
     /// <summary>
     /// Interaktionslogik für ObjectForm.xaml
     /// </summary>
-    public partial class EntityFormControl : UserControl, IDataPresentationState
+    public partial class EntityFormControl : UserControl, ILayoutHostState
     {
         /// <summary>
         /// Defines the logger to be used
@@ -369,12 +369,12 @@ namespace DatenMeister.WPF.Controls
             }
         }
 
-        EditMode IDataPresentationState.EditMode
+        EditMode ILayoutHostState.EditMode
         {
             get { return this.configuration.EditMode; }
         }
 
-        DisplayMode IDataPresentationState.DisplayMode
+        DisplayMode ILayoutHostState.DisplayMode
         {
             get { return Controls.DisplayMode.Form; }
         }

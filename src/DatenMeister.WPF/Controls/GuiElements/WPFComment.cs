@@ -17,7 +17,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <param name="fieldInfo">Information of the field</param>
         /// <param name="state">Status of the entity</param>
         /// <returns>The created UI Element</returns>
-        public UIElement GenerateElement(IObject detailInfo, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry entry)
+        public UIElement GenerateElement(IObject detailInfo, IObject fieldInfo, ILayoutHostState state, ElementCacheEntry entry)
         {
             var comment = new DatenMeister.Entities.AsObject.FieldInfo.Comment(fieldInfo);
             var commentText = comment.getComment();

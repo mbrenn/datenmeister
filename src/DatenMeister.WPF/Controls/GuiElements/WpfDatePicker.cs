@@ -22,7 +22,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// </summary>
         private System.Windows.Controls.DatePicker datePicker;
 
-        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry cacheEntry)
+        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, ILayoutHostState state, ElementCacheEntry cacheEntry)
         {
             this.wpfGrid = new System.Windows.Controls.Grid();
             this.wpfGrid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition()

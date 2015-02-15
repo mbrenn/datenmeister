@@ -55,7 +55,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             // Nothing to do per default
         }
 
-        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry entry)
+        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, ILayoutHostState state, ElementCacheEntry entry)
         {
             var settings = new WpfDropDownSettings();
 

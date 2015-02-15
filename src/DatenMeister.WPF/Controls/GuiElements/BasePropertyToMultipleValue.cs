@@ -8,9 +8,9 @@ namespace DatenMeister.WPF.Controls.GuiElements
 {
     public abstract class BasePropertyToMultipleValue :  IWpfElementGenerator, IPropertyToMultipleValues
     {
-        public abstract System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObject, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry cacheEntry);
+        public abstract System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObject, IObject fieldInfo, ILayoutHostState state, ElementCacheEntry cacheEntry);
 
-        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry cacheEntry)
+        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, ILayoutHostState state, ElementCacheEntry cacheEntry)
         {
             if (detailObject == null)
             {

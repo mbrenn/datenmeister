@@ -8,7 +8,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
 {
     public class WpfSubElementList : IWpfElementGenerator
     {
-        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, IDataPresentationState state, ElementCacheEntry cacheEntry)
+        public System.Windows.UIElement GenerateElement(IObject detailObject, IObject fieldInfo, ILayoutHostState state, ElementCacheEntry cacheEntry)
         {
             throw new NotImplementedException();
         }

@@ -103,7 +103,7 @@
     <Compile Include="Controls\GuiElements\IWpfElementGenerator.cs" />
     <Compile Include="Controls\GuiElements\WpfMultiReferenceField.cs" />
     <Compile Include="Controls\GuiElements\WpfTextField.cs" />
-    <Compile Include="Controls\IDataPresentationState.cs" />
+    <Compile Include="Controls\ILayoutHostState.cs" />
     <Compile Include="Windows\ListDialog.xaml.cs">
       <DependentUpon>ListDialog.xaml</DependentUpon>
     </Compile>
