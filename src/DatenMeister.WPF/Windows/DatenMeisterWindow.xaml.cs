@@ -10,6 +10,7 @@ using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls;
 using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Modules.RecentFiles;
+using DatenMeister.WPF.Windows.Controls;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -153,6 +154,15 @@ namespace DatenMeister.WPF.Windows
                     System.IO.Path.GetFileNameWithoutExtension(this.pathOfDataExtent),
                     applicationTitle);
             }
+        }
+
+        /// <summary>
+        /// Shows a message as an opaque window, which disappears
+        /// </summary>
+        /// <param name="message"></param>
+        public void ShowMessage(string message)
+        {
+            InlineMessageBox.ShowMessageBox(this.panelMessage, message);
         }
 
         /// <summary>
@@ -536,7 +546,7 @@ namespace DatenMeister.WPF.Windows
                 this.Core.StoreWorkbench(this.pathOfDataExtent);
                 this.UpdateWindowTitle();
 
-                MessageBox.Show(this, Localization_DatenMeister_WPF.ChangeHasBeenSaved);
+                this.ShowMessage( Localization_DatenMeister_WPF.ChangeHasBeenSaved);
             }
         }
 

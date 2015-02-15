@@ -68,6 +68,9 @@
     <Compile Include="Controls\ListLayoutConfiguration.cs" />
     <Compile Include="Controls\ObjectForTreeView.cs" />
     <Compile Include="Controls\TreeLayoutConfiguration.cs" />
+    <Compile Include="Windows\Controls\InlineMessageBox.xaml.cs">
+      <DependentUpon>InlineMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\DetailDialog.xaml.cs">
       <DependentUpon>DetailDialog.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\EntityTreeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Controls\InlineMessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,6 +20,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
+        <Grid Grid.Row="2" Panel.ZIndex="1000" x:Name="panelMessage"> 
+        </Grid>
         <Ribbon x:Name="menuMain" ShowQuickAccessToolBarOnTop="False" >
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
