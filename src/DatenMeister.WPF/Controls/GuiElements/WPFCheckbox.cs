@@ -12,12 +12,17 @@ namespace DatenMeister.WPF.Controls.GuiElements
 {
     public class WpfCheckbox : BasePropertyToMultipleValue, IWpfElementGenerator, IPropertyToMultipleValues
     {
-        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, ILayoutHostState state, ElementCacheEntry entry)
+        public override System.Windows.UIElement GenerateElement(
+            IEnumerable<IObject> detailObjects, 
+            IObject fieldInfo, 
+            ILayoutHostState state, 
+            ElementCacheEntry entry)
         {
             var checkbox = new DatenMeister.Entities.AsObject.FieldInfo.Checkbox(fieldInfo);
 
             var wpfCheckbox = new CheckBox();
             wpfCheckbox.VerticalAlignment = VerticalAlignment.Center;
+            wpfCheckbox.Click += (x, y) => entry.OnChangeContent();
 
             if (state.EditMode == EditMode.Edit && detailObjects != null)
             {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.WPF.Controls.GuiElements
 {
-    class WpfDatePicker : BasePropertyToMultipleValue, IWpfElementGenerator, IPropertyToMultipleValues
+    public class WpfDatePicker : BasePropertyToMultipleValue, IWpfElementGenerator, IPropertyToMultipleValues
     {
         private DatePicker fieldInfo;
 
@@ -22,7 +22,11 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// </summary>
         private System.Windows.Controls.DatePicker datePicker;
 
-        public override System.Windows.UIElement GenerateElement(IEnumerable<IObject> detailObjects, IObject fieldInfo, ILayoutHostState state, ElementCacheEntry cacheEntry)
+        public override System.Windows.UIElement GenerateElement(
+            IEnumerable<IObject> detailObjects, 
+            IObject fieldInfo, 
+            ILayoutHostState state, 
+            ElementCacheEntry cacheEntry)
         {
             this.wpfGrid = new System.Windows.Controls.Grid();
             this.wpfGrid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition()
@@ -38,6 +42,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             this.datePicker = new System.Windows.Controls.DatePicker();
             this.datePicker.VerticalContentAlignment = System.Windows.VerticalAlignment.Center;
+            this.datePicker.SelectedDateChanged += (x, y) => cacheEntry.OnChangeContent();
 
             if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObjects != null)
             {
