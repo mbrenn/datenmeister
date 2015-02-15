@@ -157,8 +157,8 @@ namespace DatenMeister.WPF.Controls
                     if (!this.configuration.HasMultipleObjects)
                     {
                         wpfElement = wpfElementCreator.GenerateElement(
-                            this.configuration.DetailObject, 
-                            fieldInfo, 
+                            this.configuration.DetailObject,
+                            fieldInfo,
                             this,
                             elementCacheEntry);
                     }
@@ -168,9 +168,9 @@ namespace DatenMeister.WPF.Controls
                         if (multiCreator != null)
                         {
                             wpfElement = multiCreator.GenerateElement(
-                                this.configuration.DetailObjects, 
-                                fieldInfo, 
-                                this, 
+                                this.configuration.DetailObjects,
+                                fieldInfo,
+                                this,
                                 elementCacheEntry);
                         }
                     }
@@ -178,22 +178,19 @@ namespace DatenMeister.WPF.Controls
                     // Checks, if we have an element, otherwise we skip this row
                     if (wpfElement != null)
                     {
-                        if (wpfElement != null)
+                        var border = new Border()
                         {
-                            var border = new Border()
-                            {
-                                Child = wpfElement,
-                                Margin = new Thickness(10, 5, 10, 5)
-                            };
+                            Child = wpfElement,
+                            Margin = new Thickness(10, 5, 10, 5)
+                        };
 
-                            Grid.SetRow(border, currentRow);
-                            Grid.SetColumn(border, 1);
-                            formGrid.Children.Add(border);
+                        Grid.SetRow(border, currentRow);
+                        Grid.SetColumn(border, 1);
+                        formGrid.Children.Add(border);
 
-                            // Adds the information into the storage
-                            elementCacheEntry.WPFElement = wpfElement;
-                            elementCacheEntry.WPFElementCreator = wpfElementCreator;
-                        }
+                        // Adds the information into the storage
+                        elementCacheEntry.WPFElement = wpfElement;
+                        elementCacheEntry.WPFElementCreator = wpfElementCreator;
 
                         /////////////////////////////////////////////////
                         // Defines the height
@@ -215,9 +212,9 @@ namespace DatenMeister.WPF.Controls
                         formGrid.Children.Add(nameLabel);
 
                         this.AddAdditionalColumnForRow(
-                            additionalColumns, 
-                            currentRow, 
-                            fieldInfoObj, 
+                            additionalColumns,
+                            currentRow,
+                            fieldInfoObj,
                             elementCacheEntry);
 
                         this.wpfElements.Add(elementCacheEntry);
@@ -389,7 +386,9 @@ namespace DatenMeister.WPF.Controls
         {
             if (!this.configuration.HasMultipleObjects)
             {
-                return new AdditionalColumn[] {   
+                // If this form does only contain one object, 
+                // the user can unset the property
+                return new AdditionalColumn[] {
                     new SetValueColumnInfo(
                         "Not Set",
                          (x) => x ? ObjectHelper.NotSet : null)
@@ -397,9 +396,12 @@ namespace DatenMeister.WPF.Controls
             }
             else
             {
+                // If this form contains multiple objects
+                // the user can ignore the property and also
+                // unset the property
                 return new AdditionalColumn[] {
                     new IgnoreChangeColumnInfo(
-                        "No change", true),                        
+                        "No change", true),
                     new SetValueColumnInfo(
                         "Not Set",
                          (x) => x ? ObjectHelper.NotSet : null)
@@ -438,7 +440,7 @@ namespace DatenMeister.WPF.Controls
             var currentRow = 0;
 
             // Checks, if we have an additional column, if yes, we need to create an 
-            // extra row
+            // extra row for the headlines
             if (hasAdditionalColumns)
             {
                 this.formGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) });
@@ -461,10 +463,15 @@ namespace DatenMeister.WPF.Controls
 
                 currentRow++;
             }
+
             return currentRow;
         }
 
-        private void AddAdditionalColumnForRow(AdditionalColumn[] additionalColumns, int currentRow, General fieldInfoObj, ElementCacheEntry elementCacheEntry)
+        private void AddAdditionalColumnForRow(
+            AdditionalColumn[] additionalColumns, 
+            int currentRow, 
+            General fieldInfoObj, 
+            ElementCacheEntry elementCacheEntry)
         {
             // Add the additional columns
             var currentColumn = 2;
@@ -472,7 +479,9 @@ namespace DatenMeister.WPF.Controls
 
             foreach (var column in additionalColumns)
             {
-                var objectValue = ObjectHelper.GetCommonValue(this.configuration.DetailObjects, propertyName);
+                var objectValue = ObjectHelper.GetCommonValue(
+                    this.configuration.DetailObjects,
+                    propertyName);
                 var checkBox = new CheckBox();
                 if (this.configuration.HasMultipleObjects)
                 {
@@ -508,6 +517,7 @@ namespace DatenMeister.WPF.Controls
                         {
                             newCheckBox.OnContentChange();
                         };
+
                     elementCacheEntry.AdditionalColumns.Add(newCheckBox);
                 }
 
@@ -626,7 +636,7 @@ namespace DatenMeister.WPF.Controls
                 return this.defaultCheckStatus;
             }
 
-            
+
         }
 
         #endregion

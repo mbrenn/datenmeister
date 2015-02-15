@@ -11,9 +11,14 @@ namespace DatenMeister.WPF.Controls.GuiElements
 {
     /// <summary>
     /// Being used to cache the active wpf elements and field infos
+    /// It maps the used element creator to the created element and the 
+    /// fieldinformation which was used to create the lement. 
     /// </summary>
     public class ElementCacheEntry
     {
+        /// <summary>
+        /// Stores a list of additional columns which were created for the element
+        /// </summary>
         private List<AdditionalCheckBox> additionalColumns = new List<AdditionalCheckBox>();
 
         public IWpfElementGenerator WPFElementCreator
@@ -50,7 +55,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
         /// <summary>
         /// This event will be thrown, when the content behind the created item
-        /// has changes. This event will be triggered by the WPFElement
+        /// has changes. This event will be triggered by the generated WPFElement.
         /// </summary>
         public event EventHandler ChangeContent;
 
@@ -72,7 +77,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         public void OnChangeContent()
         {
             var ev = this.ChangeContent;
-            if ( ev != null)
+            if (ev != null)
             {
                 this.ChangeContent(this, EventArgs.Empty);
             }

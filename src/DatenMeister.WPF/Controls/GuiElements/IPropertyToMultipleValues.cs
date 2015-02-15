@@ -9,7 +9,8 @@ namespace DatenMeister.WPF.Controls.GuiElements
 {
     /// <summary>
     /// The implementation of this interface indicates whether it
-    /// makes sense to show the property when the user has selected multiple elements. 
+    /// makes sense to show the property when the user has selected multiple elements and 
+    /// wants to change the properties at the same time.
     /// For simple elements, like checkbox or textbox, it would make sense, for other elements, 
     /// like lists, it is very hard to understand, whether the list will be created
     /// only once or multiple times.
