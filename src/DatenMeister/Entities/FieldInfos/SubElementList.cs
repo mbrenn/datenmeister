@@ -12,7 +12,7 @@ namespace DatenMeister.Entities.FieldInfos
     public class SubElementList : General
     {
         /// <summary>
-        /// Gets or sets the type, that shall be created for new objects
+        /// Gets or sets the type, that shall be created when user selects a new object
         /// </summary>
         public IObject typeForNew
         {
@@ -21,13 +21,18 @@ namespace DatenMeister.Entities.FieldInfos
         }
 
         /// <summary>
-        /// Gets or sets the table view for the subitems.
-        /// They are not a simple list
+        /// Gets or sets the layout for the table view of the subitems. 
+        /// The tableview shall be of type <c>TableView</c>
         /// </summary>
-        public IObject listTableView       
+        public TableView listTableView       
         {
             get;
             set;
+        }
+
+        public SubElementList(string name, string binding)
+            : base(name, binding)
+        {
         }
     }
 }

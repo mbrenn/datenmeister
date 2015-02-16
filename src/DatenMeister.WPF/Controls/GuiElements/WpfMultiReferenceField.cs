@@ -25,7 +25,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         }
 
         /// <summary>
-        /// Stores the fiel information
+        /// Stores the field information being used to create the item.
         /// </summary>
         public DatenMeister.Entities.AsObject.FieldInfo.MultiReferenceField FieldInfo
         {
