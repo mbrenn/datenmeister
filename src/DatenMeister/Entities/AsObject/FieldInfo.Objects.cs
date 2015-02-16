@@ -3077,6 +3077,13 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             this.obj = obj;
         }
 
+        public SubElementList(DatenMeister.IObject obj, object name, object binding)
+            : this(obj)
+        {
+            this.set("name", name);
+            this.set("binding", binding);
+        }
+
         public static DatenMeister.IObject create(DatenMeister.IFactory factory)
         {
             return factory.create(DatenMeister.Entities.AsObject.FieldInfo.Types.SubElementList);
@@ -3203,23 +3210,23 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             obj.set("typeForNew", value);
         }
 
-        public DatenMeister.IObject getListTableView()
+        public DatenMeister.Entities.FieldInfos.TableView getListTableView()
         {
             return getListTableView(this);
         }
 
-        public void setListTableView(DatenMeister.IObject value)
+        public void setListTableView(DatenMeister.Entities.FieldInfos.TableView value)
         {
             setListTableView(this, value);
         }
 
-        public static DatenMeister.IObject getListTableView(DatenMeister.IObject obj)
+        public static DatenMeister.Entities.FieldInfos.TableView getListTableView(DatenMeister.IObject obj)
         {
             var result = DatenMeister.Extensions.AsSingle(obj.get("listTableView"));
-            return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
+            return (result is DatenMeister.Entities.FieldInfos.TableView) ? ((DatenMeister.Entities.FieldInfos.TableView) result) : default(DatenMeister.Entities.FieldInfos.TableView);
         }
 
-        public static void setListTableView(DatenMeister.IObject obj, DatenMeister.IObject value)
+        public static void setListTableView(DatenMeister.IObject obj, DatenMeister.Entities.FieldInfos.TableView value)
         {
             obj.set("listTableView", value);
         }

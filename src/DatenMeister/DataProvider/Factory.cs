@@ -76,29 +76,29 @@ namespace DatenMeister.DataProvider
                 return GetFor(valueAsProxy.Value);
             }
 
-            // Checks, if we know the type directly from extent information
-            var valueAsKnown = value as IKnowsExtentType;
-            if (valueAsKnown != null)
-            {
-                var result = GetFor(valueAsKnown.ExtentType, value.Extent);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
+            var realExtent = value.Extent;
 
             // Checks, if object has a special factory extent
             var valueAsHasFactoryExtent = value as IHasFactoryExtent;
             if (valueAsHasFactoryExtent != null)
             {
-                var factoryExtent = valueAsHasFactoryExtent.FactoryExtent;
-                return GetFor(valueAsHasFactoryExtent.FactoryExtent);
+                realExtent = valueAsHasFactoryExtent.FactoryExtent;
             }
 
+            // Checks, if we know the type directly from extent information
+            var valueAsKnown = value as IKnowsExtentType;
+            if (valueAsKnown != null)
+            {
+                var result = GetFor(valueAsKnown.ExtentType, realExtent);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
             // If not, do default implementation
             if (value.Extent != null)
             {
-                return GetFor(value.Extent);
+                return GetFor(realExtent);
             }
             else
             {

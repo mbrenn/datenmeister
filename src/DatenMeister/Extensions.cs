@@ -217,6 +217,11 @@ namespace DatenMeister
                 return asObject;
             }
 
+            if (valueAsSingle == ObjectHelper.NotSet)
+            {
+                return null;
+            }
+
             if (valueAsSingle == null)
             {
                 throw new InvalidOperationException("Given Object returned null, when requested as an IObject");

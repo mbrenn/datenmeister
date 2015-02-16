@@ -24,7 +24,7 @@ namespace DatenMeister.Entities.FieldInfos
         /// Gets or sets the layout for the table view of the subitems. 
         /// The tableview shall be of type <c>TableView</c>
         /// </summary>
-        public TableView listTableView       
+        public TableView listTableView
         {
             get;
             set;

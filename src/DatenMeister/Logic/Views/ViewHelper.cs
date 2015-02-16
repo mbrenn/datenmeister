@@ -81,7 +81,10 @@ namespace DatenMeister.Logic.Views
         /// <param name="viewInfo">View Information, where the objects will be stored</param>
         /// <returns>true, when a useful view generation could be performed. For empty
         /// views, a false will be returned</returns>
-        public static bool AutoGenerateViewDefinition(IEnumerable<object> collection, IObject viewInfo, bool orderByName = false)
+        public static bool AutoGenerateViewDefinition(
+            IEnumerable<object> collection, 
+            IObject viewInfo, 
+            bool orderByName = false)
         {
             var result = false;
             var factory = Factory.GetFor(viewInfo);
@@ -113,6 +116,30 @@ namespace DatenMeister.Logic.Views
             if (info.ExtentCount > 1)
             {
                 fieldInfos.add(AddTextField(factory, "ExtentUri", ObjectDictionaryForView.ExtentUriBinding));
+                result = true;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Performs an autogeneration 
+        /// </summary>
+        /// <param name="viewInfo">The view information, which contains the 
+        /// field information for all the columns</param>
+        /// <returns>true, if at least one field was created</returns>
+        public static bool AutoGenerateViewDefinitionByType(
+            IObject typeInformation,
+            IObject viewInfo)
+        {
+            var result = false;
+            var factory = Factory.GetFor(viewInfo);
+            var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
+
+            var type = new DatenMeister.Entities.AsObject.Uml.Class(typeInformation);
+            foreach (var property in type.get("ownedAttribute").AsEnumeration())
+            {
+                fieldInfos.add(AddTextField(factory, property.AsIObject().get("name").AsSingle().ToString()));
                 result = true;
             }
 

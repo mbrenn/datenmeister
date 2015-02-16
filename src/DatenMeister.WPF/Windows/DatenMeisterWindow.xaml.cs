@@ -276,7 +276,7 @@ namespace DatenMeister.WPF.Windows
                 };
 
                 ///////////////////////////
-                // Creates the lsit control itself
+                // Creates the list control itself
                 UIElement entityList;
                 if ((tableInfoObj as IElement).getMetaClass() == DatenMeister.Entities.AsObject.FieldInfo.Types.TableView)
                 {

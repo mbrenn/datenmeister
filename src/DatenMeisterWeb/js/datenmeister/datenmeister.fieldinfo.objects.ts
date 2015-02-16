@@ -878,9 +878,17 @@ export module MultiReferenceField {
 export module SubElementList {
     export var TypeName='SubElementList';
 
-    export function create() {
+    export function create(name?: any, binding?: any) {
         var result = new __d__.JsonExtentObject();
         result.set('type', 'SubElementList');
+        if (name !== undefined) {
+            result.set('name', name);
+        }
+
+        if (binding !== undefined) {
+            result.set('binding', binding);
+        }
+
         return result;
     }
 

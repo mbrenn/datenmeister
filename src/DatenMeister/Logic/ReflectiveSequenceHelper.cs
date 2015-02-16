@@ -19,7 +19,8 @@ namespace DatenMeister.Logic
         /// <returns>Enumeration of property names being used</returns>
         public static IEnumerable<string> GetConsolidatedPropertyNames(this IEnumerable<object> collection)
         {
-            return ObjectHelper.GetColumnNames(collection.Where(x=> x is IObject).Select(x=> x as IObject));
+            return ObjectHelper.GetColumnNames(collection.Where(x=> x is IObject)
+                .Select(x=> x as IObject));
         }
 
         private static int GetTypeCount(IEnumerable<object> collection)
