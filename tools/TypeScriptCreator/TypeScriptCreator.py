@@ -72,7 +72,7 @@ print('Creating the ProjektMeister')
 clr.AddReferenceToFile("ProjektMeister")
 import ProjektMeister
 projektMeisterTypes = [
-    ProjektMeister.Data.Entities.Comment,     
+    ProjektMeister.Data.Entities.Remark,     
     ProjektMeister.Data.Entities.Person,         
     ProjektMeister.Data.Entities.Task ]
 

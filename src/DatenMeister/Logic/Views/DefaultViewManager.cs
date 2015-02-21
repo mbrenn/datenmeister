@@ -147,7 +147,12 @@ namespace DatenMeister.Logic.Views
             var element = obj as IElement;
             if (element != null)
             {
-                done = ViewHelper.AutoGenerateViewDefinitionByType(element.getMetaClass(), view);
+                var metaClass = element.getMetaClass();
+
+                if (metaClass != null)
+                {
+                    done = ViewHelper.AutoGenerateViewDefinitionByType(element.getMetaClass(), view);
+                }
             }
 
             if (!done)
