@@ -50,9 +50,9 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName)
+        public object get(string propertyName, DatenMeister.RequestType requestType)
         {
-            return this.obj.get(propertyName);
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
 
         public static System.String getRelativePath(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("relativePath"));
+            var result = DatenMeister.Extensions.AsSingle(obj.get("relativePath", DatenMeister.RequestType.AsSingle));
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -195,9 +195,9 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName)
+        public object get(string propertyName, DatenMeister.RequestType requestType)
         {
-            return this.obj.get(propertyName);
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
 
         public static System.String getRelativePath(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("relativePath"));
+            var result = DatenMeister.Extensions.AsSingle(obj.get("relativePath", DatenMeister.RequestType.AsSingle));
             return DatenMeister.ObjectConversion.ToString(result);
         }
 

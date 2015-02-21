@@ -55,8 +55,8 @@ namespace DatenMeister.DataProvider
         /// Stores the values
         /// </summary>
         private Dictionary<string, object> values = new Dictionary<string, object>();
-        
-        public object get(string propertyName)
+
+        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
         {
             lock (this.values)
             {

@@ -104,7 +104,7 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="propertyName">Name of the property to be retrieved</param>
         /// <returns>Retrieval a property</returns>
-        public object get(string propertyName)
+        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
         {
             var result = new List<object>();
             if (string.IsNullOrEmpty(propertyName))

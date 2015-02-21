@@ -270,7 +270,7 @@ namespace DatenMeister.Logic.SourceFactory
 
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var result = DatenMeister.Extensions.AsEnumeration<{1}>(obj.get(\"{0}\"));",
+                        TwelveSpaces + "var result = DatenMeister.Extensions.AsEnumeration<{1}>(obj.get(\"{0}\", DatenMeister.RequestType.AsReflectiveCollection));",
                         propertyName,
                         typeOfListPropertyName));
             }
@@ -278,7 +278,7 @@ namespace DatenMeister.Logic.SourceFactory
             {
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var result = DatenMeister.Extensions.AsSingle(obj.get(\"{0}\"));",
+                        TwelveSpaces + "var result = DatenMeister.Extensions.AsSingle(obj.get(\"{0}\", DatenMeister.RequestType.AsSingle));",
                         propertyName));
             }
 

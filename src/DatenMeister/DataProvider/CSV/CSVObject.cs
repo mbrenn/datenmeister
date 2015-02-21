@@ -43,7 +43,7 @@ namespace DatenMeister.DataProvider.CSV
             }
         }
 
-        public object get(string propertyName)
+        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
         {
             lock (this.values)
             {
@@ -55,6 +55,28 @@ namespace DatenMeister.DataProvider.CSV
 
                 return this.values[number];
             }
+        }
+
+        /// <summary>
+        /// Gets the property by property name and returns the value as a single
+        /// element. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property being queried</param>
+        /// <returns>The returned object as single object</returns>
+        public object getAsSingle(string propertyName)
+        {
+            return this.get(propertyName);
+        }
+
+        /// <summary>
+        /// Gets the property by property name and returns the value behind
+        /// this property as a reflective sequence
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>The resulting reflective collection</returns>
+        public IReflectiveCollection getAsReflectiveCollection(string propertyName)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<ObjectPropertyPair> getAll()

@@ -7,53 +7,27 @@ using System.Threading.Tasks;
 namespace DatenMeister
 {
     /// <summary>
-    /// Stores the object property pair, which associates a property to a value
+    /// Defines the enumeration of possible request type which can be used to retrieve an object
     /// </summary>
-    public class ObjectPropertyPair
+    public enum RequestType
     {
         /// <summary>
-        /// Gets or sets the name of the property
+        /// Uses the default method as defined by the type definition.
+        /// If the type is not known, an exception will be thrown
         /// </summary>
-        public string PropertyName
-        {
-            get;
-            set;
-        }
+        AsDefault,
 
         /// <summary>
-        /// Gets or sets the value
+        /// Returns the object as a single object. If multiple elements were found, 
+        /// only the first element will be evaluated
         /// </summary>
-        public object Value
-        {
-            get;
-            set;
-        }
+        AsSingle,
 
         /// <summary>
-        /// Initializes a new instance of the ObjectPropertyPair
+        /// Returns the object as a reflective collection. If only one element is found,
+        /// a nearly empty reflectivecollection will be created, if supported
         /// </summary>
-        /// <param name="propertyName">Name of the property</param>
-        /// <param name="value">Value of the property</param>
-        public ObjectPropertyPair(string propertyName, object value)
-        {
-            this.PropertyName = propertyName;
-            this.Value = value;
-       }
-
-        public override string ToString()
-        {
-            if (this.Value == null)
-            {
-                return this.PropertyName + ": null";
-            }
-            else
-            {
-                return string.Format(
-                    "{0}: {1}",
-                    this.PropertyName,
-                    this.Value.ToString());
-            }
-        }
+        AsReflectiveCollection
     }
 
     /// <summary>
@@ -66,10 +40,12 @@ namespace DatenMeister
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        object get(string propertyName);
+        object get(string propertyName, RequestType requestType = RequestType.AsDefault);
 
         /// <summary>
-        /// Gets all properties as key value pairs
+        /// Gets all properties as key value pairs. 
+        /// If it is unknown whether a single or multiple object will be returned, 
+        /// a single object is returned
         /// </summary>
         /// <returns></returns>
         IEnumerable<ObjectPropertyPair> getAll();

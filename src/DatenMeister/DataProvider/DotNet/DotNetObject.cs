@@ -147,7 +147,7 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Object that has been queried</returns>
-        public object get(string propertyName)
+        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
         {
             var property = GetProperty(propertyName);
             if (property == null)

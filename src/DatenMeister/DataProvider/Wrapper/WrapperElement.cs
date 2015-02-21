@@ -66,10 +66,10 @@ namespace DatenMeister.DataProvider.Wrapper
             return this.WrapperExtent.Convert(this.value.container()).AsIObject();
         }
 
-        public virtual object get(string propertyName)
+        public virtual object get(string propertyName, RequestType requestType)
         {
             // TODO Convert
-            return this.WrapperExtent.Convert(this.value.get(propertyName));
+            return this.WrapperExtent.Convert(this.value.get(propertyName, requestType));
         }
 
         public virtual IEnumerable<ObjectPropertyPair> getAll()

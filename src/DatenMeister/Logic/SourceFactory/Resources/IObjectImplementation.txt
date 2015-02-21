@@ -21,9 +21,9 @@
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName)
+        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
         {
-            return this.obj.get(propertyName);
+            return this.obj.get(propertyName, requestType);;
         }
 
         /// <summary>
