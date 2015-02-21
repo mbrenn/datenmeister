@@ -247,7 +247,7 @@ namespace DatenMeister.WPF.Windows
                 else
                 {
                     // Gets the default view for the object
-                    viewData = viewManager.GetDefaultView(value, ViewType.FormView, collection);
+                    viewData = viewManager.GetDefaultView(value, collection, ViewType.FormView);
                     if (viewData == null)
                     {
                         logger.Message("No default view had been given.");

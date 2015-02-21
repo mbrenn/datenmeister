@@ -74,6 +74,30 @@ namespace DatenMeister.Logic.Views
         }
 
         /// <summary>
+        /// Performs an autogeneration 
+        /// </summary>
+        /// <param name="viewInfo">The view information, which contains the 
+        /// field information for all the columns</param>
+        /// <returns>true, if at least one field was created</returns>
+        public static bool AutoGenerateViewDefinitionByType(
+            IObject typeInformation,
+            IObject viewInfo)
+        {
+            var result = false;
+            var factory = Factory.GetFor(viewInfo);
+            var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
+
+            var type = new DatenMeister.Entities.AsObject.Uml.Class(typeInformation);
+            foreach (var property in type.get("ownedAttribute").AsEnumeration())
+            {
+                fieldInfos.add(AddTextField(factory, property.AsIObject().get("name").AsSingle().ToString()));
+                result = true;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Auto generates the view definitions for a complete extent. 
         /// The information will be stored as a reflective collection in viewInfo. 
         /// </summary>
@@ -116,30 +140,6 @@ namespace DatenMeister.Logic.Views
             if (info.ExtentCount > 1)
             {
                 fieldInfos.add(AddTextField(factory, "ExtentUri", ObjectDictionaryForView.ExtentUriBinding));
-                result = true;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Performs an autogeneration 
-        /// </summary>
-        /// <param name="viewInfo">The view information, which contains the 
-        /// field information for all the columns</param>
-        /// <returns>true, if at least one field was created</returns>
-        public static bool AutoGenerateViewDefinitionByType(
-            IObject typeInformation,
-            IObject viewInfo)
-        {
-            var result = false;
-            var factory = Factory.GetFor(viewInfo);
-            var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
-
-            var type = new DatenMeister.Entities.AsObject.Uml.Class(typeInformation);
-            foreach (var property in type.get("ownedAttribute").AsEnumeration())
-            {
-                fieldInfos.add(AddTextField(factory, property.AsIObject().get("name").AsSingle().ToString()));
                 result = true;
             }
 

@@ -1,4 +1,5 @@
-﻿using DatenMeister.DataProvider;
+﻿using BurnSystems.Test;
+using DatenMeister.DataProvider;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic.Views;
 using DatenMeister.WPF.Controls.GuiElements.Elements;
@@ -22,7 +23,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var height = subElement.getHeight();
             if (height <= 0)
             {
-                height = 300;
+                height = 200;
             }
 
             multiReferenceField.Height = height;
@@ -33,18 +34,27 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 (pool) => detailObject.get(subElement.getBinding()).AsReflectiveCollection();
 
             var typeForNew = subElement.getTypeForNew();
-            var tableView = subElement.get("listTableView").AsIObject();
+            Ensure.That(typeForNew != null, "No type given for subelements");
 
-            if (typeForNew != null && tableView == null)
+            var tableViewAsIObject = subElement.get("listTableView").AsIObject();
+
+            if (typeForNew != null && tableViewAsIObject == null)
             {
-                tableView = Factory.GetFor(fieldInfo).create(Types.TableView);
+                tableViewAsIObject = Factory.GetFor(fieldInfo).create(Types.TableView);
 
                 ViewHelper.AutoGenerateViewDefinitionByType(
                     typeForNew,
-                    tableView);
+                    tableViewAsIObject);
             }
 
-            tableConfiguration.LayoutInfo = tableView;
+            // Includes some default properties which are required for the elementlist
+            var tableView = new TableView(tableViewAsIObject);
+            tableView.setAllowNew(true);
+            tableView.setAllowEdit(true);
+            tableView.setAllowDelete(true);
+            tableView.setMainType(typeForNew);
+
+            tableConfiguration.LayoutInfo = tableViewAsIObject;
 
             multiReferenceField.Configure(tableConfiguration);
 

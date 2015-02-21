@@ -63,7 +63,7 @@ namespace DatenMeister.Logic.Views
                 MetaClass = metaClass,
                 View = view,
                 IsDefault = isDefault
-            });                
+            });
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace DatenMeister.Logic.Views
         /// <param name="obj">Object to be evaluated</param>
         /// <param name="type">Type of the view, which is required</param>
         /// <returns>The default view or nothing</returns>
-        public IObject GetDefaultView(IObject obj, ViewType type, IReflectiveCollection collection)
+        public IObject GetDefaultView(IObject obj, IReflectiveCollection collection, ViewType type)
         {
             var result = FindEntries(obj, type).Where(x => x.IsDefault).FirstOrDefault();
             if (result == null)
@@ -121,7 +121,7 @@ namespace DatenMeister.Logic.Views
         /// <param name="obj">Object to be evaulated</param>
         /// <param name="type">Type of the view, which is required</param>
         /// <returns>An enumeration of all applicable view definitions</returns>
-        public IEnumerable<IObject> GetViews(IObject obj, ViewType type, IReflectiveCollection collection)
+        public IEnumerable<IObject> GetViews(IObject obj, IReflectiveCollection collection, ViewType type)
         {
             return FindEntries(obj, type).Where(x => x.IsDefault).Select(x => x.View);
         }
@@ -140,12 +140,25 @@ namespace DatenMeister.Logic.Views
             viewObj.setAllowDelete(false);
             viewObj.setAllowEdit(false);
             viewObj.setAllowNew(false);
+            
+            var done = false;
 
-                // Don't know what to do... throw exception
-            if (!ViewHelper.AutoGenerateViewDefinition(obj, view, true)
-                && collection != null)
+            // First, check, if we can create a view out of the type of the given object
+            var element = obj as IElement;
+            if (element != null)
             {
-                ViewHelper.AutoGenerateViewDefinition(collection, view, true);
+                done = ViewHelper.AutoGenerateViewDefinitionByType(element.getMetaClass(), view);
+            }
+
+            if (!done)
+            {
+                // Second, try to create the view out of the given object
+                if (!ViewHelper.AutoGenerateViewDefinition(obj, view, true)
+                    && collection != null)
+                {
+                    // Third, 
+                    ViewHelper.AutoGenerateViewDefinition(collection, view, true);
+                }
             }
 
             return view;
