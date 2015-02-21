@@ -60,12 +60,59 @@ namespace DatenMeister.DataProvider
         {
             lock (this.values)
             {
-                if (this.isSet(propertyName))
+                if (requestType == RequestType.AsSingle)
                 {
-                    return new GenericUnspecified(this, propertyName, this.values[propertyName], PropertyValueType.Single);
+                    return this.values[propertyName];
+                }
+                else if (requestType == RequestType.AsReflectiveCollection)
+                {
+                    List<object> list = null;
+                    if (isSet(propertyName))
+                    {
+                        var valueList = this.values[propertyName];
+
+                        if (valueList is List<object>)
+                        {
+                            list = valueList as List<object>;
+                        }
+                        else
+                        {
+                            // Transforms to a list
+                            var temp = new List<object>();
+                            temp.Add(valueList);
+                            list = temp;
+                        }
+                    }
+                    else
+                    {
+                        // Creates a list and returns the value
+                        list = new List<object>();
+                        this.values[propertyName] = list;
+                    }
+
+                    return new GenericReflectiveSequence(this.Extent, list);
+                }
+                else if ( requestType == RequestType.AsDefault)
+                {
+                    if (!this.isSet(propertyName))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        var value = this.values[propertyName];
+                        if ( ObjectConversion.IsEnumeration(value ) )
+                        {
+                            return this.get(propertyName, RequestType.AsReflectiveCollection);
+                        }
+                        else
+                        {
+                            return this.get(propertyName, RequestType.AsSingle);
+                        }
+                    }
                 }
 
-                return new GenericUnspecified(this, propertyName, ObjectHelper.NotSet, PropertyValueType.Single);
+                throw new NotImplementedException("Unknown request type: " + requestType.ToString());
             }
         }
 
@@ -73,9 +120,10 @@ namespace DatenMeister.DataProvider
         {
             lock (this.values)
             {
-                return this.values.Select(x => 
-                    new ObjectPropertyPair(x.Key,
-                    new GenericUnspecified(this, x.Key, x.Value, PropertyValueType.Single)));
+                return this.values.Select(x =>
+                    new ObjectPropertyPair(
+                        x.Key,
+                        this.get(x.Key, RequestType.AsDefault)));
             }
         }
 

@@ -8,16 +8,16 @@ namespace DatenMeister.DataProvider
 {
     public class GenericReflectiveSequence : ListReflectiveSequence<object>
     {
-        private GenericUnspecified unspecified
+        private IList<object> value
         {
             get;
             set;
         }
 
-        public GenericReflectiveSequence(GenericUnspecified unspecified)
-            : base(unspecified.Owner.Extent)
+        public GenericReflectiveSequence(IURIExtent extent, List<object> value)
+            : base (extent)
         {
-            this.unspecified = unspecified;
+            this.value = value;
         }
 
         /// <summary>
@@ -27,16 +27,7 @@ namespace DatenMeister.DataProvider
         /// <returns>The associated list</returns>
         protected override IList<object> GetList()
         {
-            var value = this.unspecified.Value as List<object>;
-            if (value == null)
-            {
-                // The list did not create, so create it. 
-                value = new List<object>();
-                this.unspecified.Value = value;
-                this.unspecified.Owner.set(this.unspecified.PropertyName, value);
-            }
-
-            return value;
+            return this.value;
         }
     }
 }

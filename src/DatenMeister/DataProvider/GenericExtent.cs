@@ -52,7 +52,7 @@ namespace DatenMeister.DataProvider
         /// <summary>
         /// Gets the context uri
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Gets the context uri</returns>
         public string ContextURI()
         {
             return this.uri;

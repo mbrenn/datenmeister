@@ -32,6 +32,10 @@ namespace DatenMeister.DataProvider
             this.containerInstance = container;
         }
 
+        /// <summary>
+        /// Gets the meta class of the Generic Element
+        /// </summary>
+        /// <returns>Returns the object</returns>
         public IObject getMetaClass()
         {
             return this.type;

@@ -94,7 +94,6 @@
     <Compile Include="DataProvider\ISettings.cs" />
     <Compile Include="DataProvider\ListNonGenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\ListReflectiveSequence.cs" />
-    <Compile Include="DataProvider\GenericUnspecified.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataProvider\IFactoryProvider.cs" />
     <Compile Include="DataProvider\IResolvable.cs" />
