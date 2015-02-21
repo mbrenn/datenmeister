@@ -10,7 +10,7 @@ namespace DatenMeister.DataProvider
     /// <summary>
     /// Defines some extensions
     /// </summary>
-    public static class ExtensionMethods
+    public static class FactoryExtensions
     {
         /// <summary>
         /// Creates a factory by extent...

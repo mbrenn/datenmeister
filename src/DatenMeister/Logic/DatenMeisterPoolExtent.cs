@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Common;
 using DatenMeister.DataProvider.DotNet;
 using DatenMeister.Entities.FieldInfos;
 using DatenMeister.Logic.Views;

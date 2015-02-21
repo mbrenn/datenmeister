@@ -60,9 +60,9 @@
   <ItemGroup>
     <Compile Include="Logic\Settings\BaseDatenMeisterSettings.cs" />
     <Compile Include="BaseUnspecified.cs" />
-    <Compile Include="DataProvider\BaseReflectiveCollection.cs" />
-    <Compile Include="DataProvider\BaseReflectiveSequence.cs" />
-    <Compile Include="DataProvider\CollectionToSequenceWrapper.cs" />
+    <Compile Include="DataProvider\Common\BaseReflectiveCollection.cs" />
+    <Compile Include="DataProvider\Common\BaseReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Common\CollectionToSequenceWrapper.cs" />
     <Compile Include="DataProvider\Common\ResolvableByPath.cs" />
     <Compile Include="DataProvider\CSV\CSVDataProvider.cs" />
     <Compile Include="DataProvider\CSV\CSVExtent.cs" />
@@ -80,8 +80,8 @@
     <Compile Include="DataProvider\DotNet\DotNetUnspecified.cs" />
     <Compile Include="DataProvider\DotNet\GlobalDotNetExtent.cs" />
     <Compile Include="DataProvider\DotNet\IMapsMetaClassFromDotNet.cs" />
-    <Compile Include="DataProvider\EnumerationReflectiveSequence.cs" />
-    <Compile Include="DataProvider\ExtensionMethods.cs" />
+    <Compile Include="DataProvider\Common\EnumerationReflectiveSequence.cs" />
+    <Compile Include="DataProvider\FactoryExtensions.cs" />
     <Compile Include="DataProvider\FactoryProvider.cs" />
     <Compile Include="DataProvider\GenericElement.cs" />
     <Compile Include="DataProvider\GenericExtent.cs" />
@@ -92,13 +92,13 @@
     <Compile Include="DataProvider\IKnowsExtentType.cs" />
     <Compile Include="DataProvider\IProxyObject.cs" />
     <Compile Include="DataProvider\ISettings.cs" />
-    <Compile Include="DataProvider\ListNonGenericReflectiveSequence.cs" />
-    <Compile Include="DataProvider\ListReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Common\ListNonGenericReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Common\ListReflectiveSequence.cs" />
     <Compile Include="DataProvider\IDataProvider.cs" />
     <Compile Include="DataProvider\IFactoryProvider.cs" />
     <Compile Include="DataProvider\IResolvable.cs" />
-    <Compile Include="DataProvider\ListNonGenericWrapperReflectiveSequence.cs" />
-    <Compile Include="DataProvider\ListWrapperReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Common\ListNonGenericWrapperReflectiveSequence.cs" />
+    <Compile Include="DataProvider\Common\ListWrapperReflectiveSequence.cs" />
     <Compile Include="Logic\Sources\AllItemsReflectiveCollection.cs" />
     <Compile Include="DataProvider\ReflectiveExtent.cs" />
     <Compile Include="DataProvider\Wrapper\EventOnChange\EventOnChangeElement.cs" />

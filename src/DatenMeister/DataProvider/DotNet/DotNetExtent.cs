@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BurnSystems.Test;
 using DatenMeister.Pool;
+using DatenMeister.DataProvider.Common;
 
 namespace DatenMeister.DataProvider.DotNet
 {

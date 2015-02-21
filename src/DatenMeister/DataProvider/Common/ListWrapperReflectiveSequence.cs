@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DatenMeister.DataProvider
+namespace DatenMeister.DataProvider.Common
 {
     /// <summary>
     /// Wraps a list in a reflective sequence
