@@ -12,7 +12,7 @@ namespace DatenMeister.DataProvider.CSV
         {
             this.Encoding = Encoding.UTF8;
             this.HasHeader = true;
-            this.Separator = ",";    
+            this.Separator = ",";
         }
 
         public Encoding Encoding

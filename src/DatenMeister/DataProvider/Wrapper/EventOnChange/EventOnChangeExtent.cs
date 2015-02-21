@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DatenMeister.DataProvider.Wrapper.EventOnChange
 {
     public class EventOnChangeExtent :
-        WrapperExtent<EventOnChangeReflectiveSequence, EventOnChangeElement, EventOnChangeUnspecified>
+        WrapperExtent<EventOnChangeReflectiveSequence, EventOnChangeElement>
     {
         /// <summary>
         /// This event is called, when one property

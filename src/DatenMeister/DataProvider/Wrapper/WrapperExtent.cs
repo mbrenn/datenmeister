@@ -14,10 +14,9 @@ namespace DatenMeister.DataProvider.Wrapper
     /// </summary>
     /// <typeparam name="TReflectiveSequence">Type of the wrapped reflective sequence</typeparam>
     /// <typeparam name="TElement">Type of the </typeparam>
-    public class WrapperExtent<TReflectiveSequence, TElement, TUnspecified> : IWrapperExtent 
+    public class WrapperExtent<TReflectiveSequence, TElement> : IWrapperExtent 
         where TReflectiveSequence : WrapperReflectiveSequence, new()
         where TElement : WrapperElement, new()
-        where TUnspecified : WrapperUnspecified, new ()
     {
         /// <summary>
         /// Stores the inner extent
@@ -74,9 +73,9 @@ namespace DatenMeister.DataProvider.Wrapper
         /// </summary>
         /// <param name="extent">Extent to be wrapped</param>
         /// <returns>The wrapped instance</returns>
-        public static WrapperExtent<TReflectiveSequence, TElement, TUnspecified> Wrap(IURIExtent extent)
+        public static WrapperExtent<TReflectiveSequence, TElement> Wrap(IURIExtent extent)
         {
-            return new WrapperExtent<TReflectiveSequence, TElement, TUnspecified>(extent);
+            return new WrapperExtent<TReflectiveSequence, TElement>(extent);
         }
 
         public virtual string ContextURI()
@@ -144,18 +143,6 @@ namespace DatenMeister.DataProvider.Wrapper
         }
 
         /// <summary>
-        /// Creates an instance of the reflective instance
-        /// </summary>
-        /// <returns>Created reflective sequence</returns>
-        public IUnspecified CreateUnspecified(IUnspecified element)
-        {
-            var result = new TUnspecified();
-            result.WrapperExtent = this;
-            result.Inner = element;
-            return result;
-        }
-
-        /// <summary>
         /// Converts the object to wrapped instances if necessary. 
         /// </summary>
         /// <param name="value">Value to be converted</param>
@@ -204,8 +191,7 @@ namespace DatenMeister.DataProvider.Wrapper
 
             if (value is IUnspecified)
             {
-                var valueAsUnspecified = value as IUnspecified;
-                return this.CreateUnspecified(valueAsUnspecified);
+                throw new NotImplementedException("Wrapper extent does not support IUnspecified");
             }
 
             throw new NotImplementedException("Cannot conver type: " + value.ToString());

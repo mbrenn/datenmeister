@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatenMeister.DataProvider.Pool
+namespace DatenMeister.Logic.Sources
 {
     /// <summary>
     /// Returns all items in all extents within the given pool.

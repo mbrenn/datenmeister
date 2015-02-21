@@ -11,7 +11,7 @@ using System.Text;
 namespace DatenMeister.DataProvider.Common
 {
     /// <summary>
-    /// Resolves the object that is resolvable by path
+    /// Resolves the object that is resolvable by a path. 
     /// </summary>
     public class ResolvableByPath : IResolvable
     {

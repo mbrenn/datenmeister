@@ -7,14 +7,51 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.DataProvider.CSV
 {
+    /// <summary>
+    /// Loads and stores the the extent from an CSV file
+    /// </summary>
     public class CSVDataProvider : IDataProvider
     {
-        public CSVExtent Load(string source, CSVSettings settings)
+        /// <summary>
+        /// Loads the CSV Extent out of the settings
+        /// </summary>
+        /// <param name="path">Path being used to load the extent</param>
+        /// <param name="settings">Settings to load the extent</param>
+        /// <returns>The loaded extent</returns>
+        public CSVExtent Load(string path, CSVSettings settings)
         {
-            var extent = new CSVExtent(source, settings);
-            this.ReadFromFile(source, settings, extent);
+            var extent = new CSVExtent(path, settings);
+            this.ReadFromFile(path, extent, settings);
 
             return extent;
+        }
+
+        /// <summary>
+        /// Reads an extent from file
+        /// </summary>
+        /// <param name="path">Path being used to load the file</param>
+        /// <param name="extent">Extet being stored</param>
+        /// <param name="settings">Settings being used to store it.</param>
+        private void ReadFromFile(string path, CSVExtent extent, CSVSettings settings)
+        {
+            using (var stream = new StreamReader(path, settings.Encoding))
+            {
+                // Reads header, if necessary
+                if (settings.HasHeader)
+                {
+                    extent.HeaderNames.AddRange(this.SplitLine(stream.ReadLine(), settings));
+                }
+
+                // Reads the data itself
+                string line;
+                while ((line = stream.ReadLine()) != null)
+                {
+                    var values = this.SplitLine(line, settings);
+
+                    var csvObject = new CSVObject(extent, values);
+                    extent.Objects.Add(csvObject);
+                }
+            }
         }
 
         /// <summary>
@@ -62,28 +99,6 @@ namespace DatenMeister.DataProvider.CSV
                         settings,
                         columnHeaders,
                         x => element.get(x));
-                }
-            }
-        }
-
-        private void ReadFromFile(string path, CSVSettings settings, CSVExtent extent)
-        {
-            using (var stream = new StreamReader(path, settings.Encoding))
-            {
-                // Reads header, if necessary
-                if (settings.HasHeader)
-                {
-                    extent.HeaderNames.AddRange(this.SplitLine(stream.ReadLine(), settings));
-                }
-
-                // Reads the data itself
-                string line;
-                while ((line = stream.ReadLine()) != null)
-                {
-                    var values = this.SplitLine(line, settings);
-
-                    var csvObject = new CSVObject(extent, values);
-                    extent.Objects.Add(csvObject);
                 }
             }
         }

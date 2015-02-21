@@ -1,6 +1,5 @@
 ﻿using DatenMeister.DataProvider;
 using DatenMeister.Transformations;
-using DatenMeister.DataProvider.Pool;
 using DatenMeister.Logic;
 using Ninject;
 using System;
@@ -11,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using DatenMeister.Pool;
 using DatenMeister.WPF.Controls;
+using DatenMeister.Logic.Sources;
 
 namespace DatenMeister.WPF.Windows
 {

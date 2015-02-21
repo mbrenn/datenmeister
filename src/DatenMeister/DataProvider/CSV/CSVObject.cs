@@ -47,36 +47,21 @@ namespace DatenMeister.DataProvider.CSV
         {
             lock (this.values)
             {
-                int number = this.GetIndexOfProperty(propertyName);
-                if (number == -1)
+                if (requestType == RequestType.AsDefault || requestType == RequestType.AsSingle)
                 {
-                    throw new IndexOutOfRangeException();
+                    int number = this.GetIndexOfProperty(propertyName);
+                    if (number == -1)
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+
+                    return this.values[number];
                 }
-
-                return this.values[number];
+                else
+                {
+                    throw new NotSupportedException("CSVObject does not support Reflective Collections");
+                }
             }
-        }
-
-        /// <summary>
-        /// Gets the property by property name and returns the value as a single
-        /// element. 
-        /// </summary>
-        /// <param name="propertyName">Name of the property being queried</param>
-        /// <returns>The returned object as single object</returns>
-        public object getAsSingle(string propertyName)
-        {
-            return this.get(propertyName);
-        }
-
-        /// <summary>
-        /// Gets the property by property name and returns the value behind
-        /// this property as a reflective sequence
-        /// </summary>
-        /// <param name="propertyName">Name of the property</param>
-        /// <returns>The resulting reflective collection</returns>
-        public IReflectiveCollection getAsReflectiveCollection(string propertyName)
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<ObjectPropertyPair> getAll()
@@ -89,7 +74,7 @@ namespace DatenMeister.DataProvider.CSV
                     {
                         yield return new ObjectPropertyPair(
                             value,
-                            this.get(value));
+                            this.get(value, RequestType.AsSingle));
                     }
                 }
                 else
@@ -181,7 +166,7 @@ namespace DatenMeister.DataProvider.CSV
 
         public void delete()
         {
-            this.extent.Elements().remove(this);
+            this.Extent.Elements().remove(this);
             this.Extent.IsDirty = true;
         }
 

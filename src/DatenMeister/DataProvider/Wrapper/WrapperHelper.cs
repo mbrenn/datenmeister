@@ -87,20 +87,5 @@ namespace DatenMeister.DataProvider.Wrapper
 
             return sequence;
         }
-
-        /// <summary>
-        /// Performs a total unwrap of the given extent
-        /// </summary>
-        /// <param name="unspecified">Extent to be unwrapped</param>
-        /// <returns>The unwrapped extent</returns>
-        public static IUnspecified GetFullUnwrapped(IUnspecified unspecified)
-        {
-            while (unspecified is WrapperUnspecified)
-            {
-                unspecified = (unspecified as WrapperUnspecified).Unwrap();
-            }
-
-            return unspecified;
-        }
     }
 }

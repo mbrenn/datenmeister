@@ -31,7 +31,7 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = new XmlExtent(document, "test:///");
             var pool = DatenMeisterPool.Create();
             pool.Add(
-                new WrapperExtent<WrapperReflectiveSequence, WrapperElement, WrapperUnspecified>(xmlExtent),
+                new WrapperExtent<WrapperReflectiveSequence, WrapperElement>(xmlExtent),
                 null,
                 ExtentType.Data);
 
