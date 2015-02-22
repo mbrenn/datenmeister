@@ -69,7 +69,7 @@ namespace DatenMeister.DataProvider.DotNet
 
             this.value = value;
 
-            if (!this.isSet("name") || ObjectHelper.IsNull(this.get("name")))
+            if (!this.isSet("name") || ObjectConversion.IsNull(this.get("name")))
             {
                 this.id = Guid.NewGuid().ToString();
             }
@@ -381,7 +381,7 @@ namespace DatenMeister.DataProvider.DotNet
 
         public override string ToString()
         {
-            if (this.isSet("name") && !ObjectHelper.IsNull(this.get("name")))
+            if (this.isSet("name") && !(ObjectConversion.IsNull(this.get("name"))))
             {
                 return string.Format("\"{0}\" (DotNetObject)",
                     this.get("name").AsSingle().ToString());

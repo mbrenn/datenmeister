@@ -21,9 +21,27 @@ namespace DatenMeister.Pool
         /// </summary>
         private static ILog logger = new ClassLogger(typeof(PoolResolver));
 
+        /// <summary>
+        /// Stores the pool
+        /// </summary>
+        private DatenMeisterPool pool;
+
+        /// <summary>
+        /// Gets the default pool
+        /// </summary>
+        /// <returns>Returns the default pool</returns>
         public static IPool GetDefaultPool()
         {
             return Injection.Application.Get<IPool>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the PoolResolver class. 
+        /// The Pool needs to be set, otherwise it won't work
+        /// </summary>
+        public PoolResolver(DatenMeisterPool pool)
+        {
+            this.pool = pool;
         }
 
         /// <summary>
@@ -44,10 +62,8 @@ namespace DatenMeister.Pool
         }
 
         /// <summary>
-        /// Stores the pool
+        /// Gets or sets the pool for the resolver
         /// </summary>
-        private DatenMeisterPool pool;
-
         public IPool Pool
         {
             get { return this.pool; }
@@ -59,15 +75,6 @@ namespace DatenMeister.Pool
                     throw new ArgumentException("value is not of type DatenMeisterPool");
                 }
             }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the PoolResolver class. 
-        /// The Pool needs to be set, otherwise it won't work
-        /// </summary>
-        public PoolResolver(DatenMeisterPool pool)
-        {
-            this.pool = pool;
         }
 
         /// <summary>

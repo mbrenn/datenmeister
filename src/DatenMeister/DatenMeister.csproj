@@ -171,8 +171,6 @@
     <Compile Include="IURIExtent.cs" />
     <Compile Include="Logic\ApplicationCore.PublicViews.cs" />
     <Compile Include="Logic\ApplicationCore.cs" />
-    <Compile Include="Logic\ClientActions\IClientAction.cs" />
-    <Compile Include="Logic\ClientActions\RefreshBrowserWindow.cs" />
     <Compile Include="Logic\DatenMeisterPoolExtent.cs" />
     <Compile Include="Logic\ExtentContainer.cs" />
     <Compile Include="Logic\MethodProvider\MethodType.cs" />
@@ -186,8 +184,6 @@
     <Compile Include="Logic\ObjectCopier.cs" />
     <Compile Include="Logic\ExtentCopier.cs" />
     <Compile Include="DataProvider\Factory.cs" />
-    <Compile Include="Logic\JsonExtentData.cs" />
-    <Compile Include="Logic\JsonExtentInfo.cs" />
     <Compile Include="Logic\ObjectDictionary.cs" />
     <Compile Include="Logic\ObjectDictionaryForView.cs" />
     <Compile Include="Logic\ObjectHelper.cs" />

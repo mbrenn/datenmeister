@@ -238,6 +238,19 @@ namespace DatenMeister
         }
 
         /// <summary>
+        /// Checks whether the given object is null, ObjectHelper.Null or ObjectHelper.NotSet
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <returns>true, if the object returns null</returns>
+        public static bool IsNull(object value)
+        {
+            value = value.AsSingle();
+            return value == null
+                || value == ObjectHelper.Null
+                || value == ObjectHelper.NotSet;
+        }
+
+        /// <summary>
         /// Checks, if the object is an enumeration object
         /// </summary>
         /// <param name="value">Value to be checked</param>

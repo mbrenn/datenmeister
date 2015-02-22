@@ -40,6 +40,10 @@ namespace DatenMeister.Logic.Views
             get { return this.entries; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the DefaultViewManager class
+        /// </summary>
+        /// <param name="extent">Extent being used for factory creation.</param>
         public DefaultViewManager(IURIExtent extent)
         {
             Ensure.That(extent != null);
@@ -55,7 +59,6 @@ namespace DatenMeister.Logic.Views
         public void Add(IObject metaClass, IObject view, bool isDefault)
         {
             Ensure.That(metaClass != null);
-            Ensure.That(view != null);
             Ensure.That(view != null);
 
             this.entries.Add(new ViewEntry()

@@ -27,15 +27,6 @@ namespace DatenMeister
             return pool.GetInstance(extent);
         }
 
-        public static JsonExtentInfo ToJson(this IURIExtent extent)
-        {
-            return new JsonExtentInfo()
-            {
-                uri = extent.ContextURI(),
-                type = extent.GetType().FullName
-            };
-        }
-
         public static object getAsSingle(this IObject value, string propertyName)
         {
             return value.get(propertyName, RequestType.AsSingle);
