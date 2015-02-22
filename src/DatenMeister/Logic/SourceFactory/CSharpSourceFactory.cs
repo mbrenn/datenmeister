@@ -13,7 +13,7 @@ namespace DatenMeister.Logic.SourceFactory
     /// </summary>
     public class CSharpSourceFactory : SourceFactoryBase
     {
-        public static Version FactoryVersion = new Version(1, 0, 8, 0);
+        public static Version FactoryVersion = new Version(1, 1, 0, 0);
 
         /// <summary>
         /// Namespace to be used for the class
@@ -270,7 +270,7 @@ namespace DatenMeister.Logic.SourceFactory
 
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var result = DatenMeister.Extensions.AsEnumeration<{1}>(obj.get(\"{0}\", DatenMeister.RequestType.AsReflectiveCollection));",
+                        TwelveSpaces + "var result = DatenMeister.Extensions.getAsReflectiveSequence(obj, \"{0}\");",
                         propertyName,
                         typeOfListPropertyName));
             }
@@ -278,7 +278,7 @@ namespace DatenMeister.Logic.SourceFactory
             {
                 writer.WriteLine(
                     string.Format(
-                        TwelveSpaces + "var result = DatenMeister.Extensions.AsSingle(obj.get(\"{0}\", DatenMeister.RequestType.AsSingle));",
+                        TwelveSpaces + "var result = obj.get(\"{0}\", DatenMeister.RequestType.AsSingle);",
                         propertyName));
             }
 

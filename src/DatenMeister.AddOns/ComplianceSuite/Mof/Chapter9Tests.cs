@@ -164,16 +164,16 @@ namespace DatenMeister.AddOns.ComplianceSuite.Mof
                 {
                     var success = true;
                     success = success ? instance1.isSet("known") == false : false;
-                    success = success ? ObjectHelper.IsNull(instance1.get("known")) : false;
+                    success = success ? ObjectConversion.IsNull(instance1.get("known")) : false;
                     instance1.set("known", true);
                     success = success ? instance1.isSet("known") == true : false;
-                    success = success ? (!ObjectHelper.IsNull(instance1.get("known"))) : false;
+                    success = success ? (!ObjectConversion.IsNull(instance1.get("known"))) : false;
                     instance1.unset("known");
                     success = success ? instance1.isSet("known") == false : false;
-                    success = success ? ObjectHelper.IsNull(instance1.get("known")) : false;
+                    success = success ? ObjectConversion.IsNull(instance1.get("known")) : false;
                     instance1.unset("known");
                     success = success ? instance1.isSet("known") == false : false;
-                    success = success ? ObjectHelper.IsNull(instance1.get("known")) : false;
+                    success = success ? ObjectConversion.IsNull(instance1.get("known")) : false;
                     return success;
                 });
         }

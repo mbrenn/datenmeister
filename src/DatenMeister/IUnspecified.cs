@@ -26,6 +26,7 @@ namespace DatenMeister
     /// This interface needs to be implemented by all objects, that may
     /// be transformed from enumeration to single or vice versa. 
     /// </summary>
+    [Obsolete]
     public interface IUnspecified
     {
         /// <summary>

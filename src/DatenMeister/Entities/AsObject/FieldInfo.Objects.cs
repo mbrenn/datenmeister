@@ -50,9 +50,9 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getComment(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("comment", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("comment", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -155,7 +155,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -176,7 +176,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -197,7 +197,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -218,7 +218,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -239,7 +239,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -300,7 +300,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -384,7 +384,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -405,7 +405,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -426,7 +426,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -447,7 +447,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -468,7 +468,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -529,9 +529,9 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -613,7 +613,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -634,7 +634,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -655,7 +655,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -676,7 +676,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -697,7 +697,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -758,7 +758,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -842,7 +842,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("width", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("width", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -863,7 +863,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isMultiline(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isMultiline", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isMultiline", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -884,7 +884,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isDateTime(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isDateTime", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isDateTime", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -905,7 +905,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -926,7 +926,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -947,7 +947,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -968,7 +968,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -989,7 +989,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -1050,7 +1050,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -1134,7 +1134,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("width", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("width", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -1155,7 +1155,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isMultiline(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isMultiline", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isMultiline", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -1176,7 +1176,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isDateTime(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isDateTime", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isDateTime", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -1197,7 +1197,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -1218,7 +1218,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -1239,7 +1239,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -1260,7 +1260,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -1281,7 +1281,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -1342,9 +1342,9 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -1426,7 +1426,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -1447,7 +1447,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -1468,7 +1468,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -1489,7 +1489,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -1510,7 +1510,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -1571,9 +1571,9 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -1655,7 +1655,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getText(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("text", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("text", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -1676,7 +1676,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getClickUrl(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("clickUrl", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("clickUrl", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -1739,7 +1739,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -1823,7 +1823,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("propertyValue", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -1844,7 +1844,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("referenceUrl", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -1865,7 +1865,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -1886,7 +1886,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -1907,7 +1907,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -1928,7 +1928,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -1949,7 +1949,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -2010,9 +2010,9 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -2099,7 +2099,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Collections.Generic.IEnumerable<System.Object> getValues(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("values", DatenMeister.RequestType.AsReflectiveCollection));
+            var result = DatenMeister.Extensions.getAsReflectiveSequence(obj, "values");
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -2132,7 +2132,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2153,7 +2153,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2174,7 +2174,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -2195,7 +2195,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -2216,7 +2216,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -2279,9 +2279,9 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -2363,7 +2363,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("propertyValue", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2384,7 +2384,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("referenceUrl", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2405,7 +2405,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2426,7 +2426,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2447,7 +2447,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -2468,7 +2468,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -2489,7 +2489,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -2552,7 +2552,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -2636,7 +2636,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("propertyValue", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2657,7 +2657,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("referenceUrl", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2678,7 +2678,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2699,7 +2699,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2720,7 +2720,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -2741,7 +2741,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -2762,7 +2762,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -2825,7 +2825,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -2909,7 +2909,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getPropertyValue(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("propertyValue", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("propertyValue", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2930,7 +2930,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getReferenceUrl(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("referenceUrl", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("referenceUrl", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2951,7 +2951,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject getTableViewInfo(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("tableViewInfo", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("tableViewInfo", DatenMeister.RequestType.AsSingle);
             return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
         }
 
@@ -2972,7 +2972,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -2993,7 +2993,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -3014,7 +3014,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3035,7 +3035,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -3056,7 +3056,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -3117,7 +3117,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -3201,7 +3201,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject getTypeForNew(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("typeForNew", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("typeForNew", DatenMeister.RequestType.AsSingle);
             return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
         }
 
@@ -3222,7 +3222,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.Entities.FieldInfos.TableView getListTableView(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("listTableView", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("listTableView", DatenMeister.RequestType.AsSingle);
             return (result is DatenMeister.Entities.FieldInfos.TableView) ? ((DatenMeister.Entities.FieldInfos.TableView) result) : default(DatenMeister.Entities.FieldInfos.TableView);
         }
 
@@ -3243,7 +3243,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -3264,7 +3264,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getBinding(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("binding", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("binding", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -3285,7 +3285,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean isReadOnly(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isReadOnly", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isReadOnly", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3306,7 +3306,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getColumnWidth(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("columnWidth", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("columnWidth", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -3327,7 +3327,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Int32 getHeight(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("height", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("height", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToInt32(result);
         }
 
@@ -3381,7 +3381,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -3465,7 +3465,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -3491,7 +3491,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Collections.Generic.IEnumerable<System.Object> getFieldInfos(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("fieldInfos", DatenMeister.RequestType.AsReflectiveCollection));
+            var result = DatenMeister.Extensions.getAsReflectiveSequence(obj, "fieldInfos");
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -3524,7 +3524,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getStartInEditMode(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("startInEditMode", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("startInEditMode", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3545,7 +3545,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getDoAutoGenerateByProperties(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("doAutoGenerateByProperties", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("doAutoGenerateByProperties", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3599,7 +3599,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -3683,7 +3683,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getAllowEdit(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("allowEdit", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("allowEdit", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3704,7 +3704,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getAllowDelete(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("allowDelete", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("allowDelete", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3725,7 +3725,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getAllowNew(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("allowNew", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("allowNew", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3746,7 +3746,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getShowColumnHeaders(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("showColumnHeaders", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("showColumnHeaders", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3767,7 +3767,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getAllowNewProperty(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("allowNewProperty", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("allowNewProperty", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3788,7 +3788,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -3814,7 +3814,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Collections.Generic.IEnumerable<System.Object> getFieldInfos(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("fieldInfos", DatenMeister.RequestType.AsReflectiveCollection));
+            var result = DatenMeister.Extensions.getAsReflectiveSequence(obj, "fieldInfos");
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -3847,7 +3847,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getStartInEditMode(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("startInEditMode", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("startInEditMode", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3868,7 +3868,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getDoAutoGenerateByProperties(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("doAutoGenerateByProperties", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("doAutoGenerateByProperties", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -3922,7 +3922,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -4006,7 +4006,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getExtentUri(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("extentUri", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("extentUri", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -4027,7 +4027,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static DatenMeister.IObject getMainType(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("mainType", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("mainType", DatenMeister.RequestType.AsSingle);
             return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
         }
 
@@ -4053,7 +4053,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Collections.Generic.IEnumerable<System.Object> getTypesForCreation(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("typesForCreation", DatenMeister.RequestType.AsReflectiveCollection));
+            var result = DatenMeister.Extensions.getAsReflectiveSequence(obj, "typesForCreation");
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -4086,7 +4086,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getAllowEdit(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("allowEdit", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("allowEdit", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -4107,7 +4107,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getAllowDelete(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("allowDelete", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("allowDelete", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -4128,7 +4128,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getAllowNew(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("allowNew", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("allowNew", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -4149,7 +4149,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -4175,7 +4175,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Collections.Generic.IEnumerable<System.Object> getFieldInfos(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<System.Object>(obj.get("fieldInfos", DatenMeister.RequestType.AsReflectiveCollection));
+            var result = DatenMeister.Extensions.getAsReflectiveSequence(obj, "fieldInfos");
             return (result is System.Collections.Generic.IEnumerable<System.Object>) ? ((System.Collections.Generic.IEnumerable<System.Object>) result) : default(System.Collections.Generic.IEnumerable<System.Object>);
         }
 
@@ -4208,7 +4208,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getStartInEditMode(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("startInEditMode", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("startInEditMode", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -4229,7 +4229,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.Boolean getDoAutoGenerateByProperties(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("doAutoGenerateByProperties", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("doAutoGenerateByProperties", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -4283,7 +4283,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -4367,7 +4367,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getExtentUri(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("extentUri", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("extentUri", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -4388,7 +4388,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 

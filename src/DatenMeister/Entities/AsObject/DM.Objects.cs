@@ -53,9 +53,9 @@ namespace DatenMeister.Entities.AsObject.DM
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.String getUri(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("uri", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("uri", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -158,7 +158,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -179,7 +179,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.String getStoragePath(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("storagePath", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("storagePath", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -200,7 +200,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static DatenMeister.Logic.ExtentType getExtentType(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("extentType", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("extentType", DatenMeister.RequestType.AsSingle);
             return (DatenMeister.Logic.ExtentType) DatenMeister.ObjectConversion.ConvertToEnum(result, typeof(DatenMeister.Logic.ExtentType));
         }
 
@@ -221,7 +221,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.Boolean isPrepopulated(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isPrepopulated", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isPrepopulated", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -242,7 +242,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static DatenMeister.DataProvider.ISettings getDataProviderSettings(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("dataProviderSettings", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("dataProviderSettings", DatenMeister.RequestType.AsSingle);
             return (result is DatenMeister.DataProvider.ISettings) ? ((DatenMeister.DataProvider.ISettings) result) : default(DatenMeister.DataProvider.ISettings);
         }
 
@@ -263,7 +263,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.String getExtentClass(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("extentClass", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("extentClass", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -317,9 +317,9 @@ namespace DatenMeister.Entities.AsObject.DM
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.String getFilePath(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("filePath", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("filePath", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -422,7 +422,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.DateTime getCreated(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("created", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("created", DatenMeister.RequestType.AsSingle);
             return (result is System.DateTime) ? ((System.DateTime) result) : default(System.DateTime);
         }
 
@@ -443,7 +443,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -497,9 +497,9 @@ namespace DatenMeister.Entities.AsObject.DM
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -581,7 +581,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.String getPath(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("path", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("path", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -602,7 +602,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.String getType(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("type", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("type", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -628,7 +628,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInfo> getInstances(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.Entities.DM.ExtentInfo>(obj.get("instances", DatenMeister.RequestType.AsReflectiveCollection));
+            var result = DatenMeister.Extensions.getAsReflectiveSequence(obj, "instances");
             return (result is System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInfo>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInfo>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.Entities.DM.ExtentInfo>);
         }
 

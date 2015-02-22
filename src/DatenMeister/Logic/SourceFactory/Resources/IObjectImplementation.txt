@@ -21,9 +21,9 @@
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>

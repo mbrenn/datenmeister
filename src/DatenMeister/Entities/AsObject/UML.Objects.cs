@@ -43,7 +43,7 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -127,7 +127,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -181,7 +181,7 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -265,7 +265,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -319,7 +319,7 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, DatenMeister.RequestType requestType)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
             return this.obj.get(propertyName, requestType);
         }
@@ -403,7 +403,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
@@ -457,9 +457,9 @@ namespace DatenMeister.Entities.AsObject.Uml
         /// </summary>
         /// <param name="propertyName">Name of the property</param>
         /// <returns>Retrieved object</returns>
-        public object get(string propertyName, RequestType requestType = RequestType.AsDefault)
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
         {
-            return this.obj.get(propertyName, requestType);;
+            return this.obj.get(propertyName, requestType);
         }
 
         /// <summary>
@@ -541,7 +541,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public static System.Boolean isAbstract(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("isAbstract", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("isAbstract", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToBoolean(result);
         }
 
@@ -567,7 +567,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public static System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property> getOwnedAttribute(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsEnumeration<DatenMeister.Entities.UML.Property>(obj.get("ownedAttribute", DatenMeister.RequestType.AsReflectiveCollection));
+            var result = DatenMeister.Extensions.getAsReflectiveSequence(obj, "ownedAttribute");
             return (result is System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property>) ? ((System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property>) result) : default(System.Collections.Generic.IEnumerable<DatenMeister.Entities.UML.Property>);
         }
 
@@ -600,7 +600,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public static System.String getName(DatenMeister.IObject obj)
         {
-            var result = DatenMeister.Extensions.AsSingle(obj.get("name", DatenMeister.RequestType.AsSingle));
+            var result = obj.get("name", DatenMeister.RequestType.AsSingle);
             return DatenMeister.ObjectConversion.ToString(result);
         }
 
