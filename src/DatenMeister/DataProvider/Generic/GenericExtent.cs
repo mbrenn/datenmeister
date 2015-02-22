@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatenMeister.DataProvider
+namespace DatenMeister.DataProvider.Generic
 {
     public class GenericExtent: IURIExtent
     {

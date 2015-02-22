@@ -1,6 +1,7 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
+using DatenMeister.DataProvider.Generic;
 using DatenMeister.Logic;
 using DatenMeister.Logic.TypeConverter;
 using DatenMeister.Pool;

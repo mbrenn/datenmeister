@@ -1,6 +1,7 @@
 ﻿using BurnSystems.Logger;
 using BurnSystems.Test;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Generic;
 using DatenMeister.Logic.Views;
 using DatenMeister.WPF.Controls;
 using Ninject;

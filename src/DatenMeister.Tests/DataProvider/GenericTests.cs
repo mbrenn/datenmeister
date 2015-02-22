@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Generic;
 using DatenMeister.Logic;
 using NUnit.Framework;
 using System;
@@ -21,9 +22,9 @@ namespace DatenMeister.Tests.DataProvider
             genericObject.set("name", "Brenn");
             genericObject.set("prename", "Martin");
 
-            Assert.That(genericObject.get("name").AsSingle(), Is.EqualTo("Brenn"));
-            Assert.That(genericObject.get("prename").AsSingle(), Is.EqualTo("Martin"));
-            Assert.That(genericObject.get("notset").AsSingle(), Is.EqualTo(ObjectHelper.NotSet));
+            Assert.That(genericObject.getAsSingle("name"), Is.EqualTo("Brenn"));
+            Assert.That(genericObject.getAsSingle("prename"), Is.EqualTo("Martin"));
+            Assert.That(genericObject.getAsSingle("notset"), Is.EqualTo(ObjectHelper.NotSet));
 
             Assert.That(genericObject.isSet("name"), Is.True);
             Assert.That(genericObject.isSet("notset"), Is.False);
@@ -32,7 +33,7 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(genericObject.unset("notset"), Is.False);
             Assert.That(genericObject.unset("name"), Is.False);
 
-            Assert.That(genericObject.get("name").AsSingle(), Is.EqualTo(ObjectHelper.NotSet));
+            Assert.That(genericObject.getAsSingle("name"), Is.EqualTo(ObjectHelper.NotSet));
         }
 
         /// <summary>
@@ -46,23 +47,23 @@ namespace DatenMeister.Tests.DataProvider
             genericObject.set("name", "Brenn");
             genericObject.set("prename", "Martin");
 
-            var children = genericObject.get("children").AsReflectiveSequence();
+            var children = genericObject.getAsReflectiveSequence("children");
             children.add("Child 1");
             children.add("Child 2");
 
-            var childrenTest = genericObject.get("children").AsReflectiveSequence();
+            var childrenTest = genericObject.getAsReflectiveSequence("children");
             foreach (var child in childrenTest)
             {
                 Assert.That(child.ToString(), Is.EqualTo("Child 1").Or.EqualTo("Child 2"));
             }
 
-            var childrenTest2 = genericObject.get("children").AsReflectiveCollection();
+            var childrenTest2 = genericObject.getAsReflectiveSequence("children");
             foreach (var child in childrenTest2)
             {
                 Assert.That(child.ToString(), Is.EqualTo("Child 1").Or.EqualTo("Child 2"));
             }
 
-            var childrenTest3 = genericObject.get("children").AsEnumeration();
+            var childrenTest3 = genericObject.getAsReflectiveSequence("children");
             foreach (var child in childrenTest3)
             {
                 Assert.That(child.AsSingle().ToString(), Is.EqualTo("Child 1").Or.EqualTo("Child 2"));

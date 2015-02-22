@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatenMeister.DataProvider
+namespace DatenMeister.DataProvider.Generic
 {
     /// <summary>
     /// Defines the factory 

@@ -2,6 +2,7 @@
 using DatenMeister;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
+using DatenMeister.DataProvider.Generic;
 using DatenMeister.DataProvider.Wrapper;
 using DatenMeister.DataProvider.Wrapper.EventOnChange;
 using DatenMeister.DataProvider.Xml;

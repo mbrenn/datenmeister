@@ -36,6 +36,30 @@ namespace DatenMeister
             };
         }
 
+        public static object getAsSingle(this IObject value, string propertyName)
+        {
+            return value.get(propertyName, RequestType.AsSingle);
+        }
+
+        public static IReflectiveCollection getAsReflectiveSequence(this IObject value, string propertyName)
+        {
+            var result = value.get(propertyName, RequestType.AsReflectiveCollection);
+            if (result == null)
+            {
+                return null;
+            }
+
+            if (result is IReflectiveCollection)
+            {
+                return result as IReflectiveCollection;
+            }
+
+            throw new InvalidOperationException(
+                string.Format("{0} did not return IReflectiveCollection on property '{1}'",
+                value.ToString(),
+                propertyName));
+        }
+
         /// <summary>
         /// If the given object is an enumeration, it returns the first instance of the given object.
         /// Otherwise it returns the object itself. 

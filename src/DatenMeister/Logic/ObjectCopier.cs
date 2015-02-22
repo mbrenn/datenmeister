@@ -3,6 +3,7 @@ using BurnSystems.Test;
 using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.Common;
 using DatenMeister.DataProvider.DotNet;
+using DatenMeister.DataProvider.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;

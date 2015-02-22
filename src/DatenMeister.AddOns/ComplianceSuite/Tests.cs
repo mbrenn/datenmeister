@@ -1,5 +1,6 @@
 ﻿using DatenMeister.AddOns.ComplianceSuite.Mof;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Generic;
 using DatenMeister.DataProvider.Xml;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
-﻿using DatenMeister.Logic;
+﻿using DatenMeister.DataProvider.Generic;
+using DatenMeister.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -62,9 +62,9 @@ namespace DatenMeister.DataProvider
         /// <returns>Created factory</returns>
         private static IFactory GetDefaultFactory(Type type, IURIExtent extent)
         {
-            if (type == typeof(GenericExtent))
+            if (type == typeof(Generic.GenericExtent))
             {
-                return new GenericFactory(extent as GenericExtent);
+                return new Generic.GenericFactory(extent as Generic.GenericExtent);
             }
 
             if (type == typeof(Xml.XmlExtent))

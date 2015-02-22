@@ -1,5 +1,6 @@
 ﻿using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
+using DatenMeister.DataProvider.Generic;
 using DatenMeister.Logic;
 using NUnit.Framework;
 using System;

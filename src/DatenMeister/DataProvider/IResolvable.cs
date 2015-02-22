@@ -17,6 +17,5 @@ namespace DatenMeister.DataProvider
         /// <param name="context">The context which is used to resolve the object</param>
         /// <returns>Resolved object</returns>
         object Resolve();
-        //object Resolve(IPool pool, IObject context);
     }
 }

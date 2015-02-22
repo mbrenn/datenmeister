@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Generic;
 using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic.TypeConverter;
 using NUnit.Framework;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DatenMeister.DataProvider
+namespace DatenMeister.DataProvider.Generic
 {
     /// <summary>
     /// Defines a generic element, that can be used temporarily. 

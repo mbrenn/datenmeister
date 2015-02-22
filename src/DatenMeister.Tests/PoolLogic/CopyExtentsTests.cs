@@ -1,5 +1,6 @@
 ﻿using DatenMeister.DataProvider;
 using DatenMeister.DataProvider.DotNet;
+using DatenMeister.DataProvider.Generic;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using DatenMeister.Logic.TypeResolver;

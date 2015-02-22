@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DatenMeister.DataProvider
+namespace DatenMeister.DataProvider.Generic
 {
     public class GenericReflectiveSequence : ListReflectiveSequence<object>
     {

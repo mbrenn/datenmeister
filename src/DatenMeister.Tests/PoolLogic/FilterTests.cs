@@ -1,4 +1,5 @@
 ﻿using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Generic;
 using DatenMeister.Logic;
 using DatenMeister.Transformations;
 using NUnit.Framework;
