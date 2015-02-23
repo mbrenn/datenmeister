@@ -29,14 +29,14 @@ namespace DatenMeister.Tests.Modules
             dotNetTypeConverter.FactoryProvider = factoryProvider;
 
             var createdType = dotNetTypeConverter.Convert(genericExtent, typeof(TestDatabase.Person));
-            Assert.That(createdType.get("name").AsSingle().ToString(), Is.EqualTo("DatenMeister.Tests.TestDatabase+Person"));
+            Assert.That(createdType.getAsSingle("name").ToString(), Is.EqualTo("DatenMeister.Tests.TestDatabase+Person"));
 
-            var attributes = createdType.get("ownedAttribute").AsEnumeration().ToList();
-            Assert.That(attributes.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "FirstName"));
-            Assert.That(attributes.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "LastName"));
-            Assert.That(attributes.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "Age"));
-            Assert.That(!attributes.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "PrivateVariable"));
-            Assert.That(!attributes.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "StaticVariable"));
+            var attributes = createdType.getAsReflectiveSequence("ownedAttribute").ToList();
+            Assert.That(attributes.Any(x => x.AsIObject().getAsSingle("name").ToString() == "FirstName"));
+            Assert.That(attributes.Any(x => x.AsIObject().getAsSingle("name").ToString() == "LastName"));
+            Assert.That(attributes.Any(x => x.AsIObject().getAsSingle("name").ToString() == "Age"));
+            Assert.That(!attributes.Any(x => x.AsIObject().getAsSingle("name").ToString() == "PrivateVariable"));
+            Assert.That(!attributes.Any(x => x.AsIObject().getAsSingle("name").ToString() == "StaticVariable"));
         }
     }
 }

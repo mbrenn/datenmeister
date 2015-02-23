@@ -1,4 +1,5 @@
-﻿using BurnSystems.Test;
+﻿using BurnSystems.Logger;
+using BurnSystems.Test;
 using DatenMeister.Logic;
 using Ninject;
 using System;
@@ -14,6 +15,16 @@ namespace DatenMeister.DataProvider.DotNet
     public class DotNetObject : IElement, IKnowsExtentType
     {
         /// <summary>
+        /// Stores the logger
+        /// </summary>
+        private static ILog logger = new ClassLogger(typeof(DotNetObject));
+
+        /// <summary>
+        /// Stores the value itself which is abstracted
+        /// </summary>
+        private object value;
+
+        /// <summary>
         /// Defines the extent being
         /// </summary>
         private DotNetExtent extent;
@@ -23,10 +34,9 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         private string id;
 
-        private object value;
-
         /// <summary>
-        /// Stores the reflective sequence where the object is stored. May be null, when object is not connected
+        /// Stores the reflective sequence where the object is stored. 
+        /// May be null, when object is not connected to any collection
         /// </summary>
         private IReflectiveSequence sequence;
 
@@ -45,6 +55,14 @@ namespace DatenMeister.DataProvider.DotNet
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets the id of the dotnet object
+        /// </summary>
+        public string Id
+        {
+            get { return this.id; }
         }
 
         /// <summary>
@@ -69,13 +87,13 @@ namespace DatenMeister.DataProvider.DotNet
 
             this.value = value;
 
-            if (!this.isSet("name") || ObjectConversion.IsNull(this.get("name")))
+            if (!this.isSet("name") || ObjectConversion.IsNull(this.getAsSingle("name")))
             {
                 this.id = Guid.NewGuid().ToString();
             }
             else
             {
-                this.id = this.get("name").AsSingle().ToString();
+                this.id = this.getAsSingle("name").ToString();
             }
         }
 
@@ -88,6 +106,12 @@ namespace DatenMeister.DataProvider.DotNet
             this.id = id;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the DotNetObject and
+        /// just assigns an object and an id
+        /// </summary>
+        /// <param name="value">Value to be added</param>
+        /// <param name="id">Id of the object to set</param>
         private DotNetObject(object value, string id)
         {
             Ensure.That(id != null);
@@ -98,12 +122,8 @@ namespace DatenMeister.DataProvider.DotNet
 
         public void SetMetaClassByMapping(DotNetExtent extent)
         {
-            if (this.value == null)
-            {
-                // No value given
-                this.metaClass = null;
-            }
-            else
+            this.metaClass = null;
+            if (this.value != null)
             {
                 if (extent == null)
                 {
@@ -113,10 +133,6 @@ namespace DatenMeister.DataProvider.DotNet
                     {
                         this.metaClass = mappings.GetMetaClass(this.value.GetType());
                     }
-                    else
-                    {
-                        this.metaClass = null;
-                    }
                 }
                 else
                 {
@@ -125,10 +141,6 @@ namespace DatenMeister.DataProvider.DotNet
                     if (result != null)
                     {
                         this.metaClass = result.Type;
-                    }
-                    else
-                    {
-                        this.metaClass = null;
                     }
                 }
             }
@@ -162,9 +174,14 @@ namespace DatenMeister.DataProvider.DotNet
             }
 
             var value = method.Invoke(this.value, null);
-            return this.ConvertIfNecessary(value, property);
+            return this.ConvertIfNecessary(value, property, requestType);
         }
 
+        /// <summary>
+        /// Sets the property of a certain .Net object
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be set</param>
+        /// <param name="value">Value to be set</param>
         public void set(string propertyName, object value)
         {
             var property = GetProperty(propertyName);
@@ -200,19 +217,24 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else if (ObjectConversion.IsEnumByType(targetType))
             {
-                // For enumerations, an explicit converstion need to happen
+                // For enums, an explicit converstion need to happen
                 // It is necessary to convert, we do the default conversion
                 var convertedValue = ObjectConversion.ConvertToEnum(value, targetType);
                 method.Invoke(this.value, new object[] { convertedValue });
             }
             else
-            {                
+            {
                 // It is necessary to convert, we do the default conversion
+                // Tries to perform the conversion as good as possible
                 var convertedValue = Convert.ChangeType(value, targetType);
                 method.Invoke(this.value, new object[] { convertedValue });
             }
         }
 
+        /// <summary>
+        /// Gets all properties
+        /// </summary>
+        /// <returns>Enumeration of all items </returns>
         public IEnumerable<ObjectPropertyPair> getAll()
         {
             foreach (var property in this.value.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
@@ -221,10 +243,16 @@ namespace DatenMeister.DataProvider.DotNet
 
                 yield return new ObjectPropertyPair(
                     property.Name,
-                    this.ConvertIfNecessary(value, property));
+                    this.ConvertIfNecessary(value, property, RequestType.AsDefault));
             }
         }
 
+        /// <summary>
+        /// Checks, if the property is set. 
+        /// It will just check, that the property exists
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if property exists</returns>
         public bool isSet(string propertyName)
         {
             var property = GetProperty(propertyName, false);
@@ -245,34 +273,22 @@ namespace DatenMeister.DataProvider.DotNet
 
         public bool unset(string propertyName)
         {
-            var property = GetProperty(propertyName);
-            if (property == null)
-            {
-                throw new InvalidOperationException("Property " + propertyName + " cannot be set, because it does not exist");
-            }
+            logger.Message("unset should not work on DotNetObject");
 
-            var method = property.GetSetMethod();
-            if (method == null)
-            {
-                throw new ArgumentException("Setter for " + propertyName + " not found");
-            }
-
-            method.Invoke(this.value, null);
-
+            this.set(propertyName, null);
             return true;
         }
 
         public void delete()
         {
-            this.sequence.remove(this);
-        }
-
-        /// <summary>
-        /// Gets the id of the dotnet object
-        /// </summary>
-        public string Id
-        {
-            get { return this.id; }
+            if (this.sequence != null)
+            {
+                this.sequence.remove(this);
+            }
+            else
+            {
+                throw new InvalidOperationException("Not connected to a sequence");
+            }
         }
 
         /// <summary>
@@ -296,39 +312,61 @@ namespace DatenMeister.DataProvider.DotNet
         /// </summary>
         /// <param name="checkObject">Object to be converted</param>
         /// <returns>Converted object</returns>
-        private object ConvertIfNecessary(object checkObject, PropertyInfo propertyInfo)
+        private object ConvertIfNecessary(object checkObject, PropertyInfo propertyInfo, RequestType requestType)
         {
             var propertyName = propertyInfo.Name;
 
-            if (ObjectConversion.IsNative(checkObject))
+            if ((
+                    ObjectConversion.IsNativeByType(propertyInfo.PropertyType) ||
+                    ObjectConversion.IsEnumByType(propertyInfo.PropertyType) ||
+                    propertyInfo.PropertyType == typeof(IObject))
+                && (
+                    requestType != RequestType.AsDefault ||
+                    requestType == RequestType.AsSingle))
             {
-                return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
+                // A native type and it is set
+                if (checkObject != null)
+                {
+                    return checkObject;
+                }
+                else
+                {
+                    return ObjectHelper.NotSet;
+                }
             }
-            else if (ObjectConversion.IsEnum(checkObject))
+            else if (
+                    (checkObject is IList<object>)
+                && (
+                    requestType != RequestType.AsDefault ||
+                    requestType == RequestType.AsReflectiveCollection))
             {
-                return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
-            }
-            else if (checkObject is IList<object>)
-            {
-                var sequence = DotNetSequence.CreateFromList(this.extent, checkObject as IList<object>);
-                return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
+                return new DotNetReflectiveSequence<object>(this.extent, checkObject as IList<object>);
             }
             else
             {
+                // TODO: Create list and set it, if checkObject is null
+
                 // It might be a generic list. We also need to support the interface
                 // to a generic list. Sad but true
-                var listType = ObjectConversion.GetTypeOfListByType(checkObject.GetType());
+                var listType = ObjectConversion.GetTypeOfListByType(propertyInfo.PropertyType);
                 if (listType != null)
                 {
-                    var dotNetSequenceType = typeof(DotNetSequence<>).MakeGenericType(listType);
-                    var sequence = dotNetSequenceType
+                    var typeReflectiveSequence = typeof(DotNetReflectiveSequence<>).MakeGenericType(listType);
+                    var reflectiveSequence = typeReflectiveSequence
                         .GetMethod("CreateFromList")
                         .Invoke(null, new object[] { this.Extent, checkObject });
-                    return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
+
+                    return reflectiveSequence;
                 }
             }
-            
-            if (checkObject is IEnumerable)
+
+            // Default type
+            return new DotNetObject(
+                null,
+                checkObject,
+                this.id + "/" + propertyName);
+
+            /*if (checkObject is IEnumerable)
             {
                 var sequence = new DotNetSequence(this.extent);
                 sequence.IsReadOnly = true;
@@ -340,17 +378,20 @@ namespace DatenMeister.DataProvider.DotNet
 
                 return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
             }
-            else if (checkObject is IObject)
-            {
-                return new DotNetUnspecified(this, propertyInfo, checkObject, PropertyValueType.Single);
-            }
             else
             {
                 // It is not an enumeration and it is not a simple type. 
                 // It is a complex .Net-Type
                 var elements = this.extent == null ? null : this.extent.Elements();
-                return new DotNetUnspecified(this, propertyInfo, new DotNetObject(elements, checkObject, this.id + "/" + propertyName), PropertyValueType.Single);
-            }
+                return new DotNetUnspecified(
+                    this, 
+                    propertyInfo, 
+                    new DotNetObject(
+                        elements, 
+                        checkObject, 
+                        this.id + "/" + propertyName), 
+                    PropertyValueType.Single);
+            }*/
         }
 
         /// <summary>
@@ -384,7 +425,7 @@ namespace DatenMeister.DataProvider.DotNet
             if (this.isSet("name") && !(ObjectConversion.IsNull(this.get("name"))))
             {
                 return string.Format("\"{0}\" (DotNetObject)",
-                    this.get("name").AsSingle().ToString());
+                    this.getAsSingle("name").ToString());
             }
             else
             {
@@ -392,6 +433,9 @@ namespace DatenMeister.DataProvider.DotNet
             }
         }
 
+        /// <summary>
+        /// Gets the extent type
+        /// </summary>
         Type IKnowsExtentType.ExtentType
         {
             get { return typeof(DotNetExtent); }

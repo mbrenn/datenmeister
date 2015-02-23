@@ -71,26 +71,26 @@ namespace DatenMeister.Tests.Modules
             Assert.That(elements.Count, Is.EqualTo(5)); // 2 files, 3 directories
 
             var foundFileXTxt = elements
-                .Where(x => x.AsIObject().get("name").AsSingle().ToString() == "x.txt")
+                .Where(x => x.AsIObject().getAsSingle("name").ToString() == "x.txt")
                 .Select ( x=> x.AsIObject() as IElement)
                 .FirstOrDefault();
             Assert.That(foundFileXTxt, Is.Not.Null);
-            Assert.That(foundFileXTxt.get("name").AsSingle().ToString(), Is.EqualTo("x.txt"));
-            Assert.That(foundFileXTxt.get("extension").AsSingle().ToString(), Is.EqualTo(".txt"));
-            Assert.That(Convert.ToInt32(foundFileXTxt.get("length").AsSingle().ToString()), Is.EqualTo(8));
-            Assert.That(foundFileXTxt.get("relativePath").AsSingle().ToString(), Is.EqualTo("/x.txt"));
+            Assert.That(foundFileXTxt.getAsSingle("name").ToString(), Is.EqualTo("x.txt"));
+            Assert.That(foundFileXTxt.getAsSingle("extension").ToString(), Is.EqualTo(".txt"));
+            Assert.That(Convert.ToInt32(foundFileXTxt.getAsSingle("length")), Is.EqualTo(8));
+            Assert.That(foundFileXTxt.getAsSingle("relativePath").ToString(), Is.EqualTo("/x.txt"));
             Assert.That(
                 foundFileXTxt.getMetaClass(),
                 Is.EqualTo(DatenMeister.AddOns.Data.FileSystem.AsObject.Types.File));
 
             var foundDirectory = elements
-                .Where(x => x.AsIObject().get("name").AsSingle().ToString() == "First")
+                .Where(x => x.AsIObject().getAsSingle("name").ToString() == "First")
                 .Select(x => x.AsIObject() as IElement)
                 .FirstOrDefault();
             Assert.That(foundDirectory, Is.Not.Null);
-            Assert.That(foundDirectory.get("name").AsSingle().ToString(), Is.EqualTo("First"));
-            Assert.That(foundDirectory.get("extension").AsSingle().ToString(), Is.EqualTo(""));
-            Assert.That(foundDirectory.get("relativePath").AsSingle().ToString(), Is.EqualTo("/First"));
+            Assert.That(foundDirectory.getAsSingle("name").ToString(), Is.EqualTo("First"));
+            Assert.That(foundDirectory.getAsSingle("extension").ToString(), Is.EqualTo(""));
+            Assert.That(foundDirectory.getAsSingle("relativePath").ToString(), Is.EqualTo("/First"));
             Assert.That(
                 foundDirectory.getMetaClass(),
                 Is.EqualTo(DatenMeister.AddOns.Data.FileSystem.AsObject.Types.Directory));

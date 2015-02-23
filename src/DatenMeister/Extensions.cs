@@ -27,11 +27,24 @@ namespace DatenMeister
             return pool.GetInstance(extent);
         }
 
+        /// <summary>
+        /// Gets the property as a single property. 
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <param name="propertyName">Name of the property to be retrieved</param>
+        /// <returns>The retrieved object as returned by the Object</returns>
         public static object getAsSingle(this IObject value, string propertyName)
         {
             return value.get(propertyName, RequestType.AsSingle);
         }
 
+        /// <summary>
+        /// Gets the property as a reflective sequence
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <param name="propertyName">Name of the property to be retrieved</param>
+        /// <returns>The retrieved object as returned by the Object. 
+        /// If the given object is not a reflective sequence, an exception is thrown</returns>
         public static IReflectiveCollection getAsReflectiveSequence(this IObject value, string propertyName)
         {
             var result = value.get(propertyName, RequestType.AsReflectiveCollection);
@@ -58,6 +71,7 @@ namespace DatenMeister
         /// </summary>
         /// <param name="value">Value to be converted</param>
         /// <returns>Converted object</returns>
+        [Obsolete]
         public static object AsSingle(this object value, bool fullResolve = true)
         {
             if (value == null)
@@ -84,23 +98,6 @@ namespace DatenMeister
                 return value;
             }
 
-            // Ok, we have an unspecified thing... don't like, but necessary
-            var valueAsUnspecified = value as IUnspecified;
-            if (valueAsUnspecified != null)
-            {
-                var asSingle = valueAsUnspecified.AsSingle();
-
-                // Check, if the returned object is of type resolvable , IUnspecified or even null
-                if (fullResolve)
-                {
-                    return Extensions.AsSingle(asSingle, fullResolve);
-                }
-                else
-                {
-                    return asSingle;
-                }
-            }
-
             // Checks, if we have an enumeration, if yes, return first element
             var valueAsEnumeration = value as IEnumerable;
             if (valueAsEnumeration != null)
@@ -119,6 +116,7 @@ namespace DatenMeister
         /// </summary>
         /// <param name="value">Value to be checked</param>
         /// <returns>Enumeration of objects</returns>
+        [Obsolete]
         public static IEnumerable<object> AsEnumeration(this object value, bool fullResolve = true)
         {
             // Defines the resolve function
@@ -166,6 +164,7 @@ namespace DatenMeister
             }
         }
 
+        [Obsolete]
         public static IEnumerable<T> AsEnumeration<T>(this object value)
         {
             foreach (var item in AsEnumeration(value))
@@ -174,6 +173,7 @@ namespace DatenMeister
             }
         }
 
+        [Obsolete]
         public static IReflectiveCollection AsReflectiveCollection(this object value)
         {
             if (value is IReflectiveCollection)
@@ -196,6 +196,7 @@ namespace DatenMeister
             throw new NotImplementedException("Only instances implemented IUnspecified can be transformed to a reflective collection");
         }
 
+        [Obsolete]
         public static IReflectiveSequence AsReflectiveSequence(this object value)
         {
             if (value is IReflectiveSequence)
@@ -317,7 +318,7 @@ namespace DatenMeister
             return pairValue;
         }
 
-        public static void SetAll(this IObject value, Dictionary<string, object> values)
+        public static void Set(this IObject value, Dictionary<string, object> values)
         {
             foreach (var pair in values)
             {

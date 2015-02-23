@@ -19,7 +19,7 @@ namespace DatenMeister.Tests.DataProvider.GroupBy
         {
             var testExtent = XmlTests.CreateTestExtent();
 
-            var groupBy = new GroupByTypeTransformation(testExtent.AsReflectiveCollection());
+            var groupBy = new GroupByTypeTransformation(testExtent.Elements());
             var elements = groupBy.getAll();
 
             Assert.That(elements.Count(), Is.EqualTo(2));
@@ -31,8 +31,8 @@ namespace DatenMeister.Tests.DataProvider.GroupBy
                 var value = elementAsObject.values; 
 
                 // Checking, if request by normal request is also working
-                var key2 =  elementAsObject.get("key").AsSingle();
-                var values2 = elementAsObject.get("values").AsReflectiveSequence();
+                var key2 = elementAsObject.getAsSingle("key");
+                var values2 = elementAsObject.getAsReflectiveSequence("values");
                 Assert.That(key, Is.EqualTo(key2));
                 Assert.That(value, Is.EqualTo(values2));
 
@@ -40,7 +40,7 @@ namespace DatenMeister.Tests.DataProvider.GroupBy
                 if (key == XmlTests.TypePerson)
                 {
                     Assert.That(value.Count(), Is.EqualTo(2));
-                    var personBrenn = value.Where(x => x.AsIObject().get("name").AsSingle().ToString() == "Brenn").FirstOrDefault();
+                    var personBrenn = value.Where(x => x.AsIObject().getAsSingle("name").ToString() == "Brenn").FirstOrDefault();
                     Assert.That(personBrenn, Is.Not.Null);
                 }
                 else if (key == XmlTests.TypeTask)

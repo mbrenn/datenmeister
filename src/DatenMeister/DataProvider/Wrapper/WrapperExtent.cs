@@ -194,7 +194,7 @@ namespace DatenMeister.DataProvider.Wrapper
                 throw new NotImplementedException("Wrapper extent does not support IUnspecified");
             }
 
-            throw new NotImplementedException("Cannot conver type: " + value.ToString());
+            throw new NotImplementedException("Cannot convert type: " + value.ToString());
         }
 
         public override bool Equals(object obj)

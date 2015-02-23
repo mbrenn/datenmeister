@@ -36,13 +36,13 @@ namespace DatenMeister.Tests.DataProvider
                 ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
-            var sequence = valueE4.get("value").AsReflectiveSequence();
+            var sequence = valueE4.getAsReflectiveSequence("value");
             sequence.add("Value 1");
             sequence.add("Value 2");
             sequence.add("Value 3");
 
             // Checks, if setting had been successful
-            sequence = valueE4.get("value").AsReflectiveSequence();
+            sequence = valueE4.getAsReflectiveSequence("value");
             Assert.That(sequence.size(), Is.EqualTo(3));
             var value1 = sequence.get(0);
             var value2 = sequence.get(1);
@@ -76,7 +76,7 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(ev, Is.EqualTo(0));
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
-            var sequence = valueE4.get("value").AsReflectiveSequence();
+            var sequence = valueE4.getAsReflectiveSequence("value");
             sequence.add("Value 1");
             sequence.add("Value 2");
             sequence.add("Value 3");
@@ -85,11 +85,11 @@ namespace DatenMeister.Tests.DataProvider
             ev = 0;
 
             // Checks, if setting had been successful
-            sequence = valueE4.get("value").AsReflectiveSequence();
+            sequence = valueE4.getAsReflectiveSequence("value");
             Assert.That(sequence.size(), Is.EqualTo(3));
-            var value1 = sequence.get(0);
-            var value2 = sequence.get(1);
-            var value3 = sequence.get(2);
+            var value1 = sequence.ElementAt(0);
+            var value2 = sequence.ElementAt(1);
+            var value3 = sequence.ElementAt(2);
 
             Assert.That(value1, Is.EqualTo("Value 1"));
             Assert.That(value2, Is.EqualTo("Value 2"));

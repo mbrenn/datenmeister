@@ -77,7 +77,6 @@
     <Compile Include="DataProvider\DotNet\DotNetSequence.cs" />
     <Compile Include="DataProvider\DotNet\DotNetTypeInformation.cs" />
     <Compile Include="DataProvider\DotNet\DotNetTypeMapping.cs" />
-    <Compile Include="DataProvider\DotNet\DotNetUnspecified.cs" />
     <Compile Include="DataProvider\DotNet\GlobalDotNetExtent.cs" />
     <Compile Include="DataProvider\DotNet\IMapsMetaClassFromDotNet.cs" />
     <Compile Include="DataProvider\Common\EnumerationReflectiveSequence.cs" />

@@ -365,7 +365,7 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(
                 string.Format(
-                    TwelveSpaces + "var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get(\"{0}\"));",
+                    TwelveSpaces + "var list = DatenMeister.Extensions.getAsReflectiveSequence(obj, \"{0}\");",
                     propertyName));
             writer.WriteLine(TwelveSpaces + "list.Add(value);");
             // If we already receive a reflective collection, than the resetting is not necessary

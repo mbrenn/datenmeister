@@ -1,6 +1,6 @@
 namespace DatenMeister.Entities.AsObject.DM
 {
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.1.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ExtentInfo : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -274,7 +274,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.1.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RecentProject : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -454,7 +454,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.1.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Workbench : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -639,13 +639,13 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static void pushInstance(DatenMeister.IObject obj, DatenMeister.IObject value)
         {
-            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("instances"));
+            var list = DatenMeister.Extensions.getAsReflectiveSequence(obj, "instances");
             list.Add(value);
         }
 
         public static void pushInstance(DatenMeister.IObject obj, DatenMeister.Entities.DM.ExtentInfo value)
         {
-            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("instances"));
+            var list = DatenMeister.Extensions.getAsReflectiveSequence(obj, "instances");
             list.Add(value);
         }
 

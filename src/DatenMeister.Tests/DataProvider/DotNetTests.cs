@@ -32,8 +32,8 @@ namespace DatenMeister.Tests.DataProvider
                     value.set("XYZ", "T");
                 });
 
-            var textValue = value.get("TextValue").AsSingle();
-            var numberValue = value.get("NumberValue").AsSingle();
+            var textValue = value.getAsSingle("TextValue");
+            var numberValue = value.getAsSingle("NumberValue");
 
             Assert.That(textValue, Is.EqualTo("Dies ist ein Test"));
             Assert.That(numberValue, Is.EqualTo(123L));
@@ -42,8 +42,8 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(properties.Any(x => x.PropertyName == "TextValue"));
             Assert.That(properties.Any(x => x.PropertyName == "NumberValue"));
 
-            Assert.That(properties.Any(x => x.Value.AsSingle().ToString() == "Dies ist ein Test"));
-            Assert.That(properties.Any(x => x.Value.AsSingle().ToString() == "123"));
+            Assert.That(properties.Any(x => x.Value.ToString() == "Dies ist ein Test"));
+            Assert.That(properties.Any(x => x.Value.ToString() == "123"));
         }
 
         [Test]
@@ -57,20 +57,20 @@ namespace DatenMeister.Tests.DataProvider
             value.TextValue = "Test";
             var valueObject = extent.CreateObject(value);
 
-            Assert.That(valueObject.get("NumberValue").AsSingle(), Is.InstanceOf<long>());
-            Assert.That((long)valueObject.get("NumberValue").AsSingle(), Is.EqualTo(2));
+            Assert.That(valueObject.getAsSingle("NumberValue"), Is.InstanceOf<long>());
+            Assert.That((long)valueObject.getAsSingle("NumberValue"), Is.EqualTo(2));
 
-            Assert.That(valueObject.get("TextValue").AsSingle(), Is.InstanceOf<string>());
-            Assert.That((string)valueObject.get("TextValue").AsSingle(), Is.EqualTo("Test"));
+            Assert.That(valueObject.getAsSingle("TextValue"), Is.InstanceOf<string>());
+            Assert.That((string)valueObject.getAsSingle("TextValue"), Is.EqualTo("Test"));
 
             valueObject.set("NumberValue", 5);
             valueObject.set("TextValue", "no Test");
 
-            Assert.That(valueObject.get("NumberValue").AsSingle(), Is.InstanceOf<long>());
-            Assert.That((long)valueObject.get("NumberValue").AsSingle(), Is.EqualTo(5));
+            Assert.That(valueObject.getAsSingle("NumberValue"), Is.InstanceOf<long>());
+            Assert.That((long)valueObject.getAsSingle("NumberValue"), Is.EqualTo(5));
 
-            Assert.That(valueObject.get("TextValue").AsSingle(), Is.InstanceOf<string>());
-            Assert.That((string)valueObject.get("TextValue").AsSingle(), Is.EqualTo("no Test"));
+            Assert.That(valueObject.getAsSingle("TextValue"), Is.InstanceOf<string>());
+            Assert.That((string)valueObject.getAsSingle("TextValue"), Is.EqualTo("no Test"));
         }
         [Test]
         public void TestPropertiesGlobalExtentObject()
@@ -84,10 +84,10 @@ namespace DatenMeister.Tests.DataProvider
             var valueObject = extent.CreateObject(value) as IElement;
             Assert.That(valueObject, Is.Not.Null);
 
-            var enumeration = valueObject.getMetaClass().get("ownedAttribute").AsEnumeration().ToList();
+            var enumeration = valueObject.getMetaClass().getAsReflectiveSequence("ownedAttribute").ToList();
             Assert.That(enumeration.Count, Is.EqualTo(2));
-            Assert.That(enumeration[0].AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("TextValue"));
-            Assert.That(enumeration[1].AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("NumberValue"));
+            Assert.That(enumeration[0].AsIObject().getAsSingle("name").ToString(), Is.EqualTo("TextValue"));
+            Assert.That(enumeration[1].AsIObject().getAsSingle("name").ToString(), Is.EqualTo("NumberValue"));
         }
 
         [Test]
@@ -123,31 +123,31 @@ namespace DatenMeister.Tests.DataProvider
             var retrievedElement = listObject.ElementAt(0).AsIObject();
             Assert.That(retrievedElement, Is.Not.Null);
 
-            Assert.That(retrievedElement.get("NumberValue").AsSingle(), Is.InstanceOf<long>());
-            Assert.That((long)retrievedElement.get("NumberValue").AsSingle(), Is.EqualTo(3));
+            Assert.That(retrievedElement.getAsSingle("NumberValue"), Is.InstanceOf<long>());
+            Assert.That((long)retrievedElement.getAsSingle("NumberValue"), Is.EqualTo(3));
 
-            Assert.That(retrievedElement.get("TextValue").AsSingle(), Is.InstanceOf<string>());
-            Assert.That((string)retrievedElement.get("TextValue").AsSingle(), Is.EqualTo("START"));
+            Assert.That(retrievedElement.getAsSingle("TextValue"), Is.InstanceOf<string>());
+            Assert.That((string)retrievedElement.getAsSingle("TextValue"), Is.EqualTo("START"));
 
             // Check second element
             retrievedElement = listObject.ElementAt(1).AsIObject();
             Assert.That(retrievedElement, Is.Not.Null);
 
-            Assert.That(retrievedElement.get("NumberValue").AsSingle(), Is.InstanceOf<long>());
-            Assert.That((long)retrievedElement.get("NumberValue").AsSingle(), Is.EqualTo(1));
+            Assert.That(retrievedElement.getAsSingle("NumberValue"), Is.InstanceOf<long>());
+            Assert.That((long)retrievedElement.getAsSingle("NumberValue"), Is.EqualTo(1));
 
-            Assert.That(retrievedElement.get("TextValue").AsSingle(), Is.InstanceOf<string>());
-            Assert.That((string)retrievedElement.get("TextValue").AsSingle(), Is.EqualTo("TEXT"));
+            Assert.That(retrievedElement.getAsSingle("TextValue"), Is.InstanceOf<string>());
+            Assert.That((string)retrievedElement.getAsSingle("TextValue"), Is.EqualTo("TEXT"));
 
             // Check third element
             retrievedElement = listObject.ElementAt(2).AsIObject();
             Assert.That(retrievedElement, Is.Not.Null);
 
-            Assert.That(retrievedElement.get("NumberValue").AsSingle(), Is.InstanceOf<long>());
-            Assert.That((long)retrievedElement.get("NumberValue").AsSingle(), Is.EqualTo(2));
+            Assert.That(retrievedElement.getAsSingle("NumberValue"), Is.InstanceOf<long>());
+            Assert.That((long)retrievedElement.getAsSingle("NumberValue"), Is.EqualTo(2));
 
-            Assert.That(retrievedElement.get("TextValue").AsSingle(), Is.InstanceOf<string>());
-            Assert.That((string)retrievedElement.get("TextValue").AsSingle(), Is.EqualTo("More Text"));
+            Assert.That(retrievedElement.getAsSingle("TextValue"), Is.InstanceOf<string>());
+            Assert.That((string)retrievedElement.getAsSingle("TextValue"), Is.EqualTo("More Text"));
 
             listObject.RemoveAt(1);
             Assert.That(listObject.size(), Is.EqualTo(2));
@@ -164,9 +164,8 @@ namespace DatenMeister.Tests.DataProvider
 
             var value = new DotNetObject(extent.Elements(), netValue, Guid.Empty.ToString());
 
-            foreach (var item in value.get("Values").AsReflectiveSequence())
+            foreach (var x in value.getAsReflectiveSequence("Values"))
             {
-                var x = item.AsSingle();
                 Assert.That(x, Is.TypeOf<string>());
                 Assert.That(x.ToString(), Is.EqualTo("A").Or.EqualTo("B"));
             }
@@ -175,9 +174,8 @@ namespace DatenMeister.Tests.DataProvider
             {
                 Assert.That(pair.PropertyName, Is.EqualTo("Values"));
 
-                foreach (var item in pair.Value.AsReflectiveSequence())
+                foreach (var x in (pair.Value as IReflectiveCollection))
                 {
-                    var x = item.AsSingle();
                     Assert.That(x, Is.TypeOf<string>());
                     Assert.That(x.ToString(), Is.EqualTo("A").Or.EqualTo("B"));
                 }

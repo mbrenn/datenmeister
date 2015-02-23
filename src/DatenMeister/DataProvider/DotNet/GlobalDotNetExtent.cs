@@ -107,7 +107,7 @@ namespace DatenMeister.DataProvider.DotNet
 
                     // Checks, if the given property is an enumeration
                     // If the element is a list or enumeration. 
-                    var underlyingListType = ObjectConversion.GetTypeOfEnumerationByType(property.PropertyType);
+                    var underlyingListType = ObjectConversion.GetTypeOfEnumerableByType(property.PropertyType);
                     if (underlyingListType != null)
                     {
                         AddTypeMapping(extent, underlyingListType);

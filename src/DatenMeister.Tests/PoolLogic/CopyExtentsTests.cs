@@ -34,7 +34,7 @@ namespace DatenMeister.Tests.PoolLogic
             var copyExtent = CreateCopiedExtent(document);
 
             Assert.That(copyExtent.Elements().ElementAt(0).AsIObject().Id, Is.EqualTo("e1"));
-            Assert.That(copyExtent.Elements().ElementAt(0).AsIObject().get("text").AsSingle().ToString(), Is.EqualTo("xyz"));
+            Assert.That(copyExtent.Elements().ElementAt(0).AsIObject().getAsSingle("text").ToString(), Is.EqualTo("xyz"));
             Assert.That(copyExtent.Elements().ElementAt(1).AsIObject().Id, Is.EqualTo("e2"));
         }
 
@@ -56,7 +56,7 @@ namespace DatenMeister.Tests.PoolLogic
             var targetElement = targetExtent.Elements().FirstOrDefault() as IObject;
             Assert.That(targetElement, Is.Not.Null);
 
-            var enumTest = targetElement.get("test").AsSingle();
+            var enumTest = targetElement.getAsSingle("test");
             Assert.That(enumTest, Is.Not.Null);
             Assert.That(enumTest, Is.Not.EqualTo(ObjectHelper.NotSet));
             Assert.That(ObjectConversion.IsEnum(enumTest), Is.True);
@@ -81,7 +81,7 @@ namespace DatenMeister.Tests.PoolLogic
             var targetElement = targetExtent.Elements().FirstOrDefault() as IObject;
             Assert.That(targetElement, Is.Not.Null);
 
-            var enumTest = targetElement.get("test").AsSingle();
+            var enumTest = targetElement.getAsSingle("test");
             Assert.That(enumTest, Is.Not.Null);
             Assert.That(enumTest, Is.Not.EqualTo(ObjectHelper.NotSet));
             Assert.That(enumTest, Is.TypeOf<string>());
@@ -108,8 +108,8 @@ namespace DatenMeister.Tests.PoolLogic
             var value = PoolResolver.ResolveInExtent("test://copy/#e4", copyExtent) as IObject;
             Assert.That(value, Is.Not.Null);
 
-            var refValue = value.get("reference");
-            var refValueAsIObject = refValue.AsSingle().AsIObject();
+            var refValue = value.getAsSingle("reference");
+            var refValueAsIObject = refValue.AsIObject();
             Assert.That(refValueAsIObject, Is.Not.Null);
 
             Assert.That(refValueAsIObject.Id, Is.EqualTo("e1"));

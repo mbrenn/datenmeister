@@ -331,11 +331,11 @@ namespace DatenMeister
         /// </summary>
         /// <param name="value">Value, which might be an enumeration. </param>
         /// <returns>The type of the enumeration or null, the if the type is not an enumeration</returns>
-        public static Type GetTypeOfEnumeration(object value)
+        public static Type GetTypeOfEnumerable(object value)
         {
             var type = value.GetType();
 
-            return GetTypeOfEnumerationByType(type);
+            return GetTypeOfEnumerableByType(type);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace DatenMeister
         /// <param name="type">Type to be tested</param>
         /// <returns>The type of the enumerable, otherwise null, if the enumerable is not a 
         /// </returns>
-        public static Type GetTypeOfEnumerationByType(Type type)
+        public static Type GetTypeOfEnumerableByType(Type type)
         {
             if (type == typeof(string))
             {

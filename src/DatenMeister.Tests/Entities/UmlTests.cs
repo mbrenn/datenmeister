@@ -32,16 +32,16 @@ namespace DatenMeister.Tests.Entities
 
             // Checks the names
             Assert.That(
-                DatenMeister.Entities.AsObject.Uml.Types.Type.get("name").AsSingle().ToString(),
+                DatenMeister.Entities.AsObject.Uml.Types.Type.getAsSingle("name").ToString(),
                 Is.EqualTo("Type"));
             Assert.That(
-                DatenMeister.Entities.AsObject.Uml.Types.NamedElement.get("name").AsSingle().ToString(),
+                DatenMeister.Entities.AsObject.Uml.Types.NamedElement.getAsSingle("name").ToString(),
                 Is.EqualTo("NamedElement"));
             Assert.That(
-                DatenMeister.Entities.AsObject.Uml.Types.Property.get("name").AsSingle().ToString(),
+                DatenMeister.Entities.AsObject.Uml.Types.Property.getAsSingle("name").ToString(),
                 Is.EqualTo("Property"));
             Assert.That(
-                DatenMeister.Entities.AsObject.Uml.Types.Class.get("name").AsSingle().ToString(),
+                DatenMeister.Entities.AsObject.Uml.Types.Class.getAsSingle("name").ToString(),
                 Is.EqualTo("Class"));
 
             // Checks the types

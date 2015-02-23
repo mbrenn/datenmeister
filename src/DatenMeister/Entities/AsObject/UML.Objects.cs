@@ -1,6 +1,6 @@
 namespace DatenMeister.Entities.AsObject.Uml
 {
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.1.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class NamedElement : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -138,7 +138,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.1.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Type : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -276,7 +276,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.1.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Property : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -414,7 +414,7 @@ namespace DatenMeister.Entities.AsObject.Uml
 
     }
 
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.0.8.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.1.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Class : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
@@ -578,13 +578,13 @@ namespace DatenMeister.Entities.AsObject.Uml
 
         public static void pushOwnedAttribute(DatenMeister.IObject obj, DatenMeister.IObject value)
         {
-            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("ownedAttribute"));
+            var list = DatenMeister.Extensions.getAsReflectiveSequence(obj, "ownedAttribute");
             list.Add(value);
         }
 
         public static void pushOwnedAttribute(DatenMeister.IObject obj, DatenMeister.Entities.UML.Property value)
         {
-            var list = DatenMeister.Extensions.AsReflectiveCollection(obj.get("ownedAttribute"));
+            var list = DatenMeister.Extensions.getAsReflectiveSequence(obj, "ownedAttribute");
             list.Add(value);
         }
 

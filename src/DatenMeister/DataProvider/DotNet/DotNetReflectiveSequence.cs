@@ -1,4 +1,5 @@
-﻿using DatenMeister.DataProvider.Common;
+﻿using BurnSystems.Test;
+using DatenMeister.DataProvider.Common;
 using DatenMeister.Logic;
 using System;
 using System.Collections;
@@ -23,6 +24,16 @@ namespace DatenMeister.DataProvider.DotNet
         public DotNetReflectiveSequence(IURIExtent extent, IList<T> list)
             : base(extent, list)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the DotNetSequence class and adds the array
+        /// </summary>
+        /// <param name="content">Objects to be added</param>
+        public static DotNetReflectiveSequence<T> CreateFromList(DotNetExtent extent, IList<T> content)
+        {
+            Ensure.That(content != null);
+            return new DotNetReflectiveSequence<T>(extent, content);
         }
 
         /// <summary>

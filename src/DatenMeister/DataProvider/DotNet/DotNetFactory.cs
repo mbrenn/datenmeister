@@ -21,14 +21,12 @@ namespace DatenMeister.DataProvider.DotNet
 
         public IObject create(IObject type)
         {
+            Ensure.That(type != null, "type is null");
+
             var found = this.extent.Mapping.FindByIObjectType(type);
             if (found != null)
             {
                 return new DotNetObject(this.extent.Elements(), Activator.CreateInstance(found.DotNetType));
-            }
-            else if (type == null)
-            {
-                throw new NotImplementedException("Type is null");
             }
             else
             {

@@ -80,33 +80,33 @@ namespace DatenMeister.Tests.DataProvider
         public void TestGetTypeOfEnumerationByType()
         {
             Assert.That(
-                ObjectConversion.GetTypeOfEnumerationByType(typeof(string)),
+                ObjectConversion.GetTypeOfEnumerableByType(typeof(string)),
                 Is.Null);
 
             Assert.That(
-                ObjectConversion.GetTypeOfEnumerationByType(typeof(int)),
+                ObjectConversion.GetTypeOfEnumerableByType(typeof(int)),
                 Is.Null);
 
             Assert.That(
-                ObjectConversion.GetTypeOfEnumerationByType(typeof(ConsoleColor)),
+                ObjectConversion.GetTypeOfEnumerableByType(typeof(ConsoleColor)),
                 Is.Null);
 
             Assert.That(
-                ObjectConversion.GetTypeOfEnumerationByType(typeof(TimeZone)),
+                ObjectConversion.GetTypeOfEnumerableByType(typeof(TimeZone)),
                 Is.Null);
 
             Assert.That(
-                ObjectConversion.GetTypeOfEnumerationByType(typeof(List<int>)),
+                ObjectConversion.GetTypeOfEnumerableByType(typeof(List<int>)),
                 Is.EqualTo(typeof(int)));
             Assert.That(
-                ObjectConversion.GetTypeOfEnumerationByType(typeof(List<string>)),
+                ObjectConversion.GetTypeOfEnumerableByType(typeof(List<string>)),
                 Is.EqualTo(typeof(string)));
             Assert.That(
-                ObjectConversion.GetTypeOfEnumerationByType(typeof(List<TimeZone>)),
+                ObjectConversion.GetTypeOfEnumerableByType(typeof(List<TimeZone>)),
                 Is.EqualTo(typeof(TimeZone)));
 
             Assert.That(
-                ObjectConversion.GetTypeOfEnumerationByType(typeof(System.Collections.Generic.LinkedList<double>)),
+                ObjectConversion.GetTypeOfEnumerableByType(typeof(System.Collections.Generic.LinkedList<double>)),
                 Is.EqualTo(typeof(double)));
         }
     }

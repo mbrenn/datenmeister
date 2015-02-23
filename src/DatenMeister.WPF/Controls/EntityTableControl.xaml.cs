@@ -1,13 +1,10 @@
 ﻿using BurnSystems.Test;
 using BurnSystems.UserExceptionHandler;
-using DatenMeister.DataProvider;
 using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Entities.AsObject.Uml;
 using DatenMeister.Logic;
-using DatenMeister.Logic.MethodProvider;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
-using DatenMeister.Transformations;
 using DatenMeister.WPF.Controls.GuiElements;
 using DatenMeister.WPF.Controls.GuiElements.Elements;
 using DatenMeister.WPF.Helper;
