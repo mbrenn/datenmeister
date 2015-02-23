@@ -18,7 +18,7 @@ namespace DatenMeister.Transformations.GroupBy
         /// </summary>
         public object key
         {
-            get { return this.get("key").AsSingle(); }
+            get { return this.getAsSingle("key"); }
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace DatenMeister.Transformations.GroupBy
         /// </summary>
         public IReflectiveSequence values
         {
-            get { return this.get("values").AsReflectiveSequence(); }
+            get { return this.getAsReflectiveSequence("values"); }
         }
 
         /// <summary>

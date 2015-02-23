@@ -247,7 +247,7 @@ namespace DatenMeister.WPF.Controls
             {
                 foreach (var elementType in typesForCreation)
                 {
-                    var name = NamedElement.getName(elementType.AsIObject()).AsSingle();
+                    var name = NamedElement.getName(elementType.AsIObject());
                     var btn = new Button();
                     btn.Content = "New " + name;
                     btn.Style = this.gridButtons.Resources["TouchButton"] as Style;

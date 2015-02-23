@@ -45,7 +45,7 @@ namespace DatenMeister
         /// <param name="propertyName">Name of the property to be retrieved</param>
         /// <returns>The retrieved object as returned by the Object. 
         /// If the given object is not a reflective sequence, an exception is thrown</returns>
-        public static IReflectiveCollection getAsReflectiveSequence(this IObject value, string propertyName)
+        public static IReflectiveSequence getAsReflectiveSequence(this IObject value, string propertyName)
         {
             var result = value.get(propertyName, RequestType.AsReflectiveCollection);
             if (result == null)
@@ -53,15 +53,16 @@ namespace DatenMeister
                 return null;
             }
 
-            if (result is IReflectiveCollection)
+            if (result is IReflectiveSequence)
             {
-                return result as IReflectiveCollection;
+                return result as IReflectiveSequence;
             }
 
             throw new InvalidOperationException(
-                string.Format("{0} did not return IReflectiveCollection on property '{1}'",
+                string.Format("{0} did not return IReflectiveSequence on property '{1}'. Was: {2}",
                 value.ToString(),
-                propertyName));
+                propertyName,
+                value.GetType().FullName));
         }
 
         /// <summary>

@@ -85,12 +85,12 @@ namespace DatenMeister.Logic.Views
         {
             var result = false;
             var factory = Factory.GetFor(viewInfo);
-            var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
+            var fieldInfos = viewInfo.getAsReflectiveSequence("fieldInfos");
 
             var type = new DatenMeister.Entities.AsObject.Uml.Class(typeInformation);
-            foreach (var property in type.get("ownedAttribute").AsEnumeration())
+            foreach (var property in type.getAsReflectiveSequence("ownedAttribute"))
             {
-                fieldInfos.add(AddTextField(factory, property.AsIObject().get("name").AsSingle().ToString()));
+                fieldInfos.add(AddTextField(factory, property.AsIObject().getAsSingle("name").ToString()));
                 result = true;
             }
 
@@ -112,7 +112,7 @@ namespace DatenMeister.Logic.Views
         {
             var result = false;
             var factory = Factory.GetFor(viewInfo);
-            var fieldInfos = viewInfo.get("fieldInfos").AsReflectiveSequence();
+            var fieldInfos = viewInfo.getAsReflectiveSequence("fieldInfos");
             var info = collection.GetConsolidatedInformation();
 
             // Gets the type, if necessary

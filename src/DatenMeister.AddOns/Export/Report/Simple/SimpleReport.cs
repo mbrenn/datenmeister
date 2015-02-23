@@ -53,7 +53,7 @@ namespace DatenMeister.AddOns.Export.Report.Simple
 
                 var table = new
                 {
-                    Headline = pair.key.AsSingle().AsIObject().get("name").AsSingle().ToString(),
+                    Headline = pair.key.AsSingle().AsIObject().getAsSingle("name").ToString(),
                     TableContent = htmlTable.ToString()
                 };
                 tables.Add(table);

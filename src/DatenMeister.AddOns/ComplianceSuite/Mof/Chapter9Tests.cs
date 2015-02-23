@@ -79,7 +79,7 @@ namespace DatenMeister.AddOns.ComplianceSuite.Mof
             var instance1 = this.suite.ObjectFactory(extent);
             // Test getting unknown properties
             this.Test("Compliance.MOF.9.3.1.get.unknown",
-                () => instance1.get("unknown").AsSingle() == ObjectHelper.NotSet);
+                () => instance1.getAsSingle("unknown") == ObjectHelper.NotSet);
 
             // Test getting integers after having them set
             this.Test("Compliance.MOF.9.3.1.get.integer",
@@ -87,7 +87,7 @@ namespace DatenMeister.AddOns.ComplianceSuite.Mof
                 {
                     var success = true;
                     instance1.set("hasValue", 2);
-                    var result = instance1.get("hasValue").AsSingle();
+                    var result = instance1.getAsSingle("hasValue");
                     success = success ?
                         (ObjectConversion.ToInt32(result) == 2) :
                         false;
@@ -101,7 +101,7 @@ namespace DatenMeister.AddOns.ComplianceSuite.Mof
                 {
                     var success = true;
                     instance1.set("hasAnotherValue", "value");
-                    var result = instance1.get("hasAnotherValue").AsSingle();
+                    var result = instance1.getAsSingle("hasAnotherValue");
                     success &= result is string;
                     success = success ?
                         (ObjectConversion.ToString(result) == "value") :
@@ -115,7 +115,7 @@ namespace DatenMeister.AddOns.ComplianceSuite.Mof
                 {
                     // Test getting reflective sequence after having them set
                     var success = true;
-                    var result = instance1.get("mySequence").AsReflectiveSequence();
+                    var result = instance1.getAsReflectiveSequence("mySequence");
                     success = success ?
                         result is IReflectiveSequence :
                         false;

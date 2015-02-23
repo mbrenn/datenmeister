@@ -30,8 +30,8 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             var tableConfiguration = new TableLayoutConfiguration();
             tableConfiguration.ShowCancelButton = false;
-            tableConfiguration.ElementsFactory = 
-                (pool) => detailObject.get(subElement.getBinding()).AsReflectiveCollection();
+            tableConfiguration.ElementsFactory =
+                (pool) => detailObject.getAsReflectiveSequence(subElement.getBinding());
 
             var typeForNew = subElement.getTypeForNew();
             Ensure.That(typeForNew != null, "No type given for subelements");

@@ -258,7 +258,7 @@ namespace DatenMeister.DataProvider.Xml
             }
 
             // Checks, if we have a value
-            var result = this.get(propertyName).AsSingle();
+            var result = this.getAsSingle(propertyName);
             if (ObjectConversion.IsNull(result))
             {
                 return false;
@@ -383,7 +383,7 @@ namespace DatenMeister.DataProvider.Xml
             }
             else if (value is IEnumerable || value is IReflectiveCollection)
             {
-                var propertyAsReflectiveCollection = this.get(propertyName).AsReflectiveCollection();
+                var propertyAsReflectiveCollection = this.getAsReflectiveSequence(propertyName);
                 foreach (var item in (value as IEnumerable))
                 {
                     propertyAsReflectiveCollection.add(item);
@@ -562,7 +562,7 @@ namespace DatenMeister.DataProvider.Xml
 
         public override string ToString()
         {
-            var nameElement = this.get("name").AsSingle();
+            var nameElement = this.getAsSingle("name");
             string nameText = string.Empty;
             if (nameElement != null )
             {

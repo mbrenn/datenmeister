@@ -47,10 +47,10 @@ namespace DatenMeister.AddOns.Export.Excel
             // Performs the fill
             if (settings.PerTypeOneSheet)
             {
-                var inTypes = new GroupByTypeTransformation(extent.AsReflectiveCollection());
+                var inTypes = new GroupByTypeTransformation(extent.Elements());
                 foreach (var pairs in inTypes.ElementsAsGroupBy())
                 {
-                    var sheet = this.workbook.CreateSheet(pairs.key.AsIObject().get("name").AsSingle().ToString());
+                    var sheet = this.workbook.CreateSheet(pairs.key.AsIObject().getAsSingle("name").ToString());
                     this.FillSheet(sheet, pairs.values);
                 }
             }
@@ -128,7 +128,7 @@ namespace DatenMeister.AddOns.Export.Excel
                     }
                     else
                     {
-                        cell.SetCellValue(metaClass.get("name").AsSingle().ToString());
+                        cell.SetCellValue(metaClass.getAsSingle("name").ToString());
                     }
                 }
 

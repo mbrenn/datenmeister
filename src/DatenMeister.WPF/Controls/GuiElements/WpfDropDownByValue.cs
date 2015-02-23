@@ -30,13 +30,13 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 return false;
             }
 
-            var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
+            var stringValue = valueAsIObject.getAsSingle(propertyValue).ToString();
             return currentValue.ToString() == stringValue;
         }
 
         protected override object GetValue(IObject otherElement)
         {
-            return otherElement.get(this.propertyValue).AsSingle().ToString();
+            return otherElement.getAsSingle(this.propertyValue).ToString();
         }
 
         protected override object GetCurrentValue()

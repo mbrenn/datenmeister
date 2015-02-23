@@ -82,16 +82,16 @@ namespace DatenMeister.AddOns.Data.FileSystem
         {
             // Checks, if the File is already in database, if yes, then the initialization is skipped
             var elements = typeExtent.Elements();
-            if (!elements.Any(x => x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.File"))
+            if (!elements.Any(x => x.AsIObject().getAsSingle("name").ToString() == "DatenMeister.AddOns.Data.FileSystem.File"))
             {
                 AsObject.Types.Init(typeExtent);
             }
             else
             {
                 AsObject.Types.File = elements.Where(x =>
-                    x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.File").First().AsIObject();
+                    x.AsIObject().getAsSingle("name").ToString() == "DatenMeister.AddOns.Data.FileSystem.File").First().AsIObject();
                 AsObject.Types.Directory = elements.Where(x =>
-                    x.AsIObject().get("name").AsSingle().ToString() == "DatenMeister.AddOns.Data.FileSystem.Directory").First().AsIObject();
+                    x.AsIObject().getAsSingle("name").ToString() == "DatenMeister.AddOns.Data.FileSystem.Directory").First().AsIObject();
             }
 
             // Performs the type mapping

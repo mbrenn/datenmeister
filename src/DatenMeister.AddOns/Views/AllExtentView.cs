@@ -48,7 +48,7 @@ namespace DatenMeister.AddOns.Views
                 window.AssociateDetailOpenEvent(newView, (z) =>
                 {
                     // Gets the referenced extent
-                    var uri = z.Value.AsSingle().AsIObject().get("uri").AsSingle().ToString();
+                    var uri = z.Value.AsIObject().getAsSingle("uri").ToString();
                     if (string.IsNullOrEmpty(uri))
                     {
                         logger.Message("No uri has been returned");

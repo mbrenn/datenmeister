@@ -313,7 +313,7 @@ namespace DatenMeister.WPF.Controls
         {
             foreach (var element in this.wpfElements)
             {
-                var elementName = element.FieldInfo.get("name").AsSingle().ToString();
+                var elementName = element.FieldInfo.getAsSingle("name").ToString();
                 if (elementName == name)
                 {
                     FocusCacheEntry(element);

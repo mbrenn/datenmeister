@@ -38,9 +38,9 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(items.Count, Is.EqualTo(6));
 
             var item0 = items[0].AsIObject();
-            var value = item0.get("").AsSingle();
+            var value = item0.getAsSingle("");
             Assert.That(value, Is.EqualTo("This is content"));
-            Assert.That(item0.get("Nix").AsSingle(), Is.EqualTo(ObjectHelper.NotSet));
+            Assert.That(item0.getAsSingle("Nix"), Is.EqualTo(ObjectHelper.NotSet));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace DatenMeister.Tests.DataProvider
 
             Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").First().Value, Is.EqualTo("This is content"));
             firstElement.set(string.Empty, "Test");
-            Assert.That(firstElement.get(string.Empty).AsSingle(), Is.EqualTo("Test"));
+            Assert.That(firstElement.getAsSingle(string.Empty), Is.EqualTo("Test"));
             Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").First().Value, Is.EqualTo("Test"));
         }
 
@@ -85,8 +85,8 @@ namespace DatenMeister.Tests.DataProvider
             var firstElement = xmlExtent.Elements().AsIObject();
             Assert.That(firstElement, Is.Not.Null);
 
-            Assert.That(firstElement.get(string.Empty).AsSingle(), Is.EqualTo("One"));
-            Assert.That(firstElement.get("letter").AsSingle(), Is.EqualTo("a"));
+            Assert.That(firstElement.getAsSingle(string.Empty), Is.EqualTo("One"));
+            Assert.That(firstElement.getAsSingle("letter"), Is.EqualTo("a"));
 
             var pairs = firstElement.getAll();
             Assert.That(pairs.Any(x => x.PropertyName == string.Empty), Is.True);
@@ -95,16 +95,16 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(pairs.Any(x => x.PropertyName == "nix"), Is.False);
 
             // Gets second item '/list/item[1]'
-            var secondElement = xmlExtent.Elements().AsEnumeration().ElementAt(1).AsIObject();
+            var secondElement = xmlExtent.Elements().ElementAt(1).AsIObject();
             Assert.That(secondElement, Is.Not.Null);
 
-            Assert.That(secondElement.get(string.Empty).AsSingle(), Is.EqualTo("Two"));
-            Assert.That(secondElement.get("letter").AsSingle(), Is.EqualTo("b"));
+            Assert.That(secondElement.getAsSingle(string.Empty), Is.EqualTo("Two"));
+            Assert.That(secondElement.getAsSingle("letter"), Is.EqualTo("b"));
 
             // Sets the content of second item
             secondElement.set("letter", "to be");
 
-            Assert.That(secondElement.get("letter").AsSingle(), Is.EqualTo("to be"));
+            Assert.That(secondElement.getAsSingle("letter"), Is.EqualTo("to be"));
             Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").ElementAt(1).Attribute("letter").Value,
                 Is.EqualTo("to be"));
         }
@@ -161,8 +161,8 @@ namespace DatenMeister.Tests.DataProvider
             var value = pool.ResolveByPath("test:///#e4") as IObject;
             Assert.That(value, Is.Not.Null);
 
-            var refValue = value.get("reference");
-            var refValueAsIObject = refValue.AsSingle().AsIObject();
+            var refValue = value.getAsSingle("reference");
+            var refValueAsIObject = refValue.AsIObject();
             Assert.That(refValueAsIObject, Is.Not.Null);
 
             Assert.That(refValueAsIObject.Id, Is.EqualTo("e1"));
@@ -186,8 +186,8 @@ namespace DatenMeister.Tests.DataProvider
             var value = pool.ResolveByPath("test:///#e4") as IObject;
             Assert.That(value, Is.Not.Null);
 
-            var refValue = value.get("reference");
-            var refValueAsIObject = refValue.AsSingle().AsIObject();
+            var refValue = value.getAsSingle("reference");
+            var refValueAsIObject = refValue.AsIObject();
             Assert.That(refValueAsIObject, Is.Not.Null);
 
             Assert.That(refValueAsIObject.Id, Is.EqualTo("e1"));
@@ -214,8 +214,8 @@ namespace DatenMeister.Tests.DataProvider
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             Assert.That(valueE4, Is.Not.Null);
 
-            var refValue = valueE4.get("reference");
-            var refValueAsIObject = refValue.AsSingle();
+            var refValue = valueE4.getAsSingle("reference");
+            var refValueAsIObject = refValue;
             Assert.That(refValueAsIObject, Is.EqualTo(ObjectHelper.Null));
         }
 
@@ -281,7 +281,7 @@ namespace DatenMeister.Tests.DataProvider
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             Assert.That(valueE4, Is.Not.Null);
 
-            var refValue = valueE4.get("reference").AsReflectiveCollection();
+            var refValue = valueE4.getAsReflectiveSequence("reference");
             Assert.That(refValue, Is.Not.Null);
             Assert.That(refValue.Count, Is.EqualTo(2));
 
@@ -307,7 +307,7 @@ namespace DatenMeister.Tests.DataProvider
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
             Assert.That(valueE4, Is.Not.Null);
 
-            var refValue = valueE4.get("reference").AsReflectiveCollection();
+            var refValue = valueE4.getAsReflectiveSequence("reference");
             Assert.That(refValue, Is.Not.Null);
             Assert.That(refValue.Count, Is.EqualTo(0));
             refValue.add(pool.ResolveByPath("test:///#e1") as IObject);
@@ -343,14 +343,14 @@ namespace DatenMeister.Tests.DataProvider
             var valueE2 = pool.ResolveByPath("test:///#e2") as IObject;
 
             // Ok, first thing: Add the stuff as references
-            var asSequence = valueE1.get("subelements").AsReflectiveSequence();
+            var asSequence = valueE1.getAsReflectiveSequence("subelements");
             Assert.That(asSequence, Is.Not.Null);
             Assert.That(asSequence.size(), Is.EqualTo(0));
             asSequence.add(valueE2);
 
             // Check, if we get it back
             Assert.That(asSequence.size(), Is.EqualTo(1));
-            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
+            Assert.That(asSequence.ElementAt(0).AsIObject().Id, Is.EqualTo("e2"));
             
             // Do a clear
             asSequence.clear();
@@ -362,34 +362,34 @@ namespace DatenMeister.Tests.DataProvider
             asSequence.add(valueE1);
 
             Assert.That(asSequence.size(), Is.EqualTo(3));
-            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
-            Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e4"));
-            Assert.That(asSequence.get(2).AsSingle().AsIObject().Id, Is.EqualTo("e1"));
+            Assert.That(asSequence.ElementAt(0).AsIObject().Id, Is.EqualTo("e2"));
+            Assert.That(asSequence.ElementAt(1).AsIObject().Id, Is.EqualTo("e4"));
+            Assert.That(asSequence.ElementAt(2).AsIObject().Id, Is.EqualTo("e1"));
 
             // Now remove second one
             asSequence.remove(1);
             Assert.That(asSequence.size(), Is.EqualTo(2));
-            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
-            Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e1"));
+            Assert.That(asSequence.ElementAt(0).AsIObject().Id, Is.EqualTo("e2"));
+            Assert.That(asSequence.ElementAt(1).AsIObject().Id, Is.EqualTo("e1"));
             
             // Re-add it
-            asSequence.add(1, valueE4);
+            asSequence.Insert(1, valueE4);
             Assert.That(asSequence.size(), Is.EqualTo(3));
-            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
-            Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e4"));
-            Assert.That(asSequence.get(2).AsSingle().AsIObject().Id, Is.EqualTo("e1"));
+            Assert.That(asSequence.ElementAt(0).AsIObject().Id, Is.EqualTo("e2"));
+            Assert.That(asSequence.ElementAt(1).AsIObject().Id, Is.EqualTo("e4"));
+            Assert.That(asSequence.ElementAt(2).AsIObject().Id, Is.EqualTo("e1"));
 
             // Remove a specific one
             asSequence.remove(valueE2);
             Assert.That(asSequence.size(), Is.EqualTo(2));
-            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e4"));
-            Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e1"));
+            Assert.That(asSequence.ElementAt(0).AsIObject().Id, Is.EqualTo("e4"));
+            Assert.That(asSequence.ElementAt(1).AsIObject().Id, Is.EqualTo("e1"));
 
             // Replace one
             asSequence.set(1, valueE2);
             Assert.That(asSequence.size(), Is.EqualTo(2));
-            Assert.That(asSequence.get(0).AsSingle().AsIObject().Id, Is.EqualTo("e4"));
-            Assert.That(asSequence.get(1).AsSingle().AsIObject().Id, Is.EqualTo("e2"));
+            Assert.That(asSequence.ElementAt(0).AsIObject().Id, Is.EqualTo("e4"));
+            Assert.That(asSequence.ElementAt(1).AsIObject().Id, Is.EqualTo("e2"));
         }
 
         [Test]
@@ -408,13 +408,13 @@ namespace DatenMeister.Tests.DataProvider
             pool.Add(xmlExtent, null, ExtentType.Data);
 
             var valueE4 = pool.ResolveByPath("test:///#e4") as IObject;
-            var sequence = valueE4.get("value").AsReflectiveSequence();
+            var sequence = valueE4.getAsReflectiveSequence("value");
             sequence.add("Value 1");
             sequence.add("Value 2");
             sequence.add("Value 3");
 
             // Checks, if setting had been successful
-            sequence = valueE4.get("value").AsReflectiveSequence();
+            sequence = valueE4.getAsReflectiveSequence("value");
             Assert.That(sequence.size(), Is.EqualTo(3));
             var value1 = sequence.get(0);
             var value2 = sequence.get(1);
@@ -446,11 +446,11 @@ namespace DatenMeister.Tests.DataProvider
             valueE4.set("user", newElement);
 
             // Check, if we get all the information
-            var retrievedUser = valueE4.get("user").AsSingle().AsIObject();
-            Assert.That(retrievedUser.get("name").AsSingle().ToString(), Is.EqualTo("Brenn"));
+            var retrievedUser = valueE4.getAsSingle("user").AsIObject();
+            Assert.That(retrievedUser.getAsSingle("name").ToString(), Is.EqualTo("Brenn"));
 
-            var retrievedAddress = retrievedUser.get("address").AsSingle().AsIObject();
-            Assert.That(retrievedAddress.get("street").AsSingle().ToString(), Is.EqualTo("Teststraße 1"));
+            var retrievedAddress = retrievedUser.getAsSingle("address").AsIObject();
+            Assert.That(retrievedAddress.getAsSingle("street").ToString(), Is.EqualTo("Teststraße 1"));
         }
 
         [Test]
@@ -474,32 +474,32 @@ namespace DatenMeister.Tests.DataProvider
             var newUser3 = CreateUser("Brennus", "Martinus", "Teststraße 3");
             var newUser4 = CreateUser("Brennas", "Martinas", "Teststraße 4");
 
-            var users = valueE4.get("user").AsReflectiveCollection();
+            var users = valueE4.getAsReflectiveSequence("user");
             users.add(newUser1);
             users.add(newUser2);
             users.add(newUser3);
 
-            users = valueE4.get("user").AsReflectiveCollection();
+            users = valueE4.getAsReflectiveSequence("user");
             users.add(newUser4);
 
             // Check, if we get all the information
-            var retrievedUsers = valueE4.get("user").AsReflectiveCollection();
+            var retrievedUsers = valueE4.getAsReflectiveSequence("user");
             Assert.That(retrievedUsers.Count, Is.EqualTo(4));
-            Assert.That(retrievedUsers.ElementAt(0).AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("Brenn"));
-            Assert.That(retrievedUsers.ElementAt(1).AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("Brenner"));
-            Assert.That(retrievedUsers.ElementAt(3).AsIObject().get("name").AsSingle().ToString(), Is.EqualTo("Brennas"));
+            Assert.That(retrievedUsers.ElementAt(0).AsIObject().getAsSingle("name").ToString(), Is.EqualTo("Brenn"));
+            Assert.That(retrievedUsers.ElementAt(1).AsIObject().getAsSingle("name").ToString(), Is.EqualTo("Brenner"));
+            Assert.That(retrievedUsers.ElementAt(3).AsIObject().getAsSingle("name").ToString(), Is.EqualTo("Brennas"));
 
-            var retrievedAddress = retrievedUsers.ElementAt(0).AsIObject().get("address").AsSingle().AsIObject();
-            Assert.That(retrievedAddress.get("street").AsSingle().ToString(), Is.EqualTo("Teststraße 1"));
+            var retrievedAddress = retrievedUsers.ElementAt(0).AsIObject().getAsSingle("address").AsIObject();
+            Assert.That(retrievedAddress.getAsSingle("street").ToString(), Is.EqualTo("Teststraße 1"));
 
-            retrievedAddress = retrievedUsers.ElementAt(3).AsIObject().get("address").AsSingle().AsIObject();
-            Assert.That(retrievedAddress.get("street").AsSingle().ToString(), Is.EqualTo("Teststraße 4"));
+            retrievedAddress = retrievedUsers.ElementAt(3).AsIObject().getAsSingle("address").AsIObject();
+            Assert.That(retrievedAddress.getAsSingle("street").ToString(), Is.EqualTo("Teststraße 4"));
 
             var n = 0;
             foreach (var user in retrievedUsers)
             {
                 n++;
-                var name = user.AsIObject().get("name").AsSingle().ToString();
+                var name = user.AsIObject().getAsSingle("name").ToString();
                 Assert.That(name,
                     Is.EqualTo("Brenn").Or.EqualTo("Brenner").Or.EqualTo("Brennus").Or.EqualTo("Brennas"));
             }
@@ -531,8 +531,8 @@ namespace DatenMeister.Tests.DataProvider
             valueE4.set("user", newElement);
 
             // Check, if we get all the information
-            var retrievedElement = valueE4.get("user").AsSingle().AsIObject();
-            Assert.That(retrievedElement.get("name").AsSingle().ToString(), Is.EqualTo("Brenn"));
+            var retrievedElement = valueE4.getAsSingle("user").AsIObject();
+            Assert.That(retrievedElement.getAsSingle("name").ToString(), Is.EqualTo("Brenn"));
         }
 
         [Test]
@@ -555,7 +555,7 @@ namespace DatenMeister.Tests.DataProvider
             valueE4.set("bday", new DateTime(1981, 11, 16, 11, 42, 00));
             
             // Check, if we get all the information
-            var retrievedBDay = ObjectConversion.ToDateTime(valueE4.get("bday").AsSingle());
+            var retrievedBDay = ObjectConversion.ToDateTime(valueE4.getAsSingle("bday"));
             Assert.That(retrievedBDay, Is.EqualTo(new DateTime(1981, 11, 16, 11, 42, 00)));
         }
 
@@ -581,7 +581,7 @@ namespace DatenMeister.Tests.DataProvider
             var valueAsIObject = xmlExtent.Elements().First().AsIObject();
             Assert.That(valueAsIObject, Is.Not.Null);
 
-            var propertyValue = valueAsIObject.get("property").AsSingle().ToString();
+            var propertyValue = valueAsIObject.getAsSingle("property").ToString();
             Assert.That(propertyValue, Is.EqualTo("value"));
         }
 
@@ -631,11 +631,11 @@ namespace DatenMeister.Tests.DataProvider
             // Now do the check
 
             Assert.That(extent.Elements().Count, Is.EqualTo(1));
-            var container2 = extent.Elements().FirstOrDefault().AsSingle().AsIObject();
+            var container2 = extent.Elements().FirstOrDefault().AsIObject();
 
             Assert.That(container2, Is.Not.Null);
-            var person2 = container2.get("person").AsSingle().AsIObject() as IElement;
-            var task2 = container2.get("task").AsSingle().AsIObject() as IElement;
+            var person2 = container2.getAsSingle("person").AsIObject() as IElement;
+            var task2 = container2.getAsSingle("task").AsIObject() as IElement;
 
             Assert.That(person2, Is.Not.Null);
             Assert.That(task2, Is.Not.Null);
@@ -728,7 +728,7 @@ namespace DatenMeister.Tests.DataProvider
             detail.set("fieldInfos", taskDetailColumns);
 
             // Now is doing all the checks
-            var value = detail.get("fieldInfos").AsReflectiveCollection();
+            var value = detail.getAsReflectiveSequence("fieldInfos");
             Assert.That(value, Is.Not.Null);
             Assert.That(value.size(), Is.EqualTo(3));
 
@@ -737,12 +737,12 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(multiReference, Is.Not.Null);
             var referencedTableObject = multiReference.get("tableViewInfo").AsIObject();
             Assert.That(referencedTableObject, Is.Not.Null);
-            Assert.That(referencedTableObject.get("name").AsSingle().ToString(), Is.EqualTo("My Table"));
-            var tableColumns = referencedTableObject.get("fieldInfos").AsReflectiveCollection();
+            Assert.That(referencedTableObject.getAsSingle("name").ToString(), Is.EqualTo("My Table"));
+            var tableColumns = referencedTableObject.getAsReflectiveSequence("fieldInfos");
             Assert.That(tableColumns, Is.Not.Null);
             Assert.That(tableColumns.size(), Is.EqualTo(6));
-            Assert.That(tableColumns.ElementAt(2).AsIObject().get("name").AsSingle(), Is.EqualTo("Ende"));
-            Assert.That(tableColumns.ElementAt(5).AsIObject().get("name").AsSingle(), Is.EqualTo("Predecessors"));
+            Assert.That(tableColumns.ElementAt(2).AsIObject().getAsSingle("name"), Is.EqualTo("Ende"));
+            Assert.That(tableColumns.ElementAt(5).AsIObject().getAsSingle("name"), Is.EqualTo("Predecessors"));
         }
 
 

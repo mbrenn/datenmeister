@@ -13,12 +13,12 @@ namespace DatenMeister.Tests
     [TestFixture]
     public class ExtensionTests
     {
-        [Test]
+        /*[Test]
         public void TestAsString()
         {
             Assert.That(Extensions.AsSingle(null), Is.EqualTo(ObjectHelper.Null));
             Assert.That(Extensions.AsSingle("TEST"), Is.EqualTo("TEST"));
-        }
+        }*/
 
         [Test]
         public void TestCommonValueNotSet()
