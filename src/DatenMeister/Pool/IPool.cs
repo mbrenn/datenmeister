@@ -7,6 +7,10 @@ using System.Text;
 
 namespace DatenMeister.Pool
 {
+    /// <summary>
+    /// Defines the interface for the pool, which contains all 
+    /// the containers
+    /// </summary>
     public interface IPool
     {
         /// <summary>
@@ -25,6 +29,7 @@ namespace DatenMeister.Pool
         /// <param name="extent">Extent to be added</param>
         /// <param name="storagePath">Path, where pool is stored</param>
         /// <param name="name">Name of the pool</param>
+        /// <param name="extentType">Type of the extent being stored</param>
         ExtentInfo Add(IURIExtent extent, string storagePath, string name, ExtentType extentType);
     }
 }

@@ -119,7 +119,6 @@
     <Compile Include="DataProvider\Xml\XmlSettings.cs" />
     <Compile Include="DataProvider\Xml\XmlTypeInformation.cs" />
     <Compile Include="DataProvider\Xml\XmlTypeMapping.cs" />
-    <Compile Include="DataProvider\Xml\XmlUnspecified.cs" />
     <Compile Include="Entities\FieldInfos\SubElementList.cs" />
     <Compile Include="Logic\Settings\MinimumDatenMeisterSettings.cs" />
     <Compile Include="ObjectPropertyPair.cs" />

@@ -49,9 +49,18 @@ namespace DatenMeister.DataProvider.Xml
         }
 
         /// <summary>
-        /// Gets or sets the unspecified object
+        /// Gets or sets the owner
         /// </summary>
-        private XmlUnspecified Unspecified
+        private XmlObject Owner
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the name of property being connected
+        /// </summary>
+        public string PropertyName
         {
             get;
             set;
@@ -61,10 +70,11 @@ namespace DatenMeister.DataProvider.Xml
         /// Initializes a new instance of the XmlReflectiveSequence
         /// </summary>
         /// <param name="unspecified">Unspecified object</param>
-        public XmlReflectiveSequence(XmlUnspecified unspecified)
-            : base((unspecified.Owner as XmlObject).FactoryExtent)
+        public XmlReflectiveSequence(XmlObject owner, string propertyName)
+            : base(owner.FactoryExtent)
         {
-            this.Unspecified = unspecified;
+            this.Owner = owner;
+            this.PropertyName = propertyName;
             this.EstimateSequenceType();
         }
 
@@ -77,17 +87,17 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         public void EstimateSequenceType()
         {
-            var owner = this.Unspecified.Owner as XmlObject;
+            var owner = this.Owner as XmlObject;
 
             // Check, if we have an attribute
-            if (owner.Node.Attribute(this.Unspecified.PropertyName + "-ref") != null)
+            if (owner.Node.Attribute(this.PropertyName + "-ref") != null)
             {
                 this.sequenceType = XmlReflectiveSequenceType.Attributes;
                 return;
             }
 
             // Check, if we have at least one node
-            if (owner.Node.Element(this.Unspecified.PropertyName) != null)
+            if (owner.Node.Element(this.PropertyName) != null)
             {
                 this.sequenceType = XmlReflectiveSequenceType.Nodes;
                 return;
@@ -112,8 +122,8 @@ namespace DatenMeister.DataProvider.Xml
                 throw new NotImplementedException("Sequencetype is Nodes... Getting attributes does not make sense");
             }
 
-            var owner = this.Unspecified.Owner as XmlObject;
-            var propertyName = this.Unspecified.PropertyName + "-ref";
+            var owner = this.Owner;
+            var propertyName = this.PropertyName + "-ref";
             var attribute = owner.Node.Attribute(propertyName);
 
             if (attribute == null)
@@ -168,12 +178,12 @@ namespace DatenMeister.DataProvider.Xml
 
         public override void add(int index, object value)
         {
-            var xmlObject = this.Unspecified.Owner as XmlObject;
+            var xmlObject = this.Owner as XmlObject;
 
             // Which type is the value 
             var valueAsIObject = value as IObject;
-            var propertyName = this.Unspecified.PropertyName;
-            var extent = this.Unspecified.Owner.Extent;
+            var propertyName = this.PropertyName;
+            var extent = this.Owner.ContainerExtent;
 
             if (valueAsIObject != null)
             {
@@ -191,7 +201,7 @@ namespace DatenMeister.DataProvider.Xml
                 {
                     // Ok, we can add it. 
                     var poolResolver = PoolResolver.GetDefault(extent.Pool);
-                    var path = poolResolver.GetResolvePath(valueAsIObject, this.Unspecified.Owner);
+                    var path = poolResolver.GetResolvePath(valueAsIObject, this.Owner);
 
                     // Ok, now we got it, now we need to inject our element
                     var list = this.GetAttributeAsList(); // Check for valid sequence types is included here
@@ -202,7 +212,7 @@ namespace DatenMeister.DataProvider.Xml
             else if (ObjectConversion.IsNative(value))
             {
                 // Add it as a new Xml Element, containing the property as a value
-                var element = new XElement(this.Unspecified.PropertyName);
+                var element = new XElement(this.PropertyName);
                 element.Value = ObjectConversion.ToString(value);
 
                 xmlObject.Node.Add(element);
@@ -223,15 +233,15 @@ namespace DatenMeister.DataProvider.Xml
                 var objectList = this.GetAttributeAsList();
 
                 var path = objectList[index];
-                var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
-                var resolvedObject = poolResolver.Resolve(path, this.Unspecified.Owner);
+                var poolResolver = PoolResolver.GetDefault(this.Owner.ContainerExtent.Pool);
+                var resolvedObject = poolResolver.Resolve(path, this.Owner);
 
                 return resolvedObject;
             }
             else if (this.sequenceType == XmlReflectiveSequenceType.Nodes)
             {
-                var xmlObject = this.Unspecified.Owner as XmlObject;
-                var elements = xmlObject.Node.Elements(this.Unspecified.PropertyName);
+                var xmlObject = this.Owner as XmlObject;
+                var elements = xmlObject.Node.Elements(this.PropertyName);
                 if (elements.Count() <= index)
                 {
                     // The number of available subelements is too low
@@ -283,8 +293,8 @@ namespace DatenMeister.DataProvider.Xml
             {
                 if (valueAsIObject.Extent != null)
                 {
-                    var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
-                    var path = poolResolver.GetResolvePath(valueAsIObject, this.Unspecified.Owner);
+                    var poolResolver = PoolResolver.GetDefault(this.Owner.ContainerExtent.Pool);
+                    var path = poolResolver.GetResolvePath(valueAsIObject, this.Owner);
 
                     // Ok, now we got it, now we need to inject our element
                     var list = this.GetAttributeAsList();
@@ -324,8 +334,8 @@ namespace DatenMeister.DataProvider.Xml
             {
                 if (valueAsIObject.Extent != null)
                 {
-                    var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
-                    var path = poolResolver.GetResolvePath(valueAsIObject, this.Unspecified.Owner);
+                    var poolResolver = PoolResolver.GetDefault(this.Owner.ContainerExtent.Pool);
+                    var path = poolResolver.GetResolvePath(valueAsIObject, this.Owner);
 
                     var attributeList = this.GetAttributeAsList();
                     var result = attributeList.Remove(path);
@@ -352,8 +362,8 @@ namespace DatenMeister.DataProvider.Xml
                 case XmlReflectiveSequenceType.Attributes:
                     return this.GetAttributeAsList().Count;
                 case XmlReflectiveSequenceType.Nodes:
-                    var xmlObject = this.Unspecified.Owner as XmlObject;
-                    return xmlObject.Node.Elements(this.Unspecified.PropertyName).Count();
+                    var xmlObject = this.Owner as XmlObject;
+                    return xmlObject.Node.Elements(this.PropertyName).Count();
                 default:
                     throw new NotImplementedException("Sequence type is not known");
             }
@@ -374,17 +384,17 @@ namespace DatenMeister.DataProvider.Xml
                     yield break;
                 }
 
-                var poolResolver = PoolResolver.GetDefault(this.Unspecified.Owner.Extent.Pool);
+                var poolResolver = PoolResolver.GetDefault(this.Owner.ContainerExtent.Pool);
                 foreach (var path in attributeList)
                 {
-                    yield return poolResolver.Resolve(path, this.Unspecified.Owner);
+                    yield return poolResolver.Resolve(path, this.Owner);
                 }
             }
 
             if (this.sequenceType == XmlReflectiveSequenceType.Nodes)
             {
-                var xmlObject = this.Unspecified.Owner as XmlObject;
-                foreach (var node in xmlObject.Node.Elements(this.Unspecified.PropertyName))
+                var xmlObject = this.Owner as XmlObject;
+                foreach (var node in xmlObject.Node.Elements(this.PropertyName))
                 {
                     if (!node.HasAttributes && !node.HasElements)
                     {

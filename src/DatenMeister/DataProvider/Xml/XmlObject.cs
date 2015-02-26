@@ -88,15 +88,24 @@ namespace DatenMeister.DataProvider.Xml
         /// </summary>
         /// <param name="value">Value to be resolved</param>
         /// <returns>Resolved object</returns>
-        private object Resolve(object value, string propertyName, PropertyValueType propertyValueType)
+        private object Resolve(object value, string propertyName, RequestType requestType)
         {
-            var result = value;
-            if (result != null)
+            switch (requestType)
             {
-                result = new XmlUnspecified(this, propertyName, result, propertyValueType);
+                case RequestType.AsDefault:
+                    var valueAsList = value as IList;
+                    var multiple = valueAsList != null ? true : valueAsList.Count > 1;
+                    return this.Resolve(
+                        value, 
+                        propertyName, 
+                        multiple ? RequestType.AsReflectiveCollection : RequestType.AsSingle);
+                case RequestType.AsSingle:
+                    return value;
+                case RequestType.AsReflectiveCollection:
+                    return new XmlReflectiveSequence(this, propertyName);
+                default:
+                    throw new InvalidOperationException("Unknown result type: " + requestType.ToString());
             }
-
-            return result;
         }
 
         /// <summary>
@@ -147,13 +156,13 @@ namespace DatenMeister.DataProvider.Xml
             // Checks, if we have an item, if not, return a not set element
             if (result.Count == 0)
             {
-                return this.Resolve(ObjectHelper.NotSet, propertyName, PropertyValueType.Single);
+                return this.Resolve(ObjectHelper.NotSet, propertyName, requestType);
             }
 
             return this.Resolve(
                 result,
                 propertyName,
-                result.Count == 1 ? PropertyValueType.Single : PropertyValueType.Enumeration);
+                requestType);
         }
 
         /// <summary>
@@ -236,11 +245,15 @@ namespace DatenMeister.DataProvider.Xml
             {
                 if (valuePair.Value.Count == 1)
                 {
-                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value.First(), valuePair.Key, PropertyValueType.Single));
+                    yield return new ObjectPropertyPair(
+                        valuePair.Key, 
+                        this.Resolve(valuePair.Value.First(), valuePair.Key, RequestType.AsDefault));
                 }
                 else
                 {
-                    yield return new ObjectPropertyPair(valuePair.Key, this.Resolve(valuePair.Value, valuePair.Key, PropertyValueType.Enumeration));
+                    yield return new ObjectPropertyPair(
+                        valuePair.Key,
+                        this.Resolve(valuePair.Value, valuePair.Key, RequestType.AsDefault));
                 }
             }
         }
