@@ -163,7 +163,7 @@ namespace DatenMeister.Pool
                 }
 
                 // We got a fragment, find the element with the id
-                result = result.AsReflectiveCollection()
+                result = ObjectConversion.ToReflectiveCollection(result)
                     .Select(x => x.AsIObject())
                     .Where(x => x.Id == fragment).FirstOrDefault();
                 if (result != null)

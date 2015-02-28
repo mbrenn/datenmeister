@@ -47,13 +47,13 @@ namespace DatenMeister.AddOns.Export.Report.Simple
                     {
                         htmlTable.AddCellWithContent(
                             HtmlElement.ConvertNewLineToBreaks(
-                                elementAsViewObject[property].AsSingle().ToString()));
+                                elementAsViewObject[property].ToString()));
                     }
                 }
 
                 var table = new
                 {
-                    Headline = pair.key.AsSingle().AsIObject().getAsSingle("name").ToString(),
+                    Headline = pair.key.AsIObject().getAsSingle("name").ToString(),
                     TableContent = htmlTable.ToString()
                 };
                 tables.Add(table);

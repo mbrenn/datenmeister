@@ -49,7 +49,7 @@ namespace DatenMeister.Transformations.GroupBy
         {
             foreach (var element in this)
             {
-                yield return element.AsSingle() as GroupByObject;
+                yield return element as GroupByObject;
             }
         }
     }

@@ -20,7 +20,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         protected override Item<object> ConvertToDropDownItem(object value)
         {
             var valueAsIObject = value as IObject;
-            var stringValue = valueAsIObject.get(propertyValue).AsSingle().ToString();
+            var stringValue = valueAsIObject.getAsSingle(propertyValue).ToString();
 
             var item = new Item<object>(stringValue, valueAsIObject, this.GetValue(valueAsIObject));
             return item;

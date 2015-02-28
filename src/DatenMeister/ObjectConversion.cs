@@ -41,12 +41,6 @@ namespace DatenMeister
                 return ((int)value) != 0;
             }
 
-            var valueAsUnspecified = value as IUnspecified;
-            if (valueAsUnspecified != null)
-            {
-                return ToBoolean(valueAsUnspecified.AsSingle());
-            }
-
             return false;
         }
 
@@ -69,12 +63,6 @@ namespace DatenMeister
                 {
                     return result;
                 }
-            }
-
-            var valueAsUnspecified = value as IUnspecified;
-            if (valueAsUnspecified != null)
-            {
-                return ToInt32(valueAsUnspecified.AsSingle());
             }
 
             return 0;
@@ -108,12 +96,6 @@ namespace DatenMeister
                 return null;
             }
 
-            var valueAsUnspecified = value as IUnspecified;
-            if (valueAsUnspecified != null)
-            {
-                return ToDateTime(valueAsUnspecified.AsSingle());
-            }
-
             return null;
         }
 
@@ -134,12 +116,6 @@ namespace DatenMeister
                 return (value as IFormattable).ToString(null, CultureInfo.InvariantCulture);
             }
 
-            var valueAsUnspecified = value as IUnspecified;
-            if (valueAsUnspecified != null)
-            {
-                return ToString(valueAsUnspecified.AsSingle());
-            }
-
             return value.ToString();
         }
 
@@ -151,13 +127,6 @@ namespace DatenMeister
         /// <returns>The converted type</returns>
         public static object ConvertTo(object value, Type targetType)
         {
-
-            var valueAsUnspecified = value as IUnspecified;
-            if (valueAsUnspecified != null)
-            {
-                return ConvertTo(valueAsUnspecified.AsSingle(), targetType);
-            }
-
             if (targetType == typeof(Int32))
             {
                 return ToInt32(value);
@@ -184,6 +153,35 @@ namespace DatenMeister
             }
 
             return Convert.ChangeType(value, targetType);
+        }
+
+        public static IReflectiveCollection ToReflectiveCollection(this object value)
+        {
+            if (value is IReflectiveCollection)
+            {
+                return value as IReflectiveCollection;
+            }
+
+            if (value is IURIExtent)
+            {
+                return (value as IURIExtent).Elements();
+            }
+
+            throw new NotImplementedException("Only instances implemented IReflectiveCollection or IURIExtent can be transformed to a reflective collection");
+        }
+        public static IReflectiveSequence ToReflectiveSequence(this object value)
+        {
+            if (value is IReflectiveSequence)
+            {
+                return value as IReflectiveSequence;
+            }
+
+            if (value is IURIExtent)
+            {
+                return (value as IURIExtent).Elements();
+            }
+
+            throw new NotImplementedException("Only instances implemented IUnspecified or IURIExtent can be transformed to a reflective sequence");
         }
 
         /// <summary>
@@ -244,14 +242,13 @@ namespace DatenMeister
         /// <returns>true, if the object returns null</returns>
         public static bool IsNull(object value)
         {
-            value = value.AsSingle();
             return value == null
                 || value == ObjectHelper.Null
                 || value == ObjectHelper.NotSet;
         }
 
         /// <summary>
-        /// Checks, if the object is an enumeration object
+        /// Checks, if the object is an enum value (not a list)
         /// </summary>
         /// <param name="value">Value to be checked</param>
         /// <returns>true, if the object is an enumeratio</returns>
@@ -299,20 +296,13 @@ namespace DatenMeister
         }
 
         /// <summary>
-        /// Checks whether the given object is a reflective collection
+        /// Checks whether the given object is an enumeration, containing a list
         /// </summary>
         /// <param name="value">Value to be checked</param>
         /// <returns>true, if the object is a reflective </returns>
         public static bool IsEnumeration(object value)
         {
             if (value is IEnumerable && !(value is string))
-            {
-                return true;
-            }
-
-            var valueAsUnspecified = value as IUnspecified;
-            if (valueAsUnspecified != null &&
-                valueAsUnspecified.PropertyValueType == PropertyValueType.Enumeration)
             {
                 return true;
             }

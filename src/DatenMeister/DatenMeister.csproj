@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic\Settings\BaseDatenMeisterSettings.cs" />
-    <Compile Include="BaseUnspecified.cs" />
     <Compile Include="DataProvider\Common\BaseReflectiveCollection.cs" />
     <Compile Include="DataProvider\Common\BaseReflectiveSequence.cs" />
     <Compile Include="DataProvider\Common\CollectionToSequenceWrapper.cs" />
@@ -165,7 +164,6 @@
     <Compile Include="Logic\Settings\IPublicDatenMeisterSettings.cs" />
     <Compile Include="IReflectiveCollection.cs" />
     <Compile Include="IReflectiveSequence.cs" />
-    <Compile Include="IUnspecified.cs" />
     <Compile Include="IURIExtent.cs" />
     <Compile Include="Logic\ApplicationCore.PublicViews.cs" />
     <Compile Include="Logic\ApplicationCore.cs" />

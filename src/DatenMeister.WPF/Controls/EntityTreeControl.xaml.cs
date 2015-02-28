@@ -4,6 +4,7 @@ using DatenMeister.Pool;
 using DatenMeister.WPF.Windows;
 using Ninject;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -93,12 +94,23 @@ namespace DatenMeister.WPF.Controls
             foreach (var pair in item.getAll().ToList())
             {
                 var tempList = new List<TreeViewItem>();
-                var asEnumeration = pair.Value.AsEnumeration();
-                foreach (var subItem in asEnumeration.Where(x => x is IObject).Select(x => x.AsIObject()))
+                if (pair.Value is IReflectiveCollection)
                 {
-                    if (!alreadyCovered.Any(x => subItem == x))
+                    var asEnumeration = pair.Value as IReflectiveCollection;
+                    foreach (var subItem in asEnumeration.Where(x => x is IObject).Select(x => x.AsIObject()))
                     {
-                        var treeSubItem = this.ConvertToTreeViewItem(subItem, alreadyCovered);
+                        if (!alreadyCovered.Any(x => subItem == x))
+                        {
+                            var treeSubItem = this.ConvertToTreeViewItem(subItem, alreadyCovered);
+                            tempList.Add(treeSubItem);
+                        }
+                    }
+                }
+                else
+                {
+                    if (!alreadyCovered.Any(x => pair.Value == x))
+                    {
+                        var treeSubItem = this.ConvertToTreeViewItem(pair.Value.AsIObject(), alreadyCovered);
                         tempList.Add(treeSubItem);
                     }
                 }

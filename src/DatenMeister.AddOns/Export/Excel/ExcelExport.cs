@@ -140,7 +140,7 @@ namespace DatenMeister.AddOns.Export.Excel
                     {
                         cell = row.CreateCell(c);
 
-                        var value = elementAsViewObject[property].AsSingle().ToString();
+                        var value = elementAsViewObject[property].ToString();
                         cell.SetCellValue(value);
 
                         if (value.Contains('\r') || value.Contains('\n'))

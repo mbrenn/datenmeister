@@ -64,7 +64,7 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
                     collection.Select(x =>
                     {
                         var asObject = x.AsIObject();
-                        var text = asObject.get(this.field.FieldInfo.getPropertyValue()).AsSingle().ToString();
+                        var text = asObject.getAsSingle(this.field.FieldInfo.getPropertyValue()).ToString();
                         return new ElementInList(asObject, text);
                     });
             }
@@ -81,7 +81,7 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
                 return null;
             }
 
-            return this.field.DetailObject.get(this.field.FieldInfo.getBinding()).AsReflectiveCollection();
+            return this.field.DetailObject.getAsReflectiveSequence(this.field.FieldInfo.getBinding());
         }
 
         /// <summary>
@@ -92,7 +92,9 @@ namespace DatenMeister.WPF.Controls.GuiElements.Elements
         {
             var poolResolver = Injection.Application.Get<IPoolResolver>();
             Ensure.That(poolResolver != null);
-            return poolResolver.Resolve(this.field.FieldInfo.getReferenceUrl(), this.field.DetailObject).AsReflectiveCollection();
+            return ObjectConversion.ToReflectiveCollection(poolResolver.Resolve(
+                    this.field.FieldInfo.getReferenceUrl(), 
+                    this.field.DetailObject));
         }
 
         /// <summary>

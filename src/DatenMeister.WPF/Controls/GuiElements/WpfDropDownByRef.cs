@@ -35,7 +35,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         protected override object GetCurrentValue()
         {
             var value = ObjectHelper.GetCommonValue(this.detailObjects, this.binding);
-            return value.AsSingle() as IObject;
+            return value as IObject;
         }
 
         protected override bool AreValuesEqual(object currentValue, object otherElement)

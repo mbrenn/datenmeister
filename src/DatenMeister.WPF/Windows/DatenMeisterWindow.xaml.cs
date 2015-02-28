@@ -272,7 +272,7 @@ namespace DatenMeister.WPF.Windows
                         throw new InvalidOperationException(extentUri + " did return null");
                     }
 
-                    return e.AsReflectiveCollection();
+                    return ObjectConversion.ToReflectiveCollection(e);
                 };
 
                 ///////////////////////////

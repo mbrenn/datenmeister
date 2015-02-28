@@ -43,7 +43,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
             var value = ObjectHelper.GetCommonValue(this.detailObjects, this.binding);
 
-            var currentValue = value.AsSingle().ToString();
+            var currentValue = value.ToString();
             return currentValue;
         }
     }

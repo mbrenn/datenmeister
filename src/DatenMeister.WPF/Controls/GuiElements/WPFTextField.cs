@@ -72,7 +72,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 }
                 else
                 {
-                    textBox.Text = commonValue.AsSingle().ToString();
+                    textBox.Text = commonValue.ToString();
                 }
 
                 // Do we have a read-only flag

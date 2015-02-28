@@ -41,7 +41,7 @@ namespace DatenMeister.WPF.Modules.RecentFiles
             DatenMeister.Entities.AsObject.FieldInfo.TableView.setAllowDelete(layoutRecentObjects, true);
             DatenMeister.Entities.AsObject.FieldInfo.TableView.setExtentUri(layoutRecentObjects, ApplicationCore.ApplicationDataUri);
 
-            var fieldInfos = layoutRecentObjects.get("fieldInfos").AsReflectiveSequence();
+            var fieldInfos = layoutRecentObjects.getAsReflectiveSequence("fieldInfos");
             var textField = DatenMeister.Entities.AsObject.FieldInfo.TextField.create(viewFactory);
             DatenMeister.Entities.AsObject.FieldInfo.TextField.setBinding(textField, "name");
             DatenMeister.Entities.AsObject.FieldInfo.TextField.setName(textField, "Name");

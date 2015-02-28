@@ -76,8 +76,7 @@ namespace DatenMeister.Logic
         {
             get
             {
-                var result = this.Get(key);
-                return result.AsSingle();
+                return this.Get(key);
             }
             set
             {

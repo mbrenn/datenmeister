@@ -52,8 +52,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                     && propertyValue != ObjectHelper.NotSet
                     && propertyValue != ObjectHelper.Different)
                 {
-                    var date = ObjectConversion.ToDateTime(
-                        propertyValue.AsSingle());
+                    var date = ObjectConversion.ToDateTime(propertyValue);
 
                     if (date == null)
                     {

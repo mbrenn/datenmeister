@@ -87,7 +87,7 @@ namespace DatenMeister.AddOns.Views
                         asObjectExtentview.setAllowNew(false);
                     }
 
-                    asObjectExtentview.setName(z.Value.AsSingle().AsIObject().get("name").AsSingle().ToString());
+                    asObjectExtentview.setName(z.Value.AsIObject().getAsSingle("name").ToString());
 
                     // Gets the referenced extent
                     ViewHelper.AutoGenerateViewDefinition(extent, asObjectExtentview);

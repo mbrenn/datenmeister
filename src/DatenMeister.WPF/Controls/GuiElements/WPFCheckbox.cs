@@ -34,8 +34,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 }
                 else if (propertyValue != null)
                 {
-                    var asSingle = propertyValue.AsSingle();
-                    wpfCheckbox.IsChecked = ObjectConversion.ToBoolean(asSingle);
+                    wpfCheckbox.IsChecked = ObjectConversion.ToBoolean(propertyValue);
                 }
             }
 

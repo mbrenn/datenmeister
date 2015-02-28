@@ -25,7 +25,7 @@ namespace DatenMeister.DataProvider.DotNet
             {
                 DotNetType = dotNetType,
                 Type = type,
-                Name = type.get("name").AsSingle().ToString()
+                Name = type.getAsSingle("name").ToString()
             };
 
             this.mappings.Add(information);

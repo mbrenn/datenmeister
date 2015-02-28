@@ -84,7 +84,7 @@ namespace DatenMeister.Transformations
                     var metaClass = element.getMetaClass();
                     if (metaClass != null)
                     {
-                        var typeName = element.getMetaClass().get("name").AsSingle().ToString();
+                        var typeName = element.getMetaClass().getAsSingle("name").ToString();
 
                         if (typeName == this.nameOfTypeToFilter)
                         {

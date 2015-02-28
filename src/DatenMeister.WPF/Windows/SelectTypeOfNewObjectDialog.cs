@@ -56,7 +56,7 @@ namespace DatenMeister.WPF.Windows
                     var factory = Factory.GetFor(reflectiveCollection.Extent);
 
                     // Adds the element to the reflective collection
-                    var createdElement = factory.create(dialog.SelectedElements.AsSingle().AsIObject());
+                    var createdElement = factory.create(dialog.SelectedElements.First().AsIObject());
                     reflectiveCollection.add(createdElement);
 
                     // Now, add the item, it might be, that other extent views also need to be updated.

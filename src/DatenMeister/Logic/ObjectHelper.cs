@@ -120,13 +120,6 @@ namespace DatenMeister.Logic
                 return true;
             }
 
-            var valueAsUnspecified = value as IUnspecified;
-            if (valueAsUnspecified != null &&
-                valueAsUnspecified.PropertyValueType == PropertyValueType.Enumeration)
-            {
-                return true;
-            }
-
             var valueAsProxyObject = value as IProxyObject;
             if (valueAsProxyObject != null)
             {
@@ -176,7 +169,7 @@ namespace DatenMeister.Logic
                         if (value == firstRoundIndicator)
                         {
                             value = propertyValue;
-                        }                        
+                        }
                         else if (!propertyValue.Equals(value))
                         {
                             value = ObjectHelper.Different;

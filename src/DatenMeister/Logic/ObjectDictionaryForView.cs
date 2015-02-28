@@ -47,7 +47,7 @@ namespace DatenMeister.Logic
         /// <returns>true, property is set</returns>
         public bool IsSet(string propertyName)
         {
-            if (this.Value.get(propertyName).AsSingle() == ObjectHelper.NotSet)
+            if (this.Value.getAsSingle(propertyName) == ObjectHelper.NotSet)
             {
                 return false;
             }
@@ -115,28 +115,13 @@ namespace DatenMeister.Logic
         /// <returns>Result als string</returns>
         private string GetInvariantStringRepresentation(string index, object result)
         {
-            // Check for IUnspecific... 
-            var resultAsUnspecified = result as IUnspecified;
-            if (resultAsUnspecified != null)
-            {
-                if (resultAsUnspecified.PropertyValueType == PropertyValueType.Enumeration)
-                {
-                    result = resultAsUnspecified.AsEnumeration();
-                }
-
-                if (resultAsUnspecified.PropertyValueType == PropertyValueType.Single)
-                {
-                    result = resultAsUnspecified.AsSingle();
-                }
-            }
-
             var resultAsIObject = result as IObject;
 
             if (resultAsIObject != null)
             {
                 // We have an IObject which has been referenced. 
                 // We return name of the object
-                result = resultAsIObject.get("name").AsSingle().ToString();
+                result = resultAsIObject.getAsSingle("name").ToString();
             }
 
             // Checks, if this is an enumeration, if yes, do enumerate and collect 
@@ -161,7 +146,6 @@ namespace DatenMeister.Logic
             else
             {
                 // Assume that this is a single
-                result = result.AsSingle();
                 if (result != null)
                 {
                     result = ConvertToStringForView(result);
@@ -265,7 +249,7 @@ namespace DatenMeister.Logic
 
             foreach (var fieldInfo in this.fieldInfos)
             {
-                if (General.getBinding(fieldInfo).AsSingle().ToString() == index)
+                if (General.getBinding(fieldInfo).ToString() == index)
                 {
                     return fieldInfo;
                 }
@@ -282,7 +266,7 @@ namespace DatenMeister.Logic
         {
             foreach (var fieldInfo in this.fieldInfos)
             {
-                var name = General.getBinding(fieldInfo).AsSingle().ToString();
+                var name = General.getBinding(fieldInfo).ToString();
                 yield return new KeyValuePair<string, object>(name, this.Get(name));
             }
         }

@@ -42,7 +42,7 @@ namespace DatenMeister.Transformations
             var vAsObject = v as IObject;
             if (vAsObject != null)
             {
-                var myValue = vAsObject.get(property).AsSingle();
+                var myValue = vAsObject.getAsSingle(property);
                 if (myValue == null)
                 {
                     return false;

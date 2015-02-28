@@ -17,7 +17,7 @@ namespace DatenMeister.Pool
             var result = resolver.Resolve(url);
             if (result is IURIExtent)
             {
-                return (result as IURIExtent).Elements().AsEnumeration<IObject>();
+                return (result as IURIExtent).Elements().Select(x => x.AsIObject());
             }
 
             if (result is IEnumerable<IObject>)

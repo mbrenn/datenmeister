@@ -15,7 +15,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
         /// <param name="detailObject">Detailobject, where the current element shall be retrieved</param>
         protected override object GetCurrentValue()
         {
-            return ObjectHelper.GetCommonValue(this.detailObjects, this.binding).AsSingle();
+            return ObjectHelper.GetCommonValue(this.detailObjects, this.binding);
         }
 
         protected override IEnumerable<object> GetDropDownValues(IObject fieldInfo)

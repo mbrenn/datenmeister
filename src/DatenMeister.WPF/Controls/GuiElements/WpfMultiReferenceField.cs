@@ -66,7 +66,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
 
             if ((state.EditMode == EditMode.Edit || state.EditMode == EditMode.Read) && detailObject != null)
             {
-                this.Sequence = detailObject.get(this.FieldInfo.getBinding()).AsReflectiveSequence();
+                this.Sequence = detailObject.getAsReflectiveSequence(this.FieldInfo.getBinding());
 
                 var element = new WpfMultiReferenceFieldElement(this);
                 element.RefreshData();

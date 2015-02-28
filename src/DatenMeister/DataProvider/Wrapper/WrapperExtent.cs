@@ -189,11 +189,6 @@ namespace DatenMeister.DataProvider.Wrapper
                 }
             }
 
-            if (value is IUnspecified)
-            {
-                throw new NotImplementedException("Wrapper extent does not support IUnspecified");
-            }
-
             throw new NotImplementedException("Cannot convert type: " + value.ToString());
         }
 

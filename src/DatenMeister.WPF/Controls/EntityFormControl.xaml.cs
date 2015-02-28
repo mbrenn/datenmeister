@@ -610,7 +610,7 @@ namespace DatenMeister.WPF.Controls
                     return null;
                 }
 
-                return value.AsSingle() == ObjectHelper.NotSet;
+                return value == ObjectHelper.NotSet;
             }
         }
 

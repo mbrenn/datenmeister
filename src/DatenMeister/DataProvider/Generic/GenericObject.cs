@@ -173,7 +173,7 @@ namespace DatenMeister.DataProvider.Generic
         {
             if (this.isSet("name"))
             {
-                return this.get("name").AsSingle().ToString();
+                return this.getAsSingle("name").ToString();
             }
 
             return base.ToString();

@@ -81,8 +81,10 @@ namespace DatenMeister.Logic
                 // Checks, if the object is an IReflective Collection
                 if (ObjectHelper.IsReflectiveCollection(pair.Value))
                 {
-                    var currentValueAsReflectiveCollection = pair.Value.AsReflectiveCollection();
-                    var targetCollection = targetElement.get(pair.PropertyName).AsReflectiveCollection();
+                    var currentValueAsReflectiveCollection =
+                        ObjectConversion.ToReflectiveCollection(pair.Value);
+
+                    var targetCollection = targetElement.getAsReflectiveSequence(pair.PropertyName);
                     foreach (var element in currentValueAsReflectiveCollection)
                     {
                         // TODO: Refactor this method in a way, that sourceElement may also be
@@ -106,7 +108,7 @@ namespace DatenMeister.Logic
                 }
                 else
                 {
-                    var currentValueAsSingle = pair.Value.AsSingle(false);
+                    var currentValueAsSingle = pair.Value;
 
                     if (ObjectConversion.IsNative(currentValueAsSingle))
                     {
