@@ -320,7 +320,7 @@ namespace DatenMeister.DataProvider.DotNet
                     ObjectConversion.IsEnumByType(propertyInfo.PropertyType) ||
                     propertyInfo.PropertyType == typeof(IObject))
                 && (
-                    requestType != RequestType.AsDefault ||
+                    requestType == RequestType.AsDefault ||
                     requestType == RequestType.AsSingle))
             {
                 // A native type and it is set
