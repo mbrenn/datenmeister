@@ -77,7 +77,7 @@ namespace DatenMeister.DataProvider.DotNet
             Ensure.That(!(value is DotNetObject), "DotNetObject may not be hosting another DotNetObject");
             Ensure.That(!(value is IObject), "DotNetObject may not be hosting another IObject");
 
-            Ensure.That(value != null);
+            Ensure.That(value != null, "No value is given");
 
             if (sequence != null)
             {
@@ -102,7 +102,6 @@ namespace DatenMeister.DataProvider.DotNet
         {
             Ensure.That(id != null);
             Ensure.That(value != null);
-            this.value = value;
             this.id = id;
         }
 

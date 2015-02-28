@@ -90,16 +90,29 @@ namespace DatenMeister.DataProvider.Xml
         /// <returns>Resolved object</returns>
         private object Resolve(object value, string propertyName, RequestType requestType)
         {
+            var valueAsList = value as IList;
+
             switch (requestType)
             {
                 case RequestType.AsDefault:
-                    var valueAsList = value as IList;
-                    var multiple = valueAsList != null ? true : valueAsList.Count > 1;
+                    var multiple = valueAsList == null ? true : valueAsList.Count > 1;
                     return this.Resolve(
                         value, 
                         propertyName, 
                         multiple ? RequestType.AsReflectiveCollection : RequestType.AsSingle);
                 case RequestType.AsSingle:
+                    if (valueAsList != null)
+                    {
+                        if (valueAsList.Count == 0)
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            return valueAsList[0];
+                        }
+                    }
+
                     return value;
                 case RequestType.AsReflectiveCollection:
                     return new XmlReflectiveSequence(this, propertyName);
