@@ -79,6 +79,15 @@ namespace DatenMeister.DataProvider.Generic
                     {
                         var valueList = this.values[propertyName];
 
+                        var asReflectiveCollection = valueList as IReflectiveCollection;
+                        if (asReflectiveCollection != null)
+                        {
+                            // We already got a reflective collection
+                            // For sure, it is not a good style to reuse it. 
+                            // TODO: It should be forbidden somehow
+                            return asReflectiveCollection;
+                        }
+
                         if (valueList is List<object>)
                         {
                             list = valueList as List<object>;
@@ -98,6 +107,7 @@ namespace DatenMeister.DataProvider.Generic
                         this.values[propertyName] = list;
                     }
 
+                    // Is just a simple list
                     return new GenericReflectiveSequence(this.Extent, list);
                 }
                 else if (requestType == RequestType.AsDefault)
