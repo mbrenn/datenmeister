@@ -50,7 +50,7 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml");
 
             // Gets the first object '/list/item[0]'
-            var firstElement = xmlExtent.Elements().AsIObject();
+            var firstElement = xmlExtent.Elements().First().AsIObject();
             Assert.That(firstElement != null);
             var allProperties = firstElement.getAll();
             Assert.That(allProperties.Any(x => x.PropertyName == string.Empty), Is.True);
@@ -82,7 +82,7 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(xmlExtent, Is.Not.Null);
 
             // Gets the first object '/list/item[0]'
-            var firstElement = xmlExtent.Elements().AsIObject();
+            var firstElement = xmlExtent.Elements().First().AsIObject();
             Assert.That(firstElement, Is.Not.Null);
 
             Assert.That(firstElement.getAsSingle(string.Empty), Is.EqualTo("One"));
