@@ -11,7 +11,7 @@ namespace DatenMeister.DataProvider.Common
     /// Wraps a list in a reflective sequence
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ListWrapperReflectiveSequence<T> : ListReflectiveSequence<T>
+    public class ListWrapperReflectiveSequence<T> : ListReflectiveSequence<T>, IListWrapperReflectiveSequence
     {
         /// <summary>
         /// Stores the list
@@ -30,6 +30,15 @@ namespace DatenMeister.DataProvider.Common
         /// </summary>
         /// <returns></returns>
         protected override IList<T> GetList()
+        {
+            return this.list;
+        }
+
+        /// <summary>
+        /// Gets the list as an instance
+        /// </summary>
+        /// <returns>Gets the list being used as container</returns>
+        IEnumerable IListWrapperReflectiveSequence.GetList()
         {
             return this.list;
         }

@@ -41,7 +41,7 @@ namespace DatenMeister.Logic
         /// Maps the objects from source to target
         /// </summary>
         private Dictionary<string, IObject> mapping = new Dictionary<string, IObject>();
-        
+
         /// <summary>
         /// Copies the element
         /// </summary>
@@ -75,8 +75,7 @@ namespace DatenMeister.Logic
                 this.mapping[sourceElement.Id] = targetElement;
             }
 
-            var pairs = sourceElement.getAll();
-            foreach (var pair in pairs.ToList())
+            foreach (var pair in sourceElement.getAll())
             {
                 // Checks, if the object is an IReflective Collection
                 if (ObjectHelper.IsReflectiveCollection(pair.Value))
@@ -94,7 +93,7 @@ namespace DatenMeister.Logic
                             targetCollection.add(element);
                             continue;
                         }
-                        
+
                         // Checks, if the instance is an IObject
                         var elementAsIObject = element as IObject;
                         if (elementAsIObject != null)

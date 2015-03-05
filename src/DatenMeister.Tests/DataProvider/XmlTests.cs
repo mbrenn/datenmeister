@@ -66,7 +66,7 @@ namespace DatenMeister.Tests.DataProvider
             var xmlExtent = xmlProvider.Load("data/xml/simplelistwithid.xml");
 
             // Gets the first object '/list/item[0]'
-            var firstElement = xmlExtent.Elements().AsIObject();
+            var firstElement = xmlExtent.Elements().First().AsIObject();
 
             Assert.That(xmlExtent.XmlDocument.Element("list").Elements("item").First().Value, Is.EqualTo("This is content"));
             firstElement.set(string.Empty, "Test");

@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataProvider\Common\IListWrapperReflectiveSequence.cs" />
     <Compile Include="Logic\Settings\BaseDatenMeisterSettings.cs" />
     <Compile Include="DataProvider\Common\BaseReflectiveCollection.cs" />
     <Compile Include="DataProvider\Common\BaseReflectiveSequence.cs" />

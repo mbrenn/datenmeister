@@ -364,7 +364,13 @@ namespace DatenMeister
                 return null;
             }
 
-            var result = type.GetInterfaces()
+            IEnumerable<Type> interfaces = type.GetInterfaces();
+            if (type.IsInterface)
+            {
+                interfaces = interfaces.Union(new[] { type });
+            }
+
+            var result = interfaces
                 .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>))
                 .Select(x => x.GetGenericArguments()[0])
                 .FirstOrDefault();

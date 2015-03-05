@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Logger;
 using BurnSystems.Test;
+using DatenMeister.DataProvider.Common;
 using DatenMeister.Logic;
 using Ninject;
 using System;
@@ -343,20 +344,29 @@ namespace DatenMeister.DataProvider.DotNet
             }
             else
             {
-                // TODO: Create list and set it, if checkObject is null
-
                 // It might be a generic list. We also need to support the interface
                 // to a generic list. Sad but true
                 var listType = ObjectConversion.GetTypeOfListByType(propertyInfo.PropertyType);
                 if (listType != null)
                 {
+                    checkObject = this.CreateListInstanceForPropertyInfo(propertyInfo);
+
+                    // Sets to object 
+                    this.set(propertyName, checkObject);
+
                     var typeReflectiveSequence = typeof(DotNetReflectiveSequence<>).MakeGenericType(listType);
                     var reflectiveSequence = typeReflectiveSequence
-                        .GetMethod("CreateFromList")
-                        .Invoke(null, new object[] { this.Extent, checkObject });
+                            .GetMethod("CreateFromList")
+                            .Invoke(null, new object[] { this.Extent, checkObject })
+                        as IListWrapperReflectiveSequence;
 
                     return reflectiveSequence;
                 }
+            }
+
+            if (checkObject == null)
+            {
+                throw new InvalidOperationException("checkObject is null: " + propertyInfo.Name);
             }
 
             // Default type
@@ -364,33 +374,61 @@ namespace DatenMeister.DataProvider.DotNet
                 null,
                 checkObject,
                 this.id + "/" + propertyName);
+        }
 
-            /*if (checkObject is IEnumerable)
+        /// <summary>
+        /// Creates a list instance for the given property. 
+        /// If the property
+        /// </summary>
+        /// <param name="propertyInfo"></param>
+        /// <returns></returns>
+        private IList CreateListInstanceForPropertyInfo(PropertyInfo propertyInfo)
+        {
+            IList newList;
+            // First... create instance, it might be that the property is an interface 
+            if (propertyInfo.PropertyType.IsInterface)
             {
-                var sequence = new DotNetSequence(this.extent);
-                sequence.IsReadOnly = true;
-
-                foreach (var value in (checkObject as IEnumerable))
+                // Find an appropriate interface 
+                var propertyType = propertyInfo.PropertyType;
+                Type interfaceType;
+                if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(IList<>))
                 {
-                    sequence.Add(value);
+                    interfaceType = propertyType;
+                }
+                else
+                {
+                    interfaceType = propertyType.GetInterfaces()
+                        .Where(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>))
+                        .FirstOrDefault();
                 }
 
-                return new DotNetUnspecified(this, propertyInfo, sequence, PropertyValueType.Enumeration);
+                if (interfaceType == null)
+                {
+                    throw new NotImplementedException("The type is not of type IList<>, the type is of: " + propertyInfo.PropertyType.ToString());
+                }
+
+                // Got the interface, now create the associated List 
+                var listElementType = interfaceType.GetGenericArguments().First();
+                if (listElementType == typeof(IObject))
+                {
+                    // if the list element type is IObject, return objects, since the DotNetObject 
+                    // will convert IObjects to objects 
+                    listElementType = typeof(object);
+                }
+
+                var genericListType = typeof(List<>).MakeGenericType(listElementType);
+                newList = Activator.CreateInstance(genericListType) as IList;
             }
             else
             {
-                // It is not an enumeration and it is not a simple type. 
-                // It is a complex .Net-Type
-                var elements = this.extent == null ? null : this.extent.Elements();
-                return new DotNetUnspecified(
-                    this, 
-                    propertyInfo, 
-                    new DotNetObject(
-                        elements, 
-                        checkObject, 
-                        this.id + "/" + propertyName), 
-                    PropertyValueType.Single);
-            }*/
+                newList = Activator.CreateInstance(propertyInfo.PropertyType) as IList;
+                if (newList == null)
+                {
+                    throw new NotImplementedException("The type is not of type IList, the type is of: " + propertyInfo.PropertyType.ToString());
+                }
+            }
+
+            return newList;
         }
 
         /// <summary>

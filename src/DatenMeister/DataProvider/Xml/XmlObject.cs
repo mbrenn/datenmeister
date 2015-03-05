@@ -260,13 +260,13 @@ namespace DatenMeister.DataProvider.Xml
                 {
                     yield return new ObjectPropertyPair(
                         valuePair.Key, 
-                        this.Resolve(valuePair.Value.First(), valuePair.Key, RequestType.AsDefault));
+                        this.Resolve(valuePair.Value.First(), valuePair.Key, RequestType.AsSingle));
                 }
                 else
                 {
                     yield return new ObjectPropertyPair(
                         valuePair.Key,
-                        this.Resolve(valuePair.Value, valuePair.Key, RequestType.AsDefault));
+                        this.Resolve(valuePair.Value, valuePair.Key, RequestType.AsReflectiveCollection));
                 }
             }
         }
