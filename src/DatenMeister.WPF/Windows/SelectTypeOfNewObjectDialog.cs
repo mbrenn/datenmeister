@@ -41,8 +41,7 @@ namespace DatenMeister.WPF.Windows
 
             var allTypes =
                 new AllItemsReflectiveCollection(pool, ExtentType.Type)
-                .FilterByExtentType(extentType)
-                .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Type);
+                    .FilterByType(DatenMeister.Entities.AsObject.Uml.Types.Class);
 
             var configuration = new TableLayoutConfiguration();
             configuration.SetElements(allTypes);
