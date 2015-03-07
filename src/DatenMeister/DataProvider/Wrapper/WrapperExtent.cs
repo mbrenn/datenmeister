@@ -154,6 +154,8 @@ namespace DatenMeister.DataProvider.Wrapper
                 return value;
             }
 
+            value = value.FullResolve();
+
             if (value == ObjectHelper.NotSet || value == ObjectHelper.Null)
             {
                 return value;

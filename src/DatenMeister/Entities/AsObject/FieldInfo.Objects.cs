@@ -2952,7 +2952,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static DatenMeister.IObject getTableViewInfo(DatenMeister.IObject obj)
         {
             var result = obj.get("tableViewInfo", DatenMeister.RequestType.AsSingle);
-            return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
+            return DatenMeister.Extensions.AsIObject(result);
         }
 
         public static void setTableViewInfo(DatenMeister.IObject obj, DatenMeister.IObject value)
@@ -3202,7 +3202,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static DatenMeister.IObject getTypeForNew(DatenMeister.IObject obj)
         {
             var result = obj.get("typeForNew", DatenMeister.RequestType.AsSingle);
-            return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
+            return DatenMeister.Extensions.AsIObject(result);
         }
 
         public static void setTypeForNew(DatenMeister.IObject obj, DatenMeister.IObject value)
@@ -4028,7 +4028,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static DatenMeister.IObject getMainType(DatenMeister.IObject obj)
         {
             var result = obj.get("mainType", DatenMeister.RequestType.AsSingle);
-            return (result is DatenMeister.IObject) ? ((DatenMeister.IObject) result) : default(DatenMeister.IObject);
+            return DatenMeister.Extensions.AsIObject(result);
         }
 
         public static void setMainType(DatenMeister.IObject obj, DatenMeister.IObject value)

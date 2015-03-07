@@ -308,6 +308,12 @@ namespace DatenMeister.Logic.SourceFactory
                         TwelveSpaces + "return ({0}) DatenMeister.ObjectConversion.ConvertToEnum(result, typeof({0}));",
                         propertyTypeName));
             }
+            else if (propertyType == typeof(IObject))
+            {
+                writer.WriteLine(
+                    string.Format(
+                        TwelveSpaces + "return DatenMeister.Extensions.AsIObject(result);"));
+            }
             else
             {
                 writer.WriteLine(
