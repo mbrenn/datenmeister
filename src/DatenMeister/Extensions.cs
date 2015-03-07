@@ -16,26 +16,16 @@ namespace DatenMeister
     public static class Extensions
     {
         /// <summary>
-        /// Gets the extent instance of a certain extent. 
-        /// The pool will be retrieved from the DoI container
-        /// </summary>
-        /// <param name="extent">Extent whose instance is queried</param>
-        /// <returns>Found extent instance</returns>
-        public static ExtentInfo GetInstance(this IURIExtent extent)
-        {
-            var pool = Injection.Application.Get<IPool>();
-            return pool.GetInstance(extent);
-        }
-
-        /// <summary>
         /// Gets the property as a single property. 
         /// </summary>
         /// <param name="value">Value to be checked</param>
         /// <param name="propertyName">Name of the property to be retrieved</param>
         /// <returns>The retrieved object as returned by the Object</returns>
-        public static object getAsSingle(this IObject value, string propertyName)
+        public static object getAsSingle(
+            this IObject value, 
+            string propertyName)
         {
-            return value.get(propertyName, RequestType.AsSingle);
+            return value.get(propertyName, RequestType.AsSingle).FullResolve();
         }
 
         /// <summary>
@@ -45,9 +35,11 @@ namespace DatenMeister
         /// <param name="propertyName">Name of the property to be retrieved</param>
         /// <returns>The retrieved object as returned by the Object. 
         /// If the given object is not a reflective sequence, an exception is thrown</returns>
-        public static IReflectiveSequence getAsReflectiveSequence(this IObject value, string propertyName)
+        public static IReflectiveSequence getAsReflectiveSequence(
+            this IObject value,
+            string propertyName)
         {
-            var result = value.get(propertyName, RequestType.AsReflectiveCollection);
+            var result = value.get(propertyName, RequestType.AsReflectiveCollection).FullResolve();
             if (result == null)
             {
                 return null;
@@ -66,12 +58,34 @@ namespace DatenMeister
         }
 
         /// <summary>
-        /// Gets the given object as an IObject interface
+        /// Fully resolves the given object. 
+        /// It will try to convert the object into IResolvable and then return 
+        /// the resolved value
+        /// </summary>
+        /// <param name="value">Value to be resolved</param>
+        /// <returns>The resolved object</returns>
+        public static object FullResolve(this object value)
+        {
+            var valueAsResolvable = value as IResolvable;
+            if (valueAsResolvable != null)
+            {
+                var result = valueAsResolvable.Resolve();
+                return FullResolve(result);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Gets the given object as an IObject interface.
+        /// It also resolves the given object by calling full resolve
         /// </summary>
         /// <param name="value">Value to be checked</param>
         /// <returns>Returns given object, if it is an IObject</returns>
         public static IObject AsIObject(this object value)
         {
+            value = FullResolve(value);
+
             var asObject = value as IObject;
             if (asObject != null)
             {
@@ -93,22 +107,6 @@ namespace DatenMeister
             }
         }
 
-        /// Converts the extent to json object
-        /// </summary>
-        /// <param name="extent">Extent to be converted</param>
-        /// <returns>Converted object</returns>
-        public static object ToJson(this IObject element, IURIExtent extent)
-        {
-            var result = new
-            {
-                id = element.Id,
-                extentUri = extent.ContextURI(),
-                values = element.ToFlatObject(extent)
-            };
-
-            return result;
-        }
-
         /// <summary>
         /// Releases the given extent from pool, so it can be added to a new pool
         /// </summary>
@@ -116,51 +114,6 @@ namespace DatenMeister
         public static void ReleaseFromPool(this IURIExtent extent)
         {
             extent.Pool = null;
-        }
-
-        /// <summary>
-        /// Transforms the given object to a pure Json-Object that can be used for web interaction
-        /// </summary>
-        /// <param name="value">Value to be converted</param>
-        /// <returns>Converted object</returns>
-        public static Dictionary<string, object> ToFlatObject(this IObject value, IURIExtent extent)
-        {
-            var result = new Dictionary<string, object>();
-
-            foreach (var pair in value.getAll())
-            {
-                var pairValue = ConvertAsFlatObject(pair.Value, extent);
-
-                result[pair.PropertyName] = pairValue;
-            }
-
-            return result;
-        }
-
-        private static object ConvertAsFlatObject(object pairValue, IURIExtent extent)
-        {
-            if (ObjectConversion.IsNative(pairValue))
-            {
-                return pairValue;
-            }
-
-            if (pairValue is IEnumerable)
-            {
-                var listElements = new List<object>();
-                foreach (var enumerationValue in pairValue as IEnumerable)
-                {
-                    listElements.Add(ConvertAsFlatObject(enumerationValue, extent));
-                }
-
-                return listElements;
-            }
-            
-            if (pairValue is IObject)
-            {
-                return ToJson(pairValue as IObject, extent);
-            }
-
-            return pairValue;
         }
 
         public static void Set(this IObject value, Dictionary<string, object> values)

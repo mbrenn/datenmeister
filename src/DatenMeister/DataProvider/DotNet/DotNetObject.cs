@@ -366,7 +366,7 @@ namespace DatenMeister.DataProvider.DotNet
 
             if (checkObject == null)
             {
-                throw new InvalidOperationException("checkObject is null: " + propertyInfo.Name);
+                return ObjectHelper.Null;
             }
 
             // Default type

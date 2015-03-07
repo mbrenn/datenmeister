@@ -72,6 +72,7 @@ namespace DatenMeister.Tests.DataProvider
             Assert.That(valueObject.getAsSingle("TextValue"), Is.InstanceOf<string>());
             Assert.That((string)valueObject.getAsSingle("TextValue"), Is.EqualTo("no Test"));
         }
+
         [Test]
         public void TestPropertiesGlobalExtentObject()
         {
@@ -182,6 +183,28 @@ namespace DatenMeister.Tests.DataProvider
             }
         }
 
+        [Test]
+        public void TestEmbeddedClasses()
+        {
+            var extent = new DotNetExtent("test:///");
+
+            var netValue = new TestEmbeddedClass();
+            netValue.TextValue = "Outer";
+            var innerNetValue = new TestEmbeddedClass();
+            innerNetValue.TextValue = "Inner";
+            netValue.InnerValue = innerNetValue;
+
+            var value = new DotNetObject(extent.Elements(), netValue, Guid.Empty.ToString());
+            Assert.That(value.getAsSingle("TextValue"), Is.EqualTo("Outer"));
+
+            var innerValue = value.getAsSingle("InnerValue").AsIObject();
+            Assert.That(innerValue.getAsSingle("TextValue"), Is.EqualTo("Inner"));
+            Assert.That(
+                ObjectConversion.IsNull(
+                    innerValue.getAsSingle("InnerValue")),
+                Is.True);
+        }
+
         public class TestClass
         {
             public string TextValue
@@ -191,6 +214,21 @@ namespace DatenMeister.Tests.DataProvider
             }
 
             public long NumberValue
+            {
+                get;
+                set;
+            }
+        }
+
+        public class TestEmbeddedClass
+        {
+            public string TextValue
+            {
+                get;
+                set;
+            }
+
+            public TestEmbeddedClass InnerValue
             {
                 get;
                 set;
