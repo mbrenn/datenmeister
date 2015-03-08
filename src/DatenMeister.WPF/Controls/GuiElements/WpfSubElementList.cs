@@ -36,7 +36,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             var typeForNew = subElement.getTypeForNew();
             Ensure.That(typeForNew != null, "No type given for subelements");
 
-            var tableViewAsIObject = subElement.get("listTableView", RequestType.AsDefault).AsIObject();
+            var tableViewAsIObject = subElement.getAsSingle("listTableView").AsIObject();
 
             if (typeForNew != null && tableViewAsIObject == null)
             {

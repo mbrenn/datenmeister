@@ -240,15 +240,31 @@ namespace DatenMeister.WPF.Controls
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            // Creates Detailobject if necessary
             if (this.configuration.EditMode == Controls.EditMode.New)
             {
+                // Creates Detailobject if necessary and stores the properties into the object
                 this.configuration.DetailObject = Factory.GetFor(this.configuration.StorageCollection.Extent).create(
                     this.configuration.TypeToCreate);
-                this.configuration.StorageCollection.add(this.configuration.DetailObject);
                 Ensure.That(this.configuration.DetailObject != null, "Element Factory has not returned a value");
+                this.StorePropertiesIntoDetailObject();
+                this.configuration.StorageCollection.add(this.configuration.DetailObject);
+            }
+            else
+            {
+                // Stores the properties directly into the object
+                this.StorePropertiesIntoDetailObject();
             }
 
+            // And now throw the event for the window
+            var ev = this.Accepted;
+            if (ev != null)
+            {
+                ev(this, EventArgs.Empty);
+            }
+        }
+
+        private void StorePropertiesIntoDetailObject()
+        {
             // Store values into object, if the view is not in read-only mode
             if (this.configuration.EditMode != Controls.EditMode.Read)
             {
@@ -263,13 +279,6 @@ namespace DatenMeister.WPF.Controls
                         this.SetPropertiesOnObject(detailObject);
                     }
                 }
-            }
-
-            // And now throw the event for the window
-            var ev = this.Accepted;
-            if (ev != null)
-            {
-                ev(this, EventArgs.Empty);
             }
         }
 
