@@ -5,11 +5,6 @@ using DatenMeister.Logic;
 using DatenMeister.Logic.Settings;
 using DatenMeister.WPF.Modules.RecentFiles;
 using DatenMeister.WPF.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace DatenMeister.AddOns

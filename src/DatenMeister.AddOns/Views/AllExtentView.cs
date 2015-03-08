@@ -1,22 +1,13 @@
 ﻿using BurnSystems.Logger;
 using DatenMeister.DataProvider;
-using DatenMeister.DataProvider.DotNet;
-using DatenMeister.Entities.AsObject.FieldInfo;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
 using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
 using Ninject;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
-using System.Windows.Media.Imaging;
 
 namespace DatenMeister.AddOns.Views
 {
