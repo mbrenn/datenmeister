@@ -18,11 +18,6 @@ namespace DatenMeister.DataProvider
         {
         }
 
-        [Obsolete("Use Factory()")]
-        public Factory(IURIExtent extent)
-        {
-        }
-
         public abstract IObject create(IObject type);
 
         /// <summary>

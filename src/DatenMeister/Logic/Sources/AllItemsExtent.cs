@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.Logic.Sources
 {
-    public class AllElementsExtent : IURIExtent
+    public class AllItemsExtent : IURIExtent
     {
         /// <summary>
         /// Stores the uri for the element
@@ -28,7 +28,7 @@ namespace DatenMeister.Logic.Sources
         /// Initializes a new instance of the AllElementsExtent class.
         /// </summary>
         /// <param name="uri"></param>
-        public AllElementsExtent(string uri, ExtentType? extentType = null )
+        public AllItemsExtent(string uri, ExtentType? extentType = null )
         {
             this.uri = uri;
             this.extentType = extentType;

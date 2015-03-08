@@ -1,6 +1,8 @@
 ﻿using DatenMeister.DataProvider.Generic;
 using DatenMeister.Logic;
+using DatenMeister.Logic.TypeConverter;
 using DatenMeister.Logic.TypeResolver;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,34 +97,13 @@ namespace DatenMeister.DataProvider.DotNet
             var mapping = extent.Mapping.FindByDotNetType(type);
             if (mapping == null)
             {
-                // We need to have a type mapping. First of all, create the type
-                var typeObject = new GenericElement(null, type.FullName, DatenMeister.Entities.AsObject.Uml.Types.Type);
-                typeObject.set("name", type.ToString());
+                var dotNetTypeMapping = Injection.Application.Get<IDotNetTypeConverter>();
+                var typeObject = dotNetTypeMapping.Convert(
+                    new GenericFactory(null), 
+                    type, 
+                    (x) => AddTypeMapping(extent, x));
 
                 mapping = extent.Mapping.Add(type, typeObject);
-
-                // Now go through the properties 
-                foreach (var property in type.GetProperties())
-                {
-
-                    // Checks, if the given property is an enumeration
-                    // If the element is a list or enumeration. 
-                    var underlyingListType = ObjectConversion.GetTypeOfEnumerableByType(property.PropertyType);
-                    if (underlyingListType != null)
-                    {
-                        AddTypeMapping(extent, underlyingListType);
-                    }
-                    else if (!ObjectConversion.IsNativeByType(property.PropertyType))
-                    {
-                        // Add the type of the property recursively
-                        AddTypeMapping(extent, property.PropertyType);
-                    }
-
-                    // Add the property to the type
-                    var propertyObject = new GenericElement(null, type.FullName, DatenMeister.Entities.AsObject.Uml.Types.Property);
-                    propertyObject.set("name", property.Name.ToString());
-                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(typeObject, propertyObject);
-                }
             }
             
             return mapping;

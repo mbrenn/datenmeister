@@ -135,14 +135,8 @@ namespace DatenMeister.Logic
                     }
                     else if (currentValueAsSingle is IObject)
                     {
-                        // We got a self-contained object
-                        // Perform a temporary copy to a DotNetExtent and store these elements into the object
-                        var tempDotNetExtent = new GenericExtent("TEMP");
-                        var tempCopier = new ObjectCopier(tempDotNetExtent);
-                        var createdCopy = tempCopier.CopyElement(currentValueAsSingle as IObject);
-
                         // And now store the element back
-                        targetElement.set(pair.PropertyName, createdCopy);
+                        targetElement.set(pair.PropertyName, currentValueAsSingle);
                     }
                     else if (currentValueAsSingle == null
                         || currentValueAsSingle == ObjectHelper.Null

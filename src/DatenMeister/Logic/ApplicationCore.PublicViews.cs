@@ -41,7 +41,7 @@ namespace DatenMeister.Logic
                     "datenmeister://datenmeister/all/extenttype/{0}",
                     enumValue.ToString());
 
-                var extent = new AllElementsExtent(uri, enumValue);
+                var extent = new AllItemsExtent(uri, enumValue);
                 workbenchManager.AddExtent(extent,
                     new ExtentParam("All Extents of Type " + name, ExtentType.Query)
                         .AsPrepopulated());

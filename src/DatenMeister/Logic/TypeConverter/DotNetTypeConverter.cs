@@ -37,7 +37,21 @@ namespace DatenMeister.Logic.TypeConverter
             Ensure.That(DatenMeister.Entities.AsObject.Uml.Types.Property != null, "UML objects are not initialized (Property)");
 
             var factory = this.FactoryProvider.CreateFor(extent);
+            var typeObject = Convert(factory, type);
 
+            extent.Elements().add(typeObject);
+
+            return typeObject;
+        }
+
+        /// <summary>
+        /// Converts the given dotnet type to an IObject type and uses the given Factory for conversion
+        /// </summary>
+        /// <param name="factory">Factory to be used to create the item</param>
+        /// <param name="type">Type to be converted</param>
+        /// <returns>Converted object</returns>
+        public IObject Convert(IFactory factory, Type type, Action<Type> callBackInnerTypes = null)
+        {
             // We need to have a type mapping. First of all, create the type
             var typeObject = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
             typeObject.set("name", type.ToString());
@@ -45,10 +59,30 @@ namespace DatenMeister.Logic.TypeConverter
             // Now go through the properties 
             foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                if (!ObjectConversion.IsNativeByType(property.PropertyType))
+                // Checks, if the given property is an enumeration
+                // If the element is a list or enumeration. 
+                var underlyingListType = ObjectConversion.GetTypeOfEnumerableByType(property.PropertyType);
+                if (underlyingListType != null)
                 {
-                    // Add the type of the property recursively
-                    throw new NotImplementedException("Subtypes are not exported");
+                    if (callBackInnerTypes != null)
+                    {
+                        callBackInnerTypes(underlyingListType);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("No inner properties supported.");
+                    }
+                }
+                else if (!ObjectConversion.IsNativeByType(property.PropertyType))
+                {
+                    if (callBackInnerTypes != null)
+                    {
+                        callBackInnerTypes(property.PropertyType);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("No inner properties supported.");
+                    }
                 }
 
                 // Add the property to the type
@@ -56,8 +90,6 @@ namespace DatenMeister.Logic.TypeConverter
                 propertyObject.set("name", property.Name.ToString());
                 DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(typeObject, propertyObject);
             }
-
-            extent.Elements().add(typeObject);
 
             return typeObject;
         }

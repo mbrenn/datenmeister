@@ -135,7 +135,6 @@
     <Compile Include="Windows\ExceptionInfoWindow.xaml.cs">
       <DependentUpon>ExceptionInfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Extensions.cs" />
     <Compile Include="Windows\IDatenMeisterWindow.cs" />
     <Compile Include="Windows\TabInformation.cs" />
     <Compile Include="Windows\WindowFactory.cs" />

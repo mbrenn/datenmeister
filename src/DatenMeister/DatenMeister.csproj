@@ -72,7 +72,6 @@
     <Compile Include="DataProvider\DotNet\DotNetExtent.cs" />
     <Compile Include="DataProvider\DotNet\DotNetFactory.cs" />
     <Compile Include="DataProvider\DotNet\DotNetReflectiveSequence.cs" />
-    <Compile Include="DataProvider\DotNet\DotNetNonGenericReflectiveSequence.cs" />
     <Compile Include="DataProvider\DotNet\DotNetObject.cs" />
     <Compile Include="DataProvider\DotNet\DotNetSequence.cs" />
     <Compile Include="DataProvider\DotNet\DotNetTypeInformation.cs" />
@@ -193,7 +192,7 @@
     <Compile Include="Logic\SourceFactory\SourceFactoryBase.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptBuilder.cs" />
     <Compile Include="Logic\SourceFactory\TypeScriptSourceFactory.cs" />
-    <Compile Include="Logic\Sources\AllElementsExtent.cs" />
+    <Compile Include="Logic\Sources\AllItemsExtent.cs" />
     <Compile Include="Logic\TypeConverter\DotNetTypeConverter.cs" />
     <Compile Include="Logic\TypeConverter\IDotNetTypeConverter.cs" />
     <Compile Include="Logic\TypeResolver\ITypeResolver.cs" />

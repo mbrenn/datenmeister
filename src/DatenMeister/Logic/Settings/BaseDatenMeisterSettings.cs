@@ -30,33 +30,6 @@ namespace DatenMeister.Logic.Settings
             set;
         }
 
-        public IURIExtent ProjectExtent
-        {
-            get
-            {
-                return PoolResolver.GetDefaultPool().GetExtents(ExtentType.Data).FirstOrDefault();
-            }
-        }
-
-        public IURIExtent ViewExtent
-        {
-            get
-            {
-                return PoolResolver.GetDefaultPool().GetExtents(ExtentType.View).FirstOrDefault();
-            }
-        }
-
-        /// <summary>
-        /// Stores the meta extent being used to 
-        /// </summary>
-        public IURIExtent TypeExtent
-        {
-            get
-            {
-                return PoolResolver.GetDefaultPool().GetExtents(ExtentType.Type).LastOrDefault();
-            }
-        }
-
         public XmlSettings ExtentSettings
         {
             get;

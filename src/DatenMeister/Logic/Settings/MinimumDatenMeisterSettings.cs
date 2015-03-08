@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DatenMeister.Logic.Settings
 {
-    public class MinimumDatenMeisterSettings :IDatenMeisterSettings
-    {       
+    public class MinimumDatenMeisterSettings : IDatenMeisterSettings
+    {
         public void InitializeForBootUp(ApplicationCore core)
         {
         }

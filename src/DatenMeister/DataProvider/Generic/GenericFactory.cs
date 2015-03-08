@@ -29,7 +29,7 @@ namespace DatenMeister.DataProvider.Generic
         /// <returns>Object being created</returns>
         public IObject create(IObject type)
         {
-            var obj = new GenericElement(extent: null, type: type);
+            var obj = new GenericElement(extent: this.Extent, type: type);
             return obj;
         }
 
@@ -42,5 +42,7 @@ namespace DatenMeister.DataProvider.Generic
         {
             throw new NotImplementedException();
         }
+
+        public static GenericFactory Generic = new GenericFactory(null);
     }
 }

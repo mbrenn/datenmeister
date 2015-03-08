@@ -19,6 +19,9 @@ namespace DatenMeister.DataProvider.Generic
             set;
         }
 
+        /// <summary>
+        /// Gets the object, 
+        /// </summary>
         private IObject containerInstance
         {
             get;
