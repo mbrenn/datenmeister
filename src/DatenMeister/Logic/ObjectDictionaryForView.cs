@@ -190,7 +190,7 @@ namespace DatenMeister.Logic
             {
                 if (this.Value.isSet(bindingName))
                 {
-                    result = base.Get(bindingName);
+                    result = base.Get(bindingName).FullResolve();
                 }
                 else
                 {
