@@ -77,11 +77,11 @@ namespace DatenMeister.Logic
                 new TextField("ExtentType", "extentType"),
                 new TextField("URI", "uri")
                 {
-                    width = 150
+                    columnWidth = 150
                 },
                 new TextField("Type", "extentClass")
                 {
-                    width = 150
+                    columnWidth = 150
                 },
                 new TextField("Filename", "storagePath")));
 
