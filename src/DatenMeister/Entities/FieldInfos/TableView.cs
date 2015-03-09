@@ -8,6 +8,8 @@ namespace DatenMeister.Entities.FieldInfos
 {
     public class TableView : View
     {
+        public const string UpdateContextMenu = "UpdateContextMenu";
+
         /// <summary>
         /// Initializes a new instance of the TableView class.
         /// </summary>
@@ -36,7 +38,6 @@ namespace DatenMeister.Entities.FieldInfos
             get;
             set;
         }
-
 
         /// <summary>
         /// Gets or sets a list of maintypes that are used to open dialogs, where user can create

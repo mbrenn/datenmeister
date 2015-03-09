@@ -127,6 +127,7 @@ namespace DatenMeister
         /// <returns>The converted type</returns>
         public static object ConvertTo(object value, Type targetType)
         {
+
             if (targetType == typeof(Int32))
             {
                 return ToInt32(value);
@@ -145,6 +146,11 @@ namespace DatenMeister
             if (targetType == typeof(DateTime))
             {
                 return ToDateTime(targetType);
+            }
+
+            if (value == null)
+            {
+                return null;
             }
 
             if (targetType.IsAssignableFrom(value.GetType()))

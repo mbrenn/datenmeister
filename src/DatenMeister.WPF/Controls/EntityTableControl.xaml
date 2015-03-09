@@ -19,7 +19,7 @@
             <DataGrid x:Name="gridContent" Grid.Row="1" 
                       IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
                       MouseDoubleClick="gridContent_MouseDoubleClick" FontSize="14" Margin="0" KeyDown="dataGrid_KeyDown"
-                      PreviewKeyDown="dataGrid_PreviewKeyDown" Sorting="gridContent_Sorting">
+                      PreviewKeyDown="dataGrid_PreviewKeyDown" Sorting="gridContent_Sorting" MouseRightButtonDown="gridContent_MouseRightButtonDown">
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="Padding" Value="10,5,10,5"/>
@@ -32,7 +32,7 @@
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
-                    </Style>
+                    </Style>                    
                 </DataGrid.CellStyle>
             </DataGrid>
             <Grid Grid.Row="2" x:Name="gridButtons" >

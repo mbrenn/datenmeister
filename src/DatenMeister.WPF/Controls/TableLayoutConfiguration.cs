@@ -1,10 +1,13 @@
 ﻿using BurnSystems.Test;
 using DatenMeister.Entities.AsObject.FieldInfo;
+using DatenMeister.Logic.MethodProvider;
 using DatenMeister.Pool;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 
 namespace DatenMeister.WPF.Controls
 {
@@ -54,6 +57,15 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
+        /// This action is called, when the context menu shall be updated
+        /// </summary>
+        public Action<ContextMenu> UpdateContextMenu
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets the tableview object as an instance of the TableView class to 
         /// have type-safe access to the instance
         /// </summary>
@@ -72,6 +84,20 @@ namespace DatenMeister.WPF.Controls
         public TableLayoutConfiguration()
         {
             this.ShowOKButton = true;
+
+            this.UpdateContextMenu = contextMenu =>
+                {
+                    var methodProvider = Injection.Application.TryGet<IMethodProvider>();
+                    if (methodProvider != null)
+                    {
+                        var method = methodProvider
+                            .GetMethodOfInstanceByName(this.LayoutInfo, Entities.FieldInfos.TableView.UpdateContextMenu);
+                        if (method != null)
+                        {
+                            method.Invoke(null, contextMenu);
+                        }
+                    }
+                };
         }
 
         /// <summary>

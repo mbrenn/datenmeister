@@ -353,30 +353,33 @@ namespace DatenMeister.WPF.Controls
 
         private void gridContent_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (this.Configuration.UseAsSelectionControl)
+            if (e.ChangedButton == MouseButton.Left)
             {
-                this.AcceptSelectedElements(e);
-            }
-            else
-            {
-                // Checks, what the user has selected, only click within the form 
-                // is considered as valid
-                var dep = (DependencyObject)e.OriginalSource;
-
-                // Iteratively traverse the visual tree an check, if the user clicked on the DataGridColumnHeader
-                while ((dep != null) &&
-                        !(dep is DataGridCell) &&
-                        !(dep is DataGridColumnHeader))
+                if (this.Configuration.UseAsSelectionControl)
                 {
-                    dep = VisualTreeHelper.GetParent(dep);
-
-                    if (dep is DataGridColumnHeader)
-                    {
-                        return;
-                    }
+                    this.AcceptSelectedElements(e);
                 }
+                else
+                {
+                    // Checks, what the user has selected, only click within the form 
+                    // is considered as valid
+                    var dep = (DependencyObject)e.OriginalSource;
 
-                this.ShowDetailDialog();
+                    // Iteratively traverse the visual tree an check, if the user clicked on the DataGridColumnHeader
+                    while ((dep != null) &&
+                            !(dep is DataGridCell) &&
+                            !(dep is DataGridColumnHeader))
+                    {
+                        dep = VisualTreeHelper.GetParent(dep);
+
+                        if (dep is DataGridColumnHeader)
+                        {
+                            return;
+                        }
+                    }
+
+                    this.ShowDetailDialog();
+                }
             }
         }
 
@@ -725,6 +728,25 @@ namespace DatenMeister.WPF.Controls
 
             e.Handled = true;
             this.RefreshItems();
+        }
+
+        private void gridContent_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                if (this.Configuration.UpdateContextMenu != null)
+                {
+                    var contextMenu = new ContextMenu();
+
+                    this.Configuration.UpdateContextMenu(contextMenu);
+
+                    if (contextMenu.Items.Count > 0)
+                    {
+                        this.gridContent.ContextMenu = contextMenu;
+                        this.gridContent.ContextMenu.IsOpen = true;
+                    }
+                }
+            }
         }
     }
 }

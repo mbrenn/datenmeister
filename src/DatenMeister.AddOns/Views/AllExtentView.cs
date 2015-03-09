@@ -1,12 +1,15 @@
 ﻿using BurnSystems.Logger;
 using DatenMeister.DataProvider;
 using DatenMeister.Logic;
+using DatenMeister.Logic.MethodProvider;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
 using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
 using Ninject;
+using System;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
 
 namespace DatenMeister.AddOns.Views
@@ -35,6 +38,20 @@ namespace DatenMeister.AddOns.Views
                 // Creates the view for the extents
                 var newView = DatenMeisterPoolExtent.AddView(extentView);
                 window.RefreshTabs();
+
+                // Adds The context menu to show the extent information
+                var methodProvider = Injection.Application.Get<IMethodProvider>();
+                methodProvider.AddInstanceMethod(
+                    newView,
+                    DatenMeister.Entities.FieldInfos.TableView.UpdateContextMenu,
+                    new Action<ContextMenu>((menu) =>
+                    {
+                        menu.Items.Clear();
+                        var innerItem = new MenuItem();
+                        innerItem.Header = "Demo";
+                        innerItem.Click += (a, b) => { System.Windows.MessageBox.Show("X"); };
+                        menu.Items.Add(innerItem);
+                    }));
 
                 window.AssociateDetailOpenEvent(newView, (z) =>
                 {
