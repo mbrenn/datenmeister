@@ -59,7 +59,7 @@ namespace DatenMeister.WPF.Controls
         /// <summary>
         /// This action is called, when the context menu shall be updated
         /// </summary>
-        public Action<ContextMenu> UpdateContextMenu
+        public Action<ContextMenu, IObject> UpdateContextMenu
         {
             get;
             set;
@@ -85,7 +85,7 @@ namespace DatenMeister.WPF.Controls
         {
             this.ShowOKButton = true;
 
-            this.UpdateContextMenu = contextMenu =>
+            this.UpdateContextMenu = (contextMenu, value) =>
                 {
                     var methodProvider = Injection.Application.TryGet<IMethodProvider>();
                     if (methodProvider != null)
@@ -94,7 +94,7 @@ namespace DatenMeister.WPF.Controls
                             .GetMethodOfInstanceByName(this.LayoutInfo, Entities.FieldInfos.TableView.UpdateContextMenu);
                         if (method != null)
                         {
-                            method.Invoke(null, contextMenu);
+                            method.Invoke(null, contextMenu, value);
                         }
                     }
                 };

@@ -734,16 +734,20 @@ namespace DatenMeister.WPF.Controls
         {
             if (e.ChangedButton == MouseButton.Right)
             {
-                if (this.Configuration.UpdateContextMenu != null)
+                this.gridContent.ContextMenu = null;
+                var selectedItems = this.gridContent.SelectedItems;
+
+                if (selectedItems.Count == 1 && this.Configuration.UpdateContextMenu != null)
                 {
                     var contextMenu = new ContextMenu();
+                    var dictionary = selectedItems[0] as ObjectDictionary;
 
-                    this.Configuration.UpdateContextMenu(contextMenu);
+                    this.Configuration.UpdateContextMenu(contextMenu, dictionary.Value);
 
                     if (contextMenu.Items.Count > 0)
                     {
                         this.gridContent.ContextMenu = contextMenu;
-                        this.gridContent.ContextMenu.IsOpen = true;
+                        //this.gridContent.ContextMenu.IsOpen = true;
                     }
                 }
             }

@@ -1,14 +1,17 @@
 ﻿using BurnSystems.Logger;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using DatenMeister.Logic.MethodProvider;
 using DatenMeister.Logic.Views;
 using DatenMeister.Pool;
 using DatenMeister.WPF.Modules.IconRepository;
 using DatenMeister.WPF.Windows;
+using DatenMeister.WPF.Windows.Addons;
 using Ninject;
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
 
@@ -44,13 +47,9 @@ namespace DatenMeister.AddOns.Views
                 methodProvider.AddInstanceMethod(
                     newView,
                     DatenMeister.Entities.FieldInfos.TableView.UpdateContextMenu,
-                    new Action<ContextMenu>((menu) =>
+                    new Action<ContextMenu, IObject>((menu, uriExtent) =>
                     {
-                        menu.Items.Clear();
-                        var innerItem = new MenuItem();
-                        innerItem.Header = "Demo";
-                        innerItem.Click += (a, b) => { System.Windows.MessageBox.Show("X"); };
-                        menu.Items.Add(innerItem);
+                        UpdateContextMenu(menu, uriExtent);
                     }));
 
                 window.AssociateDetailOpenEvent(newView, (z) =>
@@ -105,6 +104,36 @@ namespace DatenMeister.AddOns.Views
             };
 
             window.AddMenuEntry(Localization_DM_Addons.Menu_Views, menuItem);
+        }
+
+        /// <summary>
+        /// Creates the context menu entries
+        /// </summary>
+        /// <param name="menu">Menu to be used to create the items</param>
+        /// <param name="uriExtent">The object being selected</param>
+        private static void UpdateContextMenu(ContextMenu menu, IObject uriExtent)
+        {
+            var innerItem = new MenuItem();
+            innerItem.Header = "Open Raw-Xml";
+            innerItem.Click += (a, b) =>
+            {
+                var uri = uriExtent.getAsSingle("uri").ToString();
+                var pool = Injection.Application.Get<IPool>();
+                var extent = pool.GetContainer(uri).Extent;
+
+                if (extent is XmlExtent)
+                {
+                    var viewer = new XmlExtentViewer();
+                    viewer.ViewedExtent = extent;
+                    viewer.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Only Xml Extents are supported");
+                }
+            };
+
+            menu.Items.Add(innerItem);
         }
     }
 }

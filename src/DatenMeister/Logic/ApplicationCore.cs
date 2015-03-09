@@ -221,7 +221,7 @@ namespace DatenMeister.Logic
         }
 
         public void PerformInitializationOfViewSet()
-        {            
+        {
             PerformBinding();
 
             // Creates the workbench
@@ -239,7 +239,7 @@ namespace DatenMeister.Logic
             // Adds the extent for the extents
             var poolExtent = new DatenMeisterPoolExtent(workBenchManager.Pool as DatenMeisterPool);
             workBenchManager.AddExtent(
-                poolExtent, 
+                poolExtent,
                 new ExtentParam(DatenMeisterPoolExtent.DefaultName, ExtentType.Extents)
                     .AsPrepopulated());
 
@@ -249,7 +249,7 @@ namespace DatenMeister.Logic
             // Adds the extent of views to the pool
             var viewExtent = new XmlExtent(new XDocument(new XElement("views")), ViewDataUri); ;
             workBenchManager.AddExtent(
-                viewExtent, new ExtentParam("DatenMeister Views", ExtentType.View).AsPrepopulated()); 
+                viewExtent, new ExtentParam("DatenMeister Views", ExtentType.View).AsPrepopulated());
 
             // Call the private settings that the viewset needs to be initialized
             this.privateSettings.InitializeViewSet(this);

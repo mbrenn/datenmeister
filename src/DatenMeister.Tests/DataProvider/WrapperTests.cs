@@ -16,7 +16,6 @@ namespace DatenMeister.Tests.DataProvider
     [TestFixture]
     public class WrapperTests
     {
-
         [Test]
         public void TestWrapperExtent()
         {

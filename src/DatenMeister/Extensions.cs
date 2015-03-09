@@ -39,6 +39,12 @@ namespace DatenMeister
             this IObject value,
             string propertyName)
         {
+            if (value == null)
+            {
+                // We are null, so we return null
+                return null;
+            }
+
             var result = value.get(propertyName, RequestType.AsReflectiveCollection).FullResolve();
             if (result == null)
             {

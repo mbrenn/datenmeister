@@ -71,6 +71,9 @@
     <Compile Include="Controls\ListLayoutConfiguration.cs" />
     <Compile Include="Controls\ObjectForTreeView.cs" />
     <Compile Include="Controls\TreeLayoutConfiguration.cs" />
+    <Compile Include="Windows\Addons\XmlExtentViewer.xaml.cs">
+      <DependentUpon>XmlExtentViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Controls\InlineMessageBox.xaml.cs">
       <DependentUpon>InlineMessageBox.xaml</DependentUpon>
     </Compile>
@@ -145,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\GuiElements\Elements\WpfSubElementListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Addons\XmlExtentViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -230,6 +237,7 @@
   <ItemGroup>
     <Resource Include="resources\icons\x-office-spreadsheet.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
