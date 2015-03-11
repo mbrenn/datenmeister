@@ -14,6 +14,7 @@ using DatenMeister.WPF.Windows.Controls;
 using Ninject;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -469,7 +470,15 @@ namespace DatenMeister.WPF.Windows
                 // User wants to save
                 this.SaveChanges();
             }
+            
+            this.CreateEmptyProject();
+        }
 
+        /// <summary>
+        /// Creates an empty project and shows it on the application
+        /// </summary>
+        private void CreateEmptyProject()
+        {
             this.Core.PerformInitializationOfViewSet();
             this.Core.PerformInitializeFromScratch();
 
@@ -496,15 +505,32 @@ namespace DatenMeister.WPF.Windows
         /// <param name="path">Path of the object to be loaded</param>
         public void LoadAndOpenFile(string filename)
         {
-            this.Core.LoadWorkbench(filename);
+            try
+            {
+                if (!File.Exists(filename))
+                {
+                    MessageBox.Show("The file does not exist.");
+                    return;
+                }
 
-            // Adds the file to the recent files
-            this.AddRecentFile(filename);
+                this.Core.LoadWorkbench(filename);
 
-            // Refreshes all views
-            this.RefreshAllTabContent();
-            this.pathOfDataExtent = filename;
-            this.UpdateWindowTitle();
+                // Adds the file to the recent files
+                this.AddRecentFile(filename);
+
+                // Refreshes all views
+                this.RefreshAllTabContent();
+                this.pathOfDataExtent = filename;
+                this.UpdateWindowTitle();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(
+                    string.Format(
+                        "An exception occured during loading: \r\n{0}",
+                        exc.Message));
+                this.CreateEmptyProject();
+            }
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
