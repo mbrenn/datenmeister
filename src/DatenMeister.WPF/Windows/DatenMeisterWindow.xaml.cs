@@ -503,32 +503,39 @@ namespace DatenMeister.WPF.Windows
         /// Loads and opens a file and refreshes the window, so recently loaded extent is included
         /// </summary>
         /// <param name="path">Path of the object to be loaded</param>
-        public void LoadAndOpenFile(string filename)
+        public void LoadAndOpenFile(string filePath)
         {
             try
             {
-                if (!File.Exists(filename))
+                if (!File.Exists(filePath))
                 {
                     MessageBox.Show("The file does not exist.");
+                    RecentFileIntegration.RemoveRecentFile(this, filePath);
                     return;
                 }
 
-                this.Core.LoadWorkbench(filename);
+                this.Core.LoadWorkbench(filePath);
 
                 // Adds the file to the recent files
-                this.AddRecentFile(filename);
+                this.AddRecentFile(filePath);
 
                 // Refreshes all views
                 this.RefreshAllTabContent();
-                this.pathOfDataExtent = filename;
+                this.pathOfDataExtent = filePath;
                 this.UpdateWindowTitle();
             }
             catch (Exception exc)
             {
-                MessageBox.Show(
+                if (MessageBox.Show(
                     string.Format(
-                        "An exception occured during loading: \r\n{0}",
-                        exc.Message));
+                        "An exception occured during loading: \r\n{0}\r\nShall the item be removed from the recent files.",
+                        exc.Message),
+                    "Error during loading",
+                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    RecentFileIntegration.RemoveRecentFile(this, filePath);
+                }
+
                 this.CreateEmptyProject();
             }
         }

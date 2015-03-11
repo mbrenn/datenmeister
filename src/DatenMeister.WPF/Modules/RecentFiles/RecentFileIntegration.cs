@@ -153,5 +153,21 @@ namespace DatenMeister.WPF.Modules.RecentFiles
 
             AddRecentFileToMenu(wnd, recentProject);
         }
+
+        internal static void RemoveRecentFile(IDatenMeisterWindow wnd, string filePath)
+        {
+            var core = wnd.Core;
+
+            var foundElement = core.ApplicationData.Elements()
+                .FilterByType(DatenMeister.Entities.AsObject.DM.Types.RecentProject)
+                .Where(x => DatenMeister.Entities.AsObject.DM.RecentProject.getFilePath(x.AsIObject()) == filePath)
+                .FirstOrDefault()
+                .AsIObject();
+
+            if (foundElement != null)
+            {
+                foundElement.delete();
+            }
+        }
     }
 }
