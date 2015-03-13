@@ -6,18 +6,18 @@ namespace DatenMeister.Entities.AsObject.Uml
     {
         public const string DefaultExtentUri="datenmeister:///types/uml";
 
-        public static DatenMeister.IURIExtent Init()
+        public static DatenMeister.IURIExtent Init(bool forceRecreate = false)
         {
             var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(DefaultExtentUri);
             DatenMeister.Entities.AsObject.Uml.Types.AssignTypeMapping(extent);
-            Init(extent);
+            Init(extent, forceRecreate);
             return extent;
         }
 
-        public static void Init(DatenMeister.IURIExtent extent)
+        public static void Init(DatenMeister.IURIExtent extent, bool forceRecreate = false)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
-            if(Types.NamedElement == null /*|| true*/)
+            if(Types.NamedElement == null || forceRecreate)
             {
                 Types.NamedElement = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.NamedElement, "NamedElement");
@@ -31,7 +31,7 @@ namespace DatenMeister.Entities.AsObject.Uml
                 }
             }
 
-            if(Types.Type == null /*|| true*/)
+            if(Types.Type == null || forceRecreate)
             {
                 Types.Type = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Type, "Type");
@@ -45,7 +45,7 @@ namespace DatenMeister.Entities.AsObject.Uml
                 }
             }
 
-            if(Types.Property == null /*|| true*/)
+            if(Types.Property == null || forceRecreate)
             {
                 Types.Property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Property, "Property");
@@ -59,7 +59,7 @@ namespace DatenMeister.Entities.AsObject.Uml
                 }
             }
 
-            if(Types.Class == null /*|| true*/)
+            if(Types.Class == null || forceRecreate)
             {
                 Types.Class = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Class, "Class");

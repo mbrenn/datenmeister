@@ -6,18 +6,18 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
     {
         public const string DefaultExtentUri="datenmeister:///types/dmaddons/filesystem";
 
-        public static DatenMeister.IURIExtent Init()
+        public static DatenMeister.IURIExtent Init(bool forceRecreate = false)
         {
             var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(DefaultExtentUri);
             DatenMeister.Entities.AsObject.Uml.Types.AssignTypeMapping(extent);
-            Init(extent);
+            Init(extent, forceRecreate);
             return extent;
         }
 
-        public static void Init(DatenMeister.IURIExtent extent)
+        public static void Init(DatenMeister.IURIExtent extent, bool forceRecreate = false)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
-            if(Types.File == null /*|| true*/)
+            if(Types.File == null || forceRecreate)
             {
                 Types.File = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.File, "File");
@@ -31,7 +31,7 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
                 }
             }
 
-            if(Types.Directory == null /*|| true*/)
+            if(Types.Directory == null || forceRecreate)
             {
                 Types.Directory = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Directory, "Directory");

@@ -6,18 +6,18 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
     {
         public const string DefaultExtentUri="datenmeister:///types/fieldinfo";
 
-        public static DatenMeister.IURIExtent Init()
+        public static DatenMeister.IURIExtent Init(bool forceRecreate = false)
         {
             var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(DefaultExtentUri);
             DatenMeister.Entities.AsObject.Uml.Types.AssignTypeMapping(extent);
-            Init(extent);
+            Init(extent, forceRecreate);
             return extent;
         }
 
-        public static void Init(DatenMeister.IURIExtent extent)
+        public static void Init(DatenMeister.IURIExtent extent, bool forceRecreate = false)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
-            if(Types.Comment == null /*|| true*/)
+            if(Types.Comment == null || forceRecreate)
             {
                 Types.Comment = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Comment, "Comment");
@@ -66,7 +66,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.General == null /*|| true*/)
+            if(Types.General == null || forceRecreate)
             {
                 Types.General = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.General, "General");
@@ -108,7 +108,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.Checkbox == null /*|| true*/)
+            if(Types.Checkbox == null || forceRecreate)
             {
                 Types.Checkbox = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Checkbox, "Checkbox");
@@ -150,7 +150,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.TextField == null /*|| true*/)
+            if(Types.TextField == null || forceRecreate)
             {
                 Types.TextField = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.TextField, "TextField");
@@ -213,7 +213,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.HyperLinkColumn == null /*|| true*/)
+            if(Types.HyperLinkColumn == null || forceRecreate)
             {
                 Types.HyperLinkColumn = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.HyperLinkColumn, "HyperLinkColumn");
@@ -276,7 +276,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.DatePicker == null /*|| true*/)
+            if(Types.DatePicker == null || forceRecreate)
             {
                 Types.DatePicker = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.DatePicker, "DatePicker");
@@ -318,7 +318,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.ActionButton == null /*|| true*/)
+            if(Types.ActionButton == null || forceRecreate)
             {
                 Types.ActionButton = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ActionButton, "ActionButton");
@@ -339,7 +339,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.ReferenceBase == null /*|| true*/)
+            if(Types.ReferenceBase == null || forceRecreate)
             {
                 Types.ReferenceBase = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceBase, "ReferenceBase");
@@ -395,7 +395,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.ReferenceByConstant == null /*|| true*/)
+            if(Types.ReferenceByConstant == null || forceRecreate)
             {
                 Types.ReferenceByConstant = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByConstant, "ReferenceByConstant");
@@ -444,7 +444,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.ReferenceByRef == null /*|| true*/)
+            if(Types.ReferenceByRef == null || forceRecreate)
             {
                 Types.ReferenceByRef = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByRef, "ReferenceByRef");
@@ -500,7 +500,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.ReferenceByValue == null /*|| true*/)
+            if(Types.ReferenceByValue == null || forceRecreate)
             {
                 Types.ReferenceByValue = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByValue, "ReferenceByValue");
@@ -556,7 +556,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.MultiReferenceField == null /*|| true*/)
+            if(Types.MultiReferenceField == null || forceRecreate)
             {
                 Types.MultiReferenceField = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.MultiReferenceField, "MultiReferenceField");
@@ -619,7 +619,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.SubElementList == null /*|| true*/)
+            if(Types.SubElementList == null || forceRecreate)
             {
                 Types.SubElementList = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.SubElementList, "SubElementList");
@@ -675,7 +675,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.View == null /*|| true*/)
+            if(Types.View == null || forceRecreate)
             {
                 Types.View = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.View, "View");
@@ -710,7 +710,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.FormView == null /*|| true*/)
+            if(Types.FormView == null || forceRecreate)
             {
                 Types.FormView = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.FormView, "FormView");
@@ -780,7 +780,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.TableView == null /*|| true*/)
+            if(Types.TableView == null || forceRecreate)
             {
                 Types.TableView = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.TableView, "TableView");
@@ -857,7 +857,7 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
                 }
             }
 
-            if(Types.TreeView == null /*|| true*/)
+            if(Types.TreeView == null || forceRecreate)
             {
                 Types.TreeView = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.TreeView, "TreeView");
