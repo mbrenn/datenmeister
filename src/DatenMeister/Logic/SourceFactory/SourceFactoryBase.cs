@@ -16,21 +16,10 @@ namespace DatenMeister.Logic.SourceFactory
         /// Contains four spaces
         /// </summary>
         internal static string FourSpaces = "    ";
-
-        /// <summary>
-        /// Contains eight spaces
-        /// </summary>
         internal static string EightSpaces = FourSpaces + FourSpaces;
-
-        /// <summary>
-        /// Contains twelve spaces
-        /// </summary>
         internal static string TwelveSpaces = FourSpaces + EightSpaces;
-
-        /// <summary>
-        /// Contains twelve spaces
-        /// </summary>
         internal static string SixteenSpaces = FourSpaces + TwelveSpaces;
+        internal static string TwentySpaces = FourSpaces + SixteenSpaces;
 
         /// <summary>
         /// Stores the provider

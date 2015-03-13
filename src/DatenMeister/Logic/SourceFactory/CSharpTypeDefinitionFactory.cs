@@ -52,6 +52,7 @@ namespace DatenMeister.Logic.SourceFactory
 
             var typeProperties = new StringBuilder();
             var assignFunction = new StringBuilder();
+            var resetFunction = new StringBuilder();
             writer.WriteLine(EightSpaces + "public const string DefaultExtentUri=\"{0}\";", this.typeExtentUri);
             writer.WriteLine();
             writer.WriteLine(EightSpaces + "public static DatenMeister.IURIExtent Init()");
@@ -66,6 +67,9 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(EightSpaces + "public static void Init(DatenMeister.IURIExtent extent)");
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(TwelveSpaces + "var factory = DatenMeister.DataProvider.Factory.GetFor(extent);");
+
+            resetFunction.AppendLine(EightSpaces + "public static void Reset()");
+            resetFunction.AppendLine(EightSpaces + "{");
 
             assignFunction.AppendLine(EightSpaces + "public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.DotNetExtent extent)");
             assignFunction.AppendLine(EightSpaces + "{");
@@ -84,26 +88,27 @@ namespace DatenMeister.Logic.SourceFactory
                 typeProperties.AppendLine();
 
                 // Creates the object instance for the type
-                writer.WriteLine(TwelveSpaces + "if({1}.{0} == null || true)", type, this.className);
+                writer.WriteLine(TwelveSpaces + "if({1}.{0} == null /*|| true*/)", type, this.className);
                 writer.WriteLine(TwelveSpaces + "{");
                 writer.WriteLine(string.Format(SixteenSpaces + "{1}.{0} = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "DatenMeister.Entities.AsObject.Uml.Type.setName({1}.{0}, \"{0}\");", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "extent.Elements().add({1}.{0});", type, this.className));
-                writer.WriteLine(TwelveSpaces + "}");
-                writer.WriteLine();
 
                 // Assigns the properties
                 foreach (var property in provider.GetProperties(type))
                 {
-                    propertyAssignments.AppendLine();
-                    
-                    propertyAssignments.AppendLine(TwelveSpaces + "{");
-                    propertyAssignments.AppendLine(string.Format(SixteenSpaces + "// {0}.{1}", type, property));
-                    propertyAssignments.AppendLine(string.Format(SixteenSpaces + "var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);"));
-                    propertyAssignments.AppendLine(string.Format(SixteenSpaces + "DatenMeister.Entities.AsObject.Uml.Property.setName(property, \"{0}\");", property));
-                    propertyAssignments.AppendLine(string.Format(SixteenSpaces + "DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute({1}.{0}, property);", type, this.className));
-                    propertyAssignments.AppendLine(TwelveSpaces + "}");
+                    writer.WriteLine();
+
+                    writer.WriteLine(SixteenSpaces + "{");
+                    writer.WriteLine(string.Format(TwentySpaces + "// {0}.{1}", type, property));
+                    writer.WriteLine(string.Format(TwentySpaces + "var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);"));
+                    writer.WriteLine(string.Format(TwentySpaces + "DatenMeister.Entities.AsObject.Uml.Property.setName(property, \"{0}\");", property));
+                    writer.WriteLine(string.Format(TwentySpaces + "DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute({1}.{0}, property);", type, this.className));
+                    writer.WriteLine(SixteenSpaces + "}");
                 }
+
+                writer.WriteLine(TwelveSpaces + "}");
+                writer.WriteLine();
 
                 // Performs the assignment
                 assignFunction.AppendFormat(
@@ -112,6 +117,11 @@ namespace DatenMeister.Logic.SourceFactory
                     type,
                     this.className);
                 assignFunction.AppendLine();
+
+                // Performs the reset
+                resetFunction.AppendFormat(
+                    TwelveSpaces + "{1}.{0} = null;", type, this.className);
+                resetFunction.AppendLine();
             }
 
             writer.WriteLine();
@@ -128,8 +138,11 @@ namespace DatenMeister.Logic.SourceFactory
 
             assignFunction.AppendLine(EightSpaces + "}");
 
+            resetFunction.AppendLine(EightSpaces + "}");
+
             writer.WriteLine(typeProperties.ToString());
             writer.WriteLine(assignFunction.ToString());
+            writer.WriteLine(resetFunction.ToString());
             writer.WriteLine(EightSpaces + "static partial void OnInitCompleted();");
 
 

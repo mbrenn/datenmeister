@@ -17,14 +17,14 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
         public static void Init(DatenMeister.IURIExtent extent)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
-            if(Types.File == null || true)
+            if(Types.File == null /*|| true*/)
             {
                 Types.File = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.File, "File");
                 extent.Elements().add(Types.File);
             }
 
-            if(Types.Directory == null || true)
+            if(Types.Directory == null /*|| true*/)
             {
                 Types.Directory = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Directory, "Directory");
@@ -69,6 +69,12 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
         {
             mapping.Add(typeof(DatenMeister.AddOns.Data.FileSystem.File), Types.File);
             mapping.Add(typeof(DatenMeister.AddOns.Data.FileSystem.Directory), Types.Directory);
+        }
+
+        public static void Reset()
+        {
+            Types.File = null;
+            Types.Directory = null;
         }
 
         static partial void OnInitCompleted();

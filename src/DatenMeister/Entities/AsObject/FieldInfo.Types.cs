@@ -17,119 +17,119 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
         public static void Init(DatenMeister.IURIExtent extent)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
-            if(Types.Comment == null || true)
+            if(Types.Comment == null /*|| true*/)
             {
                 Types.Comment = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Comment, "Comment");
                 extent.Elements().add(Types.Comment);
             }
 
-            if(Types.General == null || true)
+            if(Types.General == null /*|| true*/)
             {
                 Types.General = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.General, "General");
                 extent.Elements().add(Types.General);
             }
 
-            if(Types.Checkbox == null || true)
+            if(Types.Checkbox == null /*|| true*/)
             {
                 Types.Checkbox = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Checkbox, "Checkbox");
                 extent.Elements().add(Types.Checkbox);
             }
 
-            if(Types.TextField == null || true)
+            if(Types.TextField == null /*|| true*/)
             {
                 Types.TextField = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.TextField, "TextField");
                 extent.Elements().add(Types.TextField);
             }
 
-            if(Types.HyperLinkColumn == null || true)
+            if(Types.HyperLinkColumn == null /*|| true*/)
             {
                 Types.HyperLinkColumn = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.HyperLinkColumn, "HyperLinkColumn");
                 extent.Elements().add(Types.HyperLinkColumn);
             }
 
-            if(Types.DatePicker == null || true)
+            if(Types.DatePicker == null /*|| true*/)
             {
                 Types.DatePicker = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.DatePicker, "DatePicker");
                 extent.Elements().add(Types.DatePicker);
             }
 
-            if(Types.ActionButton == null || true)
+            if(Types.ActionButton == null /*|| true*/)
             {
                 Types.ActionButton = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ActionButton, "ActionButton");
                 extent.Elements().add(Types.ActionButton);
             }
 
-            if(Types.ReferenceBase == null || true)
+            if(Types.ReferenceBase == null /*|| true*/)
             {
                 Types.ReferenceBase = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceBase, "ReferenceBase");
                 extent.Elements().add(Types.ReferenceBase);
             }
 
-            if(Types.ReferenceByConstant == null || true)
+            if(Types.ReferenceByConstant == null /*|| true*/)
             {
                 Types.ReferenceByConstant = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByConstant, "ReferenceByConstant");
                 extent.Elements().add(Types.ReferenceByConstant);
             }
 
-            if(Types.ReferenceByRef == null || true)
+            if(Types.ReferenceByRef == null /*|| true*/)
             {
                 Types.ReferenceByRef = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByRef, "ReferenceByRef");
                 extent.Elements().add(Types.ReferenceByRef);
             }
 
-            if(Types.ReferenceByValue == null || true)
+            if(Types.ReferenceByValue == null /*|| true*/)
             {
                 Types.ReferenceByValue = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ReferenceByValue, "ReferenceByValue");
                 extent.Elements().add(Types.ReferenceByValue);
             }
 
-            if(Types.MultiReferenceField == null || true)
+            if(Types.MultiReferenceField == null /*|| true*/)
             {
                 Types.MultiReferenceField = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.MultiReferenceField, "MultiReferenceField");
                 extent.Elements().add(Types.MultiReferenceField);
             }
 
-            if(Types.SubElementList == null || true)
+            if(Types.SubElementList == null /*|| true*/)
             {
                 Types.SubElementList = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.SubElementList, "SubElementList");
                 extent.Elements().add(Types.SubElementList);
             }
 
-            if(Types.View == null || true)
+            if(Types.View == null /*|| true*/)
             {
                 Types.View = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.View, "View");
                 extent.Elements().add(Types.View);
             }
 
-            if(Types.FormView == null || true)
+            if(Types.FormView == null /*|| true*/)
             {
                 Types.FormView = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.FormView, "FormView");
                 extent.Elements().add(Types.FormView);
             }
 
-            if(Types.TableView == null || true)
+            if(Types.TableView == null /*|| true*/)
             {
                 Types.TableView = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.TableView, "TableView");
                 extent.Elements().add(Types.TableView);
             }
 
-            if(Types.TreeView == null || true)
+            if(Types.TreeView == null /*|| true*/)
             {
                 Types.TreeView = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.TreeView, "TreeView");
@@ -947,6 +947,27 @@ namespace DatenMeister.Entities.AsObject.FieldInfo
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.FormView), Types.FormView);
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TableView), Types.TableView);
             mapping.Add(typeof(DatenMeister.Entities.FieldInfos.TreeView), Types.TreeView);
+        }
+
+        public static void Reset()
+        {
+            Types.Comment = null;
+            Types.General = null;
+            Types.Checkbox = null;
+            Types.TextField = null;
+            Types.HyperLinkColumn = null;
+            Types.DatePicker = null;
+            Types.ActionButton = null;
+            Types.ReferenceBase = null;
+            Types.ReferenceByConstant = null;
+            Types.ReferenceByRef = null;
+            Types.ReferenceByValue = null;
+            Types.MultiReferenceField = null;
+            Types.SubElementList = null;
+            Types.View = null;
+            Types.FormView = null;
+            Types.TableView = null;
+            Types.TreeView = null;
         }
 
         static partial void OnInitCompleted();

@@ -17,21 +17,21 @@ namespace DatenMeister.Entities.AsObject.DM
         public static void Init(DatenMeister.IURIExtent extent)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
-            if(Types.ExtentInfo == null || true)
+            if(Types.ExtentInfo == null /*|| true*/)
             {
                 Types.ExtentInfo = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ExtentInfo, "ExtentInfo");
                 extent.Elements().add(Types.ExtentInfo);
             }
 
-            if(Types.RecentProject == null || true)
+            if(Types.RecentProject == null /*|| true*/)
             {
                 Types.RecentProject = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.RecentProject, "RecentProject");
                 extent.Elements().add(Types.RecentProject);
             }
 
-            if(Types.Workbench == null || true)
+            if(Types.Workbench == null /*|| true*/)
             {
                 Types.Workbench = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Workbench, "Workbench");
@@ -156,6 +156,13 @@ namespace DatenMeister.Entities.AsObject.DM
             mapping.Add(typeof(DatenMeister.Entities.DM.ExtentInfo), Types.ExtentInfo);
             mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
             mapping.Add(typeof(DatenMeister.Entities.DM.Workbench), Types.Workbench);
+        }
+
+        public static void Reset()
+        {
+            Types.ExtentInfo = null;
+            Types.RecentProject = null;
+            Types.Workbench = null;
         }
 
         static partial void OnInitCompleted();

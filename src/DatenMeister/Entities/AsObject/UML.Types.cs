@@ -17,28 +17,28 @@ namespace DatenMeister.Entities.AsObject.Uml
         public static void Init(DatenMeister.IURIExtent extent)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
-            if(Types.NamedElement == null || true)
+            if(Types.NamedElement == null /*|| true*/)
             {
                 Types.NamedElement = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.NamedElement, "NamedElement");
                 extent.Elements().add(Types.NamedElement);
             }
 
-            if(Types.Type == null || true)
+            if(Types.Type == null /*|| true*/)
             {
                 Types.Type = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Type, "Type");
                 extent.Elements().add(Types.Type);
             }
 
-            if(Types.Property == null || true)
+            if(Types.Property == null /*|| true*/)
             {
                 Types.Property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Property, "Property");
                 extent.Elements().add(Types.Property);
             }
 
-            if(Types.Class == null || true)
+            if(Types.Class == null /*|| true*/)
             {
                 Types.Class = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Class, "Class");
@@ -117,6 +117,14 @@ namespace DatenMeister.Entities.AsObject.Uml
             mapping.Add(typeof(DatenMeister.Entities.UML.Type), Types.Type);
             mapping.Add(typeof(DatenMeister.Entities.UML.Property), Types.Property);
             mapping.Add(typeof(DatenMeister.Entities.UML.Class), Types.Class);
+        }
+
+        public static void Reset()
+        {
+            Types.NamedElement = null;
+            Types.Type = null;
+            Types.Property = null;
+            Types.Class = null;
         }
 
         static partial void OnInitCompleted();
