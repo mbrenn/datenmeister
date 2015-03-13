@@ -72,6 +72,9 @@ namespace DatenMeister.DataProvider.Xml
                 RetrieveRootNode = retrieveRootNode
             };
 
+            // Checks, if the nodename already exists, if yes, remove it
+            this.information.RemoveAll(x => x.NodeName == nodeName);
+
             this.information.Add(info);
         }
 

@@ -71,12 +71,24 @@ namespace DatenMeister.WPF.Modules.RecentFiles
                 });
 
             // Creates the application menu
+            ClearRecentFileToMenu(wnd);
             foreach (var item in 
                 applicationExtent.Elements().FilterByType(DatenMeister.Entities.AsObject.DM.Types.RecentProject)
                     .Select(x=> x.AsIObject()))
             {
                 AddRecentFileToMenu(wnd, item);
             }
+        }
+
+        /// <summary>
+        /// Adds a certain recent file to the menu
+        /// </summary>
+        /// <param name="wnd">Window, to which the file will be added</param>
+        /// <param name="recentFile">The recent file being added</param>
+        private static void ClearRecentFileToMenu(IDatenMeisterWindow wnd)
+        {
+            var windowAsDatenMeister = wnd as DatenMeisterWindow;
+            windowAsDatenMeister.GetRecentFileRibbon().Items.Clear();
         }
 
         /// <summary>

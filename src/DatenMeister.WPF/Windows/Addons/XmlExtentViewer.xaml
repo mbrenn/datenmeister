@@ -13,6 +13,6 @@
         <TextBox x:Name="txtContent" Margin="5" IsReadOnly="True"
                  HorizontalScrollBarVisibility="Auto" 
                  VerticalScrollBarVisibility="Auto"></TextBox>
-        <Button Grid.Row="1" x:Name="btnClose" Margin="5">OK</Button>
+        <Button Grid.Row="1" x:Name="btnClose" Margin="5" Click="btnClose_Click">OK</Button>
     </Grid>
 </Window>

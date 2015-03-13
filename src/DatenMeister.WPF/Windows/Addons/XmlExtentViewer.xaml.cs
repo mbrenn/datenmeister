@@ -75,5 +75,11 @@ namespace DatenMeister.WPF.Windows.Addons
         {
             this.txtContent.Text = extent.XmlDocument.ToString();
         }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+            this.Close();
+        }
     }
 }

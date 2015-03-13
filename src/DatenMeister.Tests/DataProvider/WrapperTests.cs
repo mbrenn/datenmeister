@@ -4,11 +4,7 @@ using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using DatenMeister.Pool;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace DatenMeister.Tests.DataProvider

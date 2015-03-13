@@ -511,6 +511,7 @@ namespace DatenMeister.WPF.Windows
                 {
                     MessageBox.Show("The file does not exist.");
                     RecentFileIntegration.RemoveRecentFile(this, filePath);
+                    RecentFileIntegration.AddSupport(this);
                     return;
                 }
 
@@ -537,6 +538,7 @@ namespace DatenMeister.WPF.Windows
                 }
 
                 this.CreateEmptyProject();
+                RecentFileIntegration.AddSupport(this);
             }
         }
 

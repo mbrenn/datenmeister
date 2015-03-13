@@ -98,7 +98,12 @@ namespace DatenMeister.Pool
         /// <param name="funcWhenNotLoaded">This function will be called, when the loading of the extent could not be done</param>
         /// <param name="actionWhenLoaded">This action will be executed, when the loading was successful</param>
         /// <returns>The created extent information</returns>
-        public ExtentInfo LoadOrCreateExtent(string storagePath, string uri, ExtentParam info, Func<IURIExtent> funcWhenNotLoaded, Action<IURIExtent> actionWhenLoaded)
+        public ExtentInfo LoadOrCreateExtent(
+            string storagePath, 
+            string uri, 
+            ExtentParam info, 
+            Func<IURIExtent> funcWhenNotLoaded, 
+            Action<IURIExtent> actionWhenLoaded)
         {
             logger.Message("Loading Extent: " + info.Name);
 

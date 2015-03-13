@@ -1,5 +1,6 @@
 ﻿using BurnSystems.Logger;
 using DatenMeister.DataProvider;
+using DatenMeister.DataProvider.Wrapper;
 using DatenMeister.DataProvider.Xml;
 using DatenMeister.Logic;
 using DatenMeister.Logic.MethodProvider;
@@ -120,6 +121,11 @@ namespace DatenMeister.AddOns.Views
                 var uri = uriExtent.getAsSingle("uri").ToString();
                 var pool = Injection.Application.Get<IPool>();
                 var extent = pool.GetContainer(uri).Extent;
+
+                while (extent is IWrapperExtent)
+                {
+                    extent = (extent as IWrapperExtent).Unwrap();
+                }
 
                 if (extent is XmlExtent)
                 {
