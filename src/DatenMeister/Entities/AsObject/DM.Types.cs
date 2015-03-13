@@ -22,6 +22,55 @@ namespace DatenMeister.Entities.AsObject.DM
                 Types.ExtentInfo = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ExtentInfo, "ExtentInfo");
                 extent.Elements().add(Types.ExtentInfo);
+
+                {
+                    // ExtentInfo.uri
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "uri");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
+                }
+
+                {
+                    // ExtentInfo.name
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
+                }
+
+                {
+                    // ExtentInfo.storagePath
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "storagePath");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
+                }
+
+                {
+                    // ExtentInfo.extentType
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentType");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
+                }
+
+                {
+                    // ExtentInfo.isPrepopulated
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isPrepopulated");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
+                }
+
+                {
+                    // ExtentInfo.dataProviderSettings
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "dataProviderSettings");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
+                }
+
+                {
+                    // ExtentInfo.extentClass
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentClass");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
+                }
             }
 
             if(Types.RecentProject == null /*|| true*/)
@@ -29,6 +78,27 @@ namespace DatenMeister.Entities.AsObject.DM
                 Types.RecentProject = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.RecentProject, "RecentProject");
                 extent.Elements().add(Types.RecentProject);
+
+                {
+                    // RecentProject.filePath
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "filePath");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
+                }
+
+                {
+                    // RecentProject.created
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "created");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
+                }
+
+                {
+                    // RecentProject.name
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
+                }
             }
 
             if(Types.Workbench == null /*|| true*/)
@@ -36,6 +106,27 @@ namespace DatenMeister.Entities.AsObject.DM
                 Types.Workbench = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Workbench, "Workbench");
                 extent.Elements().add(Types.Workbench);
+
+                {
+                    // Workbench.path
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "path");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Workbench, property);
+                }
+
+                {
+                    // Workbench.type
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "type");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Workbench, property);
+                }
+
+                {
+                    // Workbench.instances
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "instances");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Workbench, property);
+                }
             }
 
 
@@ -45,97 +136,6 @@ namespace DatenMeister.Entities.AsObject.DM
             }
 
             OnInitCompleted();
-
-            {
-                // ExtentInfo.uri
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "uri");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
-            }
-
-            {
-                // ExtentInfo.name
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
-            }
-
-            {
-                // ExtentInfo.storagePath
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "storagePath");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
-            }
-
-            {
-                // ExtentInfo.extentType
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentType");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
-            }
-
-            {
-                // ExtentInfo.isPrepopulated
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isPrepopulated");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
-            }
-
-            {
-                // ExtentInfo.dataProviderSettings
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "dataProviderSettings");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
-            }
-
-            {
-                // ExtentInfo.extentClass
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentClass");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentInfo, property);
-            }
-
-            {
-                // RecentProject.filePath
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "filePath");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
-            }
-
-            {
-                // RecentProject.created
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "created");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
-            }
-
-            {
-                // RecentProject.name
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.RecentProject, property);
-            }
-
-            {
-                // Workbench.path
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "path");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Workbench, property);
-            }
-
-            {
-                // Workbench.type
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "type");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Workbench, property);
-            }
-
-            {
-                // Workbench.instances
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "instances");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Workbench, property);
-            }
 
         }
 

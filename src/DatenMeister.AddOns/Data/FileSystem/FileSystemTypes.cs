@@ -22,6 +22,13 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
                 Types.File = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.File, "File");
                 extent.Elements().add(Types.File);
+
+                {
+                    // File.relativePath
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "relativePath");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.File, property);
+                }
             }
 
             if(Types.Directory == null /*|| true*/)
@@ -29,6 +36,13 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
                 Types.Directory = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Directory, "Directory");
                 extent.Elements().add(Types.Directory);
+
+                {
+                    // Directory.relativePath
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "relativePath");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Directory, property);
+                }
             }
 
 
@@ -38,20 +52,6 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
             }
 
             OnInitCompleted();
-
-            {
-                // File.relativePath
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "relativePath");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.File, property);
-            }
-
-            {
-                // Directory.relativePath
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "relativePath");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Directory, property);
-            }
 
         }
 

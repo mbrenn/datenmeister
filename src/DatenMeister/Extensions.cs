@@ -88,6 +88,24 @@ namespace DatenMeister
         /// </summary>
         /// <param name="value">Value to be checked</param>
         /// <returns>Returns given object, if it is an IObject</returns>
+        public static IObject AsIObjectOrNull(this object value)
+        {
+            if ( value == null)
+            {
+                return null;
+            }
+            else
+            {
+                return AsIObject(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets the given object as an IObject interface.
+        /// It also resolves the given object by calling full resolve
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <returns>Returns given object, if it is an IObject</returns>
         public static IObject AsIObject(this object value)
         {
             value = FullResolve(value);

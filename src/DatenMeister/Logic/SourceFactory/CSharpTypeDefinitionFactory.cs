@@ -55,16 +55,16 @@ namespace DatenMeister.Logic.SourceFactory
             var resetFunction = new StringBuilder();
             writer.WriteLine(EightSpaces + "public const string DefaultExtentUri=\"{0}\";", this.typeExtentUri);
             writer.WriteLine();
-            writer.WriteLine(EightSpaces + "public static DatenMeister.IURIExtent Init()");
+            writer.WriteLine(EightSpaces + "public static DatenMeister.IURIExtent Init(bool forceRecreate = false)");
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(TwelveSpaces + "var extent = new DatenMeister.DataProvider.DotNet.DotNetExtent(DefaultExtentUri);");
             writer.WriteLine(TwelveSpaces + "DatenMeister.Entities.AsObject.Uml.Types.AssignTypeMapping(extent);");
-            writer.WriteLine(TwelveSpaces + "Init(extent);");
+            writer.WriteLine(TwelveSpaces + "Init(extent, forceRecreate);");
             writer.WriteLine(TwelveSpaces + "return extent;");
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
 
-            writer.WriteLine(EightSpaces + "public static void Init(DatenMeister.IURIExtent extent)");
+            writer.WriteLine(EightSpaces + "public static void Init(DatenMeister.IURIExtent extent, bool forceRecreate = false)");
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(TwelveSpaces + "var factory = DatenMeister.DataProvider.Factory.GetFor(extent);");
 
@@ -88,7 +88,7 @@ namespace DatenMeister.Logic.SourceFactory
                 typeProperties.AppendLine();
 
                 // Creates the object instance for the type
-                writer.WriteLine(TwelveSpaces + "if({1}.{0} == null /*|| true*/)", type, this.className);
+                writer.WriteLine(TwelveSpaces + "if({1}.{0} == null || forceRecreate)", type, this.className);
                 writer.WriteLine(TwelveSpaces + "{");
                 writer.WriteLine(string.Format(SixteenSpaces + "{1}.{0} = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);", type, this.className));
                 writer.WriteLine(string.Format(SixteenSpaces + "DatenMeister.Entities.AsObject.Uml.Type.setName({1}.{0}, \"{0}\");", type, this.className));

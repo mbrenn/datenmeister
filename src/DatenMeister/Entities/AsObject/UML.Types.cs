@@ -22,6 +22,13 @@ namespace DatenMeister.Entities.AsObject.Uml
                 Types.NamedElement = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.NamedElement, "NamedElement");
                 extent.Elements().add(Types.NamedElement);
+
+                {
+                    // NamedElement.name
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.NamedElement, property);
+                }
             }
 
             if(Types.Type == null /*|| true*/)
@@ -29,6 +36,13 @@ namespace DatenMeister.Entities.AsObject.Uml
                 Types.Type = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Type, "Type");
                 extent.Elements().add(Types.Type);
+
+                {
+                    // Type.name
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Type, property);
+                }
             }
 
             if(Types.Property == null /*|| true*/)
@@ -36,6 +50,13 @@ namespace DatenMeister.Entities.AsObject.Uml
                 Types.Property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Property, "Property");
                 extent.Elements().add(Types.Property);
+
+                {
+                    // Property.name
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Property, property);
+                }
             }
 
             if(Types.Class == null /*|| true*/)
@@ -43,6 +64,27 @@ namespace DatenMeister.Entities.AsObject.Uml
                 Types.Class = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
                 DatenMeister.Entities.AsObject.Uml.Type.setName(Types.Class, "Class");
                 extent.Elements().add(Types.Class);
+
+                {
+                    // Class.isAbstract
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isAbstract");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Class, property);
+                }
+
+                {
+                    // Class.ownedAttribute
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "ownedAttribute");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Class, property);
+                }
+
+                {
+                    // Class.name
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Class, property);
+                }
             }
 
 
@@ -52,48 +94,6 @@ namespace DatenMeister.Entities.AsObject.Uml
             }
 
             OnInitCompleted();
-
-            {
-                // NamedElement.name
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.NamedElement, property);
-            }
-
-            {
-                // Type.name
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Type, property);
-            }
-
-            {
-                // Property.name
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Property, property);
-            }
-
-            {
-                // Class.isAbstract
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "isAbstract");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Class, property);
-            }
-
-            {
-                // Class.ownedAttribute
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "ownedAttribute");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Class, property);
-            }
-
-            {
-                // Class.name
-                var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
-                DatenMeister.Entities.AsObject.Uml.Property.setName(property, "name");
-                DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.Class, property);
-            }
 
         }
 
