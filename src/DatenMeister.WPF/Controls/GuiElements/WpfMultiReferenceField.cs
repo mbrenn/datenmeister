@@ -69,8 +69,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
             {
                 return new Label()
                 {
-                    Content = Localization_DatenMeister_WPF.MultiReference_NoEditPossible,
-                    FontSize = 16
+                    Content = Localization_DatenMeister_WPF.MultiReference_NoEditPossible
                 };
             }
 

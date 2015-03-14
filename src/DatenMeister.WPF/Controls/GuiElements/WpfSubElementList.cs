@@ -18,47 +18,57 @@ namespace DatenMeister.WPF.Controls.GuiElements
         {
             var subElement = new SubElementList(fieldInfo);
 
-            var multiReferenceField = new WpfSubElementListControl();
-
-            var height = subElement.getHeight();
-            if (height <= 0)
+            if (detailObject == null)
             {
-                height = 200;
+                return new Label()
+                {
+                    Content = Localization_DatenMeister_WPF.MultiReference_NoEditPossible
+                };
             }
-
-            multiReferenceField.Height = height;
-
-            var tableConfiguration = new TableLayoutConfiguration();
-            tableConfiguration.ShowCancelButton = false;
-            tableConfiguration.ElementsFactory =
-                (pool) => detailObject.getAsReflectiveSequence(subElement.getBinding());
-
-            var typeForNew = subElement.getTypeForNew();
-            Ensure.That(typeForNew != null, "No type given for subelements");
-
-            var tableViewAsIObject = subElement.getAsSingle("listTableView").AsIObject();
-
-            if (typeForNew != null && tableViewAsIObject == null)
+            else
             {
-                tableViewAsIObject = Factory.GetFor(fieldInfo).create(Types.TableView);
+                var multiReferenceField = new WpfSubElementListControl();
 
-                ViewHelper.AutoGenerateViewDefinitionByType(
-                    typeForNew,
-                    tableViewAsIObject);
+                var height = subElement.getHeight();
+                if (height <= 0)
+                {
+                    height = 200;
+                }
+
+                multiReferenceField.Height = height;
+
+                var tableConfiguration = new TableLayoutConfiguration();
+                tableConfiguration.ShowCancelButton = false;
+                tableConfiguration.ElementsFactory =
+                    (pool) => detailObject.getAsReflectiveSequence(subElement.getBinding());
+
+                var typeForNew = subElement.getTypeForNew();
+                Ensure.That(typeForNew != null, "No type given for subelements");
+
+                var tableViewAsIObject = subElement.getAsSingle("listTableView").AsIObject();
+
+                if (typeForNew != null && tableViewAsIObject == null)
+                {
+                    tableViewAsIObject = Factory.GetFor(fieldInfo).create(Types.TableView);
+
+                    ViewHelper.AutoGenerateViewDefinitionByType(
+                        typeForNew,
+                        tableViewAsIObject);
+                }
+
+                // Includes some default properties which are required for the elementlist
+                var tableView = new TableView(tableViewAsIObject);
+                tableView.setAllowNew(true);
+                tableView.setAllowEdit(true);
+                tableView.setAllowDelete(true);
+                tableView.setMainType(typeForNew);
+
+                tableConfiguration.LayoutInfo = tableViewAsIObject;
+
+                multiReferenceField.Configure(tableConfiguration);
+
+                return multiReferenceField;
             }
-
-            // Includes some default properties which are required for the elementlist
-            var tableView = new TableView(tableViewAsIObject);
-            tableView.setAllowNew(true);
-            tableView.setAllowEdit(true);
-            tableView.setAllowDelete(true);
-            tableView.setMainType(typeForNew);
-
-            tableConfiguration.LayoutInfo = tableViewAsIObject;
-
-            multiReferenceField.Configure(tableConfiguration);
-
-            return multiReferenceField;
         }
 
         public void SetData(IObject detailObject, ElementCacheEntry entry)
