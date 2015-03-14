@@ -164,7 +164,7 @@ namespace DatenMeister.Logic
 
                     if (value != ObjectHelper.Different)
                     {
-                        var propertyValue = detailObject.get(propertyName);
+                        var propertyValue = detailObject.get(propertyName).FullResolve();
 
                         if (value == firstRoundIndicator)
                         {

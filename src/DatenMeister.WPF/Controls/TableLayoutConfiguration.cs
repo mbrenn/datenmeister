@@ -66,6 +66,23 @@ namespace DatenMeister.WPF.Controls
         }
 
         /// <summary>
+        /// This event is throw, when the content is updated
+        /// </summary>
+        public event EventHandler ItemUpdated;
+
+        /// <summary>
+        /// Calls the <c>ItemUpdated</c> event
+        /// </summary>
+        internal void OnItemUpdated()
+        {
+            var ev = this.ItemUpdated;
+            if (ev != null)
+            {
+                ev(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
         /// Gets the tableview object as an instance of the TableView class to 
         /// have type-safe access to the instance
         /// </summary>

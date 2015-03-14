@@ -41,6 +41,7 @@ namespace DatenMeister.WPF.Controls.GuiElements
                 tableConfiguration.ShowCancelButton = false;
                 tableConfiguration.ElementsFactory =
                     (pool) => detailObject.getAsReflectiveSequence(subElement.getBinding());
+                tableConfiguration.ItemUpdated += (x, y) => cacheEntry.OnChangeContent();
 
                 var typeForNew = subElement.getTypeForNew();
                 Ensure.That(typeForNew != null, "No type given for subelements");

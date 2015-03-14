@@ -409,7 +409,10 @@ namespace DatenMeister.WPF.Controls
                 this.GetElements(),
                 this.Configuration.ViewInfoForDetailView);
             Ensure.That(dialog != null);
-            dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+            dialog.DetailForm.Accepted += (x, y) =>
+            {
+                this.NotifyContentChanged();
+            };
         }
 
         /// <summary>
@@ -446,10 +449,9 @@ namespace DatenMeister.WPF.Controls
             if (newItem != null)
             {
                 // Only, if a new item has been created the view needs to be reupdated
-                this.RefreshItems();
+                this.NotifyContentChanged();
 
                 // If item was created, open the detail form
-
                 var dialog = DetailDialog.ShowDialogFor(
                     newItem,
                     null,
@@ -457,7 +459,10 @@ namespace DatenMeister.WPF.Controls
 
                 if (dialog != null)
                 {
-                    dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+                    dialog.DetailForm.Accepted += (x, y) =>
+                    {
+                        this.NotifyContentChanged();
+                    };
                 }
             }
         }
@@ -521,7 +526,10 @@ namespace DatenMeister.WPF.Controls
                     }
 
                     // When user accepts the changes, all items in current view shall be refreshed. 
-                    dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+                    dialog.DetailForm.Accepted += (x, y) =>
+                    {
+                        this.NotifyContentChanged();
+                    };
                     return dialog;
                 }
             }
@@ -550,7 +558,10 @@ namespace DatenMeister.WPF.Controls
                 }
 
                 // When user accepts the changes, all items in current view shall be refreshed. 
-                dialog.DetailForm.Accepted += (x, y) => { this.RefreshItems(); };
+                dialog.DetailForm.Accepted += (x, y) =>
+                {
+                    this.NotifyContentChanged();
+                };
                 return dialog;
 
             }
@@ -581,13 +592,23 @@ namespace DatenMeister.WPF.Controls
             // If, something has been removed, perform the update
             if (any)
             {
-                this.RefreshItems();
+                NotifyContentChanged();
             }
             else
             {
                 MessageBox.Show(Localization_DatenMeister_WPF.NoElementsSelected);
                 return;
             }
+        }
+
+        /// <summary>
+        /// Notifies that content has changed. This will refresh 
+        /// the list and throw the ItemUpdated event of the configuration
+        /// </summary>
+        private void NotifyContentChanged()
+        {
+            this.RefreshItems();
+            this.Configuration.OnItemUpdated();
         }
 
         private void buttonNew_Click(object sender, RoutedEventArgs e)
