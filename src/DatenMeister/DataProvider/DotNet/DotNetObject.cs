@@ -349,10 +349,13 @@ namespace DatenMeister.DataProvider.DotNet
                 var listType = ObjectConversion.GetTypeOfListByType(propertyInfo.PropertyType);
                 if (listType != null)
                 {
-                    checkObject = this.CreateListInstanceForPropertyInfo(propertyInfo);
+                    if (checkObject == null)
+                    {
+                        checkObject = this.CreateListInstanceForPropertyInfo(propertyInfo);
 
-                    // Sets to object 
-                    this.set(propertyName, checkObject);
+                        // Sets to object 
+                        this.set(propertyName, checkObject);
+                    }
 
                     var typeReflectiveSequence = typeof(DotNetReflectiveSequence<>).MakeGenericType(listType);
                     var reflectiveSequence = typeReflectiveSequence
