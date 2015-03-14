@@ -28,6 +28,11 @@ namespace DatenMeister.Entities.AsObject.Uml
         public static readonly XNamespace XmlNamespace = "http://www.w3.org/2000/xmlns/";
 
         /// <summary>
+        /// Stores the namespace for the XmlSchema Namespace
+        /// </summary>
+        public static readonly XNamespace XmlSchemaNamespace = "http://www.w3.org/2001/XMLSchema-instance";
+
+        /// <summary>
         /// Resets the type for the internal object
         /// </summary>
         static partial void OnInitCompleted()

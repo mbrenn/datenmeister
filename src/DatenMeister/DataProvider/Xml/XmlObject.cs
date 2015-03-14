@@ -142,10 +142,9 @@ namespace DatenMeister.DataProvider.Xml
                 {
                     result.Add(xmlProperty.Value);
                 }
-
-                // Checks, if we have a reference attribute with the given name
                 else
                 {
+                    // Checks, if we have a reference attribute with the given name
                     var xmlRefProperty = this.Node.Attribute(propertyName + "-ref");
                     if (xmlRefProperty != null)
                     {
@@ -159,10 +158,18 @@ namespace DatenMeister.DataProvider.Xml
                 // Checks, if we have elements nodes with the given property name
                 foreach (var element in this.Node.Elements(propertyName))
                 {
-                    result.Add(new XmlObject(this.FactoryExtent, element, this)
+                    var nullElement = element.Attribute(Types.XmlSchemaNamespace + "nul");
+                    if (nullElement != null && nullElement.Value == "True")
                     {
-                        ContainerExtent = this.ContainerExtent
-                    });
+                        result.Add(null);
+                    }
+                    else
+                    {
+                        result.Add(new XmlObject(this.FactoryExtent, element, this)
+                        {
+                            ContainerExtent = this.ContainerExtent
+                        });
+                    }
                 }
             }
 
@@ -345,12 +352,29 @@ namespace DatenMeister.DataProvider.Xml
                     throw new InvalidOperationException(
                         "Assigning elements to empty property is not supported");
                 }
-            }            
+            }
+            else if (ObjectConversion.IsNull(value))
+            {
+                var attribute = this.Node.Attribute(propertyName);
+                if (attribute != null)
+                {
+                    attribute.Remove();
+                }
+
+                foreach (var element in this.Node.Elements(propertyName))
+                {
+                    element.Remove();
+                }
+
+                // Creates and adds new element
+                var nullElement = new XElement(propertyName);
+                nullElement.Add(new XAttribute(Types.XmlSchemaNamespace + "nil", "True"));
+            }
             else if (this.Node.Attribute(propertyName) != null)
             {
                 // Checks, if we have multiple objects, if yes, throw exception. 
-                // Check, if we have an attribute with the given name, if yes, set the property     
-                if (value == ObjectHelper.NotSet)
+                // Check, if we have an attribute with the given name, if yes, set the property
+                if (ObjectConversion.IsNull(value))
                 {
                     this.Node.Attribute(propertyName).Remove();
                 }

@@ -671,9 +671,7 @@ namespace DatenMeister.Tests.DataProvider
             extent.Elements().add(createdObject);
 
             createdObject.set("valueSet", ObjectHelper.Null);
-            var xmlNode = createdObject.Node;
-            Assert.That(xmlNode.Attributes().Any(x => x.Name == "valueSet"), Is.True);
-            Assert.That(xmlNode.Elements().Any(x => x.Name == "valueSet"), Is.True);
+            ObjectConversion.IsNull(createdObject.getAsSingle("valueSet"));
         }
 
         [Test]
