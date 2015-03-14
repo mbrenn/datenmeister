@@ -164,6 +164,7 @@ namespace DatenMeister.Tests.DataProvider
             netValue.Values.Add("B");
 
             var value = new DotNetObject(extent.Elements(), netValue, Guid.Empty.ToString());
+            Assert.That(value.getAsReflectiveSequence("Values").Count, Is.EqualTo(2));
 
             foreach (var x in value.getAsReflectiveSequence("Values"))
             {
@@ -180,6 +181,12 @@ namespace DatenMeister.Tests.DataProvider
                     Assert.That(x, Is.TypeOf<string>());
                     Assert.That(x.ToString(), Is.EqualTo("A").Or.EqualTo("B"));
                 }
+            }
+
+            foreach (var x in value.getAsReflectiveSequence("Values"))
+            {
+                Assert.That(x, Is.TypeOf<string>());
+                Assert.That(x.ToString(), Is.EqualTo("A").Or.EqualTo("B"));
             }
         }
 
