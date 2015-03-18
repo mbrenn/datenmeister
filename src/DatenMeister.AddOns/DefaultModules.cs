@@ -1,5 +1,6 @@
 ﻿using DatenMeister.AddOns.Export.Excel;
 using DatenMeister.AddOns.Export.Report.Simple;
+using DatenMeister.AddOns.Scripting;
 using DatenMeister.AddOns.Views;
 using DatenMeister.Logic;
 using DatenMeister.Logic.Settings;
@@ -30,6 +31,7 @@ namespace DatenMeister.AddOns
             TypeManager.Integrate(wnd);
             ViewSetManager.Integrate(wnd);
             SimpleReportGui.Integrate(wnd);
+            ScriptingGui.Integrate(wnd);
             DatenMeister.AddOns.ComplianceSuite.WPF.Plugin.Integrate(wnd);
 
             // Registers to exit event of the application

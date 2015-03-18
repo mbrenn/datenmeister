@@ -143,6 +143,9 @@
   <data name="Menu_Report" xml:space="preserve">
     <value>Reports</value>
   </data>
+  <data name="Menu_Scripting" xml:space="preserve">
+    <value>Scripting</value>
+  </data>
   <data name="Menu_SimpleReport" xml:space="preserve">
     <value>Create Simple Report...</value>
   </data>
