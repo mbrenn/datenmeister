@@ -10,10 +10,12 @@ from BurnSystems.DatenMeister import CSharpFactory
 print('Creating the DatenMeister')
 tsUMLFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.dm.objects.ts"
 umlTypes = [
-    DatenMeister.Entities.DM.ExtentInfo,     
+    DatenMeister.Entities.DM.ExtentInfo,   
+    DatenMeister.Entities.DM.ExtentLoadInfo,     
+    DatenMeister.Entities.DM.CSVExtentLoadInfo,     
     DatenMeister.Entities.DM.RecentProject,         
     DatenMeister.Entities.DM.Workbench]
-TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
+# TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\DM.Objects.cs"
 CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject.DM");
@@ -42,7 +44,7 @@ types = [
          DatenMeister.Entities.FieldInfos.FormView,
          DatenMeister.Entities.FieldInfos.TableView,
          DatenMeister.Entities.FieldInfos.TreeView]
-TypeScriptFactory.createFiles(tsFilename, types)
+# TypeScriptFactory.createFiles(tsFilename, types)
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\FieldInfo.Objects.cs"
 CSharpFactory.createFiles(csFilename, types, "DatenMeister.Entities.AsObject.FieldInfo");
@@ -59,7 +61,7 @@ umlTypes = [
          DatenMeister.Entities.UML.Type,       
          DatenMeister.Entities.UML.Property,    
          DatenMeister.Entities.UML.Class ]
-TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
+# TypeScriptFactory.createFiles(tsUMLFilename, umlTypes)
 
 csFilename = "..\\..\\src\\DatenMeister\\Entities\\AsObject\\UML.Objects.cs"
 CSharpFactory.createFiles(csFilename, umlTypes, "DatenMeister.Entities.AsObject.Uml");

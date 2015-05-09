@@ -13,6 +13,20 @@ namespace DatenMeister.DataProvider.CSV
     public class CSVDataProvider : IDataProvider
     {
         /// <summary>
+        /// Loads the CSV Extent out of the settings and stores the extent Uri
+        /// </summary>
+        /// <param name="extentUri">The uri being used for an extent</param>
+        /// <param name="path">Path being used to load the extent</param>
+        /// <param name="settings">Settings to load the extent</param>
+        /// <returns>The loaded extent</returns>
+        public CSVExtent Load(string extentUri, string path, CSVSettings settings)
+        {
+            var extent = new CSVExtent(extentUri, settings);
+            this.ReadFromFile(path, extent, settings);
+
+            return extent;
+        }
+        /// <summary>
         /// Loads the CSV Extent out of the settings
         /// </summary>
         /// <param name="path">Path being used to load the extent</param>
@@ -20,10 +34,7 @@ namespace DatenMeister.DataProvider.CSV
         /// <returns>The loaded extent</returns>
         public CSVExtent Load(string path, CSVSettings settings)
         {
-            var extent = new CSVExtent(path, settings);
-            this.ReadFromFile(path, extent, settings);
-
-            return extent;
+            return this.Load(path, path, settings);
         }
 
         /// <summary>
@@ -31,9 +42,15 @@ namespace DatenMeister.DataProvider.CSV
         /// </summary>
         /// <param name="path">Path being used to load the file</param>
         /// <param name="extent">Extet being stored</param>
-        /// <param name="settings">Settings being used to store it.</param>
+        /// <param name="settings">Settings being used to store it. 
+        /// When the settings are null, a default setting will be loaded</param>
         private void ReadFromFile(string path, CSVExtent extent, CSVSettings settings)
         {
+            if (settings == null)
+            {
+                settings = new CSVSettings();
+            }
+
             using (var stream = new StreamReader(path, settings.Encoding))
             {
                 // Reads header, if necessary

@@ -59,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataProvider\Common\IListWrapperReflectiveSequence.cs" />
+    <Compile Include="DataProvider\ExtentLoader.cs" />
+    <Compile Include="Entities\DM\CSVExtentLoadInfo.cs" />
+    <Compile Include="Entities\DM\ExtentLoadInfo.cs" />
     <Compile Include="Logic\Settings\BaseDatenMeisterSettings.cs" />
     <Compile Include="DataProvider\Common\BaseReflectiveCollection.cs" />
     <Compile Include="DataProvider\Common\BaseReflectiveSequence.cs" />

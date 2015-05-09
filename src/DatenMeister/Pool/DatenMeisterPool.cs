@@ -153,6 +153,15 @@ namespace DatenMeister.Pool
         }
 
         /// <summary>
+        /// Creates a default empty pool, which is not used as a masters pool
+        /// </summary>
+        /// <returns>The created pool</returns>
+        public static DatenMeisterPool CreateDecoupled()
+        {
+            return new DatenMeisterPool();
+        }
+
+        /// <summary>
         /// Gets the meta extent type for a certain extenttype 
         /// </summary>
         /// <param name="extentType">Extenttype whose meta type is requested</param>

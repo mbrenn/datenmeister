@@ -24,7 +24,12 @@ namespace DatenMeister.Tests.DataProvider
             };
 
             var provider = new CSVDataProvider();
-            var extent = provider.Load("data/csv/withoutheader.txt", settings);
+            var extent = provider.Load("data/csv/withoutheader.txt", settings); TestContentOfCSVFileWithoutheader(extent);
+        }
+
+        public static void TestContentOfCSVFileWithoutheader(CSVExtent extent)
+        {
+
             Assert.That(extent, Is.Not.Null);
             Assert.That(extent.HeaderNames.Count, Is.EqualTo(0));
 

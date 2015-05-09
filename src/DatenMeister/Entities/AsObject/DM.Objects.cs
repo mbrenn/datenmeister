@@ -276,6 +276,345 @@ namespace DatenMeister.Entities.AsObject.DM
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.1.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class ExtentLoadInfo : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
+    {
+        private DatenMeister.IObject obj;
+        public ExtentLoadInfo(DatenMeister.IObject obj)
+        {
+            this.obj = obj;
+        }
+
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
+        {
+            return factory.create(DatenMeister.Entities.AsObject.DM.Types.ExtentLoadInfo);
+        }
+
+        public static ExtentLoadInfo createTyped(DatenMeister.IFactory factory)
+        {
+            return new ExtentLoadInfo(create(factory));
+        }
+
+        #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public DatenMeister.IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
+        {
+            return this.obj.get(propertyName, requestType);
+        }
+
+        /// <summary>
+        /// Gets all properties as key value pairs
+        /// </summary>
+        /// <returns></returns>
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
+        {
+            return this.obj.getAll();
+        }
+
+        /// <summary>
+        /// Checks, if a certain property is set
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if set</returns>
+        public bool isSet(string propertyName)
+        {
+            return this.obj.isSet(propertyName);
+        }
+
+        /// <summary>
+        /// Sets the value of the property 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="value">Value to be set</param>
+        public void set(string propertyName, object value)
+        {
+            this.obj.set(propertyName, value);
+        }
+
+        /// <summary>
+        /// Unsets the property
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be removed</param>
+        public bool unset(string propertyName)
+        {
+            return this.obj.unset(propertyName);
+        }
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        public void delete()
+        {
+            this.obj.delete();
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                return this.obj.Id;
+            }
+        }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				return this.obj.Extent;
+			}
+		}
+
+        #endregion
+
+        public System.String getExtentType()
+        {
+            return getExtentType(this);
+        }
+
+        public void setExtentType(System.String value)
+        {
+            setExtentType(this, value);
+        }
+
+        public static System.String getExtentType(DatenMeister.IObject obj)
+        {
+            var result = obj.get("extentType", DatenMeister.RequestType.AsSingle);
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setExtentType(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("extentType", value);
+        }
+
+        public System.String getExtentUri()
+        {
+            return getExtentUri(this);
+        }
+
+        public void setExtentUri(System.String value)
+        {
+            setExtentUri(this, value);
+        }
+
+        public static System.String getExtentUri(DatenMeister.IObject obj)
+        {
+            var result = obj.get("extentUri", DatenMeister.RequestType.AsSingle);
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setExtentUri(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("extentUri", value);
+        }
+
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.1.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class CSVExtentLoadInfo : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
+    {
+        private DatenMeister.IObject obj;
+        public CSVExtentLoadInfo(DatenMeister.IObject obj)
+        {
+            this.obj = obj;
+        }
+
+        public static DatenMeister.IObject create(DatenMeister.IFactory factory)
+        {
+            return factory.create(DatenMeister.Entities.AsObject.DM.Types.CSVExtentLoadInfo);
+        }
+
+        public static CSVExtentLoadInfo createTyped(DatenMeister.IFactory factory)
+        {
+            return new CSVExtentLoadInfo(create(factory));
+        }
+
+        #region IObject Implementation
+
+        public static DatenMeister.IObject create(DatenMeister.IURIExtent extent)
+        {
+            var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            return create(factory); 
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public DatenMeister.IObject Value
+        {
+            get { return this.obj; }
+        }
+
+        /// <summary>
+        /// Gets the property by propertyname. 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>Retrieved object</returns>
+        public object get(string propertyName, DatenMeister.RequestType requestType = DatenMeister.RequestType.AsDefault)
+        {
+            return this.obj.get(propertyName, requestType);
+        }
+
+        /// <summary>
+        /// Gets all properties as key value pairs
+        /// </summary>
+        /// <returns></returns>
+        public System.Collections.Generic.IEnumerable<DatenMeister.ObjectPropertyPair> getAll()
+        {
+            return this.obj.getAll();
+        }
+
+        /// <summary>
+        /// Checks, if a certain property is set
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns>true, if set</returns>
+        public bool isSet(string propertyName)
+        {
+            return this.obj.isSet(propertyName);
+        }
+
+        /// <summary>
+        /// Sets the value of the property 
+        /// </summary>
+        /// <param name="propertyName">Name of the property</param>
+        /// <param name="value">Value to be set</param>
+        public void set(string propertyName, object value)
+        {
+            this.obj.set(propertyName, value);
+        }
+
+        /// <summary>
+        /// Unsets the property
+        /// </summary>
+        /// <param name="propertyName">Name of the property to be removed</param>
+        public bool unset(string propertyName)
+        {
+            return this.obj.unset(propertyName);
+        }
+
+        /// <summary>
+        /// Deletes this object and all composed elements
+        /// </summary>
+        public void delete()
+        {
+            this.obj.delete();
+        }
+
+        /// <summary>
+        /// Gets the id of the object
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                return this.obj.Id;
+            }
+        }
+
+		public DatenMeister.IURIExtent Extent
+		{
+			get
+			{
+				return this.obj.Extent;
+			}
+		}
+
+        #endregion
+
+        public System.String getFilePath()
+        {
+            return getFilePath(this);
+        }
+
+        public void setFilePath(System.String value)
+        {
+            setFilePath(this, value);
+        }
+
+        public static System.String getFilePath(DatenMeister.IObject obj)
+        {
+            var result = obj.get("filePath", DatenMeister.RequestType.AsSingle);
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setFilePath(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("filePath", value);
+        }
+
+        public System.String getExtentType()
+        {
+            return getExtentType(this);
+        }
+
+        public void setExtentType(System.String value)
+        {
+            setExtentType(this, value);
+        }
+
+        public static System.String getExtentType(DatenMeister.IObject obj)
+        {
+            var result = obj.get("extentType", DatenMeister.RequestType.AsSingle);
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setExtentType(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("extentType", value);
+        }
+
+        public System.String getExtentUri()
+        {
+            return getExtentUri(this);
+        }
+
+        public void setExtentUri(System.String value)
+        {
+            setExtentUri(this, value);
+        }
+
+        public static System.String getExtentUri(DatenMeister.IObject obj)
+        {
+            var result = obj.get("extentUri", DatenMeister.RequestType.AsSingle);
+            return DatenMeister.ObjectConversion.ToString(result);
+        }
+
+        public static void setExtentUri(DatenMeister.IObject obj, System.String value)
+        {
+            obj.set("extentUri", value);
+        }
+
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("DatenMeister.Logic.SourceFactory.CSharpSourceFactory", "1.1.0.0")]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RecentProject : DatenMeister.IObject, DatenMeister.DataProvider.IProxyObject
     {
         private DatenMeister.IObject obj;

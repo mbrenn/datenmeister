@@ -73,6 +73,55 @@ namespace DatenMeister.Entities.AsObject.DM
                 }
             }
 
+            if(Types.ExtentLoadInfo == null || forceRecreate)
+            {
+                Types.ExtentLoadInfo = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.ExtentLoadInfo, "ExtentLoadInfo");
+                extent.Elements().add(Types.ExtentLoadInfo);
+
+                {
+                    // ExtentLoadInfo.extentType
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentType");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentLoadInfo, property);
+                }
+
+                {
+                    // ExtentLoadInfo.extentUri
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentUri");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.ExtentLoadInfo, property);
+                }
+            }
+
+            if(Types.CSVExtentLoadInfo == null || forceRecreate)
+            {
+                Types.CSVExtentLoadInfo = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.CSVExtentLoadInfo, "CSVExtentLoadInfo");
+                extent.Elements().add(Types.CSVExtentLoadInfo);
+
+                {
+                    // CSVExtentLoadInfo.filePath
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "filePath");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.CSVExtentLoadInfo, property);
+                }
+
+                {
+                    // CSVExtentLoadInfo.extentType
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentType");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.CSVExtentLoadInfo, property);
+                }
+
+                {
+                    // CSVExtentLoadInfo.extentUri
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "extentUri");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.CSVExtentLoadInfo, property);
+                }
+            }
+
             if(Types.RecentProject == null || forceRecreate)
             {
                 Types.RecentProject = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
@@ -141,6 +190,10 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static DatenMeister.IObject ExtentInfo;
 
+        public static DatenMeister.IObject ExtentLoadInfo;
+
+        public static DatenMeister.IObject CSVExtentLoadInfo;
+
         public static DatenMeister.IObject RecentProject;
 
         public static DatenMeister.IObject Workbench;
@@ -154,6 +207,8 @@ namespace DatenMeister.Entities.AsObject.DM
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)
         {
             mapping.Add(typeof(DatenMeister.Entities.DM.ExtentInfo), Types.ExtentInfo);
+            mapping.Add(typeof(DatenMeister.Entities.DM.ExtentLoadInfo), Types.ExtentLoadInfo);
+            mapping.Add(typeof(DatenMeister.Entities.DM.CSVExtentLoadInfo), Types.CSVExtentLoadInfo);
             mapping.Add(typeof(DatenMeister.Entities.DM.RecentProject), Types.RecentProject);
             mapping.Add(typeof(DatenMeister.Entities.DM.Workbench), Types.Workbench);
         }
@@ -161,6 +216,8 @@ namespace DatenMeister.Entities.AsObject.DM
         public static void Reset()
         {
             Types.ExtentInfo = null;
+            Types.ExtentLoadInfo = null;
+            Types.CSVExtentLoadInfo = null;
             Types.RecentProject = null;
             Types.Workbench = null;
         }
