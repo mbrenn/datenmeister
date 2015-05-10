@@ -1,0 +1,6 @@
+﻿/**
+ * LoginManager
+ */
+class LoginForm {
+
+}
