@@ -10,6 +10,7 @@ from BurnSystems.DatenMeister import CSharpFactory
 print('Creating the DatenMeister')
 tsUMLFilename = "..\\..\\src\\DatenMeisterWeb\\js\\datenmeister\\datenmeister.dm.objects.ts"
 umlTypes = [
+    DatenMeister.Entities.DM.UserManagement.User,   
     DatenMeister.Entities.DM.ExtentInfo,   
     DatenMeister.Entities.DM.ExtentLoadInfo,     
     DatenMeister.Entities.DM.CSVExtentLoadInfo,     
