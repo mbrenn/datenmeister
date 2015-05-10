@@ -17,6 +17,27 @@ namespace DatenMeister.Entities.AsObject.DM
         public static void Init(DatenMeister.IURIExtent extent, bool forceRecreate = false)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            if(Types.User == null || forceRecreate)
+            {
+                Types.User = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
+                DatenMeister.Entities.AsObject.Uml.Type.setName(Types.User, "User");
+                extent.Elements().add(Types.User);
+
+                {
+                    // User.username
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "username");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.User, property);
+                }
+
+                {
+                    // User.password
+                    var property = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Property);
+                    DatenMeister.Entities.AsObject.Uml.Property.setName(property, "password");
+                    DatenMeister.Entities.AsObject.Uml.Class.pushOwnedAttribute(Types.User, property);
+                }
+            }
+
             if(Types.ExtentInfo == null || forceRecreate)
             {
                 Types.ExtentInfo = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
@@ -188,6 +209,8 @@ namespace DatenMeister.Entities.AsObject.DM
 
         }
 
+        public static DatenMeister.IObject User;
+
         public static DatenMeister.IObject ExtentInfo;
 
         public static DatenMeister.IObject ExtentLoadInfo;
@@ -206,6 +229,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static void AssignTypeMapping(DatenMeister.DataProvider.DotNet.IMapsMetaClassFromDotNet mapping)
         {
+            mapping.Add(typeof(DatenMeister.Entities.DM.UserManagement.User), Types.User);
             mapping.Add(typeof(DatenMeister.Entities.DM.ExtentInfo), Types.ExtentInfo);
             mapping.Add(typeof(DatenMeister.Entities.DM.ExtentLoadInfo), Types.ExtentLoadInfo);
             mapping.Add(typeof(DatenMeister.Entities.DM.CSVExtentLoadInfo), Types.CSVExtentLoadInfo);
@@ -215,6 +239,7 @@ namespace DatenMeister.Entities.AsObject.DM
 
         public static void Reset()
         {
+            Types.User = null;
             Types.ExtentInfo = null;
             Types.ExtentLoadInfo = null;
             Types.CSVExtentLoadInfo = null;
