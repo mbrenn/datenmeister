@@ -8,6 +8,20 @@ namespace DatenMeister.Pool
     public static class Extensions
     {
         /// <summary>
+        /// Gets the extent by url out of the datapool
+        /// </summary>
+        /// <param name="pool">Pool to be used</param>
+        /// <param name="uri">Uri being requested</param>
+        /// <returns></returns>
+        public static IURIExtent GetExtentByUri(this IPool pool, string uri)
+        {
+            return pool.ExtentContainer
+                .Where(x => x.Extent.ContextURI() == uri)
+                .Select(x => x.Extent)
+                .FirstOrDefault();
+        }
+
+        /// <summary>
         ///  Resolves the uri by <c>Resolve</c> and returns the elements if the returned object is an Extent
         /// </summary>
         /// <param name="url">Url being used</param>
