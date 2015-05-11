@@ -1,41 +1,29 @@
 ﻿@{
-    Layout = null;
-
+    this.ViewBag.PageTitle = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @model DatenMeisterWeb.Models.UserLoginModel
 
-<!DOCTYPE html>
 
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DatenMeister - Login</title>
-    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/Content/bootstrap-theme.min.css" />
-</head>
-<body>
-    <div class="container-fluid">
-        <h1>Der DatenMeister</h1>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <p class="lead">Welcome to DatenMeister, a dataset manipulation tool</p>
-                    @using (Html.BeginForm(new { id = "loginform" }))
-                    {
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.username)
-                            @Html.TextBoxFor(m => m.username, new { @class = "form-control" })
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.password)
-                            @Html.TextBoxFor(m => m.password, new { @class = "form-control" })
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Perform Login</button>
-
-                        @Html.ValidationSummary()
-                    }
+<h1>Der DatenMeister</h1>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <p class="lead">Welcome to DatenMeister, a dataset manipulation tool</p>
+        @using (Html.BeginForm(new { id = "loginform" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.username)
+                @Html.TextBoxFor(m => m.username, new { @class = "form-control" })
             </div>
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.password)
+                @Html.TextBoxFor(m => m.password, new { @class = "form-control" })
+            </div>
+
+            <button type="submit" class="btn btn-primary">Perform Login</button>
+
+            @Html.ValidationSummary()
+        }
     </div>
-</body>
-</html>
+</div>

@@ -19,6 +19,7 @@ namespace DatenMeisterWeb
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            DatenMeisterConfig.StartUp();
         }
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)

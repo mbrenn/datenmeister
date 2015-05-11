@@ -1,4 +1,8 @@
-﻿using DatenMeisterWeb.Models;
+﻿using DatenMeister;
+using DatenMeister.Transformations;
+using DatenMeister.Pool;
+using DatenMeister.Web;
+using DatenMeisterWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +13,16 @@ namespace DatenMeisterWeb.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Stores the server manager
+        /// </summary>
+        private IServerManager serverManager;
+
+        public HomeController(IServerManager serverManager)
+        {
+            this.serverManager = serverManager;
+        }
+
         // GET: Home
         public ActionResult Index()
         {
@@ -20,9 +34,19 @@ namespace DatenMeisterWeb.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                if (model.username == "mbrenn" && model.password == "abc")
+                // Get users
+                var userManagementExtent = this.serverManager.GetServerPool().GetExtentByUri(
+                    ServerManager.UriUserManagement);
+                var foundUser = userManagementExtent.Elements()
+                    .FilterByProperty("username", model.username)
+                    .FirstOrDefault()
+                    .AsIObjectOrNull();
+                if (foundUser != null)
                 {
-                    return this.RedirectToAction("Index", "Extents");
+                    if ( foundUser.getAsSingle("password").ToString() == model.password)
+                    {
+                        return this.RedirectToAction("Index", "Extents");
+                    }
                 }
             }
 

@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatenMeisterGui", "DatenMei
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatenMeisterWeb", "DatenMeisterWeb\DatenMeisterWeb.csproj", "{81CD956D-8807-4C5B-AC42-28AA4C14EA0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatenMeister.Web", "DatenMeister.Web\DatenMeister.Web.csproj", "{117E85A1-058F-4A2B-842B-22E4F211A611}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,14 @@ Global
 		{81CD956D-8807-4C5B-AC42-28AA4C14EA0D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81CD956D-8807-4C5B-AC42-28AA4C14EA0D}.Release|x64.ActiveCfg = Release|Any CPU
 		{81CD956D-8807-4C5B-AC42-28AA4C14EA0D}.Release|x86.ActiveCfg = Release|Any CPU
+		{117E85A1-058F-4A2B-842B-22E4F211A611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117E85A1-058F-4A2B-842B-22E4F211A611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117E85A1-058F-4A2B-842B-22E4F211A611}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{117E85A1-058F-4A2B-842B-22E4F211A611}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{117E85A1-058F-4A2B-842B-22E4F211A611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117E85A1-058F-4A2B-842B-22E4F211A611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117E85A1-058F-4A2B-842B-22E4F211A611}.Release|x64.ActiveCfg = Release|Any CPU
+		{117E85A1-058F-4A2B-842B-22E4F211A611}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
