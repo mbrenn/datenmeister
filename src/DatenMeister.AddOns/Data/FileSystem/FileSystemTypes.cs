@@ -17,6 +17,11 @@ namespace DatenMeister.AddOns.Data.FileSystem.AsObject
         public static void Init(DatenMeister.IURIExtent extent, bool forceRecreate = false)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            Init(extent, factory, forceRecreate);
+        }
+
+        public static void Init(DatenMeister.IURIExtent extent, DatenMeister.IFactory factory, bool forceRecreate = false)
+        {
             if(Types.File == null || forceRecreate)
             {
                 Types.File = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);
