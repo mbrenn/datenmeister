@@ -17,6 +17,11 @@ namespace DatenMeister.Entities.AsObject.DM
         public static void Init(DatenMeister.IURIExtent extent, bool forceRecreate = false)
         {
             var factory = DatenMeister.DataProvider.Factory.GetFor(extent);
+            Init(extent, factory, forceRecreate);
+        }
+
+        public static void Init(DatenMeister.IURIExtent extent, DatenMeister.IFactory factory, bool forceRecreate = false)
+        {
             if(Types.User == null || forceRecreate)
             {
                 Types.User = factory.create(DatenMeister.Entities.AsObject.Uml.Types.Class);

@@ -63,11 +63,15 @@ namespace DatenMeister.Logic.SourceFactory
             writer.WriteLine(TwelveSpaces + "return extent;");
             writer.WriteLine(EightSpaces + "}");
             writer.WriteLine();
-
             writer.WriteLine(EightSpaces + "public static void Init(DatenMeister.IURIExtent extent, bool forceRecreate = false)");
             writer.WriteLine(EightSpaces + "{");
             writer.WriteLine(TwelveSpaces + "var factory = DatenMeister.DataProvider.Factory.GetFor(extent);");
+            writer.WriteLine(TwelveSpaces + "Init(extent, factory, forceRecreate);");
+            writer.WriteLine(EightSpaces + "}");
+            writer.WriteLine();
 
+            writer.WriteLine(EightSpaces + "public static void Init(DatenMeister.IURIExtent extent, DatenMeister.IFactory factory, bool forceRecreate = false)");
+            writer.WriteLine(EightSpaces + "{");
             resetFunction.AppendLine(EightSpaces + "public static void Reset()");
             resetFunction.AppendLine(EightSpaces + "{");
 
