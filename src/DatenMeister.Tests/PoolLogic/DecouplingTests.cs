@@ -21,7 +21,7 @@ namespace DatenMeister.Tests.PoolLogic
             // Creates the datapool with UML information
             var dataPool = DatenMeisterPool.CreateDecoupled();
             var metaTypeExtent = new GenericExtent("datenmeister:///datenmeister/metatypes/");
-            DatenMeister.Entities.AsObject.Uml.Types.Init(metaTypeExtent);
+            DatenMeister.Entities.AsObject.Uml.Types.Init(metaTypeExtent, new GenericFactory(metaTypeExtent));
             dataPool.Add(metaTypeExtent, null, ExtentType.MetaType);
         }
     }
