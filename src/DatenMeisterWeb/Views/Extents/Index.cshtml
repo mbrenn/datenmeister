@@ -2,6 +2,12 @@
     this.ViewBag.PageTitle = "All Entities";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model IEnumerable<DatenMeister.Logic.ExtentContainer>
+        
+    <h2>Index</h2>
 
-<h2>Index</h2>
+@foreach (var container in this.Model)
+{
+    <p>@Html.ActionLink(container.Extent.ContextURI(), "Show", new { uri = container.Extent.ContextURI() })</p>
+}
 

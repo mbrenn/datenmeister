@@ -1,0 +1,46 @@
+﻿
+@{
+    this.ViewBag.PageTitle = "Show Extent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model DatenMeisterWeb.Controllers.ExtentsController.MVVMExtentOverview
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var uri = "@this.Model.Extent.ContextURI()";
+
+        require(['datenmeister-extent'], function (extent) {
+            var extentTable = new extent.ExtentOverview();
+            extentTable.loadTable(uri);
+        });
+
+    });
+</script>
+
+<h1>Show Extent</h1>
+Extent: @this.Model.Extent.ContextURI()
+
+<div id="extentTable"> </div>
+<table class="table table-striped">
+    <tr>
+        @foreach(var column in this.Model.Columns)
+        {
+            <th>@column</th>
+        }
+    </tr>
+    @foreach(var row in this.Model.Elements.Select(x=> DatenMeister.Extensions.AsIObject(x)))
+    {
+        <tr>
+            @foreach(var column in this.Model.Columns)
+            {
+                <td>@row.get(column)</td>
+            }
+        </tr>
+    }
+</table>
+
+@Html.ActionLink("Back to extents", "Index")
+
+
+

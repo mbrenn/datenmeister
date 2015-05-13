@@ -22,5 +22,11 @@ namespace DatenMeister.Web
         /// </summary>
         /// <returns>Gets the pool being used by a server</returns>
         IPool GetServerPool();
+
+        /// <summary>
+        /// Gets the data pool
+        /// </summary>
+        /// <returns>The received data pool</returns>
+        IPool GetDataPool();
     }
 }

@@ -11,6 +11,8 @@ namespace DatenMeisterWeb.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using DatenMeister.Web;
+    using System.Web.Http;
+    using WebApiContrib.IoC.Ninject;
 
     public static class NinjectWebCommon 
     {
@@ -46,7 +48,9 @@ namespace DatenMeisterWeb.App_Start
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
-                RegisterServices(kernel);
+                RegisterServices(kernel); 
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver(kernel);
+
                 return kernel;
             }
             catch
