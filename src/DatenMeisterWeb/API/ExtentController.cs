@@ -36,6 +36,8 @@ namespace DatenMeisterWeb.API
                 return null;
             }
 
+            System.Threading.Thread.Sleep(1000);
+
             // Found an extent
             var elements = foundExtent.Extent.Elements();
             var columns = ReflectiveSequenceHelper.GetConsolidatedPropertyNames(elements);

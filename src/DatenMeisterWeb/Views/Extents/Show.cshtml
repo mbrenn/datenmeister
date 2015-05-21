@@ -11,36 +11,38 @@
         var uri = "@this.Model.Extent.ContextURI()";
 
         require(['datenmeister-extent'], function (extent) {
-            var extentTable = new extent.ExtentOverview();
-            extentTable.loadTable(uri);
-        });
+            var config = new extent.ExtentOverviewConfiguration();
+            config.extentUri = uri;
+            config.domTable = $("#extentTable");
+            config.domSearchString = $("#extentSearchBox");
 
+            var extentTable = new extent.ExtentOverviewManager();
+            extentTable.loadTable(config);
+        });
     });
 </script>
-
-<h1>Show Extent</h1>
-Extent: @this.Model.Extent.ContextURI()
-
-<div id="extentTable"> </div>
-<table class="table table-striped">
-    <tr>
-        @foreach(var column in this.Model.Columns)
-        {
-            <th>@column</th>
-        }
-    </tr>
-    @foreach(var row in this.Model.Elements.Select(x=> DatenMeister.Extensions.AsIObject(x)))
-    {
-        <tr>
-            @foreach(var column in this.Model.Columns)
-            {
-                <td>@row.get(column)</td>
-            }
-        </tr>
-    }
-</table>
-
-@Html.ActionLink("Back to extents", "Index")
+<div class="row">
+    <div class="col-lg-12">
+        <h1>Show Extent</h1>
+        Extent: @this.Model.Extent.ContextURI()
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10">
+        <div id="extentTable">
+            <p class="text-info">Table is getting loaded</p>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <p>Search:</p>
+        <input type="text" id="extentSearchBox" />
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.ActionLink("Back to extents", "Index")
+            </div>
+        </div>
 
 
 
