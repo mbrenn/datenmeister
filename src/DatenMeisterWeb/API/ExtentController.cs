@@ -23,7 +23,13 @@ namespace DatenMeisterWeb.API
             this.serverManager = serverManager;
         }
 
-        public object Get(string uri)
+        /// <summary>
+        /// Gets the complete extent by the uri of an extet
+        /// </summary>
+        /// <param name="uri">Uri to be queried</param>
+        /// <returns>The Json object being sent to the browser</returns>
+        [HttpGet]
+        public object ExtentByUri(string uri)
         {
             var dataPool = this.serverManager.GetDataPool();
             var foundExtent = dataPool.ExtentContainer
@@ -36,8 +42,6 @@ namespace DatenMeisterWeb.API
                 return null;
             }
 
-            System.Threading.Thread.Sleep(1000);
-
             // Found an extent
             var elements = foundExtent.Extent.Elements();
             var columns = ReflectiveSequenceHelper.GetConsolidatedPropertyNames(elements);
@@ -45,25 +49,107 @@ namespace DatenMeisterWeb.API
             List<object> values = new List<object>();
             foreach (var element in elements.Select(x => x.AsIObject()))
             {
-                var value = new Dictionary<string, object>();
+                var data = new Dictionary<string, object>();
                 foreach (var column in columns)
                 {
                     if (element.isSet(column))
                     {
-                        value[column] = element.get(column).ToString();
+                        data[column] = element.get(column).ToString();
                     }
                 }
 
-                values.Add(value);
+                var id = element.Id;
+                values.Add(new
+                {
+                    id = id,
+                    data = data
+                });
             }
 
             return
                 new
                 {
-                    ExtentUri = foundExtent.Extent.ContextURI(),
-                    Elements = values,
-                    Columns = ReflectiveSequenceHelper.GetConsolidatedPropertyNames(elements)
+                    extentUri = foundExtent.Extent.ContextURI(),
+                    elements = values,
+                    columns = ReflectiveSequenceHelper.GetConsolidatedPropertyNames(elements)
                 };
+        }
+
+        public class DetailParam
+        {
+            public string uri { get; set; }
+            public string id { get; set; }
+        }
+
+        [HttpGet]
+        public object Detail(string uri, string objectId)
+        {
+            var objectToBeQueried = this.GetObjectByUriAndId(uri, objectId);
+            if (objectToBeQueried == null)
+            {
+                return null;
+            }
+
+            var rows = new List<string>();
+            var data = new Dictionary<string, string>();
+            foreach (var property in objectToBeQueried.getAll())
+            {
+                rows.Add(property.PropertyName);
+                data[property.PropertyName] = property.Value.ToString();
+            }
+
+            return new
+            {
+                rows = rows,
+                data = data
+            };
+        }
+
+        public class DeleteParam
+        {
+            public string uri { get; set; }
+            public string objectId { get; set; }
+        }
+
+        [HttpPost]
+        public void Delete(DeleteParam param)
+        {
+            var uri = param.uri;
+            var id = param.objectId;
+
+            var objectToBeDeleted = this.GetObjectByUriAndId(param.uri, param.objectId);
+            if (objectToBeDeleted != null)
+            {
+                objectToBeDeleted.delete();
+            }
+        }
+
+        /// <summary>
+        /// Gets the object by using a uri and an id
+        /// </summary>
+        /// <param name="uri">Uri, which is questioned</param>
+        /// <param name="id">Id to be queried</param>
+        /// <returns>Retrieved object</returns>
+        private IObject GetObjectByUriAndId(string uri, string id)
+        {
+            var dataPool = this.serverManager.GetDataPool();
+            var foundExtent = dataPool.ExtentContainer
+                .Where(x => x.Extent.ContextURI() == uri)
+                .FirstOrDefault();
+
+            if (foundExtent == null)
+            {
+                // No extent found...
+                return null;
+            }
+
+            // Gets the object that shall be deleted
+            var objectToBeDeleted =
+                foundExtent.Extent.Elements()
+                .Select(x => x.AsIObject())
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
+            return objectToBeDeleted;
         }
     }
 }

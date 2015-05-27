@@ -11,12 +11,26 @@
         var uri = "@this.Model.Extent.ContextURI()";
 
         require(['datenmeister-extent'], function (extent) {
+            var pageConfig = new extent.DatenMeisterViewConfiguration();
+            pageConfig.domTable = $("#extentTable");
+            pageConfig.domDetail = $("#extentForm");
+
+            var pageController = new extent.DatenMeisterViewManager(pageConfig);
             var config = new extent.ExtentOverviewConfiguration();
             config.extentUri = uri;
             config.domTable = $("#extentTable");
             config.domSearchString = $("#extentSearchBox");
 
             var extentTable = new extent.ExtentOverviewManager();
+            extentTable.callbackEditObject = function (uri, id) {
+                var detailConfig = new extent.ExtentDetailConfiguration();
+                detailConfig.extentUri = uri;
+                detailConfig.domForm = $("#extentForm");
+                detailConfig.id = id;
+                var detailView = new extent.ExtentDetailViewManager();
+                detailView.loadObject(detailConfig);
+                pageController.switchView(extent.View.Detail);
+            };
             extentTable.loadTable(config);
         });
     });
@@ -25,6 +39,11 @@
     <div class="col-lg-12">
         <h1>Show Extent</h1>
         Extent: @this.Model.Extent.ContextURI()
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10">
+        <div id="extentForm"></div>
     </div>
 </div>
 <div class="row">
