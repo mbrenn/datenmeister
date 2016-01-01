@@ -1,6 +1,8 @@
 DatenMeister
 ============
 
+[![ghit.me](https://ghit.me/badge.svg?repo=mbrenn/datenmeister)](https://ghit.me/repo/mbrenn/datenmeister)
+
 First of all: Thanks for using DatenMeister. 
 
 DatenMeister is database connection application to store data, to visualize data and to analyze data. Key element of DatenMeister is the transparent use of existing database in a way that the original database is used directly and changes in DatenMeister will directly lead to changes in the original database. Reading and writing will be performed in the original database.
