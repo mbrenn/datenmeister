@@ -1,6 +1,13 @@
 DatenMeister
 ============
 
+
+Obsolete... 
+use http://github.com/mbrenn/datenmeister-new
+
+
+============
+
 [![ghit.me](https://ghit.me/badge.svg?repo=mbrenn/datenmeister)](https://ghit.me/repo/mbrenn/datenmeister)
 
 First of all: Thanks for using DatenMeister. 
